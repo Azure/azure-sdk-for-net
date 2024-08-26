@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.Response<bool> Exists(string entityQueryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string entityQueryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.EntityQueryResource> Get(string entityQueryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityInsights.EntityQueryResource> GetAll(Azure.ResourceManager.SecurityInsights.Models.Enum21? kind = default(Azure.ResourceManager.SecurityInsights.Models.Enum21?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.EntityQueryResource> GetAllAsync(Azure.ResourceManager.SecurityInsights.Models.Enum21? kind = default(Azure.ResourceManager.SecurityInsights.Models.Enum21?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityInsights.EntityQueryResource> GetAll(Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind? kind = default(Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.EntityQueryResource> GetAllAsync(Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind? kind = default(Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.EntityQueryResource>> GetAsync(string entityQueryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityInsights.EntityQueryResource> GetIfExists(string entityQueryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityInsights.EntityQueryResource>> GetIfExistsAsync(string entityQueryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.Response<bool> Exists(string entityQueryTemplateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string entityQueryTemplateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.EntityQueryTemplateResource> Get(string entityQueryTemplateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityInsights.EntityQueryTemplateResource> GetAll(Azure.ResourceManager.SecurityInsights.Models.Enum23? kind = default(Azure.ResourceManager.SecurityInsights.Models.Enum23?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.EntityQueryTemplateResource> GetAllAsync(Azure.ResourceManager.SecurityInsights.Models.Enum23? kind = default(Azure.ResourceManager.SecurityInsights.Models.Enum23?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityInsights.EntityQueryTemplateResource> GetAll(Azure.ResourceManager.SecurityInsights.Models.Enum22? kind = default(Azure.ResourceManager.SecurityInsights.Models.Enum22?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.EntityQueryTemplateResource> GetAllAsync(Azure.ResourceManager.SecurityInsights.Models.Enum22? kind = default(Azure.ResourceManager.SecurityInsights.Models.Enum22?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.EntityQueryTemplateResource>> GetAsync(string entityQueryTemplateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityInsights.EntityQueryTemplateResource> GetIfExists(string entityQueryTemplateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityInsights.EntityQueryTemplateResource>> GetIfExistsAsync(string entityQueryTemplateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -239,12 +239,12 @@ namespace Azure.ResourceManager.SecurityInsights
     {
         public FileImportData() { }
         public Azure.ResourceManager.SecurityInsights.Models.FileImportContentType? ContentType { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedTimeUTC { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.FileMetadata ErrorFile { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityInsights.Models.ValidationError> ErrorsPreview { get { throw null; } }
-        public System.DateTimeOffset? FilesValidUntilTimeUTC { get { throw null; } }
+        public System.DateTimeOffset? FilesValidUntil { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.FileMetadata ImportFile { get { throw null; } set { } }
-        public System.DateTimeOffset? ImportValidUntilTimeUTC { get { throw null; } }
+        public System.DateTimeOffset? ImportValidUntil { get { throw null; } }
         public int? IngestedRecordCount { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.IngestionMode? IngestionMode { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
@@ -297,11 +297,11 @@ namespace Azure.ResourceManager.SecurityInsights
     {
         public IncidentTaskData(string title, Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus status) { }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsClientInfo CreatedBy { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsClientInfo LastModifiedBy { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus Status { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.IncidentTaskData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.IncidentTaskData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -477,8 +477,8 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.ProductTemplateModelResource> GetProductTemplateModel(string templateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.ProductTemplateModelResource>> GetProductTemplateModelAsync(string templateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.ProductTemplateModelCollection GetProductTemplateModels() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityInsights.Models.Repo> GetRepositoriesSourceControls(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessProperties repositoryAccess, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.Models.Repo> GetRepositoriesSourceControlsAsync(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessProperties repositoryAccess, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo> GetRepositoriesSourceControls(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessProperties repositoryAccess, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo> GetRepositoriesSourceControlsAsync(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessProperties repositoryAccess, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> GetSecurityInsightsAlertRule(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>> GetSecurityInsightsAlertRuleAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleCollection GetSecurityInsightsAlertRules() { throw null; }
@@ -509,6 +509,9 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource> GetSecurityInsightsSentinelOnboardingState(string sentinelOnboardingStateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource>> GetSecurityInsightsSentinelOnboardingStateAsync(string sentinelOnboardingStateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateCollection GetSecurityInsightsSentinelOnboardingStates() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource> GetSecurityInsightsSetting(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource>> GetSecurityInsightsSettingAsync(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingCollection GetSecurityInsightsSettings() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource> GetSecurityInsightsThreatIntelligenceIndicator(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource>> GetSecurityInsightsThreatIntelligenceIndicatorAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorCollection GetSecurityInsightsThreatIntelligenceIndicators() { throw null; }
@@ -518,9 +521,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource> GetSecurityMLAnalyticsSetting(string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource>> GetSecurityMLAnalyticsSettingAsync(string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingCollection GetSecurityMLAnalyticsSettings() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SettingResource> GetSetting(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SettingResource>> GetSettingAsync(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SecurityInsights.SettingCollection GetSettings() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SourceControlResource> GetSourceControl(string sourceControlId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SourceControlResource>> GetSourceControlAsync(string sourceControlId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SourceControlCollection GetSourceControls() { throw null; }
@@ -530,8 +530,8 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.TriggeredAnalyticsRuleRunResource> GetTriggeredAnalyticsRuleRun(string ruleRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.TriggeredAnalyticsRuleRunResource>> GetTriggeredAnalyticsRuleRunAsync(string ruleRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.TriggeredAnalyticsRuleRunCollection GetTriggeredAnalyticsRuleRuns() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainWhois> GetWhoisByDomain(Azure.ResourceManager.SecurityInsights.Models.EnrichmentType enrichmentType, Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainBody domainBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainWhois>> GetWhoisByDomainAsync(Azure.ResourceManager.SecurityInsights.Models.EnrichmentType enrichmentType, Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainBody domainBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainWhois> GetWhoisByDomain(Azure.ResourceManager.SecurityInsights.Models.EnrichmentType enrichmentType, Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainWhois>> GetWhoisByDomainAsync(Azure.ResourceManager.SecurityInsights.Models.EnrichmentType enrichmentType, Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.WorkspaceManagerAssignmentResource> GetWorkspaceManagerAssignment(string workspaceManagerAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.WorkspaceManagerAssignmentResource>> GetWorkspaceManagerAssignmentAsync(string workspaceManagerAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.WorkspaceManagerAssignmentCollection GetWorkspaceManagerAssignments() { throw null; }
@@ -583,10 +583,10 @@ namespace Azure.ResourceManager.SecurityInsights
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.DateTimeOffset? FirstPublishOn { get { throw null; } set { } }
         public string Icon { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Flag? IsDeprecated { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Flag? IsFeatured { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Flag? IsNew { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Flag? IsPreview { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? IsDeprecated { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? IsFeatured { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? IsNew { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? IsPreview { get { throw null; } set { } }
         public System.DateTimeOffset? LastPublishOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Providers { get { throw null; } }
         public string PublisherDisplayName { get { throw null; } set { } }
@@ -651,10 +651,10 @@ namespace Azure.ResourceManager.SecurityInsights
         public System.DateTimeOffset? FirstPublishOn { get { throw null; } set { } }
         public string Icon { get { throw null; } set { } }
         public string InstalledVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Flag? IsDeprecated { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Flag? IsFeatured { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Flag? IsNew { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Flag? IsPreview { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? IsDeprecated { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? IsFeatured { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? IsNew { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? IsPreview { get { throw null; } set { } }
         public System.DateTimeOffset? LastPublishOn { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MetadataResourceId { get { throw null; } set { } }
         public System.BinaryData PackagedContent { get { throw null; } set { } }
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.DateTimeOffset? FirstPublishOn { get { throw null; } set { } }
         public string Icon { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Flag? IsDeprecated { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? IsDeprecated { get { throw null; } }
         public System.DateTimeOffset? LastPublishOn { get { throw null; } set { } }
         public System.BinaryData PackagedContent { get { throw null; } set { } }
         public string PackageId { get { throw null; } set { } }
@@ -1080,8 +1080,8 @@ namespace Azure.ResourceManager.SecurityInsights
         protected SecurityInsightsDataConnectorResource() { }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response Connect(Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectBody connectBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ConnectAsync(Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectBody connectBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Connect(Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ConnectAsync(Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1162,8 +1162,8 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsEntityRelationCollection GetSecurityInsightsEntityRelations() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityInsights.Models.EntityQueryItem> Queries(Azure.ResourceManager.SecurityInsights.Models.EntityItemQueryKind kind, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.Models.EntityQueryItem> QueriesAsync(Azure.ResourceManager.SecurityInsights.Models.EntityItemQueryKind kind, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RunPlaybook(Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody requestBody = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RunPlaybookAsync(Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody requestBody = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RunPlaybook(Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RunPlaybookAsync(Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1206,11 +1206,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentResource GetSecurityInsightsIncidentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsRecommendationResource GetSecurityInsightsRecommendationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource GetSecurityInsightsSentinelOnboardingStateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource GetSecurityInsightsSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource GetSecurityInsightsThreatIntelligenceIndicatorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemResource GetSecurityInsightsWatchlistItemResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistResource GetSecurityInsightsWatchlistResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource GetSecurityMLAnalyticsSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.SettingResource GetSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SourceControlResource GetSourceControlResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.TemplateModelResource GetTemplateModelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.TriggeredAnalyticsRuleRunResource GetTriggeredAnalyticsRuleRunResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1293,7 +1293,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus? HypothesisStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Labels { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.HuntOwner Owner { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner Owner { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.Status? Status { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.SecurityInsightsHuntData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsHuntData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsHuntData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1323,7 +1323,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public SecurityInsightsHuntRelationData() { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Labels { get { throw null; } }
-        public string RelatedResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RelatedResourceId { get { throw null; } set { } }
         public string RelatedResourceKind { get { throw null; } }
         public string RelatedResourceName { get { throw null; } }
         public string RelationType { get { throw null; } }
@@ -1581,14 +1581,14 @@ namespace Azure.ResourceManager.SecurityInsights
     {
         public SecurityInsightsRecommendationData() { }
         public System.Collections.Generic.IDictionary<string, string> AdditionalProperties { get { throw null; } set { } }
-        public System.DateTimeOffset? CreationTimeUtc { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
-        public System.DateTimeOffset? LastEvaluatedTimeUtc { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedTimeUtc { get { throw null; } set { } }
+        public System.DateTimeOffset? LastEvaluatedOn { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public string RecommendationTypeId { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.State? State { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.RecommendationState? State { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.RecommendedSuggestion> Suggestions { get { throw null; } }
         public string Title { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.SecurityInsightsRecommendationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsRecommendationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1662,6 +1662,52 @@ namespace Azure.ResourceManager.SecurityInsights
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SecurityInsightsSettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource>, System.Collections.IEnumerable
+    {
+        protected SecurityInsightsSettingCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string settingsName, Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string settingsName, Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource> Get(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource>> GetAsync(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource> GetIfExists(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource>> GetIfExistsAsync(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public abstract partial class SecurityInsightsSettingData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>
+    {
+        protected SecurityInsightsSettingData() { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SecurityInsightsSettingResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SecurityInsightsSettingResource() { }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string settingsName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SecurityInsightsThreatIntelligenceIndicatorBaseData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData>
     {
@@ -1888,52 +1934,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.SettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SettingResource>, System.Collections.IEnumerable
-    {
-        protected SettingCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SettingResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string settingsName, Azure.ResourceManager.SecurityInsights.SettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SettingResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string settingsName, Azure.ResourceManager.SecurityInsights.SettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SettingResource> Get(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityInsights.SettingResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.SettingResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SettingResource>> GetAsync(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityInsights.SettingResource> GetIfExists(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityInsights.SettingResource>> GetIfExistsAsync(string settingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityInsights.SettingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.SettingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityInsights.SettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SettingResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public abstract partial class SettingData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SettingData>
-    {
-        protected SettingData() { }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-        Azure.ResourceManager.SecurityInsights.SettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.SettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SettingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SettingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SettingResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SettingData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected SettingResource() { }
-        public virtual Azure.ResourceManager.SecurityInsights.SettingData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string settingsName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.SecurityInsights.SettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.SettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SettingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SettingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class SourceControlCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.SourceControlResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SourceControlResource>, System.Collections.IEnumerable
     {
         protected SourceControlCollection() { }
@@ -1953,20 +1953,20 @@ namespace Azure.ResourceManager.SecurityInsights
     }
     public partial class SourceControlData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SourceControlData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SourceControlData>
     {
-        public SourceControlData(string displayName, Azure.ResourceManager.SecurityInsights.Models.RepoType repoType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ContentType> contentTypes, Azure.ResourceManager.SecurityInsights.Models.Repository repository) { }
+        public SourceControlData(string displayName, Azure.ResourceManager.SecurityInsights.Models.RepoType repoType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ContentType> contentTypes, Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository repository) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.ContentType> ContentTypes { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
-        public string IdPropertiesId { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo LastDeploymentInfo { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo LastDeploymentInfo { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.PullRequestInfo PullRequest { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.Repository Repository { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository Repository { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.RepositoryAccess RepositoryAccess { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.RepositoryResourceInfo RepositoryResourceInfo { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.RepoType RepoType { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal ServicePrincipal { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Version? Version { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal ServicePrincipal { get { throw null; } set { } }
+        public System.Guid? SourceControlId { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion? Version { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.SourceControlData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SourceControlData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SourceControlData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.SourceControlData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SourceControlData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1980,8 +1980,8 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.ResourceManager.SecurityInsights.SourceControlData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.Models.Warning> Delete(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessProperties repositoryAccess, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.Models.Warning>> DeleteAsync(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessProperties repositoryAccess, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.Models.ResponseWarning> Delete(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessProperties repositoryAccess, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.Models.ResponseWarning>> DeleteAsync(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessProperties repositoryAccess, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SourceControlResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SourceControlResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.SecurityInsights.SourceControlData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SourceControlData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2025,7 +2025,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.DateTimeOffset? FirstPublishOn { get { throw null; } set { } }
         public string Icon { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Flag? IsDeprecated { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? IsDeprecated { get { throw null; } }
         public System.DateTimeOffset? LastPublishOn { get { throw null; } set { } }
         public System.BinaryData MainTemplate { get { throw null; } set { } }
         public string PackageId { get { throw null; } set { } }
@@ -2082,9 +2082,9 @@ namespace Azure.ResourceManager.SecurityInsights
     }
     public partial class TriggeredAnalyticsRuleRunData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.TriggeredAnalyticsRuleRunData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.TriggeredAnalyticsRuleRunData>
     {
-        public TriggeredAnalyticsRuleRunData(System.DateTimeOffset executionTimeUtc, string ruleId, string triggeredAnalyticsRuleRunId, Azure.ResourceManager.SecurityInsights.Models.ProvisioningState provisioningState) { }
+        public TriggeredAnalyticsRuleRunData(System.DateTimeOffset executeOn, string ruleId, string triggeredAnalyticsRuleRunId, Azure.ResourceManager.SecurityInsights.Models.ProvisioningState provisioningState) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
-        public System.DateTimeOffset ExecutionTimeUtc { get { throw null; } set { } }
+        public System.DateTimeOffset ExecuteOn { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.ProvisioningState ProvisioningState { get { throw null; } set { } }
         public string RuleId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> RuleRunAdditionalData { get { throw null; } }
@@ -2186,7 +2186,7 @@ namespace Azure.ResourceManager.SecurityInsights
     {
         public WorkspaceManagerConfigurationData() { }
         public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.Mode? Mode { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode? Mode { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.WorkspaceManagerConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.WorkspaceManagerConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.WorkspaceManagerConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.WorkspaceManagerConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.WorkspaceManagerConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2345,11 +2345,11 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentResource GetSecurityInsightsIncidentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsRecommendationResource GetSecurityInsightsRecommendationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource GetSecurityInsightsSentinelOnboardingStateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingResource GetSecurityInsightsSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource GetSecurityInsightsThreatIntelligenceIndicatorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemResource GetSecurityInsightsWatchlistItemResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistResource GetSecurityInsightsWatchlistResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource GetSecurityMLAnalyticsSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.SecurityInsights.SettingResource GetSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SourceControlResource GetSourceControlResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.TemplateModelResource GetTemplateModelResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.TriggeredAnalyticsRuleRunResource GetTriggeredAnalyticsRuleRunResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2393,12 +2393,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         public ActivityCustomEntityQuery() { }
         public string Content { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> EntitiesFilter { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.EntityType? InputEntityType { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedTimeUtc { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Query { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> RequiredInputFieldsSets { get { throw null; } }
         public string TemplateName { get { throw null; } set { } }
@@ -2413,12 +2413,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         public ActivityEntityQuery() { }
         public string Content { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> EntitiesFilter { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.EntityType? InputEntityType { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedTimeUtc { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Query { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> RequiredInputFieldsSets { get { throw null; } }
         public string TemplateName { get { throw null; } set { } }
@@ -2460,11 +2460,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class ActivityTimelineItem : Azure.ResourceManager.SecurityInsights.Models.EntityTimelineItem, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ActivityTimelineItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ActivityTimelineItem>
     {
         internal ActivityTimelineItem() { }
-        public System.DateTimeOffset BucketEndTimeUTC { get { throw null; } }
-        public System.DateTimeOffset BucketStartTimeUTC { get { throw null; } }
+        public System.DateTimeOffset BucketEndOn { get { throw null; } }
+        public System.DateTimeOffset BucketStartOn { get { throw null; } }
         public string Content { get { throw null; } }
-        public System.DateTimeOffset FirstActivityTimeUTC { get { throw null; } }
-        public System.DateTimeOffset LastActivityTimeUTC { get { throw null; } }
+        public System.DateTimeOffset FirstActivityOn { get { throw null; } }
+        public System.DateTimeOffset LastActivityOn { get { throw null; } }
         public string QueryId { get { throw null; } }
         public string Title { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.ActivityTimelineItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ActivityTimelineItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2534,23 +2534,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     }
     public partial class AnalyticsRuleRunTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AnalyticsRuleRunTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AnalyticsRuleRunTrigger>
     {
-        public AnalyticsRuleRunTrigger(System.DateTimeOffset executionTimeUtc) { }
-        public System.DateTimeOffset ExecutionTimeUtc { get { throw null; } }
+        public AnalyticsRuleRunTrigger(System.DateTimeOffset executeOn) { }
+        public System.DateTimeOffset ExecuteOn { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.AnalyticsRuleRunTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AnalyticsRuleRunTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AnalyticsRuleRunTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.AnalyticsRuleRunTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AnalyticsRuleRunTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AnalyticsRuleRunTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AnalyticsRuleRunTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class Anomalies : Azure.ResourceManager.SecurityInsights.SettingData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Anomalies>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Anomalies>
-    {
-        public Anomalies() { }
-        public bool? IsEnabled { get { throw null; } }
-        Azure.ResourceManager.SecurityInsights.Models.Anomalies System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Anomalies>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Anomalies>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Anomalies System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Anomalies>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Anomalies>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Anomalies>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AnomalySecurityMLAnalyticsSettings : Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AnomalySecurityMLAnalyticsSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AnomalySecurityMLAnalyticsSettings>
     {
@@ -2596,16 +2586,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class AnomalyTimelineItem : Azure.ResourceManager.SecurityInsights.Models.EntityTimelineItem, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AnomalyTimelineItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AnomalyTimelineItem>
     {
         internal AnomalyTimelineItem() { }
-        public string AzureResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public System.DateTimeOffset EndTimeUtc { get { throw null; } }
+        public System.DateTimeOffset EndOn { get { throw null; } }
+        public System.DateTimeOffset GeneratedOn { get { throw null; } }
         public string Intent { get { throw null; } }
         public string ProductName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Reasons { get { throw null; } }
-        public System.DateTimeOffset StartTimeUtc { get { throw null; } }
+        public System.DateTimeOffset StartOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Techniques { get { throw null; } }
-        public System.DateTimeOffset TimeGenerated { get { throw null; } }
         public string Vendor { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.AnomalyTimelineItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AnomalyTimelineItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AnomalyTimelineItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2648,31 +2638,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     }
     public static partial class ArmSecurityInsightsModelFactory
     {
-        public static Azure.ResourceManager.SecurityInsights.Models.ActivityCustomEntityQuery ActivityCustomEntityQuery(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string title = null, string content = null, string description = null, string query = null, Azure.ResourceManager.SecurityInsights.Models.EntityType? inputEntityType = default(Azure.ResourceManager.SecurityInsights.Models.EntityType?), System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> requiredInputFieldsSets = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> entitiesFilter = null, string templateName = null, bool? enabled = default(bool?), System.DateTimeOffset? createdTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedTimeUtc = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.ActivityEntityQuery ActivityEntityQuery(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string title = null, string content = null, string description = null, string query = null, Azure.ResourceManager.SecurityInsights.Models.EntityType? inputEntityType = default(Azure.ResourceManager.SecurityInsights.Models.EntityType?), System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> requiredInputFieldsSets = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> entitiesFilter = null, string templateName = null, bool? enabled = default(bool?), System.DateTimeOffset? createdTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedTimeUtc = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ActivityCustomEntityQuery ActivityCustomEntityQuery(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string title = null, string content = null, string description = null, string query = null, Azure.ResourceManager.SecurityInsights.Models.EntityType? inputEntityType = default(Azure.ResourceManager.SecurityInsights.Models.EntityType?), System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> requiredInputFieldsSets = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> entitiesFilter = null, string templateName = null, bool? isEnabled = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ActivityEntityQuery ActivityEntityQuery(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string title = null, string content = null, string description = null, string query = null, Azure.ResourceManager.SecurityInsights.Models.EntityType? inputEntityType = default(Azure.ResourceManager.SecurityInsights.Models.EntityType?), System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> requiredInputFieldsSets = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> entitiesFilter = null, string templateName = null, bool? isEnabled = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ActivityEntityQueryTemplate ActivityEntityQueryTemplate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string content = null, string description = null, Azure.ResourceManager.SecurityInsights.Models.ActivityEntityQueryTemplatePropertiesQueryDefinitions queryDefinitions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.DataTypeDefinitions> dataTypes = null, Azure.ResourceManager.SecurityInsights.Models.EntityType? inputEntityType = default(Azure.ResourceManager.SecurityInsights.Models.EntityType?), System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> requiredInputFieldsSets = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> entitiesFilter = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.ActivityTimelineItem ActivityTimelineItem(string queryId = null, System.DateTimeOffset bucketStartTimeUTC = default(System.DateTimeOffset), System.DateTimeOffset bucketEndTimeUTC = default(System.DateTimeOffset), System.DateTimeOffset firstActivityTimeUTC = default(System.DateTimeOffset), System.DateTimeOffset lastActivityTimeUTC = default(System.DateTimeOffset), string content = null, string title = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Anomalies Anomalies(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), bool? isEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ActivityTimelineItem ActivityTimelineItem(string queryId = null, System.DateTimeOffset bucketStartOn = default(System.DateTimeOffset), System.DateTimeOffset bucketEndOn = default(System.DateTimeOffset), System.DateTimeOffset firstActivityOn = default(System.DateTimeOffset), System.DateTimeOffset lastActivityOn = default(System.DateTimeOffset), string content = null, string title = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.AnomalySecurityMLAnalyticsSettings AnomalySecurityMLAnalyticsSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string description = null, string displayName = null, bool? isEnabled = default(bool?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, string anomalyVersion = null, System.BinaryData customizableObservations = null, System.TimeSpan? frequency = default(System.TimeSpan?), Azure.ResourceManager.SecurityInsights.Models.AnomalySecurityMLAnalyticsSettingsStatus? settingsStatus = default(Azure.ResourceManager.SecurityInsights.Models.AnomalySecurityMLAnalyticsSettingsStatus?), bool? isDefaultSettings = default(bool?), int? anomalySettingsVersion = default(int?), System.Guid? settingsDefinitionId = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.AnomalyTimelineItem AnomalyTimelineItem(string azureResourceId = null, string productName = null, string description = null, string displayName = null, System.DateTimeOffset endTimeUtc = default(System.DateTimeOffset), System.DateTimeOffset startTimeUtc = default(System.DateTimeOffset), System.DateTimeOffset timeGenerated = default(System.DateTimeOffset), string vendor = null, string intent = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> reasons = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.AnomalyTimelineItem AnomalyTimelineItem(Azure.Core.ResourceIdentifier azureResourceId = null, string productName = null, string description = null, string displayName = null, System.DateTimeOffset endOn = default(System.DateTimeOffset), System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset generatedOn = default(System.DateTimeOffset), string vendor = null, string intent = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> reasons = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.AssignmentJobData AssignmentJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.JobItem> items = null, Azure.ResourceManager.SecurityInsights.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.SecurityInsights.Models.ProvisioningState?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string errorMessage = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.AttackPattern AttackPattern(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedTimeUtc = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedDateTimeUtc = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.AwsS3DataConnector AwsS3DataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string destinationTable = null, System.Collections.Generic.IEnumerable<string> sqsUrls = null, string roleArn = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? logsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.AzureDevOpsResourceInfo AzureDevOpsResourceInfo(string pipelineId = null, string serviceConnectionId = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.BillingStatisticData BillingStatisticData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.BookmarkExpandResponseValue BookmarkExpandResponseValue(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntity> entities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ConnectedEntity> edges = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.BookmarkExpandResult BookmarkExpandResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ExpansionResultAggregation> metaDataAggregations = null, Azure.ResourceManager.SecurityInsights.Models.BookmarkExpandResponseValue value = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.BookmarkTimelineItem BookmarkTimelineItem(string azureResourceId = null, string displayName = null, string notes = null, System.DateTimeOffset? endTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? startTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? eventOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy = null, System.Collections.Generic.IEnumerable<string> labels = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.BookmarkTimelineItem BookmarkTimelineItem(Azure.Core.ResourceIdentifier azureResourceId = null, string displayName = null, string notes = null, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? eventOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy = null, System.Collections.Generic.IEnumerable<string> labels = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.CodelessApiPollingDataConnector CodelessApiPollingDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigProperties connectorUiConfig = null, Azure.ResourceManager.SecurityInsights.Models.CodelessConnectorPollingConfigProperties pollingConfig = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.CodelessUiDataConnector CodelessUiDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigProperties connectorUiConfig = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClause ConditionClause(Azure.ResourceManager.SecurityInsights.Models.Connective? clauseConnective = default(Azure.ResourceManager.SecurityInsights.Models.Connective?), string field = null, Azure.ResourceManager.SecurityInsights.Models.Operator @operator = default(Azure.ResourceManager.SecurityInsights.Models.Operator), System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.ConditionProperties ConditionProperties(string stixObjectType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ConditionClause> clauses = null, Azure.ResourceManager.SecurityInsights.Models.Connective? conditionConnective = default(Azure.ResourceManager.SecurityInsights.Models.Connective?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClause ConditionClause(Azure.ResourceManager.SecurityInsights.Models.ClauseConnective? clauseConnective = default(Azure.ResourceManager.SecurityInsights.Models.ClauseConnective?), string field = null, Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator @operator = default(Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator), System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionProperties ConditionProperties(string stixObjectType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ConditionClause> clauses = null, Azure.ResourceManager.SecurityInsights.Models.ClauseConnective? conditionConnective = default(Azure.ResourceManager.SecurityInsights.Models.ClauseConnective?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ConnectedEntity ConnectedEntity(string targetEntityId = null, System.BinaryData additionalData = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectorDefinitionData CustomizableConnectorDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.DateTimeOffset? createdTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedUtc = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectorUiConfig connectorUiConfig = null, Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectionsConfig connectionsConfig = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectorDefinitionData CustomizableConnectorDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectorUiConfig connectorUiConfig = null, Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectionsConfig connectionsConfig = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.DataConnectorDefinitionData DataConnectorDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.DataConnectorRequirementsState DataConnectorRequirementsState(Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState? authorizationState = default(Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState?), Azure.ResourceManager.SecurityInsights.Models.DataConnectorLicenseState? licenseState = default(Azure.ResourceManager.SecurityInsights.Models.DataConnectorLicenseState?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Deployment Deployment(string deploymentId = null, Azure.ResourceManager.SecurityInsights.Models.DeploymentState? deploymentState = default(Azure.ResourceManager.SecurityInsights.Models.DeploymentState?), Azure.ResourceManager.SecurityInsights.Models.DeploymentResult? deploymentResult = default(Azure.ResourceManager.SecurityInsights.Models.DeploymentResult?), System.DateTimeOffset? deploymentOn = default(System.DateTimeOffset?), System.Uri deploymentLogsUri = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo DeploymentInfo(Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus? deploymentFetchStatus = default(Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus?), Azure.ResourceManager.SecurityInsights.Models.Deployment deployment = null, string message = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.Dynamics365DataConnector Dynamics365DataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? dynamics365CdsActivitiesState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainWhois EnrichmentDomainWhois(string domain = null, string server = null, System.DateTimeOffset? created = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainWhoisDetails parsedWhois = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainWhoisContact EnrichmentDomainWhoisContact(string name = null, string org = null, System.Collections.Generic.IEnumerable<string> street = null, string city = null, string state = null, string postal = null, string country = null, string phone = null, string fax = null, string email = null) { throw null; }
@@ -2684,10 +2670,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.EntityEdges EntityEdges(string targetEntityId = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EntityExpandResponseValue EntityExpandResponseValue(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntity> entities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.EntityEdges> edges = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EntityExpandResult EntityExpandResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ExpansionResultAggregation> metaDataAggregations = null, Azure.ResourceManager.SecurityInsights.Models.EntityExpandResponseValue value = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.EntityGetInsightsContent EntityGetInsightsContent(System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset endOn = default(System.DateTimeOffset), bool? addDefaultExtendedTimeRange = default(bool?), System.Collections.Generic.IEnumerable<System.Guid> insightQueryIds = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.EntityGetInsightsContent EntityGetInsightsContent(System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset endOn = default(System.DateTimeOffset), bool? isDefaultExtendedTimeRangeAdded = default(bool?), System.Collections.Generic.IEnumerable<System.Guid> insightQueryIds = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EntityInsightItem EntityInsightItem(string queryId = null, Azure.ResourceManager.SecurityInsights.Models.EntityInsightItemQueryTimeInterval queryTimeInterval = null, Azure.ResourceManager.SecurityInsights.Models.InsightsTableResult tableQueryResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.InsightsTableResult> chartQueryResults = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EntityInsightItemQueryTimeInterval EntityInsightItemQueryTimeInterval(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody EntityManualTriggerRequestBody(string incidentArmId = null, System.Guid? tenantId = default(System.Guid?), string logicAppsResourceId = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent EntityManualTriggerRequestContent(Azure.Core.ResourceIdentifier incidentArmId = null, System.Guid? tenantId = default(System.Guid?), Azure.Core.ResourceIdentifier logicAppsResourceId = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EntityQueryCreateOrUpdateContent EntityQueryCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.EntityQueryData EntityQueryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EntityQueryItem EntityQueryItem(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null) { throw null; }
@@ -2698,27 +2684,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.ExpansionEntityQuery ExpansionEntityQuery(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> dataSources = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.EntityType? inputEntityType = default(Azure.ResourceManager.SecurityInsights.Models.EntityType?), System.Collections.Generic.IEnumerable<string> inputFields = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.EntityType> outputEntityTypes = null, string queryTemplate = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ExpansionResultAggregation ExpansionResultAggregation(string aggregationType = null, int count = 0, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind entityKind = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EyesOn EyesOn(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), bool? isEnabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.FileImportData FileImportData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SecurityInsights.Models.IngestionMode? ingestionMode = default(Azure.ResourceManager.SecurityInsights.Models.IngestionMode?), Azure.ResourceManager.SecurityInsights.Models.FileImportContentType? contentType = default(Azure.ResourceManager.SecurityInsights.Models.FileImportContentType?), System.DateTimeOffset? createdTimeUTC = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.FileMetadata errorFile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ValidationError> errorsPreview = null, Azure.ResourceManager.SecurityInsights.Models.FileMetadata importFile = null, int? ingestedRecordCount = default(int?), string source = null, Azure.ResourceManager.SecurityInsights.Models.FileImportState? state = default(Azure.ResourceManager.SecurityInsights.Models.FileImportState?), int? totalRecordCount = default(int?), int? validRecordCount = default(int?), System.DateTimeOffset? filesValidUntilTimeUTC = default(System.DateTimeOffset?), System.DateTimeOffset? importValidUntilTimeUTC = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.FileImportData FileImportData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SecurityInsights.Models.IngestionMode? ingestionMode = default(Azure.ResourceManager.SecurityInsights.Models.IngestionMode?), Azure.ResourceManager.SecurityInsights.Models.FileImportContentType? contentType = default(Azure.ResourceManager.SecurityInsights.Models.FileImportContentType?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.FileMetadata errorFile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ValidationError> errorsPreview = null, Azure.ResourceManager.SecurityInsights.Models.FileMetadata importFile = null, int? ingestedRecordCount = default(int?), string source = null, Azure.ResourceManager.SecurityInsights.Models.FileImportState? state = default(Azure.ResourceManager.SecurityInsights.Models.FileImportState?), int? totalRecordCount = default(int?), int? validRecordCount = default(int?), System.DateTimeOffset? filesValidUntil = default(System.DateTimeOffset?), System.DateTimeOffset? importValidUntil = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.FileMetadata FileMetadata(Azure.ResourceManager.SecurityInsights.Models.FileFormat? fileFormat = default(Azure.ResourceManager.SecurityInsights.Models.FileFormat?), string fileName = null, int? fileSize = default(int?), System.Uri fileContentUri = null, Azure.ResourceManager.SecurityInsights.Models.DeleteStatus? deleteStatus = default(Azure.ResourceManager.SecurityInsights.Models.DeleteStatus?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.FusionSourceSubTypeSetting FusionSourceSubTypeSetting(bool enabled = false, string sourceSubTypeName = null, string sourceSubTypeDisplayName = null, Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFilter severityFilters = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.FusionSourceSubTypeSetting FusionSourceSubTypeSetting(bool isEnabled = false, string sourceSubTypeName = null, string sourceSubTypeDisplayName = null, Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFilter severityFilters = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFilter FusionSubTypeSeverityFilter(bool? isSupported = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFiltersItem> filters = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.FusionTemplateSourceSubType FusionTemplateSourceSubType(string sourceSubTypeName = null, string sourceSubTypeDisplayName = null, Azure.ResourceManager.SecurityInsights.Models.FusionTemplateSubTypeSeverityFilter severityFilter = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.GCPDataConnector GCPDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string connectorDefinitionName = null, Azure.ResourceManager.SecurityInsights.Models.GCPAuthProperties auth = null, Azure.ResourceManager.SecurityInsights.Models.GCPRequestProperties request = null, Azure.ResourceManager.SecurityInsights.Models.DCRConfiguration dcrConfig = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Identity Identity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedTimeUtc = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedDateTimeUtc = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.IncidentTaskData IncidentTaskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string description = null, Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus status = default(Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus), System.DateTimeOffset? createdTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedTimeUtc = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsClientInfo createdBy = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsClientInfo lastModifiedBy = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Indicator Indicator(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedTimeUtc = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedDateTimeUtc = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.IndicatorObservablesItem> observables = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.IncidentTaskData IncidentTaskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string description = null, Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus status = default(Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsClientInfo createdBy = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsClientInfo lastModifiedBy = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.InsightQueryItem InsightQueryItem(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemProperties properties = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemProperties InsightQueryItemProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.EntityQueryItemPropertiesDataTypesItem> dataTypes = null, Azure.ResourceManager.SecurityInsights.Models.EntityType? inputEntityType = default(Azure.ResourceManager.SecurityInsights.Models.EntityType?), System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> requiredInputFieldsSets = null, System.BinaryData entitiesFilter = null, string displayName = null, string description = null, string baseQuery = null, Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQuery tableQuery = null, System.BinaryData chartQuery = null, Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesAdditionalQuery additionalQuery = null, Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesDefaultTimeRange defaultTimeRange = null, string beforeRange = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesAdditionalQuery InsightQueryItemPropertiesAdditionalQuery(string query = null, string text = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesDefaultTimeRange InsightQueryItemPropertiesDefaultTimeRange(string beforeRange = null, string afterRange = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQuery InsightQueryItemPropertiesTableQuery(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem> columnsDefinitions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem> queriesDefinitions = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem(string header = null, Azure.ResourceManager.SecurityInsights.Models.OutputType? outputType = default(Azure.ResourceManager.SecurityInsights.Models.OutputType?), bool? supportDeepLink = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem(string header = null, Azure.ResourceManager.SecurityInsights.Models.OutputType? outputType = default(Azure.ResourceManager.SecurityInsights.Models.OutputType?), bool? isDeepLinkSupported = default(bool?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem(string filter = null, string summarize = null, string project = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem> linkColumnsDefinitions = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem(string projectedName = null, string query = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.InsightsTableResult InsightsTableResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.InsightsTableResultColumnsItem> columns = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> rows = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.InsightsTableResultColumnsItem InsightsTableResultColumnsItem(string insightsTableResultColumnsItemType = null, string name = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.IotDataConnector IotDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? alertsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?), string subscriptionId = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.JobItem JobItem(string resourceId = null, Azure.ResourceManager.SecurityInsights.Models.Status? status = default(Azure.ResourceManager.SecurityInsights.Models.Status?), System.DateTimeOffset? executionOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.Error> errors = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.JobItem JobItem(Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.SecurityInsights.Models.Status? status = default(Azure.ResourceManager.SecurityInsights.Models.Status?), System.DateTimeOffset? executionOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.PublicationFailedError> errors = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ManualTriggerRequestBody ManualTriggerRequestBody(System.Guid? tenantId = default(System.Guid?), string logicAppsResourceId = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.McasDataConnector McasDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.McasDataConnectorDataTypes dataTypes = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.MdatpDataConnector MdatpDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? alertsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
@@ -2727,35 +2711,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.MicrosoftPurviewInformationProtectionDataConnector MicrosoftPurviewInformationProtectionDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? logsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityIncidentCreationAlertRule MicrosoftSecurityIncidentCreationAlertRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> displayNamesFilter = null, System.Collections.Generic.IEnumerable<string> displayNamesExcludeFilter = null, Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName? productFilter = default(Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity> severitiesFilter = null, string alertRuleTemplateName = null, string description = null, string displayName = null, bool? isEnabled = default(bool?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? alertRulesCreatedByTemplateCount = default(int?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string description = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus?), System.Collections.Generic.IEnumerable<string> displayNamesFilter = null, System.Collections.Generic.IEnumerable<string> displayNamesExcludeFilter = null, Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName? productFilter = default(Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity> severitiesFilter = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.MLBehaviorAnalyticsAlertRule MLBehaviorAnalyticsAlertRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string alertRuleTemplateName = null, string description = null, string displayName = null, bool? enabled = default(bool?), System.DateTimeOffset? lastModifiedUtc = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.MLBehaviorAnalyticsAlertRuleTemplate MLBehaviorAnalyticsAlertRuleTemplate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? alertRulesCreatedByTemplateCount = default(int?), System.DateTimeOffset? lastUpdatedDateUTC = default(System.DateTimeOffset?), System.DateTimeOffset? createdDateUTC = default(System.DateTimeOffset?), string description = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.MLBehaviorAnalyticsAlertRule MLBehaviorAnalyticsAlertRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string alertRuleTemplateName = null, string description = null, string displayName = null, bool? isEnabled = default(bool?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.MLBehaviorAnalyticsAlertRuleTemplate MLBehaviorAnalyticsAlertRuleTemplate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? alertRulesCreatedByTemplateCount = default(int?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string description = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.MstiDataConnector MstiDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed microsoftEmergingThreatFeed = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.MTPDataConnector MTPDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.MtpProvider> filteredProvidersAlerts = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? incidentsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? alertsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.NicEntity NicEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, string macAddress = null, string ipAddressEntityId = null, System.Collections.Generic.IEnumerable<string> vlans = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.NrtAlertRule NrtAlertRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string alertRuleTemplateName = null, string templateVersion = null, string description = null, string query = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null, string displayName = null, bool? enabled = default(bool?), System.DateTimeOffset? lastModifiedUtc = default(System.DateTimeOffset?), System.TimeSpan? suppressionDuration = default(System.TimeSpan?), bool? suppressionEnabled = default(bool?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentConfiguration incidentConfiguration = null, System.Collections.Generic.IDictionary<string, string> customDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind = default(Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> sentinelEntitiesMappings = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.NrtAlertRuleTemplate NrtAlertRuleTemplate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? alertRulesCreatedByTemplateCount = default(int?), System.DateTimeOffset? lastUpdatedDateUTC = default(System.DateTimeOffset?), System.DateTimeOffset? createdDateUTC = default(System.DateTimeOffset?), string description = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, string query = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), string version = null, System.Collections.Generic.IDictionary<string, string> customDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind = default(Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> sentinelEntitiesMappings = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.NrtAlertRule NrtAlertRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string alertRuleTemplateName = null, string templateVersion = null, string description = null, string query = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null, string displayName = null, bool? isEnabled = default(bool?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.TimeSpan? suppressionDuration = default(System.TimeSpan?), bool? isSuppressionEnabled = default(bool?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentConfiguration incidentConfiguration = null, System.Collections.Generic.IDictionary<string, string> customDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind = default(Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> sentinelEntitiesMappings = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.NrtAlertRuleTemplate NrtAlertRuleTemplate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? alertRulesCreatedByTemplateCount = default(int?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string description = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, string query = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), string version = null, System.Collections.Generic.IDictionary<string, string> customDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind = default(Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> sentinelEntitiesMappings = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.Office365ProjectDataConnector Office365ProjectDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? logsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.OfficeATPDataConnector OfficeATPDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? alertsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.OfficeConsentData OfficeConsentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? tenantId = default(System.Guid?), string consentId = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.OfficeIRMDataConnector OfficeIRMDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? alertsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.OfficePowerBIDataConnector OfficePowerBIDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? logsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.PackageModelData PackageModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string contentId = null, string contentProductId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string contentSchemaVersion = null, Azure.ResourceManager.SecurityInsights.Models.Flag? isNew = default(Azure.ResourceManager.SecurityInsights.Models.Flag?), Azure.ResourceManager.SecurityInsights.Models.Flag? isPreview = default(Azure.ResourceManager.SecurityInsights.Models.Flag?), Azure.ResourceManager.SecurityInsights.Models.Flag? isFeatured = default(Azure.ResourceManager.SecurityInsights.Models.Flag?), Azure.ResourceManager.SecurityInsights.Models.Flag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.Flag?), string version = null, string displayName = null, string description = null, string publisherDisplayName = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, string icon = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.ProductPackageModelData ProductPackageModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string contentId = null, string contentProductId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string contentSchemaVersion = null, Azure.ResourceManager.SecurityInsights.Models.Flag? isNew = default(Azure.ResourceManager.SecurityInsights.Models.Flag?), Azure.ResourceManager.SecurityInsights.Models.Flag? isPreview = default(Azure.ResourceManager.SecurityInsights.Models.Flag?), Azure.ResourceManager.SecurityInsights.Models.Flag? isFeatured = default(Azure.ResourceManager.SecurityInsights.Models.Flag?), Azure.ResourceManager.SecurityInsights.Models.Flag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.Flag?), string version = null, string displayName = null, string description = null, string publisherDisplayName = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, string icon = null, string installedVersion = null, Azure.Core.ResourceIdentifier metadataResourceId = null, System.BinaryData packagedContent = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.ProductTemplateModelData ProductTemplateModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind?), Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), string customVersion = null, string contentSchemaVersion = null, string icon = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, System.Collections.Generic.IEnumerable<string> previewImages = null, System.Collections.Generic.IEnumerable<string> previewImagesDark = null, string packageId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? packageKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string packageName = null, Azure.ResourceManager.SecurityInsights.Models.Flag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.Flag?), System.BinaryData packagedContent = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.PullRequestInfo PullRequestInfo(System.Uri uri = null, Azure.ResourceManager.SecurityInsights.Models.State? state = default(Azure.ResourceManager.SecurityInsights.Models.State?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.ReevaluateResult ReevaluateResult(System.DateTimeOffset? lastEvaluatedTimeUtc = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Relationship Relationship(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedTimeUtc = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedDateTimeUtc = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.PackageModelData PackageModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string contentId = null, string contentProductId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string contentSchemaVersion = null, Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isNew = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?), Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isPreview = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?), Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isFeatured = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?), Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?), string version = null, string displayName = null, string description = null, string publisherDisplayName = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, string icon = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.ProductPackageModelData ProductPackageModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string contentId = null, string contentProductId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string contentSchemaVersion = null, Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isNew = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?), Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isPreview = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?), Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isFeatured = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?), Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?), string version = null, string displayName = null, string description = null, string publisherDisplayName = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, string icon = null, string installedVersion = null, Azure.Core.ResourceIdentifier metadataResourceId = null, System.BinaryData packagedContent = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.ProductTemplateModelData ProductTemplateModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind?), Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), string customVersion = null, string contentSchemaVersion = null, string icon = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, System.Collections.Generic.IEnumerable<string> previewImages = null, System.Collections.Generic.IEnumerable<string> previewImagesDark = null, string packageId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? packageKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string packageName = null, Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?), System.BinaryData packagedContent = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.PullRequestInfo PullRequestInfo(System.Uri uri = null, Azure.ResourceManager.SecurityInsights.Models.RecommendationState? state = default(Azure.ResourceManager.SecurityInsights.Models.RecommendationState?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ReevaluateResult ReevaluateResult(System.DateTimeOffset? lastEvaluatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.RelationshipHint RelationshipHint(string fieldName = null, string source = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Repo Repo(System.Uri uri = null, string fullName = null, long? installationId = default(long?), System.Collections.Generic.IEnumerable<string> branches = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Repository Repository(System.Uri uri = null, string branch = null, System.Uri displayUri = null, System.Uri deploymentLogsUri = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessProperties RepositoryAccessProperties(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessKind kind = default(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessKind), string code = null, string state = null, string clientId = null, string token = null, string installationId = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.RepositoryResourceInfo RepositoryResourceInfo(Azure.ResourceManager.SecurityInsights.Models.Webhook webhook = null, string gitHubResourceInfoAppInstallationId = null, Azure.ResourceManager.SecurityInsights.Models.AzureDevOpsResourceInfo azureDevOpsResourceInfo = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.RepositoryResourceInfo RepositoryResourceInfo(Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook webhook = null, string gitHubResourceInfoAppInstallationId = null, Azure.ResourceManager.SecurityInsights.Models.AzureDevOpsResourceInfo azureDevOpsResourceInfo = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ResponseWarning ResponseWarning(Azure.ResourceManager.SecurityInsights.Models.WarningBody warning = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerDataConnector RestApiPollerDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string connectorDefinitionName = null, Azure.ResourceManager.SecurityInsights.Models.CcpAuthConfig auth = null, Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestConfig request = null, Azure.ResourceManager.SecurityInsights.Models.DCRConfiguration dcrConfig = null, bool? isActive = default(bool?), string dataType = null, Azure.ResourceManager.SecurityInsights.Models.CcpResponseConfig response = null, Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingConfig paging = null, System.Collections.Generic.IDictionary<string, string> addOnAttributes = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SapSolutionUsageStatistic SapSolutionUsageStatistic(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), long? activeSystemIdCount = default(long?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ScheduledAlertRuleTemplate ScheduledAlertRuleTemplate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? alertRulesCreatedByTemplateCount = default(int?), System.DateTimeOffset? createdDateUTC = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedDateUTC = default(System.DateTimeOffset?), string description = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus?), string query = null, System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator? triggerOperator = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator?), int? triggerThreshold = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null, string version = null, Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind = default(Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind?), System.Collections.Generic.IDictionary<string, string> customDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> sentinelEntitiesMappings = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.ScheduledAlertRuleTemplate ScheduledAlertRuleTemplate(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, int? alertRulesCreatedByTemplateCount, System.DateTimeOffset? createdDateUTC, System.DateTimeOffset? lastUpdatedDateUTC, string description, string displayName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status, string query, System.TimeSpan? queryFrequency, System.TimeSpan? queryPeriod, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics, System.Collections.Generic.IEnumerable<string> techniques, string version, Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind, System.Collections.Generic.IDictionary<string, string> customDetails, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.SecurityAlertTimelineItem SecurityAlertTimelineItem(string azureResourceId = null, string productName = null, string description = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity), System.DateTimeOffset endTimeUtc = default(System.DateTimeOffset), System.DateTimeOffset startTimeUtc = default(System.DateTimeOffset), System.DateTimeOffset timeGenerated = default(System.DateTimeOffset), string alertType = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent? intent = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent?), System.Collections.Generic.IEnumerable<string> techniques = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SecurityAlertTimelineItem SecurityAlertTimelineItem(Azure.Core.ResourceIdentifier azureResourceId = null, string productName = null, string description = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity), System.DateTimeOffset endOn = default(System.DateTimeOffset), System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset generatedOn = default(System.DateTimeOffset), string alertType = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent? intent = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent?), System.Collections.Generic.IEnumerable<string> techniques = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAadDataConnector SecurityInsightsAadDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? alertsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAatpDataConnector SecurityInsightsAatpDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? alertsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAccountEntity SecurityInsightsAccountEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, string aadTenantId = null, string aadUserId = null, string accountName = null, string displayName = null, string hostEntityId = null, bool? isDomainJoined = default(bool?), string ntDomain = null, System.Guid? objectGuid = default(System.Guid?), string puid = null, string sid = null, string upnSuffix = null, string dnsDomain = null) { throw null; }
@@ -2791,9 +2773,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsGroupEntity SecurityInsightsGroupEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, string distinguishedName = null, System.Guid? objectGuid = default(System.Guid?), string sid = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHostEntity SecurityInsightsHostEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, Azure.Core.ResourceIdentifier azureId = null, string dnsDomain = null, string hostName = null, bool? isDomainJoined = default(bool?), string netBiosName = null, string ntDomain = null, string omsAgentId = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHostOSFamily? osFamily = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHostOSFamily?), string osVersion = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsHuntCommentData SecurityInsightsHuntCommentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string message = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.SecurityInsightsHuntData SecurityInsightsHuntData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, Azure.ResourceManager.SecurityInsights.Models.Status? status = default(Azure.ResourceManager.SecurityInsights.Models.Status?), Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus? hypothesisStatus = default(Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> attackTactics = null, System.Collections.Generic.IEnumerable<string> attackTechniques = null, System.Collections.Generic.IEnumerable<string> labels = null, Azure.ResourceManager.SecurityInsights.Models.HuntOwner owner = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.SecurityInsightsHuntData SecurityInsightsHuntData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, Azure.ResourceManager.SecurityInsights.Models.Status? status = default(Azure.ResourceManager.SecurityInsights.Models.Status?), Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus? hypothesisStatus = default(Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> attackTactics = null, System.Collections.Generic.IEnumerable<string> attackTechniques = null, System.Collections.Generic.IEnumerable<string> labels = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner owner = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntingBookmark SecurityInsightsHuntingBookmark(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy = null, string displayName = null, System.DateTimeOffset? eventOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> labels = null, string notes = null, string query = null, string queryResult = null, System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo updatedBy = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsBookmarkIncidentInfo incidentInfo = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.SecurityInsightsHuntRelationData SecurityInsightsHuntRelationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string relatedResourceId = null, string relatedResourceName = null, string relationType = null, string relatedResourceKind = null, System.Collections.Generic.IEnumerable<string> labels = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.SecurityInsightsHuntRelationData SecurityInsightsHuntRelationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier relatedResourceId = null, string relatedResourceName = null, string relationType = null, string relatedResourceKind = null, System.Collections.Generic.IEnumerable<string> labels = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentAdditionalInfo SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, System.Collections.Generic.IEnumerable<string> alertProductNames, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentAdditionalInfo SecurityInsightsIncidentAdditionalInfo(int? alertsCount = default(int?), int? bookmarksCount = default(int?), int? commentsCount = default(int?), System.Collections.Generic.IEnumerable<string> alertProductNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Uri providerIncidentUri = null) { throw null; }
@@ -2820,13 +2802,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMalwareEntity SecurityInsightsMalwareEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, string category = null, System.Collections.Generic.IEnumerable<string> fileEntityIds = null, string malwareName = null, System.Collections.Generic.IEnumerable<string> processEntityIds = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsOfficeDataConnector SecurityInsightsOfficeDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsOfficeDataConnectorDataTypes dataTypes = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsProcessEntity SecurityInsightsProcessEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, string accountEntityId = null, string commandLine = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsProcessElevationToken? elevationToken = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsProcessElevationToken?), string hostEntityId = null, string hostLogonSessionEntityId = null, string imageFileEntityId = null, string parentProcessEntityId = null, string processId = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.SecurityInsightsRecommendationData SecurityInsightsRecommendationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string recommendationTypeId = null, Azure.ResourceManager.SecurityInsights.Models.State? state = default(Azure.ResourceManager.SecurityInsights.Models.State?), string title = null, string description = null, System.DateTimeOffset? creationTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastEvaluatedTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedTimeUtc = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RecommendedSuggestion> suggestions = null, string resourceId = null, System.Collections.Generic.IDictionary<string, string> additionalProperties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.SecurityInsightsRecommendationData SecurityInsightsRecommendationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string recommendationTypeId = null, Azure.ResourceManager.SecurityInsights.Models.RecommendationState? state = default(Azure.ResourceManager.SecurityInsights.Models.RecommendationState?), string title = null, string description = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastEvaluatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RecommendedSuggestion> suggestions = null, string resourceId = null, System.Collections.Generic.IDictionary<string, string> additionalProperties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryKeyEntity SecurityInsightsRegistryKeyEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryHive? hive = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryHive?), string key = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueEntity SecurityInsightsRegistryValueEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, string keyEntityId = null, string valueData = null, string valueName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueKind? valueType = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueKind?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsScheduledAlertRule SecurityInsightsScheduledAlertRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string query = null, System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator? triggerOperator = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator?), int? triggerThreshold = default(int?), Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind = default(Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind?), System.Collections.Generic.IDictionary<string, string> customDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> sentinelEntitiesMappings = null, string alertRuleTemplateName = null, string templateVersion = null, string description = null, string displayName = null, bool? isEnabled = default(bool?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.TimeSpan? suppressionDuration = default(System.TimeSpan?), bool? isSuppressionEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentConfiguration incidentConfiguration = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsScheduledAlertRule SecurityInsightsScheduledAlertRule(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, string query, System.TimeSpan? queryFrequency, System.TimeSpan? queryPeriod, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind, System.Collections.Generic.IDictionary<string, string> customDetails, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride, string alertRuleTemplateName, string templateVersion, string description, string displayName, bool? isEnabled, System.DateTimeOffset? lastModifiedOn, System.TimeSpan? suppressionDuration, bool? isSuppressionEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics, System.Collections.Generic.IEnumerable<string> techniques, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentConfiguration incidentConfiguration) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData SecurityInsightsSentinelOnboardingStateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isCustomerManagedKeySet = default(bool?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind SecurityInsightsSettingAnomaliesKind(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), bool? isEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData SecurityInsightsSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSubmissionMailEntity SecurityInsightsSubmissionMailEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, System.Guid? networkMessageId = default(System.Guid?), System.Guid? submissionId = default(System.Guid?), string submitter = null, System.DateTimeOffset? submitOn = default(System.DateTimeOffset?), System.DateTimeOffset? messageReceivedOn = default(System.DateTimeOffset?), string recipient = null, string sender = null, System.Net.IPAddress senderIP = null, string subject = null, string reportType = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsThreatIntelligence SecurityInsightsThreatIntelligence(double? confidence = default(double?), string providerName = null, string reportLink = null, string threatDescription = null, string threatName = null, string threatType = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData SecurityInsightsThreatIntelligenceIndicatorBaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -2841,32 +2825,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string watchlistItemType = null, string watchlistItemId = null, System.Guid? tenantId = default(System.Guid?), bool? isDeleted = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo updatedBy = null, System.BinaryData itemsKeyValue = null, System.BinaryData entityMapping = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string watchlistItemType = null, string watchlistItemId = null, System.Guid? tenantId = default(System.Guid?), bool? isDeleted = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo updatedBy = null, System.Collections.Generic.IDictionary<string, System.BinaryData> itemsKeyValueDictionary = null, System.Collections.Generic.IDictionary<string, System.BinaryData> entityMappingDictionary = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData SecurityMLAnalyticsSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal ServicePrincipal(string id = null, System.Guid? tenantId = default(System.Guid?), string appId = null, System.DateTimeOffset? credentialsExpireOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.SettingData SettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.SourceControlData SourceControlData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string idPropertiesId = null, Azure.ResourceManager.SecurityInsights.Models.Version? version = default(Azure.ResourceManager.SecurityInsights.Models.Version?), string displayName = null, string description = null, Azure.ResourceManager.SecurityInsights.Models.RepoType repoType = default(Azure.ResourceManager.SecurityInsights.Models.RepoType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ContentType> contentTypes = null, Azure.ResourceManager.SecurityInsights.Models.Repository repository = null, Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal servicePrincipal = null, Azure.ResourceManager.SecurityInsights.Models.RepositoryAccess repositoryAccess = null, Azure.ResourceManager.SecurityInsights.Models.RepositoryResourceInfo repositoryResourceInfo = null, Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo lastDeploymentInfo = null, Azure.ResourceManager.SecurityInsights.Models.PullRequestInfo pullRequest = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.SourceControlData SourceControlData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? sourceControlId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion? version = default(Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion?), string displayName = null, string description = null, Azure.ResourceManager.SecurityInsights.Models.RepoType repoType = default(Azure.ResourceManager.SecurityInsights.Models.RepoType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ContentType> contentTypes = null, Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository repository = null, Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal servicePrincipal = null, Azure.ResourceManager.SecurityInsights.Models.RepositoryAccess repositoryAccess = null, Azure.ResourceManager.SecurityInsights.Models.RepositoryResourceInfo repositoryResourceInfo = null, Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo lastDeploymentInfo = null, Azure.ResourceManager.SecurityInsights.Models.PullRequestInfo pullRequest = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment SourceControlDeployment(string deploymentId = null, Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState? deploymentState = default(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState?), Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult? deploymentResult = default(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult?), System.DateTimeOffset? deploymentOn = default(System.DateTimeOffset?), System.Uri deploymentLogsUri = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo SourceControlDeploymentInfo(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus? deploymentFetchStatus = default(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus?), Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment deployment = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo SourceControlRepo(System.Uri uri = null, string fullName = null, long? installationId = default(long?), System.Collections.Generic.IEnumerable<string> branches = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository SourceControlRepository(System.Uri uri = null, string branch = null, System.Uri displayUri = null, System.Uri deploymentLogsUri = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal SourceControlServicePrincipal(string id = null, System.Guid? tenantId = default(System.Guid?), string appId = null, System.DateTimeOffset? credentialsExpireOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook SourceControlWebhook(string webhookId = null, System.Uri webhookUri = null, System.DateTimeOffset? webhookSecretUpdateOn = default(System.DateTimeOffset?), bool? isWebhookSecretRotated = default(bool?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.TeamInformation TeamInformation(string teamId = null, System.Uri primaryChannelUri = null, System.DateTimeOffset? teamCreationTimeUtc = default(System.DateTimeOffset?), string name = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.TemplateBaseProperties TemplateBaseProperties(string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind?), Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), string customVersion = null, string contentSchemaVersion = null, string icon = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, System.Collections.Generic.IEnumerable<string> previewImages = null, System.Collections.Generic.IEnumerable<string> previewImagesDark = null, string packageId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? packageKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string packageName = null, Azure.ResourceManager.SecurityInsights.Models.Flag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.Flag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.TemplateModelData TemplateModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind?), Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), string customVersion = null, string contentSchemaVersion = null, string icon = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, System.Collections.Generic.IEnumerable<string> previewImages = null, System.Collections.Generic.IEnumerable<string> previewImagesDark = null, string packageId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? packageKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string packageName = null, Azure.ResourceManager.SecurityInsights.Models.Flag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.Flag?), System.BinaryData mainTemplate = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.TemplateProperties> dependantTemplates = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.TemplateProperties TemplateProperties(string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind?), Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), string customVersion = null, string contentSchemaVersion = null, string icon = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, System.Collections.Generic.IEnumerable<string> previewImages = null, System.Collections.Generic.IEnumerable<string> previewImagesDark = null, string packageId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? packageKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string packageName = null, Azure.ResourceManager.SecurityInsights.Models.Flag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.Flag?), System.BinaryData mainTemplate = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.TemplateProperties> dependantTemplates = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.ThreatActor ThreatActor(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedTimeUtc = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedDateTimeUtc = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceAlertRule ThreatIntelligenceAlertRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string alertRuleTemplateName = null, string description = null, string displayName = null, bool? enabled = default(bool?), System.DateTimeOffset? lastModifiedUtc = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceAlertRuleTemplate ThreatIntelligenceAlertRuleTemplate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? alertRulesCreatedByTemplateCount = default(int?), System.DateTimeOffset? lastUpdatedDateUTC = default(System.DateTimeOffset?), System.DateTimeOffset? createdDateUTC = default(System.DateTimeOffset?), string description = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.TemplateBaseProperties TemplateBaseProperties(string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind?), Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), string customVersion = null, string contentSchemaVersion = null, string icon = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, System.Collections.Generic.IEnumerable<string> previewImages = null, System.Collections.Generic.IEnumerable<string> previewImagesDark = null, string packageId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? packageKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string packageName = null, Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.TemplateModelData TemplateModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind?), Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), string customVersion = null, string contentSchemaVersion = null, string icon = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, System.Collections.Generic.IEnumerable<string> previewImages = null, System.Collections.Generic.IEnumerable<string> previewImagesDark = null, string packageId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? packageKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string packageName = null, Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?), System.BinaryData mainTemplate = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.TemplateProperties> dependantTemplates = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.TemplateProperties TemplateProperties(string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind? contentKind = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind?), Azure.ResourceManager.SecurityInsights.Models.MetadataSource source = null, Azure.ResourceManager.SecurityInsights.Models.MetadataAuthor author = null, Azure.ResourceManager.SecurityInsights.Models.MetadataSupport support = null, Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies dependencies = null, Azure.ResourceManager.SecurityInsights.Models.MetadataCategories categories = null, System.Collections.Generic.IEnumerable<string> providers = null, System.DateTimeOffset? firstPublishOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastPublishOn = default(System.DateTimeOffset?), string customVersion = null, string contentSchemaVersion = null, string icon = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTactics = null, System.Collections.Generic.IEnumerable<string> threatAnalysisTechniques = null, System.Collections.Generic.IEnumerable<string> previewImages = null, System.Collections.Generic.IEnumerable<string> previewImagesDark = null, string packageId = null, Azure.ResourceManager.SecurityInsights.Models.PackageKind? packageKind = default(Azure.ResourceManager.SecurityInsights.Models.PackageKind?), string packageName = null, Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? isDeprecated = default(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag?), System.BinaryData mainTemplate = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.TemplateProperties> dependantTemplates = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceAlertRule ThreatIntelligenceAlertRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string alertRuleTemplateName = null, string description = null, string displayName = null, bool? isEnabled = default(bool?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceAlertRuleTemplate ThreatIntelligenceAlertRuleTemplate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? alertRulesCreatedByTemplateCount = default(int?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string description = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceCount ThreatIntelligenceCount(int count = 0) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceMetric ThreatIntelligenceMetric(string lastUpdatedOn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceMetricEntity> threatTypeMetrics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceMetricEntity> patternTypeMetrics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceMetricEntity> sourceMetrics = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceMetricEntity ThreatIntelligenceMetricEntity(string metricName = null, int? metricValue = default(int?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceMetrics ThreatIntelligenceMetrics(Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceMetric properties = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo ThreatIntelligenceUserInfo(System.Guid? objectId = default(System.Guid?), string email = null, string name = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.TIObject TIObject(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedTimeUtc = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedDateTimeUtc = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.TIObject TIObject(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedOn = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.TiObjectKindAttackPattern TiObjectKindAttackPattern(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedOn = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIdentity TiObjectKindIdentity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedOn = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIndicator TiObjectKindIndicator(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedOn = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.IndicatorObservablesItem> observables = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.TiObjectKindRelationship TiObjectKindRelationship(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedOn = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.TiObjectKindThreatActor TiObjectKindThreatActor(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> data = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo createdBy = null, string source = null, System.DateTimeOffset? firstIngestedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastIngestedOn = default(System.DateTimeOffset?), System.Guid? ingestionRulesVersion = default(System.Guid?), string lastUpdateMethod = null, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo lastModifiedBy = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> relationshipHints = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.TiTaxiiDataConnector TiTaxiiDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), string workspaceId = null, string friendlyName = null, string taxiiServer = null, string collectionId = null, string userName = null, string password = null, System.DateTimeOffset? taxiiLookbackPeriod = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.PollingFrequency? pollingFrequency = default(Azure.ResourceManager.SecurityInsights.Models.PollingFrequency?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? taxiiClientState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.TriggeredAnalyticsRuleRunData TriggeredAnalyticsRuleRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset executionTimeUtc = default(System.DateTimeOffset), string ruleId = null, string triggeredAnalyticsRuleRunId = null, Azure.ResourceManager.SecurityInsights.Models.ProvisioningState provisioningState = default(Azure.ResourceManager.SecurityInsights.Models.ProvisioningState), System.Collections.Generic.IDictionary<string, System.BinaryData> ruleRunAdditionalData = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Ueba Ueba(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.UebaDataSource> dataSources = null) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.TriggeredAnalyticsRuleRunData TriggeredAnalyticsRuleRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset executeOn = default(System.DateTimeOffset), string ruleId = null, string triggeredAnalyticsRuleRunId = null, Azure.ResourceManager.SecurityInsights.Models.ProvisioningState provisioningState = default(Azure.ResourceManager.SecurityInsights.Models.ProvisioningState), System.Collections.Generic.IDictionary<string, System.BinaryData> ruleRunAdditionalData = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.UebaSettings UebaSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.UebaDataSource> dataSources = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ValidationError ValidationError(int? recordIndex = default(int?), System.Collections.Generic.IEnumerable<string> errorMessages = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Warning Warning(Azure.ResourceManager.SecurityInsights.Models.WarningBody warningValue = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.WarningBody WarningBody(Azure.ResourceManager.SecurityInsights.Models.WarningCode? code = default(Azure.ResourceManager.SecurityInsights.Models.WarningCode?), string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.WarningBody> details = null) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Webhook Webhook(string webhookId = null, System.Uri webhookUri = null, System.DateTimeOffset? webhookSecretUpdateOn = default(System.DateTimeOffset?), bool? rotateWebhookSecret = default(bool?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.WorkspaceEnrichmentIPGeodata WorkspaceEnrichmentIPGeodata(string asn = null, string carrier = null, string city = null, int? cityConfidenceFactor = default(int?), string continent = null, string country = null, int? countryConfidenceFactor = default(int?), string ipAddr = null, string ipRoutingType = null, string latitude = null, string longitude = null, string organization = null, string organizationType = null, string region = null, string state = null, int? stateConfidenceFactor = default(int?), string stateCode = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.WorkspaceManagerAssignmentData WorkspaceManagerAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string targetResourceName = null, System.DateTimeOffset? lastJobEndOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.ProvisioningState? lastJobProvisioningState = default(Azure.ResourceManager.SecurityInsights.Models.ProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AssignmentItem> items = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.WorkspaceManagerConfigurationData WorkspaceManagerConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SecurityInsights.Models.Mode? mode = default(Azure.ResourceManager.SecurityInsights.Models.Mode?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.WorkspaceManagerConfigurationData WorkspaceManagerConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode? mode = default(Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.WorkspaceManagerGroupData WorkspaceManagerGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string displayName = null, System.Collections.Generic.IEnumerable<string> memberResourceNames = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.WorkspaceManagerMemberData WorkspaceManagerMemberData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string targetWorkspaceResourceId = null, string targetWorkspaceTenantId = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
     }
@@ -2883,21 +2873,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class AssignmentItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AssignmentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AssignmentItem>
     {
         public AssignmentItem() { }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.Models.AssignmentItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AssignmentItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AssignmentItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.AssignmentItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AssignmentItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AssignmentItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AssignmentItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AttackPattern : Azure.ResourceManager.SecurityInsights.Models.TIObject, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AttackPattern>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AttackPattern>
-    {
-        public AttackPattern() { }
-        Azure.ResourceManager.SecurityInsights.Models.AttackPattern System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AttackPattern>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AttackPattern>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.AttackPattern System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AttackPattern>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AttackPattern>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AttackPattern>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationRuleAddIncidentTaskAction : Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAutomationRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AutomationRuleAddIncidentTaskAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AutomationRuleAddIncidentTaskAction>
     {
@@ -3224,33 +3205,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AutomationRuleRunPlaybookActionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AutomationRuleRunPlaybookActionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Availability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Availability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Availability>
-    {
-        public Availability() { }
-        public bool? IsPreview { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.AvailabilityStatus? Status { get { throw null; } set { } }
-        Azure.ResourceManager.SecurityInsights.Models.Availability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Availability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Availability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Availability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Availability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Availability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Availability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AvailabilityStatus : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.AvailabilityStatus>
-    {
-        private readonly int _dummyPrimitive;
-        public AvailabilityStatus(int value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.AvailabilityStatus _1 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AvailabilityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AvailabilityStatus left, Azure.ResourceManager.SecurityInsights.Models.AvailabilityStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AvailabilityStatus (int value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.AvailabilityStatus left, Azure.ResourceManager.SecurityInsights.Models.AvailabilityStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class AWSAuthModel : Azure.ResourceManager.SecurityInsights.Models.CcpAuthConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.AWSAuthModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.AWSAuthModel>
     {
         public AWSAuthModel(string roleArn) { }
@@ -3363,14 +3317,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class BookmarkTimelineItem : Azure.ResourceManager.SecurityInsights.Models.EntityTimelineItem, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.BookmarkTimelineItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.BookmarkTimelineItem>
     {
         internal BookmarkTimelineItem() { }
-        public string AzureResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo CreatedBy { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public System.DateTimeOffset? EndTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.DateTimeOffset? EventOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Labels { get { throw null; } }
         public string Notes { get { throw null; } }
-        public System.DateTimeOffset? StartTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.BookmarkTimelineItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.BookmarkTimelineItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.BookmarkTimelineItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.BookmarkTimelineItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.BookmarkTimelineItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3400,13 +3354,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         public CcpResponseConfig(System.Collections.Generic.IEnumerable<string> eventsJsonPaths) { }
         public string CompressionAlgo { get { throw null; } set { } }
-        public bool? ConvertChildPropertiesToArray { get { throw null; } set { } }
         public string CsvDelimiter { get { throw null; } set { } }
         public string CsvEscape { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EventsJsonPaths { get { throw null; } }
         public string Format { get { throw null; } set { } }
         public bool? HasCsvBoundary { get { throw null; } set { } }
         public bool? HasCsvHeader { get { throw null; } set { } }
+        public bool? IsConvertChildPropertiesToArray { get { throw null; } set { } }
         public bool? IsGzipCompressed { get { throw null; } set { } }
         public string SuccessStatusJsonPath { get { throw null; } set { } }
         public string SuccessStatusValue { get { throw null; } set { } }
@@ -3415,6 +3369,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         Azure.ResourceManager.SecurityInsights.Models.CcpResponseConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CcpResponseConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CcpResponseConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CcpResponseConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClauseConnective : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.ClauseConnective>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClauseConnective(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ClauseConnective And { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ClauseConnective Or { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ClauseConnective other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ClauseConnective left, Azure.ResourceManager.SecurityInsights.Models.ClauseConnective right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ClauseConnective (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.ClauseConnective left, Azure.ResourceManager.SecurityInsights.Models.ClauseConnective right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CodelessApiPollingDataConnector : Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.CodelessApiPollingDataConnector>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CodelessApiPollingDataConnector>
     {
@@ -3517,8 +3489,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     }
     public partial class CodelessUiConnectorConfigProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigProperties>
     {
-        public CodelessUiConnectorConfigProperties(string title, string publisher, string descriptionMarkdown, string graphQueriesTableName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesGraphQueriesItem> graphQueries, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesSampleQueriesItem> sampleQueries, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesDataTypesItem> dataTypes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem> connectivityCriteria, Azure.ResourceManager.SecurityInsights.Models.Availability availability, Azure.ResourceManager.SecurityInsights.Models.Permissions permissions, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesInstructionStepsItem> instructionSteps) { }
-        public Azure.ResourceManager.SecurityInsights.Models.Availability Availability { get { throw null; } set { } }
+        public CodelessUiConnectorConfigProperties(string title, string publisher, string descriptionMarkdown, string graphQueriesTableName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesGraphQueriesItem> graphQueries, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesSampleQueriesItem> sampleQueries, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesDataTypesItem> dataTypes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem> connectivityCriteria, Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailability availability, Azure.ResourceManager.SecurityInsights.Models.ConnectorPermissions permissions, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesInstructionStepsItem> instructionSteps) { }
+        public Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailability Availability { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem> ConnectivityCriteria { get { throw null; } }
         public string CustomImage { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesDataTypesItem> DataTypes { get { throw null; } }
@@ -3526,7 +3498,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesGraphQueriesItem> GraphQueries { get { throw null; } }
         public string GraphQueriesTableName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesInstructionStepsItem> InstructionSteps { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.Permissions Permissions { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.ConnectorPermissions Permissions { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.CodelessUiConnectorConfigPropertiesSampleQueriesItem> SampleQueries { get { throw null; } }
         public string Title { get { throw null; } set { } }
@@ -3593,10 +3565,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     }
     public partial class ConditionClause : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConditionClause>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConditionClause>
     {
-        public ConditionClause(string field, Azure.ResourceManager.SecurityInsights.Models.Operator @operator, System.Collections.Generic.IEnumerable<string> values) { }
-        public Azure.ResourceManager.SecurityInsights.Models.Connective? ClauseConnective { get { throw null; } set { } }
+        public ConditionClause(string field, Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator @operator, System.Collections.Generic.IEnumerable<string> values) { }
+        public Azure.ResourceManager.SecurityInsights.Models.ClauseConnective? ClauseConnective { get { throw null; } set { } }
         public string Field { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.Operator Operator { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator Operator { get { throw null; } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.ConditionClause System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConditionClause>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConditionClause>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3604,11 +3576,53 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConditionClause>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConditionClause>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConditionClauseOperator : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConditionClauseOperator(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator AfterAbsolute { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator AfterRelative { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator ArrayContains { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator ArrayNotContains { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator BeforeAbsolute { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator BeforeRelative { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator EqualsValue { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator GreaterThan { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator GreaterThanEqual { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator IsFalse { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator IsNull { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator IsTrue { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator LessThan { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator LessThanEqual { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator NotEquals { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator OnOrAfterAbsolute { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator OnOrAfterRelative { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator OnOrBeforeAbsolute { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator OnOrBeforeRelative { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator StringContains { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator StringEndsWith { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator StringIsEmpty { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator StringNotContains { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator StringNotEndsWith { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator StringNotStartsWith { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator StringStartsWith { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator left, Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator left, Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ConditionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConditionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConditionProperties>
     {
         public ConditionProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ConditionClause> clauses) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.ConditionClause> Clauses { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.Connective? ConditionConnective { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.ClauseConnective? ConditionConnective { get { throw null; } set { } }
         public string StixObjectType { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.ConditionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConditionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConditionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3645,24 +3659,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         Azure.ResourceManager.SecurityInsights.Models.ConnectedEntity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectedEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectedEntity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectedEntity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Connective : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.Connective>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Connective(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Connective And { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Connective Or { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.Connective other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.Connective left, Azure.ResourceManager.SecurityInsights.Models.Connective right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.Connective (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.Connective left, Azure.ResourceManager.SecurityInsights.Models.Connective right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ConnectivityCriteria : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConnectivityCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectivityCriteria>
     {
@@ -3701,6 +3697,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ConnectivityType left, Azure.ResourceManager.SecurityInsights.Models.ConnectivityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ConnectivityType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.ConnectivityType left, Azure.ResourceManager.SecurityInsights.Models.ConnectivityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ConnectorAvailability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailability>
+    {
+        public ConnectorAvailability() { }
+        public bool? IsPreview { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConnectorAvailabilityStatus : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus>
+    {
+        private readonly int _dummyPrimitive;
+        public ConnectorAvailabilityStatus(int value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus _1 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus left, Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus (int value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus left, Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ConnectorDataType : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorDataType>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorDataType>
@@ -3763,6 +3786,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorInstructionModelBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorInstructionModelBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ConnectorPermissions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorPermissions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorPermissions>
+    {
+        public ConnectorPermissions() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.PermissionsCustomsItem> Customs { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.PermissionsResourceProviderItem> ResourceProvider { get { throw null; } }
+        Azure.ResourceManager.SecurityInsights.Models.ConnectorPermissions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorPermissions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorPermissions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.ConnectorPermissions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorPermissions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorPermissions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ConnectorPermissions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentType : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.ContentType>
     {
@@ -3801,8 +3835,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public CustomizableConnectorDefinitionData() { }
         public Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectionsConfig ConnectionsConfig { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectorUiConfig ConnectorUiConfig { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedTimeUtc { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedUtc { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectorDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectorDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectorDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectorDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomizableConnectorDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3841,25 +3875,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomPermissionDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomPermissionDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Customs : Azure.ResourceManager.SecurityInsights.Models.CustomsPermission, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Customs>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Customs>
-    {
-        public Customs() { }
-        Azure.ResourceManager.SecurityInsights.Models.Customs System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Customs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Customs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Customs System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Customs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Customs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Customs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomsPermission : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermission>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermission>
+    public partial class CustomsPermission : Azure.ResourceManager.SecurityInsights.Models.CustomsPermissionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermission>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermission>
     {
         public CustomsPermission() { }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.Models.CustomsPermission System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermission>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermission>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.CustomsPermission System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermission>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermission>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermission>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CustomsPermissionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermissionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermissionProperties>
+    {
+        public CustomsPermissionProperties() { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.SecurityInsights.Models.CustomsPermissionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermissionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermissionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.CustomsPermissionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermissionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermissionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.CustomsPermissionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataConnectorAuthorizationState : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState>
@@ -3879,9 +3913,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState left, Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataConnectorConnectBody : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectBody>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectBody>
+    public partial class DataConnectorConnectContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectContent>
     {
-        public DataConnectorConnectBody() { }
+        public DataConnectorConnectContent() { }
         public string ApiKey { get { throw null; } set { } }
         public string AuthorizationCode { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
@@ -3893,11 +3927,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Password { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> RequestConfigUserInputValues { get { throw null; } }
         public string UserName { get { throw null; } set { } }
-        Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectBody System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectBody System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorConnectContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataConnectorDataTypeCommon : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorDataTypeCommon>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DataConnectorDataTypeCommon>
     {
@@ -3989,90 +4023,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.DeleteStatus left, Azure.ResourceManager.SecurityInsights.Models.DeleteStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Deployment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Deployment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Deployment>
-    {
-        internal Deployment() { }
-        public string DeploymentId { get { throw null; } }
-        public System.Uri DeploymentLogsUri { get { throw null; } }
-        public System.DateTimeOffset? DeploymentOn { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.DeploymentResult? DeploymentResult { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.DeploymentState? DeploymentState { get { throw null; } }
-        Azure.ResourceManager.SecurityInsights.Models.Deployment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Deployment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Deployment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Deployment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Deployment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Deployment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Deployment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DeploymentFetchStatus : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DeploymentFetchStatus(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus NotFound { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus Success { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus Unauthorized { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus left, Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus left, Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DeploymentInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo>
-    {
-        internal DeploymentInfo() { }
-        public Azure.ResourceManager.SecurityInsights.Models.Deployment Deployment { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.DeploymentFetchStatus? DeploymentFetchStatus { get { throw null; } }
-        public string Message { get { throw null; } }
-        Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.DeploymentInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DeploymentResult : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.DeploymentResult>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DeploymentResult(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.DeploymentResult Canceled { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.DeploymentResult Failed { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.DeploymentResult Success { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.DeploymentResult other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.DeploymentResult left, Azure.ResourceManager.SecurityInsights.Models.DeploymentResult right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.DeploymentResult (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.DeploymentResult left, Azure.ResourceManager.SecurityInsights.Models.DeploymentResult right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DeploymentState : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.DeploymentState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DeploymentState(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.DeploymentState Canceling { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.DeploymentState Completed { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.DeploymentState InProgress { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.DeploymentState Queued { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.DeploymentState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.DeploymentState left, Azure.ResourceManager.SecurityInsights.Models.DeploymentState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.DeploymentState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.DeploymentState left, Azure.ResourceManager.SecurityInsights.Models.DeploymentState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeviceImportance : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.DeviceImportance>
     {
@@ -4114,15 +4064,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Dynamics365DataConnector>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Dynamics365DataConnector>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EnrichmentDomainBody : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainBody>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainBody>
+    public partial class EnrichmentDomainContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainContent>
     {
-        public EnrichmentDomainBody() { }
+        public EnrichmentDomainContent() { }
         public string Domain { get { throw null; } set { } }
-        Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainBody System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainBody System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EnrichmentDomainWhois : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainWhois>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainWhois>
     {
@@ -4252,7 +4202,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.EnrichmentType left, Azure.ResourceManager.SecurityInsights.Models.EnrichmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EntityAnalytics : Azure.ResourceManager.SecurityInsights.SettingData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityAnalytics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityAnalytics>
+    public partial class EntityAnalytics : Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityAnalytics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityAnalytics>
     {
         public EntityAnalytics() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.EntityProvider> EntityProviders { get { throw null; } }
@@ -4321,9 +4271,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class EntityGetInsightsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityGetInsightsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityGetInsightsContent>
     {
         public EntityGetInsightsContent(System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
-        public bool? AddDefaultExtendedTimeRange { get { throw null; } set { } }
         public System.DateTimeOffset EndOn { get { throw null; } }
         public System.Collections.Generic.IList<System.Guid> InsightQueryIds { get { throw null; } }
+        public bool? IsDefaultExtendedTimeRangeAdded { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.EntityGetInsightsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityGetInsightsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityGetInsightsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4372,17 +4322,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.EntityItemQueryKind left, Azure.ResourceManager.SecurityInsights.Models.EntityItemQueryKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EntityManualTriggerRequestBody : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody>
+    public partial class EntityManualTriggerRequestContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent>
     {
-        public EntityManualTriggerRequestBody(string logicAppsResourceId) { }
-        public string IncidentArmId { get { throw null; } set { } }
-        public string LogicAppsResourceId { get { throw null; } }
+        public EntityManualTriggerRequestContent(Azure.Core.ResourceIdentifier logicAppsResourceId) { }
+        public Azure.Core.ResourceIdentifier IncidentArmId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LogicAppsResourceId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } set { } }
-        Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityManualTriggerRequestContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityProvider : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.EntityProvider>
@@ -4443,6 +4393,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         Azure.ResourceManager.SecurityInsights.Models.EntityQueryItemPropertiesDataTypesItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityQueryItemPropertiesDataTypesItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityQueryItemPropertiesDataTypesItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityQueryItemPropertiesDataTypesItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EntityQueryKind : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EntityQueryKind(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind Activity { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind Expansion { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind left, Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind left, Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EntityTimelineContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EntityTimelineContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EntityTimelineContent>
     {
@@ -4525,50 +4493,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Enum21 : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.Enum21>
+    public readonly partial struct Enum22 : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.Enum22>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Enum21(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Enum21 Activity { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Enum21 Expansion { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.Enum21 other) { throw null; }
+        public Enum22(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.Enum22 Activity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.Enum22 other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.Enum21 left, Azure.ResourceManager.SecurityInsights.Models.Enum21 right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.Enum21 (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.Enum21 left, Azure.ResourceManager.SecurityInsights.Models.Enum21 right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.Enum22 left, Azure.ResourceManager.SecurityInsights.Models.Enum22 right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.Enum22 (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.Enum22 left, Azure.ResourceManager.SecurityInsights.Models.Enum22 right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Enum23 : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.Enum23>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Enum23(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Enum23 Activity { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.Enum23 other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.Enum23 left, Azure.ResourceManager.SecurityInsights.Models.Enum23 right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.Enum23 (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.Enum23 left, Azure.ResourceManager.SecurityInsights.Models.Enum23 right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Error : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Error>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Error>
-    {
-        public Error(string memberResourceName, string errorMessage) { }
-        public string ErrorMessage { get { throw null; } set { } }
-        public string MemberResourceName { get { throw null; } set { } }
-        Azure.ResourceManager.SecurityInsights.Models.Error System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Error>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Error>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Error System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Error>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Error>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Error>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventGroupingAggregationKind : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind>
@@ -4616,7 +4555,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ExpansionResultAggregation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ExpansionResultAggregation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EyesOn : Azure.ResourceManager.SecurityInsights.SettingData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EyesOn>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EyesOn>
+    public partial class EyesOn : Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.EyesOn>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.EyesOn>
     {
         public EyesOn() { }
         public bool? IsEnabled { get { throw null; } }
@@ -4701,24 +4640,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.FileMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.FileMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Flag : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.Flag>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Flag(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Flag False { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Flag True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.Flag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.Flag left, Azure.ResourceManager.SecurityInsights.Models.Flag right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.Flag (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.Flag left, Azure.ResourceManager.SecurityInsights.Models.Flag right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class FusionScenarioExclusionPattern : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.FusionScenarioExclusionPattern>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.FusionScenarioExclusionPattern>
     {
         public FusionScenarioExclusionPattern(string exclusionPattern, string dateAddedInUTC) { }
@@ -4732,8 +4653,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     }
     public partial class FusionSourceSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.FusionSourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.FusionSourceSettings>
     {
-        public FusionSourceSettings(bool enabled, string sourceName) { }
-        public bool Enabled { get { throw null; } set { } }
+        public FusionSourceSettings(bool isEnabled, string sourceName) { }
+        public bool IsEnabled { get { throw null; } set { } }
         public string SourceName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.FusionSourceSubTypeSetting> SourceSubTypes { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.FusionSourceSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.FusionSourceSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4744,8 +4665,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     }
     public partial class FusionSourceSubTypeSetting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.FusionSourceSubTypeSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.FusionSourceSubTypeSetting>
     {
-        public FusionSourceSubTypeSetting(bool enabled, string sourceSubTypeName, Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFilter severityFilters) { }
-        public bool Enabled { get { throw null; } set { } }
+        public FusionSourceSubTypeSetting(bool isEnabled, string sourceSubTypeName, Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFilter severityFilters) { }
+        public bool IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFilter SeverityFilters { get { throw null; } set { } }
         public string SourceSubTypeDisplayName { get { throw null; } }
         public string SourceSubTypeName { get { throw null; } set { } }
@@ -4768,8 +4689,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     }
     public partial class FusionSubTypeSeverityFiltersItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFiltersItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFiltersItem>
     {
-        public FusionSubTypeSeverityFiltersItem(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity severity, bool enabled) { }
-        public bool Enabled { get { throw null; } set { } }
+        public FusionSubTypeSeverityFiltersItem(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity severity, bool isEnabled) { }
+        public bool IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity Severity { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFiltersItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFiltersItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.FusionSubTypeSeverityFiltersItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4924,20 +4845,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.HttpMethodVerb left, Azure.ResourceManager.SecurityInsights.Models.HttpMethodVerb right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HuntOwner : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.HuntOwner>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.HuntOwner>
-    {
-        public HuntOwner() { }
-        public string AssignedTo { get { throw null; } set { } }
-        public string Email { get { throw null; } set { } }
-        public System.Guid? ObjectId { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentOwnerType? OwnerType { get { throw null; } set { } }
-        public string UserPrincipalName { get { throw null; } set { } }
-        Azure.ResourceManager.SecurityInsights.Models.HuntOwner System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.HuntOwner>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.HuntOwner>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.HuntOwner System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.HuntOwner>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.HuntOwner>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.HuntOwner>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HypothesisStatus : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus>
     {
@@ -4957,15 +4864,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus left, Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Identity : Azure.ResourceManager.SecurityInsights.Models.TIObject, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Identity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Identity>
-    {
-        public Identity() { }
-        Azure.ResourceManager.SecurityInsights.Models.Identity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Identity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Identity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Identity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Identity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Identity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Identity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IncidentTaskStatus : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus>
     {
@@ -4983,16 +4881,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus left, Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class Indicator : Azure.ResourceManager.SecurityInsights.Models.TIObject, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Indicator>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Indicator>
-    {
-        public Indicator() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.IndicatorObservablesItem> Observables { get { throw null; } }
-        Azure.ResourceManager.SecurityInsights.Models.Indicator System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Indicator>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Indicator>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Indicator System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Indicator>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Indicator>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Indicator>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class IndicatorObservablesItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.IndicatorObservablesItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.IndicatorObservablesItem>
     {
@@ -5088,8 +4976,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem() { }
         public string Header { get { throw null; } }
+        public bool? IsDeepLinkSupported { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.OutputType? OutputType { get { throw null; } }
-        public bool? SupportDeepLink { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5211,9 +5099,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class JobItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.JobItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.JobItem>
     {
         public JobItem() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.Error> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.PublicationFailedError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExecutionOn { get { throw null; } }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.Status? Status { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.JobItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.JobItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.JobItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5343,13 +5231,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies> Criteria { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind? Kind { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.SecurityInsights.Models.Operator? Operator { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.ConditionClauseOperator? Operator { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.MetadataDependencies>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MetadataFlag : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.MetadataFlag>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MetadataFlag(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.MetadataFlag False { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.MetadataFlag True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag left, Azure.ResourceManager.SecurityInsights.Models.MetadataFlag right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.MetadataFlag (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.MetadataFlag left, Azure.ResourceManager.SecurityInsights.Models.MetadataFlag right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MetadataModelPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.MetadataModelPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.MetadataModelPatch>
     {
@@ -5493,8 +5399,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string AlertRuleTemplateName { get { throw null; } set { } }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public bool? Enabled { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedUtc { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? Severity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SubTechniques { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> Tactics { get { throw null; } }
@@ -5509,10 +5415,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         public MLBehaviorAnalyticsAlertRuleTemplate() { }
         public int? AlertRulesCreatedByTemplateCount { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedDateUTC { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public System.DateTimeOffset? LastUpdatedDateUTC { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> RequiredDataConnectors { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? Severity { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? Status { get { throw null; } set { } }
@@ -5523,24 +5429,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         Azure.ResourceManager.SecurityInsights.Models.MLBehaviorAnalyticsAlertRuleTemplate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.MLBehaviorAnalyticsAlertRuleTemplate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.MLBehaviorAnalyticsAlertRuleTemplate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.MLBehaviorAnalyticsAlertRuleTemplate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Mode : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.Mode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Mode(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Mode Disabled { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Mode Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.Mode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.Mode left, Azure.ResourceManager.SecurityInsights.Models.Mode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.Mode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.Mode left, Azure.ResourceManager.SecurityInsights.Models.Mode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class MstiCheckRequirements : Azure.ResourceManager.SecurityInsights.Models.DataConnectorsCheckRequirements, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.MstiCheckRequirements>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.MstiCheckRequirements>
     {
@@ -5645,17 +5533,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public System.Collections.Generic.IDictionary<string, string> CustomDetails { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> EntityMappings { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? EventGroupingAggregationKind { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentConfiguration IncidentConfiguration { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedUtc { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsSuppressionEnabled { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Query { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> SentinelEntitiesMappings { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? Severity { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SubTechniques { get { throw null; } }
         public System.TimeSpan? SuppressionDuration { get { throw null; } set { } }
-        public bool? SuppressionEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> Tactics { get { throw null; } }
         public System.Collections.Generic.IList<string> Techniques { get { throw null; } }
         public string TemplateVersion { get { throw null; } set { } }
@@ -5670,13 +5558,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public NrtAlertRuleTemplate() { }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride AlertDetailsOverride { get { throw null; } set { } }
         public int? AlertRulesCreatedByTemplateCount { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedDateUTC { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> CustomDetails { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> EntityMappings { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? EventGroupingAggregationKind { get { throw null; } set { } }
-        public System.DateTimeOffset? LastUpdatedDateUTC { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public string Query { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> RequiredDataConnectors { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> SentinelEntitiesMappings { get { throw null; } }
@@ -5826,48 +5714,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.OfficePowerBIDataConnector>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.OfficePowerBIDataConnector>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Operator : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.Operator>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Operator(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator AfterAbsolute { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator AfterRelative { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator ArrayContains { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator ArrayNotContains { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator BeforeAbsolute { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator BeforeRelative { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator EqualsValue { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator GreaterThan { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator GreaterThanEqual { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator IsFalse { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator IsNull { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator IsTrue { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator LessThan { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator LessThanEqual { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator NotEquals { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator OnOrAfterAbsolute { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator OnOrAfterRelative { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator OnOrBeforeAbsolute { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator OnOrBeforeRelative { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator StringContains { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator StringEndsWith { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator StringIsEmpty { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator StringNotContains { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator StringNotEndsWith { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator StringNotStartsWith { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Operator StringStartsWith { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.Operator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.Operator left, Azure.ResourceManager.SecurityInsights.Models.Operator right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.Operator (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.Operator left, Azure.ResourceManager.SecurityInsights.Models.Operator right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class OracleAuthModel : Azure.ResourceManager.SecurityInsights.Models.CcpAuthConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.OracleAuthModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.OracleAuthModel>
     {
         public OracleAuthModel(System.Guid tenantId, string userId, string publicFingerprint, string pemFile) { }
@@ -5949,18 +5795,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.PermissionProviderScope left, Azure.ResourceManager.SecurityInsights.Models.PermissionProviderScope right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Permissions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Permissions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Permissions>
-    {
-        public Permissions() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.PermissionsCustomsItem> Customs { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.PermissionsResourceProviderItem> ResourceProvider { get { throw null; } }
-        Azure.ResourceManager.SecurityInsights.Models.Permissions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Permissions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Permissions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Permissions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Permissions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Permissions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Permissions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PermissionsCustomsItem : Azure.ResourceManager.SecurityInsights.Models.Customs, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.PermissionsCustomsItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.PermissionsCustomsItem>
+    public partial class PermissionsCustomsItem : Azure.ResourceManager.SecurityInsights.Models.CustomsPermission, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.PermissionsCustomsItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.PermissionsCustomsItem>
     {
         public PermissionsCustomsItem() { }
         Azure.ResourceManager.SecurityInsights.Models.PermissionsCustomsItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.PermissionsCustomsItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6080,10 +5915,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.ProvisioningState left, Azure.ResourceManager.SecurityInsights.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class PublicationFailedError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.PublicationFailedError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.PublicationFailedError>
+    {
+        public PublicationFailedError(string memberResourceName, string errorMessage) { }
+        public string ErrorMessage { get { throw null; } set { } }
+        public string MemberResourceName { get { throw null; } set { } }
+        Azure.ResourceManager.SecurityInsights.Models.PublicationFailedError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.PublicationFailedError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.PublicationFailedError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.PublicationFailedError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.PublicationFailedError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.PublicationFailedError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.PublicationFailedError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class PullRequestInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.PullRequestInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.PullRequestInfo>
     {
         internal PullRequestInfo() { }
-        public Azure.ResourceManager.SecurityInsights.Models.State? State { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.RecommendationState? State { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.PullRequestInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.PullRequestInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.PullRequestInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6095,7 +5941,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         public QueryCondition(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ConditionClause> clauses) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.ConditionClause> Clauses { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.Connective? ConditionConnective { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.ClauseConnective? ConditionConnective { get { throw null; } set { } }
         public string StixObjectType { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.Models.QueryCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.QueryCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.QueryCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6114,6 +5960,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.QuerySortBy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.QuerySortBy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecommendationState : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.RecommendationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecommendationState(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.RecommendationState Active { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.RecommendationState CompletedBySystem { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.RecommendationState CompletedByUser { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.RecommendationState Dismissed { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.RecommendationState InProgress { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.RecommendationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.RecommendationState left, Azure.ResourceManager.SecurityInsights.Models.RecommendationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.RecommendationState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.RecommendationState left, Azure.ResourceManager.SecurityInsights.Models.RecommendationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RecommendedSuggestion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.RecommendedSuggestion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.RecommendedSuggestion>
     {
         public RecommendedSuggestion(string suggestionTypeId, string title, string description, string action) { }
@@ -6131,21 +5998,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class ReevaluateResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ReevaluateResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ReevaluateResult>
     {
         internal ReevaluateResult() { }
-        public System.DateTimeOffset? LastEvaluatedTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? LastEvaluatedOn { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.ReevaluateResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ReevaluateResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ReevaluateResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.ReevaluateResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ReevaluateResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ReevaluateResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ReevaluateResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class Relationship : Azure.ResourceManager.SecurityInsights.Models.TIObject, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Relationship>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Relationship>
-    {
-        public Relationship() { }
-        Azure.ResourceManager.SecurityInsights.Models.Relationship System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Relationship>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Relationship>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Relationship System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Relationship>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Relationship>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Relationship>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RelationshipHint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint>
     {
@@ -6157,32 +6015,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         Azure.ResourceManager.SecurityInsights.Models.RelationshipHint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class Repo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Repo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Repo>
-    {
-        internal Repo() { }
-        public System.Collections.Generic.IReadOnlyList<string> Branches { get { throw null; } }
-        public string FullName { get { throw null; } }
-        public long? InstallationId { get { throw null; } }
-        public System.Uri Uri { get { throw null; } }
-        Azure.ResourceManager.SecurityInsights.Models.Repo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Repo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Repo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Repo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Repo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Repo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Repo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class Repository : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Repository>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Repository>
-    {
-        public Repository(System.Uri uri, string branch) { }
-        public string Branch { get { throw null; } set { } }
-        public System.Uri DeploymentLogsUri { get { throw null; } }
-        public System.Uri DisplayUri { get { throw null; } set { } }
-        public System.Uri Uri { get { throw null; } set { } }
-        Azure.ResourceManager.SecurityInsights.Models.Repository System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Repository>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Repository>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Repository System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Repository>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Repository>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Repository>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RepositoryAccess : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.RepositoryAccess>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.RepositoryAccess>
     {
@@ -6238,7 +6070,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public RepositoryResourceInfo() { }
         public Azure.ResourceManager.SecurityInsights.Models.AzureDevOpsResourceInfo AzureDevOpsResourceInfo { get { throw null; } }
         public string GitHubResourceInfoAppInstallationId { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.Webhook Webhook { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook Webhook { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.Models.RepositoryResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.RepositoryResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.RepositoryResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.RepositoryResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.RepositoryResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6266,10 +6098,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class RequiredPermissions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.RequiredPermissions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.RequiredPermissions>
     {
         public RequiredPermissions() { }
-        public bool? Action { get { throw null; } set { } }
-        public bool? Delete { get { throw null; } set { } }
-        public bool? Read { get { throw null; } set { } }
-        public bool? Write { get { throw null; } set { } }
+        public bool? IsCustomAction { get { throw null; } set { } }
+        public bool? IsDeleteAction { get { throw null; } set { } }
+        public bool? IsReadAction { get { throw null; } set { } }
+        public bool? IsWriteAction { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.Models.RequiredPermissions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.RequiredPermissions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.RequiredPermissions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.RequiredPermissions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.RequiredPermissions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6293,15 +6125,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class ResourceProviderRequiredPermissions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ResourceProviderRequiredPermissions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ResourceProviderRequiredPermissions>
     {
         public ResourceProviderRequiredPermissions() { }
-        public bool? Action { get { throw null; } set { } }
-        public bool? Delete { get { throw null; } set { } }
-        public bool? Read { get { throw null; } set { } }
-        public bool? Write { get { throw null; } set { } }
+        public bool? IsCustomAction { get { throw null; } set { } }
+        public bool? IsDeleteAction { get { throw null; } set { } }
+        public bool? IsReadAction { get { throw null; } set { } }
+        public bool? IsWriteAction { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.Models.ResourceProviderRequiredPermissions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ResourceProviderRequiredPermissions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ResourceProviderRequiredPermissions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.ResourceProviderRequiredPermissions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ResourceProviderRequiredPermissions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ResourceProviderRequiredPermissions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ResourceProviderRequiredPermissions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResponseWarning : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ResponseWarning>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ResponseWarning>
+    {
+        internal ResponseWarning() { }
+        public Azure.ResourceManager.SecurityInsights.Models.WarningBody Warning { get { throw null; } }
+        Azure.ResourceManager.SecurityInsights.Models.ResponseWarning System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ResponseWarning>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ResponseWarning>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.ResponseWarning System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ResponseWarning>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ResponseWarning>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ResponseWarning>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RestApiPollerDataConnector : Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.RestApiPollerDataConnector>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.RestApiPollerDataConnector>
     {
@@ -6437,16 +6279,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal SecurityAlertTimelineItem() { }
         public string AlertType { get { throw null; } }
-        public string AzureResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public System.DateTimeOffset EndTimeUtc { get { throw null; } }
+        public System.DateTimeOffset EndOn { get { throw null; } }
+        public System.DateTimeOffset GeneratedOn { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent? Intent { get { throw null; } }
         public string ProductName { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity Severity { get { throw null; } }
-        public System.DateTimeOffset StartTimeUtc { get { throw null; } }
+        public System.DateTimeOffset StartOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Techniques { get { throw null; } }
-        public System.DateTimeOffset TimeGenerated { get { throw null; } }
         Azure.ResourceManager.SecurityInsights.Models.SecurityAlertTimelineItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityAlertTimelineItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityAlertTimelineItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.SecurityAlertTimelineItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityAlertTimelineItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7172,6 +7014,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntingBookmark>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntingBookmark>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SecurityInsightsHuntOwner : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner>
+    {
+        public SecurityInsightsHuntOwner() { }
+        public string AssignedTo { get { throw null; } set { } }
+        public string Email { get { throw null; } set { } }
+        public System.Guid? ObjectId { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentOwnerType? OwnerType { get { throw null; } set { } }
+        public string UserPrincipalName { get { throw null; } set { } }
+        Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SecurityInsightsIncidentActionConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentActionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentActionConfiguration>
     {
         public SecurityInsightsIncidentActionConfiguration() { }
@@ -7705,7 +7561,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SecurityInsightsRecommendationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRecommendationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRecommendationPatch>
     {
         public SecurityInsightsRecommendationPatch() { }
-        public Azure.ResourceManager.SecurityInsights.Models.State? RecommendationPatchState { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityInsights.Models.RecommendationState? RecommendationPatchState { get { throw null; } set { } }
         Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRecommendationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRecommendationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRecommendationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRecommendationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRecommendationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7821,6 +7677,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsScheduledAlertRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsScheduledAlertRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsScheduledAlertRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsScheduledAlertRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SecurityInsightsSettingAnomaliesKind : Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind>
+    {
+        public SecurityInsightsSettingAnomaliesKind() { }
+        public bool? IsEnabled { get { throw null; } }
+        Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SecurityInsightsSubmissionMailEntity : Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntity, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSubmissionMailEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSubmissionMailEntity>
     {
@@ -7954,19 +7820,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServicePrincipal : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal>
-    {
-        public ServicePrincipal() { }
-        public string AppId { get { throw null; } }
-        public System.DateTimeOffset? CredentialsExpireOn { get { throw null; } set { } }
-        public string Id { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-        Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ServicePrincipal>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class SessionAuthModel : Azure.ResourceManager.SecurityInsights.Models.CcpAuthConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SessionAuthModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SessionAuthModel>
     {
         public SessionAuthModel(System.Collections.Generic.IDictionary<string, string> userName, System.Collections.Generic.IDictionary<string, string> password) { }
@@ -8039,6 +7892,160 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.Source left, Azure.ResourceManager.SecurityInsights.Models.Source right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SourceControlDeployment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment>
+    {
+        internal SourceControlDeployment() { }
+        public string DeploymentId { get { throw null; } }
+        public System.Uri DeploymentLogsUri { get { throw null; } }
+        public System.DateTimeOffset? DeploymentOn { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult? DeploymentResult { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState? DeploymentState { get { throw null; } }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SourceControlDeploymentFetchStatus : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SourceControlDeploymentFetchStatus(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus NotFound { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus Success { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus Unauthorized { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus left, Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus left, Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SourceControlDeploymentInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo>
+    {
+        internal SourceControlDeploymentInfo() { }
+        public Azure.ResourceManager.SecurityInsights.Models.SourceControlDeployment Deployment { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus? DeploymentFetchStatus { get { throw null; } }
+        public string Message { get { throw null; } }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SourceControlDeploymentResult : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SourceControlDeploymentResult(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult Canceled { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult Failed { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult Success { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult left, Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult left, Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SourceControlDeploymentState : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SourceControlDeploymentState(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState Canceling { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState Completed { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState InProgress { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState Queued { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState left, Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState left, Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SourceControlRepo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo>
+    {
+        internal SourceControlRepo() { }
+        public System.Collections.Generic.IReadOnlyList<string> Branches { get { throw null; } }
+        public string FullName { get { throw null; } }
+        public long? InstallationId { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SourceControlRepository : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository>
+    {
+        public SourceControlRepository(System.Uri uri, string branch) { }
+        public string Branch { get { throw null; } set { } }
+        public System.Uri DeploymentLogsUri { get { throw null; } }
+        public System.Uri DisplayUri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlRepository>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SourceControlServicePrincipal : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal>
+    {
+        public SourceControlServicePrincipal() { }
+        public string AppId { get { throw null; } }
+        public System.DateTimeOffset? CredentialsExpireOn { get { throw null; } set { } }
+        public string Id { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlServicePrincipal>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SourceControlVersion : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SourceControlVersion(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion V1 { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion V2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion left, Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion left, Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SourceControlWebhook : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook>
+    {
+        public SourceControlWebhook() { }
+        public bool? IsWebhookSecretRotated { get { throw null; } set { } }
+        public string WebhookId { get { throw null; } }
+        public System.DateTimeOffset? WebhookSecretUpdateOn { get { throw null; } }
+        public System.Uri WebhookUri { get { throw null; } }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.SourceControlWebhook>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SourceKind : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.SourceKind>
     {
@@ -8075,27 +8082,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceType left, Azure.ResourceManager.SecurityInsights.Models.SourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.SourceType left, Azure.ResourceManager.SecurityInsights.Models.SourceType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct State : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.State>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public State(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.State Active { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.State CompletedBySystem { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.State CompletedByUser { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.State Dismissed { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.State InProgress { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.State other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.State left, Azure.ResourceManager.SecurityInsights.Models.State right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.State (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.State left, Azure.ResourceManager.SecurityInsights.Models.State right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -8169,7 +8155,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string DisplayName { get { throw null; } }
         public System.DateTimeOffset? FirstPublishOn { get { throw null; } }
         public string Icon { get { throw null; } }
-        public Azure.ResourceManager.SecurityInsights.Models.Flag? IsDeprecated { get { throw null; } }
+        public Azure.ResourceManager.SecurityInsights.Models.MetadataFlag? IsDeprecated { get { throw null; } }
         public System.DateTimeOffset? LastPublishOn { get { throw null; } }
         public string PackageId { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.PackageKind? PackageKind { get { throw null; } }
@@ -8212,23 +8198,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TemplateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TemplateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ThreatActor : Azure.ResourceManager.SecurityInsights.Models.TIObject, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ThreatActor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ThreatActor>
-    {
-        public ThreatActor() { }
-        Azure.ResourceManager.SecurityInsights.Models.ThreatActor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ThreatActor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ThreatActor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.ThreatActor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ThreatActor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ThreatActor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ThreatActor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ThreatIntelligenceAlertRule : Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceAlertRule>
     {
         public ThreatIntelligenceAlertRule() { }
         public string AlertRuleTemplateName { get { throw null; } set { } }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public bool? Enabled { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedUtc { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? Severity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SubTechniques { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> Tactics { get { throw null; } }
@@ -8243,10 +8220,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         public ThreatIntelligenceAlertRuleTemplate() { }
         public int? AlertRulesCreatedByTemplateCount { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedDateUTC { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public System.DateTimeOffset? LastUpdatedDateUTC { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> RequiredDataConnectors { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? Severity { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? Status { get { throw null; } set { } }
@@ -8473,11 +8450,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         protected TIObject() { }
         public Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo CreatedBy { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Data { get { throw null; } }
-        public System.DateTimeOffset? FirstIngestedTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? FirstIngestedOn { get { throw null; } }
         public System.Guid? IngestionRulesVersion { get { throw null; } }
-        public System.DateTimeOffset? LastIngestedTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? LastIngestedOn { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceUserInfo LastModifiedBy { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedDateTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public string LastUpdateMethod { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityInsights.Models.RelationshipHint> RelationshipHints { get { throw null; } }
         public string Source { get { throw null; } }
@@ -8486,6 +8463,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         Azure.ResourceManager.SecurityInsights.Models.TIObject System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TIObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TIObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TIObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TiObjectKindAttackPattern : Azure.ResourceManager.SecurityInsights.Models.TIObject, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindAttackPattern>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindAttackPattern>
+    {
+        public TiObjectKindAttackPattern() { }
+        Azure.ResourceManager.SecurityInsights.Models.TiObjectKindAttackPattern System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindAttackPattern>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindAttackPattern>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.TiObjectKindAttackPattern System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindAttackPattern>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindAttackPattern>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindAttackPattern>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TiObjectKindIdentity : Azure.ResourceManager.SecurityInsights.Models.TIObject, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIdentity>
+    {
+        public TiObjectKindIdentity() { }
+        Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TiObjectKindIndicator : Azure.ResourceManager.SecurityInsights.Models.TIObject, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIndicator>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIndicator>
+    {
+        public TiObjectKindIndicator() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.IndicatorObservablesItem> Observables { get { throw null; } }
+        Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIndicator System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIndicator>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIndicator>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIndicator System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIndicator>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIndicator>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindIndicator>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TiObjectKindRelationship : Azure.ResourceManager.SecurityInsights.Models.TIObject, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindRelationship>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindRelationship>
+    {
+        public TiObjectKindRelationship() { }
+        Azure.ResourceManager.SecurityInsights.Models.TiObjectKindRelationship System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindRelationship>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindRelationship>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.TiObjectKindRelationship System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindRelationship>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindRelationship>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindRelationship>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TiObjectKindThreatActor : Azure.ResourceManager.SecurityInsights.Models.TIObject, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindThreatActor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindThreatActor>
+    {
+        public TiObjectKindThreatActor() { }
+        Azure.ResourceManager.SecurityInsights.Models.TiObjectKindThreatActor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindThreatActor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindThreatActor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.TiObjectKindThreatActor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindThreatActor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindThreatActor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiObjectKindThreatActor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TiTaxiiCheckRequirements : Azure.ResourceManager.SecurityInsights.Models.DataConnectorsCheckRequirements, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.TiTaxiiCheckRequirements>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.TiTaxiiCheckRequirements>
     {
@@ -8569,16 +8592,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.TriggersWhen left, Azure.ResourceManager.SecurityInsights.Models.TriggersWhen right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Ueba : Azure.ResourceManager.SecurityInsights.SettingData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Ueba>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Ueba>
-    {
-        public Ueba() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.UebaDataSource> DataSources { get { throw null; } }
-        Azure.ResourceManager.SecurityInsights.Models.Ueba System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Ueba>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Ueba>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Ueba System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Ueba>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Ueba>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Ueba>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UebaDataSource : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.UebaDataSource>
     {
@@ -8599,6 +8612,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.UebaDataSource left, Azure.ResourceManager.SecurityInsights.Models.UebaDataSource right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class UebaSettings : Azure.ResourceManager.SecurityInsights.SecurityInsightsSettingData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.UebaSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.UebaSettings>
+    {
+        public UebaSettings() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.UebaDataSource> DataSources { get { throw null; } }
+        Azure.ResourceManager.SecurityInsights.Models.UebaSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.UebaSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.UebaSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.Models.UebaSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.UebaSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.UebaSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.UebaSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ValidationError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.ValidationError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ValidationError>
     {
         internal ValidationError() { }
@@ -8609,34 +8632,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         Azure.ResourceManager.SecurityInsights.Models.ValidationError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ValidationError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ValidationError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.ValidationError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Version : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.Version>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Version(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.Models.Version V1 { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.Version V2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.Version other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.Version left, Azure.ResourceManager.SecurityInsights.Models.Version right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.Version (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.Version left, Azure.ResourceManager.SecurityInsights.Models.Version right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Warning : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Warning>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Warning>
-    {
-        internal Warning() { }
-        public Azure.ResourceManager.SecurityInsights.Models.WarningBody WarningValue { get { throw null; } }
-        Azure.ResourceManager.SecurityInsights.Models.Warning System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Warning>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Warning>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Warning System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Warning>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Warning>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Warning>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WarningBody : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.WarningBody>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.WarningBody>
     {
@@ -8671,19 +8666,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.WarningCode left, Azure.ResourceManager.SecurityInsights.Models.WarningCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Webhook : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Webhook>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Webhook>
-    {
-        public Webhook() { }
-        public bool? RotateWebhookSecret { get { throw null; } set { } }
-        public string WebhookId { get { throw null; } }
-        public System.DateTimeOffset? WebhookSecretUpdateOn { get { throw null; } }
-        public System.Uri WebhookUri { get { throw null; } }
-        Azure.ResourceManager.SecurityInsights.Models.Webhook System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Webhook>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.Webhook>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityInsights.Models.Webhook System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Webhook>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Webhook>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.Webhook>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class WorkspaceEnrichmentIPGeodata : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.Models.WorkspaceEnrichmentIPGeodata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.WorkspaceEnrichmentIPGeodata>
     {
         internal WorkspaceEnrichmentIPGeodata() { }
@@ -8709,5 +8691,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         Azure.ResourceManager.SecurityInsights.Models.WorkspaceEnrichmentIPGeodata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.WorkspaceEnrichmentIPGeodata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.WorkspaceEnrichmentIPGeodata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.Models.WorkspaceEnrichmentIPGeodata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkspaceManagerConfigurationMode : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkspaceManagerConfigurationMode(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode Disabled { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode left, Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode left, Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
