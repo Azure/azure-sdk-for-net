@@ -30,11 +30,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
     {
         private readonly MockTransport _mockTransport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
 
-#if NET6_0
-        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-#else
+//#if NET6_0
+//        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+//#else
         [Theory]
-#endif
+//#endif
         [InlineData(false, LogLevel.Debug, null)]
         [InlineData(false, LogLevel.Information, null)]
         [InlineData(false, LogLevel.Warning, "TestWarningEvent: hello")]
@@ -43,100 +43,93 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         [InlineData(true, LogLevel.Debug, "TestVerboseEvent: hello")]
         public async Task DistroLogForwarderIsAdded(bool addLoggingFilter, LogLevel eventLevel, string expectedMessage)
         {
+            // SETUP
             var serviceCollection = new ServiceCollection();
-            //var builder = WebApplication.CreateBuilder();
             using TestEventSource source = new TestEventSource(addLoggingFilter ? "Azure-LoggingFilter" : "Azure-Test");
 
-            //if (addLoggingFilter)
-            //{
-            //    builder.Logging.AddFilter(source.Name.Replace('-', '.'), eventLevel);
-            //}
-
-            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
-            SetUpOTelAndLogging(serviceCollection, transport, LogLevel.Information, (loggingBuilder) => {
+            SetUpOTelAndLogging(serviceCollection, _mockTransport, LogLevel.Information, (loggingBuilder) =>
+            {
                 if (addLoggingFilter)
                 {
                     loggingBuilder.AddFilter(source.Name.Replace('-', '.'), eventLevel);
                 }
-                });
+            });
 
-            //using var app = builder.Build();
-            //await app.StartAsync();
             using var serviceProvider = serviceCollection.BuildServiceProvider();
 
             // We must manually start any IHostedServices. This includes the AzureLogForwarder.
             // In a normal app, Microsoft.Extensions.Hosting would handle this.
-            var hostedServices = serviceProvider.GetServices<IHostedService>();
-            foreach (var hostedService in hostedServices)
-            {
-                await hostedService.StartAsync(CancellationToken.None);
-            }
+            await StartHostedServicesAsync(serviceProvider);
 
+            // ACT
             Assert.True(source.IsEnabled());
             source.LogMessage("hello", eventLevel);
-            WaitForRequest(transport);
+            WaitForRequest(_mockTransport);
+
+            // ASSERT
             if (expectedMessage != null)
             {
-                Assert.Single(transport.Requests);
-                await AssertContentContains(transport.Requests.Single(), expectedMessage, eventLevel);
+                Assert.Single(_mockTransport.Requests);
+                await AssertContentContains(_mockTransport.Requests.Single(), expectedMessage, eventLevel);
             }
             else
             {
-                await AssertContentDoesNotContain(transport.Requests, "hello");
+                await AssertContentDoesNotContain(_mockTransport.Requests, "hello");
             }
         }
 
-#if NET6_0
-        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-#else
+//#if NET6_0
+//        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+//#else
         [Theory]
-#endif
+//#endif
         [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
         [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
         [InlineData(LogLevel.Debug, null)]
         public async Task PublicLogForwarderIsAdded(LogLevel eventLevel, string expectedMessage)
         {
+            // SETUP
             var serviceCollection = new ServiceCollection();
-            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
-            SetUpOTelAndLogging(serviceCollection, transport, LogLevel.Information);
+            SetUpOTelAndLogging(serviceCollection, _mockTransport, LogLevel.Information);
 
             serviceCollection.TryAddSingleton<AzureLogForwarder>();
 
             using var serviceProvider = serviceCollection.BuildServiceProvider();
 
             var logForwarder = serviceProvider.GetRequiredService<AzureLogForwarder>();
-
             Assert.NotNull(logForwarder);
             logForwarder.Start();
 
+            // ACT
             using TestEventSource source = new TestEventSource("Azure-Test");
             Assert.True(source.IsEnabled());
             source.LogMessage("hello", eventLevel);
+            WaitForRequest(_mockTransport);
 
-            WaitForRequest(transport);
+            // ASSERT
             if (expectedMessage != null)
             {
-                Assert.Single(transport.Requests);
-                await AssertContentContains(transport.Requests.Single(), expectedMessage, eventLevel);
+                Assert.Single(_mockTransport.Requests);
+                await AssertContentContains(_mockTransport.Requests.Single(), expectedMessage, eventLevel);
             }
             else
             {
-                await AssertContentDoesNotContain(transport.Requests, "hello");
+                await AssertContentDoesNotContain(_mockTransport.Requests, "hello");
             }
         }
 
-#if NET6_0
-        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-#else
+//#if NET6_0
+//        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+//#else
         [Fact]
-#endif
+//#endif
         public void SelfDiagnosticsIsDisabled()
         {
+            // SETUP
             bool logAzureFilterCalled = false;
             var enableLevel = LogLevel.Debug;
 
             var serviceCollection = new ServiceCollection();
-            //var builder = WebApplication.CreateBuilder();
 
             serviceCollection.AddLogging(loggingBuilder =>
             {
@@ -152,47 +145,39 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 });
             });
 
-            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
             serviceCollection.AddOpenTelemetry().UseAzureMonitor(config =>
             {
-                config.Transport = transport;
+                config.Transport = _mockTransport;
                 config.ConnectionString = $"InstrumentationKey={Guid.NewGuid()}";
                 config.EnableLiveMetrics = true;
                 Assert.False(config.Diagnostics.IsLoggingEnabled);
                 Assert.False(config.Diagnostics.IsDistributedTracingEnabled);
             });
 
-            //using var app = builder.Build();
-            //await app.StartAsync();
             using var serviceProvider = serviceCollection.BuildServiceProvider();
 
+            // ASSERT
             // let's get some live metric requests first to check that no logs were recorded for them
-            WaitForRequest(transport, r => r.Uri.Host == "rt.services.visualstudio.com"); // TODO: WHY IS THIS NECESSARY? THERE ARE NO ASSERTS HERE.
+            WaitForRequest(_mockTransport, r => r.Uri.Host == "rt.services.visualstudio.com"); // TODO: WHY IS THIS NECESSARY? THERE ARE NO ASSERTS HERE.
 
             // now let's wait for track requests
-            var trackRequests = WaitForRequest(transport, r => r.Uri.Host == "dc.services.visualstudio.com");
+            var trackRequests = WaitForRequest(_mockTransport, r => r.Uri.Host == "dc.services.visualstudio.com");
             Assert.Empty(trackRequests);
 
             // since LiveMetrics logging is disabled, we shouldn't even have logging policy trying to log anything.
             Assert.False(logAzureFilterCalled);
         }
 
-#if NET6_0
-        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-#else
+//#if NET6_0
+//        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+//#else
         [Fact]
-#endif
+//#endif
         public async Task DistroLogForwarderAppliesWildCardFilter()
         {
+            // SETUP
             var serviceCollection = new ServiceCollection();
-            //var builder = WebApplication.CreateBuilder();
-            //builder.Logging.AddFilter("Azure.*", LogLevel.Warning);
-
-            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
-            SetUpOTelAndLogging(serviceCollection, transport, LogLevel.Information, (loggingBuilder) => loggingBuilder.AddFilter("Azure.*", LogLevel.Warning));
-
-            //using var app = builder.Build();
-            //await app.StartAsync();
+            SetUpOTelAndLogging(serviceCollection, _mockTransport, LogLevel.Information, (loggingBuilder) => loggingBuilder.AddFilter("Azure.*", LogLevel.Warning));
             using var serviceProvider = serviceCollection.BuildServiceProvider();
 
             // We must manually start any IHostedServices. This includes the AzureLogForwarder.
@@ -203,92 +188,77 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 await hostedService.StartAsync(CancellationToken.None);
             }
 
+            // ACT
             using TestEventSource source = new TestEventSource("Azure-Test");
             Assert.True(source.IsEnabled());
             source.LogMessage("hello", LogLevel.Warning);
-            WaitForRequest(transport);
+            WaitForRequest(_mockTransport);
 
-            Assert.Single(transport.Requests);
-            await AssertContentContains(transport.Requests.Single(), "TestWarningEvent: hello", LogLevel.Warning);
+            // ASSERT
+            Assert.Single(_mockTransport.Requests);
+            await AssertContentContains(_mockTransport.Requests.Single(), "TestWarningEvent: hello", LogLevel.Warning);
         }
 
-#if NET6_0
-        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-#else
+//#if NET6_0
+//        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+//#else
         [Fact]
-#endif
+//#endif
         public async Task SettingCustomLoggingFilterResetsDefaultWarningLevel()
         {
+            // SETUP
             var serviceCollection = new ServiceCollection();
-            //var builder = WebApplication.CreateBuilder();
-            // Even when a single custom filter is set, it should reset the default warning level.
-            //builder.Logging.AddFilter("Azure.One", LogLevel.Information);
-
-            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
-            SetUpOTelAndLogging(serviceCollection, transport, LogLevel.Information, (loggingBuilder) => loggingBuilder.AddFilter("Azure.One", LogLevel.Information));
-
-            //using var app = builder.Build();
-            //await app.StartAsync();
+            SetUpOTelAndLogging(serviceCollection, _mockTransport, LogLevel.Information, (loggingBuilder) => loggingBuilder.AddFilter("Azure.One", LogLevel.Information));
             using var serviceProvider = serviceCollection.BuildServiceProvider();
 
             // We must manually start any IHostedServices. This includes the AzureLogForwarder.
             // In a normal app, Microsoft.Extensions.Hosting would handle this.
-            var hostedServices = serviceProvider.GetServices<IHostedService>();
-            foreach (var hostedService in hostedServices)
-            {
-                await hostedService.StartAsync(CancellationToken.None);
-            }
+            await StartHostedServicesAsync(serviceProvider);
 
+            // ACT 1
             // Azure-One is added as a logging filter, the default warning level is reset.
             // Informational-level logs from Azure-One sources are collected.
             using TestEventSource source1 = new TestEventSource("Azure-One");
             Assert.True(source1.IsEnabled());
 
+            // ASSERT 1
             source1.LogMessage("hello one", LogLevel.Information);
-            WaitForRequest(transport);
-            Assert.Single(transport.Requests);
-            await AssertContentContains(transport.Requests.Single(), "TestInfoEvent: hello one", LogLevel.Information);
-            transport.Requests.Clear();
+            WaitForRequest(_mockTransport);
+            Assert.Single(_mockTransport.Requests);
+            await AssertContentContains(_mockTransport.Requests.Single(), "TestInfoEvent: hello one", LogLevel.Information);
+            _mockTransport.Requests.Clear();
 
+            // ACT 2
             // Azure-Two is not part of the logging filter.
             // Since the logging filter is customized for the Azure SDK, the default warning level is reset.
             // Informational-level logs from Azure-Two sources are collected.
             using TestEventSource source2 = new TestEventSource("Azure-Two");
             Assert.True(source2.IsEnabled());
 
+            // ASSERT 2
             source2.LogMessage("hello two", LogLevel.Information);
-            WaitForRequest(transport);
-            Assert.Single(transport.Requests);
-            await AssertContentContains(transport.Requests.Single(), "TestInfoEvent: hello two", LogLevel.Information);
+            WaitForRequest(_mockTransport);
+            Assert.Single(_mockTransport.Requests);
+            await AssertContentContains(_mockTransport.Requests.Single(), "TestInfoEvent: hello two", LogLevel.Information);
         }
 
-#if NET6_0
-        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-#else
+//#if NET6_0
+//        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+//#else
         [Fact]
-#endif
+//#endif
         public async Task CustomLoggingFilterOverridesDefaultWarningAndCapturesErrorLogs()
         {
+            // SETUP
             var serviceCollection = new ServiceCollection();
-            //var builder = WebApplication.CreateBuilder();
-            // Even when a single custom filter is set, it should reset the default warning level.
-            //builder.Logging.AddFilter("Azure.One", LogLevel.Error);
-
-            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
-            SetUpOTelAndLogging(serviceCollection, transport, LogLevel.Information, (loggingBuilder) => loggingBuilder.AddFilter("Azure.One", LogLevel.Error));
-
-            //using var app = builder.Build();
-            //await app.StartAsync();
+            SetUpOTelAndLogging(serviceCollection, _mockTransport, LogLevel.Information, (loggingBuilder) => loggingBuilder.AddFilter("Azure.One", LogLevel.Error));
             using var serviceProvider = serviceCollection.BuildServiceProvider();
 
             // We must manually start any IHostedServices. This includes the AzureLogForwarder.
             // In a normal app, Microsoft.Extensions.Hosting would handle this.
-            var hostedServices = serviceProvider.GetServices<IHostedService>();
-            foreach (var hostedService in hostedServices)
-            {
-                await hostedService.StartAsync(CancellationToken.None);
-            }
+            await StartHostedServicesAsync(serviceProvider);
 
+            // ACT
             using TestEventSource source1 = new TestEventSource("Azure-One");
             Assert.True(source1.IsEnabled());
 
@@ -297,40 +267,21 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             source1.LogMessage("Hello Debug", LogLevel.Debug);
             source1.LogMessage("Hello Warning", LogLevel.Warning);
             source1.LogMessage("Hello Error", LogLevel.Error);
-            WaitForRequest(transport);
-            Assert.Single(transport.Requests);
-            await AssertContentContains(transport.Requests.Single(), "TestErrorEvent: Hello Error", LogLevel.Error);
+            WaitForRequest(_mockTransport);
+
+            // ASSERT
+            Assert.Single(_mockTransport.Requests);
+            await AssertContentContains(_mockTransport.Requests.Single(), "TestErrorEvent: Hello Error", LogLevel.Error);
 
             // Azure-Two is not part of the logging filter, it should capture all logs.
             using TestEventSource source2 = new TestEventSource("Azure-Two");
             Assert.True(source2.IsEnabled());
-            transport.Requests.Clear();
+            _mockTransport.Requests.Clear();
 
             source2.LogMessage("hello two", LogLevel.Information);
-            WaitForRequest(transport);
-            Assert.Single(transport.Requests);
-            await AssertContentContains(transport.Requests.Single(), "TestInfoEvent: hello two", LogLevel.Information);
-        }
-
-        [Fact]
-        public async Task DistroLogForwarderAppliesWildCardFilter2()
-        {
-            var builder = WebApplication.CreateBuilder();
-            builder.Logging.AddFilter("Azure.*", LogLevel.Warning);
-
-            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
-            SetUpOTelAndLogging(builder, transport, LogLevel.Information);
-
-            using var app = builder.Build();
-            await app.StartAsync();
-
-            using TestEventSource source = new TestEventSource("Azure-Test");
-            Assert.True(source.IsEnabled());
-            source.LogMessage("hello", LogLevel.Warning);
-            WaitForRequest(transport);
-
-            Assert.Single(transport.Requests);
-            await AssertContentContains(transport.Requests.Single(), "TestWarningEvent: hello", LogLevel.Warning);
+            WaitForRequest(_mockTransport);
+            Assert.Single(_mockTransport.Requests);
+            await AssertContentContains(_mockTransport.Requests.Single(), "TestInfoEvent: hello two", LogLevel.Information);
         }
 
         private IEnumerable<MockRequest> WaitForRequest(MockTransport transport, Func<MockRequest, bool>? filter = null)
@@ -382,7 +333,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         {
             serviceCollection.AddLogging(loggingBuilder =>
             {
-                loggingBuilder.ClearProviders();
+                //loggingBuilder.ClearProviders();
                 loggingBuilder.AddFilter((name, level) =>
                 {
                     if (name != null && name.StartsWith("Azure"))
@@ -403,24 +354,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             });
         }
 
-        private static void SetUpOTelAndLogging(WebApplicationBuilder builder, MockTransport transport, LogLevel enableLevel)
+        private static async Task StartHostedServicesAsync(ServiceProvider serviceProvider)
         {
-            builder.Logging.ClearProviders();
-            builder.Logging.AddFilter((name, level) =>
+            var hostedServices = serviceProvider.GetServices<IHostedService>();
+            foreach (var hostedService in hostedServices)
             {
-                if (name != null && name.StartsWith("Azure"))
-                {
-                    return level >= enableLevel;
-                }
-                return false;
-            });
-
-            builder.Services.AddOpenTelemetry().UseAzureMonitor(config =>
-            {
-                config.Transport = transport;
-                config.ConnectionString = $"InstrumentationKey={Guid.NewGuid()}";
-                config.EnableLiveMetrics = false;
-            });
+                await hostedService.StartAsync(CancellationToken.None);
+            }
         }
 
         internal class TestEventSource : AzureEventSource
