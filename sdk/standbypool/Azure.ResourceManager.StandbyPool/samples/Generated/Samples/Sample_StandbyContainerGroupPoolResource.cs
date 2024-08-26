@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetStandbyContainerGroupPools_StandbyContainerGroupPoolsListBySubscription()
         {
-            // Generated from example definition: specification/standbypool/resource-manager/Microsoft.StandbyPool/preview/2024-03-01-preview/examples/StandbyContainerGroupPools_ListBySubscription.json
+            // Generated from example definition: specification/standbypool/resource-manager/Microsoft.StandbyPool/stable/2024-03-01/examples/StandbyContainerGroupPools_ListBySubscription.json
             // this example is just showing the usage of "StandbyContainerGroupPools_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_StandbyContainerGroupPoolsGet()
         {
-            // Generated from example definition: specification/standbypool/resource-manager/Microsoft.StandbyPool/preview/2024-03-01-preview/examples/StandbyContainerGroupPools_Get.json
+            // Generated from example definition: specification/standbypool/resource-manager/Microsoft.StandbyPool/stable/2024-03-01/examples/StandbyContainerGroupPools_Get.json
             // this example is just showing the usage of "StandbyContainerGroupPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_StandbyContainerGroupPoolsUpdate()
         {
-            // Generated from example definition: specification/standbypool/resource-manager/Microsoft.StandbyPool/preview/2024-03-01-preview/examples/StandbyContainerGroupPools_Update.json
+            // Generated from example definition: specification/standbypool/resource-manager/Microsoft.StandbyPool/stable/2024-03-01/examples/StandbyContainerGroupPools_Update.json
             // this example is just showing the usage of "StandbyContainerGroupPools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -145,7 +145,7 @@ Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_StandbyContainerGroupPoolsDelete()
         {
-            // Generated from example definition: specification/standbypool/resource-manager/Microsoft.StandbyPool/preview/2024-03-01-preview/examples/StandbyContainerGroupPools_Delete.json
+            // Generated from example definition: specification/standbypool/resource-manager/Microsoft.StandbyPool/stable/2024-03-01/examples/StandbyContainerGroupPools_Delete.json
             // this example is just showing the usage of "StandbyContainerGroupPools_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
