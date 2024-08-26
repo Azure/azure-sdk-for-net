@@ -217,9 +217,9 @@ eventLogger.TrackEvent("CustomEventName", new List<KeyValuePair<string, object?>
 > **Note**
   > LoggerFactory instance passed in to the ApplicationInsightsEventLogger must be the same one that is used to configure OpenTelemetry.
 
-`TrackEvent` internally calls the ILogger.Log API with the LogLevel set to
-Information. If you want to disable the collection of custom events, you can do
-so by adding a filter in code or via `appsettings.json`, as shown below.
+`TrackEvent` internally calls the `ILogger.Log` API with the LogLevel set to
+`Information`. If you want to disable the collection of custom events, you can
+do so by adding a filter in code or via `appsettings.json`, as shown below.
 
 `In code`
 

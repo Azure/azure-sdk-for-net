@@ -372,7 +372,7 @@ app.MapGet("/", (IApplicationInsightsEventLogger CustomEventLogger) =>
 app.Run();
 ```
 
-`TrackEvent` internally calls the ILogger.Log API with the LogLevel set to Information. If you want to disable the collection of custom events, you can do so by adding a filter in code or via `appsettings.json`, as shown below.
+`TrackEvent` internally calls the `ILogger.Log` API with the LogLevel set to `Information`. If you want to disable the collection of custom events, you can do so by adding a filter in code or via `appsettings.json`, as shown below.
 
 `In code`
 
@@ -391,6 +391,9 @@ builder.Logging.AddFilter<OpenTelemetryLoggerProvider>("Azure.Monitor.OpenTeleme
     }
 }
 ```
+
+> **Note**
+  > Adding an explicit filter, as shown above, is necessary to disable the collection of custom events, even if you have a filter set to enable logs only for warning level and above.
 
 ## Troubleshooting
 
