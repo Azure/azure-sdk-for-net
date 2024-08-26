@@ -4,6 +4,12 @@
 
 ### Features Added
 
+* Added a new API `TrackEvent` for logging [Application Insights Custom
+  Events](https://learn.microsoft.com/en-us/azure/azure-monitor/app/data-model-complete#event).
+  For more details see [Application Insights Custom
+  Events](Readme#application-insights-custom-events).
+  ([#45630](https://github.com/Azure/azure-sdk-for-net/pull/45630))
+
 ### Breaking Changes
 
 ### Bugs Fixed

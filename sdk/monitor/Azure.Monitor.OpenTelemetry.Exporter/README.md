@@ -178,6 +178,75 @@ In scenarios involving multiple scopes or a single scope with multiple key-value
 only the first occurrence of the key-value pair from the outermost scope will be recorded.
 However, when the same key is utilized both within a logging scope and directly in the log statement, the value specified in the log message template will take precedence.
 
+### Application Insights Custom Events
+
+In general, you should be able to use
+[ILogger](https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger)
+for your logging needs. For users looking to log [Application Insights Custom
+Events](https://learn.microsoft.com/azure/azure-monitor/app/api-custom-events-metrics#trackevent),
+this can be accomplished by utilizing the `TrackEvent(string name,
+IReadOnlyList<KeyValuePair<string, object?>>? attributes = null)` API provided
+in the exporter.
+
+To begin, you need to pass an instance of the
+[LoggerFactory](https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loggerfactory)
+class to create an instance of `ApplicationInsightsEventLogger`. This instance
+can then be used to invoke the `TrackEvent` method for logging custom events.
+Below is an example of how you can implement this:
+
+```csharp
+// Example code to log custom events in Application Insights
+var loggerFactory = LoggerFactory.Create(builder =>
+{
+    builder.AddOpenTelemetry(options =>
+    {
+        options.AddAzureMonitorLogExporter(o => o.ConnectionString =  "InstrumentationKey=00000000-0000-0000-0000-000000000000", credential);
+    });
+});
+
+var eventLogger = new ApplicationInsightsEventLogger(loggerFactory.CreateLogger<ApplicationInsightsEventLogger>());
+
+// Logging a custom event
+eventLogger.TrackEvent("CustomEventName", new List<KeyValuePair<string, object?>>
+{
+    new KeyValuePair<string, object?>("Key1", "Value1"),
+    new KeyValuePair<string, object?>("Key2", 12345)
+});
+```
+
+> **Note**
+  > LoggerFactory instance passed in to the ApplicationInsightsEventLogger must be the same one that is used to configure OpenTelemetry.
+
+`TrackEvent` internally calls the ILogger.Log API with the LogLevel set to
+Information. If you want to disable the collection of custom events, you can do
+so by adding a filter in code or via `appsettings.json`, as shown below.
+
+`In code`
+
+```csharp
+this.loggerFactory = LoggerFactory.Create(builder =>
+{
+    // Disable custom event collection.
+    builder.AddFilter<OpenTelemetryLoggerProvider>("Azure.Monitor.OpenTelemetry.CustomEvents", LogLevel.None);
+    builder.AddOpenTelemetry(options =>
+    {
+        options.AddAzureMonitorLogExporter(o => o.ConnectionString = connectionString, credential);
+    });
+});
+```
+
+`appsettings.json`
+
+```json
+"Logging": {
+    "OpenTelemetry": {
+        "LogLevel": {
+            "Azure.Monitor.OpenTelemetry.CustomEvents": "None"
+        }
+    }
+}
+```
+
 ## Troubleshooting
 
 The Azure Monitor exporter uses EventSource for its own internal logging. The exporter logs are available to any EventListener by opting into the source named "OpenTelemetry-AzureMonitor-Exporter".
