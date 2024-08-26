@@ -8,7 +8,7 @@ pr:
     - release/*
   paths:
     include:
-    - tools/azure-plugin
+    - packages/npm/http-client-csharp
   
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml

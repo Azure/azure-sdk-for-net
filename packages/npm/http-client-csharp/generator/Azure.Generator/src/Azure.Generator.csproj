@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
     <PackageId>AzureClientPlugin</PackageId>
     <Version>1.0.0-beta.1</Version>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
 	<!-- Below is workaround to make MSBuild pass -->
 	<RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
 	<TargetFrameworks>net8.0</TargetFrameworks>
@@ -11,7 +11,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Generator.CSharp.ClientModel" VersionOverride="1.0.0-alpha.20240820.5" />
+		<PackageReference Include="Microsoft.Generator.CSharp.ClientModel" />
 	</ItemGroup>
 
 	<!-- Copy output to package dist path for local execution -->

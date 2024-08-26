@@ -241,6 +241,11 @@
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="3.9.0" PrivateAssets="all" />
   </ItemGroup>
 
+  <!-- Packages intended for generator libraries only -->
+  <ItemGroup Condition="('$(IsGeneratorLibrary)' == 'true')">
+    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20240820.5" />
+  </ItemGroup>
+
   <!--
     Test/Sample/Perf/Stress project dependencies
   -->
