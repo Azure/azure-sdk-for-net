@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             ActivitySource.AddActivityListener(listener);
 
             // ACT
-            using var dependencyActivity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Client);
+            using var dependencyActivity = activitySource.StartActivity(name: "TestActivityName", kind: ActivityKind.Client);
             Assert.NotNull(dependencyActivity);
             dependencyActivity.SetTag("http.request.method", "GET");
             dependencyActivity.SetTag("url.full", "http://bing.com");
@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             // ASSERT
             Assert.Equal("http://bing.com", dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
-            Assert.Equal("HelloWorld", dependencyDocument.Name);
+            Assert.Equal("TestActivityName", dependencyDocument.Name);
             Assert.Equal("200", dependencyDocument.ResultCode);
 
             VerifyCustomProperties(dependencyDocument);

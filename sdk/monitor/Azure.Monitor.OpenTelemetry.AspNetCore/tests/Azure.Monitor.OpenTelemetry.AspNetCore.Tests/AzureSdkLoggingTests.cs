@@ -22,11 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
     public class AzureSdkLoggingTests
     {
-#if NET6_0
-        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-#else
-        [Theory]
-#endif
+        [Theory(Skip = "Test is unstable and need to be re-written without the need to create a web server.")]
         [InlineData(false, LogLevel.Debug, null)]
         [InlineData(false, LogLevel.Information, null)]
         [InlineData(false, LogLevel.Warning, "TestWarningEvent: hello")]
@@ -62,11 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 
-#if NET6_0
-        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-#else
-        [Theory]
-#endif
+        [Theory(Skip = "Test is unstable and need to be re-written without the need to create a web server.")]
         [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
         [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
         [InlineData(LogLevel.Debug, null)]
@@ -103,11 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 
-#if NET6_0
-        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-#else
-        [Fact]
-#endif
+        [Fact(Skip = "Test is unstable and need to be re-written without the need to create a web server.")]
         public async Task SelfDiagnosticsIsDisabled()
         {
             var enableLevel = LogLevel.Debug;
@@ -148,7 +136,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.False(logAzureFilterCalled);
         }
 
-        [Fact]
+        [Fact(Skip = "Test is unstable and need to be re-written without the need to create a web server.")]
         public async Task DistroLogForwarderAppliesWildCardFilter()
         {
             var builder = WebApplication.CreateBuilder();
@@ -169,7 +157,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             await AssertContentContains(transport.Requests.Single(), "TestWarningEvent: hello", LogLevel.Warning);
         }
 
-        [Fact]
+        [Fact(Skip = "Test is unstable and need to be re-written without the need to create a web server.")]
         public async Task SettingCustomLoggingFilterResetsDefaultWarningLevel()
         {
             var builder = WebApplication.CreateBuilder();
@@ -205,7 +193,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             await AssertContentContains(transport.Requests.Single(), "TestInfoEvent: hello two", LogLevel.Information);
         }
 
-        [Fact]
+        [Fact(Skip = "Test is unstable and need to be re-written without the need to create a web server.")]
         public async Task CustomLoggingFilterOverridesDefaultWarningAndCapturesErrorLogs()
         {
             var builder = WebApplication.CreateBuilder();

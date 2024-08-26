@@ -108,8 +108,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             RemoteDependency remoteDependencyDocument = new()
             {
                 DocumentType = DocumentType.RemoteDependency,
+                Duration = activity.Duration < SchemaConstants.RemoteDependencyData_Duration_LessThanDays
+                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
+                                : SchemaConstants.Duration_MaxValue,
+
                 // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
                 Extension_Duration = activity.Duration.TotalMilliseconds,
+                Extension_IsSuccess = activity.Status != ActivityStatusCode.Error,
             };
 
             var liveMetricsTagsProcessor = new LiveMetricsTagsProcessor();
@@ -119,41 +124,41 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             {
                 case OperationType.Http:
                     remoteDependencyDocument.Name = activity.DisplayName;
-                    remoteDependencyDocument.CommandName = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeUrlFull)?.ToString();
+
+                    var httpUrl = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeUrlFull)?.ToString();
+                    remoteDependencyDocument.CommandName = httpUrl;
+
                     var httpResponseStatusCode = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
-                    remoteDependencyDocument.ResultCode = httpResponseStatusCode;
-                    remoteDependencyDocument.Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
-                                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
-                                                                : SchemaConstants.Duration_MaxValue;
+                    remoteDependencyDocument.ResultCode = httpResponseStatusCode ?? "0";
 
                     // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
                     remoteDependencyDocument.Extension_IsSuccess = IsHttpSuccess(activity, httpResponseStatusCode);
                     break;
                 case OperationType.Db:
-                    // Note: The Exception details are recorded in Activity.Events only if the configuration has opt-ed into this (SqlClientInstrumentationOptions.RecordException).
+                    remoteDependencyDocument.Name = activity.DisplayName;
 
-                    var (_, dbTarget) = liveMetricsTagsProcessor.Tags.GetDbDependencyTargetAndName();
-
-                    remoteDependencyDocument.Name = dbTarget;
                     remoteDependencyDocument.CommandName = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeDbStatement)?.ToString();
-                    remoteDependencyDocument.Duration = activity.Duration.ToString("c", CultureInfo.InvariantCulture);
 
                     // TODO: remoteDependencyDocumentIngress.ResultCode = "";
                     // AI SDK reads a Number property from Connection or Command objects.
                     // As of Feb 2024, OpenTelemetry doesn't record this. This may change in the future when the semantic convention stabalizes.
 
-                    // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
-                    remoteDependencyDocument.Extension_IsSuccess = activity.Status != ActivityStatusCode.Error;
-                    break;
-                case OperationType.Rpc:
-                    // TODO RPC
                     break;
                 case OperationType.Messaging:
-                    // TODO MESSAGING
+                    remoteDependencyDocument.Name = activity.DisplayName;
+
+                    var (messagingUrl, _) = liveMetricsTagsProcessor.Tags.GetMessagingUrlAndSourceOrTarget(activity.Kind);
+                    remoteDependencyDocument.CommandName = messagingUrl;
+
                     break;
+                case OperationType.Rpc:
+                    // remoteDependencyDocument.Name = activity.DisplayName;
+                    // remoteDependencyDocument.CommandName = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeRpcService)?.ToString();
+                    // remoteDependencyDocument.ResultCode = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeRpcStatus)?.ToString();
                 default:
-                    // Unknown or Unexpected Dependency Type
-                    remoteDependencyDocument.Name = liveMetricsTagsProcessor.ActivityType.ToString();
+                    // Unknown or Manual or Unexpected Dependency Type
+                    remoteDependencyDocument.Name = activity.DisplayName;
+                    remoteDependencyDocument.Properties.Add(new KeyValuePairString("ActivitySource", activity.Source.Name));
                     break;
             }
 
