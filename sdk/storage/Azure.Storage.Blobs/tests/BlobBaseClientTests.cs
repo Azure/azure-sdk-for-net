@@ -8228,6 +8228,7 @@ namespace Azure.Storage.Blobs.Test
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AppendBlobClient createClient = InstrumentClient(new AppendBlobClient(
                 blobUriBuilder.ToUri(),
+                TestEnvironment.Credential,
                 options));
 
             await createClient.CreateAsync();
