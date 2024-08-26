@@ -393,7 +393,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             ChatClient chatClient = GetTestClient(keyCredential: new ApiKeyCredential(mockKey));
             var messages = new[] { new UserChatMessage("oops, this won't work with that key!") };
 
-            AsyncResultCollection<StreamingChatCompletionUpdate> result = SyncOrAsync(chatClient,
+            AsyncCollectionResult<StreamingChatCompletionUpdate> result = SyncOrAsync(chatClient,
                 c => c.CompleteChatStreaming(messages),
                 c => c.CompleteChatStreamingAsync(messages));
 
@@ -433,7 +433,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             TopLogProbabilityCount = 1,
         };
 
-        AsyncResultCollection<StreamingChatCompletionUpdate> streamingResults = SyncOrAsync(chatClient,
+        AsyncCollectionResult<StreamingChatCompletionUpdate> streamingResults = SyncOrAsync(chatClient,
                 c => c.CompleteChatStreaming(messages, options),
                 c => c.CompleteChatStreamingAsync(messages, options));
         Assert.That(streamingResults, Is.Not.Null);
@@ -477,7 +477,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         ChatClient client = GetTestClient();
 
-        AsyncResultCollection<StreamingChatCompletionUpdate> chatUpdates = SyncOrAsync(client,
+        AsyncCollectionResult<StreamingChatCompletionUpdate> chatUpdates = SyncOrAsync(client,
             c => c.CompleteChatStreaming(messages, options),
             c => c.CompleteChatStreamingAsync(messages, options));
         Assert.IsNotNull(chatUpdates);
