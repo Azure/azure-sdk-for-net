@@ -30,7 +30,7 @@ Follow these steps to run your existing Playwright test suite with the service.
 
 1. Sign in to the [Playwright portal](https://aka.ms/mpt/portal) with your Azure account.
 
-2. Create the Workspace.
+2. Create the Workspace
 
     ![Create new workspace](https://github.com/microsoft/playwright-testing-service/assets/12104064/d571e86b-9d43-48ac-a2b7-63afb9bb86a8)
 
