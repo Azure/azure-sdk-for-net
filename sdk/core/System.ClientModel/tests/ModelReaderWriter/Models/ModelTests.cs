@@ -51,7 +51,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithModelInterfaceNonGeneric(string format)
-            => RoundTripTest(format, new ModelInterfaceAsObjectStrategy<T>());
+        {
+            if (typeof(T).IsValueType)
+            {
+                Assert.Ignore("object based interface is not supported for value types.");
+            }
+            else
+            {
+                RoundTripTest(format, new ModelInterfaceAsObjectStrategy<T>());
+            }
+        }
 
         protected void RoundTripTest(string format, RoundTripStrategy<T> strategy)
         {
@@ -130,9 +139,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
             Assert.Throws<FormatException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
 
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((IPersistableModel<object>)ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((object)ModelInstance, options));
             Assert.Throws<FormatException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
-            if (ModelInstance is IJsonModel<T> jsonModel)
+            if (ModelInstance is IJsonModel<T> jsonModel && !typeof(T).IsValueType)
             {
                 Assert.Throws<FormatException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), options));
                 Assert.Throws<FormatException>(() => ((IJsonModel<object>)jsonModel).Write(new Utf8JsonWriter(new MemoryStream()), options));

@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     /// <summary> The InputAdditionalPropertiesModelStruct. </summary>
-    public readonly partial struct ModelAsStruct : IJsonModel<ModelAsStruct>, IJsonModel<object>
+    public readonly partial struct ModelAsStruct : IJsonModel<ModelAsStruct>
     {
         private readonly Dictionary<string, BinaryData> _rawData;
 
@@ -109,33 +109,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
-        void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
-
-        object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
-
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
-        }
-
-        BinaryData IPersistableModel<object>.Write(ModelReaderWriterOptions options)
-        {
-            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
-
-            return ModelReaderWriter.Write(this, options);
-        }
-
-        object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
-        }
-
         string IPersistableModel<ModelAsStruct>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        string IPersistableModel<object>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

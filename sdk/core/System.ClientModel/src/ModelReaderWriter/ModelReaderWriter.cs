@@ -10,7 +10,7 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// Provides functionality to read and write <see cref="IPersistableModel{T}"/> and <see cref="IJsonModel{T}"/>.
 /// </summary>
-public static class ModelReaderWriter
+public static partial class ModelReaderWriter
 {
     /// <summary>
     /// Converts the value of a model into a <see cref="BinaryData"/>.
@@ -62,7 +62,17 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        var iModel = model as IPersistableModel<object>;
+        IPersistableModel<object>? iModel;
+        if (model.GetType().IsValueType)
+        {
+            var wrapper = typeof(StructWapper<>).MakeGenericType(model.GetType());
+            iModel = (IPersistableModel<object>)Activator.CreateInstance(wrapper, model)!;
+        }
+        else
+        {
+            iModel = model as IPersistableModel<object>;
+        }
+
         if (iModel is null)
         {
             throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)}");
@@ -135,12 +145,23 @@ public static class ModelReaderWriter
 
     private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
     {
-        var model = GetObjectInstance(returnType) as IPersistableModel<object>;
-        if (model is null)
+        var model = GetObjectInstance(returnType);
+        IPersistableModel<object>? iModel;
+        if (model.GetType().IsValueType)
+        {
+            var wrapper = typeof(StructWapper<>).MakeGenericType(model.GetType());
+            iModel = (IPersistableModel<object>)Activator.CreateInstance(wrapper, model)!;
+        }
+        else
+        {
+            iModel = model as IPersistableModel<object>;
+        }
+
+        if (iModel is null)
         {
             throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
         }
-        return model;
+        return iModel;
     }
 
     private static IPersistableModel<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()

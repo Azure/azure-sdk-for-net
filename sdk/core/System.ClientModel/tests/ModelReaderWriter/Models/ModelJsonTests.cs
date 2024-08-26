@@ -16,7 +16,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceNonGeneric(string format)
-              => RoundTripTest(format, new JsonInterfaceAsObjectStrategy<T>());
+        {
+            if (typeof(T).IsValueType)
+            {
+                Assert.Ignore("object based interface is not supported for value types.");
+            }
+            else
+            {
+                RoundTripTest(format, new JsonInterfaceAsObjectStrategy<T>());
+            }
+        }
 
         [TestCase("J")]
         [TestCase("W")]
@@ -26,6 +35,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceUtf8ReaderNonGeneric(string format)
-            => RoundTripTest(format, new JsonInterfaceUtf8ReaderAsObjectStrategy<T>());
+        {
+            if (typeof(T).IsValueType)
+            {
+                Assert.Ignore("object based interface is not supported for value types.");
+            }
+            else
+            {
+                RoundTripTest(format, new JsonInterfaceUtf8ReaderAsObjectStrategy<T>());
+            }
+        }
     }
 }
