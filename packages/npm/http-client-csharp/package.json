@@ -1,5 +1,5 @@
 {
-  "name": "@azure-tools/csharp-plugin",
+  "name": "@azure-typespec/http-client-csharp",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/emitter/index.js",

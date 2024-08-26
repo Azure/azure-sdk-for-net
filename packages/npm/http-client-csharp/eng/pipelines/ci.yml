@@ -40,26 +40,26 @@ extends:
               - script: |
                   npm ci
                 displayName: "Install packages"
-                workingDirectory: $(Build.SourcesDirectory)/tools/azure-plugin
+                workingDirectory: $(Build.SourcesDirectory)/packages/npm/http-client-csharp
               - script: |
                   npm ls -a
                 displayName: "List packages"
-                workingDirectory: $(Build.SourcesDirectory)/tools/azure-plugin
+                workingDirectory: $(Build.SourcesDirectory)/packages/npm/http-client-csharp
               - script: |
                   npm run prettier
                 displayName: "Emitter format check"
-                workingDirectory: $(Build.SourcesDirectory)/tools/azure-plugin/emitter
+                workingDirectory: $(Build.SourcesDirectory)/packages/npm/http-client-csharp/emitter
               - script: |
                   npm run lint
                 displayName: "Emitter linter check"
-                workingDirectory: $(Build.SourcesDirectory)/tools/azure-plugin/emitter
+                workingDirectory: $(Build.SourcesDirectory)/packages/npm/http-client-csharp/emitter
               - task: Npm@1
                 displayName: 'Build Azure csharp client emitter and generator'
                 inputs:
                   command: custom
                   customCommand: run build
-                  workingDir: $(Build.SourcesDirectory)/tools/azure-plugin              
-              - pwsh: ./tools/azure-plugin/eng/scripts/CodeGenerationCheck.ps1
+                  workingDir: $(Build.SourcesDirectory)/packages/npm/http-client-csharp             
+              - pwsh: ./packages/npm/http-client-csharp/eng/scripts/CodeGenerationCheck.ps1
                 displayName: "Check if generated code is up-to-date"
                 env:
                   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1

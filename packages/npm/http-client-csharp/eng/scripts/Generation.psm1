@@ -26,14 +26,14 @@ function Get-TspCommand {
         [string]$generationDir
     )
     $command = "npx tsp compile $specFile"
-    $command += " --trace @azure-tools/csharp-plugin"
-    $command += " --emit @azure-tools/csharp-plugin"
+    $command += " --trace @azure-typespec/http-client-csharp"
+    $command += " --emit @azure-typespec/http-client-csharp"
     $configFile = Join-Path $generationDir "tspconfig.yaml"
     if (Test-Path $configFile) {
         $command += " --config=$configFile"
     }
-    $command += " --option @azure-tools/csharp-plugin.emitter-output-dir=$generationDir"
-    $command += " --option @azure-tools/csharp-plugin.save-inputs=true"
+    $command += " --option @azure-typespec/http-client-csharp.emitter-output-dir=$generationDir"
+    $command += " --option @azure-typespec/http-client-csharp.save-inputs=true"
     return $command
 }
 

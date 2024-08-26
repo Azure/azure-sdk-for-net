@@ -140,7 +140,7 @@ Backup*/
 UpgradeLog*.XML
 
 # NuGet
-packages
+# packages
 packages/repositories.config
 testPackages
 
