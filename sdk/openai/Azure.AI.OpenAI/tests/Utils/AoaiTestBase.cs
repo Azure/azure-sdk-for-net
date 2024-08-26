@@ -7,12 +7,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Models;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenAI.Assistants;
 using OpenAI.Audio;
@@ -23,14 +23,13 @@ using OpenAI.Files;
 using OpenAI.FineTuning;
 using OpenAI.Images;
 using OpenAI.TestFramework;
-using OpenAI.TestFramework.Recording;
-using OpenAI.TestFramework.Recording.RecordingProxy;
-using OpenAI.TestFramework.Utils;
-using OpenAI.VectorStores;
-using OpenAI.TestFramework.Recording.Sanitizers;
-using TokenCredential = Azure.Core.TokenCredential;
 using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Recording.Proxy.Service;
+using OpenAI.TestFramework.Recording.RecordingProxy;
+using OpenAI.TestFramework.Recording.Sanitizers;
+using OpenAI.TestFramework.Utils;
+using OpenAI.VectorStores;
+using TokenCredential = Azure.Core.TokenCredential;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -452,7 +451,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             request.Content.WriteTo(stream, default);
             stream.Position = 0;
 
-            string? contentType = request.Headers.GetFirstValueOrDefault("Content-Type");
+            string? contentType = request.Headers.GetFirstOrDefault("Content-Type");
             if (IsProbableTextContent(contentType))
             {
                 DumpText(contentType, stream);
@@ -481,7 +480,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         if (response!.Content is not null)
         {
             using Stream stream = response.Content.ToStream();
-            string? contentType = response.Headers.GetFirstValueOrDefault("Content-Type");
+            string? contentType = response.Headers.GetFirstOrDefault("Content-Type");
             if (IsProbableTextContent(contentType))
             {
                 DumpText(contentType, stream);

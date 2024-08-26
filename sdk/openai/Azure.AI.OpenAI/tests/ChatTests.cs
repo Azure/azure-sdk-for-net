@@ -5,13 +5,14 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Chat;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using NUnit.Framework;
 using OpenAI.Chat;
 using OpenAI.TestFramework;
 using OpenAI.TestFramework.Mocks;
@@ -156,8 +157,8 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(chatCompletion.Content[0].Text, Is.Not.Null.Or.Empty);
     }
 
-    [Test]
-    [LiveOnly(Reason = "Delay behavior not emulated by recordings")]
+    [RecordedTest]
+    [Ignore("Delay behavior not emulated by recordings, and needs to be run manually with some time in between iterations due to service throttling behaviour")]
     [TestCase("x-ms-retry-after-ms", "1000", 1000)]
     [TestCase("retry-after-ms", "1400", 1400)]
     [TestCase("Retry-After", "1", 1000)]
@@ -166,15 +167,18 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     [TestCase("x-fake-test-retry-header", "1400", 800)]
     public async Task RateLimitedRetryWorks(string headerName, string headerValue, double expectedDelayMilliseconds)
     {
-        IConfiguration testConfig = TestConfig.GetConfig("rate_limited_chat");
+        const string responseClass = "HttpClientTransportResponse";
+        const string responseField = "_httpResponse";
+        IConfiguration testConfig = TestConfig.GetConfig("rate_limited_chat")!;
+        Assert.That(testConfig, Is.Not.Null);
 
         int failureCount = 0;
-        string clientRequestId = null;
+        string? clientRequestId = null;
 
         TestPipelinePolicy replaceHeadersPolicy = new(
             requestAction: (request) =>
             {
-                clientRequestId ??= request.Headers.TryGetValue("x-ms-client-request-id", out string id) ? id : null;
+                clientRequestId ??= request.Headers.GetFirstOrDefault("x-ms-client-request-id");
             },
             responseAction: (response) =>
             {
@@ -182,9 +186,12 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
                 {
                     failureCount++;
 
-                    Type httpPipelineResponseType = typeof(HttpClientPipelineTransport).GetNestedType("HttpClientTransportResponse", BindingFlags.NonPublic);
-                    FieldInfo httpResponseField = httpPipelineResponseType.GetField("_httpResponse", BindingFlags.Instance | BindingFlags.NonPublic);
-                    HttpResponseMessage httpResponse = httpResponseField.GetValue(response) as HttpResponseMessage;
+                    Type httpPipelineResponseType = typeof(HttpClientPipelineTransport).GetNestedType(responseClass, BindingFlags.NonPublic)
+                        ?? throw new InvalidOperationException($"Could not the expected {responseClass} inner non public class");
+                    FieldInfo httpResponseField = httpPipelineResponseType.GetField(responseField, BindingFlags.Instance | BindingFlags.NonPublic)
+                        ?? throw new InvalidOperationException($"Could not find the expected {responseClass}.{responseField} field)");
+                    HttpResponseMessage httpResponse = httpResponseField.GetValue(response) as HttpResponseMessage
+                        ?? throw new InvalidOperationException($"Could note determine the HttpResponseMessage to modify");
 
                     httpResponse.Headers.Remove("x-ms-retry-after-ms");
                     httpResponse.Headers.Remove("retry-after-ms");
@@ -216,7 +223,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             Stopwatch requestWatch = Stopwatch.StartNew();
             ClientResult protocolResult = await client.CompleteChatAsync(requestContent, noThrowOptions);
             PipelineResponse response = protocolResult.GetRawResponse();
-            bool responseHasRequestId = response.Headers.TryGetValue("x-ms-client-request-id", out string requestIdFromResponse);
+            bool responseHasRequestId = response.Headers.TryGetValue("x-ms-client-request-id", out string? requestIdFromResponse);
             Assert.That(responseHasRequestId, Is.True);
             Assert.That(requestIdFromResponse, Is.EqualTo(clientRequestId));
             switch (response.Status)
@@ -237,8 +244,8 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(observed200Delay.HasValue, Is.True);
         Assert.That(observed429Delay.HasValue, Is.True);
         Assert.That(failureCount, Is.EqualTo(4));
-        Assert.That(observed429Delay.Value.TotalMilliseconds, Is.GreaterThan(expectedDelayMilliseconds));
-        Assert.That(observed429Delay.Value.TotalMilliseconds, Is.LessThan(3 * expectedDelayMilliseconds + 2 * observed200Delay.Value.TotalMilliseconds));
+        Assert.That(observed429Delay!.Value.TotalMilliseconds, Is.GreaterThan(expectedDelayMilliseconds));
+        Assert.That(observed429Delay!.Value.TotalMilliseconds, Is.LessThan(3 * expectedDelayMilliseconds + 2 * observed200Delay!.Value.TotalMilliseconds));
     }
 
     #endregion
