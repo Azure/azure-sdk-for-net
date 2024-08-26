@@ -7,17 +7,20 @@ namespace System.ClientModel.Primitives;
 
 public static partial class ModelReaderWriter
 {
-    private class StructWapper<T> : IJsonModel<StructWapper<T>> where T : IJsonModel<T>
+    private class StructWrapper<T> : StructWrapper, IJsonModel<StructWrapper<T>> where T : IJsonModel<T>
     {
-        public StructWapper(T value) => Value = value;
+        public StructWrapper(T value) : base(value)
+        {
+            Value = value;
+        }
 
-        public T Value { get; private set; }
+        public new T Value { get; private set; }
 
-        public StructWapper<T> Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            => new StructWapper<T>(Value.Create(ref reader, options));
+        public StructWrapper<T> Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            => new StructWrapper<T>(Value.Create(ref reader, options));
 
-        public StructWapper<T> Create(BinaryData data, ModelReaderWriterOptions options)
-            => new StructWapper<T>(Value.Create(data, options));
+        public StructWrapper<T> Create(BinaryData data, ModelReaderWriterOptions options)
+            => new StructWrapper<T>(Value.Create(data, options));
 
         public string GetFormatFromOptions(ModelReaderWriterOptions options)
             => Value.GetFormatFromOptions(options);
@@ -27,7 +30,15 @@ public static partial class ModelReaderWriter
 
         public BinaryData Write(ModelReaderWriterOptions options)
             => Value.Write(options);
+    }
 
-        public static implicit operator T(StructWapper<T> wrapper) => wrapper.Value;
+    private class StructWrapper
+    {
+        public StructWrapper(object value)
+        {
+            Value = value;
+        }
+
+        public object Value { get; }
     }
 }
