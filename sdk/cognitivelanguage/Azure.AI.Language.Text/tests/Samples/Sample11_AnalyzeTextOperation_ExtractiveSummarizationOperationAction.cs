@@ -87,7 +87,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)analyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
-                    foreach (ExtractedSummaryDocumentResultWithDetectedLanguage extractedSummyDocument in extractiveSummarizationLROResult.Results.Documents)
+                    foreach (ExtractedSummaryActionResult extractedSummyDocument in extractiveSummarizationLROResult.Results.Documents)
                     {
                         Console.WriteLine($"Result for document with Id = \"{extractedSummyDocument.Id}\":");
                         Console.WriteLine($"  Extracted {extractedSummyDocument.Sentences.Count} sentence(s):");

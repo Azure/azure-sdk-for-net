@@ -156,6 +156,91 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(chatCompletion.Content[0].Text, Is.Not.Null.Or.Empty);
     }
 
+    [Test]
+    [LiveOnly(Reason = "Delay behavior not emulated by recordings")]
+    [TestCase("x-ms-retry-after-ms", "1000", 1000)]
+    [TestCase("retry-after-ms", "1400", 1400)]
+    [TestCase("Retry-After", "1", 1000)]
+    [TestCase("Retry-After", "1.5", 1500)]
+    [TestCase("retry-after-ms", "200", 200)]
+    [TestCase("x-fake-test-retry-header", "1400", 800)]
+    public async Task RateLimitedRetryWorks(string headerName, string headerValue, double expectedDelayMilliseconds)
+    {
+        IConfiguration testConfig = TestConfig.GetConfig("rate_limited_chat");
+
+        int failureCount = 0;
+        string clientRequestId = null;
+
+        TestPipelinePolicy replaceHeadersPolicy = new(
+            requestAction: (request) =>
+            {
+                clientRequestId ??= request.Headers.TryGetValue("x-ms-client-request-id", out string id) ? id : null;
+            },
+            responseAction: (response) =>
+            {
+                if (response.Status != 200)
+                {
+                    failureCount++;
+
+                    Type httpPipelineResponseType = typeof(HttpClientPipelineTransport).GetNestedType("HttpClientTransportResponse", BindingFlags.NonPublic);
+                    FieldInfo httpResponseField = httpPipelineResponseType.GetField("_httpResponse", BindingFlags.Instance | BindingFlags.NonPublic);
+                    HttpResponseMessage httpResponse = httpResponseField.GetValue(response) as HttpResponseMessage;
+
+                    httpResponse.Headers.Remove("x-ms-retry-after-ms");
+                    httpResponse.Headers.Remove("retry-after-ms");
+                    httpResponse.Headers.Remove("Retry-After");
+                    httpResponse.Headers.TryAddWithoutValidation(headerName, headerValue);
+                }
+            });
+
+        TestClientOptions options = new();
+        options.AddPolicy(replaceHeadersPolicy, PipelinePosition.PerTry);
+
+        ChatClient client = GetTestClient(testConfig, options);
+
+        BinaryContent requestContent = BinaryContent.Create(BinaryData.FromString($$"""
+            {
+              "model": "{{testConfig.Deployment}}",
+              "messages": [
+                { "role": "user", "content": "Write three haikus about tropical fruit." }
+              ]
+            }
+            """));
+        RequestOptions noThrowOptions = new() { ErrorOptions = ClientErrorBehaviors.NoThrow };
+
+        TimeSpan? observed200Delay = null;
+        TimeSpan? observed429Delay = null;
+
+        for (int i = 0; i < 4 && !observed429Delay.HasValue; i++)
+        {
+            Stopwatch requestWatch = Stopwatch.StartNew();
+            ClientResult protocolResult = await client.CompleteChatAsync(requestContent, noThrowOptions);
+            PipelineResponse response = protocolResult.GetRawResponse();
+            bool responseHasRequestId = response.Headers.TryGetValue("x-ms-client-request-id", out string requestIdFromResponse);
+            Assert.That(responseHasRequestId, Is.True);
+            Assert.That(requestIdFromResponse, Is.EqualTo(clientRequestId));
+            switch (response.Status)
+            {
+                case 200:
+                    observed200Delay = requestWatch.Elapsed;
+                    break;
+                case 429:
+                    observed429Delay = requestWatch.Elapsed;
+                    break;
+                default:
+                    Assert.Fail();
+                    break;
+            }
+            clientRequestId = null;
+        }
+
+        Assert.That(observed200Delay.HasValue, Is.True);
+        Assert.That(observed429Delay.HasValue, Is.True);
+        Assert.That(failureCount, Is.EqualTo(4));
+        Assert.That(observed429Delay.Value.TotalMilliseconds, Is.GreaterThan(expectedDelayMilliseconds));
+        Assert.That(observed429Delay.Value.TotalMilliseconds, Is.LessThan(3 * expectedDelayMilliseconds + 2 * observed200Delay.Value.TotalMilliseconds));
+    }
+
     #endregion
 
     #region Regular chat completions tests
@@ -308,7 +393,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             ChatClient chatClient = GetTestClient(keyCredential: new ApiKeyCredential(mockKey));
             var messages = new[] { new UserChatMessage("oops, this won't work with that key!") };
 
-            AsyncResultCollection<StreamingChatCompletionUpdate> result = chatClient.CompleteChatStreamingAsync(messages);
+            AsyncCollectionResult<StreamingChatCompletionUpdate> result = chatClient.CompleteChatStreamingAsync(messages);
             await foreach (StreamingChatCompletionUpdate update in result)
             {
                 Assert.Fail("No exception was thrown");
@@ -345,7 +430,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             TopLogProbabilityCount = 1,
         };
 
-        AsyncResultCollection<StreamingChatCompletionUpdate> streamingResults = chatClient.CompleteChatStreamingAsync(messages, options);
+        AsyncCollectionResult<StreamingChatCompletionUpdate> streamingResults = chatClient.CompleteChatStreamingAsync(messages, options);
         Assert.That(streamingResults, Is.Not.Null);
 
         await foreach (StreamingChatCompletionUpdate update in streamingResults)
@@ -388,7 +473,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         ChatClient client = GetTestClient();
 
-        AsyncResultCollection<StreamingChatCompletionUpdate> chatUpdates = client.CompleteChatStreamingAsync(messages, options);
+        AsyncCollectionResult<StreamingChatCompletionUpdate> chatUpdates = client.CompleteChatStreamingAsync(messages, options);
         Assert.IsNotNull(chatUpdates);
 
         await foreach (StreamingChatCompletionUpdate update in chatUpdates)

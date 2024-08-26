@@ -26,11 +26,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DateTime))
+            if (Optional.IsCollectionDefined(CommunicatedAt))
             {
-                writer.WritePropertyName("dateTime"u8);
+                writer.WritePropertyName("communicatedAt"u8);
                 writer.WriteStartArray();
-                foreach (var item in DateTime)
+                foreach (var item in CommunicatedAt)
                 {
                     writer.WriteStringValue(item, "O");
                 }
@@ -98,7 +98,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            IReadOnlyList<DateTimeOffset> dateTime = default;
+            IReadOnlyList<DateTimeOffset> communicatedAt = default;
             IReadOnlyList<MedicalProfessionalType> recipient = default;
             bool wasAcknowledged = default;
             RadiologyInsightsInferenceType kind = default;
@@ -107,7 +107,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dateTime"u8))
+                if (property.NameEquals("communicatedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         array.Add(item.GetDateTimeOffset("O"));
                     }
-                    dateTime = array;
+                    communicatedAt = array;
                     continue;
                 }
                 if (property.NameEquals("recipient"u8))
@@ -169,7 +169,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 kind,
                 extension ?? new ChangeTrackingList<FhirR4Extension>(),
                 serializedAdditionalRawData,
-                dateTime ?? new ChangeTrackingList<DateTimeOffset>(),
+                communicatedAt ?? new ChangeTrackingList<DateTimeOffset>(),
                 recipient ?? new ChangeTrackingList<MedicalProfessionalType>(),
                 wasAcknowledged);
         }

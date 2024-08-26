@@ -255,7 +255,7 @@ namespace Azure.AI.OpenAI.Tests
                 }
             };
 
-            AsyncResultCollection<StreamingChatCompletionUpdate> response = client.CompleteChatStreamingAsync(messages, requestOptions);
+            AsyncCollectionResult<StreamingChatCompletionUpdate> response = client.CompleteChatStreamingAsync(messages, requestOptions);
             Assert.That(response, Is.Not.Null);
 
             await foreach (StreamingChatCompletionUpdate update in response)

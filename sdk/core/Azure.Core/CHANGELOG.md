@@ -1,5 +1,17 @@
 # Release History
 
+## 1.43.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Added a new constructor on `AzureEventSourceListener` for callers that don't need the formatted message ([#45191](https://github.com/Azure/azure-sdk-for-net/pull/45191)).
+
 ## 1.42.0 (2024-08-01)
 
 ### Other Changes

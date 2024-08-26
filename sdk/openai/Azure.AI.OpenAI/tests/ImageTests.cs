@@ -47,7 +47,7 @@ public class ImageTests(bool isAsync) : AoaiTestBase<ImageClient>(isAsync)
         {
             Quality = GeneratedImageQuality.Standard,
             Size = GeneratedImageSize.W1024xH1024,
-            User = "test_user",
+            EndUserId = "test_user",
             ResponseFormat = GeneratedImageFormat.Bytes,
         });
         Assert.That(image, Is.Not.Null);
@@ -62,7 +62,7 @@ public class ImageTests(bool isAsync) : AoaiTestBase<ImageClient>(isAsync)
         {
             Quality = GeneratedImageQuality.Standard,
             Size = GeneratedImageSize.W1024xH1024,
-            User = "test_user",
+            EndUserId = "test_user",
             ResponseFormat = GeneratedImageFormat.Uri,
         });
         GeneratedImage image = imageResult.Value;

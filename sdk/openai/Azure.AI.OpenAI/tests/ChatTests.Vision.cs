@@ -118,7 +118,7 @@ namespace Azure.AI.OpenAI.Tests
                 MaxTokens = 2048,
             };
 
-            AsyncResultCollection<StreamingChatCompletionUpdate> response = client.CompleteChatStreamingAsync(messages, options);
+            AsyncCollectionResult<StreamingChatCompletionUpdate> response = client.CompleteChatStreamingAsync(messages, options);
             Assert.That(response, Is.Not.Null);
 
             await foreach (StreamingChatCompletionUpdate update in response)

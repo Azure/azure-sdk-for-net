@@ -27,6 +27,26 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [Category("Smoke")]
     public void CanCreateClient() => Assert.That(GetTestClient(), Is.InstanceOf<AssistantClient>());
 
+    [Test]
+    [Category("Smoke")]
+    public void VerifyClientOptionMutability()
+    {
+        AzureOpenAIClientOptions options = null;
+        Assert.DoesNotThrow(() =>
+            options = new AzureOpenAIClientOptions()
+            {
+                ApplicationId = "init does not throw",
+            });
+        Assert.DoesNotThrow(() =>
+            options.ApplicationId = "set before freeze OK");
+        AzureOpenAIClient azureClient = new(
+            new Uri("https://www.microsoft.com/placeholder"),
+            new ApiKeyCredential("placeholder"),
+            options);
+        Assert.Throws<InvalidOperationException>(() =>
+            options.ApplicationId = "set after freeze throws");
+    }
+
     [RecordedTest]
     public async Task BasicAssistantOperationsWork()
     {
@@ -61,9 +81,9 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             },
         });
         Assert.That(modifiedAssistant.Id, Is.EqualTo(assistant.Id));
-        AsyncPageableCollection<Assistant> recentAssistants = client.GetAssistantsAsync();
+        AsyncPageCollection<Assistant> recentAssistants = client.GetAssistantsAsync();
         Assistant recentAssistant = null;
-        await foreach (Assistant asyncAssistant in recentAssistants)
+        await foreach (Assistant asyncAssistant in recentAssistants.GetAllValuesAsync())
         {
             recentAssistant = asyncAssistant;
             break;
@@ -138,7 +158,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     {
         AssistantClient client = GetTestClient();
         string modelName = client.DeploymentOrThrow();
-        FunctionToolDefinition getWeatherTool = new("get_current_weather", "Gets the user's current weather");
+        FunctionToolDefinition getWeatherTool = new("get_current_weather") { Description = "Gets the user's current weather" };
         Assistant assistant = await client.CreateAssistantAsync(modelName, new()
         {
             Tools = { getWeatherTool }
@@ -154,7 +174,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         {
             InitialMessages = { new(MessageRole.User, ["What should I wear outside right now?"]), },
         };
-        AsyncResultCollection<StreamingUpdate> asyncResults = client.CreateThreadAndRunStreamingAsync(assistant, thrdOpt);
+        AsyncCollectionResult<StreamingUpdate> asyncResults = client.CreateThreadAndRunStreamingAsync(assistant, thrdOpt);
 
         Print(" >>> Starting enumeration ...");
 
@@ -274,7 +294,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         };
         AssistantThread thread = await client.CreateThreadAsync(options);
         Validate(thread);
-        List<ThreadMessage> messageList = await client.GetMessagesAsync(thread, resultOrder: ListOrder.OldestFirst).ToListAsync();
+        List<ThreadMessage> messageList = await client.GetMessagesAsync(thread, new() { Order = ListOrder.OldestFirst }).ToListAsync();
         Assert.That(messageList.Count, Is.EqualTo(2));
         Assert.That(messageList[0].Role, Is.EqualTo(MessageRole.User));
         Assert.That(messageList[0].Content?.Count, Is.EqualTo(1));
@@ -455,7 +475,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             r => r.Status.IsTerminal);
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
 
-        List<ThreadMessage> messages = await client.GetMessagesAsync(run.ThreadId, resultOrder: ListOrder.NewestFirst)
+        List<ThreadMessage> messages = await client.GetMessagesAsync(run.ThreadId, new() { Order = ListOrder.NewestFirst })
             .ToListAsync();
         Assert.That(messages.Count, Is.GreaterThan(1));
         Assert.That(messages.ElementAt(0).Role, Is.EqualTo(MessageRole.Assistant));
@@ -559,10 +579,10 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             r => r.Status.IsTerminal);
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
 
-        AsyncPageableCollection<ThreadMessage> messages = client.GetMessagesAsync(thread, resultOrder: ListOrder.NewestFirst);
+        AsyncPageCollection<ThreadMessage> messages = client.GetMessagesAsync(thread, new() { Order = ListOrder.NewestFirst });
         bool hasAtLeastOne = false;
         bool hasCake = false;
-        await foreach (ThreadMessage message in messages)
+        await foreach (ThreadMessage message in messages.GetAllValuesAsync())
         {
             hasAtLeastOne = true;
             foreach (MessageContent content in message.Content)
@@ -593,7 +613,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
         Validate(thread);
 
-        AsyncResultCollection<StreamingUpdate> streamingResult = client.CreateRunStreamingAsync(thread.Id, assistant.Id);
+        AsyncCollectionResult<StreamingUpdate> streamingResult = client.CreateRunStreamingAsync(thread.Id, assistant.Id);
 
         StringBuilder content = new();
         DateTimeOffset? lastUpdate = null;

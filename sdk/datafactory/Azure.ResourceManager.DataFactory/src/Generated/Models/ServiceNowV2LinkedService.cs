@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="ServiceNowV2LinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="clientSecret"> The client secret for OAuth2 authentication. </param>
         /// <param name="grantType"> GrantType for OAuth2 authentication. Default value is password. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal ServiceNowV2LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> endpoint, ServiceNowV2AuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> grantType, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal ServiceNowV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> endpoint, ServiceNowV2AuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> grantType, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             AuthenticationType = authenticationType;

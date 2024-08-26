@@ -110,7 +110,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)analyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
-                    foreach (KeyPhrasesDocumentResultWithDetectedLanguage kpeResult in keyPhraseExtractionLROResult.Results.Documents)
+                    foreach (KeyPhrasesActionResult kpeResult in keyPhraseExtractionLROResult.Results.Documents)
                     {
                         Console.WriteLine($"Result for document with Id = \"{kpeResult.Id}\":");
                         foreach (string keyPhrase in kpeResult.KeyPhrases)

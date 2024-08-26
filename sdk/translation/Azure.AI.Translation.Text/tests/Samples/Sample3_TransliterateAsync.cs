@@ -22,7 +22,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTransliteratedTextAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTransliteratedTextAsync
             try
@@ -50,7 +50,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTransliteratedTextOptionsAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTransliteratedTextOptionsAsync
             try
