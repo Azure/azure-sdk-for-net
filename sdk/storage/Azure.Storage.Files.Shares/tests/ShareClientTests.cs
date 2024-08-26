@@ -362,6 +362,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/45675")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_01_05)]
         public async Task CreateAsync_ProvisionedMaxIopsAndBandwidth()
         {
@@ -1916,6 +1917,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/45675")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_01_05)]
         public async Task SetPropertiesAsync_ProvisionedBilling()
         {
@@ -1933,7 +1935,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
-            Assert.AreEqual(3000, response.Value.PaidBurstingMaxIops);
+            Assert.AreEqual(3000, response.Value.ProvisionedIops);
             Assert.AreEqual(125, response.Value.ProvisionedBandwidthMiBps);
             Assert.IsNotNull(response.Value.IncludedBurstIops);
             Assert.IsNotNull(response.Value.MaxBurstCreditsForIops);

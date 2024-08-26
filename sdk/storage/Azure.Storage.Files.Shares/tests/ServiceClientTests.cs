@@ -432,6 +432,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/45675")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_01_05)]
         public async Task ListSharesSegmentAsync_ProvisionedBilling()
         {
