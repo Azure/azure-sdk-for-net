@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Events;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -542,6 +543,45 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, properties.Count);
             Assert.True(properties.TryGetValue(expectedScopeKey, out string actualScopeValue));
             Assert.Equal(duplicateScopeValue2, actualScopeValue);
+        }
+
+        [Fact]
+        public void ValidateCustomEvent()
+        {
+            // Arrange.
+            var logRecords = new List<LogRecord>(1);
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddInMemoryExporter(logRecords);
+                });
+            });
+
+            var eventLogger = new ApplicationInsightsEventLogger(loggerFactory);
+
+            var attributesList = new List<KeyValuePair<string, object?>>
+            {
+                new KeyValuePair<string, object?>("customEventKey", "customEventValue")
+            };
+
+            eventLogger.TrackEvent("MyCustomEvent", attributesList);
+
+            // Assert.
+            var logRecord = logRecords.Single();
+            var logRecodBatch = new Batch<LogRecord>(new[] { logRecord } , 1);
+            var properties = new ChangeTrackingDictionary<string, string>();
+            var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(logRecodBatch, null, "Ikey");
+
+            var telemetryItem = telemetryItems.FirstOrDefault();
+            var telemetryEventData = telemetryItem?.Data.BaseData as TelemetryEventData;
+
+            Assert.NotNull(telemetryEventData);
+            Assert.Equal("MyCustomEvent", telemetryEventData.Name);
+            Assert.Single(telemetryEventData.Properties);
+            var property = telemetryEventData.Properties.Single();
+            Assert.Equal("customEventKey", property.Key);
+            Assert.Equal("customEventValue", property.Value);
         }
 
         private class CustomObject
