@@ -1,6 +1,0 @@
-{
-  "output-folder": ".",
-  "namespace": "UnbrandedTypeSpec",
-  "library-name": "UnbrandedTypeSpec",
-  "use-model-reader-writer": true
-}

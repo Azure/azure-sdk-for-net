@@ -6,20 +6,20 @@ $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 
 Refresh-Build
 
-Write-Host "Generating UnbrandedTypeSpec" -ForegroundColor Cyan
+Write-Host "Generating BasicTypeSpec" -ForegroundColor Cyan
 $testProjectsLocalDir = Join-Path $packageRoot 'generator' 'TestProjects' 'Local'
 
-$unbrandedTypespecTestProject = Join-Path $testProjectsLocalDir "Unbranded-TypeSpec"
+$basicTypespecTestProject = Join-Path $testProjectsLocalDir "Basic-TypeSpec"
 
-Invoke (Get-TspCommand "$unbrandedTypespecTestProject/Unbranded-TypeSpec.tsp" $unbrandedTypespecTestProject)
+Invoke (Get-TspCommand "$basicTypespecTestProject/Basic-TypeSpec.tsp" $basicTypespecTestProject)
 
 # exit if the generation failed
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
-Write-Host "Building UnbrandedTypeSpec" -ForegroundColor Cyan
-Invoke "dotnet build $packageRoot/generator/TestProjects/Local/Unbranded-TypeSpec/src/UnbrandedTypeSpec.csproj"
+Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
+Invoke "dotnet build $packageRoot/generator/TestProjects/Local/Basic-TypeSpec/src/BasicTypeSpec.csproj"
 
 # exit if the generation failed
 if ($LASTEXITCODE -ne 0) {
