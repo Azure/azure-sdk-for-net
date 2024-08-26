@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Concurrent;
-using System.Security.Cryptography;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress;
 
@@ -21,7 +20,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress;
 internal class Processor
 {
     /// <summary>A unique identifier used to identify this processor instance.</summary>
-    public string Identifier { get; } = Guid.NewGuid().ToString();
+    public string BlobName { get; } = Guid.NewGuid().ToString();
 
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Processor" /> instance.</summary>
     private Metrics _metrics;
@@ -58,10 +57,10 @@ internal class Processor
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task RunAsync(Func<ProcessMessageEventArgs, Task> messageHandler, Func<ProcessErrorEventArgs, Task> errorHandler, CancellationToken cancellationToken)
+    public async Task RunAsync(Func<TransferStatusEventArgs, Task> messageHandler, Func<TransferItemFailedEventArgs, Task> errorHandler, CancellationToken cancellationToken)
     {
-        await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-        await using var processor = client.CreateProcessor(_testParameters.QueueName, _processorConfiguration.options);
+        var client = new BlobContainerClient(_testParameters.StorageConnectionString, _testParameters.BlobContainerName, _processorConfiguration.options);
+        var processor = client.GetBlockBlobClient(BlobName);
 
         while (!cancellationToken.IsCancellationRequested)
         {
