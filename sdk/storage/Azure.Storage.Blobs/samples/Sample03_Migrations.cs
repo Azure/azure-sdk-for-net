@@ -935,10 +935,10 @@ namespace Azure.Storage.Blobs.Samples
 
                 // Create full, self-authenticating URI to the resource from the BlobClient
                 Uri sasUri = blobClient.GenerateUserDelegationSasUri(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1), userDelegationKey);
-
-                // Use newly made as SAS URI to download the blob
-                await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
                 #endregion
+
+                // Use newly made SAS URI to download the blob
+                await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
             }
             finally
             {
@@ -983,7 +983,7 @@ namespace Azure.Storage.Blobs.Samples
                 Uri sasUri = blobClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
                 #endregion
 
-                // Use newly made as SAS URI to download the blob
+                // Use newly made SAS URI to download the blob
                 await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
             }
             finally

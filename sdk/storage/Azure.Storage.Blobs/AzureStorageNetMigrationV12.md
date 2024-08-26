@@ -619,9 +619,6 @@ BlobClient blobClient = new BlobClient(blobUri);
 
 // Create full, self-authenticating URI to the resource from the BlobClient
 Uri sasUri = blobClient.GenerateUserDelegationSasUri(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1), userDelegationKey);
-
-// Use newly made as SAS URI to download the blob
-await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
 ```
 
 To create a more complex User Delegation SAS, pass the SAS builder to the GenerateUserDelegationSas method.
