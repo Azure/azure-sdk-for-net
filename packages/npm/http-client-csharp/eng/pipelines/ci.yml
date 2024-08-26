@@ -26,7 +26,7 @@ extends:
               - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
                 parameters:
                   Paths:
-                    - tools/azure-plugin
+                    - packages/npm/http-client-csharp
               - task: UseDotNet@2
                 displayName: 'Use .NET Core SDK'
                 retryCountOnTaskFailure: 3
