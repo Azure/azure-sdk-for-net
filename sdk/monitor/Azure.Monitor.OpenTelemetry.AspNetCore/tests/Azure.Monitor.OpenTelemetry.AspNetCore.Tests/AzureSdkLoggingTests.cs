@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
-using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
@@ -26,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
         [Theory]
         [InlineData(false, LogLevel.Debug, null)]
-        //[InlineData(false, LogLevel.Information, null)] // TODO: This test needs to be fixed. It's failing because the CustomEvent changes.
+        [InlineData(false, LogLevel.Information, null)]
         [InlineData(false, LogLevel.Warning, "TestWarningEvent: hello")]
         [InlineData(true, LogLevel.Information, "TestInfoEvent: hello")]
         [InlineData(true, LogLevel.Warning, "TestWarningEvent: hello")]
