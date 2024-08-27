@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Models;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using NUnit.Framework;
 using OpenAI.Batch;
 using OpenAI.Chat;
 using OpenAI.Embeddings;

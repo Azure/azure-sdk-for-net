@@ -4,7 +4,6 @@
 using System;
 using System.ClientModel;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using OpenAI.Images;
 using OpenAI.TestFramework;
 

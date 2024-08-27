@@ -12,7 +12,6 @@ using Azure.AI.OpenAI.FineTuning;
 using Azure.AI.OpenAI.Tests.Models;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using NUnit.Framework;
 using OpenAI.Chat;
 using OpenAI.Files;
 using OpenAI.FineTuning;

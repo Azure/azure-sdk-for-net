@@ -3,7 +3,6 @@
 
 using System.ClientModel;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using OpenAI.Embeddings;
 using OpenAI.TestFramework;
 

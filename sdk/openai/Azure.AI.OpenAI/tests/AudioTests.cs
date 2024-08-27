@@ -6,7 +6,6 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using OpenAI.Audio;
 using OpenAI.TestFramework;
 

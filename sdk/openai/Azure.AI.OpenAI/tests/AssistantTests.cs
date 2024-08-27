@@ -11,7 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using NUnit.Framework;
 using OpenAI;
 using OpenAI.Assistants;
 using OpenAI.Files;

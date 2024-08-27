@@ -6,7 +6,6 @@ using System.ClientModel;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using OpenAI.Chat;
 using OpenAI.TestFramework;
 
