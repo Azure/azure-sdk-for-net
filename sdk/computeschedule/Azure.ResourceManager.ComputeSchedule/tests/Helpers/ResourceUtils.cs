@@ -2,20 +2,21 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
 {
     public static class ResourceUtils
     {
-        public static VirtualMachineData GetBasicLinuxVirtualMachineData(AzureLocation location, string computerName, ResourceIdentifier nicID, string adminUsername = "adminuser")
+        public static VirtualMachineData GetBasicLinuxVirtualMachineData(AzureLocation location, string computerName, ResourceIdentifier nicID, string dummySSHKey,
+            string adminUsername = "adminuser")
         {
             return new VirtualMachineData(location)
             {
                 HardwareProfile = new()
                 {
-                    VmSize = VirtualMachineSizeType.StandardF2
+                    VmSize = VirtualMachineSizeType.StandardD4V3
                 },
                 OSProfile = new()
                 {
@@ -25,6 +26,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
                     {
                         DisablePasswordAuthentication = true,
                         EnableVmAgentPlatformUpdates = true,
+                        SshPublicKeys = {
+                                    new()
+                                    {
+                                        Path = $"/home/{adminUsername}/.ssh/authorized_keys",
+                                        KeyData = dummySSHKey,
+                                    }
+                                }
                     }
                 },
                 NetworkProfile = new VirtualMachineNetworkProfile()

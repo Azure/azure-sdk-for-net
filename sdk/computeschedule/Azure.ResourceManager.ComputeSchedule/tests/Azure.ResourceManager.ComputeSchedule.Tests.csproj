@@ -2,6 +2,8 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.ComputeSchedule.csproj" />
     <PackageReference Include="Azure.ResourceManager.Compute" />
+    <PackageReference Include="Polly" />
+    <PackageReference Include="Polly.Contrib.WaitAndRetry" />
   </ItemGroup>
   <ItemGroup>
    <ProjectReference Include="$(AzureCoreTestFramework)" />
