@@ -20,6 +20,7 @@
 ### Bugs Fixed
 
 - Fixed https://github.com/Azure/azure-sdk-for-net/issues/39126.
+- Fixed 'GetAppServiceCertificateOrdersAsync's InvalidResourceType problem for AppServiceCertificateOrderData, Issue at https://github.com/Azure/azure-sdk-for-net/issues/45177
 
 ### Other Changes
 

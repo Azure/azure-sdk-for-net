@@ -1,17 +1,23 @@
 # Release History
 
-## 12.22.0-beta.1 (Unreleased)
+## 12.22.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.22.0-beta.1 (2024-08-06)
 
 ### Features Added
 - Added support for service version 2024-11-04.
 - Added ability to retrieve SAS string to sign for debugging purposes.
 
-### Breaking Changes
-
 ### Bugs Fixed
 - Fixed \[BUG\] BlobContainerClient(connectionString, blobContainerName, options) ctor to set clientSideEncryptionOptions #44623
-
-### Other Changes
 
 ## 12.21.1 (2024-07-25)
 
