@@ -8,21 +8,21 @@ using System.ComponentModel.Composition;
 namespace Azure.Generator;
 
 /// <summary>
-/// XXX
+/// The Azure client plugin to generate the Azure client SDK.
 /// </summary>
 [Export(typeof(CodeModelPlugin))]
 [ExportMetadata("PluginName", nameof(AzureClientPlugin))]
 public class AzureClientPlugin : ClientModelPlugin
 {
     /// <summary>
-    /// XXX
+    /// The Azure client plugin to generate the Azure client SDK.
     /// </summary>
     /// <param name="context"></param>
     [ImportingConstructor]
     public AzureClientPlugin(GeneratorContext context) : base(context) { }
 
     /// <summary>
-    /// XXX
+    /// Customize the generation output for Azure client SDK.
     /// </summary>
     public override void Configure()
     {
