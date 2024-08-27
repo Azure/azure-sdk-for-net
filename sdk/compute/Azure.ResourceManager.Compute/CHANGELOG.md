@@ -1,14 +1,18 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.6.0 (2024-08-26)
 
 ### Features Added
 
+- Added a new read-only property `LogicalSectorSize` to `DiskRestorePointData` class.
+- Added new properties `SkuProfile` and `ZonalPlatformFaultDomainAlignMode` to `VirtualMachineScaleSetData` class.
+- Added new properties `Zones`, `ZonalPlatformFaultDomainAlignMode`, and `SkuProfile` to `VirtualMachineScaleSetPatch` class.
+- Added a new property `ScheduledEventsPolicy` to `AvailabilitySetPatch` and `AvailabilitySetData` class.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- `ExcludeExtensions` property in `ComputeSecurityPostureReference` is replaced by `ExcludeExtensionNames` property which takes in a list of strings.
+- `IsVmAgentPlatformUpdatesEnabled` property in `WindowsConfiguration` class is now read-only.
 
 ## 1.5.0 (2024-05-10)
 
