@@ -1,12 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
     <PackageId>AzureClientPlugin</PackageId>
     <Version>1.0.0-beta.1</Version>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-
-	<!-- Below is workaround to make MSBuild pass -->
-	<RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
-	<TargetFrameworks>net8.0</TargetFrameworks>
 	<NoWarn>CS8002</NoWarn>
   </PropertyGroup>
 

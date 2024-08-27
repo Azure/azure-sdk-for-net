@@ -22,7 +22,7 @@
     <IsShippingLibrary Condition="'$(IsShippingLibrary)' == '' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsPerfProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsStressProject)' != 'true'">true</IsShippingLibrary>
     <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'">true</IsShippingClientLibrary>
     <TestFrameworkSupportFiles>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Shared/*.cs</TestFrameworkSupportFiles>
-    <IsGeneratorLibrary Condition="'$(IsGeneratorLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator'))">true</IsGeneratorLibrary>
+
     <IncludeOperationsSharedSource Condition="'$(IncludeOperationsSharedSource)' == '' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsPerfProject)' != 'true'">true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
@@ -78,7 +78,7 @@
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <!--
+    <!-- 
       .NET 8 now produces security warnings for nuget packages in dotnet restore. Keep these as warnings in T1 to avoid needing to update T1 library dependencies.
       See: https://learn.microsoft.com/en-us/dotnet/core/compatibility/sdk/8.0/dotnet-restore-audit#recommended-action
     -->
@@ -138,11 +138,11 @@
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <IsPackable>false</IsPackable>
     <!-- List newest targets first so that recordings are made with latest, running tests from editor runs latest, etc. -->
-    <RequiredTargetFrameworks>net8.0;net6.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>net7.0;net6.0</RequiredTargetFrameworks>
     <!-- Also test net462 on Windows. net461 is out of support as of 4/2022 and is not supported in version 4.4.x and beyond of NUnit3TestAdapter. -->
     <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net462</RequiredTargetFrameworks>
     <!-- But only build snippets for the latest. -->
-    <RequiredTargetFrameworks Condition="'$(BuildSnippets)' == 'true'">net8.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(BuildSnippets)' == 'true'">net7.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
