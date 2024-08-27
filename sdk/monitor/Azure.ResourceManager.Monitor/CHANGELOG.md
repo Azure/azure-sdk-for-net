@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added azure monitor pipline group APIs (version `2023-10-01-preview`)
+
 ### Breaking Changes
 
 ### Bugs Fixed
