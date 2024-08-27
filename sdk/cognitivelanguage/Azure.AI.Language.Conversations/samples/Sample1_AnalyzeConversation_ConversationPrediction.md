@@ -14,11 +14,11 @@ using Azure.AI.Language.Conversations;
 
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
-```C# Snippet:ConversationAnalysisClient_Create
+```C# Snippet:CreateConversationAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-
-ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2024_05_01);
+ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential, options);
 ```
 
 Once you have created a client, you can call synchronous or asynchronous methods.

@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="ContentFilterResultForPrompt"/>. </summary>
         internal ContentFilterResultForPrompt()
         {
@@ -55,7 +54,7 @@ namespace Azure.AI.OpenAI
         {
             PromptIndex = promptIndex;
             InternalResults = internalResults;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }
