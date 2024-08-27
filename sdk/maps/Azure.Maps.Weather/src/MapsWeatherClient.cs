@@ -7,9 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
 
@@ -182,7 +184,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<HourlyForecastResult>> GetHourlyForecastAsync(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HourlyForecastResult>> GetHourlyForecastAsync(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -191,7 +193,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetHourlyForecastAsync(format, coordinates, unit, duration, language, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetHourlyForecastAsync(format, coord, unit, duration, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -236,7 +243,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<HourlyForecastResult> GetHourlyForecast(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual Response<HourlyForecastResult> GetHourlyForecast(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -245,7 +252,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetHourlyForecast(format, coordinates, unit, duration, language, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetHourlyForecast(format, coord, unit, duration, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -286,7 +298,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<MinuteForecastResult>> GetMinuteForecastAsync(string format, IEnumerable<double> coordinates, int? interval, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MinuteForecastResult>> GetMinuteForecastAsync(string format, GeoPosition coordinates, int? interval, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -295,7 +307,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetMinuteForecastAsync(format, coordinates, interval, language, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetMinuteForecastAsync(format, coord, interval, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -336,7 +353,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<MinuteForecastResult> GetMinuteForecast(string format, IEnumerable<double> coordinates, int? interval, string language, CancellationToken cancellationToken = default)
+        public virtual Response<MinuteForecastResult> GetMinuteForecast(string format, GeoPosition coordinates, int? interval, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -345,7 +362,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetMinuteForecast(format, coordinates, interval, language, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetMinuteForecast(format, coord, interval, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -388,7 +410,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<QuarterDayForecastResult>> GetQuarterDayForecastAsync(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuarterDayForecastResult>> GetQuarterDayForecastAsync(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -397,7 +419,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetQuarterDayForecastAsync(format, coordinates, unit, duration, language, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetQuarterDayForecastAsync(format, coord, unit, duration, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -440,7 +467,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<QuarterDayForecastResult> GetQuarterDayForecast(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual Response<QuarterDayForecastResult> GetQuarterDayForecast(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -449,7 +476,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetQuarterDayForecast(format, coordinates, unit, duration, language, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetQuarterDayForecast(format, coord, unit, duration, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -496,7 +528,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<CurrentConditionsResult>> GetCurrentConditionsAsync(string format, IEnumerable<double> coordinates, string unit, string details, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CurrentConditionsResult>> GetCurrentConditionsAsync(string format, GeoPosition coordinates, string unit, string details, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -505,7 +537,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetCurrentConditionsAsync(format, coordinates, unit, details, duration, language, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetCurrentConditionsAsync(format, coord, unit, details, duration, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -552,7 +589,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<CurrentConditionsResult> GetCurrentConditions(string format, IEnumerable<double> coordinates, string unit, string details, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual Response<CurrentConditionsResult> GetCurrentConditions(string format, GeoPosition coordinates, string unit, string details, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -561,7 +598,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetCurrentConditions(format, coordinates, unit, details, duration, language, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetCurrentConditions(format, coord, unit, details, duration, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -605,7 +647,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyForecastResult>> GetDailyForecastAsync(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyForecastResult>> GetDailyForecastAsync(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -614,7 +656,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetDailyForecastAsync(format, coordinates, unit, duration, language, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetDailyForecastAsync(format, coord, unit, duration, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -658,7 +705,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyForecastResult> GetDailyForecast(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual Response<DailyForecastResult> GetDailyForecast(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -667,7 +714,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetDailyForecast(format, coordinates, unit, duration, language, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetDailyForecast(format, coord, unit, duration, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -805,7 +857,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(string format, IEnumerable<double> coordinates, string language, string details, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(string format, GeoPosition coordinates, string language, string details, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -814,7 +866,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetSevereWeatherAlertsAsync(format, coordinates, language, details, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetSevereWeatherAlertsAsync(format, coord, language, details, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -854,7 +911,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<SevereWeatherAlertsResult> GetSevereWeatherAlerts(string format, IEnumerable<double> coordinates, string language, string details, CancellationToken cancellationToken = default)
+        public virtual Response<SevereWeatherAlertsResult> GetSevereWeatherAlerts(string format, GeoPosition coordinates, string language, string details, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -863,7 +920,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetSevereWeatherAlerts(format, coordinates, language, details, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetSevereWeatherAlerts(format, coord, language, details, cancellationToken);
             }
             catch (Exception e)
             {
@@ -907,7 +969,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyIndicesResult>> GetDailyIndicesAsync(string format, IEnumerable<double> coordinates, string language, int? duration, int? indexId, int? indexGroupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyIndicesResult>> GetDailyIndicesAsync(string format, GeoPosition coordinates, string language, int? duration, int? indexId, int? indexGroupId, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -916,7 +978,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetDailyIndicesAsync(format, coordinates, language, duration, indexId, indexGroupId, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetDailyIndicesAsync(format, coord, language, duration, indexId, indexGroupId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -960,7 +1027,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyIndicesResult> GetDailyIndices(string format, IEnumerable<double> coordinates, string language, int? duration, int? indexId, int? indexGroupId, CancellationToken cancellationToken = default)
+        public virtual Response<DailyIndicesResult> GetDailyIndices(string format, GeoPosition coordinates, string language, int? duration, int? indexId, int? indexGroupId, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -969,7 +1036,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetDailyIndices(format, coordinates, language, duration, indexId, indexGroupId, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetDailyIndices(format, coord, language, duration, indexId, indexGroupId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1307,7 +1379,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<AirQualityResult>> GetCurrentAirQualityAsync(string format, IEnumerable<double> coordinates, string language, bool? includePollutantDetails, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AirQualityResult>> GetCurrentAirQualityAsync(string format, GeoPosition coordinates, string language, bool? includePollutantDetails, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1316,7 +1388,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetCurrentAirQualityAsync(format, coordinates, language, includePollutantDetails, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetCurrentAirQualityAsync(format, coord, language, includePollutantDetails, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1352,7 +1429,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<AirQualityResult> GetCurrentAirQuality(string format, IEnumerable<double> coordinates, string language, bool? includePollutantDetails, CancellationToken cancellationToken = default)
+        public virtual Response<AirQualityResult> GetCurrentAirQuality(string format, GeoPosition coordinates, string language, bool? includePollutantDetails, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1361,7 +1438,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetCurrentAirQuality(format, coordinates, language, includePollutantDetails, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetCurrentAirQuality(format, coord, language, includePollutantDetails, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1397,7 +1479,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyAirQualityForecastResult>> GetAirQualityDailyForecastsAsync(string format, IEnumerable<double> coordinates, string language, int? duration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyAirQualityForecastResult>> GetAirQualityDailyForecastsAsync(string format, GeoPosition coordinates, string language, int? duration, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1406,7 +1488,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetAirQualityDailyForecastsAsync(format, coordinates, language, duration, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetAirQualityDailyForecastsAsync(format, coord, language, duration, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1442,7 +1529,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyAirQualityForecastResult> GetAirQualityDailyForecasts(string format, IEnumerable<double> coordinates, string language, int? duration, CancellationToken cancellationToken = default)
+        public virtual Response<DailyAirQualityForecastResult> GetAirQualityDailyForecasts(string format, GeoPosition coordinates, string language, int? duration, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1451,7 +1538,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetAirQualityDailyForecasts(format, coordinates, language, duration, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetAirQualityDailyForecasts(format, coord, language, duration, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1488,7 +1580,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<AirQualityResult>> GetAirQualityHourlyForecastsAsync(string format, IEnumerable<double> coordinates, string language, int? duration, bool? includePollutantDetails, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AirQualityResult>> GetAirQualityHourlyForecastsAsync(string format, GeoPosition coordinates, string language, int? duration, bool? includePollutantDetails, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1497,7 +1589,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetAirQualityHourlyForecastsAsync(format, coordinates, language, duration, includePollutantDetails, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetAirQualityHourlyForecastsAsync(format, coord, language, duration, includePollutantDetails, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1534,7 +1631,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<AirQualityResult> GetAirQualityHourlyForecasts(string format, IEnumerable<double> coordinates, string language, int? duration, bool? includePollutantDetails, CancellationToken cancellationToken = default)
+        public virtual Response<AirQualityResult> GetAirQualityHourlyForecasts(string format, GeoPosition coordinates, string language, int? duration, bool? includePollutantDetails, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1543,7 +1640,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetAirQualityHourlyForecasts(format, coordinates, language, duration, includePollutantDetails, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetAirQualityHourlyForecasts(format, coord, language, duration, includePollutantDetails, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1576,7 +1678,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyHistoricalActualsResult>> GetDailyHistoricalActualsAsync(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyHistoricalActualsResult>> GetDailyHistoricalActualsAsync(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1585,7 +1687,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetDailyHistoricalActualsAsync(format, coordinates, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetDailyHistoricalActualsAsync(format, coord, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1618,7 +1725,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyHistoricalActualsResult> GetDailyHistoricalActuals(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual Response<DailyHistoricalActualsResult> GetDailyHistoricalActuals(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1627,7 +1734,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetDailyHistoricalActuals(format, coordinates, startDate, endDate, unit, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetDailyHistoricalActuals(format, coord, startDate, endDate, unit, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1660,7 +1772,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyHistoricalRecordsResult>> GetDailyHistoricalRecordsAsync(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyHistoricalRecordsResult>> GetDailyHistoricalRecordsAsync(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1669,7 +1781,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetDailyHistoricalRecordsAsync(format, coordinates, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetDailyHistoricalRecordsAsync(format, coord, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1702,7 +1819,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyHistoricalRecordsResult> GetDailyHistoricalRecords(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual Response<DailyHistoricalRecordsResult> GetDailyHistoricalRecords(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1711,7 +1828,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetDailyHistoricalRecords(format, coordinates, startDate, endDate, unit, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetDailyHistoricalRecords(format, coord, startDate, endDate, unit, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1744,7 +1866,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyHistoricalNormalsResult>> GetDailyHistoricalNormalsAsync(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyHistoricalNormalsResult>> GetDailyHistoricalNormalsAsync(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1753,7 +1875,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetDailyHistoricalNormalsAsync(format, coordinates, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return await restClient.GetDailyHistoricalNormalsAsync(format, coord, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1786,7 +1913,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyHistoricalNormalsResult> GetDailyHistoricalNormals(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual Response<DailyHistoricalNormalsResult> GetDailyHistoricalNormals(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -1795,7 +1922,12 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetDailyHistoricalNormals(format, coordinates, startDate, endDate, unit, cancellationToken);
+                var coord = new[]
+                {
+                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                };
+                return restClient.GetDailyHistoricalNormals(format, coord, startDate, endDate, unit, cancellationToken);
             }
             catch (Exception e)
             {
