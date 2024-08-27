@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The PatchCluster request parameters. </summary>
-    public partial class HDInsightClusterPatch
+    /// <summary> Contains the IpTag associated with the public IP address. </summary>
+    public partial class IPTag
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +45,38 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/>. </summary>
-        public HDInsightClusterPatch()
+        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        /// <param name="ipTagType"> Gets or sets the ipTag type: Example FirstPartyUsage. </param>
+        /// <param name="tag"> Gets or sets value of the IpTag associated with the public IP. Example HDInsight, SQL, Storage etc. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipTagType"/> or <paramref name="tag"/> is null. </exception>
+        public IPTag(string ipTagType, string tag)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Argument.AssertNotNull(ipTagType, nameof(ipTagType));
+            Argument.AssertNotNull(tag, nameof(tag));
+
+            IPTagType = ipTagType;
+            Tag = tag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/>. </summary>
-        /// <param name="tags"> The resource tags. </param>
-        /// <param name="identity"> The identity of the cluster, if configured. </param>
+        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        /// <param name="ipTagType"> Gets or sets the ipTag type: Example FirstPartyUsage. </param>
+        /// <param name="tag"> Gets or sets value of the IpTag associated with the public IP. Example HDInsight, SQL, Storage etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IPTag(string ipTagType, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Identity = identity;
+            IPTagType = ipTagType;
+            Tag = tag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
-        /// <summary> The identity of the cluster, if configured. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Initializes a new instance of <see cref="IPTag"/> for deserialization. </summary>
+        internal IPTag()
+        {
+        }
+
+        /// <summary> Gets or sets the ipTag type: Example FirstPartyUsage. </summary>
+        public string IPTagType { get; set; }
+        /// <summary> Gets or sets value of the IpTag associated with the public IP. Example HDInsight, SQL, Storage etc. </summary>
+        public string Tag { get; set; }
     }
 }
