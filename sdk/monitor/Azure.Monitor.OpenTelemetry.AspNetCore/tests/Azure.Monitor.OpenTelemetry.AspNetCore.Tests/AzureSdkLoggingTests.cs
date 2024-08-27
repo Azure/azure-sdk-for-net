@@ -11,18 +11,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using OpenTelemetry.Logs;
-using OpenTelemetry.Trace;
 using Xunit;
-using static Xunit.CustomXunitAttributes;
-
-using AzureLogForwarder = Microsoft.Extensions.Azure.AzureEventSourceLogForwarder;
-using InternalLogForwarder = Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat.AzureEventSourceLogForwarder;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
@@ -30,11 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
     {
         private readonly MockTransport _mockTransport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
 
-//#if NET6_0
-//        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-//#else
         [Theory]
-//#endif
         [InlineData(false, LogLevel.Debug, null)]
         [InlineData(false, LogLevel.Information, null)]
         [InlineData(false, LogLevel.Warning, "TestWarningEvent: hello")]
@@ -78,11 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 
-//#if NET6_0
-//        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-//#else
         [Theory]
-//#endif
         [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
         [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
         [InlineData(LogLevel.Debug, null)]
@@ -92,11 +77,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             var serviceCollection = new ServiceCollection();
             SetUpOTelAndLogging(serviceCollection, _mockTransport, LogLevel.Information);
 
-            serviceCollection.TryAddSingleton<AzureLogForwarder>();
+            serviceCollection.TryAddSingleton<Microsoft.Extensions.Azure.AzureEventSourceLogForwarder>();
 
             using var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            var logForwarder = serviceProvider.GetRequiredService<AzureLogForwarder>();
+            var logForwarder = serviceProvider.GetRequiredService<Microsoft.Extensions.Azure.AzureEventSourceLogForwarder>();
             Assert.NotNull(logForwarder);
             logForwarder.Start();
 
@@ -118,11 +103,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 
-//#if NET6_0
-//        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-//#else
         [Fact]
-//#endif
         public void SelfDiagnosticsIsDisabled()
         {
             // SETUP
@@ -168,11 +149,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.False(logAzureFilterCalled);
         }
 
-//#if NET6_0
-//        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-//#else
         [Fact]
-//#endif
         public async Task DistroLogForwarderAppliesWildCardFilter()
         {
             // SETUP
@@ -199,11 +176,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             await AssertContentContains(_mockTransport.Requests.Single(), "TestWarningEvent: hello", LogLevel.Warning);
         }
 
-//#if NET6_0
-//        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-//#else
         [Fact]
-//#endif
         public async Task SettingCustomLoggingFilterResetsDefaultWarningLevel()
         {
             // SETUP
@@ -242,11 +215,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             await AssertContentContains(_mockTransport.Requests.Single(), "TestInfoEvent: hello two", LogLevel.Information);
         }
 
-//#if NET6_0
-//        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
-//#else
         [Fact]
-//#endif
         public async Task CustomLoggingFilterOverridesDefaultWarningAndCapturesErrorLogs()
         {
             // SETUP
