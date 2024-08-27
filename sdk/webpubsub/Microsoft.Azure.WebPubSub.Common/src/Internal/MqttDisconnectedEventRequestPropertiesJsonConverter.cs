@@ -14,7 +14,7 @@ internal class MqttDisconnectedEventRequestPropertiesJsonConverter : JsonConvert
     public override MqttDisconnectedEventRequestProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         bool? initiatedByClient = null;
-        MqttDisconnectPacketProperties? disconnectPacket = null;
+        //MqttDisconnectPacketProperties? disconnectPacket = null;
 
         while (reader.Read())
         {
@@ -34,8 +34,12 @@ internal class MqttDisconnectedEventRequestPropertiesJsonConverter : JsonConvert
                         initiatedByClient = reader.GetBoolean();
                         break;
 
-                    case MqttDisconnectedEventRequestProperties.DisconnectPacketProperty:
-                        disconnectPacket = JsonSerializer.Deserialize<MqttDisconnectPacketProperties>(ref reader, options);
+                    //case MqttDisconnectedEventRequestProperties.DisconnectPacketProperty:
+                    //    disconnectPacket = JsonSerializer.Deserialize<MqttDisconnectPacketProperties>(ref reader, options);
+                    //    break;
+
+                    default:
+                        reader.Skip();
                         break;
                 }
             }
@@ -47,22 +51,14 @@ internal class MqttDisconnectedEventRequestPropertiesJsonConverter : JsonConvert
             throw new JsonException($"Missing required property '{MqttDisconnectedEventRequestProperties.InitiatedByClientProperty}'.");
         }
 
-        return new MqttDisconnectedEventRequestProperties(initiatedByClient.Value, disconnectPacket);
+        return new MqttDisconnectedEventRequestProperties()
+        {
+            InitiatedByClient = initiatedByClient.Value
+        };
     }
 
     public override void Write(Utf8JsonWriter writer, MqttDisconnectedEventRequestProperties value, JsonSerializerOptions options)
     {
-        writer.WriteStartObject();
-
-        writer.WritePropertyName(MqttDisconnectedEventRequestProperties.InitiatedByClientProperty);
-        writer.WriteBooleanValue(value.InitiatedByClient);
-
-        if (value.DisconnectPacket != null)
-        {
-            writer.WritePropertyName(MqttDisconnectedEventRequestProperties.DisconnectPacketProperty);
-            JsonSerializer.Serialize(writer, value.DisconnectPacket, options);
-        }
-
-        writer.WriteEndObject();
+        JsonSerializer.Serialize(writer, value, options);
     }
 }

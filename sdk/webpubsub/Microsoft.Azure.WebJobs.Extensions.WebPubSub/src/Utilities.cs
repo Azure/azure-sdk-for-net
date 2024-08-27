@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             return error switch
             {
-                MqttConnectEventErrorResponse mqttConnectError => BuildErrorResponse(JsonConvert.SerializeObject(mqttConnectError), mqttConnectError.Code),
+                MqttConnectEventErrorResponse mqttConnectError => BuildErrorResponse(JsonConvert.SerializeObject(mqttConnectError, MqttConnectEventErrorResponseJsonConverter.Instance), mqttConnectError.Code),
                 _ => BuildErrorResponse(error.ErrorMessage, error.Code)
             };
         }
@@ -125,29 +125,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             throw new ArgumentException($"Invalid request type, {requestType}");
         }
 
+        public static bool TryGetMqttConnectError(JObject response, WebPubSubEventRequest eventRequest, out HttpResponseMessage httpResponse)
+        {
+            if (eventRequest is MqttConnectEventRequest mqttConnectRequest
+                && response.TryGetValue("code", out var code)
+                && code.ToObject<WebPubSubStatusCode>() != WebPubSubStatusCode.Success)
+            {
+                var error = response.ToObject<EventErrorResponse>();
+                var mqttError = mqttConnectRequest.CreateErrorResponse(error.Code, error.ErrorMessage);
+                httpResponse = BuildErrorResponse(mqttError);
+                return true;
+            }
+            httpResponse = null;
+            return false;
+        }
+
         public static HttpResponseMessage BuildValidResponse(
-            JToken jResponse, RequestType requestType,
+            JObject response, RequestType requestType,
             WebPubSubConnectionContext context)
         {
             try
             {
-                JObject response = jResponse is JObject jObj ? jObj : throw new ArgumentException("Response should be a JObject.");
-
                 // check error as top priority.
                 if (
-                    // General error response
                     response.TryGetValue("code", out var code)
-                    && code.ToObject<WebPubSubStatusCode>() != WebPubSubStatusCode.Success ||
-
-                    // MQTT connect error response
-                    response.TryGetValue("mqtt", out var mqtt)
-                    && mqtt is JObject mqttObject && mqttObject.TryGetValue("code", out _))
+                    && code.ToObject<WebPubSubStatusCode>() != WebPubSubStatusCode.Success)
                 {
-                    if (context is MqttConnectionContext mqttContext)
-                    {
-                        var mqttErrorConnectResponse = response.ToObject<MqttConnectEventErrorResponseContent>();
-                        return BuildErrorResponse(JsonConvert.SerializeObject(mqttErrorConnectResponse), mqttErrorConnectResponse.Code);
-                    }
                     var error = response.ToObject<EventErrorResponse>();
                     return BuildErrorResponse(error);
                 }
@@ -261,11 +264,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
             // We don't support clear states for JS
             return new Dictionary<string, BinaryData>();
-        }
-
-        private static MqttConnectEventErrorResponse ToMqttConnectErrorResponse(JObject jObject)
-        {
-            return jObject.ToObject<MqttConnectEventErrorResponseContent>();
         }
     }
 }

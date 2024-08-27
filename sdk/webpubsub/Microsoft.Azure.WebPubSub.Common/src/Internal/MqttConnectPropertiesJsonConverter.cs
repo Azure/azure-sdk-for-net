@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -17,7 +16,7 @@ internal class MqttConnectPropertiesJsonConverter : JsonConverter<MqttConnectPro
         MqttProtocolVersion? protocolVersion = null;
         string? username = null;
         string? password = null;
-        IReadOnlyList<MqttUserProperty>? userProperties = null;
+        //IReadOnlyList<KeyValuePair<string, string>>? userProperties = null;
 
         while (reader.Read())
         {
@@ -45,8 +44,11 @@ internal class MqttConnectPropertiesJsonConverter : JsonConverter<MqttConnectPro
                         password = reader.GetString();
                         break;
 
-                    case MqttConnectProperties.UserPropertiesProperty:
-                        userProperties = JsonSerializer.Deserialize<IReadOnlyList<MqttUserProperty>>(ref reader, options);
+                    //case MqttConnectProperties.UserPropertiesProperty:
+                    //    userProperties = JsonSerializer.Deserialize<IReadOnlyList<KeyValuePair<string, string>>>(ref reader, MqttUserPropertyConverterOptions);
+                    //    break;
+                    default:
+                        reader.Skip();
                         break;
                 }
             }
@@ -58,25 +60,11 @@ internal class MqttConnectPropertiesJsonConverter : JsonConverter<MqttConnectPro
             throw new JsonException($"Missing required property '{MqttConnectProperties.ProtocolVersionProperty}'.");
         }
 
-        return new MqttConnectProperties(protocolVersion.Value, username, password, userProperties);
+        return new MqttConnectProperties(protocolVersion.Value, username, password);
     }
 
     public override void Write(Utf8JsonWriter writer, MqttConnectProperties value, JsonSerializerOptions options)
     {
-        writer.WriteStartObject();
-
-        writer.WritePropertyName(MqttConnectProperties.ProtocolVersionProperty);
-        JsonSerializer.Serialize(writer, value.ProtocolVersion, options);
-
-        writer.WritePropertyName(MqttConnectProperties.UsernameProperty);
-        writer.WriteStringValue(value.Username);
-
-        writer.WritePropertyName(MqttConnectProperties.PasswordProperty);
-        writer.WriteStringValue(value.Password);
-
-        writer.WritePropertyName(MqttConnectProperties.UserPropertiesProperty);
-        JsonSerializer.Serialize(writer, value.UserProperties, options);
-
-        writer.WriteEndObject();
+        JsonSerializer.Serialize(writer, value, options);
     }
 }

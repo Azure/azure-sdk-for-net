@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -35,18 +34,21 @@ public class MqttConnectEventErrorResponseProperties
     [JsonPropertyName(ReasonProperty)]
     public string? Reason { get; set; }
 
-    /// <summary>
-    /// The user properties in the response.
-    /// </summary>
-    [DataMember(Name = UserPropertiesProperty)]
-    [JsonPropertyName(UserPropertiesProperty)]
-    public IReadOnlyList<MqttUserProperty>? UserProperties { get; set; }
+    // TODO: Uncomment this property when we finalize the user properties design.
+    ///// <summary>
+    ///// The user properties in the response.
+    ///// </summary>
+    //[DataMember(Name = UserPropertiesProperty)]
+    //[JsonPropertyName(UserPropertiesProperty)]
+    //[JsonConverter(typeof(MqttUserPropertyJsonConverter))]
+    //public IReadOnlyList<KeyValuePair<string, string>>? UserProperties { get; set; }
 
     /// <summary>
     /// Creates a new instance of <see cref="MqttConnectEventErrorResponseProperties"/>.
     /// </summary>
     /// <param name="code"></param>
-    public MqttConnectEventErrorResponseProperties(MqttV500ConnectReasonCode code)
+    /// <remarks>This API involves general purpose MQTT API. We can make it public once those general purpose MQTT API are released in a shared package.</remarks>
+    internal MqttConnectEventErrorResponseProperties(MqttV500ConnectReasonCode code)
     {
         Code = (int)code;
     }
@@ -55,7 +57,8 @@ public class MqttConnectEventErrorResponseProperties
     /// Creates a new instance of <see cref="MqttConnectEventErrorResponseProperties"/>.
     /// </summary>
     /// <param name="code"></param>
-    public MqttConnectEventErrorResponseProperties(MqttV311ConnectReturnCode code)
+    /// <remarks>This API involves general purpose MQTT API. We can make it public once those general purpose MQTT API are released in a shared package.</remarks>
+    internal MqttConnectEventErrorResponseProperties(MqttV311ConnectReturnCode code)
     {
         Code = (int)code;
     }

@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
 
 #nullable enable
 
@@ -35,10 +34,10 @@ public sealed class MqttConnectEventResponse : ConnectEventResponse
     {
     }
 
-    /// <summary>
-    /// Represents the MQTT specific properties in a successful MQTT connection event response.
-    /// </summary>
-    [JsonPropertyName(MqttProperty)]
-    [DataMember(Name = MqttProperty)]
-    public MqttConnectEventResponseProperties? Mqtt { get; set; }
+    ///// <summary>
+    ///// Represents the MQTT specific properties in a successful MQTT connection event response.
+    ///// </summary>
+    //[JsonPropertyName(MqttProperty)]
+    //[DataMember(Name = MqttProperty)]
+    //public MqttConnectEventResponseProperties? Mqtt { get; set; }
 }

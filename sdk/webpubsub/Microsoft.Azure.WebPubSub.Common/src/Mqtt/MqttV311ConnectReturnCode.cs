@@ -6,7 +6,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// <summary>
 /// MQTT 3.1.1 Connect Return Codes.
 /// </summary>
-public enum MqttV311ConnectReturnCode : byte
+internal enum MqttV311ConnectReturnCode : byte
 {
     /// <summary>
     /// 0x01: Connection refused, unacceptable protocol version

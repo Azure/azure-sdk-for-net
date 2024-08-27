@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -14,20 +13,15 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// </summary>
 [DataContract]
 [JsonConverter(typeof(MqttDisconnectPacketPropertiesJsonConverter))]
-public class MqttDisconnectPacketProperties
+internal class MqttDisconnectPacketProperties
 {
     internal const string CodeProperty = "code";
     internal const string UserPropertiesProperty = "userProperties";
 
-    /// <summary>
-    /// Creates a new instance of <see cref="MqttDisconnectPacketProperties"/>.
-    /// </summary>
     /// <param name="code"></param>
-    /// <param name="userProperties"></param>
-    public MqttDisconnectPacketProperties(MqttDisconnectReasonCode code, IReadOnlyList<MqttUserProperty>? userProperties)
+    internal MqttDisconnectPacketProperties(MqttDisconnectReasonCode code)
     {
         Code = code;
-        UserProperties = userProperties;
     }
 
     /// <summary>
@@ -38,10 +32,12 @@ public class MqttDisconnectPacketProperties
     [DataMember(Name = CodeProperty)]
     public MqttDisconnectReasonCode Code { get; }
 
-    /// <summary>
-    /// The user properties in the DISCONNECT packet sent by the client. The value is not null only if the client sent a DISCONNECT packet with user properties.
-    /// </summary>
-    [DataMember(Name = UserPropertiesProperty)]
-    [JsonPropertyName(UserPropertiesProperty)]
-    public IReadOnlyList<MqttUserProperty>? UserProperties { get; }
+    // TODO: Uncomment this property when we finalize the user properties design.
+    ///// <summary>
+    ///// The user properties in the DISCONNECT packet sent by the client.The value is not null only if the client sent a DISCONNECT packet with user properties.
+    ///// </summary>
+    //[DataMember(Name = UserPropertiesProperty)]
+    //[JsonPropertyName(UserPropertiesProperty)]
+    //[JsonConverter(typeof(MqttUserPropertyJsonConverter))]
+    //internal IReadOnlyList<KeyValuePair<string, string>>? UserProperties { get; }
 }

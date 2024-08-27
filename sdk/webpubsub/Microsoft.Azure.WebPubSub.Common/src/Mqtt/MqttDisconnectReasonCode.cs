@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// MQTT Disconnect Reason Codes
 /// These codes represent the reasons for disconnecting an MQTT client as per MQTT 5.0 specification.
 /// </summary>
-public enum MqttDisconnectReasonCode : byte
+internal enum MqttDisconnectReasonCode : byte
 {
     /// <summary>
     /// 0x00 - Normal disconnection

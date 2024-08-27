@@ -7,7 +7,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// MQTT Connect Reason Codes
 /// These codes represent the reasons for the outcome of an MQTT CONNECT packet as per MQTT 5.0 specification.
 /// </summary>
-public enum MqttV500ConnectReasonCode : byte
+internal enum MqttV500ConnectReasonCode : byte
 {
     /// <summary>
     /// 0x80 - Unspecified error

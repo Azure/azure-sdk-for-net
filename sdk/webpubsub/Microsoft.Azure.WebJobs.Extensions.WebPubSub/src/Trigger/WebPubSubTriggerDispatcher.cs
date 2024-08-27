@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Logging;
-
 using NewtonsoftJsonLinq = Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -174,7 +173,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                                 }
                                 if (response is NewtonsoftJsonLinq.JToken jResponse)
                                 {
-                                    return Utilities.BuildValidResponse(jResponse, requestType, context);
+                                    var jObject = jResponse as NewtonsoftJsonLinq.JObject ?? throw new ArgumentException("Response should be a JObject.");
+
+                                    // Currently we don't expose the MqttProtocolVersion in MqttConnectEventRequest, therefore, when the response is an error response, we rely on the MqttConnectEventRequest.CreateErrorResponse method to assign a proper MQTT code according to the protocol version.
+                                    if (Utilities.TryGetMqttConnectError(jObject, eventRequest, out var httpResponse))
+                                    {
+                                        return httpResponse;
+                                    }
+                                    return Utilities.BuildValidResponse(jObject, requestType, context);
                                 }
 
                                 _logger.LogWarning($"Invalid response type {response.GetType()} regarding current request: {requestType}");
@@ -185,13 +191,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     {
                         if (context is MqttConnectionContext mqttContext && requestType == RequestType.Connect)
                         {
-                            var mqttProtocolVersion = ((MqttConnectEventRequest)eventRequest).Mqtt.ProtocolVersion;
-                            var errorResponse = mqttProtocolVersion switch
-                            {
-                                MqttProtocolVersion.V311 => new MqttConnectEventErrorResponse(MqttV500ConnectReasonCode.ServerUnavailable, ex.Message),
-                                MqttProtocolVersion.V500 => new MqttConnectEventErrorResponse(MqttV500ConnectReasonCode.ServerUnavailable, ex.Message),
-                                _ => throw new NotSupportedException($"MQTT protocol version {mqttProtocolVersion} is not supported yet.")
-                            };
+                            var errorResponse = ((MqttConnectEventRequest)eventRequest).CreateErrorResponse(WebPubSubErrorCode.ServerError, ex.Message);
                             return Utilities.BuildErrorResponse(errorResponse);
                         }
                         var error = new EventErrorResponse(WebPubSubErrorCode.ServerError, ex.Message);

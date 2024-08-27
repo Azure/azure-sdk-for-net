@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -47,14 +46,13 @@ public class MqttConnectEventRequest : ConnectEventRequest
     /// <param name="code"><see cref="WebPubSubErrorCode"/>.</param>
     /// <param name="message">Detail error message.</param>
     /// <returns>A error response to return caller and will drop connection.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public override EventErrorResponse CreateErrorResponse(WebPubSubErrorCode code, string? message = null)
     {
         return Mqtt.ProtocolVersion switch
         {
             MqttProtocolVersion.V311 => new MqttConnectEventErrorResponse(code.ToMqttV311ConnectReturnCode(), message),
             MqttProtocolVersion.V500 => new MqttConnectEventErrorResponse(code.ToMqttV500ConnectReasonCode(), message),
-            _ => throw new NotSupportedException()
+            _ => throw new ArgumentOutOfRangeException($"MQTT protocol version {Mqtt.ProtocolVersion} is invalid.")
         };
     }
 
@@ -68,35 +66,5 @@ public class MqttConnectEventRequest : ConnectEventRequest
     public MqttConnectEventResponse CreateMqttResponse(string userId, IEnumerable<string> groups, IEnumerable<string> roles)
     {
         return new MqttConnectEventResponse(userId, groups, roles);
-    }
-
-    /// <summary>
-    /// Creates error response for MQTT protocol 5.0.
-    /// </summary>
-    /// <param name="code"></param>
-    /// <param name="message"></param>
-    /// <returns>A error response to return caller and will drop connection.</returns>
-    public MqttConnectEventErrorResponse CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode code, string? message = null)
-    {
-        if (Mqtt.ProtocolVersion != MqttProtocolVersion.V500)
-        {
-            throw new InvalidOperationException("The MQTT protocol version of the client is not 5.0.");
-        }
-        return new MqttConnectEventErrorResponse(code, message);
-    }
-
-    /// <summary>
-    /// Creates error response for MQTT protocol 3.1.1.
-    /// </summary>
-    /// <param name="code"></param>
-    /// <param name="message"></param>
-    /// <returns>A error response to return caller and will drop connection.</returns>
-    public MqttConnectEventErrorResponse CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode code, string? message = null)
-    {
-        if (Mqtt.ProtocolVersion != MqttProtocolVersion.V311)
-        {
-            throw new InvalidOperationException("The MQTT protocol version of the client is not 3.1.1.");
-        }
-        return new MqttConnectEventErrorResponse(code, message);
     }
 }

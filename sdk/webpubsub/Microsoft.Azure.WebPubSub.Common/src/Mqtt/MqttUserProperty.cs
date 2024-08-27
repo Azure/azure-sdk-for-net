@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// </summary>
 [DataContract]
 [JsonConverter(typeof(MqttUserPropertyJsonConverter))]
-public record MqttUserProperty
+internal record MqttUserProperty
 {
     internal const string NamePropertyName = "name";
     internal const string ValuePropertyName = "value";

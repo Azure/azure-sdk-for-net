@@ -37,6 +37,10 @@ internal class WebPubSubClientCertificateJsonConverter : JsonConverter<WebPubSub
                     case WebPubSubClientCertificate.ContentProperty:
                         content = reader.GetString();
                         break;
+
+                    default:
+                        reader.Skip();
+                        break;
                 }
             }
         }

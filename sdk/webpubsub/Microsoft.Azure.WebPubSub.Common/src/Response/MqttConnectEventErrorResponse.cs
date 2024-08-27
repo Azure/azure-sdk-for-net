@@ -13,6 +13,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// Represents the response properties of an MQTT connection failure.
 /// </summary>
 [DataContract]
+[JsonConverter(typeof(MqttConnectEventErrorResponseJsonConverter))]
 public class MqttConnectEventErrorResponse : EventErrorResponse
 {
     internal const string MqttProperty = "mqtt";
@@ -30,7 +31,8 @@ public class MqttConnectEventErrorResponse : EventErrorResponse
     /// <summary>
     /// Creates an instance of <see cref="MqttConnectEventErrorResponse"/>.
     /// </summary>
-    public MqttConnectEventErrorResponse(MqttV500ConnectReasonCode code, string? reason) : base(WebPubSubErrorCodeExtensions.FromMqttV500ConnectReasonCode(code), reason)
+    /// <remarks>This API involves general purpose MQTT API. We can make it public once those general purpose MQTT API are released in a shared package.</remarks>
+    internal MqttConnectEventErrorResponse(MqttV500ConnectReasonCode code, string? reason) : base(WebPubSubErrorCodeExtensions.FromMqttV500ConnectReasonCode(code), reason)
     {
         Mqtt = new MqttConnectEventErrorResponseProperties(code)
         {
@@ -41,7 +43,8 @@ public class MqttConnectEventErrorResponse : EventErrorResponse
     /// <summary>
     /// Creates an instance of <see cref="MqttConnectEventErrorResponse"/>.
     /// </summary>
-    public MqttConnectEventErrorResponse(MqttV311ConnectReturnCode code, string? reason) : base(WebPubSubErrorCodeExtensions.FromMqttV311ConnectReturnCode(code), reason)
+    /// <remarks>This API involves general purpose MQTT API. We can make it public once those general purpose MQTT API are released in a shared package.</remarks>
+    internal MqttConnectEventErrorResponse(MqttV311ConnectReturnCode code, string? reason) : base(WebPubSubErrorCodeExtensions.FromMqttV311ConnectReturnCode(code), reason)
     {
         Mqtt = new MqttConnectEventErrorResponseProperties(code)
         {

@@ -2,14 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common;
 
-internal class MqttUserPropertyJsonConverter : JsonConverter<MqttUserProperty>
+internal class MqttUserPropertyJsonConverter : JsonConverter<KeyValuePair<string, string>>
 {
-    public override MqttUserProperty Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    private const string NamePropertyName = "name";
+    private const string ValuePropertyName = "value";
+
+    public override KeyValuePair<string, string> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.StartObject)
         {
@@ -36,10 +40,10 @@ internal class MqttUserPropertyJsonConverter : JsonConverter<MqttUserProperty>
 
             switch (propertyName)
             {
-                case MqttUserProperty.NamePropertyName:
+                case NamePropertyName:
                     name = reader.GetString();
                     break;
-                case MqttUserProperty.ValuePropertyName:
+                case ValuePropertyName:
                     value = reader.GetString();
                     break;
                 default:
@@ -48,15 +52,25 @@ internal class MqttUserPropertyJsonConverter : JsonConverter<MqttUserProperty>
             }
         }
 
-        return new MqttUserProperty(name, value);
+        if (name == null)
+        {
+            throw new JsonException($"Missing required property '{NamePropertyName}'.");
+        }
+
+        if (value == null)
+        {
+            throw new JsonException($"Missing required property '{ValuePropertyName}'.");
+        }
+
+        return new KeyValuePair<string, string>(name, value);
     }
 
-    public override void Write(Utf8JsonWriter writer, MqttUserProperty value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, KeyValuePair<string, string> value, JsonSerializerOptions options)
     {
         writer.WriteStartObject();
 
-        writer.WriteString(MqttUserProperty.NamePropertyName, value.Name);
-        writer.WriteString(MqttUserProperty.ValuePropertyName, value.Value);
+        writer.WriteString(NamePropertyName, value.Key);
+        writer.WriteString(ValuePropertyName, value.Value);
 
         writer.WriteEndObject();
     }

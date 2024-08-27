@@ -133,14 +133,7 @@ public static WebPubSubEventResponse Run(
     }
     else
     {
-        if (request.Mqtt.ProtocolVersion == MqttProtocolVersion.V311)
-        {
-            return request.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode.NotAuthorized);
-        }
-        else
-        {
-            return request.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode.NotAuthorized);
-        }
+        return request.CreateErrorResponse(WebPubSubErrorCode.Unauthorized, "unauthorzied connection");
     }
 }
 ```

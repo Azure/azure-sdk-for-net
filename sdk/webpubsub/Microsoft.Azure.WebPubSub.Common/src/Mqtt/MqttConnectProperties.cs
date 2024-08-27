@@ -3,7 +3,6 @@
 
 #nullable enable
 
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -21,48 +20,40 @@ public class MqttConnectProperties
     internal const string PasswordProperty = "password";
     internal const string UserPropertiesProperty = "userProperties";
 
-    /// <summary>
-    /// Creates a new instance of <see cref="MqttConnectProperties"/>.
-    /// </summary>
-    /// <param name="protocolVersion"></param>
-    /// <param name="username"></param>
-    /// <param name="password"></param>
-    /// <param name="userProperties"></param>
-    public MqttConnectProperties(MqttProtocolVersion protocolVersion, string? username, string? password, IReadOnlyList<MqttUserProperty>? userProperties)
+    internal MqttConnectProperties(MqttProtocolVersion protocolVersion, string? username, string? password)
     {
         ProtocolVersion = protocolVersion;
         Username = username;
         Password = password;
-        UserProperties = userProperties;
     }
 
     /// <summary>
     /// MQTT protocol version.
     /// </summary>
+    /// <remarks>This API involves general purpose MQTT API. We can make it public once those general purpose MQTT API are released in a shared package.</remarks>
     [JsonPropertyName(ProtocolVersionProperty)]
     [DataMember(Name = ProtocolVersionProperty)]
-    public MqttProtocolVersion ProtocolVersion { get; protected set; }
+    internal MqttProtocolVersion ProtocolVersion { get; }
 
     /// <summary>
     /// The username field in the MQTT CONNECT packet.
     /// </summary>
     [JsonPropertyName(UsernameProperty)]
     [DataMember(Name = UsernameProperty)]
-    public string? Username { get; protected set; }
+    public string? Username { get; }
 
     /// <summary>
     ///The password field in the MQTT CONNECT packet.
-    /// Use string type instead of byte[] to avoid the problem of serialization.
-    /// Although System.Text.Json serializes byte[] to base64 string by default, it is not explicitly documented.
     /// </summary>
     [JsonPropertyName(PasswordProperty)]
     [DataMember(Name = PasswordProperty)]
-    public string? Password { get; protected set; }
+    public string? Password { get; }
 
-    /// <summary>
-    /// The user properties in the MQTT CONNECT packet.
-    /// </summary>
-    [JsonPropertyName(UserPropertiesProperty)]
-    [DataMember(Name = UserPropertiesProperty)]
-    public IReadOnlyList<MqttUserProperty>? UserProperties { get; protected set; }
+    // Uncomment this property when we finalize the user properties design.
+    ///// <summary>
+    ///// The user properties in the MQTT CONNECT packet.
+    ///// </summary>
+    //[JsonPropertyName(UserPropertiesProperty)]
+    //[DataMember(Name = UserPropertiesProperty)]
+    //public IReadOnlyList<KeyValuePair<string, string>>? UserProperties { get; }
 }

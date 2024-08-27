@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// </summary>
         /// <param name="thumbprint"></param>
         /// <param name="content"></param>
-        public WebPubSubClientCertificate(string thumbprint, string? content)
+        internal WebPubSubClientCertificate(string thumbprint, string? content)
         {
             Content = content;
             Thumbprint = thumbprint;

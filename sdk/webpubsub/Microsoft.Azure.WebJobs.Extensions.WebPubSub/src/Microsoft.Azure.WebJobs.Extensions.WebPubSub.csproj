@@ -17,8 +17,6 @@
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubStatusCode.cs" LinkBase="Bindings\Shared" />
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttDisconnectedEventRequestContent.cs" LinkBase="Bindings\Shared" />
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttConnectEventRequestContent.cs" LinkBase="Bindings\Shared" />
-    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttConnectEventErrorResponseContent.cs" LinkBase="Bindings\Shared" />
-    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubErrorCodeExtensions.cs" LinkBase="Bindings\Shared" />
   </ItemGroup>
 
   <ItemGroup>

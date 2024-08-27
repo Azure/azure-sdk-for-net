@@ -81,8 +81,6 @@ namespace Microsoft.Azure.WebPubSub.Common
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public MqttConnectEventErrorResponse(Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponseProperties mqtt) { }
-        public MqttConnectEventErrorResponse(Microsoft.Azure.WebPubSub.Common.MqttV311ConnectReturnCode code, string? reason) { }
-        public MqttConnectEventErrorResponse(Microsoft.Azure.WebPubSub.Common.MqttV500ConnectReasonCode code, string? reason) { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="mqtt")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("mqtt")]
         public Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponseProperties Mqtt { get { throw null; } }
@@ -90,17 +88,13 @@ namespace Microsoft.Azure.WebPubSub.Common
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttConnectEventErrorResponseProperties
     {
-        public MqttConnectEventErrorResponseProperties(Microsoft.Azure.WebPubSub.Common.MqttV311ConnectReturnCode code) { }
-        public MqttConnectEventErrorResponseProperties(Microsoft.Azure.WebPubSub.Common.MqttV500ConnectReasonCode code) { }
+        internal MqttConnectEventErrorResponseProperties() { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="code")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("code")]
         public int Code { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="reason")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("reason")]
         public string? Reason { get { throw null; } set { } }
-        [System.Runtime.Serialization.DataMemberAttribute(Name="userProperties")]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("userProperties")]
-        public System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? UserProperties { get { throw null; } set { } }
     }
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttConnectEventRequest : Microsoft.Azure.WebPubSub.Common.ConnectEventRequest
@@ -109,28 +103,14 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Runtime.Serialization.DataMemberAttribute(Name="mqtt")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("mqtt")]
         public Microsoft.Azure.WebPubSub.Common.MqttConnectProperties Mqtt { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Microsoft.Azure.WebPubSub.Common.EventErrorResponse CreateErrorResponse(Microsoft.Azure.WebPubSub.Common.WebPubSubErrorCode code, string? message = null) { throw null; }
         public Microsoft.Azure.WebPubSub.Common.MqttConnectEventResponse CreateMqttResponse(string userId, System.Collections.Generic.IEnumerable<string> groups, System.Collections.Generic.IEnumerable<string> roles) { throw null; }
-        public Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponse CreateMqttV311ErrorResponse(Microsoft.Azure.WebPubSub.Common.MqttV311ConnectReturnCode code, string? message = null) { throw null; }
-        public Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponse CreateMqttV50ErrorResponse(Microsoft.Azure.WebPubSub.Common.MqttV500ConnectReasonCode code, string? message = null) { throw null; }
     }
     [System.Runtime.Serialization.DataContractAttribute]
     public sealed partial class MqttConnectEventResponse : Microsoft.Azure.WebPubSub.Common.ConnectEventResponse
     {
         public MqttConnectEventResponse() { }
         public MqttConnectEventResponse(string? userId, System.Collections.Generic.IEnumerable<string>? groups, System.Collections.Generic.IEnumerable<string>? roles) { }
-        [System.Runtime.Serialization.DataMemberAttribute(Name="mqtt")]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("mqtt")]
-        public Microsoft.Azure.WebPubSub.Common.MqttConnectEventResponseProperties? Mqtt { get { throw null; } set { } }
-    }
-    [System.Runtime.Serialization.DataContractAttribute]
-    public partial class MqttConnectEventResponseProperties
-    {
-        public MqttConnectEventResponseProperties() { }
-        [System.Runtime.Serialization.DataMemberAttribute(Name="userProperties")]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("userProperties")]
-        public System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? UserProperties { get { throw null; } set { } }
     }
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttConnectionContext : Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext
@@ -146,19 +126,13 @@ namespace Microsoft.Azure.WebPubSub.Common
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttConnectProperties
     {
-        public MqttConnectProperties(Microsoft.Azure.WebPubSub.Common.MqttProtocolVersion protocolVersion, string? username, string? password, System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? userProperties) { }
+        internal MqttConnectProperties() { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="password")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("password")]
-        public string? Password { get { throw null; } protected set { } }
-        [System.Runtime.Serialization.DataMemberAttribute(Name="protocolVersion")]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("protocolVersion")]
-        public Microsoft.Azure.WebPubSub.Common.MqttProtocolVersion ProtocolVersion { get { throw null; } protected set { } }
+        public string? Password { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="username")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("username")]
-        public string? Username { get { throw null; } protected set { } }
-        [System.Runtime.Serialization.DataMemberAttribute(Name="userProperties")]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("userProperties")]
-        public System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? UserProperties { get { throw null; } protected set { } }
+        public string? Username { get { throw null; } }
     }
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttDisconnectedEventRequest : Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest
@@ -171,114 +145,9 @@ namespace Microsoft.Azure.WebPubSub.Common
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttDisconnectedEventRequestProperties
     {
-        public MqttDisconnectedEventRequestProperties(bool initiatedByClient, Microsoft.Azure.WebPubSub.Common.MqttDisconnectPacketProperties? disconnectPacket) { }
-        [System.Runtime.Serialization.DataMemberAttribute(Name="disconnectPacket")]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("disconnectPacket")]
-        public Microsoft.Azure.WebPubSub.Common.MqttDisconnectPacketProperties? DisconnectPacket { get { throw null; } }
+        internal MqttDisconnectedEventRequestProperties() { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="initiatedByClient")]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("initiatedByClient")]
         public bool InitiatedByClient { get { throw null; } }
-    }
-    [System.Runtime.Serialization.DataContractAttribute]
-    public partial class MqttDisconnectPacketProperties
-    {
-        public MqttDisconnectPacketProperties(Microsoft.Azure.WebPubSub.Common.MqttDisconnectReasonCode code, System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? userProperties) { }
-        [System.Runtime.Serialization.DataMemberAttribute(Name="code")]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("code")]
-        public Microsoft.Azure.WebPubSub.Common.MqttDisconnectReasonCode Code { get { throw null; } }
-        [System.Runtime.Serialization.DataMemberAttribute(Name="userProperties")]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("userProperties")]
-        public System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? UserProperties { get { throw null; } }
-    }
-    public enum MqttDisconnectReasonCode : byte
-    {
-        NormalDisconnection = (byte)0,
-        DisconnectWithWillMessage = (byte)4,
-        UnspecifiedError = (byte)128,
-        MalformedPacket = (byte)129,
-        ProtocolError = (byte)130,
-        ImplementationSpecificError = (byte)131,
-        NotAuthorized = (byte)135,
-        ServerBusy = (byte)137,
-        ServerShuttingDown = (byte)139,
-        KeepAliveTimeout = (byte)141,
-        SessionTakenOver = (byte)142,
-        TopicFilterInvalid = (byte)143,
-        TopicNameInvalid = (byte)144,
-        ReceiveMaximumExceeded = (byte)147,
-        TopicAliasInvalid = (byte)148,
-        PacketTooLarge = (byte)149,
-        MessageRateTooHigh = (byte)150,
-        QuotaExceeded = (byte)151,
-        AdministrativeAction = (byte)152,
-        PayloadFormatInvalid = (byte)153,
-        RetainNotSupported = (byte)154,
-        QosNotSupported = (byte)155,
-        UseAnotherServer = (byte)156,
-        ServerMoved = (byte)157,
-        SharedSubscriptionsNotSupported = (byte)158,
-        ConnectionRateExceeded = (byte)159,
-        MaximumConnectTime = (byte)160,
-        SubscriptionIdentifiersNotSupported = (byte)161,
-        WildcardSubscriptionsNotSupported = (byte)162,
-    }
-    public enum MqttProtocolVersion
-    {
-        V311 = 4,
-        V500 = 5,
-    }
-    [System.Runtime.Serialization.DataContractAttribute]
-    public partial class MqttUserProperty : System.IEquatable<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>
-    {
-        protected MqttUserProperty(Microsoft.Azure.WebPubSub.Common.MqttUserProperty original) { }
-        public MqttUserProperty(string name, string value) { }
-        protected virtual System.Type EqualityContract { get { throw null; } }
-        [System.Runtime.Serialization.DataMemberAttribute(Name="name")]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("name")]
-        public string Name { get { throw null; } }
-        [System.Runtime.Serialization.DataMemberAttribute(Name="value")]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("value")]
-        public string Value { get { throw null; } }
-        public virtual bool Equals(Microsoft.Azure.WebPubSub.Common.MqttUserProperty? other) { throw null; }
-        public override bool Equals(object? obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Microsoft.Azure.WebPubSub.Common.MqttUserProperty? left, Microsoft.Azure.WebPubSub.Common.MqttUserProperty? right) { throw null; }
-        public static bool operator !=(Microsoft.Azure.WebPubSub.Common.MqttUserProperty? left, Microsoft.Azure.WebPubSub.Common.MqttUserProperty? right) { throw null; }
-        protected virtual bool PrintMembers(System.Text.StringBuilder builder) { throw null; }
-        public override string ToString() { throw null; }
-        public virtual Microsoft.Azure.WebPubSub.Common.MqttUserProperty <Clone>$() { throw null; }
-    }
-    public enum MqttV311ConnectReturnCode : byte
-    {
-        UnacceptableProtocolVersion = (byte)1,
-        IdentifierRejected = (byte)2,
-        ServerUnavailable = (byte)3,
-        BadUsernameOrPassword = (byte)4,
-        NotAuthorized = (byte)5,
-    }
-    public enum MqttV500ConnectReasonCode : byte
-    {
-        UnspecifiedError = (byte)128,
-        MalformedPacket = (byte)129,
-        ProtocolError = (byte)130,
-        ImplementationSpecificError = (byte)131,
-        UnsupportedProtocolVersion = (byte)132,
-        ClientIdentifierNotValid = (byte)133,
-        BadUserNameOrPassword = (byte)134,
-        NotAuthorized = (byte)135,
-        ServerUnavailable = (byte)136,
-        ServerBusy = (byte)137,
-        Banned = (byte)138,
-        BadAuthenticationMethod = (byte)140,
-        TopicNameInvalid = (byte)144,
-        PacketTooLarge = (byte)149,
-        QuotaExceeded = (byte)151,
-        PayloadFormatInvalid = (byte)153,
-        RetainNotSupported = (byte)154,
-        QosNotSupported = (byte)155,
-        UseAnotherServer = (byte)156,
-        ServerMoved = (byte)157,
-        ConnectionRateExceeded = (byte)159,
     }
     [System.Runtime.Serialization.DataContractAttribute]
     public sealed partial class PreflightRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
@@ -330,7 +199,6 @@ namespace Microsoft.Azure.WebPubSub.Common
     public sealed partial class WebPubSubClientCertificate
     {
         public WebPubSubClientCertificate(string thumbprint) { }
-        public WebPubSubClientCertificate(string thumbprint, string? content) { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="content")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("content")]
         public string? Content { get { throw null; } }

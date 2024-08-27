@@ -22,24 +22,19 @@ public class MqttDisconnectedEventRequestProperties
     /// Indicates whether the disconnection is initiated by the client.
     /// </summary>
     [DataMember(Name = InitiatedByClientProperty)]
-    [JsonPropertyName(InitiatedByClientProperty)]
-    public bool InitiatedByClient { get; }
+    public bool InitiatedByClient { get; internal set; }
 
-    /// <summary>
-    ///The DISCONNECT packet properties to end the last physical connection. It may be sent by the client or server.
-    ///</summary>
-    [DataMember(Name = DisconnectPacketProperty)]
-    [JsonPropertyName(DisconnectPacketProperty)]
-    public MqttDisconnectPacketProperties? DisconnectPacket { get; }
+    internal MqttDisconnectedEventRequestProperties() { }
 
-    /// <summary>
-    /// Creates an instance of <see cref="MqttDisconnectedEventRequestProperties"/>.
-    /// </summary>
-    /// <param name="initiatedByClient"></param>
-    /// <param name="disconnectPacket"></param>
-    public MqttDisconnectedEventRequestProperties(bool initiatedByClient, MqttDisconnectPacketProperties? disconnectPacket)
-    {
-        InitiatedByClient = initiatedByClient;
-        DisconnectPacket = disconnectPacket;
-    }
+    ///// <summary>
+    ///// The DISCONNECT packet properties to end the last physical connection. It may be sent by the client or server.
+    /////</summary>
+    //[IgnoreDataMember]
+    //internal MqttDisconnectPacketProperties? DisconnectPacket { get; }
+
+    //internal MqttDisconnectedEventRequestProperties(bool initiatedByClient, MqttDisconnectPacketProperties? disconnectPacket)
+    //{
+    //    InitiatedByClient = initiatedByClient;
+    //    DisconnectPacket = disconnectPacket;
+    //}
 }

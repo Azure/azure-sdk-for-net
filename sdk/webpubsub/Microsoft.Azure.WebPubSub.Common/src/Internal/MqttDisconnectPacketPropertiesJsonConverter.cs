@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -15,7 +14,7 @@ internal class MqttDisconnectPacketPropertiesJsonConverter : JsonConverter<MqttD
     public override MqttDisconnectPacketProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         MqttDisconnectReasonCode? code = null;
-        IReadOnlyList<MqttUserProperty>? userProperties = null;
+        //IReadOnlyList<KeyValuePair<string, string>>? userProperties = null;
 
         while (reader.Read())
         {
@@ -35,8 +34,11 @@ internal class MqttDisconnectPacketPropertiesJsonConverter : JsonConverter<MqttD
                         code = JsonSerializer.Deserialize<MqttDisconnectReasonCode>(ref reader, options);
                         break;
 
-                    case MqttDisconnectPacketProperties.UserPropertiesProperty:
-                        userProperties = JsonSerializer.Deserialize<List<MqttUserProperty>>(ref reader, options);
+                    //case MqttDisconnectPacketProperties.UserPropertiesProperty:
+                    //    userProperties = JsonSerializer.Deserialize<List<KeyValuePair<string, string>>>(ref reader, options);
+                    //    break;
+                    default:
+                        reader.Skip();
                         break;
                 }
             }
@@ -48,7 +50,7 @@ internal class MqttDisconnectPacketPropertiesJsonConverter : JsonConverter<MqttD
             throw new JsonException($"Missing required property '{MqttDisconnectPacketProperties.CodeProperty}'.");
         }
 
-        return new MqttDisconnectPacketProperties(code.Value, userProperties);
+        return new MqttDisconnectPacketProperties(code.Value);
     }
 
     public override void Write(Utf8JsonWriter writer, MqttDisconnectPacketProperties value, JsonSerializerOptions options)
@@ -58,11 +60,11 @@ internal class MqttDisconnectPacketPropertiesJsonConverter : JsonConverter<MqttD
         writer.WritePropertyName(MqttDisconnectPacketProperties.CodeProperty);
         JsonSerializer.Serialize(writer, value.Code, options);
 
-        if (value.UserProperties != null)
-        {
-            writer.WritePropertyName(MqttDisconnectPacketProperties.UserPropertiesProperty);
-            JsonSerializer.Serialize(writer, value.UserProperties, options);
-        }
+        //if (value.UserProperties != null)
+        //{
+        //    writer.WritePropertyName(MqttDisconnectPacketProperties.UserPropertiesProperty);
+        //    JsonSerializer.Serialize(writer, value.UserProperties, options);
+        //}
 
         writer.WriteEndObject();
     }

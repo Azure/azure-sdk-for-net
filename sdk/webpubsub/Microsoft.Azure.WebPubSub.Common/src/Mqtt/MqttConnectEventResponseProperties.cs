@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// Represents the MQTT specific properties in a successful MQTT connection event response.
 /// </summary>
 [DataContract]
-public class MqttConnectEventResponseProperties
+internal class MqttConnectEventResponseProperties
 {
     internal const string UserPropertiesProperty = "userProperties";
 
@@ -22,5 +22,6 @@ public class MqttConnectEventResponseProperties
     /// </summary>
     [DataMember(Name = UserPropertiesProperty)]
     [JsonPropertyName(UserPropertiesProperty)]
-    public IReadOnlyList<MqttUserProperty>? UserProperties { get; set; }
+    [JsonConverter(typeof(MqttUserPropertyJsonConverter))]
+    public IReadOnlyList<KeyValuePair<string, string>>? UserProperties { get; set; }
 }
