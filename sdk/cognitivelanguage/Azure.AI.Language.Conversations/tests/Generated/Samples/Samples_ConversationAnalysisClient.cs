@@ -90,7 +90,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem("<id>", "<participantId>", "<text>")), new ConversationActionContent("<projectName>", "<deploymentName>"));
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("<id>", "<participantId>", "<text>")), new ConversationLanguageUnderstandingActionContent("<projectName>", "<deploymentName>"));
             Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(analyzeConversationInput);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem("<id>", "<participantId>", "<text>")), new ConversationActionContent("<projectName>", "<deploymentName>"));
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("<id>", "<participantId>", "<text>")), new ConversationLanguageUnderstandingActionContent("<projectName>", "<deploymentName>"));
             Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
         }
 
@@ -228,12 +228,12 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem("<id>", "<participantId>", "<text>")
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("<id>", "<participantId>", "<text>")
             {
                 Language = "<language>",
                 Modality = InputModality.Transcript,
                 Role = ParticipantRole.Customer,
-            }), new ConversationActionContent("<projectName>", "<deploymentName>")
+            }), new ConversationLanguageUnderstandingActionContent("<projectName>", "<deploymentName>")
             {
                 Verbose = true,
                 IsLoggingEnabled = true,
@@ -268,12 +268,12 @@ ApiVersion = "<apiVersion>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem("<id>", "<participantId>", "<text>")
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("<id>", "<participantId>", "<text>")
             {
                 Language = "<language>",
                 Modality = InputModality.Transcript,
                 Role = ParticipantRole.Customer,
-            }), new ConversationActionContent("<projectName>", "<deploymentName>")
+            }), new ConversationLanguageUnderstandingActionContent("<projectName>", "<deploymentName>")
             {
                 Verbose = true,
                 IsLoggingEnabled = true,
@@ -384,6 +384,13 @@ ApiVersion = "<apiVersion>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
@@ -426,6 +433,13 @@ ApiVersion = "<apiVersion>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());

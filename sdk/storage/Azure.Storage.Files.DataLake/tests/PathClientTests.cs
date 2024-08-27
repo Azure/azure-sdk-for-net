@@ -243,8 +243,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = pathClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = pathClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
@@ -257,6 +259,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -281,8 +284,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 StartsOn = startsOn
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = pathClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = pathClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(blobEndpoint);
@@ -294,6 +299,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]

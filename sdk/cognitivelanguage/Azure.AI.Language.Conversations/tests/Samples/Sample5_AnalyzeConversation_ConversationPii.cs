@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
                 if (operationResult is ConversationPiiOperationResult piiOperationResult)
                 {
-                    foreach (ConversationalPiiResultWithResultBase conversation in piiOperationResult.Results.Conversations)
+                    foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
                     {
                         Console.WriteLine($"Conversation: #{conversation.Id}");
                         Console.WriteLine("Detected Entities:");
@@ -136,7 +136,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
                 if (operationResult is ConversationPiiOperationResult piiOperationResult)
                 {
-                    foreach (ConversationalPiiResultWithResultBase conversation in piiOperationResult.Results.Conversations)
+                    foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
                     {
                         Console.WriteLine($"Conversation: #{conversation.Id}");
                         Console.WriteLine("Detected Entities:");
@@ -144,12 +144,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         {
                             foreach (NamedEntity entity in item.Entities)
                             {
-                                Console.WriteLine($"Category: {entity.Category}");
-                                Console.WriteLine($"Subcategory: {entity.Subcategory}");
-                                Console.WriteLine($"Text: {entity.Text}");
-                                Console.WriteLine($"Offset: {entity.Offset}");
-                                Console.WriteLine($"Length: {entity.Length}");
-                                Console.WriteLine($"Confidence score: {entity.ConfidenceScore}");
+                                Console.WriteLine($"  Category: {entity.Category}");
+                                Console.WriteLine($"  Subcategory: {entity.Subcategory}");
+                                Console.WriteLine($"  Text: {entity.Text}");
+                                Console.WriteLine($"  Offset: {entity.Offset}");
+                                Console.WriteLine($"  Length: {entity.Length}");
+                                Console.WriteLine($"  Confidence score: {entity.ConfidenceScore}");
                                 Console.WriteLine();
 #if !SNIPPET
                                 entitiesDetected.Add(entity);

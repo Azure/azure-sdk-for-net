@@ -831,10 +831,10 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response1, response2);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            var query = new LabelSelector();
+            var query = new SettingLabelSelector();
             int keyIndex = 0;
 
-            await foreach (Label label in service.GetLabelsAsync(query, CancellationToken.None))
+            await foreach (SettingLabel label in service.GetLabelsAsync(query, CancellationToken.None))
             {
                 Assert.AreEqual("label" + keyIndex, label.Name);
                 keyIndex++;
@@ -1056,9 +1056,9 @@ namespace Azure.Data.AppConfiguration.Tests
             return new ConfigurationSetting($"key{i}", "val") { Label = "label", ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1"), ContentType = "text" };
         }
 
-        private static Label CreateLabel(int i)
+        private static SettingLabel CreateLabel(int i)
         {
-            return new Label($"label{i}");
+            return new SettingLabel($"label{i}");
         }
 
         private void SerializeRequestSetting(ref Utf8JsonWriter json, ConfigurationSetting setting)
@@ -1125,7 +1125,7 @@ namespace Azure.Data.AppConfiguration.Tests
             json.WriteEndObject();
         }
 
-        private static void SerializeLabel(ref Utf8JsonWriter json, Label label)
+        private static void SerializeLabel(ref Utf8JsonWriter json, SettingLabel label)
         {
             json.WriteStartObject();
             json.WritePropertyName("name"u8);
@@ -1133,7 +1133,7 @@ namespace Azure.Data.AppConfiguration.Tests
             json.WriteEndObject();
         }
 
-        private void SerializeLabels(ref Utf8JsonWriter json, (Label[] Labels, string NextLink) content)
+        private void SerializeLabels(ref Utf8JsonWriter json, (SettingLabel[] Labels, string NextLink) content)
         {
             json.WriteStartObject();
             if (content.NextLink != null)
@@ -1141,7 +1141,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 json.WriteString("@nextLink", content.NextLink);
             }
             json.WriteStartArray("items");
-            foreach (Label label in content.Labels)
+            foreach (SettingLabel label in content.Labels)
             {
                 ConfigurationMockTests.SerializeLabel(ref json, label);
             }

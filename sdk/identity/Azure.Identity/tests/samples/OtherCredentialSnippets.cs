@@ -5,8 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Core;
-using Microsoft.Extensions.Primitives;
 using System.Threading;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Identity.Tests.samples
 {
@@ -55,6 +55,19 @@ namespace Azure.Identity.Tests.samples
 
             // Use the credential to authenticate with the Key Vault client.
             var client = new SecretClient(new Uri("https://keyvault-name.vault.azure.net/"), credential);
+            #endregion
+        }
+
+        public void CustomChainedTokenCredential()
+        {
+            #region Snippet:CustomChainedTokenCredential
+
+            // Authenticate using managed identity if it is available; otherwise use the Azure CLI to authenticate.
+
+            var credential = new ChainedTokenCredential(new ManagedIdentityCredential(), new AzureCliCredential());
+
+            var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
+
             #endregion
         }
     }

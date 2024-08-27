@@ -54,6 +54,9 @@ az cognitiveservices account create \
 ```
 For more information about creating the resource or how to get the location information see [here][cognitive_resource_cli].
 
+#### Setup Azure Blob Storage Account
+For more information about creating an Azure Blob Storage account see [here][azure_blob_storage_account]. For creating containers for your source and target files see [here][container]. Make sure to authorize your Translation resource storage access, more info [here][storage_container_authorization]. 
+
 ### Authenticate the client
 In order to interact with the Document Translation service, you'll need to create an instance of the [DocumentTranslationClient][documenttranslation_client_class] class. You will need an **endpoint**, and either an **API key** or `TokenCredential` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
@@ -152,6 +155,8 @@ var inputs = new List<DocumentTranslationInput>
 ```
 
 Note that documents written to a target container must have unique names. So you can't translate a source container into a target container twice or have sources with the same documents translated into the same target container.
+
+If "Allow Storage Account Key Access" is disabled on the storage account , Managed Identity is enabled on the Translator resource and it is assigned the role "Storage Blob Data Contributor" on the storage account, then you can use the container URLs directly and no SAS URIs will be needed.
 
 ### Long-Running Operations
 
@@ -392,7 +397,7 @@ try
     using Stream fileStream = File.OpenRead(filePath);
     var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), fileStream, "text/html");
     DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument);
-    var response = client.DocumentTranslate("hi", content);
+    var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
 
     var requestString = File.ReadAllText(filePath);
     var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
@@ -502,6 +507,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [glossary]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview#supported-glossary-formats
 [sas_token]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/create-sas-tokens?tabs=Containers#create-your-sas-tokens-with-azure-storage-explorer
 [sas_token_permissions]: https://aka.ms/azsdk/documenttranslation/sas-permissions
+[azure_blob_storage_account]: https://ms.portal.azure.com/#create/Microsoft.StorageAccount
+[container]: https://learn.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-portal#create-a-container
+[storage_container_authorization]: https://learn.microsoft.com/azure/ai-services/translator/document-translation/quickstarts/client-library-sdks?tabs=dotnet&pivots=programming-language-csharp#storage-container-authorization
 
 [documenttranslation_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/src/DocumentTranslationClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md

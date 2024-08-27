@@ -210,7 +210,11 @@
       "words": [
         "cref",
         "imds",
-        "IMDS"
+        "IMDS",
+        "Wdac",
+        "Adou",
+        "Drtm",
+        "Hvci"
       ]
     },
     {
@@ -276,10 +280,35 @@
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
+        "armn",
+        "bangla",
+        "dbauth",
+        "ethi",
+        "gebr",
+        "geor",
+        "grek",
+        "gujr",
+        "gurmukhi",
+        "hebr",
+        "inclusivity",
+        "jpan",
+        "khmr",
+        "knda",
+        "laoo",
+        "mlym",
+        "mymr",
         "nigiri",
-        "qnas",
+        "odia",
+        "orya",
         "petabit",
-        "Picometer"
+        "picometer",
+        "qnas",
+        "regon",
+        "taml",
+        "telu",
+        "thaa",
+        "thaana",
+        "tibt"
       ]
     },
     {
@@ -379,6 +408,13 @@
       "filename": "**/sdk/datadog/**/*.cs",
       "words": [
         "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/devopsinfrastructure/**/*.cs",
+      "words": [
+        "Reimage",
+        "Reimaging"
       ]
     },
     {
@@ -1237,7 +1273,9 @@
         "Rehydrated",
         "Undelete",
         "Aadkerb",
-        "Nfsv"
+        "Mibps",
+        "Nfsv",
+        "Sddl"
       ]
     },
     {

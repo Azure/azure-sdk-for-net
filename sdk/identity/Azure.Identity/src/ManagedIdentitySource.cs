@@ -82,11 +82,21 @@ namespace Azure.Identity
 
             //This is a special case for Docker Desktop which responds with a 403 with a message that contains "A socket operation was attempted to an unreachable network/host"
             // rather than just timing out, as expected.
-            if (response.Status == 403)
+            // This case can also be hit when some service other than IMDS responds with a non-JSON response.
+            // In all such cases, we should treat the response as CredentialUnavailable.
+            if (response.IsError)
             {
-                string content = response.Content.ToString();
-                if (content.Contains("unreachable"))
+                string content = string.Empty;
+                try
                 {
+                    content = response.Content.ToString();
+                    using JsonDocument json = async
+                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                    : JsonDocument.Parse(response.ContentStream);
+                }
+                catch (JsonException)
+                {
+                    // If the response is not json, it is not the IMDS and it should be treated as CredentialUnavailable
                     throw new CredentialUnavailableException(UnexpectedResponse, new Exception(content));
                 }
             }

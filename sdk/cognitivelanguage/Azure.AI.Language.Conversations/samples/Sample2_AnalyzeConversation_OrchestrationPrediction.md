@@ -28,13 +28,13 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
 string projectName = "DomainOrchestrator";
 string deploymentName = "production";
-AnalyzeConversationInput data = new ConversationalInput(
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
     new ConversationAnalysisInput(
         new TextConversationItem(
             id: "1",
             participantId: "participant1",
             text: "How are you?")),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
         StringIndexType = StringIndexType.Utf16CodeUnit,
     });

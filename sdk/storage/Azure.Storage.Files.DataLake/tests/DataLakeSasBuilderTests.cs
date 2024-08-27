@@ -114,9 +114,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigHierarchicalNamespace.AccountName, Tenants.TestConfigHierarchicalNamespace.AccountKey);
 
+            string stringToSign = null;
+
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
             {
-                Sas = dataLakeSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+                Sas = dataLakeSasBuilder.ToSasQueryParameters(sharedKeyCredential, out stringToSign)
             };
 
             DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions()));
@@ -126,6 +128,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 // Just make sure the call succeeds.
             }
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -514,9 +517,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.List);
 
+            string stringToSign = null;
+
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
             {
-                Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
+                Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName, out stringToSign)
             };
 
             DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions()));
@@ -526,6 +531,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 // Just make sure the call succeeds.
             }
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]

@@ -51,18 +51,18 @@ namespace Azure.AI.Language.Conversations
         public static Azure.AI.Language.Conversations.Models.AreaResolution AreaResolution(double value = 0, Azure.AI.Language.Conversations.Models.AreaUnit unit = default(Azure.AI.Language.Conversations.Models.AreaUnit)) { throw null; }
         public static Azure.AI.Language.Conversations.Models.AudioTiming AudioTiming(long? offset = default(long?), long? duration = default(long?)) { throw null; }
         public static Azure.AI.Language.Conversations.Models.BooleanResolution BooleanResolution(bool value = false) { throw null; }
-        public static Azure.AI.Language.Conversations.Models.ConversationActionContent ConversationActionContent(string projectName = null, string deploymentName = null, bool? verbose = default(bool?), bool? isLoggingEnabled = default(bool?), Azure.AI.Language.Conversations.Models.StringIndexType? stringIndexType = default(Azure.AI.Language.Conversations.Models.StringIndexType?), string directTarget = null, System.Collections.Generic.IDictionary<string, Azure.AI.Language.Conversations.Models.AnalysisConfig> targetProjectParameters = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.ConversationActionResult ConversationActionResult(Azure.AI.Language.Conversations.Models.AnalyzeConversationResult result = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.ConversationActions ConversationActions(int completed = 0, int failed = 0, int inProgress = 0, int total = 0, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationResult> items = null) { throw null; }
-        public static Azure.AI.Language.Conversations.Models.ConversationalInput ConversationalInput(Azure.AI.Language.Conversations.Models.ConversationAnalysisInput conversationInput = null, Azure.AI.Language.Conversations.Models.ConversationActionContent actionContent = null) { throw null; }
-        public static Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase ConversationalPiiResultWithResultBase(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.InputWarning> warnings = null, Azure.AI.Language.Conversations.Models.ConversationStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ConversationPiiItemResult> conversationItems = null) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.ConversationalPiiResult ConversationalPiiResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.InputWarning> warnings = null, Azure.AI.Language.Conversations.Models.ConversationStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ConversationPiiItemResult> conversationItems = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.ConversationEntity ConversationEntity(string category = null, string text = null, int offset = 0, int length = 0, float confidence = 0f, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ResolutionBase> resolutions = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation> extraInformation = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.ConversationError ConversationError(Azure.AI.Language.Conversations.Models.ConversationErrorCode code = default(Azure.AI.Language.Conversations.Models.ConversationErrorCode), string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ConversationError> details = null, Azure.AI.Language.Conversations.Models.InnerErrorModel innererror = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.ConversationInput ConversationInput(string id = null, string language = null, string modality = null, Azure.AI.Language.Conversations.Models.ConversationDomain? domain = default(Azure.AI.Language.Conversations.Models.ConversationDomain?)) { throw null; }
         public static Azure.AI.Language.Conversations.Models.ConversationIntent ConversationIntent(string category = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent ConversationLanguageUnderstandingActionContent(string projectName = null, string deploymentName = null, bool? verbose = default(bool?), bool? isLoggingEnabled = default(bool?), Azure.AI.Language.Conversations.Models.StringIndexType? stringIndexType = default(Azure.AI.Language.Conversations.Models.StringIndexType?), string directTarget = null, System.Collections.Generic.IDictionary<string, Azure.AI.Language.Conversations.Models.AnalysisConfig> targetProjectParameters = null) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput ConversationLanguageUnderstandingInput(Azure.AI.Language.Conversations.Models.ConversationAnalysisInput conversationInput = null, Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent actionContent = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiItemResult ConversationPiiItemResult(string id = null, Azure.AI.Language.Conversations.Models.RedactedTranscriptContent redactedContent = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.NamedEntity> entities = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiOperationResult ConversationPiiOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Conversations.Models.ConversationActionState status = default(Azure.AI.Language.Conversations.Models.ConversationActionState), string name = null, Azure.AI.Language.Conversations.Models.ConversationPiiResults results = null) { throw null; }
-        public static Azure.AI.Language.Conversations.Models.ConversationPiiResults ConversationPiiResults(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.DocumentError> errors = null, Azure.AI.Language.Conversations.Models.RequestStatistics statistics = null, string modelVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase> conversations = null) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiResults ConversationPiiResults(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.DocumentError> errors = null, Azure.AI.Language.Conversations.Models.RequestStatistics statistics = null, string modelVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ConversationalPiiResult> conversations = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.ConversationPrediction ConversationPrediction(string topIntent = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ConversationIntent> intents = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ConversationEntity> entities = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.ConversationRequestStatistics ConversationRequestStatistics(int documentsCount = 0, int validDocumentsCount = 0, int erroneousDocumentsCount = 0, long transactionsCount = (long)0, int conversationsCount = 0, int validConversationsCount = 0, int erroneousConversationsCount = 0) { throw null; }
         public static Azure.AI.Language.Conversations.Models.ConversationResult ConversationResult(string query = null, string detectedLanguage = null, Azure.AI.Language.Conversations.Models.ConversationPrediction prediction = null) { throw null; }
@@ -404,22 +404,6 @@ namespace Azure.AI.Language.Conversations.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.BooleanResolution>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.BooleanResolution>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConversationActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationActionContent>
-    {
-        public ConversationActionContent(string projectName, string deploymentName) { }
-        public string DeploymentName { get { throw null; } }
-        public string DirectTarget { get { throw null; } set { } }
-        public bool? IsLoggingEnabled { get { throw null; } set { } }
-        public string ProjectName { get { throw null; } }
-        public Azure.AI.Language.Conversations.Models.StringIndexType? StringIndexType { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Conversations.Models.AnalysisConfig> TargetProjectParameters { get { throw null; } }
-        public bool? Verbose { get { throw null; } set { } }
-        Azure.AI.Language.Conversations.Models.ConversationActionContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.ConversationActionContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ConversationActionResult : Azure.AI.Language.Conversations.Models.AnalyzeConversationActionResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationActionResult>
     {
         internal ConversationActionResult() { }
@@ -467,29 +451,18 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator !=(Azure.AI.Language.Conversations.Models.ConversationActionState left, Azure.AI.Language.Conversations.Models.ConversationActionState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConversationalInput : Azure.AI.Language.Conversations.Models.AnalyzeConversationInput, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalInput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalInput>
+    public partial class ConversationalPiiResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResult>
     {
-        public ConversationalInput(Azure.AI.Language.Conversations.Models.ConversationAnalysisInput conversationInput, Azure.AI.Language.Conversations.Models.ConversationActionContent actionContent) { }
-        public Azure.AI.Language.Conversations.Models.ConversationActionContent ActionContent { get { throw null; } }
-        public Azure.AI.Language.Conversations.Models.ConversationAnalysisInput ConversationInput { get { throw null; } }
-        Azure.AI.Language.Conversations.Models.ConversationalInput System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.ConversationalInput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ConversationalPiiResultWithResultBase : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase>
-    {
-        internal ConversationalPiiResultWithResultBase() { }
+        internal ConversationalPiiResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Conversations.Models.ConversationPiiItemResult> ConversationItems { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.Language.Conversations.Models.ConversationStatistics Statistics { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Conversations.Models.InputWarning> Warnings { get { throw null; } }
-        Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Language.Conversations.Models.ConversationalPiiResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Models.ConversationalPiiResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalPiiResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ConversationAnalysisInput : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationAnalysisInput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationAnalysisInput>
     {
@@ -649,6 +622,33 @@ namespace Azure.AI.Language.Conversations.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationItemLevelTiming>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationItemLevelTiming>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ConversationLanguageUnderstandingActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent>
+    {
+        public ConversationLanguageUnderstandingActionContent(string projectName, string deploymentName) { }
+        public string DeploymentName { get { throw null; } }
+        public string DirectTarget { get { throw null; } set { } }
+        public bool? IsLoggingEnabled { get { throw null; } set { } }
+        public string ProjectName { get { throw null; } }
+        public Azure.AI.Language.Conversations.Models.StringIndexType? StringIndexType { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Conversations.Models.AnalysisConfig> TargetProjectParameters { get { throw null; } }
+        public bool? Verbose { get { throw null; } set { } }
+        Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConversationLanguageUnderstandingInput : Azure.AI.Language.Conversations.Models.AnalyzeConversationInput, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput>
+    {
+        public ConversationLanguageUnderstandingInput(Azure.AI.Language.Conversations.Models.ConversationAnalysisInput conversationInput, Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent actionContent) { }
+        public Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingActionContent ActionContent { get { throw null; } }
+        public Azure.AI.Language.Conversations.Models.ConversationAnalysisInput ConversationInput { get { throw null; } }
+        Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationLanguageUnderstandingInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ConversationPiiActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationPiiActionContent>
     {
         public ConversationPiiActionContent() { }
@@ -739,7 +739,7 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationPiiResults : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationPiiResults>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationPiiResults>
     {
         internal ConversationPiiResults() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Conversations.Models.ConversationalPiiResultWithResultBase> Conversations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Conversations.Models.ConversationalPiiResult> Conversations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Conversations.Models.DocumentError> Errors { get { throw null; } }
         public string ModelVersion { get { throw null; } }
         public Azure.AI.Language.Conversations.Models.RequestStatistics Statistics { get { throw null; } }

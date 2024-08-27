@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(M365))
+            if (options.Format != "W" && Optional.IsDefined(M365))
             {
                 writer.WritePropertyName("m365"u8);
                 writer.WriteObjectValue(M365, options);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            OverviewStatus m365 = default;
+            ReportOverviewStatus m365 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    m365 = OverviewStatus.DeserializeOverviewStatus(property.Value, options);
+                    m365 = ReportOverviewStatus.DeserializeReportOverviewStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

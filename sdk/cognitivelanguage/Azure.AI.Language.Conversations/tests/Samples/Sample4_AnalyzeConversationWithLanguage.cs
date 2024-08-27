@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 #endif
 
             AnalyzeConversationInput data =
-                new ConversationalInput(
+                new ConversationLanguageUnderstandingInput(
                     new ConversationAnalysisInput(
                         new TextConversationItem(
                             id: "1",
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         {
                             Language = "es"
                         }),
-                new ConversationActionContent(projectName, deploymentName)
+                new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
                 {
                     // Use Utf16CodeUnit for strings in .NET.
                     StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -96,7 +96,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             string deploymentName = TestEnvironment.DeploymentName;
 
             AnalyzeConversationInput data =
-                new ConversationalInput(
+                new ConversationLanguageUnderstandingInput(
                     new ConversationAnalysisInput(
                         new TextConversationItem(
                             id: "1",
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         {
                             Language = "es"
                         }),
-                new ConversationActionContent(projectName, deploymentName)
+                new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
                 {
                     // Use Utf16CodeUnit for strings in .NET.
                     StringIndexType = StringIndexType.Utf16CodeUnit,

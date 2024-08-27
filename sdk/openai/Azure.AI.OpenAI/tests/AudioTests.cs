@@ -1,26 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using OpenAI.Audio;
+using OpenAI.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests;
 
-public class AudioTests : AoaiTestBase<AudioClient>
+public class AudioTests(bool isAsync) : AoaiTestBase<AudioClient>(isAsync)
 {
-    public AudioTests(bool isAsync) : base(isAsync)
-    {
-        DisableRequestBodyRecording(nameof(AudioClient.TranscribeAudioAsync));
-        DisableRequestBodyRecording(nameof(AudioClient.TranslateAudioAsync));
-    }
-
     [Test]
     [Category("Smoke")]
     public void CanCreateClient() => Assert.That(GetTestClient(), Is.InstanceOf<AudioClient>());

@@ -26,7 +26,7 @@ az maps account create --kind "Gen2" --account-name "myMapAccountName" --resourc
 
 ### Authenticate the client
 
-There are 2 ways to authenticate the client: Shared key authentication and Azure AD.
+There are 3 ways to authenticate the client: Shared key authentication, Microsoft Entra authentication and shared access signature (SAS) authentication.
 
 #### Shared Key Authentication
 
@@ -39,16 +39,16 @@ AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsSearchClient client = new MapsSearchClient(credential);
 ```
 
-#### Azure AD Authentication
+#### Microsoft Entra Authentication
 
 In order to interact with the Azure Maps service, you'll need to create an instance of the MapsSearchClient class. The Azure Identity library makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
 
-To use AAD authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT_SECRET` to environment variable and call `DefaultAzureCredential()` method to get credential. `CLIENT_ID` and `CLIENT_SECRET` are the service principal ID and secret that can access Azure Maps account.
+To use Microsoft Entra authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT_SECRET` to environment variable and call `DefaultAzureCredential()` method to get credential. `CLIENT_ID` and `CLIENT_SECRET` are the service principal ID and secret that can access Azure Maps account.
 
 We also need **Azure Maps Client ID** which can get from Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
 
-```C# Snippet:InstantiateSearchClientViaAAD
-// Create a MapsSearchClient that will authenticate through AAD
+```C# Snippet:InstantiateSearchClientViaMicrosoftEntra
+// Create a MapsSearchClient that will authenticate through Microsoft Entra
 DefaultAzureCredential credential = new DefaultAzureCredential();
 string clientId = "<My Map Account Client Id>";
 MapsSearchClient client = new MapsSearchClient(credential, clientId);
@@ -68,8 +68,6 @@ dotnet add package Azure.ResourceManager.Maps --prerelease
 In the code, we need to import the following lines for both Azure Maps SDK and ResourceManager:
 
 ```C# Snippet:SearchImportNamespaces
-using Azure.Core.GeoJson;
-using Azure.Maps.Search;
 using Azure.Maps.Search.Models;
 ```
 
@@ -143,116 +141,66 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples).
 
-### Example Get Polygons
+### Example Get Geocoding
 
-```C# Snippet:GetPolygons
-// Get Addresses
-Response<SearchAddressResult> searchResult = await client.SearchAddressAsync("Seattle");
-
-// Extract geometry ids from addresses
-string geometry0Id = searchResult.Value.Results[0].DataSources.Geometry.Id;
-string geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
-
-// Extract position coordinates
-GeoPosition positionCoordinates = searchResult.Value.Results[0].Position;
-
-// Get polygons from geometry ids
-PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
-
-// Get polygons objects
-IReadOnlyList<PolygonObject> polygonList = polygonResponse.Polygons;
+```C# Snippet:GetGeocoding
+var query = "15171 NE 24th St, Redmond, WA 98052, United States";
+Response <GeocodingResponse> result = client.GetGeocoding(query);
+Console.WriteLine("Result for query: \"{0}\"", query);
+Console.WriteLine(result);
 ```
 
-### Example Fuzzy Search
+### Example Get Geocoding Batch
 
-```C# Snippet:FuzzySearch
-Response<SearchAddressResult> fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions
-{
-    Coordinates = new GeoPosition(121.56, 25.04),
-    Language = SearchLanguage.EnglishUsa
-});
-
-// Print out the possible results
-Console.WriteLine("The possible results for coffee shop:");
-foreach (SearchAddressResultItem result in fuzzySearchResponse.Value.Results)
-{
-    Console.WriteLine("Coordinate: {0}, Address: {1}",
-        result.Position, result.Address.FreeformAddress);
-}
+```C# Snippet:GetGeocodingBatch
+List<GeocodingQuery> queries = new List<GeocodingQuery>
+        {
+            new GeocodingQuery()
+            {
+                Query ="15171 NE 24th St, Redmond, WA 98052, United States"
+            },
+            new GeocodingQuery()
+            {
+                 Coordinates = new GeoPosition(121.5, 25.0)
+            },
+        };
+Response<GeocodingBatchResponse> results = client.GetGeocodingBatch(queries);
+Console.WriteLine(results);
 ```
 
-### Example Reverse Search Cross Street Address
+### Example Get Polygon
 
-```C# Snippet:ReverseSearchCrossStreetAddress
-var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions
+```C# Snippet:GetPolygon
+GetPolygonOptions options = new GetPolygonOptions()
 {
-    Coordinates = new GeoPosition(121.0, 24.0),
-    Language = SearchLanguage.EnglishUsa
-});
-```
-
-### Example Search Structured Address
-
-```C# Snippet:SearchStructuredAddress
-var address = new StructuredAddress
-{
-    CountryCode = "US",
-    StreetNumber = "15127",
-    StreetName = "NE 24th Street",
-    Municipality = "Redmond",
-    CountrySubdivision = "WA",
-    PostalCode = "98052"
+    Coordinates = new GeoPosition(121.5, 25.0)
 };
-Response<SearchAddressResult> searchResult = await client.SearchStructuredAddressAsync(address);
-
-SearchAddressResultItem resultItem = searchResult.Value.Results[0];
-Console.WriteLine("First result - Coordinate: {0}, Address: {1}",
-    resultItem.Position, resultItem.Address.FreeformAddress);
+Response<Boundary> result = client.GetPolygon(options);
+Console.WriteLine(result);
 ```
 
-### Example Search Inside Geometry
+### Example Get Reverse Geocoding
 
-```C# Snippet:SearchInsideGeometry
-GeoPolygon sfPolygon = new GeoPolygon(new[]
-{
-    new GeoPosition(-122.43576049804686, 37.752415234354402),
-    new GeoPosition(-122.4330139160, 37.706604725423119),
-    new GeoPosition(-122.36434936523438, 37.712059855877314),
-    new GeoPosition(-122.43576049804686, 37.7524152343544)
-});
-
-GeoPolygon taipeiPolygon = new GeoPolygon(new[]
-{
-    new GeoPosition(121.56, 25.04),
-    new GeoPosition(121.565, 25.04),
-    new GeoPosition(121.565, 25.045),
-    new GeoPosition(121.56, 25.045),
-    new GeoPosition(121.56, 25.04)
-});
-
-// Search coffee shop in Both polygons, return results in en-US
-Response<SearchAddressResult> searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions
-{
-    Language = SearchLanguage.EnglishUsa
-});
-
-// Get Taipei Cafe and San Francisco cafe and print first place
-SearchAddressResultItem taipeiCafe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "Taipei City").First();
-SearchAddressResultItem sfCafe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "San Francisco").First();
-
-Console.WriteLine("Possible Coffee shop in the Polygons:");
-Console.WriteLine("Coffee shop address in Taipei: {0}", taipeiCafe.Address.FreeformAddress);
-Console.WriteLine("Coffee shop address in San Francisco: {0}", sfCafe.Address.FreeformAddress);
+```C# Snippet:GetReverseGeocoding
+GeoPosition coordinates = new GeoPosition(-122.138685, 47.6305637);
+Response<GeocodingResponse> result = client.GetReverseGeocoding(coordinates);
 ```
 
-### Example Search Address
+### Example Get Reverse Geocoding Batch
 
-```C# Snippet:SearchAddress
-Response<SearchAddressResult> searchResult = await client.SearchAddressAsync("Seattle");
-
-SearchAddressResultItem resultItem = searchResult.Value.Results[0];
-Console.WriteLine("First result - Coordinate: {0}, Address: {1}",
-    resultItem.Position, resultItem.Address.FreeformAddress);
+```C# Snippet:GetReverseGeocodingBatch
+List<ReverseGeocodingQuery> items = new List<ReverseGeocodingQuery>
+        {
+            new ReverseGeocodingQuery()
+            {
+                Coordinates = new GeoPosition(121.53, 25.0)
+            },
+            new ReverseGeocodingQuery()
+            {
+                Coordinates = new GeoPosition(121.5, 25.0)
+            },
+        };
+Response<GeocodingBatchResponse> result = client.GetReverseGeocodingBatch(items);
 ```
 
 ## Troubleshooting

@@ -68,10 +68,10 @@ await foreach (ConfigurationSetting setting in client.GetConfigurationSettingsAs
 To gather all the labels whose names start with the "production" environment, call `GetLabelsAsync` with a label selector that filters for labels that start with the "production" label name.  This will retrieve all the labels in the store that satisfy that condition. See App Configuration [REST API](https://docs.microsoft.com/azure/azure-app-configuration/rest-api-labels#filtering) for more information about filtering.
 
 ```C# Snippet:AzConfigSample2_GetLabelsAsync
-var labelsSelector = new LabelSelector { NameFilter = "production*" };
+var labelsSelector = new SettingLabelSelector { NameFilter = "production*" };
 
 Console.WriteLine("Labels for Production environment:");
-await foreach (Label label in client.GetLabelsAsync(labelsSelector))
+await foreach (SettingLabel label in client.GetLabelsAsync(labelsSelector))
 {
     Console.WriteLine(label.Name);
 }

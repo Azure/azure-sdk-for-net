@@ -26,16 +26,6 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Extension))
-            {
-                writer.WritePropertyName("extension"u8);
-                writer.WriteStartArray();
-                foreach (var item in Extension)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
@@ -45,6 +35,16 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(Extension))
+            {
+                writer.WritePropertyName("extension"u8);
+                writer.WriteStartArray();
+                foreach (var item in Extension)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,27 +84,13 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            IList<FhirR4Extension> extension = default;
             FhirR4CodeableConcept code = default;
             string description = default;
+            IList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extension"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<FhirR4Extension> array = new List<FhirR4Extension>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item, options));
-                    }
-                    extension = array;
-                    continue;
-                }
                 if (property.NameEquals("code"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -119,13 +105,27 @@ namespace Azure.Health.Insights.RadiologyInsights
                     description = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("extension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FhirR4Extension> array = new List<FhirR4Extension>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item, options));
+                    }
+                    extension = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OrderedProcedure(extension ?? new ChangeTrackingList<FhirR4Extension>(), code, description, serializedAdditionalRawData);
+            return new OrderedProcedure(code, description, extension ?? new ChangeTrackingList<FhirR4Extension>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrderedProcedure>.Write(ModelReaderWriterOptions options)

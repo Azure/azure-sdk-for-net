@@ -30,7 +30,7 @@ string projectName = "Menu";
 string deploymentName = "production";
 
 AnalyzeConversationInput data =
-    new ConversationalInput(
+    new ConversationLanguageUnderstandingInput(
         new ConversationAnalysisInput(
             new TextConversationItem(
                 id: "1",
@@ -39,7 +39,7 @@ AnalyzeConversationInput data =
             {
                 Language = "es"
             }),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
         // Use Utf16CodeUnit for strings in .NET.
         StringIndexType = StringIndexType.Utf16CodeUnit,
