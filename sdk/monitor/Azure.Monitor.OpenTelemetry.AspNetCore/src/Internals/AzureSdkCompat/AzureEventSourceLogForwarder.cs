@@ -30,8 +30,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
 
             foreach (var rule in loggerFilterOptions?.Rules ?? Enumerable.Empty<LoggerFilterRule>())
             {
-                if (!string.IsNullOrEmpty(rule.CategoryName) &&
-                    (rule.CategoryName.StartsWith("Azure.") || rule.CategoryName.StartsWith("Microsoft.Azure.")))
+                if (!string.IsNullOrEmpty(rule.CategoryName)
+                    && rule.CategoryName != "Azure.Monitor.OpenTelemetry.CustomEvents" // This is used by our Exporter to log custom events and MUST be excluded here
+                    && (rule.CategoryName.StartsWith("Azure.") || rule.CategoryName.StartsWith("Microsoft.Azure.")))
                 {
                     _hasAzureLoggerFilterOptionsRules = true;
                 }
