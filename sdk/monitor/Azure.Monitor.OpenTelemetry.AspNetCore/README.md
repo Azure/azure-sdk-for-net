@@ -342,12 +342,15 @@ for your logging needs. For users looking to log [Application Insights Custom
 Events](https://learn.microsoft.com/azure/azure-monitor/app/api-custom-events-metrics#trackevent),
 this can be accomplished by utilizing the `TrackEvent(string name,
 IReadOnlyList<KeyValuePair<string, object?>>? attributes = null)` API provided
-in the distro.
+with the distro.
 
 Distro injects a singleton instance of `ApplicationInsightsEventLogger` into the Dependency Injection container. This instance can then be used to invoke the `TrackEvent` method for logging custom events. Below is an example of how you can implement this:
 
 ```csharp
 // Example code to log custom events in Application Insights
+using Azure.Monitor.OpenTelemetry.AspNetCore;
+using Azure.Monitor.OpenTelemetry.Events;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
@@ -372,7 +375,11 @@ app.MapGet("/", (IApplicationInsightsEventLogger CustomEventLogger) =>
 app.Run();
 ```
 
-`TrackEvent` internally calls the `ILogger.Log` API with the LogLevel set to `Information`. If you want to disable the collection of custom events, you can do so by adding a filter in code or via `appsettings.json`, as shown below.
+`TrackEvent` internally calls the `ILogger.Log` API with the LogLevel set to
+`Information`, allowing standard ILogger [filtering
+rules](https://learn.microsoft.com/dotnet/core/extensions/logging?tabs=command-line#how-filtering-rules-are-applied)
+to apply. If you want to disable the collection of custom events emitted by your application, you can do so
+by adding a filter in code or via `appsettings.json`, as shown below.
 
 `In code`
 

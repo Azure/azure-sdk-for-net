@@ -186,7 +186,7 @@ for your logging needs. For users looking to log [Application Insights Custom
 Events](https://learn.microsoft.com/azure/azure-monitor/app/api-custom-events-metrics#trackevent),
 this can be accomplished by utilizing the `TrackEvent(string name,
 IReadOnlyList<KeyValuePair<string, object?>>? attributes = null)` API provided
-in the exporter.
+with the exporter.
 
 To begin, you need to pass an instance of the
 [LoggerFactory](https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loggerfactory)
@@ -196,6 +196,8 @@ Below is an example of how you can implement this:
 
 ```csharp
 // Example code to log custom events in Application Insights
+using Azure.Monitor.OpenTelemetry.Events;
+
 var loggerFactory = LoggerFactory.Create(builder =>
 {
     builder.AddOpenTelemetry(options =>
@@ -204,10 +206,10 @@ var loggerFactory = LoggerFactory.Create(builder =>
     });
 });
 
-var eventLogger = new ApplicationInsightsEventLogger(loggerFactory.CreateLogger<ApplicationInsightsEventLogger>());
+var applicationInsightsEventLogger = new ApplicationInsightsEventLogger(loggerFactory);
 
 // Logging a custom event
-eventLogger.TrackEvent("CustomEventName", new List<KeyValuePair<string, object?>>
+applicationInsightsEventLogger.TrackEvent("CustomEventName", new List<KeyValuePair<string, object?>>
 {
     new KeyValuePair<string, object?>("Key1", "Value1"),
     new KeyValuePair<string, object?>("Key2", 12345)
@@ -218,8 +220,13 @@ eventLogger.TrackEvent("CustomEventName", new List<KeyValuePair<string, object?>
   > LoggerFactory instance passed in to the ApplicationInsightsEventLogger must be the same one that is used to configure OpenTelemetry.
 
 `TrackEvent` internally calls the `ILogger.Log` API with the LogLevel set to
-`Information`. If you want to disable the collection of custom events, you can
-do so by adding a filter in code or via `appsettings.json`, as shown below.
+`Information`, allowing standard ILogger [filtering
+rules](https://learn.microsoft.com/dotnet/core/extensions/logging?tabs=command-line#how-filtering-rules-are-applied)
+to apply. If you want to disable the collection of custom events emitted by your application, you can do so
+by adding a filter in code or via `appsettings.json`, as shown below.
+
+> **Note**
+  > If you have a filter set to enable logs only for warning level and above, you will need to explicitly allow logs from the `Azure.Monitor.OpenTelemetry.CustomEvents` category. In the example below, change the log level from `None` to `Information`.
 
 `In code`
 
