@@ -123,7 +123,7 @@ Syslog = new SyslogReceiver("0.0.0.0:514"),
 {
 new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
 {
-AzureMonitorWorkspaceLogs = new AzureMonitorWorkspaceLogsExporter(new AzureMonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"),"Custom-MyTableRawData_CL","dcr-00000000000000000000000000000000",new MonitorWorkspaceLogsSchemaMap(new MonitorWorkspaceLogsRecordMap[]
+AzureMonitorWorkspaceLogs = new MonitorWorkspaceLogsExporter(new MonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"),"Custom-MyTableRawData_CL","dcr-00000000000000000000000000000000",new MonitorWorkspaceLogsSchemaMap(new MonitorWorkspaceLogsRecordMap[]
 {
 new MonitorWorkspaceLogsRecordMap("body","Body"),new MonitorWorkspaceLogsRecordMap("severity_text","SeverityText"),new MonitorWorkspaceLogsRecordMap("time_unix_nano","TimeGenerated")
 })))

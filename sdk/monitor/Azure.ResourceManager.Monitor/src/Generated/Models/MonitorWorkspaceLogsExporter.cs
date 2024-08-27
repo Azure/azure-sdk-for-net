@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Azure Monitor Workspace Logs specific configurations. </summary>
-    public partial class AzureMonitorWorkspaceLogsExporter
+    public partial class MonitorWorkspaceLogsExporter
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureMonitorWorkspaceLogsExporter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsExporter"/>. </summary>
         /// <param name="api"> API configurations for Azure Monitor workspace exporter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="api"/> is null. </exception>
-        public AzureMonitorWorkspaceLogsExporter(AzureMonitorWorkspaceLogsApiConfig api)
+        public MonitorWorkspaceLogsExporter(MonitorWorkspaceLogsApiConfig api)
         {
             Argument.AssertNotNull(api, nameof(api));
 
             Api = api;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureMonitorWorkspaceLogsExporter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsExporter"/>. </summary>
         /// <param name="api"> API configurations for Azure Monitor workspace exporter. </param>
         /// <param name="concurrency"> Concurrency configuration for the exporter. </param>
         /// <param name="cache"> Cache configurations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMonitorWorkspaceLogsExporter(AzureMonitorWorkspaceLogsApiConfig api, MonitorWorkspaceLogsExporterConcurrencyConfiguration concurrency, MonitorWorkspaceLogsExporterCacheConfiguration cache, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorWorkspaceLogsExporter(MonitorWorkspaceLogsApiConfig api, MonitorWorkspaceLogsExporterConcurrencyConfiguration concurrency, MonitorWorkspaceLogsExporterCacheConfiguration cache, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Api = api;
             Concurrency = concurrency;
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.Monitor.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureMonitorWorkspaceLogsExporter"/> for deserialization. </summary>
-        internal AzureMonitorWorkspaceLogsExporter()
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsExporter"/> for deserialization. </summary>
+        internal MonitorWorkspaceLogsExporter()
         {
         }
 
         /// <summary> API configurations for Azure Monitor workspace exporter. </summary>
-        public AzureMonitorWorkspaceLogsApiConfig Api { get; set; }
+        public MonitorWorkspaceLogsApiConfig Api { get; set; }
         /// <summary> Concurrency configuration for the exporter. </summary>
         public MonitorWorkspaceLogsExporterConcurrencyConfiguration Concurrency { get; set; }
         /// <summary> Cache configurations. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Azure Monitor Workspace Logs Api configurations. </summary>
-    public partial class AzureMonitorWorkspaceLogsApiConfig
+    public partial class MonitorWorkspaceLogsApiConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureMonitorWorkspaceLogsApiConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsApiConfig"/>. </summary>
         /// <param name="dataCollectionEndpointUri"> Data collection endpoint ingestion url. </param>
         /// <param name="stream"> Stream name in destination. Azure Monitor stream is related to the destination table. </param>
         /// <param name="dataCollectionRule"> Data Collection Rule (DCR) immutable id. </param>
         /// <param name="schema"> The schema mapping for incoming data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointUri"/>, <paramref name="stream"/>, <paramref name="dataCollectionRule"/> or <paramref name="schema"/> is null. </exception>
-        public AzureMonitorWorkspaceLogsApiConfig(Uri dataCollectionEndpointUri, string stream, string dataCollectionRule, MonitorWorkspaceLogsSchemaMap schema)
+        public MonitorWorkspaceLogsApiConfig(Uri dataCollectionEndpointUri, string stream, string dataCollectionRule, MonitorWorkspaceLogsSchemaMap schema)
         {
             Argument.AssertNotNull(dataCollectionEndpointUri, nameof(dataCollectionEndpointUri));
             Argument.AssertNotNull(stream, nameof(stream));
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.Monitor.Models
             Schema = schema;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureMonitorWorkspaceLogsApiConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsApiConfig"/>. </summary>
         /// <param name="dataCollectionEndpointUri"> Data collection endpoint ingestion url. </param>
         /// <param name="stream"> Stream name in destination. Azure Monitor stream is related to the destination table. </param>
         /// <param name="dataCollectionRule"> Data Collection Rule (DCR) immutable id. </param>
         /// <param name="schema"> The schema mapping for incoming data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMonitorWorkspaceLogsApiConfig(Uri dataCollectionEndpointUri, string stream, string dataCollectionRule, MonitorWorkspaceLogsSchemaMap schema, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorWorkspaceLogsApiConfig(Uri dataCollectionEndpointUri, string stream, string dataCollectionRule, MonitorWorkspaceLogsSchemaMap schema, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataCollectionEndpointUri = dataCollectionEndpointUri;
             Stream = stream;
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Monitor.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureMonitorWorkspaceLogsApiConfig"/> for deserialization. </summary>
-        internal AzureMonitorWorkspaceLogsApiConfig()
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsApiConfig"/> for deserialization. </summary>
+        internal MonitorWorkspaceLogsApiConfig()
         {
         }
 

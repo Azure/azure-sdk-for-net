@@ -1646,31 +1646,6 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AutoscaleSettingPredicativeResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AutoscaleSettingPredicativeResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureMonitorWorkspaceLogsApiConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig>
-    {
-        public AzureMonitorWorkspaceLogsApiConfig(System.Uri dataCollectionEndpointUri, string stream, string dataCollectionRule, Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap schema) { }
-        public System.Uri DataCollectionEndpointUri { get { throw null; } set { } }
-        public string DataCollectionRule { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap Schema { get { throw null; } set { } }
-        public string Stream { get { throw null; } set { } }
-        Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AzureMonitorWorkspaceLogsExporter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsExporter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsExporter>
-    {
-        public AzureMonitorWorkspaceLogsExporter(Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig api) { }
-        public Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig Api { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporterCacheConfiguration Cache { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporterConcurrencyConfiguration Concurrency { get { throw null; } set { } }
-        Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsExporter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsExporter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsExporter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsExporter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsExporter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsExporter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsExporter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class BatchProcessor : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.BatchProcessor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.BatchProcessor>
     {
         public BatchProcessor() { }
@@ -3475,6 +3450,31 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MonitorWorkspaceLogsApiConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsApiConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsApiConfig>
+    {
+        public MonitorWorkspaceLogsApiConfig(System.Uri dataCollectionEndpointUri, string stream, string dataCollectionRule, Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap schema) { }
+        public System.Uri DataCollectionEndpointUri { get { throw null; } set { } }
+        public string DataCollectionRule { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap Schema { get { throw null; } set { } }
+        public string Stream { get { throw null; } set { } }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsApiConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsApiConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsApiConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsApiConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsApiConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsApiConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsApiConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MonitorWorkspaceLogsExporter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporter>
+    {
+        public MonitorWorkspaceLogsExporter(Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsApiConfig api) { }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsApiConfig Api { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporterCacheConfiguration Cache { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporterConcurrencyConfiguration Concurrency { get { throw null; } set { } }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MonitorWorkspaceLogsExporterCacheConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporterCacheConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporterCacheConfiguration>
     {
         public MonitorWorkspaceLogsExporterCacheConfiguration() { }
@@ -3734,7 +3734,7 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class PipelineGroupExporter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupExporter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupExporter>
     {
         public PipelineGroupExporter(Azure.ResourceManager.Monitor.Models.PipelineGroupExporterType exporterType, string name) { }
-        public Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsExporter AzureMonitorWorkspaceLogs { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporter AzureMonitorWorkspaceLogs { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.PipelineGroupExporterType ExporterType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Uri TcpUri { get { throw null; } set { } }
@@ -3873,7 +3873,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType Otlp { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType PipelineGroup { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType Syslog { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType UDP { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

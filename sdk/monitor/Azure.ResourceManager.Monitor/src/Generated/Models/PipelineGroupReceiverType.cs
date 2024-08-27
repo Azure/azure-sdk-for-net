@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string AmaValue = "Ama";
         private const string PipelineGroupValue = "PipelineGroup";
         private const string OtlpValue = "OTLP";
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
 
         /// <summary> Linux syslog. </summary>
         public static PipelineGroupReceiverType Syslog { get; } = new PipelineGroupReceiverType(SyslogValue);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Receives data from a OTLP collector. </summary>
         public static PipelineGroupReceiverType Otlp { get; } = new PipelineGroupReceiverType(OtlpValue);
         /// <summary> Receives data from an UDP collector. </summary>
-        public static PipelineGroupReceiverType UDP { get; } = new PipelineGroupReceiverType(UDPValue);
+        public static PipelineGroupReceiverType Udp { get; } = new PipelineGroupReceiverType(UdpValue);
         /// <summary> Determines if two <see cref="PipelineGroupReceiverType"/> values are the same. </summary>
         public static bool operator ==(PipelineGroupReceiverType left, PipelineGroupReceiverType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PipelineGroupReceiverType"/> values are not the same. </summary>

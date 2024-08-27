@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             PipelineGroupExporterType type = default;
             string name = default;
-            AzureMonitorWorkspaceLogsExporter azureMonitorWorkspaceLogs = default;
+            MonitorWorkspaceLogsExporter azureMonitorWorkspaceLogs = default;
             TcpExporter tcp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    azureMonitorWorkspaceLogs = AzureMonitorWorkspaceLogsExporter.DeserializeAzureMonitorWorkspaceLogsExporter(property.Value, options);
+                    azureMonitorWorkspaceLogs = MonitorWorkspaceLogsExporter.DeserializeMonitorWorkspaceLogsExporter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tcp"u8))

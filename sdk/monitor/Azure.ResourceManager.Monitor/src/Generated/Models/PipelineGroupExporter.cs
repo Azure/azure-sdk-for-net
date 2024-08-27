@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="azureMonitorWorkspaceLogs"> Azure Monitor Workspace Logs specific configurations. </param>
         /// <param name="tcp"> TCP based exporter. Used for pipelineGroup exporter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupExporter(PipelineGroupExporterType exporterType, string name, AzureMonitorWorkspaceLogsExporter azureMonitorWorkspaceLogs, TcpExporter tcp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupExporter(PipelineGroupExporterType exporterType, string name, MonitorWorkspaceLogsExporter azureMonitorWorkspaceLogs, TcpExporter tcp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExporterType = exporterType;
             Name = name;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The name of exporter. </summary>
         public string Name { get; set; }
         /// <summary> Azure Monitor Workspace Logs specific configurations. </summary>
-        public AzureMonitorWorkspaceLogsExporter AzureMonitorWorkspaceLogs { get; set; }
+        public MonitorWorkspaceLogsExporter AzureMonitorWorkspaceLogs { get; set; }
         /// <summary> TCP based exporter. Used for pipelineGroup exporter. </summary>
         internal TcpExporter Tcp { get; set; }
         /// <summary> TCP url to export. </summary>

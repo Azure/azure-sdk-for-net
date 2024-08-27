@@ -62,6 +62,7 @@ acronym-mapping:
   HH: Hh
   DD: Dd
   SS: Ss
+  UDP: Udp
 
 irregular-plural-words:
   status: status
@@ -334,6 +335,8 @@ rename-mapping:
   NetworkingRoute: PipelineGroupNetworkingRoute
   ExternalNetworkingMode: PipelineGroupExternalNetworkingMode
   AzureResourceManagerCommonTypesExtendedLocation: Azure.ResourceManager.CommonTypes.ExtendedLocation
+  AzureMonitorWorkspaceLogsApiConfig: MonitorWorkspaceLogsApiConfig
+  AzureMonitorWorkspaceLogsExporter: MonitorWorkspaceLogsExporter
 
 suppress-abstract-base-class:
 - MetricAlertCriteria

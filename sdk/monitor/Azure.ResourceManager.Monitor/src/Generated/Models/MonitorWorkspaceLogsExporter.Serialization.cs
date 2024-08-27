@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AzureMonitorWorkspaceLogsExporter : IUtf8JsonSerializable, IJsonModel<AzureMonitorWorkspaceLogsExporter>
+    public partial class MonitorWorkspaceLogsExporter : IUtf8JsonSerializable, IJsonModel<MonitorWorkspaceLogsExporter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMonitorWorkspaceLogsExporter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorWorkspaceLogsExporter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AzureMonitorWorkspaceLogsExporter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorWorkspaceLogsExporter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceLogsExporter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMonitorWorkspaceLogsExporter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        AzureMonitorWorkspaceLogsExporter IJsonModel<AzureMonitorWorkspaceLogsExporter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MonitorWorkspaceLogsExporter IJsonModel<MonitorWorkspaceLogsExporter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceLogsExporter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMonitorWorkspaceLogsExporter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureMonitorWorkspaceLogsExporter(document.RootElement, options);
+            return DeserializeMonitorWorkspaceLogsExporter(document.RootElement, options);
         }
 
-        internal static AzureMonitorWorkspaceLogsExporter DeserializeAzureMonitorWorkspaceLogsExporter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MonitorWorkspaceLogsExporter DeserializeMonitorWorkspaceLogsExporter(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            AzureMonitorWorkspaceLogsApiConfig api = default;
+            MonitorWorkspaceLogsApiConfig api = default;
             MonitorWorkspaceLogsExporterConcurrencyConfiguration concurrency = default;
             MonitorWorkspaceLogsExporterCacheConfiguration cache = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("api"u8))
                 {
-                    api = AzureMonitorWorkspaceLogsApiConfig.DeserializeAzureMonitorWorkspaceLogsApiConfig(property.Value, options);
+                    api = MonitorWorkspaceLogsApiConfig.DeserializeMonitorWorkspaceLogsApiConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("concurrency"u8))
@@ -112,38 +112,38 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureMonitorWorkspaceLogsExporter(api, concurrency, cache, serializedAdditionalRawData);
+            return new MonitorWorkspaceLogsExporter(api, concurrency, cache, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AzureMonitorWorkspaceLogsExporter>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MonitorWorkspaceLogsExporter>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceLogsExporter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMonitorWorkspaceLogsExporter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporter)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AzureMonitorWorkspaceLogsExporter IPersistableModel<AzureMonitorWorkspaceLogsExporter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MonitorWorkspaceLogsExporter IPersistableModel<MonitorWorkspaceLogsExporter>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceLogsExporter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureMonitorWorkspaceLogsExporter(document.RootElement, options);
+                        return DeserializeMonitorWorkspaceLogsExporter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMonitorWorkspaceLogsExporter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporter)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureMonitorWorkspaceLogsExporter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorWorkspaceLogsExporter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
