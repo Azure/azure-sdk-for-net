@@ -1,14 +1,24 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0 (2024-08-01)
 
 ### Features Added
 
+- Add `UpgradePolicy` support to Pool Creation
+  - Added `UpgradePolicy` definition
+  - Added `AutomaticOSUpgradePolicy` definition
+  - Added `RollingUpgradePolicy` definition
+
+- Added `BatchSupportEndOfLife` property to `BatchSupportedSku` definition
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Removed `UpgradePolicy` support to Pool Creation
+  - Added `UpgradePolicy` definition
+  - Added `AutomaticOSUpgradePolicy` definition
+  - Added `RollingUpgradePolicy` definition
 
-### Other Changes
+- Added `BatchSupportEndOfLife` property to `BatchSupportedSku` definition
 
 ## 1.4.0 (2024-03-01)
 
