@@ -63,7 +63,7 @@ public class AzureTestEnvironment
                 Path.Combine(RepoRoot.FullName, "sdk"),
                 sourceDir.FullName);
             serviceName = relativePath
-                .Split([Path.DirectorySeparatorChar], StringSplitOptions.RemoveEmptyEntries)
+                .Split(new char[] { Path.DirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries)
                 .FirstOrDefault()!;
         }
 
