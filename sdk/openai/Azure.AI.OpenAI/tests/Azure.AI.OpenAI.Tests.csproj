@@ -24,6 +24,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Condition="'$(ExternalOpenAILibrary)' != ''"
+               Include="$([System.IO.Path]::GetFileName('$(ExternalOpenAILibrary)'))"
+               HintPath="$(ExternalOpenAILibrary)" />
+    <Reference Condition="'$(ExternalAzureCoreLibrary)' != ''"
+               Include="$([System.IO.Path]::GetFileName('$(ExternalAzureCoreLibrary)'))"
+               HintPath="$(ExternalAzureCoreLibrary)" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 
