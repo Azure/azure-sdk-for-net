@@ -35,15 +35,291 @@ namespace Azure.ResourceManager.Billing.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AgreementResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AgreementResource.CreateResourceIdentifier" /> to create an <see cref="AgreementResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingSubscriptionResource"/> object. </returns>
-        public virtual BillingSubscriptionResource GetBillingSubscriptionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AgreementResource"/> object. </returns>
+        public virtual AgreementResource GetAgreementResource(ResourceIdentifier id)
         {
-            BillingSubscriptionResource.ValidateResourceId(id);
-            return new BillingSubscriptionResource(Client, id);
+            AgreementResource.ValidateResourceId(id);
+            return new AgreementResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AssociatedTenantResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AssociatedTenantResource.CreateResourceIdentifier" /> to create an <see cref="AssociatedTenantResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AssociatedTenantResource"/> object. </returns>
+        public virtual AssociatedTenantResource GetAssociatedTenantResource(ResourceIdentifier id)
+        {
+            AssociatedTenantResource.ValidateResourceId(id);
+            return new AssociatedTenantResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountAvailableBalanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountAvailableBalanceResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountAvailableBalanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountAvailableBalanceResource"/> object. </returns>
+        public virtual BillingAccountAvailableBalanceResource GetBillingAccountAvailableBalanceResource(ResourceIdentifier id)
+        {
+            BillingAccountAvailableBalanceResource.ValidateResourceId(id);
+            return new BillingAccountAvailableBalanceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileAvailableBalanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileAvailableBalanceResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileAvailableBalanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileAvailableBalanceResource"/> object. </returns>
+        public virtual BillingAccountBillingProfileAvailableBalanceResource GetBillingAccountBillingProfileAvailableBalanceResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingProfileAvailableBalanceResource.ValidateResourceId(id);
+            return new BillingAccountBillingProfileAvailableBalanceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountResource"/> object. </returns>
+        public virtual BillingAccountResource GetBillingAccountResource(ResourceIdentifier id)
+        {
+            BillingAccountResource.ValidateResourceId(id);
+            return new BillingAccountResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingProfileResource.CreateResourceIdentifier" /> to create a <see cref="BillingProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingProfileResource"/> object. </returns>
+        public virtual BillingProfileResource GetBillingProfileResource(ResourceIdentifier id)
+        {
+            BillingProfileResource.ValidateResourceId(id);
+            return new BillingProfileResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingPropertyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingPropertyResource.CreateResourceIdentifier" /> to create a <see cref="BillingPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingPropertyResource"/> object. </returns>
+        public virtual BillingPropertyResource GetBillingPropertyResource(ResourceIdentifier id)
+        {
+            BillingPropertyResource.ValidateResourceId(id);
+            return new BillingPropertyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingRequestResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingRequestResource.CreateResourceIdentifier" /> to create a <see cref="BillingRequestResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingRequestResource"/> object. </returns>
+        public virtual BillingRequestResource GetBillingRequestResource(ResourceIdentifier id)
+        {
+            BillingRequestResource.ValidateResourceId(id);
+            return new BillingRequestResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileBillingRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileBillingRoleAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileBillingRoleAssignmentResource"/> object. </returns>
+        public virtual BillingAccountBillingProfileBillingRoleAssignmentResource GetBillingAccountBillingProfileBillingRoleAssignmentResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingProfileBillingRoleAssignmentResource.ValidateResourceId(id);
+            return new BillingAccountBillingProfileBillingRoleAssignmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileCustomerBillingRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileCustomerBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileCustomerBillingRoleAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileCustomerBillingRoleAssignmentResource"/> object. </returns>
+        public virtual BillingAccountBillingProfileCustomerBillingRoleAssignmentResource GetBillingAccountBillingProfileCustomerBillingRoleAssignmentResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingProfileCustomerBillingRoleAssignmentResource.ValidateResourceId(id);
+            return new BillingAccountBillingProfileCustomerBillingRoleAssignmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource"/> object. </returns>
+        public virtual BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource GetBillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource.ValidateResourceId(id);
+            return new BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingRoleAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingRoleAssignmentResource"/> object. </returns>
+        public virtual BillingAccountBillingRoleAssignmentResource GetBillingAccountBillingRoleAssignmentResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingRoleAssignmentResource.ValidateResourceId(id);
+            return new BillingAccountBillingRoleAssignmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountDepartmentBillingRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountDepartmentBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountDepartmentBillingRoleAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountDepartmentBillingRoleAssignmentResource"/> object. </returns>
+        public virtual BillingAccountDepartmentBillingRoleAssignmentResource GetBillingAccountDepartmentBillingRoleAssignmentResource(ResourceIdentifier id)
+        {
+            BillingAccountDepartmentBillingRoleAssignmentResource.ValidateResourceId(id);
+            return new BillingAccountDepartmentBillingRoleAssignmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountEnrollmentAccountBillingRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountEnrollmentAccountBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountEnrollmentAccountBillingRoleAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountEnrollmentAccountBillingRoleAssignmentResource"/> object. </returns>
+        public virtual BillingAccountEnrollmentAccountBillingRoleAssignmentResource GetBillingAccountEnrollmentAccountBillingRoleAssignmentResource(ResourceIdentifier id)
+        {
+            BillingAccountEnrollmentAccountBillingRoleAssignmentResource.ValidateResourceId(id);
+            return new BillingAccountEnrollmentAccountBillingRoleAssignmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileBillingRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileBillingRoleDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileBillingRoleDefinitionResource"/> object. </returns>
+        public virtual BillingAccountBillingProfileBillingRoleDefinitionResource GetBillingAccountBillingProfileBillingRoleDefinitionResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingProfileBillingRoleDefinitionResource.ValidateResourceId(id);
+            return new BillingAccountBillingProfileBillingRoleDefinitionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileCustomerBillingRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileCustomerBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileCustomerBillingRoleDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileCustomerBillingRoleDefinitionResource"/> object. </returns>
+        public virtual BillingAccountBillingProfileCustomerBillingRoleDefinitionResource GetBillingAccountBillingProfileCustomerBillingRoleDefinitionResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingProfileCustomerBillingRoleDefinitionResource.ValidateResourceId(id);
+            return new BillingAccountBillingProfileCustomerBillingRoleDefinitionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource"/> object. </returns>
+        public virtual BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource GetBillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource.ValidateResourceId(id);
+            return new BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingRoleDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingRoleDefinitionResource"/> object. </returns>
+        public virtual BillingAccountBillingRoleDefinitionResource GetBillingAccountBillingRoleDefinitionResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingRoleDefinitionResource.ValidateResourceId(id);
+            return new BillingAccountBillingRoleDefinitionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountDepartmentBillingRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountDepartmentBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountDepartmentBillingRoleDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountDepartmentBillingRoleDefinitionResource"/> object. </returns>
+        public virtual BillingAccountDepartmentBillingRoleDefinitionResource GetBillingAccountDepartmentBillingRoleDefinitionResource(ResourceIdentifier id)
+        {
+            BillingAccountDepartmentBillingRoleDefinitionResource.ValidateResourceId(id);
+            return new BillingAccountDepartmentBillingRoleDefinitionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountEnrollmentAccountBillingRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountEnrollmentAccountBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountEnrollmentAccountBillingRoleDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountEnrollmentAccountBillingRoleDefinitionResource"/> object. </returns>
+        public virtual BillingAccountEnrollmentAccountBillingRoleDefinitionResource GetBillingAccountEnrollmentAccountBillingRoleDefinitionResource(ResourceIdentifier id)
+        {
+            BillingAccountEnrollmentAccountBillingRoleDefinitionResource.ValidateResourceId(id);
+            return new BillingAccountEnrollmentAccountBillingRoleDefinitionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SavingsPlanOrderModelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SavingsPlanOrderModelResource.CreateResourceIdentifier" /> to create a <see cref="SavingsPlanOrderModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SavingsPlanOrderModelResource"/> object. </returns>
+        public virtual SavingsPlanOrderModelResource GetSavingsPlanOrderModelResource(ResourceIdentifier id)
+        {
+            SavingsPlanOrderModelResource.ValidateResourceId(id);
+            return new SavingsPlanOrderModelResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SavingsPlanModelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SavingsPlanModelResource.CreateResourceIdentifier" /> to create a <see cref="SavingsPlanModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SavingsPlanModelResource"/> object. </returns>
+        public virtual SavingsPlanModelResource GetSavingsPlanModelResource(ResourceIdentifier id)
+        {
+            SavingsPlanModelResource.ValidateResourceId(id);
+            return new SavingsPlanModelResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileBillingSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileBillingSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileBillingSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileBillingSubscriptionResource"/> object. </returns>
+        public virtual BillingAccountBillingProfileBillingSubscriptionResource GetBillingAccountBillingProfileBillingSubscriptionResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingProfileBillingSubscriptionResource.ValidateResourceId(id);
+            return new BillingAccountBillingProfileBillingSubscriptionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingSubscriptionResource"/> object. </returns>
+        public virtual BillingAccountBillingSubscriptionResource GetBillingAccountBillingSubscriptionResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingSubscriptionResource.ValidateResourceId(id);
+            return new BillingAccountBillingSubscriptionResource(Client, id);
         }
 
         /// <summary>
@@ -59,15 +335,123 @@ namespace Azure.ResourceManager.Billing.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingPaymentMethodResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileCustomerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileCustomerResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileCustomerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingPaymentMethodResource"/> object. </returns>
-        public virtual BillingPaymentMethodResource GetBillingPaymentMethodResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileCustomerResource"/> object. </returns>
+        public virtual BillingAccountBillingProfileCustomerResource GetBillingAccountBillingProfileCustomerResource(ResourceIdentifier id)
         {
-            BillingPaymentMethodResource.ValidateResourceId(id);
-            return new BillingPaymentMethodResource(Client, id);
+            BillingAccountBillingProfileCustomerResource.ValidateResourceId(id);
+            return new BillingAccountBillingProfileCustomerResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountCustomerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountCustomerResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountCustomerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountCustomerResource"/> object. </returns>
+        public virtual BillingAccountCustomerResource GetBillingAccountCustomerResource(ResourceIdentifier id)
+        {
+            BillingAccountCustomerResource.ValidateResourceId(id);
+            return new BillingAccountCustomerResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DepartmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DepartmentResource.CreateResourceIdentifier" /> to create a <see cref="DepartmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DepartmentResource"/> object. </returns>
+        public virtual DepartmentResource GetDepartmentResource(ResourceIdentifier id)
+        {
+            DepartmentResource.ValidateResourceId(id);
+            return new DepartmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountDepartmentEnrollmentAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountDepartmentEnrollmentAccountResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountDepartmentEnrollmentAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountDepartmentEnrollmentAccountResource"/> object. </returns>
+        public virtual BillingAccountDepartmentEnrollmentAccountResource GetBillingAccountDepartmentEnrollmentAccountResource(ResourceIdentifier id)
+        {
+            BillingAccountDepartmentEnrollmentAccountResource.ValidateResourceId(id);
+            return new BillingAccountDepartmentEnrollmentAccountResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountEnrollmentAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountEnrollmentAccountResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountEnrollmentAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountEnrollmentAccountResource"/> object. </returns>
+        public virtual BillingAccountEnrollmentAccountResource GetBillingAccountEnrollmentAccountResource(ResourceIdentifier id)
+        {
+            BillingAccountEnrollmentAccountResource.ValidateResourceId(id);
+            return new BillingAccountEnrollmentAccountResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingAccountInvoiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingAccountInvoiceResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingAccountInvoiceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingAccountInvoiceResource"/> object. </returns>
+        public virtual BillingAccountBillingAccountInvoiceResource GetBillingAccountBillingAccountInvoiceResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingAccountInvoiceResource.ValidateResourceId(id);
+            return new BillingAccountBillingAccountInvoiceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingSubscriptionInvoiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingSubscriptionInvoiceResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingSubscriptionInvoiceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingSubscriptionInvoiceResource"/> object. </returns>
+        public virtual BillingAccountBillingSubscriptionInvoiceResource GetBillingAccountBillingSubscriptionInvoiceResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingSubscriptionInvoiceResource.ValidateResourceId(id);
+            return new BillingAccountBillingSubscriptionInvoiceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantBillingAccountInvoiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantBillingAccountInvoiceResource.CreateResourceIdentifier" /> to create a <see cref="TenantBillingAccountInvoiceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantBillingAccountInvoiceResource"/> object. </returns>
+        public virtual TenantBillingAccountInvoiceResource GetTenantBillingAccountInvoiceResource(ResourceIdentifier id)
+        {
+            TenantBillingAccountInvoiceResource.ValidateResourceId(id);
+            return new TenantBillingAccountInvoiceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="InvoiceSectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InvoiceSectionResource.CreateResourceIdentifier" /> to create an <see cref="InvoiceSectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="InvoiceSectionResource"/> object. </returns>
+        public virtual InvoiceSectionResource GetInvoiceSectionResource(ResourceIdentifier id)
+        {
+            InvoiceSectionResource.ValidateResourceId(id);
+            return new InvoiceSectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingPaymentMethodLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingPaymentMethodLinkResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingPaymentMethodLinkResource"/> object. </returns>
+        public virtual BillingPaymentMethodLinkResource GetBillingPaymentMethodLinkResource(ResourceIdentifier id)
+        {
+            BillingPaymentMethodLinkResource.ValidateResourceId(id);
+            return new BillingPaymentMethodLinkResource(Client, id);
         }
 
         /// <summary>
@@ -83,15 +467,147 @@ namespace Azure.ResourceManager.Billing.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingPaymentMethodLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingPaymentMethodLinkResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="BillingPaymentMethodResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingPaymentMethodLinkResource"/> object. </returns>
-        public virtual BillingPaymentMethodLinkResource GetBillingPaymentMethodLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingPaymentMethodResource"/> object. </returns>
+        public virtual BillingPaymentMethodResource GetBillingPaymentMethodResource(ResourceIdentifier id)
         {
-            BillingPaymentMethodLinkResource.ValidateResourceId(id);
-            return new BillingPaymentMethodLinkResource(Client, id);
+            BillingPaymentMethodResource.ValidateResourceId(id);
+            return new BillingPaymentMethodResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileCustomerPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileCustomerPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileCustomerPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileCustomerPolicyResource"/> object. </returns>
+        public virtual BillingAccountBillingProfileCustomerPolicyResource GetBillingAccountBillingProfileCustomerPolicyResource(ResourceIdentifier id)
+        {
+            BillingAccountBillingProfileCustomerPolicyResource.ValidateResourceId(id);
+            return new BillingAccountBillingProfileCustomerPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountCustomerPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountCustomerPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountCustomerPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountCustomerPolicyResource"/> object. </returns>
+        public virtual BillingAccountCustomerPolicyResource GetBillingAccountCustomerPolicyResource(ResourceIdentifier id)
+        {
+            BillingAccountCustomerPolicyResource.ValidateResourceId(id);
+            return new BillingAccountCustomerPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingProfilePolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingProfilePolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingProfilePolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingProfilePolicyResource"/> object. </returns>
+        public virtual BillingProfilePolicyResource GetBillingProfilePolicyResource(ResourceIdentifier id)
+        {
+            BillingProfilePolicyResource.ValidateResourceId(id);
+            return new BillingProfilePolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
+        public virtual BillingAccountPolicyResource GetBillingAccountPolicyResource(ResourceIdentifier id)
+        {
+            BillingAccountPolicyResource.ValidateResourceId(id);
+            return new BillingAccountPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionPolicyResource"/> object. </returns>
+        public virtual SubscriptionPolicyResource GetSubscriptionPolicyResource(ResourceIdentifier id)
+        {
+            SubscriptionPolicyResource.ValidateResourceId(id);
+            return new SubscriptionPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ProductResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProductResource.CreateResourceIdentifier" /> to create a <see cref="ProductResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ProductResource"/> object. </returns>
+        public virtual ProductResource GetProductResource(ResourceIdentifier id)
+        {
+            ProductResource.ValidateResourceId(id);
+            return new ProductResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ReservationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationResource.CreateResourceIdentifier" /> to create a <see cref="ReservationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ReservationResource"/> object. </returns>
+        public virtual ReservationResource GetReservationResource(ResourceIdentifier id)
+        {
+            ReservationResource.ValidateResourceId(id);
+            return new ReservationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ReservationOrderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationOrderResource.CreateResourceIdentifier" /> to create a <see cref="ReservationOrderResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ReservationOrderResource"/> object. </returns>
+        public virtual ReservationOrderResource GetReservationOrderResource(ResourceIdentifier id)
+        {
+            ReservationOrderResource.ValidateResourceId(id);
+            return new ReservationOrderResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TransferDetailResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TransferDetailResource.CreateResourceIdentifier" /> to create a <see cref="TransferDetailResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TransferDetailResource"/> object. </returns>
+        public virtual TransferDetailResource GetTransferDetailResource(ResourceIdentifier id)
+        {
+            TransferDetailResource.ValidateResourceId(id);
+            return new TransferDetailResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PartnerTransferDetailResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PartnerTransferDetailResource.CreateResourceIdentifier" /> to create a <see cref="PartnerTransferDetailResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PartnerTransferDetailResource"/> object. </returns>
+        public virtual PartnerTransferDetailResource GetPartnerTransferDetailResource(ResourceIdentifier id)
+        {
+            PartnerTransferDetailResource.ValidateResourceId(id);
+            return new PartnerTransferDetailResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RecipientTransferDetailResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecipientTransferDetailResource.CreateResourceIdentifier" /> to create a <see cref="RecipientTransferDetailResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RecipientTransferDetailResource"/> object. </returns>
+        public virtual RecipientTransferDetailResource GetRecipientTransferDetailResource(ResourceIdentifier id)
+        {
+            RecipientTransferDetailResource.ValidateResourceId(id);
+            return new RecipientTransferDetailResource(Client, id);
         }
     }
 }

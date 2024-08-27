@@ -28,6 +28,17 @@ namespace Azure.ResourceManager.Billing
             }
 
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -59,6 +70,11 @@ namespace Azure.ResourceManager.Billing
             {
                 writer.WritePropertyName("beneficiaryTenantId"u8);
                 writer.WriteStringValue(BeneficiaryTenantId);
+            }
+            if (Optional.IsDefined(Beneficiary))
+            {
+                writer.WritePropertyName("beneficiary"u8);
+                writer.WriteObjectValue(Beneficiary, options);
             }
             if (Optional.IsDefined(BillingFrequency))
             {
@@ -105,6 +121,11 @@ namespace Azure.ResourceManager.Billing
             {
                 writer.WritePropertyName("customerDisplayName"u8);
                 writer.WriteStringValue(CustomerDisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CustomerName))
+            {
+                writer.WritePropertyName("customerName"u8);
+                writer.WriteStringValue(CustomerName);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -191,35 +212,25 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("renewalTermDetails"u8);
                 writer.WriteObjectValue(RenewalTermDetails, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(SkuDescription))
-            {
-                writer.WritePropertyName("skuDescription"u8);
-                writer.WriteStringValue(SkuDescription);
-            }
             if (Optional.IsDefined(SkuId))
             {
                 writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Optional.IsDefined(SkuDescription))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WritePropertyName("skuDescription"u8);
+                writer.WriteStringValue(SkuDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SystemOverrides))
             {
-                writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
+                writer.WritePropertyName("systemOverrides"u8);
+                writer.WriteObjectValue(SystemOverrides, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SuspensionReasons))
+            if (options.Format != "W" && Optional.IsDefined(ResourceUri))
             {
-                writer.WritePropertyName("suspensionReasons"u8);
-                writer.WriteStartArray();
-                foreach (var item in SuspensionReasons)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("resourceUri"u8);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(TermDuration))
             {
@@ -236,17 +247,62 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("termEndDate"u8);
                 writer.WriteStringValue(TermEndOn.Value, "O");
             }
+            if (Optional.IsDefined(ProvisioningTenantId))
+            {
+                writer.WritePropertyName("provisioningTenantId"u8);
+                writer.WriteStringValue(ProvisioningTenantId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(OperationStatus))
+            {
+                writer.WritePropertyName("operationStatus"u8);
+                writer.WriteStringValue(OperationStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SuspensionReasons))
+            {
+                writer.WritePropertyName("suspensionReasons"u8);
+                writer.WriteStartArray();
+                foreach (var item in SuspensionReasons)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SuspensionReasonDetails))
+            {
+                writer.WritePropertyName("suspensionReasonDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in SuspensionReasonDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("enrollmentAccountSubscriptionDetails"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionEnrollmentAccountStatus))
-            {
-                writer.WritePropertyName("subscriptionEnrollmentAccountStatus"u8);
-                writer.WriteStringValue(SubscriptionEnrollmentAccountStatus.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(EnrollmentAccountStartOn))
             {
                 writer.WritePropertyName("enrollmentAccountStartDate"u8);
                 writer.WriteStringValue(EnrollmentAccountStartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionEnrollmentAccountStatus))
+            {
+                writer.WritePropertyName("subscriptionEnrollmentAccountStatus"u8);
+                writer.WriteStringValue(SubscriptionEnrollmentAccountStatus.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -288,12 +344,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return null;
             }
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
             BillingSubscriptionAutoRenewState? autoRenew = default;
             string beneficiaryTenantId = default;
+            Beneficiary beneficiary = default;
             string billingFrequency = default;
             ResourceIdentifier billingProfileId = default;
             IReadOnlyDictionary<string, string> billingPolicies = default;
@@ -302,6 +360,7 @@ namespace Azure.ResourceManager.Billing
             string consumptionCostCenter = default;
             string customerId = default;
             string customerDisplayName = default;
+            string customerName = default;
             string displayName = default;
             string enrollmentAccountId = default;
             string enrollmentAccountDisplayName = default;
@@ -319,20 +378,40 @@ namespace Azure.ResourceManager.Billing
             long? quantity = default;
             CreatedSubscriptionReseller reseller = default;
             SubscriptionRenewalTermDetails renewalTermDetails = default;
-            string skuDescription = default;
             string skuId = default;
-            BillingSubscriptionStatus? status = default;
-            string subscriptionId = default;
-            IReadOnlyList<string> suspensionReasons = default;
+            string skuDescription = default;
+            SystemOverrides systemOverrides = default;
+            Uri resourceUri = default;
             TimeSpan? termDuration = default;
             DateTimeOffset? termStartDate = default;
             DateTimeOffset? termEndDate = default;
-            SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default;
+            string provisioningTenantId = default;
+            BillingSubscriptionStatus? status = default;
+            BillingSubscriptionOperationStatus? operationStatus = default;
+            ProvisioningState? provisioningState = default;
+            string subscriptionId = default;
+            IReadOnlyList<string> suspensionReasons = default;
+            IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails = default;
             DateTimeOffset? enrollmentAccountStartDate = default;
+            SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -378,6 +457,15 @@ namespace Azure.ResourceManager.Billing
                         if (property0.NameEquals("beneficiaryTenantId"u8))
                         {
                             beneficiaryTenantId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("beneficiary"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            beneficiary = Beneficiary.DeserializeBeneficiary(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("billingFrequency"u8))
@@ -431,6 +519,11 @@ namespace Azure.ResourceManager.Billing
                         if (property0.NameEquals("customerDisplayName"u8))
                         {
                             customerDisplayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("customerName"u8))
+                        {
+                            customerName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -550,42 +643,32 @@ namespace Azure.ResourceManager.Billing
                             renewalTermDetails = SubscriptionRenewalTermDetails.DeserializeSubscriptionRenewalTermDetails(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("skuDescription"u8))
-                        {
-                            skuDescription = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("skuId"u8))
                         {
                             skuId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"u8))
+                        if (property0.NameEquals("skuDescription"u8))
+                        {
+                            skuDescription = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("systemOverrides"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            status = new BillingSubscriptionStatus(property0.Value.GetString());
+                            systemOverrides = SystemOverrides.DeserializeSystemOverrides(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("subscriptionId"u8))
-                        {
-                            subscriptionId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("suspensionReasons"u8))
+                        if (property0.NameEquals("resourceUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            suspensionReasons = array;
+                            resourceUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("termDuration"u8))
@@ -615,6 +698,71 @@ namespace Azure.ResourceManager.Billing
                             termEndDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("provisioningTenantId"u8))
+                        {
+                            provisioningTenantId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = new BillingSubscriptionStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("operationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            operationStatus = new BillingSubscriptionOperationStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("subscriptionId"u8))
+                        {
+                            subscriptionId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("suspensionReasons"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            suspensionReasons = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("suspensionReasonDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<BillingSubscriptionStatusDetails> array = new List<BillingSubscriptionStatusDetails>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(BillingSubscriptionStatusDetails.DeserializeBillingSubscriptionStatusDetails(item, options));
+                            }
+                            suspensionReasonDetails = array;
+                            continue;
+                        }
                         if (property0.NameEquals("enrollmentAccountSubscriptionDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -624,15 +772,6 @@ namespace Azure.ResourceManager.Billing
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("subscriptionEnrollmentAccountStatus"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    subscriptionEnrollmentAccountStatus = new SubscriptionEnrollmentAccountStatus(property1.Value.GetString());
-                                    continue;
-                                }
                                 if (property1.NameEquals("enrollmentAccountStartDate"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
@@ -640,6 +779,15 @@ namespace Azure.ResourceManager.Billing
                                         continue;
                                     }
                                     enrollmentAccountStartDate = property1.Value.GetDateTimeOffset("O");
+                                    continue;
+                                }
+                                if (property1.NameEquals("subscriptionEnrollmentAccountStatus"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    subscriptionEnrollmentAccountStatus = new SubscriptionEnrollmentAccountStatus(property1.Value.GetString());
                                     continue;
                                 }
                             }
@@ -661,6 +809,7 @@ namespace Azure.ResourceManager.Billing
                 systemData,
                 autoRenew,
                 beneficiaryTenantId,
+                beneficiary,
                 billingFrequency,
                 billingProfileId,
                 billingPolicies ?? new ChangeTrackingDictionary<string, string>(),
@@ -669,6 +818,7 @@ namespace Azure.ResourceManager.Billing
                 consumptionCostCenter,
                 customerId,
                 customerDisplayName,
+                customerName,
                 displayName,
                 enrollmentAccountId,
                 enrollmentAccountDisplayName,
@@ -686,16 +836,23 @@ namespace Azure.ResourceManager.Billing
                 quantity,
                 reseller,
                 renewalTermDetails,
-                skuDescription,
                 skuId,
-                status,
-                subscriptionId,
-                suspensionReasons ?? new ChangeTrackingList<string>(),
+                skuDescription,
+                systemOverrides,
+                resourceUri,
                 termDuration,
                 termStartDate,
                 termEndDate,
-                subscriptionEnrollmentAccountStatus,
+                provisioningTenantId,
+                status,
+                operationStatus,
+                provisioningState,
+                subscriptionId,
+                suspensionReasons ?? new ChangeTrackingList<string>(),
+                suspensionReasonDetails ?? new ChangeTrackingList<BillingSubscriptionStatusDetails>(),
                 enrollmentAccountStartDate,
+                subscriptionEnrollmentAccountStatus,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

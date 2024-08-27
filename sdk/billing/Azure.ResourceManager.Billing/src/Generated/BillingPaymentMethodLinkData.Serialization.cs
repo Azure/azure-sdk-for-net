@@ -28,6 +28,17 @@ namespace Azure.ResourceManager.Billing
             }
 
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -50,10 +61,60 @@ namespace Azure.ResourceManager.Billing
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AccountHolderName))
+            {
+                writer.WritePropertyName("accountHolderName"u8);
+                writer.WriteStringValue(AccountHolderName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Expiration))
+            {
+                writer.WritePropertyName("expiration"u8);
+                writer.WriteStringValue(Expiration);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Family))
+            {
+                writer.WritePropertyName("family"u8);
+                writer.WriteStringValue(Family.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastFourDigits))
+            {
+                writer.WritePropertyName("lastFourDigits"u8);
+                writer.WriteStringValue(LastFourDigits);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Logos))
+            {
+                writer.WritePropertyName("logos"u8);
+                writer.WriteStartArray();
+                foreach (var item in Logos)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(PaymentMethod))
             {
                 writer.WritePropertyName("paymentMethod"u8);
                 writer.WriteObjectValue(PaymentMethod, options);
+            }
+            if (Optional.IsDefined(PaymentMethodId))
+            {
+                writer.WritePropertyName("paymentMethodId"u8);
+                writer.WriteStringValue(PaymentMethodId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PaymentMethodType))
+            {
+                writer.WritePropertyName("paymentMethodType"u8);
+                writer.WriteStringValue(PaymentMethodType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -94,15 +155,39 @@ namespace Azure.ResourceManager.Billing
             {
                 return null;
             }
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            PaymentMethodProjectionProperties paymentMethod = default;
+            string accountHolderName = default;
+            string displayName = default;
+            string expiration = default;
+            PaymentMethodFamily? family = default;
+            string lastFourDigits = default;
+            IReadOnlyList<PaymentMethodLogo> logos = default;
+            PaymentMethodProperties paymentMethod = default;
+            string paymentMethodId = default;
+            string paymentMethodType = default;
+            PaymentMethodStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -136,13 +221,75 @@ namespace Azure.ResourceManager.Billing
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("accountHolderName"u8))
+                        {
+                            accountHolderName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("expiration"u8))
+                        {
+                            expiration = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("family"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            family = new PaymentMethodFamily(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("lastFourDigits"u8))
+                        {
+                            lastFourDigits = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("logos"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<PaymentMethodLogo> array = new List<PaymentMethodLogo>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(PaymentMethodLogo.DeserializePaymentMethodLogo(item, options));
+                            }
+                            logos = array;
+                            continue;
+                        }
                         if (property0.NameEquals("paymentMethod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            paymentMethod = PaymentMethodProjectionProperties.DeserializePaymentMethodProjectionProperties(property0.Value, options);
+                            paymentMethod = PaymentMethodProperties.DeserializePaymentMethodProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("paymentMethodId"u8))
+                        {
+                            paymentMethodId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("paymentMethodType"u8))
+                        {
+                            paymentMethodType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = new PaymentMethodStatus(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -159,7 +306,17 @@ namespace Azure.ResourceManager.Billing
                 name,
                 type,
                 systemData,
+                accountHolderName,
+                displayName,
+                expiration,
+                family,
+                lastFourDigits,
+                logos ?? new ChangeTrackingList<PaymentMethodLogo>(),
                 paymentMethod,
+                paymentMethodId,
+                paymentMethodType,
+                status,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

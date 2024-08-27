@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProductId))
+            {
+                writer.WritePropertyName("productId"u8);
+                writer.WriteStringValue(ProductId);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProductTypeId))
             {
                 writer.WritePropertyName("productTypeId"u8);
                 writer.WriteStringValue(ProductTypeId);
-            }
-            if (Optional.IsDefined(Quantity))
-            {
-                writer.WritePropertyName("quantity"u8);
-                writer.WriteNumberValue(Quantity.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(SkuId))
             {
@@ -50,6 +50,16 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");
+            }
+            if (Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TermEndOn))
+            {
+                writer.WritePropertyName("termEndDate"u8);
+                writer.WriteStringValue(TermEndOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -90,10 +100,12 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             string billingFrequency = default;
+            string productId = default;
             string productTypeId = default;
-            long? quantity = default;
             string skuId = default;
             TimeSpan? termDuration = default;
+            long? quantity = default;
+            DateTimeOffset? termEndDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,18 +115,14 @@ namespace Azure.ResourceManager.Billing.Models
                     billingFrequency = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("productId"u8))
+                {
+                    productId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("productTypeId"u8))
                 {
                     productTypeId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("quantity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    quantity = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("skuId"u8))
@@ -131,6 +139,24 @@ namespace Azure.ResourceManager.Billing.Models
                     termDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("quantity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    quantity = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("termEndDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    termEndDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -139,10 +165,12 @@ namespace Azure.ResourceManager.Billing.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new SubscriptionRenewalTermDetails(
                 billingFrequency,
+                productId,
                 productTypeId,
-                quantity,
                 skuId,
                 termDuration,
+                quantity,
+                termEndDate,
                 serializedAdditionalRawData);
         }
 

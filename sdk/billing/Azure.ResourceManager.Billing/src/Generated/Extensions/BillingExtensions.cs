@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Billing.Mocking;
+using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
@@ -22,28 +24,470 @@ namespace Azure.ResourceManager.Billing
             return client.GetCachedClient(client0 => new MockableBillingArmClient(client0));
         }
 
+        private static MockableBillingSubscriptionResource GetMockableBillingSubscriptionResource(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new MockableBillingSubscriptionResource(client, resource.Id));
+        }
+
         private static MockableBillingTenantResource GetMockableBillingTenantResource(ArmResource resource)
         {
             return resource.GetCachedClient(client => new MockableBillingTenantResource(client, resource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AgreementResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AgreementResource.CreateResourceIdentifier" /> to create an <see cref="AgreementResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetAgreementResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingSubscriptionResource"/> object. </returns>
-        public static BillingSubscriptionResource GetBillingSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AgreementResource"/> object. </returns>
+        public static AgreementResource GetAgreementResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingArmClient(client).GetBillingSubscriptionResource(id);
+            return GetMockableBillingArmClient(client).GetAgreementResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AssociatedTenantResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AssociatedTenantResource.CreateResourceIdentifier" /> to create an <see cref="AssociatedTenantResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetAssociatedTenantResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AssociatedTenantResource"/> object. </returns>
+        public static AssociatedTenantResource GetAssociatedTenantResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetAssociatedTenantResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountAvailableBalanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountAvailableBalanceResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountAvailableBalanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountAvailableBalanceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountAvailableBalanceResource"/> object. </returns>
+        public static BillingAccountAvailableBalanceResource GetBillingAccountAvailableBalanceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountAvailableBalanceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileAvailableBalanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileAvailableBalanceResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileAvailableBalanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingProfileAvailableBalanceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileAvailableBalanceResource"/> object. </returns>
+        public static BillingAccountBillingProfileAvailableBalanceResource GetBillingAccountBillingProfileAvailableBalanceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingProfileAvailableBalanceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountResource"/> object. </returns>
+        public static BillingAccountResource GetBillingAccountResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingProfileResource.CreateResourceIdentifier" /> to create a <see cref="BillingProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingProfileResource"/> object. </returns>
+        public static BillingProfileResource GetBillingProfileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingProfileResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingPropertyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingPropertyResource.CreateResourceIdentifier" /> to create a <see cref="BillingPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingPropertyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingPropertyResource"/> object. </returns>
+        public static BillingPropertyResource GetBillingPropertyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingPropertyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingRequestResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingRequestResource.CreateResourceIdentifier" /> to create a <see cref="BillingRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingRequestResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingRequestResource"/> object. </returns>
+        public static BillingRequestResource GetBillingRequestResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingRequestResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileBillingRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileBillingRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingProfileBillingRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileBillingRoleAssignmentResource"/> object. </returns>
+        public static BillingAccountBillingProfileBillingRoleAssignmentResource GetBillingAccountBillingProfileBillingRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingProfileBillingRoleAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileCustomerBillingRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileCustomerBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileCustomerBillingRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingProfileCustomerBillingRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileCustomerBillingRoleAssignmentResource"/> object. </returns>
+        public static BillingAccountBillingProfileCustomerBillingRoleAssignmentResource GetBillingAccountBillingProfileCustomerBillingRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingProfileCustomerBillingRoleAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource"/> object. </returns>
+        public static BillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource GetBillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingProfileInvoiceSectionBillingRoleAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingRoleAssignmentResource"/> object. </returns>
+        public static BillingAccountBillingRoleAssignmentResource GetBillingAccountBillingRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingRoleAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountDepartmentBillingRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountDepartmentBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountDepartmentBillingRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountDepartmentBillingRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountDepartmentBillingRoleAssignmentResource"/> object. </returns>
+        public static BillingAccountDepartmentBillingRoleAssignmentResource GetBillingAccountDepartmentBillingRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountDepartmentBillingRoleAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountEnrollmentAccountBillingRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountEnrollmentAccountBillingRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountEnrollmentAccountBillingRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountEnrollmentAccountBillingRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountEnrollmentAccountBillingRoleAssignmentResource"/> object. </returns>
+        public static BillingAccountEnrollmentAccountBillingRoleAssignmentResource GetBillingAccountEnrollmentAccountBillingRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountEnrollmentAccountBillingRoleAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileBillingRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileBillingRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingProfileBillingRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileBillingRoleDefinitionResource"/> object. </returns>
+        public static BillingAccountBillingProfileBillingRoleDefinitionResource GetBillingAccountBillingProfileBillingRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingProfileBillingRoleDefinitionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileCustomerBillingRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileCustomerBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileCustomerBillingRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingProfileCustomerBillingRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileCustomerBillingRoleDefinitionResource"/> object. </returns>
+        public static BillingAccountBillingProfileCustomerBillingRoleDefinitionResource GetBillingAccountBillingProfileCustomerBillingRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingProfileCustomerBillingRoleDefinitionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource"/> object. </returns>
+        public static BillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource GetBillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingProfileInvoiceSectionBillingRoleDefinitionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingRoleDefinitionResource"/> object. </returns>
+        public static BillingAccountBillingRoleDefinitionResource GetBillingAccountBillingRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingRoleDefinitionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountDepartmentBillingRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountDepartmentBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountDepartmentBillingRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountDepartmentBillingRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountDepartmentBillingRoleDefinitionResource"/> object. </returns>
+        public static BillingAccountDepartmentBillingRoleDefinitionResource GetBillingAccountDepartmentBillingRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountDepartmentBillingRoleDefinitionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountEnrollmentAccountBillingRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountEnrollmentAccountBillingRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountEnrollmentAccountBillingRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountEnrollmentAccountBillingRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountEnrollmentAccountBillingRoleDefinitionResource"/> object. </returns>
+        public static BillingAccountEnrollmentAccountBillingRoleDefinitionResource GetBillingAccountEnrollmentAccountBillingRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountEnrollmentAccountBillingRoleDefinitionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SavingsPlanOrderModelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SavingsPlanOrderModelResource.CreateResourceIdentifier" /> to create a <see cref="SavingsPlanOrderModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetSavingsPlanOrderModelResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SavingsPlanOrderModelResource"/> object. </returns>
+        public static SavingsPlanOrderModelResource GetSavingsPlanOrderModelResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetSavingsPlanOrderModelResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SavingsPlanModelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SavingsPlanModelResource.CreateResourceIdentifier" /> to create a <see cref="SavingsPlanModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetSavingsPlanModelResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SavingsPlanModelResource"/> object. </returns>
+        public static SavingsPlanModelResource GetSavingsPlanModelResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetSavingsPlanModelResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileBillingSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileBillingSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileBillingSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingProfileBillingSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileBillingSubscriptionResource"/> object. </returns>
+        public static BillingAccountBillingProfileBillingSubscriptionResource GetBillingAccountBillingProfileBillingSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingProfileBillingSubscriptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingSubscriptionResource"/> object. </returns>
+        public static BillingAccountBillingSubscriptionResource GetBillingAccountBillingSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingSubscriptionResource(id);
         }
 
         /// <summary>
@@ -66,41 +510,174 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingPaymentMethodResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileCustomerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileCustomerResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileCustomerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingPaymentMethodResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingProfileCustomerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingPaymentMethodResource"/> object. </returns>
-        public static BillingPaymentMethodResource GetBillingPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileCustomerResource"/> object. </returns>
+        public static BillingAccountBillingProfileCustomerResource GetBillingAccountBillingProfileCustomerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingArmClient(client).GetBillingPaymentMethodResource(id);
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingProfileCustomerResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingAccountPaymentMethodResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingAccountPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingAccountCustomerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountCustomerResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountCustomerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountPaymentMethodResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountCustomerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingAccountPaymentMethodResource"/> object. </returns>
-        public static BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingAccountCustomerResource"/> object. </returns>
+        public static BillingAccountCustomerResource GetBillingAccountCustomerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingArmClient(client).GetBillingAccountPaymentMethodResource(id);
+            return GetMockableBillingArmClient(client).GetBillingAccountCustomerResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DepartmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DepartmentResource.CreateResourceIdentifier" /> to create a <see cref="DepartmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetDepartmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DepartmentResource"/> object. </returns>
+        public static DepartmentResource GetDepartmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetDepartmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountDepartmentEnrollmentAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountDepartmentEnrollmentAccountResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountDepartmentEnrollmentAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountDepartmentEnrollmentAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountDepartmentEnrollmentAccountResource"/> object. </returns>
+        public static BillingAccountDepartmentEnrollmentAccountResource GetBillingAccountDepartmentEnrollmentAccountResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountDepartmentEnrollmentAccountResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountEnrollmentAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountEnrollmentAccountResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountEnrollmentAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountEnrollmentAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountEnrollmentAccountResource"/> object. </returns>
+        public static BillingAccountEnrollmentAccountResource GetBillingAccountEnrollmentAccountResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountEnrollmentAccountResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingAccountInvoiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingAccountInvoiceResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingAccountInvoiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingAccountInvoiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingAccountInvoiceResource"/> object. </returns>
+        public static BillingAccountBillingAccountInvoiceResource GetBillingAccountBillingAccountInvoiceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingAccountInvoiceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingSubscriptionInvoiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingSubscriptionInvoiceResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingSubscriptionInvoiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingSubscriptionInvoiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingSubscriptionInvoiceResource"/> object. </returns>
+        public static BillingAccountBillingSubscriptionInvoiceResource GetBillingAccountBillingSubscriptionInvoiceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingSubscriptionInvoiceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantBillingAccountInvoiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantBillingAccountInvoiceResource.CreateResourceIdentifier" /> to create a <see cref="TenantBillingAccountInvoiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetTenantBillingAccountInvoiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TenantBillingAccountInvoiceResource"/> object. </returns>
+        public static TenantBillingAccountInvoiceResource GetTenantBillingAccountInvoiceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetTenantBillingAccountInvoiceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="InvoiceSectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InvoiceSectionResource.CreateResourceIdentifier" /> to create an <see cref="InvoiceSectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetInvoiceSectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="InvoiceSectionResource"/> object. </returns>
+        public static InvoiceSectionResource GetInvoiceSectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetInvoiceSectionResource(id);
         }
 
         /// <summary>
@@ -123,197 +700,660 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets a collection of BillingSubscriptionResources in the TenantResource.
+        /// Gets an object representing a <see cref="BillingAccountPaymentMethodResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscriptions(string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountPaymentMethodResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountPaymentMethodResource"/> object. </returns>
+        public static BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountPaymentMethodResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingPaymentMethodResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingPaymentMethodResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingPaymentMethodResource"/> object. </returns>
+        public static BillingPaymentMethodResource GetBillingPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingPaymentMethodResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountBillingProfileCustomerPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountBillingProfileCustomerPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountBillingProfileCustomerPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountBillingProfileCustomerPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountBillingProfileCustomerPolicyResource"/> object. </returns>
+        public static BillingAccountBillingProfileCustomerPolicyResource GetBillingAccountBillingProfileCustomerPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountBillingProfileCustomerPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountCustomerPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountCustomerPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountCustomerPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountCustomerPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountCustomerPolicyResource"/> object. </returns>
+        public static BillingAccountCustomerPolicyResource GetBillingAccountCustomerPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountCustomerPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingProfilePolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingProfilePolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingProfilePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingProfilePolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingProfilePolicyResource"/> object. </returns>
+        public static BillingProfilePolicyResource GetBillingProfilePolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingProfilePolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
+        public static BillingAccountPolicyResource GetBillingAccountPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetBillingAccountPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetSubscriptionPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionPolicyResource"/> object. </returns>
+        public static SubscriptionPolicyResource GetSubscriptionPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetSubscriptionPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ProductResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProductResource.CreateResourceIdentifier" /> to create a <see cref="ProductResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetProductResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProductResource"/> object. </returns>
+        public static ProductResource GetProductResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetProductResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ReservationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationResource.CreateResourceIdentifier" /> to create a <see cref="ReservationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetReservationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReservationResource"/> object. </returns>
+        public static ReservationResource GetReservationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetReservationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ReservationOrderResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationOrderResource.CreateResourceIdentifier" /> to create a <see cref="ReservationOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetReservationOrderResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReservationOrderResource"/> object. </returns>
+        public static ReservationOrderResource GetReservationOrderResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetReservationOrderResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TransferDetailResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TransferDetailResource.CreateResourceIdentifier" /> to create a <see cref="TransferDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetTransferDetailResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TransferDetailResource"/> object. </returns>
+        public static TransferDetailResource GetTransferDetailResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetTransferDetailResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PartnerTransferDetailResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PartnerTransferDetailResource.CreateResourceIdentifier" /> to create a <see cref="PartnerTransferDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetPartnerTransferDetailResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PartnerTransferDetailResource"/> object. </returns>
+        public static PartnerTransferDetailResource GetPartnerTransferDetailResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetPartnerTransferDetailResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RecipientTransferDetailResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecipientTransferDetailResource.CreateResourceIdentifier" /> to create a <see cref="RecipientTransferDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetRecipientTransferDetailResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RecipientTransferDetailResource"/> object. </returns>
+        public static RecipientTransferDetailResource GetRecipientTransferDetailResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingArmClient(client).GetRecipientTransferDetailResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a BillingPropertyResource along with the instance operations that can be performed on it in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingSubscriptionResource.GetBillingProperty()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingPropertyResource"/> object. </returns>
+        public static BillingPropertyResource GetBillingProperty(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingSubscriptionResource(subscriptionResource).GetBillingProperty();
+        }
+
+        /// <summary>
+        /// Gets an object representing a SubscriptionPolicyResource along with the instance operations that can be performed on it in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingSubscriptionResource.GetSubscriptionPolicy()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionPolicyResource"/> object. </returns>
+        public static SubscriptionPolicyResource GetSubscriptionPolicy(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingSubscriptionResource(subscriptionResource).GetSubscriptionPolicy();
+        }
+
+        /// <summary>
+        /// Gets a collection of BillingAccountResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccounts()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of BillingAccountResources and their operations over a BillingAccountResource. </returns>
+        public static BillingAccountCollection GetBillingAccounts(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableBillingTenantResource(tenantResource).GetBillingAccounts();
+        }
+
+        /// <summary>
+        /// Gets a billing account by its ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccountAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="billingAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BillingSubscriptionResources and their operations over a BillingSubscriptionResource. </returns>
-        public static BillingSubscriptionCollection GetBillingSubscriptions(this TenantResource tenantResource, string billingAccountName)
+        [ForwardsClientCalls]
+        public static async Task<Response<BillingAccountResource>> GetBillingAccountAsync(this TenantResource tenantResource, string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptions(billingAccountName);
+            return await GetMockableBillingTenantResource(tenantResource).GetBillingAccountAsync(billingAccountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
+        /// Gets a billing account by its ID.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_Get</description>
+        /// <description>BillingAccounts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
+        /// <description><see cref="BillingAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscriptionAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<BillingSubscriptionResource>> GetBillingSubscriptionAsync(this TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAsync(billingAccountName, billingSubscriptionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscription(string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<BillingSubscriptionResource> GetBillingSubscription(this TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableBillingTenantResource(tenantResource).GetBillingSubscription(billingAccountName, billingSubscriptionName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of BillingSubscriptionAliasResources in the TenantResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscriptionAliases(string)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="billingAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BillingSubscriptionAliasResources and their operations over a BillingSubscriptionAliasResource. </returns>
-        public static BillingSubscriptionAliasCollection GetBillingSubscriptionAliases(this TenantResource tenantResource, string billingAccountName)
+        [ForwardsClientCalls]
+        public static Response<BillingAccountResource> GetBillingAccount(this TenantResource tenantResource, string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAliases(billingAccountName);
+            return GetMockableBillingTenantResource(tenantResource).GetBillingAccount(billingAccountName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
+        /// Gets a collection of BillingRequestResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingRequests()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of BillingRequestResources and their operations over a BillingRequestResource. </returns>
+        public static BillingRequestCollection GetBillingRequests(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableBillingTenantResource(tenantResource).GetBillingRequests();
+        }
+
+        /// <summary>
+        /// Gets a billing request by its ID.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// <description>BillingRequests_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <description><see cref="BillingRequestResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscriptionAliasAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingRequestAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
+        /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="billingRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BillingSubscriptionAliasResource>> GetBillingSubscriptionAliasAsync(this TenantResource tenantResource, string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BillingRequestResource>> GetBillingRequestAsync(this TenantResource tenantResource, string billingRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAliasAsync(billingAccountName, aliasName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingTenantResource(tenantResource).GetBillingRequestAsync(billingRequestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
+        /// Gets a billing request by its ID.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// <description>BillingRequests_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <description><see cref="BillingRequestResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscriptionAlias(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingRequest(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
+        /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="billingRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<BillingSubscriptionAliasResource> GetBillingSubscriptionAlias(this TenantResource tenantResource, string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
+        public static Response<BillingRequestResource> GetBillingRequest(this TenantResource tenantResource, string billingRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAlias(billingAccountName, aliasName, cancellationToken);
+            return GetMockableBillingTenantResource(tenantResource).GetBillingRequest(billingRequestName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of BillingAccountBillingSubscriptionInvoiceResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccountBillingSubscriptionInvoices(string)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of BillingAccountBillingSubscriptionInvoiceResources and their operations over a BillingAccountBillingSubscriptionInvoiceResource. </returns>
+        public static BillingAccountBillingSubscriptionInvoiceCollection GetBillingAccountBillingSubscriptionInvoices(this TenantResource tenantResource, string subscriptionId)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableBillingTenantResource(tenantResource).GetBillingAccountBillingSubscriptionInvoices(subscriptionId);
+        }
+
+        /// <summary>
+        /// Gets an invoice by subscription ID and invoice ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_GetByBillingSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountBillingSubscriptionInvoiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccountBillingSubscriptionInvoiceAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<BillingAccountBillingSubscriptionInvoiceResource>> GetBillingAccountBillingSubscriptionInvoiceAsync(this TenantResource tenantResource, string subscriptionId, string invoiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableBillingTenantResource(tenantResource).GetBillingAccountBillingSubscriptionInvoiceAsync(subscriptionId, invoiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an invoice by subscription ID and invoice ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_GetByBillingSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountBillingSubscriptionInvoiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccountBillingSubscriptionInvoice(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<BillingAccountBillingSubscriptionInvoiceResource> GetBillingAccountBillingSubscriptionInvoice(this TenantResource tenantResource, string subscriptionId, string invoiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableBillingTenantResource(tenantResource).GetBillingAccountBillingSubscriptionInvoice(subscriptionId, invoiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of TenantBillingAccountInvoiceResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetTenantBillingAccountInvoices()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of TenantBillingAccountInvoiceResources and their operations over a TenantBillingAccountInvoiceResource. </returns>
+        public static TenantBillingAccountInvoiceCollection GetTenantBillingAccountInvoices(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableBillingTenantResource(tenantResource).GetTenantBillingAccountInvoices();
+        }
+
+        /// <summary>
+        /// Gets an invoice by ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantBillingAccountInvoiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetTenantBillingAccountInvoiceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TenantBillingAccountInvoiceResource>> GetTenantBillingAccountInvoiceAsync(this TenantResource tenantResource, string invoiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableBillingTenantResource(tenantResource).GetTenantBillingAccountInvoiceAsync(invoiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an invoice by ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantBillingAccountInvoiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetTenantBillingAccountInvoice(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<TenantBillingAccountInvoiceResource> GetTenantBillingAccountInvoice(this TenantResource tenantResource, string invoiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableBillingTenantResource(tenantResource).GetTenantBillingAccountInvoice(invoiceName, cancellationToken);
         }
 
         /// <summary>
@@ -346,7 +1386,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -384,7 +1424,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -410,200 +1450,230 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets a collection of BillingAccountPaymentMethodResources in the TenantResource.
+        /// Gets a collection of RecipientTransferDetailResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccountPaymentMethods(string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetRecipientTransferDetails()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BillingAccountPaymentMethodResources and their operations over a BillingAccountPaymentMethodResource. </returns>
-        public static BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods(this TenantResource tenantResource, string billingAccountName)
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of RecipientTransferDetailResources and their operations over a RecipientTransferDetailResource. </returns>
+        public static RecipientTransferDetailCollection GetRecipientTransferDetails(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingTenantResource(tenantResource).GetBillingAccountPaymentMethods(billingAccountName);
+            return GetMockableBillingTenantResource(tenantResource).GetRecipientTransferDetails();
         }
 
         /// <summary>
-        /// Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Gets a transfer request by ID. The caller must be the recipient of the transfer request.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}</description>
+        /// <description>/providers/Microsoft.Billing/transfers/{transferName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// <description>RecipientTransfers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountPaymentMethodResource"/></description>
+        /// <description><see cref="RecipientTransferDetailResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccountPaymentMethodAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetRecipientTransferDetailAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
+        /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(this TenantResource tenantResource, string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
+        public static async Task<Response<RecipientTransferDetailResource>> GetRecipientTransferDetailAsync(this TenantResource tenantResource, string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableBillingTenantResource(tenantResource).GetBillingAccountPaymentMethodAsync(billingAccountName, paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingTenantResource(tenantResource).GetRecipientTransferDetailAsync(transferName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Gets a transfer request by ID. The caller must be the recipient of the transfer request.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}</description>
+        /// <description>/providers/Microsoft.Billing/transfers/{transferName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// <description>RecipientTransfers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountPaymentMethodResource"/></description>
+        /// <description><see cref="RecipientTransferDetailResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccountPaymentMethod(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetRecipientTransferDetail(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
+        /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(this TenantResource tenantResource, string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
+        public static Response<RecipientTransferDetailResource> GetRecipientTransferDetail(this TenantResource tenantResource, string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingTenantResource(tenantResource).GetBillingAccountPaymentMethod(billingAccountName, paymentMethodName, cancellationToken);
+            return GetMockableBillingTenantResource(tenantResource).GetRecipientTransferDetail(transferName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of BillingPaymentMethodLinkResources in the TenantResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingPaymentMethodLinks(string,string)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BillingPaymentMethodLinkResources and their operations over a BillingPaymentMethodLinkResource. </returns>
-        public static BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks(this TenantResource tenantResource, string billingAccountName, string billingProfileName)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethodLinks(billingAccountName, billingProfileName);
-        }
-
-        /// <summary>
-        /// Gets a payment method linked with a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Validates an address. Use the operation to validate an address before using it as soldTo or a billTo address.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}</description>
+        /// <description>/providers/Microsoft.Billing/validateAddress</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// <description>Address_Validate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingPaymentMethodLinkAsync(string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.ValidateAddres(AddressDetails,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
+        /// <param name="details"> Address details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="details"/> is null. </exception>
+        public static async Task<Response<AddressValidationResponse>> ValidateAddresAsync(this TenantResource tenantResource, AddressDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethodLinkAsync(billingAccountName, billingProfileName, paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingTenantResource(tenantResource).ValidateAddresAsync(details, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a payment method linked with a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Validates an address. Use the operation to validate an address before using it as soldTo or a billTo address.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}</description>
+        /// <description>/providers/Microsoft.Billing/validateAddress</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// <description>Address_Validate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingPaymentMethodLink(string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.ValidateAddres(AddressDetails,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
+        /// <param name="details"> Address details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="details"/> is null. </exception>
+        public static Response<AddressValidationResponse> ValidateAddres(this TenantResource tenantResource, AddressDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethodLink(billingAccountName, billingProfileName, paymentMethodName, cancellationToken);
+            return GetMockableBillingTenantResource(tenantResource).ValidateAddres(details, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a URL to download multiple invoice documents (invoice pdf, tax receipts, credit notes) as a zip file. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/downloadDocuments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_DownloadDocumentsByBillingSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil,string,IEnumerable{DocumentDownloadRequest},CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <param name="arrayOfDocumentDownloadRequest"> A list of download details for individual documents. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="subscriptionId"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
+        public static async Task<ArmOperation<DocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableBillingTenantResource(tenantResource).DownloadDocumentsByBillingSubscriptionInvoiceAsync(waitUntil, subscriptionId, arrayOfDocumentDownloadRequest, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a URL to download multiple invoice documents (invoice pdf, tax receipts, credit notes) as a zip file. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/downloadDocuments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_DownloadDocumentsByBillingSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil,string,IEnumerable{DocumentDownloadRequest},CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <param name="arrayOfDocumentDownloadRequest"> A list of download details for individual documents. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="subscriptionId"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
+        public static ArmOperation<DocumentDownloadResult> DownloadDocumentsByBillingSubscriptionInvoice(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableBillingTenantResource(tenantResource).DownloadDocumentsByBillingSubscriptionInvoice(waitUntil, subscriptionId, arrayOfDocumentDownloadRequest, cancellationToken);
         }
     }
 }

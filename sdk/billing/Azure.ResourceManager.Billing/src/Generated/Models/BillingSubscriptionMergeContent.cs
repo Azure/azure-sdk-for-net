@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> Request to merge two billing subscriptions. </summary>
+    /// <summary> Request parameters that are provided to merge the two billing subscriptions. </summary>
     public partial class BillingSubscriptionMergeContent
     {
         /// <summary>

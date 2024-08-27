@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing
     /// A class representing the BillingPaymentMethod data model.
     /// A payment method.
     /// </summary>
-    public partial class BillingPaymentMethodData : ResourceData
+    public partial class BillingPaymentMethodData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,7 +52,8 @@ namespace Azure.ResourceManager.Billing
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodData"/>. </summary>
-        public BillingPaymentMethodData()
+        /// <param name="location"> The location. </param>
+        public BillingPaymentMethodData(AzureLocation location) : base(location)
         {
             Logos = new ChangeTrackingList<PaymentMethodLogo>();
         }
@@ -62,42 +63,53 @@ namespace Azure.ResourceManager.Billing
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="family"> The family of payment method. </param>
-        /// <param name="paymentMethodType"> The type of payment method. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="idPropertiesId"> Id of payment method. </param>
         /// <param name="accountHolderName"> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </param>
-        /// <param name="expiration"> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </param>
-        /// <param name="lastFourDigits"> Last four digits of payment method. </param>
         /// <param name="displayName"> The display name of the payment method. </param>
+        /// <param name="expiration"> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </param>
+        /// <param name="family"> The family of payment method. </param>
+        /// <param name="lastFourDigits"> Last four digits of payment method. </param>
         /// <param name="logos"> The list of logos for the payment method. </param>
+        /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodFamily? family, string paymentMethodType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IList<PaymentMethodLogo> logos, PaymentMethodStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string idPropertiesId, string accountHolderName, string displayName, string expiration, PaymentMethodFamily? family, string lastFourDigits, IList<PaymentMethodLogo> logos, string paymentMethodType, PaymentMethodStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Family = family;
-            PaymentMethodType = paymentMethodType;
+            IdPropertiesId = idPropertiesId;
             AccountHolderName = accountHolderName;
-            Expiration = expiration;
-            LastFourDigits = lastFourDigits;
             DisplayName = displayName;
+            Expiration = expiration;
+            Family = family;
+            LastFourDigits = lastFourDigits;
             Logos = logos;
+            PaymentMethodType = paymentMethodType;
             Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The family of payment method. </summary>
-        public PaymentMethodFamily? Family { get; set; }
-        /// <summary> The type of payment method. </summary>
-        public string PaymentMethodType { get; }
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodData"/> for deserialization. </summary>
+        internal BillingPaymentMethodData()
+        {
+        }
+
+        /// <summary> Id of payment method. </summary>
+        public string IdPropertiesId { get; }
         /// <summary> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </summary>
         public string AccountHolderName { get; }
-        /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>
-        public string Expiration { get; }
-        /// <summary> Last four digits of payment method. </summary>
-        public string LastFourDigits { get; }
         /// <summary> The display name of the payment method. </summary>
         public string DisplayName { get; }
+        /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>
+        public string Expiration { get; }
+        /// <summary> The family of payment method. </summary>
+        public PaymentMethodFamily? Family { get; set; }
+        /// <summary> Last four digits of payment method. </summary>
+        public string LastFourDigits { get; }
         /// <summary> The list of logos for the payment method. </summary>
         public IList<PaymentMethodLogo> Logos { get; }
+        /// <summary> The type of payment method. </summary>
+        public string PaymentMethodType { get; }
         /// <summary> Status of the payment method. </summary>
         public PaymentMethodStatus? Status { get; set; }
     }

@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CreatedSubscriptionReseller"/>. </summary>
-        internal CreatedSubscriptionReseller()
+        public CreatedSubscriptionReseller()
         {
         }
 
