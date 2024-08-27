@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
@@ -129,7 +130,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             serviceCollection.AddOpenTelemetry().UseAzureMonitor(config =>
             {
                 config.Transport = _mockTransport;
-                config.ConnectionString = $"InstrumentationKey={Guid.NewGuid()}";
+                config.ConnectionString = $"InstrumentationKey={nameof(SelfDiagnosticsIsDisabled)}";
                 config.EnableLiveMetrics = true;
                 Assert.False(config.Diagnostics.IsLoggingEnabled);
                 Assert.False(config.Diagnostics.IsDistributedTracingEnabled);
@@ -139,11 +140,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             // ASSERT
             // let's get some live metric requests first to check that no logs were recorded for them
-            WaitForRequest(_mockTransport, r => r.Uri.Host == "rt.services.visualstudio.com"); // TODO: WHY IS THIS NECESSARY? THERE ARE NO ASSERTS HERE.
+            var liveMetricsRequests = WaitForRequest(_mockTransport, r => r.Uri.Host == "rt.services.visualstudio.com");
+            Assert.Empty(liveMetricsRequests);
 
             // now let's wait for track requests
-            var trackRequests = WaitForRequest(_mockTransport, r => r.Uri.Host == "dc.services.visualstudio.com");
-            Assert.Empty(trackRequests);
+            var breezeTrackRequests = WaitForRequest(_mockTransport, r => r.Uri.Host == "dc.services.visualstudio.com");
+            Assert.Empty(breezeTrackRequests);
 
             // since LiveMetrics logging is disabled, we shouldn't even have logging policy trying to log anything.
             Assert.False(logAzureFilterCalled);
