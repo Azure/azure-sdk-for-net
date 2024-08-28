@@ -188,10 +188,11 @@ namespace System.ClientModel.Primitives
         public ModelReaderWriterOptions(string format) { }
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
-        public object? ProxiedModel { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyDictionary<System.Type, object> Proxies { get { throw null; } }
+        public object? ProxiedModel { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
         public void AddProxy<T>(System.Type type, System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
+        public System.ClientModel.Primitives.IJsonModel<T> GetJsonInterface<T>(System.ClientModel.Primitives.IJsonModel<T> model) { throw null; }
+        public System.ClientModel.Primitives.IPersistableModel<T> GetPersistableInterface<T>(System.ClientModel.Primitives.IPersistableModel<T> model) { throw null; }
     }
     public abstract partial class OperationResult : System.ClientModel.ClientResult
     {
