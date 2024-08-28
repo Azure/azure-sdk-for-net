@@ -202,13 +202,25 @@
     }
   ],
   "outputs": {
+    "SERVICEBUS_FULLY_QUALIFIED_NAMESPACE": {
+      "type": "string",
+      "value": "[variables('serviceBusNamespace')]"
+    },
     "SERVICEBUS_CONNECTION_STRING": {
       "type": "string",
       "value": "[listkeys(variables('authRuleResourceId'), variables('sbVersion')).primaryConnectionString]"
     },
+    "SERVICEBUS_SECONDARY_FULLY_QUALIFIED_NAMESPACE": {
+      "type": "string",
+      "value": "[variables('serviceBusSecondaryNamespace')]"
+    },
     "SERVICEBUS_SECONDARY_NAMESPACE_CONNECTION_STRING": {
       "type": "string",
       "value": "[listkeys(variables('authRuleSecondaryResourceId'), variables('sbVersion')).primaryConnectionString]"
+    },
+    "SERVICEBUS_PREMIUM_FULLY_QUALIFIED_NAMESPACE": {
+      "type": "string",
+      "value": "[variables('serviceBusPremiumNamespace')]"
     },
     "SERVICEBUS_PREMIUM_NAMESPACE_CONNECTION_STRING": {
       "type": "string",
@@ -220,6 +232,10 @@
         variables('storageAccount'),
         listKeys(variables('storageAccountId'), variables('storageMgmtApiVersion')).keys[0].value,
         reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount')), variables('storageMgmtApiVersion')).primaryEndpoints.blob)]"
+    },
+    "STORAGE_CLAIM_CHECK_ACCOUNT_NAME": {
+      "type": "string",
+      "value": "[variables('storageAccount')]"
     }
   }
 }
