@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added azure monitor pipline group APIs (version `2023-10-01-preview`)
+- Added azure monitor pipeline group APIs (version `2023-10-01-preview`)
 
 ## 1.3.1 (2024-04-29)
 
