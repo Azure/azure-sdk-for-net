@@ -176,12 +176,6 @@ internal static class ModelReaderWriterExtensions
         writer.WriteNumberValue(value.ToUnixTimeSeconds());
     }
 
-    private static IJsonModel<T> GetJsonInterface<T>(this ModelReaderWriterOptions options, IJsonModel<T> model)
-    {
-        options.ProxiedModel = model;
-        return options.Proxies.TryGetValue(model.GetType(), out var proxy) && proxy is IJsonModel<T> proxyAsT ? proxyAsT : model;
-    }
-
     public static void WriteObjectValue(this Utf8JsonWriter writer, object? value, ModelReaderWriterOptions? options = null)
     {
         switch (value)

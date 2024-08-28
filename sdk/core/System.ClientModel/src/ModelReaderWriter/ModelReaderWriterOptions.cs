@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
 
@@ -11,12 +12,8 @@ namespace System.ClientModel.Primitives;
 public class ModelReaderWriterOptions
 {
     private Dictionary<Type, object>? _proxies;
-    /// <summary>
-    /// Gets the proxies that are registered.
-    /// </summary>
-    public IReadOnlyDictionary<Type, object> Proxies => _proxies ??= new Dictionary<Type, object>();
-
     private static ModelReaderWriterOptions? s_jsonOptions;
+
     /// <summary>
     /// Default options for writing models into JSON format.
     /// </summary>
@@ -49,7 +46,6 @@ public class ModelReaderWriterOptions
     /// <param name="proxy"> The <see cref="IPersistableModel{T}"/> proxy that will be used to read or write the model. </param>
     public void AddProxy<T>(Type type, IPersistableModel<T> proxy)
     {
-        //multiple of same type?
         if (_proxies is null)
             _proxies = new Dictionary<Type, object>();
 
@@ -57,29 +53,39 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Gets or Sets the model that is currently being proxied.
+    /// Gets the model that is currently being proxied.
     /// </summary>
     /// <remarks>
     /// Whenever a proxy is used for a given type, the model being proxied is set here.
     /// The value does not need to be cleared after setting it will be overwritten on the next use.
     /// </remarks>
-    public object? ProxiedModel { get; set; }
+    public object? ProxiedModel { get; private set; }
 
-    internal IPersistableModel<T> GetPersistableInterface<T>(IPersistableModel<T> model)
+    /// <summary>
+    /// Gets the applicable <see cref="IPersistableModel{T}"/> interface that should be used for the given model.
+    /// </summary>
+    /// <param name="model"> The <see cref="IPersistableModel{T}"/> model to get the applicable interface for. </param>
+    /// <returns> A proxy <see cref="IPersistableModel{T}"/> interface if registered otherwise returns the <paramref name="model"/>. </returns>
+    public IPersistableModel<T> GetPersistableInterface<T>(IPersistableModel<T> model)
     {
         ProxiedModel = model;
         if (_proxies is null)
             return model;
 
-        return Proxies.TryGetValue(model.GetType(), out var proxy) && proxy is IPersistableModel<T> proxyAsT ? proxyAsT : model;
+        return _proxies.TryGetValue(model.GetType(), out var proxy) && proxy is IPersistableModel<T> proxyAsT ? proxyAsT : model;
     }
 
-    internal IJsonModel<T> GetJsonInterface<T>(IJsonModel<T> model)
+    /// <summary>
+    /// Gets the applicable <see cref="IJsonModel{T}"/> interface that should be used for the given model.
+    /// </summary>
+    /// <param name="model"> The <see cref="IJsonModel{T}"/> model to get the applicable interface for. </param>
+    /// <returns> A proxy <see cref="IJsonModel{T}"/> interface if registered otherwise returns the <paramref name="model"/>. </returns>
+    public IJsonModel<T> GetJsonInterface<T>(IJsonModel<T> model)
     {
         ProxiedModel = model;
         if (_proxies is null)
             return model;
 
-        return Proxies.TryGetValue(model.GetType(), out var proxy) && proxy is IJsonModel<T> proxyAsT ? proxyAsT : model;
+        return _proxies.TryGetValue(model.GetType(), out var proxy) && proxy is IJsonModel<T> proxyAsT ? proxyAsT : model;
     }
 }
