@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
     /// </summary>
     internal class AccumulatedValues
     {
-        private readonly AggregationType aggregationType;
+        private readonly AggregationTypeEnum aggregationType;
 
         private SpinLock spinLock = new SpinLock();
 
@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
         private double min = double.MaxValue;
 
-        public AccumulatedValues(string metricId, AggregationType aggregationType)
+        public AccumulatedValues(string metricId, AggregationTypeEnum aggregationType)
         {
             this.MetricId = metricId;
             this.aggregationType = aggregationType;
@@ -44,18 +44,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
                 switch (this.aggregationType)
                 {
-                    case AggregationType.Avg:
-                    case AggregationType.Sum:
+                    case AggregationTypeEnum.Avg:
+                    case AggregationTypeEnum.Sum:
                         this.sum += value;
                         break;
-                    case AggregationType.Min:
+                    case AggregationTypeEnum.Min:
                         if (value < this.min)
                         {
                             this.min = value;
                         }
 
                         break;
-                    case AggregationType.Max:
+                    case AggregationTypeEnum.Max:
                         if (value > this.max)
                         {
                             this.max = value;
@@ -86,13 +86,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                 count = this.count;
                 switch (this.aggregationType)
                 {
-                    case AggregationType.Avg:
+                    case AggregationTypeEnum.Avg:
                         return this.count != 0 ? this.sum / this.count : 0.0;
-                    case AggregationType.Sum:
+                    case AggregationTypeEnum.Sum:
                         return this.sum;
-                    case AggregationType.Min:
+                    case AggregationTypeEnum.Min:
                         return this.count != 0 ? this.min : 0.0;
-                    case AggregationType.Max:
+                    case AggregationTypeEnum.Max:
                         return this.count != 0 ? this.max : 0.0;
                     default:
                         throw new ArgumentOutOfRangeException(

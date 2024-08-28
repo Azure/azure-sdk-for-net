@@ -43,8 +43,7 @@ namespace Azure.AI.OpenAI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="DataSourceVectorizer"/>. </summary>
         protected DataSourceVectorizer()
         {
@@ -56,7 +55,7 @@ namespace Azure.AI.OpenAI.Chat
         internal DataSourceVectorizer(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The differentiating identifier for the concrete vectorization source. </summary>

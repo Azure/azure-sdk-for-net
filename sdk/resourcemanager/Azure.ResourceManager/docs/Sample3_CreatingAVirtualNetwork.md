@@ -99,5 +99,5 @@ VirtualNetwork myVNet = await resourceGroup.GetVirtualNetworks().GetAsync(vnetNa
 Console.WriteLine(myVNet.Data.Subnets.Count);
 ```
 
-## Next stepts
+## Next steps
 Take a look at the [Authenticate across tenants](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/Sample4_MultiTenant.md) samples.

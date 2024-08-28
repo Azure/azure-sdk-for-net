@@ -47,20 +47,13 @@ namespace Azure.Data.Tables.Sas
         }
 
         /// <summary>
-        /// Initializes an instance of a <see cref="TableSasBuilder"/>.
+        /// Initializes an instance of a <see cref="TableSasBuilder"/> with no details set. At minimum, additional properties must be set to create a valid SaS.
+        /// These include setting the <see cref="TableName"/>, permissions, and an expiry. Permissions and expiry can also be specified in a shared access policy, which can be
+        /// selected by specifying the name of the policy on the <see cref="Identifier"/> property.
+        ///
         /// </summary>
-        /// <param name="tableName">The name of the table being made accessible with the shared access signature.</param>
-        /// <param name="identifier">The identifier of the stored access policy that defines the permissions and, optionally, expiry of the shared access signature.
-        /// Note: Either the stored access policy specified by the <paramref name="identifier"/> or the created shared access signature must define an expiry.
-        /// If neither define an expiry or both do, authentication will fail.</param>
-        public TableSasBuilder(string tableName, string identifier)
-        {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(identifier, nameof(identifier));
-
-            TableName = tableName;
-            Identifier = identifier;
-        }
+        public TableSasBuilder()
+        { }
 
         /// <summary>
         /// Initializes a new instance of <see cref="TableSasBuilder"/> based on an existing Uri containing a shared access signature.
@@ -133,6 +126,8 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// An optional unique value up to 64 characters in length that
         /// correlates to an access policy specified for the container.
+        /// Note: Either the stored access policy specified by the <see cref="Identifier"/> or the created shared access signature must define an expiry.
+        /// If neither define an expiry or both do, authentication will fail.
         /// </summary>
         public string Identifier { get; set; }
 
