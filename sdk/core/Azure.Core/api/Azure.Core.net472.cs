@@ -306,6 +306,7 @@ namespace Azure.Core
         public string TokenType { get { throw null; } }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
+        public System.ClientModel.Token ToToken() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureLocation : System.IEquatable<Azure.Core.AzureLocation>
@@ -765,14 +766,17 @@ namespace Azure.Core
         public void Apply(Azure.Core.HttpMessage message) { }
         public override string ToString() { throw null; }
     }
-    public abstract partial class TokenCredential
+    public abstract partial class TokenCredential : System.ClientModel.TokenProvider<Azure.Core.TokenRequestContext>
     {
         protected TokenCredential() { }
+        public override Azure.Core.TokenRequestContext CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> context) { throw null; }
+        public override System.ClientModel.Token GetAccessToken(Azure.Core.TokenRequestContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetAccessTokenAsync(Azure.Core.TokenRequestContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
         public abstract Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TokenRequestContext
+    public readonly partial struct TokenRequestContext : System.ClientModel.ITokenContext, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
@@ -792,7 +796,16 @@ namespace Azure.Core
         public string? ResourceRequestMethod { get { throw null; } }
         public System.Uri? ResourceRequestUri { get { throw null; } }
         public string[] Scopes { get { throw null; } }
+        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>.Count { get { throw null; } }
+        object System.Collections.Generic.IReadOnlyDictionary<string, object>.this[string key] { get { throw null; } }
+        System.Collections.Generic.IEnumerable<string> System.Collections.Generic.IReadOnlyDictionary<string, object>.Keys { get { throw null; } }
+        System.Collections.Generic.IEnumerable<object> System.Collections.Generic.IReadOnlyDictionary<string, object>.Values { get { throw null; } }
         public string? TenantId { get { throw null; } }
+        public static Azure.Core.TokenRequestContext FromDictionary(System.Collections.Generic.IReadOnlyDictionary<string, object> dictionary) { throw null; }
+        System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>.GetEnumerator() { throw null; }
+        bool System.Collections.Generic.IReadOnlyDictionary<string, object>.ContainsKey(string key) { throw null; }
+        bool System.Collections.Generic.IReadOnlyDictionary<string, object>.TryGetValue(string key, out object value) { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
 }
 namespace Azure.Core.Cryptography

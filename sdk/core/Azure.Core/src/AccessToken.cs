@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 
 namespace Azure.Core
 {
@@ -70,6 +71,14 @@ namespace Azure.Core
         /// Identifies the type of access token.
         /// </summary>
         public string TokenType { get; }
+
+        /// <summary>
+        /// Converts this <see cref="AccessToken"/> to a <see cref="Credential"/>.
+        /// </summary>
+        public Token ToToken()
+        {
+            return new Token(Token, TokenType, ExpiresOn, RefreshOn);
+        }
 
         /// <inheritdoc />
         public override bool Equals(object? obj)

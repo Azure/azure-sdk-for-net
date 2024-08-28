@@ -74,15 +74,20 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     if ($pkgProp.Name -in $DependencyCalculationPackages -and $env:DISCOVER_DEPENDENT_PACKAGES) {
       Write-Host "Calculating dependencies for $($pkgProp.Name)"
       $outputFilePath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylist.txt"
+      $buildOutputPath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylistoutput.txt"
 
       if (!(Test-Path $outputFilePath)) {
         try {
-          Invoke-LoggedCommand "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$($pkgProp.Name)`" /p:IncludeSrc=false " +
+          $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$($pkgProp.Name)`" /p:IncludeSrc=false " +
           "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
-          " /p:OutputProjectFilePath=`"$outputFilePath`""
+          " /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
+
+          Invoke-LoggedCommand $command | Out-Null
         }
         catch {
-            Write-Host "Failed calculating dependencies for $($pkgProp.Name), continuing."
+            Write-Host "Failed calculating dependencies for $($pkgProp.Name). Exit code $LASTEXITCODE."
+            Write-Host "Dumping erroring build output."
+            Write-Host (Get-Content -Raw $buildOutputPath)
             continue
         }
       }
