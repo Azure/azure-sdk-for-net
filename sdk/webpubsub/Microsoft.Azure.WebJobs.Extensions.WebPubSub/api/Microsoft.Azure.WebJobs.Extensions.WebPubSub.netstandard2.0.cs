@@ -133,7 +133,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     public partial class WebPubSubAttribute : System.Attribute
     {
         public WebPubSubAttribute() { }
-        [Microsoft.Azure.WebJobs.Description.ConnectionStringAttribute]
         public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Hub { get { throw null; } set { } }

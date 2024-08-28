@@ -17,7 +17,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// The connection of target Web PubSub service.
         /// </summary>
-        [ConnectionString]
         public string Connection { get; set; } = Constants.WebPubSubConnectionStringName;
 
         /// <summary>
