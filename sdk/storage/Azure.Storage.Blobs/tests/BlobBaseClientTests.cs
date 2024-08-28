@@ -8206,12 +8206,13 @@ namespace Azure.Storage.Blobs.Test
                  new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobVersionId does not match snapshot value in the URI in the Client. BlobSasBuilder.BlobVersionId must either be left empty or match the snapshot value in the URI in the Client"));
         }
 
-        [LiveOnly]
+        [RecordedTest]
         public async Task GenerateUserDelegationSas_TrimBlobSlashes()
         {
             // Arrange
-            StorageSharedKeyCredential sharedKeyCredential = Tenants.GetNewSharedKeyCredentials();
-            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient);
             string containerName = test.Container.Name;
             string blobName = $"/{GetNewBlobName()}";
 
@@ -8234,7 +8235,7 @@ namespace Azure.Storage.Blobs.Test
             await createClient.CreateAsync();
 
             string stringToSign = null;
-            Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
+            Response<UserDelegationKey> userDelegationKeyResponse = await serviceClient.GetUserDelegationKeyAsync(
                 startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
