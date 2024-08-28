@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Vision.Face
 {
     /// <summary> Training result of a container. </summary>
-    public partial class TrainingResult
+    public partial class FaceTrainingResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TrainingResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FaceTrainingResult"/>. </summary>
         /// <param name="status"> Training status of the container. </param>
         /// <param name="createdDateTime"> A combined UTC date and time string that describes the created time of the person group, large person group or large face list. </param>
         /// <param name="lastActionDateTime"> A combined UTC date and time string that describes the last modify time of the person group, large person group or large face list, could be null value when the group is not successfully trained. </param>
         /// <param name="lastSuccessfulTrainingDateTime"> A combined UTC date and time string that describes the last successful training time of the person group, large person group or large face list. </param>
-        internal TrainingResult(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastActionDateTime, DateTimeOffset lastSuccessfulTrainingDateTime)
+        internal FaceTrainingResult(FaceOperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastActionDateTime, DateTimeOffset lastSuccessfulTrainingDateTime)
         {
             Status = status;
             CreatedDateTime = createdDateTime;
@@ -58,14 +58,14 @@ namespace Azure.AI.Vision.Face
             LastSuccessfulTrainingDateTime = lastSuccessfulTrainingDateTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrainingResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FaceTrainingResult"/>. </summary>
         /// <param name="status"> Training status of the container. </param>
         /// <param name="createdDateTime"> A combined UTC date and time string that describes the created time of the person group, large person group or large face list. </param>
         /// <param name="lastActionDateTime"> A combined UTC date and time string that describes the last modify time of the person group, large person group or large face list, could be null value when the group is not successfully trained. </param>
         /// <param name="lastSuccessfulTrainingDateTime"> A combined UTC date and time string that describes the last successful training time of the person group, large person group or large face list. </param>
         /// <param name="message"> Show failure message when training failed (omitted when training succeed). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingResult(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastActionDateTime, DateTimeOffset lastSuccessfulTrainingDateTime, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FaceTrainingResult(FaceOperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastActionDateTime, DateTimeOffset lastSuccessfulTrainingDateTime, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             CreatedDateTime = createdDateTime;
@@ -75,13 +75,13 @@ namespace Azure.AI.Vision.Face
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrainingResult"/> for deserialization. </summary>
-        internal TrainingResult()
+        /// <summary> Initializes a new instance of <see cref="FaceTrainingResult"/> for deserialization. </summary>
+        internal FaceTrainingResult()
         {
         }
 
         /// <summary> Training status of the container. </summary>
-        public OperationStatus Status { get; }
+        public FaceOperationStatus Status { get; }
         /// <summary> A combined UTC date and time string that describes the created time of the person group, large person group or large face list. </summary>
         public DateTimeOffset CreatedDateTime { get; }
         /// <summary> A combined UTC date and time string that describes the last modify time of the person group, large person group or large face list, could be null value when the group is not successfully trained. </summary>

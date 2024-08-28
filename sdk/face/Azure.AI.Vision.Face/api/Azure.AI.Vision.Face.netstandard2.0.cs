@@ -57,18 +57,19 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.FaceDetectionResult FaceDetectionResult(System.Guid? faceId = default(System.Guid?), Azure.AI.Vision.Face.FaceRecognitionModel? recognitionModel = default(Azure.AI.Vision.Face.FaceRecognitionModel?), Azure.AI.Vision.Face.FaceRectangle faceRectangle = null, Azure.AI.Vision.Face.FaceLandmarks faceLandmarks = null, Azure.AI.Vision.Face.FaceAttributes faceAttributes = null) { throw null; }
         public static Azure.AI.Vision.Face.FaceFindSimilarResult FaceFindSimilarResult(float confidence = 0f, System.Guid? faceId = default(System.Guid?), System.Guid? persistedFaceId = default(System.Guid?)) { throw null; }
         public static Azure.AI.Vision.Face.FaceGroupingResult FaceGroupingResult(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Guid>> groups = null, System.Collections.Generic.IEnumerable<System.Guid> messyGroup = null) { throw null; }
+        public static Azure.AI.Vision.Face.FaceIdentificationCandidate FaceIdentificationCandidate(System.Guid personId = default(System.Guid), float confidence = 0f) { throw null; }
+        public static Azure.AI.Vision.Face.FaceIdentificationResult FaceIdentificationResult(System.Guid faceId = default(System.Guid), System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.FaceIdentificationCandidate> candidates = null) { throw null; }
         public static Azure.AI.Vision.Face.FaceLandmarks FaceLandmarks(Azure.AI.Vision.Face.LandmarkCoordinate pupilLeft = null, Azure.AI.Vision.Face.LandmarkCoordinate pupilRight = null, Azure.AI.Vision.Face.LandmarkCoordinate noseTip = null, Azure.AI.Vision.Face.LandmarkCoordinate mouthLeft = null, Azure.AI.Vision.Face.LandmarkCoordinate mouthRight = null, Azure.AI.Vision.Face.LandmarkCoordinate eyebrowLeftOuter = null, Azure.AI.Vision.Face.LandmarkCoordinate eyebrowLeftInner = null, Azure.AI.Vision.Face.LandmarkCoordinate eyeLeftOuter = null, Azure.AI.Vision.Face.LandmarkCoordinate eyeLeftTop = null, Azure.AI.Vision.Face.LandmarkCoordinate eyeLeftBottom = null, Azure.AI.Vision.Face.LandmarkCoordinate eyeLeftInner = null, Azure.AI.Vision.Face.LandmarkCoordinate eyebrowRightInner = null, Azure.AI.Vision.Face.LandmarkCoordinate eyebrowRightOuter = null, Azure.AI.Vision.Face.LandmarkCoordinate eyeRightInner = null, Azure.AI.Vision.Face.LandmarkCoordinate eyeRightTop = null, Azure.AI.Vision.Face.LandmarkCoordinate eyeRightBottom = null, Azure.AI.Vision.Face.LandmarkCoordinate eyeRightOuter = null, Azure.AI.Vision.Face.LandmarkCoordinate noseRootLeft = null, Azure.AI.Vision.Face.LandmarkCoordinate noseRootRight = null, Azure.AI.Vision.Face.LandmarkCoordinate noseLeftAlarTop = null, Azure.AI.Vision.Face.LandmarkCoordinate noseRightAlarTop = null, Azure.AI.Vision.Face.LandmarkCoordinate noseLeftAlarOutTip = null, Azure.AI.Vision.Face.LandmarkCoordinate noseRightAlarOutTip = null, Azure.AI.Vision.Face.LandmarkCoordinate upperLipTop = null, Azure.AI.Vision.Face.LandmarkCoordinate upperLipBottom = null, Azure.AI.Vision.Face.LandmarkCoordinate underLipTop = null, Azure.AI.Vision.Face.LandmarkCoordinate underLipBottom = null) { throw null; }
         public static Azure.AI.Vision.Face.FaceList FaceList(string name = null, string userData = null, Azure.AI.Vision.Face.FaceRecognitionModel? recognitionModel = default(Azure.AI.Vision.Face.FaceRecognitionModel?), string faceListId = null, System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.FaceListFace> persistedFaces = null) { throw null; }
         public static Azure.AI.Vision.Face.FaceListFace FaceListFace(System.Guid persistedFaceId = default(System.Guid), string userData = null) { throw null; }
         public static Azure.AI.Vision.Face.FaceListItem FaceListItem(string name = null, string userData = null, Azure.AI.Vision.Face.FaceRecognitionModel? recognitionModel = default(Azure.AI.Vision.Face.FaceRecognitionModel?), string faceListId = null) { throw null; }
         public static Azure.AI.Vision.Face.FaceRectangle FaceRectangle(int top = 0, int left = 0, int width = 0, int height = 0) { throw null; }
+        public static Azure.AI.Vision.Face.FaceTrainingResult FaceTrainingResult(Azure.AI.Vision.Face.FaceOperationStatus status = default(Azure.AI.Vision.Face.FaceOperationStatus), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastActionDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastSuccessfulTrainingDateTime = default(System.DateTimeOffset), string message = null) { throw null; }
         public static Azure.AI.Vision.Face.FaceVerificationResult FaceVerificationResult(bool isIdentical = false, float confidence = 0f) { throw null; }
         public static Azure.AI.Vision.Face.FacialHair FacialHair(float moustache = 0f, float beard = 0f, float sideburns = 0f) { throw null; }
         public static Azure.AI.Vision.Face.HairColor HairColor(Azure.AI.Vision.Face.HairColorType color = default(Azure.AI.Vision.Face.HairColorType), float confidence = 0f) { throw null; }
         public static Azure.AI.Vision.Face.HairProperties HairProperties(float bald = 0f, bool invisible = false, System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.HairColor> hairColor = null) { throw null; }
         public static Azure.AI.Vision.Face.HeadPose HeadPose(float pitch = 0f, float roll = 0f, float yaw = 0f) { throw null; }
-        public static Azure.AI.Vision.Face.IdentificationCandidate IdentificationCandidate(System.Guid personId = default(System.Guid), float confidence = 0f) { throw null; }
-        public static Azure.AI.Vision.Face.IdentificationResult IdentificationResult(System.Guid faceId = default(System.Guid), System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.IdentificationCandidate> candidates = null) { throw null; }
         public static Azure.AI.Vision.Face.LandmarkCoordinate LandmarkCoordinate(float x = 0f, float y = 0f) { throw null; }
         public static Azure.AI.Vision.Face.LargeFaceList LargeFaceList(string name = null, string userData = null, Azure.AI.Vision.Face.FaceRecognitionModel? recognitionModel = default(Azure.AI.Vision.Face.FaceRecognitionModel?), string largeFaceListId = null) { throw null; }
         public static Azure.AI.Vision.Face.LargeFaceListFace LargeFaceListFace(System.Guid persistedFaceId = default(System.Guid), string userData = null) { throw null; }
@@ -89,7 +90,6 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.PersonGroup PersonGroup(string name = null, string userData = null, Azure.AI.Vision.Face.FaceRecognitionModel? recognitionModel = default(Azure.AI.Vision.Face.FaceRecognitionModel?), string personGroupId = null) { throw null; }
         public static Azure.AI.Vision.Face.PersonGroupPerson PersonGroupPerson(System.Guid personId = default(System.Guid), string name = null, string userData = null, System.Collections.Generic.IEnumerable<System.Guid> persistedFaceIds = null) { throw null; }
         public static Azure.AI.Vision.Face.PersonGroupPersonFace PersonGroupPersonFace(System.Guid persistedFaceId = default(System.Guid), string userData = null) { throw null; }
-        public static Azure.AI.Vision.Face.TrainingResult TrainingResult(Azure.AI.Vision.Face.OperationStatus status = default(Azure.AI.Vision.Face.OperationStatus), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastActionDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastSuccessfulTrainingDateTime = default(System.DateTimeOffset), string message = null) { throw null; }
     }
     public partial class AuditLivenessResponseInfo : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.AuditLivenessResponseInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AuditLivenessResponseInfo>
     {
@@ -253,6 +253,19 @@ namespace Azure.AI.Vision.Face
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.ExposureProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.ExposureProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class FaceAdministrationClient
+    {
+        protected FaceAdministrationClient() { }
+        public FaceAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public FaceAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
+        public FaceAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public FaceAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.AI.Vision.Face.FaceListClient GetFaceListClient() { throw null; }
+        public virtual Azure.AI.Vision.Face.LargeFaceListClient GetLargeFaceListClient() { throw null; }
+        public virtual Azure.AI.Vision.Face.LargePersonGroupClient GetLargePersonGroupClient() { throw null; }
+        public virtual Azure.AI.Vision.Face.PersonGroupClient GetPersonGroupClient() { throw null; }
+    }
     public partial class FaceAttributes : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceAttributes>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceAttributes>
     {
         internal FaceAttributes() { }
@@ -361,13 +374,13 @@ namespace Azure.AI.Vision.Face
         public virtual System.Threading.Tasks.Task<Azure.Response> GroupAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.FaceGroupingResult>> GroupAsync(System.Collections.Generic.IEnumerable<System.Guid> faceIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response IdentifyFromLargePersonGroup(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.IdentificationResult>> IdentifyFromLargePersonGroup(System.Collections.Generic.IEnumerable<System.Guid> faceIds, string largePersonGroupId, int? maxNumOfCandidatesReturned = default(int?), float? confidenceThreshold = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.FaceIdentificationResult>> IdentifyFromLargePersonGroup(System.Collections.Generic.IEnumerable<System.Guid> faceIds, string largePersonGroupId, int? maxNumOfCandidatesReturned = default(int?), float? confidenceThreshold = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> IdentifyFromLargePersonGroupAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.IdentificationResult>>> IdentifyFromLargePersonGroupAsync(System.Collections.Generic.IEnumerable<System.Guid> faceIds, string largePersonGroupId, int? maxNumOfCandidatesReturned = default(int?), float? confidenceThreshold = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.FaceIdentificationResult>>> IdentifyFromLargePersonGroupAsync(System.Collections.Generic.IEnumerable<System.Guid> faceIds, string largePersonGroupId, int? maxNumOfCandidatesReturned = default(int?), float? confidenceThreshold = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response IdentifyFromPersonGroup(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.IdentificationResult>> IdentifyFromPersonGroup(System.Collections.Generic.IEnumerable<System.Guid> faceIds, string personGroupId, int? maxNumOfCandidatesReturned = default(int?), float? confidenceThreshold = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.FaceIdentificationResult>> IdentifyFromPersonGroup(System.Collections.Generic.IEnumerable<System.Guid> faceIds, string personGroupId, int? maxNumOfCandidatesReturned = default(int?), float? confidenceThreshold = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> IdentifyFromPersonGroupAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.IdentificationResult>>> IdentifyFromPersonGroupAsync(System.Collections.Generic.IEnumerable<System.Guid> faceIds, string personGroupId, int? maxNumOfCandidatesReturned = default(int?), float? confidenceThreshold = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.FaceIdentificationResult>>> IdentifyFromPersonGroupAsync(System.Collections.Generic.IEnumerable<System.Guid> faceIds, string personGroupId, int? maxNumOfCandidatesReturned = default(int?), float? confidenceThreshold = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response VerifyFaceToFace(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Vision.Face.FaceVerificationResult> VerifyFaceToFace(System.Guid faceId1, System.Guid faceId2, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> VerifyFaceToFaceAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -436,6 +449,28 @@ namespace Azure.AI.Vision.Face
         Azure.AI.Vision.Face.FaceGroupingResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceGroupingResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceGroupingResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceGroupingResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FaceIdentificationCandidate : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceIdentificationCandidate>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceIdentificationCandidate>
+    {
+        internal FaceIdentificationCandidate() { }
+        public float Confidence { get { throw null; } }
+        public System.Guid PersonId { get { throw null; } }
+        Azure.AI.Vision.Face.FaceIdentificationCandidate System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceIdentificationCandidate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceIdentificationCandidate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.FaceIdentificationCandidate System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceIdentificationCandidate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceIdentificationCandidate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceIdentificationCandidate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FaceIdentificationResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceIdentificationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceIdentificationResult>
+    {
+        internal FaceIdentificationResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.FaceIdentificationCandidate> Candidates { get { throw null; } }
+        public System.Guid FaceId { get { throw null; } }
+        Azure.AI.Vision.Face.FaceIdentificationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceIdentificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceIdentificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.FaceIdentificationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceIdentificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceIdentificationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceIdentificationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FaceImageType : System.IEquatable<Azure.AI.Vision.Face.FaceImageType>
@@ -583,6 +618,26 @@ namespace Azure.AI.Vision.Face
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FaceOperationStatus : System.IEquatable<Azure.AI.Vision.Face.FaceOperationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FaceOperationStatus(string value) { throw null; }
+        public static Azure.AI.Vision.Face.FaceOperationStatus Failed { get { throw null; } }
+        public static Azure.AI.Vision.Face.FaceOperationStatus NotStarted { get { throw null; } }
+        public static Azure.AI.Vision.Face.FaceOperationStatus Running { get { throw null; } }
+        public static Azure.AI.Vision.Face.FaceOperationStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.Vision.Face.FaceOperationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Vision.Face.FaceOperationStatus left, Azure.AI.Vision.Face.FaceOperationStatus right) { throw null; }
+        public static implicit operator Azure.AI.Vision.Face.FaceOperationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Vision.Face.FaceOperationStatus left, Azure.AI.Vision.Face.FaceOperationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FaceRecognitionModel : System.IEquatable<Azure.AI.Vision.Face.FaceRecognitionModel>
     {
         private readonly object _dummy;
@@ -614,19 +669,6 @@ namespace Azure.AI.Vision.Face
         Azure.AI.Vision.Face.FaceRectangle System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceRectangle>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceRectangle>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceRectangle>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class FaceServiceClient
-    {
-        protected FaceServiceClient() { }
-        public FaceServiceClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public FaceServiceClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
-        public FaceServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public FaceServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.AI.Vision.Face.FaceListClient GetFaceListClientClient() { throw null; }
-        public virtual Azure.AI.Vision.Face.LargeFaceListClient GetLargeFaceListClientClient() { throw null; }
-        public virtual Azure.AI.Vision.Face.LargePersonGroupClient GetLargePersonGroupClientClient() { throw null; }
-        public virtual Azure.AI.Vision.Face.PersonGroupClient GetPersonGroupClientClient() { throw null; }
     }
     public partial class FaceSessionClient
     {
@@ -697,6 +739,20 @@ namespace Azure.AI.Vision.Face
         public static implicit operator Azure.AI.Vision.Face.FaceSessionStatus (string value) { throw null; }
         public static bool operator !=(Azure.AI.Vision.Face.FaceSessionStatus left, Azure.AI.Vision.Face.FaceSessionStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class FaceTrainingResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceTrainingResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceTrainingResult>
+    {
+        internal FaceTrainingResult() { }
+        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset LastActionDateTime { get { throw null; } }
+        public System.DateTimeOffset LastSuccessfulTrainingDateTime { get { throw null; } }
+        public string Message { get { throw null; } }
+        public Azure.AI.Vision.Face.FaceOperationStatus Status { get { throw null; } }
+        Azure.AI.Vision.Face.FaceTrainingResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceTrainingResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceTrainingResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.FaceTrainingResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceTrainingResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceTrainingResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceTrainingResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FaceVerificationResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceVerificationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceVerificationResult>
     {
@@ -818,28 +874,6 @@ namespace Azure.AI.Vision.Face
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.HeadPose>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.HeadPose>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IdentificationCandidate : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.IdentificationCandidate>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.IdentificationCandidate>
-    {
-        internal IdentificationCandidate() { }
-        public float Confidence { get { throw null; } }
-        public System.Guid PersonId { get { throw null; } }
-        Azure.AI.Vision.Face.IdentificationCandidate System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.IdentificationCandidate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.IdentificationCandidate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.IdentificationCandidate System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.IdentificationCandidate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.IdentificationCandidate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.IdentificationCandidate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class IdentificationResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.IdentificationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.IdentificationResult>
-    {
-        internal IdentificationResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.IdentificationCandidate> Candidates { get { throw null; } }
-        public System.Guid FaceId { get { throw null; } }
-        Azure.AI.Vision.Face.IdentificationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.IdentificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.IdentificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.IdentificationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.IdentificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.IdentificationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.IdentificationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class LandmarkCoordinate : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LandmarkCoordinate>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LandmarkCoordinate>
     {
         internal LandmarkCoordinate() { }
@@ -903,9 +937,9 @@ namespace Azure.AI.Vision.Face
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLargeFaceListsAsync(string start, int? top, bool? returnRecognitionModel, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LargeFaceList>>> GetLargeFaceListsAsync(string start = null, int? top = default(int?), bool? returnRecognitionModel = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetTrainingStatus(string largeFaceListId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Vision.Face.TrainingResult> GetTrainingStatus(string largeFaceListId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Vision.Face.FaceTrainingResult> GetTrainingStatus(string largeFaceListId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTrainingStatusAsync(string largeFaceListId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.TrainingResult>> GetTrainingStatusAsync(string largeFaceListId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.FaceTrainingResult>> GetTrainingStatusAsync(string largeFaceListId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation Train(Azure.WaitUntil waitUntil, string largeFaceListId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> TrainAsync(Azure.WaitUntil waitUntil, string largeFaceListId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Update(string largeFaceListId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -986,9 +1020,9 @@ namespace Azure.AI.Vision.Face
         public virtual System.Threading.Tasks.Task<Azure.Response> GetPersonsAsync(string largePersonGroupId, string start, int? top, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LargePersonGroupPerson>>> GetPersonsAsync(string largePersonGroupId, string start = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetTrainingStatus(string largePersonGroupId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Vision.Face.TrainingResult> GetTrainingStatus(string largePersonGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Vision.Face.FaceTrainingResult> GetTrainingStatus(string largePersonGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTrainingStatusAsync(string largePersonGroupId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.TrainingResult>> GetTrainingStatusAsync(string largePersonGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.FaceTrainingResult>> GetTrainingStatusAsync(string largePersonGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation Train(Azure.WaitUntil waitUntil, string largePersonGroupId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> TrainAsync(Azure.WaitUntil waitUntil, string largePersonGroupId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Update(string largePersonGroupId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -1249,26 +1283,6 @@ namespace Azure.AI.Vision.Face
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.OcclusionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.OcclusionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationStatus : System.IEquatable<Azure.AI.Vision.Face.OperationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OperationStatus(string value) { throw null; }
-        public static Azure.AI.Vision.Face.OperationStatus Failed { get { throw null; } }
-        public static Azure.AI.Vision.Face.OperationStatus NotStarted { get { throw null; } }
-        public static Azure.AI.Vision.Face.OperationStatus Running { get { throw null; } }
-        public static Azure.AI.Vision.Face.OperationStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.AI.Vision.Face.OperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Vision.Face.OperationStatus left, Azure.AI.Vision.Face.OperationStatus right) { throw null; }
-        public static implicit operator Azure.AI.Vision.Face.OperationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Vision.Face.OperationStatus left, Azure.AI.Vision.Face.OperationStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class PersonGroup : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.PersonGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.PersonGroup>
     {
         internal PersonGroup() { }
@@ -1331,9 +1345,9 @@ namespace Azure.AI.Vision.Face
         public virtual System.Threading.Tasks.Task<Azure.Response> GetPersonsAsync(string personGroupId, string start, int? top, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.PersonGroupPerson>>> GetPersonsAsync(string personGroupId, string start = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetTrainingStatus(string personGroupId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Vision.Face.TrainingResult> GetTrainingStatus(string personGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Vision.Face.FaceTrainingResult> GetTrainingStatus(string personGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTrainingStatusAsync(string personGroupId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.TrainingResult>> GetTrainingStatusAsync(string personGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.FaceTrainingResult>> GetTrainingStatusAsync(string personGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation Train(Azure.WaitUntil waitUntil, string personGroupId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> TrainAsync(Azure.WaitUntil waitUntil, string personGroupId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Update(string personGroupId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -1386,31 +1400,17 @@ namespace Azure.AI.Vision.Face
         public static bool operator !=(Azure.AI.Vision.Face.QualityForRecognition left, Azure.AI.Vision.Face.QualityForRecognition right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TrainingResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.TrainingResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.TrainingResult>
-    {
-        internal TrainingResult() { }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
-        public System.DateTimeOffset LastActionDateTime { get { throw null; } }
-        public System.DateTimeOffset LastSuccessfulTrainingDateTime { get { throw null; } }
-        public string Message { get { throw null; } }
-        public Azure.AI.Vision.Face.OperationStatus Status { get { throw null; } }
-        Azure.AI.Vision.Face.TrainingResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.TrainingResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.TrainingResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.TrainingResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.TrainingResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.TrainingResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.TrainingResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
 }
 namespace Microsoft.Extensions.Azure
 {
     public static partial class AIVisionFaceClientBuilderExtensions
     {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceAdministrationClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceAdministrationClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceAdministrationClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceServiceClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceServiceClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceServiceClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceServiceClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceServiceClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceSessionClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceSessionClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceSessionClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceSessionClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Vision.Face.FaceSessionClient, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions> AddFaceSessionClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

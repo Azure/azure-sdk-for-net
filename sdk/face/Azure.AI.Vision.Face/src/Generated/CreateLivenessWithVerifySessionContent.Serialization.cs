@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class CreateLivenessWithVerifySessionJsonContent : IUtf8JsonSerializable, IJsonModel<CreateLivenessWithVerifySessionJsonContent>
+    public partial class CreateLivenessWithVerifySessionContent : IUtf8JsonSerializable, IJsonModel<CreateLivenessWithVerifySessionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateLivenessWithVerifySessionJsonContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateLivenessWithVerifySessionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CreateLivenessWithVerifySessionJsonContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CreateLivenessWithVerifySessionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionJsonContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionJsonContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,19 +86,19 @@ namespace Azure.AI.Vision.Face
             writer.WriteEndObject();
         }
 
-        CreateLivenessWithVerifySessionJsonContent IJsonModel<CreateLivenessWithVerifySessionJsonContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CreateLivenessWithVerifySessionContent IJsonModel<CreateLivenessWithVerifySessionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionJsonContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionJsonContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateLivenessWithVerifySessionJsonContent(document.RootElement, options);
+            return DeserializeCreateLivenessWithVerifySessionContent(document.RootElement, options);
         }
 
-        internal static CreateLivenessWithVerifySessionJsonContent DeserializeCreateLivenessWithVerifySessionJsonContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CreateLivenessWithVerifySessionContent DeserializeCreateLivenessWithVerifySessionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -198,7 +198,7 @@ namespace Azure.AI.Vision.Face
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CreateLivenessWithVerifySessionJsonContent(
+            return new CreateLivenessWithVerifySessionContent(
                 livenessOperationMode,
                 sendResultsToClient,
                 deviceCorrelationIdSetInClient,
@@ -211,43 +211,43 @@ namespace Azure.AI.Vision.Face
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CreateLivenessWithVerifySessionJsonContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CreateLivenessWithVerifySessionContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionJsonContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionJsonContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CreateLivenessWithVerifySessionJsonContent IPersistableModel<CreateLivenessWithVerifySessionJsonContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CreateLivenessWithVerifySessionContent IPersistableModel<CreateLivenessWithVerifySessionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionJsonContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCreateLivenessWithVerifySessionJsonContent(document.RootElement, options);
+                        return DeserializeCreateLivenessWithVerifySessionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionJsonContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CreateLivenessWithVerifySessionJsonContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CreateLivenessWithVerifySessionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CreateLivenessWithVerifySessionJsonContent FromResponse(Response response)
+        internal static CreateLivenessWithVerifySessionContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCreateLivenessWithVerifySessionJsonContent(document.RootElement);
+            return DeserializeCreateLivenessWithVerifySessionContent(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -11,7 +11,7 @@ To create a large face list, you'll need `LargeFaceListClient` object.
 ```C# Snippet:CreateLargeFaceListClient
 Uri endpoint = new Uri("<your endpoint>");
 DefaultAzureCredential credential = new DefaultAzureCredential();
-var client = new LargeFaceListClient(endpoint, credential);
+var listClient = new LargeFaceListClient(endpoint, credential);
 ```
 
 Call `Create` to create a large face list. You can specify the `name` and `userData` for the large face list.

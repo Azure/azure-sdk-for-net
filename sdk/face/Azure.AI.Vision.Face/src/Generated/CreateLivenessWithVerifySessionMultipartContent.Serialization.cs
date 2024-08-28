@@ -76,7 +76,7 @@ namespace Azure.AI.Vision.Face
             {
                 return null;
             }
-            CreateLivenessWithVerifySessionJsonContent parameters = default;
+            CreateLivenessWithVerifySessionContent parameters = default;
             Stream verifyImage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,7 +84,7 @@ namespace Azure.AI.Vision.Face
             {
                 if (property.NameEquals("Parameters"u8))
                 {
-                    parameters = CreateLivenessWithVerifySessionJsonContent.DeserializeCreateLivenessWithVerifySessionJsonContent(property.Value, options);
+                    parameters = CreateLivenessWithVerifySessionContent.DeserializeCreateLivenessWithVerifySessionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("VerifyImage"u8))

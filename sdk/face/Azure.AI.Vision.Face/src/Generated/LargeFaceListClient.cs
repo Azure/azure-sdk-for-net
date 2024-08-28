@@ -25,6 +25,7 @@ namespace Azure.AI.Vision.Face
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private readonly string _largeFaceListId;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -47,56 +48,52 @@ namespace Azure.AI.Vision.Face
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://{resource-name}.cognitiveservices.azure.com).
         /// </param>
+        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="apiVersion"> API Version. Allowed values: "v1.1-preview.1" | "v1.2-preview.1". </param>
-        internal LargeFaceListClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal LargeFaceListClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string largeFaceListId, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _keyCredential = keyCredential;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
+            _largeFaceListId = largeFaceListId;
             _apiVersion = apiVersion;
         }
 
         /// <summary> Create an empty Large Face List with user-specified largeFaceListId, name, an optional userData and recognitionModel. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="name"> User defined name, maximum length is 128. </param>
         /// <param name="userData"> Optional user defined data. Length should not exceed 16K. </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with this face list. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02, 'recognition_03', and 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/create-large-face-list for more details. </remarks>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='CreateAsync(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
-        public virtual async Task<Response> CreateAsync(string largeFaceListId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='CreateAsync(string,string,FaceRecognitionModel?,CancellationToken)']/*" />
+        public virtual async Task<Response> CreateAsync(string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(name, nameof(name));
 
-            CreateRequest2 createRequest2 = new CreateRequest2(name, userData, recognitionModel, null);
+            CreateRequest1 createRequest1 = new CreateRequest1(name, userData, recognitionModel, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(largeFaceListId, createRequest2.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateAsync(createRequest1.ToRequestContent(), context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Create an empty Large Face List with user-specified largeFaceListId, name, an optional userData and recognitionModel. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="name"> User defined name, maximum length is 128. </param>
         /// <param name="userData"> Optional user defined data. Length should not exceed 16K. </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with this face list. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02, 'recognition_03', and 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/create-large-face-list for more details. </remarks>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='Create(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
-        public virtual Response Create(string largeFaceListId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='Create(string,string,FaceRecognitionModel?,CancellationToken)']/*" />
+        public virtual Response Create(string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(name, nameof(name));
 
-            CreateRequest2 createRequest2 = new CreateRequest2(name, userData, recognitionModel, null);
+            CreateRequest1 createRequest1 = new CreateRequest1(name, userData, recognitionModel, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(largeFaceListId, createRequest2.ToRequestContent(), context);
+            Response response = Create(createRequest1.ToRequestContent(), context);
             return response;
         }
 
@@ -110,29 +107,26 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateAsync(string,string,string,FaceRecognitionModel?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAsync(string,string,FaceRecognitionModel?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='CreateAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateAsync(string largeFaceListId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(largeFaceListId, content, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -152,29 +146,26 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Create(string,string,string,FaceRecognitionModel?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Create(string,string,FaceRecognitionModel?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='Create(string,RequestContent,RequestContext)']/*" />
-        public virtual Response Create(string largeFaceListId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
+        public virtual Response Create(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(largeFaceListId, content, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -195,22 +186,17 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string largeFaceListId, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='DeleteAsync(RequestContext)']/*" />
+        public virtual async Task<Response> DeleteAsync(RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(largeFaceListId, context);
+                using HttpMessage message = CreateDeleteRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -231,22 +217,17 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
-        public virtual Response Delete(string largeFaceListId, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='Delete(RequestContext)']/*" />
+        public virtual Response Delete(RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(largeFaceListId, context);
+                using HttpMessage message = CreateDeleteRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -257,34 +238,24 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-large-face-list for more details. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetLargeFaceListAsync(string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<LargeFaceList>> GetLargeFaceListAsync(string largeFaceListId, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetLargeFaceListAsync(bool?,CancellationToken)']/*" />
+        public virtual async Task<Response<LargeFaceList>> GetLargeFaceListAsync(bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetLargeFaceListAsync(largeFaceListId, returnRecognitionModel, context).ConfigureAwait(false);
+            Response response = await GetLargeFaceListAsync(returnRecognitionModel, context).ConfigureAwait(false);
             return Response.FromValue(LargeFaceList.FromResponse(response), response);
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-large-face-list for more details. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetLargeFaceList(string,bool?,CancellationToken)']/*" />
-        public virtual Response<LargeFaceList> GetLargeFaceList(string largeFaceListId, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetLargeFaceList(bool?,CancellationToken)']/*" />
+        public virtual Response<LargeFaceList> GetLargeFaceList(bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetLargeFaceList(largeFaceListId, returnRecognitionModel, context);
+            Response response = GetLargeFaceList(returnRecognitionModel, context);
             return Response.FromValue(LargeFaceList.FromResponse(response), response);
         }
 
@@ -298,28 +269,23 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetLargeFaceListAsync(string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetLargeFaceListAsync(bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetLargeFaceListAsync(string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetLargeFaceListAsync(string largeFaceListId, bool? returnRecognitionModel, RequestContext context)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetLargeFaceListAsync(bool?,RequestContext)']/*" />
+        public virtual async Task<Response> GetLargeFaceListAsync(bool? returnRecognitionModel, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.GetLargeFaceList");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLargeFaceListRequest(largeFaceListId, returnRecognitionModel, context);
+                using HttpMessage message = CreateGetLargeFaceListRequest(returnRecognitionModel, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -339,28 +305,23 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetLargeFaceList(string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetLargeFaceList(bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetLargeFaceList(string,bool?,RequestContext)']/*" />
-        public virtual Response GetLargeFaceList(string largeFaceListId, bool? returnRecognitionModel, RequestContext context)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetLargeFaceList(bool?,RequestContext)']/*" />
+        public virtual Response GetLargeFaceList(bool? returnRecognitionModel, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.GetLargeFaceList");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLargeFaceListRequest(largeFaceListId, returnRecognitionModel, context);
+                using HttpMessage message = CreateGetLargeFaceListRequest(returnRecognitionModel, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -380,24 +341,21 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='UpdateAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateAsync(string largeFaceListId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='UpdateAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.Update");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(largeFaceListId, content, context);
+                using HttpMessage message = CreateUpdateRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -417,24 +375,21 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='Update(string,RequestContent,RequestContext)']/*" />
-        public virtual Response Update(string largeFaceListId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='Update(RequestContent,RequestContext)']/*" />
+        public virtual Response Update(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.Update");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(largeFaceListId, content, context);
+                using HttpMessage message = CreateUpdateRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -565,33 +520,23 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-large-face-list-training-status for more details. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TrainingResult>> GetTrainingStatusAsync(string largeFaceListId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetTrainingStatusAsync(CancellationToken)']/*" />
+        public virtual async Task<Response<FaceTrainingResult>> GetTrainingStatusAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTrainingStatusAsync(largeFaceListId, context).ConfigureAwait(false);
-            return Response.FromValue(TrainingResult.FromResponse(response), response);
+            Response response = await GetTrainingStatusAsync(context).ConfigureAwait(false);
+            return Response.FromValue(FaceTrainingResult.FromResponse(response), response);
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-large-face-list-training-status for more details. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetTrainingStatus(string,CancellationToken)']/*" />
-        public virtual Response<TrainingResult> GetTrainingStatus(string largeFaceListId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetTrainingStatus(CancellationToken)']/*" />
+        public virtual Response<FaceTrainingResult> GetTrainingStatus(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTrainingStatus(largeFaceListId, context);
-            return Response.FromValue(TrainingResult.FromResponse(response), response);
+            Response response = GetTrainingStatus(context);
+            return Response.FromValue(FaceTrainingResult.FromResponse(response), response);
         }
 
         /// <summary>
@@ -604,27 +549,22 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTrainingStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTrainingStatusAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTrainingStatusAsync(string largeFaceListId, RequestContext context)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetTrainingStatusAsync(RequestContext)']/*" />
+        public virtual async Task<Response> GetTrainingStatusAsync(RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.GetTrainingStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTrainingStatusRequest(largeFaceListId, context);
+                using HttpMessage message = CreateGetTrainingStatusRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -644,27 +584,22 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTrainingStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTrainingStatus(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetTrainingStatus(string,RequestContext)']/*" />
-        public virtual Response GetTrainingStatus(string largeFaceListId, RequestContext context)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetTrainingStatus(RequestContext)']/*" />
+        public virtual Response GetTrainingStatus(RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.GetTrainingStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTrainingStatusRequest(largeFaceListId, context);
+                using HttpMessage message = CreateGetTrainingStatusRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -675,44 +610,38 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Add a face to a specified Large Face List, up to 1,000,000 faces. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="uri"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/add-large-face-list-face-from-url for more details. </remarks>
-        internal virtual async Task<Response<AddFaceResult>> AddFaceFromUrlImplAsync(string largeFaceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<AddFaceResult>> AddFaceFromUrlImplAsync(Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(uri, nameof(uri));
 
-            AddFaceFromUrlRequest2 addFaceFromUrlRequest2 = new AddFaceFromUrlRequest2(uri, null);
+            AddFaceFromUrlRequest1 addFaceFromUrlRequest1 = new AddFaceFromUrlRequest1(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddFaceFromUrlImplAsync(largeFaceListId, addFaceFromUrlRequest2.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
+            Response response = await AddFaceFromUrlImplAsync(addFaceFromUrlRequest1.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
         /// <summary> Add a face to a specified Large Face List, up to 1,000,000 faces. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="uri"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/add-large-face-list-face-from-url for more details. </remarks>
-        internal virtual Response<AddFaceResult> AddFaceFromUrlImpl(string largeFaceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        internal virtual Response<AddFaceResult> AddFaceFromUrlImpl(Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(uri, nameof(uri));
 
-            AddFaceFromUrlRequest2 addFaceFromUrlRequest2 = new AddFaceFromUrlRequest2(uri, null);
+            AddFaceFromUrlRequest1 addFaceFromUrlRequest1 = new AddFaceFromUrlRequest1(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddFaceFromUrlImpl(largeFaceListId, addFaceFromUrlRequest2.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
+            Response response = AddFaceFromUrlImpl(addFaceFromUrlRequest1.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -726,31 +655,28 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceFromUrlImplAsync(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceFromUrlImplAsync(Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AddFaceFromUrlImplAsync(string largeFaceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual async Task<Response> AddFaceFromUrlImplAsync(RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.AddFaceFromUrlImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceFromUrlImplRequest(largeFaceListId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceFromUrlImplRequest(content, targetFace, detectionModel, userData, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -770,31 +696,28 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceFromUrlImpl(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceFromUrlImpl(Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AddFaceFromUrlImpl(string largeFaceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual Response AddFaceFromUrlImpl(RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.AddFaceFromUrlImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceFromUrlImplRequest(largeFaceListId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceFromUrlImplRequest(content, targetFace, detectionModel, userData, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -805,44 +728,38 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Add a face to a specified Large Face List, up to 1,000,000 faces. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="imageContent"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/add-large-face-list-face for more details. </remarks>
-        internal virtual async Task<Response<AddFaceResult>> AddFaceImplAsync(string largeFaceListId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<AddFaceResult>> AddFaceImplAsync(BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             using RequestContent content = imageContent;
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddFaceImplAsync(largeFaceListId, content, targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
+            Response response = await AddFaceImplAsync(content, targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
         /// <summary> Add a face to a specified Large Face List, up to 1,000,000 faces. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="imageContent"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/add-large-face-list-face for more details. </remarks>
-        internal virtual Response<AddFaceResult> AddFaceImpl(string largeFaceListId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        internal virtual Response<AddFaceResult> AddFaceImpl(BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             using RequestContent content = imageContent;
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddFaceImpl(largeFaceListId, content, targetFace, detectionModel?.ToString(), userData, context);
+            Response response = AddFaceImpl(content, targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -856,31 +773,28 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceImplAsync(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceImplAsync(BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AddFaceImplAsync(string largeFaceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual async Task<Response> AddFaceImplAsync(RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.AddFaceImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceImplRequest(largeFaceListId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceImplRequest(content, targetFace, detectionModel, userData, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -900,31 +814,28 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceImpl(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceImpl(BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AddFaceImpl(string largeFaceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual Response AddFaceImpl(RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.AddFaceImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceImplRequest(largeFaceListId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceImplRequest(content, targetFace, detectionModel, userData, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -945,23 +856,18 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='DeleteFaceAsync(string,Guid,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteFaceAsync(string largeFaceListId, Guid persistedFaceId, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='DeleteFaceAsync(Guid,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteFaceAsync(Guid persistedFaceId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.DeleteFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteFaceRequest(largeFaceListId, persistedFaceId, context);
+                using HttpMessage message = CreateDeleteFaceRequest(persistedFaceId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -982,23 +888,18 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='DeleteFace(string,Guid,RequestContext)']/*" />
-        public virtual Response DeleteFace(string largeFaceListId, Guid persistedFaceId, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='DeleteFace(Guid,RequestContext)']/*" />
+        public virtual Response DeleteFace(Guid persistedFaceId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.DeleteFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteFaceRequest(largeFaceListId, persistedFaceId, context);
+                using HttpMessage message = CreateDeleteFaceRequest(persistedFaceId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1009,34 +910,24 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-large-face-list-face for more details. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFaceAsync(string,Guid,CancellationToken)']/*" />
-        public virtual async Task<Response<LargeFaceListFace>> GetFaceAsync(string largeFaceListId, Guid persistedFaceId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFaceAsync(Guid,CancellationToken)']/*" />
+        public virtual async Task<Response<LargeFaceListFace>> GetFaceAsync(Guid persistedFaceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetFaceAsync(largeFaceListId, persistedFaceId, context).ConfigureAwait(false);
+            Response response = await GetFaceAsync(persistedFaceId, context).ConfigureAwait(false);
             return Response.FromValue(LargeFaceListFace.FromResponse(response), response);
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-large-face-list-face for more details. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFace(string,Guid,CancellationToken)']/*" />
-        public virtual Response<LargeFaceListFace> GetFace(string largeFaceListId, Guid persistedFaceId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFace(Guid,CancellationToken)']/*" />
+        public virtual Response<LargeFaceListFace> GetFace(Guid persistedFaceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetFace(largeFaceListId, persistedFaceId, context);
+            Response response = GetFace(persistedFaceId, context);
             return Response.FromValue(LargeFaceListFace.FromResponse(response), response);
         }
 
@@ -1050,28 +941,23 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetFaceAsync(string,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetFaceAsync(Guid,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFaceAsync(string,Guid,RequestContext)']/*" />
-        public virtual async Task<Response> GetFaceAsync(string largeFaceListId, Guid persistedFaceId, RequestContext context)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFaceAsync(Guid,RequestContext)']/*" />
+        public virtual async Task<Response> GetFaceAsync(Guid persistedFaceId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.GetFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFaceRequest(largeFaceListId, persistedFaceId, context);
+                using HttpMessage message = CreateGetFaceRequest(persistedFaceId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1091,28 +977,23 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetFace(string,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetFace(Guid,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFace(string,Guid,RequestContext)']/*" />
-        public virtual Response GetFace(string largeFaceListId, Guid persistedFaceId, RequestContext context)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFace(Guid,RequestContext)']/*" />
+        public virtual Response GetFace(Guid persistedFaceId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.GetFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFaceRequest(largeFaceListId, persistedFaceId, context);
+                using HttpMessage message = CreateGetFaceRequest(persistedFaceId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1132,25 +1013,22 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='UpdateFaceAsync(string,Guid,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateFaceAsync(string largeFaceListId, Guid persistedFaceId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='UpdateFaceAsync(Guid,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateFaceAsync(Guid persistedFaceId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.UpdateFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateFaceRequest(largeFaceListId, persistedFaceId, content, context);
+                using HttpMessage message = CreateUpdateFaceRequest(persistedFaceId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1170,25 +1048,22 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='UpdateFace(string,Guid,RequestContent,RequestContext)']/*" />
-        public virtual Response UpdateFace(string largeFaceListId, Guid persistedFaceId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='UpdateFace(Guid,RequestContent,RequestContext)']/*" />
+        public virtual Response UpdateFace(Guid persistedFaceId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.UpdateFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateFaceRequest(largeFaceListId, persistedFaceId, content, context);
+                using HttpMessage message = CreateUpdateFaceRequest(persistedFaceId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1199,20 +1074,15 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> List faces' persistedFaceId and userData in a specified Large Face List. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-large-face-list-faces for more details. </remarks>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFacesAsync(string,string,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<LargeFaceListFace>>> GetFacesAsync(string largeFaceListId, string start = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFacesAsync(string,int?,CancellationToken)']/*" />
+        public virtual async Task<Response<IReadOnlyList<LargeFaceListFace>>> GetFacesAsync(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetFacesAsync(largeFaceListId, start, top, context).ConfigureAwait(false);
+            Response response = await GetFacesAsync(start, top, context).ConfigureAwait(false);
             IReadOnlyList<LargeFaceListFace> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             List<LargeFaceListFace> array = new List<LargeFaceListFace>();
@@ -1225,20 +1095,15 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> List faces' persistedFaceId and userData in a specified Large Face List. </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-large-face-list-faces for more details. </remarks>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFaces(string,string,int?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<LargeFaceListFace>> GetFaces(string largeFaceListId, string start = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFaces(string,int?,CancellationToken)']/*" />
+        public virtual Response<IReadOnlyList<LargeFaceListFace>> GetFaces(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetFaces(largeFaceListId, start, top, context);
+            Response response = GetFaces(start, top, context);
             IReadOnlyList<LargeFaceListFace> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
             List<LargeFaceListFace> array = new List<LargeFaceListFace>();
@@ -1260,29 +1125,24 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetFacesAsync(string,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetFacesAsync(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFacesAsync(string,string,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetFacesAsync(string largeFaceListId, string start, int? top, RequestContext context)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFacesAsync(string,int?,RequestContext)']/*" />
+        public virtual async Task<Response> GetFacesAsync(string start, int? top, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.GetFaces");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFacesRequest(largeFaceListId, start, top, context);
+                using HttpMessage message = CreateGetFacesRequest(start, top, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1302,29 +1162,24 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetFaces(string,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetFaces(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFaces(string,string,int?,RequestContext)']/*" />
-        public virtual Response GetFaces(string largeFaceListId, string start, int? top, RequestContext context)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='GetFaces(string,int?,RequestContext)']/*" />
+        public virtual Response GetFaces(string start, int? top, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.GetFaces");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFacesRequest(largeFaceListId, start, top, context);
+                using HttpMessage message = CreateGetFacesRequest(start, top, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1346,22 +1201,17 @@ namespace Azure.AI.Vision.Face
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,string,RequestContext)']/*" />
-        public virtual async Task<Operation> TrainAsync(WaitUntil waitUntil, string largeFaceListId, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,RequestContext)']/*" />
+        public virtual async Task<Operation> TrainAsync(WaitUntil waitUntil, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.Train");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTrainRequest(largeFaceListId, context);
+                using HttpMessage message = CreateTrainRequest(context);
                 return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "LargeFaceListClient.Train", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1383,22 +1233,17 @@ namespace Azure.AI.Vision.Face
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='Train(WaitUntil,string,RequestContext)']/*" />
-        public virtual Operation Train(WaitUntil waitUntil, string largeFaceListId, RequestContext context = null)
+        /// <include file="Docs/LargeFaceListClient.xml" path="doc/members/member[@name='Train(WaitUntil,RequestContext)']/*" />
+        public virtual Operation Train(WaitUntil waitUntil, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-
             using var scope = ClientDiagnostics.CreateScope("LargeFaceListClient.Train");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTrainRequest(largeFaceListId, context);
+                using HttpMessage message = CreateTrainRequest(context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "LargeFaceListClient.Train", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
@@ -1408,7 +1253,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string largeFaceListId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1418,7 +1263,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1426,7 +1271,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string largeFaceListId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1436,13 +1281,13 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetLargeFaceListRequest(string largeFaceListId, bool? returnRecognitionModel, RequestContext context)
+        internal HttpMessage CreateGetLargeFaceListRequest(bool? returnRecognitionModel, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1452,7 +1297,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             if (returnRecognitionModel != null)
             {
                 uri.AppendQuery("returnRecognitionModel", returnRecognitionModel.Value, true);
@@ -1462,7 +1307,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string largeFaceListId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1472,7 +1317,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1507,7 +1352,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateGetTrainingStatusRequest(string largeFaceListId, RequestContext context)
+        internal HttpMessage CreateGetTrainingStatusRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1517,14 +1362,14 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             uri.AppendPath("/training", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateTrainRequest(string largeFaceListId, RequestContext context)
+        internal HttpMessage CreateTrainRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -1534,14 +1379,14 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             uri.AppendPath("/train", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateAddFaceFromUrlImplRequest(string largeFaceListId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
+        internal HttpMessage CreateAddFaceFromUrlImplRequest(RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1551,7 +1396,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             uri.AppendPath("/persistedfaces", false);
             if (targetFace != null && !(targetFace is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -1572,7 +1417,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateAddFaceImplRequest(string largeFaceListId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
+        internal HttpMessage CreateAddFaceImplRequest(RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1582,7 +1427,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             uri.AppendPath("/persistedfaces", false);
             if (targetFace != null && !(targetFace is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -1603,7 +1448,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateDeleteFaceRequest(string largeFaceListId, Guid persistedFaceId, RequestContext context)
+        internal HttpMessage CreateDeleteFaceRequest(Guid persistedFaceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1613,7 +1458,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             uri.AppendPath("/persistedfaces/", false);
             uri.AppendPath(persistedFaceId, true);
             request.Uri = uri;
@@ -1621,7 +1466,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateGetFaceRequest(string largeFaceListId, Guid persistedFaceId, RequestContext context)
+        internal HttpMessage CreateGetFaceRequest(Guid persistedFaceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1631,7 +1476,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             uri.AppendPath("/persistedfaces/", false);
             uri.AppendPath(persistedFaceId, true);
             request.Uri = uri;
@@ -1639,7 +1484,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateUpdateFaceRequest(string largeFaceListId, Guid persistedFaceId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateFaceRequest(Guid persistedFaceId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1649,7 +1494,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             uri.AppendPath("/persistedfaces/", false);
             uri.AppendPath(persistedFaceId, true);
             request.Uri = uri;
@@ -1659,7 +1504,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateGetFacesRequest(string largeFaceListId, string start, int? top, RequestContext context)
+        internal HttpMessage CreateGetFacesRequest(string start, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1669,7 +1514,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
-            uri.AppendPath(largeFaceListId, true);
+            uri.AppendPath(_largeFaceListId, true);
             uri.AppendPath("/persistedfaces", false);
             if (start != null)
             {

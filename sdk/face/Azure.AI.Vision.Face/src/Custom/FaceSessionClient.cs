@@ -19,7 +19,7 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentNullException"> <paramref name="jsonContent"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session-with-verify-image for more details. </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionAsync(CreateLivenessWithVerifySessionJsonContent jsonContent, Stream verifyImage, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionAsync(CreateLivenessWithVerifySessionContent jsonContent, Stream verifyImage, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jsonContent, nameof(jsonContent));
 
@@ -39,7 +39,7 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentNullException"> <paramref name="jsonContent"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session-with-verify-image for more details. </remarks>
         [ForwardsClientCalls]
-        public virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(CreateLivenessWithVerifySessionJsonContent jsonContent, Stream verifyImage, CancellationToken cancellationToken = default)
+        public virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(CreateLivenessWithVerifySessionContent jsonContent, Stream verifyImage, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jsonContent, nameof(jsonContent));
 

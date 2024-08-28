@@ -15,11 +15,11 @@ namespace Azure.AI.Vision.Face.Samples
         [Test]
         public async Task FindSimilarFromLargeFaceListAsync()
         {
-            var listClient = CreateLargeFaceListClient();
+            var listId = "lfl_family1";
+            var listClient = CreateLargeFaceListClient(listId);
 
             #region Snippet:CreateLargeFaceListAsync
-            var listId = "lfl_family1";
-            await listClient.CreateAsync(listId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
+            await listClient.CreateAsync("Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
             #endregion
 
             #region Snippet:AddFacesToLargeFaceListAsync
@@ -33,13 +33,13 @@ namespace Azure.AI.Vision.Face.Samples
 
             foreach (var face in faces)
             {
-                var addFaceResponse = await listClient.AddFaceAsync(listId, face.ImageUrl, userData: face.UserData);
+                var addFaceResponse = await listClient.AddFaceAsync(face.ImageUrl, userData: face.UserData);
                 faceIds[addFaceResponse.Value.PersistedFaceId] = face.UserData;
             }
             #endregion
 
             #region Snippet:TrainLargeFaceListAsync
-            var operation = await listClient.TrainAsync(WaitUntil.Completed, listId);
+            var operation = await listClient.TrainAsync(WaitUntil.Completed);
             await operation.WaitForCompletionResponseAsync();
             #endregion
 
@@ -56,7 +56,7 @@ namespace Azure.AI.Vision.Face.Samples
             #endregion
 
             #region Snippet:DeleteLargeFaceListAsync
-            await listClient.DeleteAsync(listId);
+            await listClient.DeleteAsync();
             #endregion
         }
     }

@@ -25,6 +25,7 @@ namespace Azure.AI.Vision.Face
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private readonly string _largePersonGroupId;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -47,56 +48,52 @@ namespace Azure.AI.Vision.Face
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://{resource-name}.cognitiveservices.azure.com).
         /// </param>
+        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="apiVersion"> API Version. Allowed values: "v1.1-preview.1" | "v1.2-preview.1". </param>
-        internal LargePersonGroupClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal LargePersonGroupClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string largePersonGroupId, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _keyCredential = keyCredential;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
+            _largePersonGroupId = largePersonGroupId;
             _apiVersion = apiVersion;
         }
 
         /// <summary> Create a new Large Person Group with user-specified largePersonGroupId, name, an optional userData and recognitionModel. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="name"> User defined name, maximum length is 128. </param>
         /// <param name="userData"> Optional user defined data. Length should not exceed 16K. </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with this face list. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02, 'recognition_03', and 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/create-large-person-group for more details. </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreateAsync(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
-        public virtual async Task<Response> CreateAsync(string largePersonGroupId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreateAsync(string,string,FaceRecognitionModel?,CancellationToken)']/*" />
+        public virtual async Task<Response> CreateAsync(string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(name, nameof(name));
 
             CreateRequest createRequest = new CreateRequest(name, userData, recognitionModel, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(largePersonGroupId, createRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateAsync(createRequest.ToRequestContent(), context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Create a new Large Person Group with user-specified largePersonGroupId, name, an optional userData and recognitionModel. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="name"> User defined name, maximum length is 128. </param>
         /// <param name="userData"> Optional user defined data. Length should not exceed 16K. </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with this face list. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02, 'recognition_03', and 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/create-large-person-group for more details. </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='Create(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
-        public virtual Response Create(string largePersonGroupId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='Create(string,string,FaceRecognitionModel?,CancellationToken)']/*" />
+        public virtual Response Create(string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(name, nameof(name));
 
             CreateRequest createRequest = new CreateRequest(name, userData, recognitionModel, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(largePersonGroupId, createRequest.ToRequestContent(), context);
+            Response response = Create(createRequest.ToRequestContent(), context);
             return response;
         }
 
@@ -110,29 +107,26 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateAsync(string,string,string,FaceRecognitionModel?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAsync(string,string,FaceRecognitionModel?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreateAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateAsync(string largePersonGroupId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(largePersonGroupId, content, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -152,29 +146,26 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Create(string,string,string,FaceRecognitionModel?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Create(string,string,FaceRecognitionModel?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='Create(string,RequestContent,RequestContext)']/*" />
-        public virtual Response Create(string largePersonGroupId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
+        public virtual Response Create(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(largePersonGroupId, content, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -195,22 +186,17 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string largePersonGroupId, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='DeleteAsync(RequestContext)']/*" />
+        public virtual async Task<Response> DeleteAsync(RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(largePersonGroupId, context);
+                using HttpMessage message = CreateDeleteRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -231,22 +217,17 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
-        public virtual Response Delete(string largePersonGroupId, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='Delete(RequestContext)']/*" />
+        public virtual Response Delete(RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(largePersonGroupId, context);
+                using HttpMessage message = CreateDeleteRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -257,34 +238,24 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group for more details. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetLargePersonGroupAsync(string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<LargePersonGroup>> GetLargePersonGroupAsync(string largePersonGroupId, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetLargePersonGroupAsync(bool?,CancellationToken)']/*" />
+        public virtual async Task<Response<LargePersonGroup>> GetLargePersonGroupAsync(bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetLargePersonGroupAsync(largePersonGroupId, returnRecognitionModel, context).ConfigureAwait(false);
+            Response response = await GetLargePersonGroupAsync(returnRecognitionModel, context).ConfigureAwait(false);
             return Response.FromValue(LargePersonGroup.FromResponse(response), response);
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group for more details. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetLargePersonGroup(string,bool?,CancellationToken)']/*" />
-        public virtual Response<LargePersonGroup> GetLargePersonGroup(string largePersonGroupId, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetLargePersonGroup(bool?,CancellationToken)']/*" />
+        public virtual Response<LargePersonGroup> GetLargePersonGroup(bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetLargePersonGroup(largePersonGroupId, returnRecognitionModel, context);
+            Response response = GetLargePersonGroup(returnRecognitionModel, context);
             return Response.FromValue(LargePersonGroup.FromResponse(response), response);
         }
 
@@ -298,28 +269,23 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetLargePersonGroupAsync(string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetLargePersonGroupAsync(bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetLargePersonGroupAsync(string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetLargePersonGroupAsync(string largePersonGroupId, bool? returnRecognitionModel, RequestContext context)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetLargePersonGroupAsync(bool?,RequestContext)']/*" />
+        public virtual async Task<Response> GetLargePersonGroupAsync(bool? returnRecognitionModel, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.GetLargePersonGroup");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLargePersonGroupRequest(largePersonGroupId, returnRecognitionModel, context);
+                using HttpMessage message = CreateGetLargePersonGroupRequest(returnRecognitionModel, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -339,28 +305,23 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetLargePersonGroup(string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetLargePersonGroup(bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetLargePersonGroup(string,bool?,RequestContext)']/*" />
-        public virtual Response GetLargePersonGroup(string largePersonGroupId, bool? returnRecognitionModel, RequestContext context)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetLargePersonGroup(bool?,RequestContext)']/*" />
+        public virtual Response GetLargePersonGroup(bool? returnRecognitionModel, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.GetLargePersonGroup");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLargePersonGroupRequest(largePersonGroupId, returnRecognitionModel, context);
+                using HttpMessage message = CreateGetLargePersonGroupRequest(returnRecognitionModel, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -380,24 +341,21 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='UpdateAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateAsync(string largePersonGroupId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='UpdateAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.Update");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(largePersonGroupId, content, context);
+                using HttpMessage message = CreateUpdateRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -417,24 +375,21 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='Update(string,RequestContent,RequestContext)']/*" />
-        public virtual Response Update(string largePersonGroupId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='Update(RequestContent,RequestContext)']/*" />
+        public virtual Response Update(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.Update");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(largePersonGroupId, content, context);
+                using HttpMessage message = CreateUpdateRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -565,35 +520,25 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> To check Large Person Group training status completed or still ongoing. Large Person Group training is an asynchronous operation triggered by "Train Large Person Group" API. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-training-status for more details. </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TrainingResult>> GetTrainingStatusAsync(string largePersonGroupId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatusAsync(CancellationToken)']/*" />
+        public virtual async Task<Response<FaceTrainingResult>> GetTrainingStatusAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTrainingStatusAsync(largePersonGroupId, context).ConfigureAwait(false);
-            return Response.FromValue(TrainingResult.FromResponse(response), response);
+            Response response = await GetTrainingStatusAsync(context).ConfigureAwait(false);
+            return Response.FromValue(FaceTrainingResult.FromResponse(response), response);
         }
 
         /// <summary> To check Large Person Group training status completed or still ongoing. Large Person Group training is an asynchronous operation triggered by "Train Large Person Group" API. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-training-status for more details. </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatus(string,CancellationToken)']/*" />
-        public virtual Response<TrainingResult> GetTrainingStatus(string largePersonGroupId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatus(CancellationToken)']/*" />
+        public virtual Response<FaceTrainingResult> GetTrainingStatus(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTrainingStatus(largePersonGroupId, context);
-            return Response.FromValue(TrainingResult.FromResponse(response), response);
+            Response response = GetTrainingStatus(context);
+            return Response.FromValue(FaceTrainingResult.FromResponse(response), response);
         }
 
         /// <summary>
@@ -606,27 +551,22 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTrainingStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTrainingStatusAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTrainingStatusAsync(string largePersonGroupId, RequestContext context)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatusAsync(RequestContext)']/*" />
+        public virtual async Task<Response> GetTrainingStatusAsync(RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.GetTrainingStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTrainingStatusRequest(largePersonGroupId, context);
+                using HttpMessage message = CreateGetTrainingStatusRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -646,27 +586,22 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTrainingStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTrainingStatus(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatus(string,RequestContext)']/*" />
-        public virtual Response GetTrainingStatus(string largePersonGroupId, RequestContext context)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatus(RequestContext)']/*" />
+        public virtual Response GetTrainingStatus(RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.GetTrainingStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTrainingStatusRequest(largePersonGroupId, context);
+                using HttpMessage message = CreateGetTrainingStatusRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -677,42 +612,36 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Create a new person in a specified Large Person Group. To add face to this person, please call "Add Large Person Group Person Face". </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="name"> User defined name, maximum length is 128. </param>
         /// <param name="userData"> Optional user defined data. Length should not exceed 16K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/create-large-person-group-person for more details. </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreatePersonAsync(string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<CreatePersonResult>> CreatePersonAsync(string largePersonGroupId, string name, string userData = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreatePersonAsync(string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<CreatePersonResult>> CreatePersonAsync(string name, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(name, nameof(name));
 
             CreatePersonRequest createPersonRequest = new CreatePersonRequest(name, userData, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreatePersonAsync(largePersonGroupId, createPersonRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreatePersonAsync(createPersonRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(CreatePersonResult.FromResponse(response), response);
         }
 
         /// <summary> Create a new person in a specified Large Person Group. To add face to this person, please call "Add Large Person Group Person Face". </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="name"> User defined name, maximum length is 128. </param>
         /// <param name="userData"> Optional user defined data. Length should not exceed 16K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/create-large-person-group-person for more details. </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreatePerson(string,string,string,CancellationToken)']/*" />
-        public virtual Response<CreatePersonResult> CreatePerson(string largePersonGroupId, string name, string userData = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreatePerson(string,string,CancellationToken)']/*" />
+        public virtual Response<CreatePersonResult> CreatePerson(string name, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(name, nameof(name));
 
             CreatePersonRequest createPersonRequest = new CreatePersonRequest(name, userData, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreatePerson(largePersonGroupId, createPersonRequest.ToRequestContent(), context);
+            Response response = CreatePerson(createPersonRequest.ToRequestContent(), context);
             return Response.FromValue(CreatePersonResult.FromResponse(response), response);
         }
 
@@ -726,29 +655,26 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreatePersonAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreatePersonAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreatePersonAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreatePersonAsync(string largePersonGroupId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreatePersonAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreatePersonAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.CreatePerson");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreatePersonRequest(largePersonGroupId, content, context);
+                using HttpMessage message = CreateCreatePersonRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -768,29 +694,26 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreatePerson(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreatePerson(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreatePerson(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreatePerson(string largePersonGroupId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreatePerson(RequestContent,RequestContext)']/*" />
+        public virtual Response CreatePerson(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.CreatePerson");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreatePersonRequest(largePersonGroupId, content, context);
+                using HttpMessage message = CreateCreatePersonRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -811,23 +734,18 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='DeletePersonAsync(string,Guid,RequestContext)']/*" />
-        public virtual async Task<Response> DeletePersonAsync(string largePersonGroupId, Guid personId, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='DeletePersonAsync(Guid,RequestContext)']/*" />
+        public virtual async Task<Response> DeletePersonAsync(Guid personId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.DeletePerson");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeletePersonRequest(largePersonGroupId, personId, context);
+                using HttpMessage message = CreateDeletePersonRequest(personId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -848,23 +766,18 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='DeletePerson(string,Guid,RequestContext)']/*" />
-        public virtual Response DeletePerson(string largePersonGroupId, Guid personId, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='DeletePerson(Guid,RequestContext)']/*" />
+        public virtual Response DeletePerson(Guid personId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.DeletePerson");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeletePersonRequest(largePersonGroupId, personId, context);
+                using HttpMessage message = CreateDeletePersonRequest(personId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -875,34 +788,24 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person for more details. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersonAsync(string,Guid,CancellationToken)']/*" />
-        public virtual async Task<Response<LargePersonGroupPerson>> GetPersonAsync(string largePersonGroupId, Guid personId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersonAsync(Guid,CancellationToken)']/*" />
+        public virtual async Task<Response<LargePersonGroupPerson>> GetPersonAsync(Guid personId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetPersonAsync(largePersonGroupId, personId, context).ConfigureAwait(false);
+            Response response = await GetPersonAsync(personId, context).ConfigureAwait(false);
             return Response.FromValue(LargePersonGroupPerson.FromResponse(response), response);
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person for more details. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPerson(string,Guid,CancellationToken)']/*" />
-        public virtual Response<LargePersonGroupPerson> GetPerson(string largePersonGroupId, Guid personId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPerson(Guid,CancellationToken)']/*" />
+        public virtual Response<LargePersonGroupPerson> GetPerson(Guid personId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetPerson(largePersonGroupId, personId, context);
+            Response response = GetPerson(personId, context);
             return Response.FromValue(LargePersonGroupPerson.FromResponse(response), response);
         }
 
@@ -916,28 +819,23 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPersonAsync(string,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPersonAsync(Guid,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersonAsync(string,Guid,RequestContext)']/*" />
-        public virtual async Task<Response> GetPersonAsync(string largePersonGroupId, Guid personId, RequestContext context)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersonAsync(Guid,RequestContext)']/*" />
+        public virtual async Task<Response> GetPersonAsync(Guid personId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.GetPerson");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPersonRequest(largePersonGroupId, personId, context);
+                using HttpMessage message = CreateGetPersonRequest(personId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -957,28 +855,23 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPerson(string,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPerson(Guid,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPerson(string,Guid,RequestContext)']/*" />
-        public virtual Response GetPerson(string largePersonGroupId, Guid personId, RequestContext context)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPerson(Guid,RequestContext)']/*" />
+        public virtual Response GetPerson(Guid personId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.GetPerson");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPersonRequest(largePersonGroupId, personId, context);
+                using HttpMessage message = CreateGetPersonRequest(personId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -998,25 +891,22 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='UpdatePersonAsync(string,Guid,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdatePersonAsync(string largePersonGroupId, Guid personId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='UpdatePersonAsync(Guid,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdatePersonAsync(Guid personId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.UpdatePerson");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdatePersonRequest(largePersonGroupId, personId, content, context);
+                using HttpMessage message = CreateUpdatePersonRequest(personId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1036,25 +926,22 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='UpdatePerson(string,Guid,RequestContent,RequestContext)']/*" />
-        public virtual Response UpdatePerson(string largePersonGroupId, Guid personId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='UpdatePerson(Guid,RequestContent,RequestContext)']/*" />
+        public virtual Response UpdatePerson(Guid personId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.UpdatePerson");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdatePersonRequest(largePersonGroupId, personId, content, context);
+                using HttpMessage message = CreateUpdatePersonRequest(personId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1065,20 +952,15 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> List all persons' information in the specified Large Person Group, including personId, name, userData and persistedFaceIds of registered person faces. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-persons for more details. </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersonsAsync(string,string,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<LargePersonGroupPerson>>> GetPersonsAsync(string largePersonGroupId, string start = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersonsAsync(string,int?,CancellationToken)']/*" />
+        public virtual async Task<Response<IReadOnlyList<LargePersonGroupPerson>>> GetPersonsAsync(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetPersonsAsync(largePersonGroupId, start, top, context).ConfigureAwait(false);
+            Response response = await GetPersonsAsync(start, top, context).ConfigureAwait(false);
             IReadOnlyList<LargePersonGroupPerson> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             List<LargePersonGroupPerson> array = new List<LargePersonGroupPerson>();
@@ -1091,20 +973,15 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> List all persons' information in the specified Large Person Group, including personId, name, userData and persistedFaceIds of registered person faces. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-persons for more details. </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersons(string,string,int?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<LargePersonGroupPerson>> GetPersons(string largePersonGroupId, string start = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersons(string,int?,CancellationToken)']/*" />
+        public virtual Response<IReadOnlyList<LargePersonGroupPerson>> GetPersons(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetPersons(largePersonGroupId, start, top, context);
+            Response response = GetPersons(start, top, context);
             IReadOnlyList<LargePersonGroupPerson> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
             List<LargePersonGroupPerson> array = new List<LargePersonGroupPerson>();
@@ -1126,29 +1003,24 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPersonsAsync(string,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPersonsAsync(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersonsAsync(string,string,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetPersonsAsync(string largePersonGroupId, string start, int? top, RequestContext context)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersonsAsync(string,int?,RequestContext)']/*" />
+        public virtual async Task<Response> GetPersonsAsync(string start, int? top, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.GetPersons");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPersonsRequest(largePersonGroupId, start, top, context);
+                using HttpMessage message = CreateGetPersonsRequest(start, top, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1168,29 +1040,24 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetPersons(string,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPersons(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersons(string,string,int?,RequestContext)']/*" />
-        public virtual Response GetPersons(string largePersonGroupId, string start, int? top, RequestContext context)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersons(string,int?,RequestContext)']/*" />
+        public virtual Response GetPersons(string start, int? top, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.GetPersons");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPersonsRequest(largePersonGroupId, start, top, context);
+                using HttpMessage message = CreateGetPersonsRequest(start, top, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1201,46 +1068,40 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Add a face to a person into a Large Person Group for face identification or verification. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="uri"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/add-large-person-group-person-face-from-url for more details. </remarks>
-        internal virtual async Task<Response<AddFaceResult>> AddFaceFromUrlImplAsync(string largePersonGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<AddFaceResult>> AddFaceFromUrlImplAsync(Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(uri, nameof(uri));
 
             AddFaceFromUrlRequest addFaceFromUrlRequest = new AddFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddFaceFromUrlImplAsync(largePersonGroupId, personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
+            Response response = await AddFaceFromUrlImplAsync(personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
         /// <summary> Add a face to a person into a Large Person Group for face identification or verification. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="uri"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/add-large-person-group-person-face-from-url for more details. </remarks>
-        internal virtual Response<AddFaceResult> AddFaceFromUrlImpl(string largePersonGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        internal virtual Response<AddFaceResult> AddFaceFromUrlImpl(Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(uri, nameof(uri));
 
             AddFaceFromUrlRequest addFaceFromUrlRequest = new AddFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddFaceFromUrlImpl(largePersonGroupId, personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
+            Response response = AddFaceFromUrlImpl(personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -1254,32 +1115,29 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceFromUrlImplAsync(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceFromUrlImplAsync(Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AddFaceFromUrlImplAsync(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual async Task<Response> AddFaceFromUrlImplAsync(Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFaceFromUrlImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceFromUrlImplRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceFromUrlImplRequest(personId, content, targetFace, detectionModel, userData, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1299,32 +1157,29 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceFromUrlImpl(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceFromUrlImpl(Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AddFaceFromUrlImpl(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual Response AddFaceFromUrlImpl(Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFaceFromUrlImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceFromUrlImplRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceFromUrlImplRequest(personId, content, targetFace, detectionModel, userData, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1335,46 +1190,40 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Add a face to a person into a Large Person Group for face identification or verification. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="imageContent"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/add-large-person-group-person-face for more details. </remarks>
-        internal virtual async Task<Response<AddFaceResult>> AddFaceImplAsync(string largePersonGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<AddFaceResult>> AddFaceImplAsync(Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             using RequestContent content = imageContent;
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddFaceImplAsync(largePersonGroupId, personId, content, targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
+            Response response = await AddFaceImplAsync(personId, content, targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
         /// <summary> Add a face to a person into a Large Person Group for face identification or verification. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="imageContent"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/add-large-person-group-person-face for more details. </remarks>
-        internal virtual Response<AddFaceResult> AddFaceImpl(string largePersonGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        internal virtual Response<AddFaceResult> AddFaceImpl(Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             using RequestContent content = imageContent;
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddFaceImpl(largePersonGroupId, personId, content, targetFace, detectionModel?.ToString(), userData, context);
+            Response response = AddFaceImpl(personId, content, targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -1388,32 +1237,29 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceImplAsync(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceImplAsync(Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AddFaceImplAsync(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual async Task<Response> AddFaceImplAsync(Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFaceImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceImplRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceImplRequest(personId, content, targetFace, detectionModel, userData, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1433,32 +1279,29 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceImpl(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceImpl(Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AddFaceImpl(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual Response AddFaceImpl(Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFaceImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceImplRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceImplRequest(personId, content, targetFace, detectionModel, userData, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1479,24 +1322,19 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='DeleteFaceAsync(string,Guid,Guid,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteFaceAsync(string largePersonGroupId, Guid personId, Guid persistedFaceId, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='DeleteFaceAsync(Guid,Guid,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteFaceAsync(Guid personId, Guid persistedFaceId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.DeleteFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteFaceRequest(largePersonGroupId, personId, persistedFaceId, context);
+                using HttpMessage message = CreateDeleteFaceRequest(personId, persistedFaceId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1517,24 +1355,19 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='DeleteFace(string,Guid,Guid,RequestContext)']/*" />
-        public virtual Response DeleteFace(string largePersonGroupId, Guid personId, Guid persistedFaceId, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='DeleteFace(Guid,Guid,RequestContext)']/*" />
+        public virtual Response DeleteFace(Guid personId, Guid persistedFaceId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.DeleteFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteFaceRequest(largePersonGroupId, personId, persistedFaceId, context);
+                using HttpMessage message = CreateDeleteFaceRequest(personId, persistedFaceId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1545,36 +1378,26 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person-face for more details. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetFaceAsync(string,Guid,Guid,CancellationToken)']/*" />
-        public virtual async Task<Response<LargePersonGroupPersonFace>> GetFaceAsync(string largePersonGroupId, Guid personId, Guid persistedFaceId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetFaceAsync(Guid,Guid,CancellationToken)']/*" />
+        public virtual async Task<Response<LargePersonGroupPersonFace>> GetFaceAsync(Guid personId, Guid persistedFaceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetFaceAsync(largePersonGroupId, personId, persistedFaceId, context).ConfigureAwait(false);
+            Response response = await GetFaceAsync(personId, persistedFaceId, context).ConfigureAwait(false);
             return Response.FromValue(LargePersonGroupPersonFace.FromResponse(response), response);
         }
 
         /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person-face for more details. </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetFace(string,Guid,Guid,CancellationToken)']/*" />
-        public virtual Response<LargePersonGroupPersonFace> GetFace(string largePersonGroupId, Guid personId, Guid persistedFaceId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetFace(Guid,Guid,CancellationToken)']/*" />
+        public virtual Response<LargePersonGroupPersonFace> GetFace(Guid personId, Guid persistedFaceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetFace(largePersonGroupId, personId, persistedFaceId, context);
+            Response response = GetFace(personId, persistedFaceId, context);
             return Response.FromValue(LargePersonGroupPersonFace.FromResponse(response), response);
         }
 
@@ -1588,29 +1411,24 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetFaceAsync(string,Guid,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetFaceAsync(Guid,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetFaceAsync(string,Guid,Guid,RequestContext)']/*" />
-        public virtual async Task<Response> GetFaceAsync(string largePersonGroupId, Guid personId, Guid persistedFaceId, RequestContext context)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetFaceAsync(Guid,Guid,RequestContext)']/*" />
+        public virtual async Task<Response> GetFaceAsync(Guid personId, Guid persistedFaceId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.GetFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFaceRequest(largePersonGroupId, personId, persistedFaceId, context);
+                using HttpMessage message = CreateGetFaceRequest(personId, persistedFaceId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1630,29 +1448,24 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetFace(string,Guid,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetFace(Guid,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetFace(string,Guid,Guid,RequestContext)']/*" />
-        public virtual Response GetFace(string largePersonGroupId, Guid personId, Guid persistedFaceId, RequestContext context)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetFace(Guid,Guid,RequestContext)']/*" />
+        public virtual Response GetFace(Guid personId, Guid persistedFaceId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.GetFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFaceRequest(largePersonGroupId, personId, persistedFaceId, context);
+                using HttpMessage message = CreateGetFaceRequest(personId, persistedFaceId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1672,26 +1485,23 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='UpdateFaceAsync(string,Guid,Guid,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateFaceAsync(string largePersonGroupId, Guid personId, Guid persistedFaceId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='UpdateFaceAsync(Guid,Guid,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateFaceAsync(Guid personId, Guid persistedFaceId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.UpdateFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateFaceRequest(largePersonGroupId, personId, persistedFaceId, content, context);
+                using HttpMessage message = CreateUpdateFaceRequest(personId, persistedFaceId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1711,26 +1521,23 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='UpdateFace(string,Guid,Guid,RequestContent,RequestContext)']/*" />
-        public virtual Response UpdateFace(string largePersonGroupId, Guid personId, Guid persistedFaceId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='UpdateFace(Guid,Guid,RequestContent,RequestContext)']/*" />
+        public virtual Response UpdateFace(Guid personId, Guid persistedFaceId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.UpdateFace");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateFaceRequest(largePersonGroupId, personId, persistedFaceId, content, context);
+                using HttpMessage message = CreateUpdateFaceRequest(personId, persistedFaceId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1752,22 +1559,17 @@ namespace Azure.AI.Vision.Face
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,string,RequestContext)']/*" />
-        public virtual async Task<Operation> TrainAsync(WaitUntil waitUntil, string largePersonGroupId, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,RequestContext)']/*" />
+        public virtual async Task<Operation> TrainAsync(WaitUntil waitUntil, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.Train");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTrainRequest(largePersonGroupId, context);
+                using HttpMessage message = CreateTrainRequest(context);
                 return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "LargePersonGroupClient.Train", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1789,22 +1591,17 @@ namespace Azure.AI.Vision.Face
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='Train(WaitUntil,string,RequestContext)']/*" />
-        public virtual Operation Train(WaitUntil waitUntil, string largePersonGroupId, RequestContext context = null)
+        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='Train(WaitUntil,RequestContext)']/*" />
+        public virtual Operation Train(WaitUntil waitUntil, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-
             using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.Train");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTrainRequest(largePersonGroupId, context);
+                using HttpMessage message = CreateTrainRequest(context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "LargePersonGroupClient.Train", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
@@ -1814,7 +1611,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string largePersonGroupId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1824,7 +1621,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1832,7 +1629,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string largePersonGroupId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1842,13 +1639,13 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetLargePersonGroupRequest(string largePersonGroupId, bool? returnRecognitionModel, RequestContext context)
+        internal HttpMessage CreateGetLargePersonGroupRequest(bool? returnRecognitionModel, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1858,7 +1655,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             if (returnRecognitionModel != null)
             {
                 uri.AppendQuery("returnRecognitionModel", returnRecognitionModel.Value, true);
@@ -1868,7 +1665,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string largePersonGroupId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1878,7 +1675,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1913,7 +1710,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateGetTrainingStatusRequest(string largePersonGroupId, RequestContext context)
+        internal HttpMessage CreateGetTrainingStatusRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1923,14 +1720,14 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/training", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateTrainRequest(string largePersonGroupId, RequestContext context)
+        internal HttpMessage CreateTrainRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -1940,14 +1737,14 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/train", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateCreatePersonRequest(string largePersonGroupId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreatePersonRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1957,7 +1754,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/persons", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1966,7 +1763,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateDeletePersonRequest(string largePersonGroupId, Guid personId, RequestContext context)
+        internal HttpMessage CreateDeletePersonRequest(Guid personId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1976,7 +1773,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             request.Uri = uri;
@@ -1984,7 +1781,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateGetPersonRequest(string largePersonGroupId, Guid personId, RequestContext context)
+        internal HttpMessage CreateGetPersonRequest(Guid personId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1994,7 +1791,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             request.Uri = uri;
@@ -2002,7 +1799,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateUpdatePersonRequest(string largePersonGroupId, Guid personId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdatePersonRequest(Guid personId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2012,7 +1809,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             request.Uri = uri;
@@ -2022,7 +1819,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateGetPersonsRequest(string largePersonGroupId, string start, int? top, RequestContext context)
+        internal HttpMessage CreateGetPersonsRequest(string start, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2032,7 +1829,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/persons", false);
             if (start != null)
             {
@@ -2047,7 +1844,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateAddFaceFromUrlImplRequest(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
+        internal HttpMessage CreateAddFaceFromUrlImplRequest(Guid personId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2057,7 +1854,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             uri.AppendPath("/persistedfaces", false);
@@ -2080,7 +1877,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateAddFaceImplRequest(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
+        internal HttpMessage CreateAddFaceImplRequest(Guid personId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2090,7 +1887,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             uri.AppendPath("/persistedfaces", false);
@@ -2113,7 +1910,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateDeleteFaceRequest(string largePersonGroupId, Guid personId, Guid persistedFaceId, RequestContext context)
+        internal HttpMessage CreateDeleteFaceRequest(Guid personId, Guid persistedFaceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2123,7 +1920,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             uri.AppendPath("/persistedfaces/", false);
@@ -2133,7 +1930,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateGetFaceRequest(string largePersonGroupId, Guid personId, Guid persistedFaceId, RequestContext context)
+        internal HttpMessage CreateGetFaceRequest(Guid personId, Guid persistedFaceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2143,7 +1940,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             uri.AppendPath("/persistedfaces/", false);
@@ -2153,7 +1950,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateUpdateFaceRequest(string largePersonGroupId, Guid personId, Guid persistedFaceId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateFaceRequest(Guid personId, Guid persistedFaceId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2163,7 +1960,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largepersongroups/", false);
-            uri.AppendPath(largePersonGroupId, true);
+            uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             uri.AppendPath("/persistedfaces/", false);

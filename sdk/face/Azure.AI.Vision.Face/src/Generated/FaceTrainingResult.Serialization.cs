@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class TrainingResult : IUtf8JsonSerializable, IJsonModel<TrainingResult>
+    public partial class FaceTrainingResult : IUtf8JsonSerializable, IJsonModel<FaceTrainingResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrainingResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FaceTrainingResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TrainingResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FaceTrainingResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FaceTrainingResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrainingResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FaceTrainingResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,19 +57,19 @@ namespace Azure.AI.Vision.Face
             writer.WriteEndObject();
         }
 
-        TrainingResult IJsonModel<TrainingResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FaceTrainingResult IJsonModel<FaceTrainingResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FaceTrainingResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrainingResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FaceTrainingResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTrainingResult(document.RootElement, options);
+            return DeserializeFaceTrainingResult(document.RootElement, options);
         }
 
-        internal static TrainingResult DeserializeTrainingResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FaceTrainingResult DeserializeFaceTrainingResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,7 +77,7 @@ namespace Azure.AI.Vision.Face
             {
                 return null;
             }
-            OperationStatus status = default;
+            FaceOperationStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastActionDateTime = default;
             DateTimeOffset lastSuccessfulTrainingDateTime = default;
@@ -88,7 +88,7 @@ namespace Azure.AI.Vision.Face
             {
                 if (property.NameEquals("status"u8))
                 {
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new FaceOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"u8))
@@ -117,7 +117,7 @@ namespace Azure.AI.Vision.Face
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TrainingResult(
+            return new FaceTrainingResult(
                 status,
                 createdDateTime,
                 lastActionDateTime,
@@ -126,43 +126,43 @@ namespace Azure.AI.Vision.Face
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TrainingResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FaceTrainingResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FaceTrainingResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrainingResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FaceTrainingResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TrainingResult IPersistableModel<TrainingResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FaceTrainingResult IPersistableModel<FaceTrainingResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FaceTrainingResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTrainingResult(document.RootElement, options);
+                        return DeserializeFaceTrainingResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrainingResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FaceTrainingResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TrainingResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FaceTrainingResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TrainingResult FromResponse(Response response)
+        internal static FaceTrainingResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTrainingResult(document.RootElement);
+            return DeserializeFaceTrainingResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

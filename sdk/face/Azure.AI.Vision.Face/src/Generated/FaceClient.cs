@@ -105,7 +105,7 @@ namespace Azure.AI.Vision.Face
 
         /// <summary> Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and attributes. </summary>
         /// <param name="uri"> URL of input image. </param>
-        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. 'detection_03' is recommended since its accuracy is improved on smaller faces (64x64 pixels) and rotated face orientations. </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. </param>
         /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
         /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
@@ -135,7 +135,7 @@ namespace Azure.AI.Vision.Face
 
         /// <summary> Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and attributes. </summary>
         /// <param name="uri"> URL of input image. </param>
-        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. 'detection_03' is recommended since its accuracy is improved on smaller faces (64x64 pixels) and rotated face orientations. </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. </param>
         /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
         /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
@@ -179,7 +179,7 @@ namespace Azure.AI.Vision.Face
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. 'detection_03' is recommended since its accuracy is improved on smaller faces (64x64 pixels) and rotated face orientations. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. Allowed values: "recognition_01" | "recognition_02" | "recognition_03" | "recognition_04". </param>
         /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
         /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
@@ -224,7 +224,7 @@ namespace Azure.AI.Vision.Face
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. 'detection_03' is recommended since its accuracy is improved on smaller faces (64x64 pixels) and rotated face orientations. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. Allowed values: "recognition_01" | "recognition_02" | "recognition_03" | "recognition_04". </param>
         /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
         /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
@@ -255,7 +255,7 @@ namespace Azure.AI.Vision.Face
 
         /// <summary> Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and attributes. </summary>
         /// <param name="imageContent"> The input image binary. </param>
-        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. 'detection_03' is recommended since its accuracy is improved on smaller faces (64x64 pixels) and rotated face orientations. </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. </param>
         /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
         /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
@@ -285,7 +285,7 @@ namespace Azure.AI.Vision.Face
 
         /// <summary> Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and attributes. </summary>
         /// <param name="imageContent"> The input image binary. </param>
-        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. 'detection_03' is recommended since its accuracy is improved on smaller faces (64x64 pixels) and rotated face orientations. </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. </param>
         /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
         /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
@@ -329,7 +329,7 @@ namespace Azure.AI.Vision.Face
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. 'detection_03' is recommended since its accuracy is improved on smaller faces (64x64 pixels) and rotated face orientations. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. Allowed values: "recognition_01" | "recognition_02" | "recognition_03" | "recognition_04". </param>
         /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
         /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
@@ -374,7 +374,7 @@ namespace Azure.AI.Vision.Face
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. 'detection_03' is recommended since its accuracy is improved on smaller faces (64x64 pixels) and rotated face orientations. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. Allowed values: "recognition_01" | "recognition_02" | "recognition_03" | "recognition_04". </param>
         /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
         /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
@@ -751,138 +751,6 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary> Given query face's faceId, to search the similar-looking faces from a Face List. A 'faceListId' is created by Create Face List. </summary>
-        /// <param name="faceId"> faceId of the query face. User needs to call "Detect" first to get a valid faceId. Note that this faceId is not persisted and will expire 24 hours after the detection call. </param>
-        /// <param name="faceListId"> An existing user-specified unique candidate Face List, created in "Create Face List". Face List contains a set of persistedFaceIds which are persisted and will never expire. </param>
-        /// <param name="maxNumOfCandidatesReturned"> The number of top similar faces returned. The valid range is [1, 1000]. Default value is 20. </param>
-        /// <param name="mode"> Similar face searching mode. It can be 'matchPerson' or 'matchFace'. Default value is 'matchPerson'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-recognition-operations/find-similar-from-face-list for more details. </remarks>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='FindSimilarFromFaceListAsync(Guid,string,int?,FindSimilarMatchMode?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<FaceFindSimilarResult>>> FindSimilarFromFaceListAsync(Guid faceId, string faceListId, int? maxNumOfCandidatesReturned = null, FindSimilarMatchMode? mode = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(faceListId, nameof(faceListId));
-
-            FindSimilarFromFaceListRequest findSimilarFromFaceListRequest = new FindSimilarFromFaceListRequest(faceId, maxNumOfCandidatesReturned, mode, faceListId, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await FindSimilarFromFaceListAsync(findSimilarFromFaceListRequest.ToRequestContent(), context).ConfigureAwait(false);
-            IReadOnlyList<FaceFindSimilarResult> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            List<FaceFindSimilarResult> array = new List<FaceFindSimilarResult>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(FaceFindSimilarResult.DeserializeFaceFindSimilarResult(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Given query face's faceId, to search the similar-looking faces from a Face List. A 'faceListId' is created by Create Face List. </summary>
-        /// <param name="faceId"> faceId of the query face. User needs to call "Detect" first to get a valid faceId. Note that this faceId is not persisted and will expire 24 hours after the detection call. </param>
-        /// <param name="faceListId"> An existing user-specified unique candidate Face List, created in "Create Face List". Face List contains a set of persistedFaceIds which are persisted and will never expire. </param>
-        /// <param name="maxNumOfCandidatesReturned"> The number of top similar faces returned. The valid range is [1, 1000]. Default value is 20. </param>
-        /// <param name="mode"> Similar face searching mode. It can be 'matchPerson' or 'matchFace'. Default value is 'matchPerson'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-recognition-operations/find-similar-from-face-list for more details. </remarks>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='FindSimilarFromFaceList(Guid,string,int?,FindSimilarMatchMode?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<FaceFindSimilarResult>> FindSimilarFromFaceList(Guid faceId, string faceListId, int? maxNumOfCandidatesReturned = null, FindSimilarMatchMode? mode = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(faceListId, nameof(faceListId));
-
-            FindSimilarFromFaceListRequest findSimilarFromFaceListRequest = new FindSimilarFromFaceListRequest(faceId, maxNumOfCandidatesReturned, mode, faceListId, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = FindSimilarFromFaceList(findSimilarFromFaceListRequest.ToRequestContent(), context);
-            IReadOnlyList<FaceFindSimilarResult> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
-            List<FaceFindSimilarResult> array = new List<FaceFindSimilarResult>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(FaceFindSimilarResult.DeserializeFaceFindSimilarResult(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Given query face's faceId, to search the similar-looking faces from a Face List. A 'faceListId' is created by Create Face List.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="FindSimilarFromFaceListAsync(Guid,string,int?,FindSimilarMatchMode?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='FindSimilarFromFaceListAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> FindSimilarFromFaceListAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceClient.FindSimilarFromFaceList");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateFindSimilarFromFaceListRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Given query face's faceId, to search the similar-looking faces from a Face List. A 'faceListId' is created by Create Face List.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="FindSimilarFromFaceList(Guid,string,int?,FindSimilarMatchMode?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='FindSimilarFromFaceList(RequestContent,RequestContext)']/*" />
-        public virtual Response FindSimilarFromFaceList(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceClient.FindSimilarFromFaceList");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateFindSimilarFromFaceListRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Given query face's faceId, to search the similar-looking faces from a Large Face List. A 'largeFaceListId' is created by Create Large Face List. </summary>
         /// <param name="faceId"> faceId of the query face. User needs to call "Detect" first to get a valid faceId. Note that this faceId is not persisted and will expire 24 hours after the detection call. </param>
         /// <param name="largeFaceListId"> An existing user-specified unique candidate Large Face List, created in "Create Large Face List". Large Face List contains a set of persistedFaceIds which are persisted and will never expire. </param>
@@ -1015,140 +883,6 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary> 1-to-many identification to find the closest matches of the specific query person face from a Person Group. </summary>
-        /// <param name="faceIds"> Array of query faces faceIds, created by the "Detect". Each of the faces are identified independently. The valid number of faceIds is between [1, 10]. </param>
-        /// <param name="personGroupId"> personGroupId of the target Person Group, created by "Create Person Group". Parameter personGroupId and largePersonGroupId should not be provided at the same time. </param>
-        /// <param name="maxNumOfCandidatesReturned"> The range of maxNumOfCandidatesReturned is between 1 and 100. Default value is 10. </param>
-        /// <param name="confidenceThreshold"> Customized identification confidence threshold, in the range of [0, 1]. Advanced user can tweak this value to override default internal threshold for better precision on their scenario data. Note there is no guarantee of this threshold value working on other data and after algorithm updates. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="faceIds"/> or <paramref name="personGroupId"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-recognition-operations/identify-from-person-group for more details. </remarks>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='IdentifyFromPersonGroupAsync(IEnumerable{Guid},string,int?,float?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<IdentificationResult>>> IdentifyFromPersonGroupAsync(IEnumerable<Guid> faceIds, string personGroupId, int? maxNumOfCandidatesReturned = null, float? confidenceThreshold = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(faceIds, nameof(faceIds));
-            Argument.AssertNotNull(personGroupId, nameof(personGroupId));
-
-            IdentifyFromPersonGroupRequest identifyFromPersonGroupRequest = new IdentifyFromPersonGroupRequest(faceIds.ToList(), personGroupId, maxNumOfCandidatesReturned, confidenceThreshold, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await IdentifyFromPersonGroupAsync(identifyFromPersonGroupRequest.ToRequestContent(), context).ConfigureAwait(false);
-            IReadOnlyList<IdentificationResult> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            List<IdentificationResult> array = new List<IdentificationResult>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(IdentificationResult.DeserializeIdentificationResult(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> 1-to-many identification to find the closest matches of the specific query person face from a Person Group. </summary>
-        /// <param name="faceIds"> Array of query faces faceIds, created by the "Detect". Each of the faces are identified independently. The valid number of faceIds is between [1, 10]. </param>
-        /// <param name="personGroupId"> personGroupId of the target Person Group, created by "Create Person Group". Parameter personGroupId and largePersonGroupId should not be provided at the same time. </param>
-        /// <param name="maxNumOfCandidatesReturned"> The range of maxNumOfCandidatesReturned is between 1 and 100. Default value is 10. </param>
-        /// <param name="confidenceThreshold"> Customized identification confidence threshold, in the range of [0, 1]. Advanced user can tweak this value to override default internal threshold for better precision on their scenario data. Note there is no guarantee of this threshold value working on other data and after algorithm updates. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="faceIds"/> or <paramref name="personGroupId"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-recognition-operations/identify-from-person-group for more details. </remarks>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='IdentifyFromPersonGroup(IEnumerable{Guid},string,int?,float?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<IdentificationResult>> IdentifyFromPersonGroup(IEnumerable<Guid> faceIds, string personGroupId, int? maxNumOfCandidatesReturned = null, float? confidenceThreshold = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(faceIds, nameof(faceIds));
-            Argument.AssertNotNull(personGroupId, nameof(personGroupId));
-
-            IdentifyFromPersonGroupRequest identifyFromPersonGroupRequest = new IdentifyFromPersonGroupRequest(faceIds.ToList(), personGroupId, maxNumOfCandidatesReturned, confidenceThreshold, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = IdentifyFromPersonGroup(identifyFromPersonGroupRequest.ToRequestContent(), context);
-            IReadOnlyList<IdentificationResult> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
-            List<IdentificationResult> array = new List<IdentificationResult>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(IdentificationResult.DeserializeIdentificationResult(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] 1-to-many identification to find the closest matches of the specific query person face from a Person Group.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="IdentifyFromPersonGroupAsync(IEnumerable{Guid},string,int?,float?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='IdentifyFromPersonGroupAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> IdentifyFromPersonGroupAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceClient.IdentifyFromPersonGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateIdentifyFromPersonGroupRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] 1-to-many identification to find the closest matches of the specific query person face from a Person Group.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="IdentifyFromPersonGroup(IEnumerable{Guid},string,int?,float?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='IdentifyFromPersonGroup(RequestContent,RequestContext)']/*" />
-        public virtual Response IdentifyFromPersonGroup(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceClient.IdentifyFromPersonGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateIdentifyFromPersonGroupRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> 1-to-many identification to find the closest matches of the specific query person face from a Large Person Group. </summary>
         /// <param name="faceIds"> Array of query faces faceIds, created by the "Detect". Each of the faces are identified independently. The valid number of faceIds is between [1, 10]. </param>
         /// <param name="largePersonGroupId"> largePersonGroupId of the target Large Person Group, created by "Create Large Person Group". Parameter personGroupId and largePersonGroupId should not be provided at the same time. </param>
@@ -1156,9 +890,9 @@ namespace Azure.AI.Vision.Face
         /// <param name="confidenceThreshold"> Customized identification confidence threshold, in the range of [0, 1]. Advanced user can tweak this value to override default internal threshold for better precision on their scenario data. Note there is no guarantee of this threshold value working on other data and after algorithm updates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceIds"/> or <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-recognition-operations/identify-from-large-person-group for more details. </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-recognition-operations/identify-from-person-group for more details. </remarks>
         /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='IdentifyFromLargePersonGroupAsync(IEnumerable{Guid},string,int?,float?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<IdentificationResult>>> IdentifyFromLargePersonGroupAsync(IEnumerable<Guid> faceIds, string largePersonGroupId, int? maxNumOfCandidatesReturned = null, float? confidenceThreshold = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<FaceIdentificationResult>>> IdentifyFromLargePersonGroupAsync(IEnumerable<Guid> faceIds, string largePersonGroupId, int? maxNumOfCandidatesReturned = null, float? confidenceThreshold = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(faceIds, nameof(faceIds));
             Argument.AssertNotNull(largePersonGroupId, nameof(largePersonGroupId));
@@ -1166,12 +900,12 @@ namespace Azure.AI.Vision.Face
             IdentifyFromLargePersonGroupRequest identifyFromLargePersonGroupRequest = new IdentifyFromLargePersonGroupRequest(faceIds.ToList(), largePersonGroupId, maxNumOfCandidatesReturned, confidenceThreshold, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await IdentifyFromLargePersonGroupAsync(identifyFromLargePersonGroupRequest.ToRequestContent(), context).ConfigureAwait(false);
-            IReadOnlyList<IdentificationResult> value = default;
+            IReadOnlyList<FaceIdentificationResult> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            List<IdentificationResult> array = new List<IdentificationResult>();
+            List<FaceIdentificationResult> array = new List<FaceIdentificationResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(IdentificationResult.DeserializeIdentificationResult(item));
+                array.Add(FaceIdentificationResult.DeserializeFaceIdentificationResult(item));
             }
             value = array;
             return Response.FromValue(value, response);
@@ -1184,9 +918,9 @@ namespace Azure.AI.Vision.Face
         /// <param name="confidenceThreshold"> Customized identification confidence threshold, in the range of [0, 1]. Advanced user can tweak this value to override default internal threshold for better precision on their scenario data. Note there is no guarantee of this threshold value working on other data and after algorithm updates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceIds"/> or <paramref name="largePersonGroupId"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-recognition-operations/identify-from-large-person-group for more details. </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-recognition-operations/identify-from-person-group for more details. </remarks>
         /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='IdentifyFromLargePersonGroup(IEnumerable{Guid},string,int?,float?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<IdentificationResult>> IdentifyFromLargePersonGroup(IEnumerable<Guid> faceIds, string largePersonGroupId, int? maxNumOfCandidatesReturned = null, float? confidenceThreshold = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<FaceIdentificationResult>> IdentifyFromLargePersonGroup(IEnumerable<Guid> faceIds, string largePersonGroupId, int? maxNumOfCandidatesReturned = null, float? confidenceThreshold = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(faceIds, nameof(faceIds));
             Argument.AssertNotNull(largePersonGroupId, nameof(largePersonGroupId));
@@ -1194,12 +928,12 @@ namespace Azure.AI.Vision.Face
             IdentifyFromLargePersonGroupRequest identifyFromLargePersonGroupRequest = new IdentifyFromLargePersonGroupRequest(faceIds.ToList(), largePersonGroupId, maxNumOfCandidatesReturned, confidenceThreshold, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = IdentifyFromLargePersonGroup(identifyFromLargePersonGroupRequest.ToRequestContent(), context);
-            IReadOnlyList<IdentificationResult> value = default;
+            IReadOnlyList<FaceIdentificationResult> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
-            List<IdentificationResult> array = new List<IdentificationResult>();
+            List<FaceIdentificationResult> array = new List<FaceIdentificationResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(IdentificationResult.DeserializeIdentificationResult(item));
+                array.Add(FaceIdentificationResult.DeserializeFaceIdentificationResult(item));
             }
             value = array;
             return Response.FromValue(value, response);
@@ -1274,120 +1008,6 @@ namespace Azure.AI.Vision.Face
             try
             {
                 using HttpMessage message = CreateIdentifyFromLargePersonGroupRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Verify whether a face belongs to a person in a Person Group. </summary>
-        /// <param name="faceId"> The faceId of the face, come from "Detect". </param>
-        /// <param name="personGroupId"> Using existing personGroupId and personId for fast loading a specified person. personGroupId is created in "Create Person Group". </param>
-        /// <param name="personId"> Specify a certain person in Person Group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-recognition-operations/verify-from-person-group for more details. </remarks>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='VerifyFromPersonGroupAsync(Guid,string,Guid,CancellationToken)']/*" />
-        public virtual async Task<Response<FaceVerificationResult>> VerifyFromPersonGroupAsync(Guid faceId, string personGroupId, Guid personId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(personGroupId, nameof(personGroupId));
-
-            VerifyFromPersonGroupRequest verifyFromPersonGroupRequest = new VerifyFromPersonGroupRequest(faceId, personGroupId, personId, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await VerifyFromPersonGroupAsync(verifyFromPersonGroupRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(FaceVerificationResult.FromResponse(response), response);
-        }
-
-        /// <summary> Verify whether a face belongs to a person in a Person Group. </summary>
-        /// <param name="faceId"> The faceId of the face, come from "Detect". </param>
-        /// <param name="personGroupId"> Using existing personGroupId and personId for fast loading a specified person. personGroupId is created in "Create Person Group". </param>
-        /// <param name="personId"> Specify a certain person in Person Group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-recognition-operations/verify-from-person-group for more details. </remarks>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='VerifyFromPersonGroup(Guid,string,Guid,CancellationToken)']/*" />
-        public virtual Response<FaceVerificationResult> VerifyFromPersonGroup(Guid faceId, string personGroupId, Guid personId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(personGroupId, nameof(personGroupId));
-
-            VerifyFromPersonGroupRequest verifyFromPersonGroupRequest = new VerifyFromPersonGroupRequest(faceId, personGroupId, personId, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = VerifyFromPersonGroup(verifyFromPersonGroupRequest.ToRequestContent(), context);
-            return Response.FromValue(FaceVerificationResult.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Verify whether a face belongs to a person in a Person Group.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="VerifyFromPersonGroupAsync(Guid,string,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='VerifyFromPersonGroupAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> VerifyFromPersonGroupAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceClient.VerifyFromPersonGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateVerifyFromPersonGroupRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Verify whether a face belongs to a person in a Person Group.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="VerifyFromPersonGroup(Guid,string,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceClient.xml" path="doc/members/member[@name='VerifyFromPersonGroup(RequestContent,RequestContext)']/*" />
-        public virtual Response VerifyFromPersonGroup(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceClient.VerifyFromPersonGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateVerifyFromPersonGroupRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1652,23 +1272,6 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateFindSimilarFromFaceListRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/findsimilars", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateFindSimilarFromLargeFaceListRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1686,23 +1289,6 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateIdentifyFromPersonGroupRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/identify", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateIdentifyFromLargePersonGroupRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1713,23 +1299,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/identify", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateVerifyFromPersonGroupRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/verify", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");

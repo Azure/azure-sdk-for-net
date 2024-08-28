@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Vision.Face
 {
     /// <summary> Identify result. </summary>
-    public partial class IdentificationResult
+    public partial class FaceIdentificationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IdentificationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FaceIdentificationResult"/>. </summary>
         /// <param name="faceId"> faceId of the query face. </param>
         /// <param name="candidates"> Identified person candidates for that face (ranked by confidence). Array size should be no larger than input maxNumOfCandidatesReturned. If no person is identified, will return an empty array. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="candidates"/> is null. </exception>
-        internal IdentificationResult(Guid faceId, IEnumerable<IdentificationCandidate> candidates)
+        internal FaceIdentificationResult(Guid faceId, IEnumerable<FaceIdentificationCandidate> candidates)
         {
             Argument.AssertNotNull(candidates, nameof(candidates));
 
@@ -58,25 +58,25 @@ namespace Azure.AI.Vision.Face
             Candidates = candidates.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentificationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FaceIdentificationResult"/>. </summary>
         /// <param name="faceId"> faceId of the query face. </param>
         /// <param name="candidates"> Identified person candidates for that face (ranked by confidence). Array size should be no larger than input maxNumOfCandidatesReturned. If no person is identified, will return an empty array. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IdentificationResult(Guid faceId, IReadOnlyList<IdentificationCandidate> candidates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FaceIdentificationResult(Guid faceId, IReadOnlyList<FaceIdentificationCandidate> candidates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FaceId = faceId;
             Candidates = candidates;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentificationResult"/> for deserialization. </summary>
-        internal IdentificationResult()
+        /// <summary> Initializes a new instance of <see cref="FaceIdentificationResult"/> for deserialization. </summary>
+        internal FaceIdentificationResult()
         {
         }
 
         /// <summary> faceId of the query face. </summary>
         public Guid FaceId { get; }
         /// <summary> Identified person candidates for that face (ranked by confidence). Array size should be no larger than input maxNumOfCandidatesReturned. If no person is identified, will return an empty array. </summary>
-        public IReadOnlyList<IdentificationCandidate> Candidates { get; }
+        public IReadOnlyList<FaceIdentificationCandidate> Candidates { get; }
     }
 }

@@ -15,11 +15,11 @@ namespace Azure.AI.Vision.Face.Samples
         [Test]
         public void FindSimilarFromLargeFaceList()
         {
-            var listClient = CreateLargeFaceListClient();
+            var listId = "lfl_family1";
+            var listClient = CreateLargeFaceListClient(listId);
 
             #region Snippet:CreateLargeFaceList
-            var listId = "lfl_family1";
-            listClient.Create(listId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
+            listClient.Create("Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
             #endregion
 
             #region Snippet:AddFacesToLargeFaceList
@@ -33,13 +33,13 @@ namespace Azure.AI.Vision.Face.Samples
 
             foreach (var face in faces)
             {
-                var addFaceResponse = listClient.AddFace(listId, face.ImageUrl, userData: face.UserData);
+                var addFaceResponse = listClient.AddFace(face.ImageUrl, userData: face.UserData);
                 faceIds[addFaceResponse.Value.PersistedFaceId] = face.UserData;
             }
             #endregion
 
             #region Snippet:TrainLargeFaceList
-            var operation = listClient.Train(WaitUntil.Completed, listId);
+            var operation = listClient.Train(WaitUntil.Completed);
             operation.WaitForCompletionResponse();
             #endregion
 
@@ -56,7 +56,7 @@ namespace Azure.AI.Vision.Face.Samples
             #endregion
 
             #region Snippet:DeleteLargeFaceList
-            listClient.Delete(listId);
+            listClient.Delete();
             #endregion
         }
     }

@@ -67,81 +67,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessSession_CreateLivenessSession_CreateLivenessSession_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive);
-            Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_LivenessSession_CreateLivenessSession_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive);
-            Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_LivenessSession_CreateLivenessSession_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                livenessOperationMode = "Passive",
-                sendResultsToClient = true,
-                deviceCorrelationIdSetInClient = true,
-                enableSessionImage = true,
-                livenessSingleModalModel = "2022-10-15-preview.04",
-                deviceCorrelationId = "<deviceCorrelationId>",
-                authTokenTimeToLiveInSeconds = 1234,
-            });
-            Response response = client.CreateLivenessSession(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("sessionId").ToString());
-            Console.WriteLine(result.GetProperty("authToken").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_LivenessSession_CreateLivenessSession_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                livenessOperationMode = "Passive",
-                sendResultsToClient = true,
-                deviceCorrelationIdSetInClient = true,
-                enableSessionImage = true,
-                livenessSingleModalModel = "2022-10-15-preview.04",
-                deviceCorrelationId = "<deviceCorrelationId>",
-                authTokenTimeToLiveInSeconds = 1234,
-            });
-            Response response = await client.CreateLivenessSessionAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("sessionId").ToString());
-            Console.WriteLine(result.GetProperty("authToken").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_LivenessSession_CreateLivenessSession_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -149,10 +75,8 @@ namespace Azure.AI.Vision.Face.Samples
             {
                 SendResultsToClient = true,
                 DeviceCorrelationIdSetInClient = true,
-                EnableSessionImage = true,
-                LivenessSingleModalModel = LivenessModel.V20221015Preview04,
-                DeviceCorrelationId = "<deviceCorrelationId>",
-                AuthTokenTimeToLiveInSeconds = 1234,
+                DeviceCorrelationId = "your_device_correlation_id",
+                AuthTokenTimeToLiveInSeconds = 60,
             };
             Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(body);
         }
@@ -169,10 +93,8 @@ namespace Azure.AI.Vision.Face.Samples
             {
                 SendResultsToClient = true,
                 DeviceCorrelationIdSetInClient = true,
-                EnableSessionImage = true,
-                LivenessSingleModalModel = LivenessModel.V20221015Preview04,
-                DeviceCorrelationId = "<deviceCorrelationId>",
-                AuthTokenTimeToLiveInSeconds = 1234,
+                DeviceCorrelationId = "your_device_correlation_id",
+                AuthTokenTimeToLiveInSeconds = 60,
             };
             Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(body);
         }
@@ -267,131 +189,7 @@ namespace Azure.AI.Vision.Face.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response response = client.GetLivenessSessionResult("<sessionId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionStartDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionExpired").ToString());
-            Console.WriteLine(result.GetProperty("deviceCorrelationId").ToString());
-            Console.WriteLine(result.GetProperty("authTokenTimeToLiveInSeconds").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("sessionId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("requestId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentLength").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("userAgent").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_LivenessSession_GetLivenessSessionResult_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = await client.GetLivenessSessionResultAsync("<sessionId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionStartDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionExpired").ToString());
-            Console.WriteLine(result.GetProperty("deviceCorrelationId").ToString());
-            Console.WriteLine(result.GetProperty("authTokenTimeToLiveInSeconds").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("sessionId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("requestId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentLength").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("userAgent").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_LivenessSession_GetLivenessSessionResult_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<LivenessSession> response = client.GetLivenessSessionResult("<sessionId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_LivenessSession_GetLivenessSessionResult_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<LivenessSession> response = await client.GetLivenessSessionResultAsync("<sessionId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_LivenessSession_GetLivenessSessions_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = client.GetLivenessSessions(null, null, null);
+            Response response = client.GetLivenessSessions("00000000-0000-0000-0000-000000000000", 20, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("id").ToString());
@@ -517,117 +315,7 @@ namespace Azure.AI.Vision.Face.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response response = client.GetLivenessSessionAuditEntries("<sessionId>", "<start>", 1234, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionId").ToString());
-            Console.WriteLine(result[0].GetProperty("requestId").ToString());
-            Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentLength").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("userAgent").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result[0].GetProperty("digest").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
-            Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetLivenessSessionAuditEntries_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = await client.GetLivenessSessionAuditEntriesAsync("<sessionId>", "<start>", 1234, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionId").ToString());
-            Console.WriteLine(result[0].GetProperty("requestId").ToString());
-            Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentLength").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("userAgent").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result[0].GetProperty("digest").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
-            Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_GetLivenessSessionAuditEntries_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionAuditEntry>> response = client.GetLivenessSessionAuditEntries("<sessionId>", start: "<start>", top: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetLivenessSessionAuditEntries_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionAuditEntry>> response = await client.GetLivenessSessionAuditEntriesAsync("<sessionId>", start: "<start>", top: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_LivenessWithVerifySession_DeleteLivenessWithVerifySession_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = client.DeleteLivenessWithVerifySession("<sessionId>");
+            Response response = client.DeleteLivenessWithVerifySession("b12e033e-bda7-4b83-a211-e721c661f30e");
 
             Console.WriteLine(response.Status);
         }
@@ -709,131 +397,7 @@ namespace Azure.AI.Vision.Face.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response response = client.GetLivenessWithVerifySessionResult("<sessionId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionStartDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionExpired").ToString());
-            Console.WriteLine(result.GetProperty("deviceCorrelationId").ToString());
-            Console.WriteLine(result.GetProperty("authTokenTimeToLiveInSeconds").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("sessionId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("requestId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentLength").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("userAgent").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_LivenessWithVerifySession_GetLivenessWithVerifySessionResult_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = await client.GetLivenessWithVerifySessionResultAsync("<sessionId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionStartDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionExpired").ToString());
-            Console.WriteLine(result.GetProperty("deviceCorrelationId").ToString());
-            Console.WriteLine(result.GetProperty("authTokenTimeToLiveInSeconds").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("sessionId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("requestId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentLength").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("userAgent").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_LivenessWithVerifySession_GetLivenessWithVerifySessionResult_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<LivenessWithVerifySession> response = client.GetLivenessWithVerifySessionResult("<sessionId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_LivenessWithVerifySession_GetLivenessWithVerifySessionResult_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<LivenessWithVerifySession> response = await client.GetLivenessWithVerifySessionResultAsync("<sessionId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_LivenessWithVerifySession_GetLivenessWithVerifySessions_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = client.GetLivenessWithVerifySessions(null, null, null);
+            Response response = client.GetLivenessWithVerifySessions("00000000-0000-0000-0000-000000000000", 20, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("id").ToString());
@@ -948,130 +512,20 @@ namespace Azure.AI.Vision.Face.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response<IReadOnlyList<LivenessSessionAuditEntry>> response = await client.GetLivenessWithVerifySessionAuditEntriesAsync("<sessionId>");
+            Response<IReadOnlyList<LivenessSessionAuditEntry>> response = await client.GetLivenessWithVerifySessionAuditEntriesAsync("b12e033e-bda7-4b83-a211-e721c661f30e");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_AllParameters()
+        public void Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = client.GetLivenessWithVerifySessionAuditEntries("<sessionId>", "<start>", 1234, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionId").ToString());
-            Console.WriteLine(result[0].GetProperty("requestId").ToString());
-            Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentLength").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("userAgent").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result[0].GetProperty("digest").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
-            Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = await client.GetLivenessWithVerifySessionAuditEntriesAsync("<sessionId>", "<start>", 1234, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionId").ToString());
-            Console.WriteLine(result[0].GetProperty("requestId").ToString());
-            Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentLength").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("userAgent").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result[0].GetProperty("digest").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
-            Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionAuditEntry>> response = client.GetLivenessWithVerifySessionAuditEntries("<sessionId>", start: "<start>", top: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionAuditEntry>> response = await client.GetLivenessWithVerifySessionAuditEntriesAsync("<sessionId>", start: "<start>", top: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_DetectFromSessionImage_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
-                sessionImageId = "<sessionImageId>",
+                sessionImageId = "aa93ce80-9a9b-48bd-ae1a-1c7543841e92",
             });
             Response response = client.DetectFromSessionImage(content);
 
@@ -1084,15 +538,15 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_DetectFromSessionImage_ShortVersion_Async()
+        public async Task Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
-                sessionImageId = "<sessionImageId>",
+                sessionImageId = "aa93ce80-9a9b-48bd-ae1a-1c7543841e92",
             });
             Response response = await client.DetectFromSessionImageAsync(content);
 
@@ -1105,265 +559,35 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_DetectFromSessionImage_ShortVersion_Convenience()
+        public void Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response<IReadOnlyList<FaceDetectionResult>> response = client.DetectFromSessionImage("<sessionImageId>");
+            Response<IReadOnlyList<FaceDetectionResult>> response = client.DetectFromSessionImage("aa93ce80-9a9b-48bd-ae1a-1c7543841e92");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_DetectFromSessionImage_ShortVersion_Convenience_Async()
+        public async Task Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response<IReadOnlyList<FaceDetectionResult>> response = await client.DetectFromSessionImageAsync("<sessionImageId>");
+            Response<IReadOnlyList<FaceDetectionResult>> response = await client.DetectFromSessionImageAsync("aa93ce80-9a9b-48bd-ae1a-1c7543841e92");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_DetectFromSessionImage_AllParameters()
+        public void Example_FaceSessionClient_GetSessionImage_GetSessionImage()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                sessionImageId = "<sessionImageId>",
-            });
-            Response response = client.DetectFromSessionImage(content, detectionModel: "detection_01", recognitionModel: "recognition_01", returnFaceId: true, returnFaceAttributes: new FaceAttributeType[] { FaceAttributeType.HeadPose }, returnFaceLandmarks: true, returnRecognitionModel: true, faceIdTimeToLive: 1234);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("faceId").ToString());
-            Console.WriteLine(result[0].GetProperty("recognitionModel").ToString());
-            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilLeft").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilLeft").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilRight").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilRight").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseTip").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseTip").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthLeft").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthLeft").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthRight").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthRight").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftOuter").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftOuter").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftInner").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftInner").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftOuter").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftOuter").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftBottom").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftBottom").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftInner").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftInner").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightInner").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightInner").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightOuter").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightOuter").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightInner").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightInner").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightBottom").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightBottom").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightOuter").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightOuter").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootLeft").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootLeft").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootRight").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootRight").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarOutTip").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarOutTip").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarOutTip").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarOutTip").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipBottom").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipBottom").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipBottom").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipBottom").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("age").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("smile").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("moustache").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("beard").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("sideburns").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("glasses").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("pitch").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("roll").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("yaw").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("bald").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("invisible").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("hairColor")[0].GetProperty("color").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("hairColor")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("foreheadOccluded").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("eyeOccluded").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("mouthOccluded").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("accessories")[0].GetProperty("type").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("accessories")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("blur").GetProperty("blurLevel").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("blur").GetProperty("value").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("exposure").GetProperty("exposureLevel").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("exposure").GetProperty("value").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("noise").GetProperty("noiseLevel").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("noise").GetProperty("value").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("mask").GetProperty("noseAndMouthCovered").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("mask").GetProperty("type").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("qualityForRecognition").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_DetectFromSessionImage_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                sessionImageId = "<sessionImageId>",
-            });
-            Response response = await client.DetectFromSessionImageAsync(content, detectionModel: "detection_01", recognitionModel: "recognition_01", returnFaceId: true, returnFaceAttributes: new FaceAttributeType[] { FaceAttributeType.HeadPose }, returnFaceLandmarks: true, returnRecognitionModel: true, faceIdTimeToLive: 1234);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("faceId").ToString());
-            Console.WriteLine(result[0].GetProperty("recognitionModel").ToString());
-            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("top").ToString());
-            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("left").ToString());
-            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("width").ToString());
-            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("height").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilLeft").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilLeft").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilRight").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilRight").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseTip").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseTip").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthLeft").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthLeft").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthRight").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthRight").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftOuter").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftOuter").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftInner").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftInner").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftOuter").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftOuter").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftBottom").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftBottom").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftInner").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftInner").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightInner").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightInner").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightOuter").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightOuter").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightInner").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightInner").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightBottom").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightBottom").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightOuter").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightOuter").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootLeft").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootLeft").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootRight").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootRight").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarOutTip").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarOutTip").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarOutTip").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarOutTip").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipBottom").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipBottom").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipTop").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipTop").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipBottom").GetProperty("x").ToString());
-            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipBottom").GetProperty("y").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("age").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("smile").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("moustache").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("beard").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("sideburns").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("glasses").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("pitch").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("roll").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("yaw").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("bald").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("invisible").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("hairColor")[0].GetProperty("color").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("hairColor")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("foreheadOccluded").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("eyeOccluded").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("mouthOccluded").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("accessories")[0].GetProperty("type").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("accessories")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("blur").GetProperty("blurLevel").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("blur").GetProperty("value").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("exposure").GetProperty("exposureLevel").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("exposure").GetProperty("value").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("noise").GetProperty("noiseLevel").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("noise").GetProperty("value").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("mask").GetProperty("noseAndMouthCovered").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("mask").GetProperty("type").ToString());
-            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("qualityForRecognition").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_DetectFromSessionImage_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<FaceDetectionResult>> response = client.DetectFromSessionImage("<sessionImageId>", detectionModel: FaceDetectionModel.Detection01, recognitionModel: FaceRecognitionModel.Recognition01, returnFaceId: true, returnFaceAttributes: new FaceAttributeType[] { FaceAttributeType.HeadPose }, returnFaceLandmarks: true, returnRecognitionModel: true, faceIdTimeToLive: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_DetectFromSessionImage_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<FaceDetectionResult>> response = await client.DetectFromSessionImageAsync("<sessionImageId>", detectionModel: FaceDetectionModel.Detection01, recognitionModel: FaceRecognitionModel.Recognition01, returnFaceId: true, returnFaceAttributes: new FaceAttributeType[] { FaceAttributeType.HeadPose }, returnFaceLandmarks: true, returnRecognitionModel: true, faceIdTimeToLive: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_GetSessionImage_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = client.GetSessionImage("<sessionImageId>", null);
+            Response response = client.GetSessionImage("3d035d35-2e01-4ed4-8935-577afde9caaa", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1371,13 +595,13 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetSessionImage_ShortVersion_Async()
+        public async Task Example_FaceSessionClient_GetSessionImage_GetSessionImage_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response response = await client.GetSessionImageAsync("<sessionImageId>", null);
+            Response response = await client.GetSessionImageAsync("3d035d35-2e01-4ed4-8935-577afde9caaa", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1385,74 +609,24 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_GetSessionImage_ShortVersion_Convenience()
+        public void Example_FaceSessionClient_GetSessionImage_GetSessionImage_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response<BinaryData> response = client.GetSessionImage("<sessionImageId>");
+            Response<BinaryData> response = client.GetSessionImage("3d035d35-2e01-4ed4-8935-577afde9caaa");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetSessionImage_ShortVersion_Convenience_Async()
+        public async Task Example_FaceSessionClient_GetSessionImage_GetSessionImage_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response<BinaryData> response = await client.GetSessionImageAsync("<sessionImageId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_GetSessionImage_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = client.GetSessionImage("<sessionImageId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetSessionImage_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = await client.GetSessionImageAsync("<sessionImageId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_GetSessionImage_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<BinaryData> response = client.GetSessionImage("<sessionImageId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetSessionImage_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<BinaryData> response = await client.GetSessionImageAsync("<sessionImageId>");
+            Response<BinaryData> response = await client.GetSessionImageAsync("3d035d35-2e01-4ed4-8935-577afde9caaa");
         }
     }
 }

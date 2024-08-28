@@ -1,306 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateAsync(string,string,string,FaceRecognitionModel?,CancellationToken)">
+    <member name="CreateAsync(string,string,FaceRecognitionModel?,CancellationToken)">
       <example>
 This sample shows how to call CreateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = await client.CreateAsync("<largePersonGroupId>", "<name>");
-]]></code>
-This sample shows how to call CreateAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = await client.CreateAsync("<largePersonGroupId>", "<name>", userData: "<userData>", recognitionModel: FaceRecognitionModel.Recognition01);
+Response response = await client.CreateAsync("your_large_person_group_name");
 ]]></code></example>
     </member>
-    <member name="Create(string,string,string,FaceRecognitionModel?,CancellationToken)">
+    <member name="Create(string,string,FaceRecognitionModel?,CancellationToken)">
       <example>
 This sample shows how to call Create.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = client.Create("<largePersonGroupId>", "<name>");
-]]></code>
-This sample shows how to call Create with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = client.Create("<largePersonGroupId>", "<name>", userData: "<userData>", recognitionModel: FaceRecognitionModel.Recognition01);
+Response response = client.Create("your_large_person_group_name");
 ]]></code></example>
     </member>
-    <member name="CreateAsync(string,RequestContent,RequestContext)">
+    <member name="CreateAsync(RequestContent,RequestContext)">
       <example>
 This sample shows how to call CreateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
 using RequestContent content = RequestContent.Create(new
 {
-    name = "<name>",
-});
-Response response = await client.CreateAsync("<largePersonGroupId>", content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CreateAsync with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-using RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    userData = "<userData>",
+    name = "your_large_person_group_name",
+    userData = "your_user_data",
     recognitionModel = "recognition_01",
 });
-Response response = await client.CreateAsync("<largePersonGroupId>", content);
+Response response = await client.CreateAsync(content);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="Create(string,RequestContent,RequestContext)">
+    <member name="Create(RequestContent,RequestContext)">
       <example>
 This sample shows how to call Create.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
 using RequestContent content = RequestContent.Create(new
 {
-    name = "<name>",
-});
-Response response = client.Create("<largePersonGroupId>", content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call Create with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-using RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    userData = "<userData>",
+    name = "your_large_person_group_name",
+    userData = "your_user_data",
     recognitionModel = "recognition_01",
 });
-Response response = client.Create("<largePersonGroupId>", content);
+Response response = client.Create(content);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteAsync(string,RequestContext)">
+    <member name="DeleteAsync(RequestContext)">
       <example>
 This sample shows how to call DeleteAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = await client.DeleteAsync("<largePersonGroupId>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call DeleteAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = await client.DeleteAsync("<largePersonGroupId>");
+Response response = await client.DeleteAsync();
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="Delete(string,RequestContext)">
+    <member name="Delete(RequestContext)">
       <example>
 This sample shows how to call Delete.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = client.Delete("<largePersonGroupId>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call Delete with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = client.Delete("<largePersonGroupId>");
+Response response = client.Delete();
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetLargePersonGroupAsync(string,bool?,CancellationToken)">
+    <member name="GetLargePersonGroupAsync(bool?,CancellationToken)">
       <example>
 This sample shows how to call GetLargePersonGroupAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<LargePersonGroup> response = await client.GetLargePersonGroupAsync("<largePersonGroupId>");
-]]></code>
-This sample shows how to call GetLargePersonGroupAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<LargePersonGroup> response = await client.GetLargePersonGroupAsync("<largePersonGroupId>", returnRecognitionModel: true);
+Response<LargePersonGroup> response = await client.GetLargePersonGroupAsync();
 ]]></code></example>
     </member>
-    <member name="GetLargePersonGroup(string,bool?,CancellationToken)">
+    <member name="GetLargePersonGroup(bool?,CancellationToken)">
       <example>
 This sample shows how to call GetLargePersonGroup.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<LargePersonGroup> response = client.GetLargePersonGroup("<largePersonGroupId>");
-]]></code>
-This sample shows how to call GetLargePersonGroup with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<LargePersonGroup> response = client.GetLargePersonGroup("<largePersonGroupId>", returnRecognitionModel: true);
+Response<LargePersonGroup> response = client.GetLargePersonGroup();
 ]]></code></example>
     </member>
-    <member name="GetLargePersonGroupAsync(string,bool?,RequestContext)">
+    <member name="GetLargePersonGroupAsync(bool?,RequestContext)">
       <example>
 This sample shows how to call GetLargePersonGroupAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = await client.GetLargePersonGroupAsync("<largePersonGroupId>", null, null);
+Response response = await client.GetLargePersonGroupAsync(true, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("largePersonGroupId").ToString());
-]]></code>
-This sample shows how to call GetLargePersonGroupAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = await client.GetLargePersonGroupAsync("<largePersonGroupId>", true, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("userData").ToString());
-Console.WriteLine(result.GetProperty("recognitionModel").ToString());
 Console.WriteLine(result.GetProperty("largePersonGroupId").ToString());
 ]]></code></example>
     </member>
-    <member name="GetLargePersonGroup(string,bool?,RequestContext)">
+    <member name="GetLargePersonGroup(bool?,RequestContext)">
       <example>
 This sample shows how to call GetLargePersonGroup and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = client.GetLargePersonGroup("<largePersonGroupId>", null, null);
+Response response = client.GetLargePersonGroup(true, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("largePersonGroupId").ToString());
-]]></code>
-This sample shows how to call GetLargePersonGroup with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = client.GetLargePersonGroup("<largePersonGroupId>", true, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("userData").ToString());
-Console.WriteLine(result.GetProperty("recognitionModel").ToString());
 Console.WriteLine(result.GetProperty("largePersonGroupId").ToString());
 ]]></code></example>
     </member>
-    <member name="UpdateAsync(string,RequestContent,RequestContext)">
+    <member name="UpdateAsync(RequestContent,RequestContext)">
       <example>
 This sample shows how to call UpdateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-using RequestContent content = RequestContent.Create(new object());
-Response response = await client.UpdateAsync("<largePersonGroupId>", content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call UpdateAsync with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
 using RequestContent content = RequestContent.Create(new
 {
-    name = "<name>",
-    userData = "<userData>",
+    name = "your_large_person_group_name",
+    userData = "your_user_data",
 });
-Response response = await client.UpdateAsync("<largePersonGroupId>", content);
+Response response = await client.UpdateAsync(content);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="Update(string,RequestContent,RequestContext)">
+    <member name="Update(RequestContent,RequestContext)">
       <example>
 This sample shows how to call Update.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-using RequestContent content = RequestContent.Create(new object());
-Response response = client.Update("<largePersonGroupId>", content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call Update with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
 using RequestContent content = RequestContent.Create(new
 {
-    name = "<name>",
-    userData = "<userData>",
+    name = "your_large_person_group_name",
+    userData = "your_user_data",
 });
-Response response = client.Update("<largePersonGroupId>", content);
+Response response = client.Update(content);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
@@ -309,66 +179,36 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetLargePersonGroupsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
 
 Response<IReadOnlyList<LargePersonGroup>> response = await client.GetLargePersonGroupsAsync();
-]]></code>
-This sample shows how to call GetLargePersonGroupsAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<IReadOnlyList<LargePersonGroup>> response = await client.GetLargePersonGroupsAsync(start: "<start>", top: 1234, returnRecognitionModel: true);
 ]]></code></example>
     </member>
     <member name="GetLargePersonGroups(string,int?,bool?,CancellationToken)">
       <example>
 This sample shows how to call GetLargePersonGroups.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
 
 Response<IReadOnlyList<LargePersonGroup>> response = client.GetLargePersonGroups();
-]]></code>
-This sample shows how to call GetLargePersonGroups with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<IReadOnlyList<LargePersonGroup>> response = client.GetLargePersonGroups(start: "<start>", top: 1234, returnRecognitionModel: true);
 ]]></code></example>
     </member>
     <member name="GetLargePersonGroupsAsync(string,int?,bool?,RequestContext)">
       <example>
 This sample shows how to call GetLargePersonGroupsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
 
-Response response = await client.GetLargePersonGroupsAsync(null, null, null, null);
+Response response = await client.GetLargePersonGroupsAsync("00000000-0000-0000-0000-000000000000", 20, true, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("name").ToString());
-Console.WriteLine(result[0].GetProperty("largePersonGroupId").ToString());
-]]></code>
-This sample shows how to call GetLargePersonGroupsAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = await client.GetLargePersonGroupsAsync("<start>", 1234, true, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("name").ToString());
-Console.WriteLine(result[0].GetProperty("userData").ToString());
-Console.WriteLine(result[0].GetProperty("recognitionModel").ToString());
 Console.WriteLine(result[0].GetProperty("largePersonGroupId").ToString());
 ]]></code></example>
     </member>
@@ -376,763 +216,429 @@ Console.WriteLine(result[0].GetProperty("largePersonGroupId").ToString());
       <example>
 This sample shows how to call GetLargePersonGroups and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
 
-Response response = client.GetLargePersonGroups(null, null, null, null);
+Response response = client.GetLargePersonGroups("00000000-0000-0000-0000-000000000000", 20, true, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("name").ToString());
-Console.WriteLine(result[0].GetProperty("largePersonGroupId").ToString());
-]]></code>
-This sample shows how to call GetLargePersonGroups with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = client.GetLargePersonGroups("<start>", 1234, true, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("name").ToString());
-Console.WriteLine(result[0].GetProperty("userData").ToString());
-Console.WriteLine(result[0].GetProperty("recognitionModel").ToString());
 Console.WriteLine(result[0].GetProperty("largePersonGroupId").ToString());
 ]]></code></example>
     </member>
-    <member name="GetTrainingStatusAsync(string,CancellationToken)">
+    <member name="GetTrainingStatusAsync(CancellationToken)">
       <example>
 This sample shows how to call GetTrainingStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<TrainingResult> response = await client.GetTrainingStatusAsync("<largePersonGroupId>");
-]]></code>
-This sample shows how to call GetTrainingStatusAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<TrainingResult> response = await client.GetTrainingStatusAsync("<largePersonGroupId>");
+Response<FaceTrainingResult> response = await client.GetTrainingStatusAsync();
 ]]></code></example>
     </member>
-    <member name="GetTrainingStatus(string,CancellationToken)">
+    <member name="GetTrainingStatus(CancellationToken)">
       <example>
 This sample shows how to call GetTrainingStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<TrainingResult> response = client.GetTrainingStatus("<largePersonGroupId>");
-]]></code>
-This sample shows how to call GetTrainingStatus with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<TrainingResult> response = client.GetTrainingStatus("<largePersonGroupId>");
+Response<FaceTrainingResult> response = client.GetTrainingStatus();
 ]]></code></example>
     </member>
-    <member name="GetTrainingStatusAsync(string,RequestContext)">
+    <member name="GetTrainingStatusAsync(RequestContext)">
       <example>
 This sample shows how to call GetTrainingStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = await client.GetTrainingStatusAsync("<largePersonGroupId>", null);
+Response response = await client.GetTrainingStatusAsync(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastSuccessfulTrainingDateTime").ToString());
-]]></code>
-This sample shows how to call GetTrainingStatusAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = await client.GetTrainingStatusAsync("<largePersonGroupId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastSuccessfulTrainingDateTime").ToString());
-Console.WriteLine(result.GetProperty("message").ToString());
 ]]></code></example>
     </member>
-    <member name="GetTrainingStatus(string,RequestContext)">
+    <member name="GetTrainingStatus(RequestContext)">
       <example>
 This sample shows how to call GetTrainingStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = client.GetTrainingStatus("<largePersonGroupId>", null);
+Response response = client.GetTrainingStatus(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastSuccessfulTrainingDateTime").ToString());
-]]></code>
-This sample shows how to call GetTrainingStatus with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = client.GetTrainingStatus("<largePersonGroupId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastSuccessfulTrainingDateTime").ToString());
-Console.WriteLine(result.GetProperty("message").ToString());
 ]]></code></example>
     </member>
-    <member name="CreatePersonAsync(string,string,string,CancellationToken)">
+    <member name="CreatePersonAsync(string,string,CancellationToken)">
       <example>
 This sample shows how to call CreatePersonAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<CreatePersonResult> response = await client.CreatePersonAsync("<largePersonGroupId>", "<name>");
-]]></code>
-This sample shows how to call CreatePersonAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<CreatePersonResult> response = await client.CreatePersonAsync("<largePersonGroupId>", "<name>", userData: "<userData>");
+Response<CreatePersonResult> response = await client.CreatePersonAsync("your_large_person_group_person_name");
 ]]></code></example>
     </member>
-    <member name="CreatePerson(string,string,string,CancellationToken)">
+    <member name="CreatePerson(string,string,CancellationToken)">
       <example>
 This sample shows how to call CreatePerson.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<CreatePersonResult> response = client.CreatePerson("<largePersonGroupId>", "<name>");
-]]></code>
-This sample shows how to call CreatePerson with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<CreatePersonResult> response = client.CreatePerson("<largePersonGroupId>", "<name>", userData: "<userData>");
+Response<CreatePersonResult> response = client.CreatePerson("your_large_person_group_person_name");
 ]]></code></example>
     </member>
-    <member name="CreatePersonAsync(string,RequestContent,RequestContext)">
+    <member name="CreatePersonAsync(RequestContent,RequestContext)">
       <example>
 This sample shows how to call CreatePersonAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
 using RequestContent content = RequestContent.Create(new
 {
-    name = "<name>",
+    name = "your_large_person_group_person_name",
+    userData = "your_user_data",
 });
-Response response = await client.CreatePersonAsync("<largePersonGroupId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("personId").ToString());
-]]></code>
-This sample shows how to call CreatePersonAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-using RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    userData = "<userData>",
-});
-Response response = await client.CreatePersonAsync("<largePersonGroupId>", content);
+Response response = await client.CreatePersonAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("personId").ToString());
 ]]></code></example>
     </member>
-    <member name="CreatePerson(string,RequestContent,RequestContext)">
+    <member name="CreatePerson(RequestContent,RequestContext)">
       <example>
 This sample shows how to call CreatePerson and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
 using RequestContent content = RequestContent.Create(new
 {
-    name = "<name>",
+    name = "your_large_person_group_person_name",
+    userData = "your_user_data",
 });
-Response response = client.CreatePerson("<largePersonGroupId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("personId").ToString());
-]]></code>
-This sample shows how to call CreatePerson with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-using RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    userData = "<userData>",
-});
-Response response = client.CreatePerson("<largePersonGroupId>", content);
+Response response = client.CreatePerson(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("personId").ToString());
 ]]></code></example>
     </member>
-    <member name="DeletePersonAsync(string,Guid,RequestContext)">
+    <member name="DeletePersonAsync(Guid,RequestContext)">
       <example>
 This sample shows how to call DeletePersonAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = await client.DeletePersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call DeletePersonAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = await client.DeletePersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response response = await client.DeletePersonAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"));
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeletePerson(string,Guid,RequestContext)">
+    <member name="DeletePerson(Guid,RequestContext)">
       <example>
 This sample shows how to call DeletePerson.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = client.DeletePerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call DeletePerson with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = client.DeletePerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response response = client.DeletePerson(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"));
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetPersonAsync(string,Guid,CancellationToken)">
+    <member name="GetPersonAsync(Guid,CancellationToken)">
       <example>
 This sample shows how to call GetPersonAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<LargePersonGroupPerson> response = await client.GetPersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-]]></code>
-This sample shows how to call GetPersonAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<LargePersonGroupPerson> response = await client.GetPersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response<LargePersonGroupPerson> response = await client.GetPersonAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"));
 ]]></code></example>
     </member>
-    <member name="GetPerson(string,Guid,CancellationToken)">
+    <member name="GetPerson(Guid,CancellationToken)">
       <example>
 This sample shows how to call GetPerson.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<LargePersonGroupPerson> response = client.GetPerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-]]></code>
-This sample shows how to call GetPerson with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<LargePersonGroupPerson> response = client.GetPerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response<LargePersonGroupPerson> response = client.GetPerson(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"));
 ]]></code></example>
     </member>
-    <member name="GetPersonAsync(string,Guid,RequestContext)">
+    <member name="GetPersonAsync(Guid,RequestContext)">
       <example>
 This sample shows how to call GetPersonAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = await client.GetPersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+Response response = await client.GetPersonAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("personId").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
-]]></code>
-This sample shows how to call GetPersonAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = await client.GetPersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("personId").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("userData").ToString());
-Console.WriteLine(result.GetProperty("persistedFaceIds")[0].ToString());
 ]]></code></example>
     </member>
-    <member name="GetPerson(string,Guid,RequestContext)">
+    <member name="GetPerson(Guid,RequestContext)">
       <example>
 This sample shows how to call GetPerson and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = client.GetPerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+Response response = client.GetPerson(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("personId").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
-]]></code>
-This sample shows how to call GetPerson with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = client.GetPerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("personId").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("userData").ToString());
-Console.WriteLine(result.GetProperty("persistedFaceIds")[0].ToString());
 ]]></code></example>
     </member>
-    <member name="UpdatePersonAsync(string,Guid,RequestContent,RequestContext)">
+    <member name="UpdatePersonAsync(Guid,RequestContent,RequestContext)">
       <example>
 This sample shows how to call UpdatePersonAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-using RequestContent content = RequestContent.Create(new object());
-Response response = await client.UpdatePersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call UpdatePersonAsync with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
 using RequestContent content = RequestContent.Create(new
 {
-    name = "<name>",
-    userData = "<userData>",
+    name = "your_large_person_group_person_name",
+    userData = "your_user_data",
 });
-Response response = await client.UpdatePersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+Response response = await client.UpdatePersonAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), content);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="UpdatePerson(string,Guid,RequestContent,RequestContext)">
+    <member name="UpdatePerson(Guid,RequestContent,RequestContext)">
       <example>
 This sample shows how to call UpdatePerson.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-using RequestContent content = RequestContent.Create(new object());
-Response response = client.UpdatePerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call UpdatePerson with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
 using RequestContent content = RequestContent.Create(new
 {
-    name = "<name>",
-    userData = "<userData>",
+    name = "your_large_person_group_person_name",
+    userData = "your_user_data",
 });
-Response response = client.UpdatePerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+Response response = client.UpdatePerson(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), content);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetPersonsAsync(string,string,int?,CancellationToken)">
+    <member name="GetPersonsAsync(string,int?,CancellationToken)">
       <example>
 This sample shows how to call GetPersonsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<IReadOnlyList<LargePersonGroupPerson>> response = await client.GetPersonsAsync("<largePersonGroupId>");
-]]></code>
-This sample shows how to call GetPersonsAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<IReadOnlyList<LargePersonGroupPerson>> response = await client.GetPersonsAsync("<largePersonGroupId>", start: "<start>", top: 1234);
+Response<IReadOnlyList<LargePersonGroupPerson>> response = await client.GetPersonsAsync();
 ]]></code></example>
     </member>
-    <member name="GetPersons(string,string,int?,CancellationToken)">
+    <member name="GetPersons(string,int?,CancellationToken)">
       <example>
 This sample shows how to call GetPersons.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<IReadOnlyList<LargePersonGroupPerson>> response = client.GetPersons("<largePersonGroupId>");
-]]></code>
-This sample shows how to call GetPersons with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<IReadOnlyList<LargePersonGroupPerson>> response = client.GetPersons("<largePersonGroupId>", start: "<start>", top: 1234);
+Response<IReadOnlyList<LargePersonGroupPerson>> response = client.GetPersons();
 ]]></code></example>
     </member>
-    <member name="GetPersonsAsync(string,string,int?,RequestContext)">
+    <member name="GetPersonsAsync(string,int?,RequestContext)">
       <example>
 This sample shows how to call GetPersonsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = await client.GetPersonsAsync("<largePersonGroupId>", null, null, null);
+Response response = await client.GetPersonsAsync("00000000-0000-0000-0000-000000000000", 20, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("personId").ToString());
 Console.WriteLine(result[0].GetProperty("name").ToString());
-]]></code>
-This sample shows how to call GetPersonsAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = await client.GetPersonsAsync("<largePersonGroupId>", "<start>", 1234, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("personId").ToString());
-Console.WriteLine(result[0].GetProperty("name").ToString());
-Console.WriteLine(result[0].GetProperty("userData").ToString());
-Console.WriteLine(result[0].GetProperty("persistedFaceIds")[0].ToString());
 ]]></code></example>
     </member>
-    <member name="GetPersons(string,string,int?,RequestContext)">
+    <member name="GetPersons(string,int?,RequestContext)">
       <example>
 This sample shows how to call GetPersons and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = client.GetPersons("<largePersonGroupId>", null, null, null);
+Response response = client.GetPersons("00000000-0000-0000-0000-000000000000", 20, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("personId").ToString());
 Console.WriteLine(result[0].GetProperty("name").ToString());
-]]></code>
-This sample shows how to call GetPersons with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = client.GetPersons("<largePersonGroupId>", "<start>", 1234, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("personId").ToString());
-Console.WriteLine(result[0].GetProperty("name").ToString());
-Console.WriteLine(result[0].GetProperty("userData").ToString());
-Console.WriteLine(result[0].GetProperty("persistedFaceIds")[0].ToString());
 ]]></code></example>
     </member>
-    <member name="DeleteFaceAsync(string,Guid,Guid,RequestContext)">
+    <member name="DeleteFaceAsync(Guid,Guid,RequestContext)">
       <example>
 This sample shows how to call DeleteFaceAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = await client.DeleteFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call DeleteFaceAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = await client.DeleteFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response response = await client.DeleteFaceAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"));
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteFace(string,Guid,Guid,RequestContext)">
+    <member name="DeleteFace(Guid,Guid,RequestContext)">
       <example>
 This sample shows how to call DeleteFace.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = client.DeleteFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call DeleteFace with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = client.DeleteFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response response = client.DeleteFace(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"));
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetFaceAsync(string,Guid,Guid,CancellationToken)">
+    <member name="GetFaceAsync(Guid,Guid,CancellationToken)">
       <example>
 This sample shows how to call GetFaceAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<LargePersonGroupPersonFace> response = await client.GetFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-]]></code>
-This sample shows how to call GetFaceAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<LargePersonGroupPersonFace> response = await client.GetFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response<LargePersonGroupPersonFace> response = await client.GetFaceAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"));
 ]]></code></example>
     </member>
-    <member name="GetFace(string,Guid,Guid,CancellationToken)">
+    <member name="GetFace(Guid,Guid,CancellationToken)">
       <example>
 This sample shows how to call GetFace.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response<LargePersonGroupPersonFace> response = client.GetFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-]]></code>
-This sample shows how to call GetFace with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response<LargePersonGroupPersonFace> response = client.GetFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response<LargePersonGroupPersonFace> response = client.GetFace(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"));
 ]]></code></example>
     </member>
-    <member name="GetFaceAsync(string,Guid,Guid,RequestContext)">
+    <member name="GetFaceAsync(Guid,Guid,RequestContext)">
       <example>
 This sample shows how to call GetFaceAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = await client.GetFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+Response response = await client.GetFaceAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"), null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
-]]></code>
-This sample shows how to call GetFaceAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = await client.GetFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
-Console.WriteLine(result.GetProperty("userData").ToString());
 ]]></code></example>
     </member>
-    <member name="GetFace(string,Guid,Guid,RequestContext)">
+    <member name="GetFace(Guid,Guid,RequestContext)">
       <example>
 This sample shows how to call GetFace and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Response response = client.GetFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+Response response = client.GetFace(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"), null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
-]]></code>
-This sample shows how to call GetFace with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Response response = client.GetFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
-Console.WriteLine(result.GetProperty("userData").ToString());
 ]]></code></example>
     </member>
-    <member name="UpdateFaceAsync(string,Guid,Guid,RequestContent,RequestContext)">
+    <member name="UpdateFaceAsync(Guid,Guid,RequestContent,RequestContext)">
       <example>
 This sample shows how to call UpdateFaceAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-using RequestContent content = RequestContent.Create(new object());
-Response response = await client.UpdateFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call UpdateFaceAsync with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
 using RequestContent content = RequestContent.Create(new
 {
-    userData = "<userData>",
+    userData = "your_user_data",
 });
-Response response = await client.UpdateFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+Response response = await client.UpdateFaceAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"), content);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="UpdateFace(string,Guid,Guid,RequestContent,RequestContext)">
+    <member name="UpdateFace(Guid,Guid,RequestContent,RequestContext)">
       <example>
 This sample shows how to call UpdateFace.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-using RequestContent content = RequestContent.Create(new object());
-Response response = client.UpdateFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call UpdateFace with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
 using RequestContent content = RequestContent.Create(new
 {
-    userData = "<userData>",
+    userData = "your_user_data",
 });
-Response response = client.UpdateFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+Response response = client.UpdateFace(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"), content);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="TrainAsync(WaitUntil,string,RequestContext)">
+    <member name="TrainAsync(WaitUntil,RequestContext)">
       <example>
 This sample shows how to call TrainAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Operation operation = await client.TrainAsync(WaitUntil.Completed, "<largePersonGroupId>");
-]]></code>
-This sample shows how to call TrainAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Operation operation = await client.TrainAsync(WaitUntil.Completed, "<largePersonGroupId>");
+Operation operation = await client.TrainAsync(WaitUntil.Completed);
 ]]></code></example>
     </member>
-    <member name="Train(WaitUntil,string,RequestContext)">
+    <member name="Train(WaitUntil,RequestContext)">
       <example>
 This sample shows how to call Train.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
-Operation operation = client.Train(WaitUntil.Completed, "<largePersonGroupId>");
-]]></code>
-This sample shows how to call Train with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-LargePersonGroupClient client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientClient();
-
-Operation operation = client.Train(WaitUntil.Completed, "<largePersonGroupId>");
+Operation operation = client.Train(WaitUntil.Completed);
 ]]></code></example>
     </member>
   </members>

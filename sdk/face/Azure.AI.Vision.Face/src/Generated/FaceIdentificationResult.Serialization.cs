@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class IdentificationResult : IUtf8JsonSerializable, IJsonModel<IdentificationResult>
+    public partial class FaceIdentificationResult : IUtf8JsonSerializable, IJsonModel<FaceIdentificationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdentificationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FaceIdentificationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IdentificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FaceIdentificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FaceIdentificationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentificationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FaceIdentificationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,19 +53,19 @@ namespace Azure.AI.Vision.Face
             writer.WriteEndObject();
         }
 
-        IdentificationResult IJsonModel<IdentificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FaceIdentificationResult IJsonModel<FaceIdentificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FaceIdentificationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentificationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FaceIdentificationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIdentificationResult(document.RootElement, options);
+            return DeserializeFaceIdentificationResult(document.RootElement, options);
         }
 
-        internal static IdentificationResult DeserializeIdentificationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FaceIdentificationResult DeserializeFaceIdentificationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -74,7 +74,7 @@ namespace Azure.AI.Vision.Face
                 return null;
             }
             Guid faceId = default;
-            IReadOnlyList<IdentificationCandidate> candidates = default;
+            IReadOnlyList<FaceIdentificationCandidate> candidates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,10 +86,10 @@ namespace Azure.AI.Vision.Face
                 }
                 if (property.NameEquals("candidates"u8))
                 {
-                    List<IdentificationCandidate> array = new List<IdentificationCandidate>();
+                    List<FaceIdentificationCandidate> array = new List<FaceIdentificationCandidate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IdentificationCandidate.DeserializeIdentificationCandidate(item, options));
+                        array.Add(FaceIdentificationCandidate.DeserializeFaceIdentificationCandidate(item, options));
                     }
                     candidates = array;
                     continue;
@@ -100,46 +100,46 @@ namespace Azure.AI.Vision.Face
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IdentificationResult(faceId, candidates, serializedAdditionalRawData);
+            return new FaceIdentificationResult(faceId, candidates, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IdentificationResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FaceIdentificationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FaceIdentificationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IdentificationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FaceIdentificationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IdentificationResult IPersistableModel<IdentificationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FaceIdentificationResult IPersistableModel<FaceIdentificationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FaceIdentificationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIdentificationResult(document.RootElement, options);
+                        return DeserializeFaceIdentificationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdentificationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FaceIdentificationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IdentificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FaceIdentificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static IdentificationResult FromResponse(Response response)
+        internal static FaceIdentificationResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeIdentificationResult(document.RootElement);
+            return DeserializeFaceIdentificationResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

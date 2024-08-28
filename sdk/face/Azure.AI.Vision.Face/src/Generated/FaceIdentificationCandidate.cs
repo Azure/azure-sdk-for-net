@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Vision.Face
 {
-    /// <summary> Face resource for person group person. </summary>
-    public partial class PersonGroupPersonFace
+    /// <summary> Candidate for identify call. </summary>
+    public partial class FaceIdentificationCandidate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,34 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PersonGroupPersonFace"/>. </summary>
-        internal PersonGroupPersonFace()
+        /// <summary> Initializes a new instance of <see cref="FaceIdentificationCandidate"/>. </summary>
+        /// <param name="personId"> personId of candidate person. </param>
+        /// <param name="confidence"> Confidence value of the candidate. The higher confidence, the more similar. Range between [0,1]. </param>
+        internal FaceIdentificationCandidate(Guid personId, float confidence)
         {
+            PersonId = personId;
+            Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersonGroupPersonFace"/>. </summary>
-        /// <param name="persistedFaceId"> Face ID of the face. </param>
-        /// <param name="userData"> User-provided data attached to the face. The length limit is 1K. </param>
+        /// <summary> Initializes a new instance of <see cref="FaceIdentificationCandidate"/>. </summary>
+        /// <param name="personId"> personId of candidate person. </param>
+        /// <param name="confidence"> Confidence value of the candidate. The higher confidence, the more similar. Range between [0,1]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PersonGroupPersonFace(Guid persistedFaceId, string userData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FaceIdentificationCandidate(Guid personId, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PersistedFaceId = persistedFaceId;
-            UserData = userData;
+            PersonId = personId;
+            Confidence = confidence;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Face ID of the face. </summary>
-        public Guid PersistedFaceId { get; }
-        /// <summary> User-provided data attached to the face. The length limit is 1K. </summary>
-        public string UserData { get; }
+        /// <summary> Initializes a new instance of <see cref="FaceIdentificationCandidate"/> for deserialization. </summary>
+        internal FaceIdentificationCandidate()
+        {
+        }
+
+        /// <summary> personId of candidate person. </summary>
+        public Guid PersonId { get; }
+        /// <summary> Confidence value of the candidate. The higher confidence, the more similar. Range between [0,1]. </summary>
+        public float Confidence { get; }
     }
 }

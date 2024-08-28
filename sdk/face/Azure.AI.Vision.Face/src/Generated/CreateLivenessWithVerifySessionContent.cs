@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Vision.Face
 {
     /// <summary> Request for creating liveness with verify session. </summary>
-    public partial class CreateLivenessWithVerifySessionJsonContent
+    public partial class CreateLivenessWithVerifySessionContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionJsonContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionContent"/>. </summary>
         /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
-        public CreateLivenessWithVerifySessionJsonContent(LivenessOperationMode livenessOperationMode)
+        public CreateLivenessWithVerifySessionContent(LivenessOperationMode livenessOperationMode)
         {
             LivenessOperationMode = livenessOperationMode;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionJsonContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionContent"/>. </summary>
         /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
         /// <param name="sendResultsToClient"> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </param>
         /// <param name="deviceCorrelationIdSetInClient"> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </param>
@@ -63,7 +63,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="returnVerifyImageHash"> Whether or not return the verify image hash. </param>
         /// <param name="verifyConfidenceThreshold"> Threshold for confidence of the face verification. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateLivenessWithVerifySessionJsonContent(LivenessOperationMode livenessOperationMode, bool? sendResultsToClient, bool? deviceCorrelationIdSetInClient, bool? enableSessionImage, LivenessModel? livenessSingleModalModel, string deviceCorrelationId, int? authTokenTimeToLiveInSeconds, bool? returnVerifyImageHash, float? verifyConfidenceThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateLivenessWithVerifySessionContent(LivenessOperationMode livenessOperationMode, bool? sendResultsToClient, bool? deviceCorrelationIdSetInClient, bool? enableSessionImage, LivenessModel? livenessSingleModalModel, string deviceCorrelationId, int? authTokenTimeToLiveInSeconds, bool? returnVerifyImageHash, float? verifyConfidenceThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LivenessOperationMode = livenessOperationMode;
             SendResultsToClient = sendResultsToClient;
@@ -77,8 +77,8 @@ namespace Azure.AI.Vision.Face
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionJsonContent"/> for deserialization. </summary>
-        internal CreateLivenessWithVerifySessionJsonContent()
+        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionContent"/> for deserialization. </summary>
+        internal CreateLivenessWithVerifySessionContent()
         {
         }
 

@@ -15,11 +15,11 @@ namespace Azure.AI.Vision.Face.Samples
         [Test]
         public void VerifyAndIdentifyFromLargePersonGroup()
         {
-            var groupClient = CreateLargePersonGroupClient();
-            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_CreateLargePersonGroup
             var groupId = "lpg_family1";
+            var groupClient = CreateLargePersonGroupClient(groupId);
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_CreateLargePersonGroup
 
-            groupClient.Create(groupId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
+            groupClient.Create("Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
             #endregion
 
             #region Snippet:VerifyAndIdentifyFromLargePersonGroup_CreatePersonAndAddFaces
@@ -33,19 +33,19 @@ namespace Azure.AI.Vision.Face.Samples
 
             foreach (var person in persons)
             {
-                var createPersonResponse = groupClient.CreatePerson(groupId, person.Name, userData: person.UserData);
+                var createPersonResponse = groupClient.CreatePerson(person.Name, userData: person.UserData);
                 var personId = createPersonResponse.Value.PersonId;
                 personIds.Add(person.Name, personId);
 
                 foreach (var imageUrl in person.ImageUrls)
                 {
-                    groupClient.AddFace(groupId, personId, new Uri(imageUrl), userData: $"{person.UserData}-{imageUrl}", detectionModel: FaceDetectionModel.Detection03);
+                    groupClient.AddFace(personId, new Uri(imageUrl), userData: $"{person.UserData}-{imageUrl}", detectionModel: FaceDetectionModel.Detection03);
                 }
             }
             #endregion
 
             #region Snippet:VerifyAndIdentifyFromLargePersonGroup_Train
-            var operation = groupClient.Train(WaitUntil.Completed, groupId);
+            var operation = groupClient.Train(WaitUntil.Completed);
             operation.WaitForCompletionResponse();
             #endregion
 
@@ -65,13 +65,13 @@ namespace Azure.AI.Vision.Face.Samples
             var identifyResponse = faceClient.IdentifyFromLargePersonGroup(new[] { faceId }, groupId);
             foreach (var candidate in identifyResponse.Value[0].Candidates)
             {
-                var person = groupClient.GetPerson(groupId, candidate.PersonId);
+                var person = groupClient.GetPerson(candidate.PersonId);
                 Console.WriteLine($"The detected face belongs to {person.Value.Name} ({candidate.Confidence})");
             }
             #endregion
 
             #region Snippet:VerifyAndIdentifyFromLargePersonGroup_DeleteLargePersonGroup
-            groupClient.Delete(groupId);
+            groupClient.Delete();
             #endregion
         }
     }

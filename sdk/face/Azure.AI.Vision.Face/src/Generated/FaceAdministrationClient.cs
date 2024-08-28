@@ -6,15 +6,14 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Vision.Face
 {
     // Data plane generated client.
-    /// <summary> The FaceService service client. </summary>
-    public partial class FaceServiceClient
+    /// <summary> The FaceAdministration service client. </summary>
+    public partial class FaceAdministrationClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -30,34 +29,34 @@ namespace Azure.AI.Vision.Face
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of FaceServiceClient for mocking. </summary>
-        protected FaceServiceClient()
+        /// <summary> Initializes a new instance of FaceAdministrationClient for mocking. </summary>
+        protected FaceAdministrationClient()
         {
         }
 
-        /// <summary> Initializes a new instance of FaceServiceClient. </summary>
+        /// <summary> Initializes a new instance of FaceAdministrationClient. </summary>
         /// <param name="endpoint">
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://{resource-name}.cognitiveservices.azure.com).
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public FaceServiceClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIVisionFaceClientOptions())
+        public FaceAdministrationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIVisionFaceClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of FaceServiceClient. </summary>
+        /// <summary> Initializes a new instance of FaceAdministrationClient. </summary>
         /// <param name="endpoint">
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://{resource-name}.cognitiveservices.azure.com).
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public FaceServiceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIVisionFaceClientOptions())
+        public FaceAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIVisionFaceClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of FaceServiceClient. </summary>
+        /// <summary> Initializes a new instance of FaceAdministrationClient. </summary>
         /// <param name="endpoint">
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://{resource-name}.cognitiveservices.azure.com).
@@ -65,7 +64,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public FaceServiceClient(Uri endpoint, AzureKeyCredential credential, AzureAIVisionFaceClientOptions options)
+        public FaceAdministrationClient(Uri endpoint, AzureKeyCredential credential, AzureAIVisionFaceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -78,7 +77,7 @@ namespace Azure.AI.Vision.Face
             _apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of FaceServiceClient. </summary>
+        /// <summary> Initializes a new instance of FaceAdministrationClient. </summary>
         /// <param name="endpoint">
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://{resource-name}.cognitiveservices.azure.com).
@@ -86,7 +85,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public FaceServiceClient(Uri endpoint, TokenCredential credential, AzureAIVisionFaceClientOptions options)
+        public FaceAdministrationClient(Uri endpoint, TokenCredential credential, AzureAIVisionFaceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -99,33 +98,26 @@ namespace Azure.AI.Vision.Face
             _apiVersion = options.Version;
         }
 
-        private FaceListClient _cachedFaceListClient;
-        private LargeFaceListClient _cachedLargeFaceListClient;
-        private PersonGroupClient _cachedPersonGroupClient;
-        private LargePersonGroupClient _cachedLargePersonGroupClient;
-
-        /// <summary> Initializes a new instance of FaceListClient. </summary>
-        public virtual FaceListClient GetFaceListClientClient()
-        {
-            return Volatile.Read(ref _cachedFaceListClient) ?? Interlocked.CompareExchange(ref _cachedFaceListClient, new FaceListClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFaceListClient;
-        }
-
         /// <summary> Initializes a new instance of LargeFaceListClient. </summary>
-        public virtual LargeFaceListClient GetLargeFaceListClientClient()
+        /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual LargeFaceListClient GetLargeFaceListClient(string largeFaceListId)
         {
-            return Volatile.Read(ref _cachedLargeFaceListClient) ?? Interlocked.CompareExchange(ref _cachedLargeFaceListClient, new LargeFaceListClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedLargeFaceListClient;
-        }
+            Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
 
-        /// <summary> Initializes a new instance of PersonGroupClient. </summary>
-        public virtual PersonGroupClient GetPersonGroupClientClient()
-        {
-            return Volatile.Read(ref _cachedPersonGroupClient) ?? Interlocked.CompareExchange(ref _cachedPersonGroupClient, new PersonGroupClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPersonGroupClient;
+            return new LargeFaceListClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, largeFaceListId, _apiVersion);
         }
 
         /// <summary> Initializes a new instance of LargePersonGroupClient. </summary>
-        public virtual LargePersonGroupClient GetLargePersonGroupClientClient()
+        /// <param name="largePersonGroupId"> ID of the container. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual LargePersonGroupClient GetLargePersonGroupClient(string largePersonGroupId)
         {
-            return Volatile.Read(ref _cachedLargePersonGroupClient) ?? Interlocked.CompareExchange(ref _cachedLargePersonGroupClient, new LargePersonGroupClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedLargePersonGroupClient;
+            Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
+
+            return new LargePersonGroupClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, largePersonGroupId, _apiVersion);
         }
     }
 }
