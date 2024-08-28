@@ -678,4 +678,9 @@ input-file:
     - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/deploymentStacks.json
     - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-08-01/dataBoundaries.json
 ```
-
+``` yaml
+directive:
+- from: dataBoundaries.json
+  where: $.paths
+  transform: delete $["/providers/Microsoft.Resources/operations"]
+```
