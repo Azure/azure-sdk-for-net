@@ -4,21 +4,27 @@
 
 ### Features Added
 
-- Add `UpgradePolicy` support to Pool Creation
-  - Added `UpgradePolicy` definition
-  - Added `AutomaticOSUpgradePolicy` definition
-  - Added `RollingUpgradePolicy` definition
+- Add NetworkSecurityPerimeter support
+  - Added `GetNetworkSecurityPerimeterConfigurations` api on `BatchAccountResource` definition
+  - Added `GetNetworkSecurityPerimeterConfiguration` api on `BatchAccountResource` definition
+  - Added `GetAll` api on `NetworkSecurityPerimeterConfigurationCollection` definition
+  - Added `GetAll` api on `NetworkSecurityPerimeterConfigurationCollection` definition
+  - Added `Exists` api on `NetworkSecurityPerimeterConfigurationCollection` definition
+  - Added `GetIfExists` api on `NetworkSecurityPerimeterConfigurationCollection` definition
+  - Added `GetNetworkSecurityPerimeterConfigurationResource` api on `ArmClient` definition
+  - Added `ReconcileConfiguration` api on `NetworkSecurityPerimeterConfigurationResource` definition
 
-- Added `BatchSupportEndOfLife` property to `BatchSupportedSku` definition
+- Added `SharedGalleryImageId` and `CommunityGalleryImageId` to `BatchImageReference` definition
+- Added `SecurityProfile`  to `ManagedDisk` definition
+- Added `SecuredByPerimeter` to `BatchPublicNetworkAccess` enum
+- Added `ConfidentialVm` to `BatchSecurityType` enum
+- Added `ContainerHostBatchBindMounts` to `BatchTaskContainerSettings` definition
 
 ### Breaking Changes
 
-- Removed `UpgradePolicy` support to Pool Creation
-  - Added `UpgradePolicy` definition
-  - Added `AutomaticOSUpgradePolicy` definition
-  - Added `RollingUpgradePolicy` definition
-
-- Added `BatchSupportEndOfLife` property to `BatchSupportedSku` definition
+- Remove CloudService support from Pools
+  - Removed `GetBatchSupportedCloudServiceSkus` api
+  - Removed `BatchCloudServiceConfiguration` from `BatchDeploymentConfiguration`
 
 ## 1.4.0 (2024-03-01)
 
