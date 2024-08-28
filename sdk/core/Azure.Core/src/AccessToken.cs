@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 
 namespace Azure.Core
 {
@@ -48,6 +49,14 @@ namespace Azure.Core
         /// Gets the time when the token should be refreshed.
         /// </summary>
         public DateTimeOffset? RefreshOn { get; }
+
+        /// <summary>
+        /// Converts this <see cref="AccessToken"/> to a <see cref="Credential"/>.
+        /// </summary>
+        public Credential ToCredential()
+        {
+            return new Credential(Token, "Bearer", ExpiresOn);
+        }
 
         /// <inheritdoc />
         public override bool Equals(object? obj)
