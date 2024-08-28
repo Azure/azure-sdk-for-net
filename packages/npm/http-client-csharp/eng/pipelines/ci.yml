@@ -27,6 +27,9 @@ extends:
                 parameters:
                   Paths:
                     - packages/npm/http-client-csharp
+                    - eng
+                    - Directory.Build.props
+                    - Directory.Build.targets
               - task: UseDotNet@2
                 displayName: 'Use .NET Core SDK'
                 retryCountOnTaskFailure: 3
