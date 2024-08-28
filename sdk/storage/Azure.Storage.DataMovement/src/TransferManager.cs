@@ -20,14 +20,10 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class TransferManager : IAsyncDisposable
     {
-        // Indicates whether the current thread is processing Jobs.
-        private static Task _currentTaskIsProcessingJob;
-
-        // Indicates whether the current thread is processing Jobs Parts.
-        private static Task _currentTaskIsProcessingJobPart;
-
-        // Indicates whether the current thread is processing Jobs Chunks.
-        private static Task _currentTaskIsProcessingJobChunk;
+        // Async channel reader tasks. These loop for the lifetime of the object.
+        private readonly Task _currentTaskIsProcessingJob;
+        private readonly Task _currentTaskIsProcessingJobPart;
+        private readonly Task _currentTaskIsProcessingJobChunk;
 
         /// <summary>
         /// Channel of Jobs waiting to divided into job parts/files.
