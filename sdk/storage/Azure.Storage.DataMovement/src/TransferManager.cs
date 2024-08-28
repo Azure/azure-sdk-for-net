@@ -30,21 +30,21 @@ namespace Azure.Storage.DataMovement
         ///
         /// Limit 1 task to convert jobs to job parts.
         /// </summary>
-        private Channel<TransferJobInternal> _jobsToProcessChannel { get; set; }
+        private readonly Channel<TransferJobInternal> _jobsToProcessChannel;
 
         /// <summary>
         /// Channel of Job parts / files to be divided into chunks / requests
         ///
         /// Limit 64 tasks to convert job parts to chunks.
         /// </summary>
-        private Channel<JobPartInternal> _partsToProcessChannel { get; set; }
+        private readonly Channel<JobPartInternal> _partsToProcessChannel;
 
         /// <summary>
         /// Channel of Job chunks / requests to send to the service.
         ///
         /// Limit 4-300/Max amount of tasks allowed to process chunks.
         /// </summary>
-        private Channel<Func<Task>> _chunksToProcessChannel { get; set; }
+        private readonly Channel<Func<Task>> _chunksToProcessChannel;
 
         /// <summary>
         /// This value can fluctuate depending on if we've reached max capacity
