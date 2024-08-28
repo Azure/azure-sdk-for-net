@@ -1,16 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.0.0 (2024-08-27)
+## 1.0.0 (2024-09-10)
 
 ### Features Added
 - Update the StandbyPool api-version from `package-2023-12-01-preview` to `package-2024-03-01`. This is the first stable API version for Standby Pool RP.
