@@ -77,7 +77,7 @@ Ensure that the `PLAYWRIGHT_SERVICE_URL` that you obtained in previous step is a
 
 ### Sign in to Azure
 
-You need to sign in to Azure using Azure CLI to enable authentication via Entra ID.  Run the command to sign-in
+You need to sign in to Azure using Azure CLI to enable authentication via Microsoft Entra ID.  Run the command to sign-in
 
 ```azurecli
 az login

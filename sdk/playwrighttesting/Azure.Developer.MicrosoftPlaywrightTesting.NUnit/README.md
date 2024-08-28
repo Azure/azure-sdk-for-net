@@ -1,4 +1,5 @@
 # Microsoft Playwright Testing client library for .NET
+
 Microsoft Playwright Testing is a fully managed service that uses the cloud to enable you to run Playwright tests with much higher parallelization across different operating system-browser combinations simultaneously. This means faster test runs with broader scenario coverage, which helps speed up delivery of features without sacrificing quality. The service also enables you to publish test results and related artifacts to the service and view them in the service portal enabling faster and easier troubleshooting. With Microsoft Playwright Testing service, you can release features faster and more confidently.
 
 Ready to get started? Jump into our [quickstart guide](#get-started)!
@@ -10,22 +11,21 @@ Ready to get started? Jump into our [quickstart guide](#get-started)!
 - [Pricing](https://aka.ms/mpt/pricing)
 - [Share feedback](https://aka.ms/mpt/feedback)
 
-## Get Started
-Follow these steps to run your existing Playwright test suite with the service.
+## Getting started
 
-### Install Microsoft Playwright Testing package
+### Install the package
 
-1. Run this command to install the service package
+Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
-    ```dotnetcli
-- Your Azure account must be assigned the [Owner](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#owner), [Contributor](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#contributor), or one of the [classic administrator roles](https://learn.microsoft.com/azure/role-based-access-control/rbac-and-directory-admin-roles#classic-subscription-administrator-roles).
+```dotnetcli
+dotnet add package Azure.Developer.MicrosoftPlaywrightTesting.NUnit --prerelease
+```
 
 ### Prerequisites
 
-- An Azure account with an active subscription. If you don't have an Azure subscription, [create a free account](https://aka.ms/mpt/create-azure-subscription) before you begin.
-- Your Azure account must be assigned the [Owner](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner), [Contributor](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#contributor), or one of the [classic administrator roles](https://learn.microsoft.com/en-us/azure/role-based-access-control/rbac-and-directory-admin-roles#classic-subscription-administrator-roles).
-- [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) must be installed in the machine from where you are running Playwright tests. 
+- An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
 - Your Azure account must be assigned the [Owner](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#owner), [Contributor](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#contributor), or one of the [classic administrator roles](https://learn.microsoft.com/azure/role-based-access-control/rbac-and-directory-admin-roles#classic-subscription-administrator-roles).
+
 #### Create a Workspace
 
 1. Sign in to the [Playwright portal](https://aka.ms/mpt/portal) with your Azure account.
@@ -72,15 +72,9 @@ Follow these steps to run your existing Playwright test suite with the service.
 
 Ensure that the `PLAYWRIGHT_SERVICE_URL` that you obtained in previous step is available in your environment.
 
-### Sign in to Azure
+### Authenticate the client
 
-You need to sign in to Azure using Azure CLI to enable authentication via Microsoft Entra ID.  Run the command to sign-in
-
-```azurecli
-az login
-```
-
-**NOTE**: If you are a part of multiple tenants, you will have to login to a particular tenant. Run `az login --tenant=<TENANT_ID>' to sign in to the tenant where the workspace is created. You can find the tenant id through these [steps.](https://learn.microsoft.com/entra/fundamentals/how-to-find-tenant)
+To learn more about options for Microsoft Entra Id authentication, refer to [Azure.Identity credentials](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#credentials). You can also refer to [our samples]<!--(https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit/samples/Sample1_CustomisingServiceParameters.md)--> on how to configurate different Azure Identity credentials.
 
 ### Run the tests
 
@@ -107,3 +101,5 @@ details, visit [cla.microsoft.com][cla].
 This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [opencode@microsoft.com][coc_contact] with any additional questions or comments.
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit/README.png)

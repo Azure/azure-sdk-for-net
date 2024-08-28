@@ -733,7 +733,7 @@
 # ServiceOwners:                                                   @rhurey @dargilco
 
 # PRLabel: %Playwright
-/sdk/playwrighttesting/                                            @Sid200026 @puagarwa @vvs11 @ShreyaAnand
+/sdk/playwrighttesting/                                            @Sid200026 @puagarwa @ShreyaAnand
 
 # ServiceLabel: %Playwright
 # ServiceOwners:                                                   @shreyaanand @mjmadhu
