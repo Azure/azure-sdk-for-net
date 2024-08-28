@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Displayed when details=true or radiiGeometry=true in the request. </summary>
     public partial class StormWindRadiiSummary

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> The HourlyForecastResult. </summary>
     public partial class HourlyForecastResult

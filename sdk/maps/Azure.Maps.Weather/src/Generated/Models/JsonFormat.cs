@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> The JsonFormat. </summary>
     public readonly partial struct JsonFormat : IEquatable<JsonFormat>

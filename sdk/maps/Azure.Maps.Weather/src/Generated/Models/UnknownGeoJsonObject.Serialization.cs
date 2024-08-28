@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     internal partial class UnknownGeoJsonObject
     {

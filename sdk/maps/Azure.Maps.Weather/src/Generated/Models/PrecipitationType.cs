@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Specifies the type of precipitation ("Rain" "Snow" "Ice" or "Mix"). If dbz is zero, precipitationType is not present in the response. </summary>
     public readonly partial struct PrecipitationType : IEquatable<PrecipitationType>

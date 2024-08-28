@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Keyword for the latest status of the alert. </summary>
     public readonly partial struct LatestStatusKeyword : IEquatable<LatestStatusKeyword>

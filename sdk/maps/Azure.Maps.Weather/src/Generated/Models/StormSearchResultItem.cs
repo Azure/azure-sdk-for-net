@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Government-issued active storm event. </summary>
     public partial class StormSearchResultItem

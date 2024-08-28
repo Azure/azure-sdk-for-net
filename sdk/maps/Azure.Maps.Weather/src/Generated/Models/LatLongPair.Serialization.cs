@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     public partial class LatLongPair
     {

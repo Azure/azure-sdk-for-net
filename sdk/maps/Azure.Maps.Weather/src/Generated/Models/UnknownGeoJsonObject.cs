@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Unknown version of GeoJsonObject. </summary>
     internal partial class UnknownGeoJsonObject : GeoJsonObject

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Type of pollutant. Please note that more may be added at any time. </summary>
     public readonly partial struct DominantPollutant : IEquatable<DominantPollutant>

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> This object is returned from a successful Get Daily Air Quality Forecast call. </summary>
     public partial class DailyAirQualityForecastResult

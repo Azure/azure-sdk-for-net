@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Search government-issued storms. </summary>
     public partial class StormSearchResult

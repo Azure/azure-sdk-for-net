@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     internal static partial class GeoJsonObjectTypeExtensions
     {

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> The PressureTendency. </summary>
     public partial class PressureTendency

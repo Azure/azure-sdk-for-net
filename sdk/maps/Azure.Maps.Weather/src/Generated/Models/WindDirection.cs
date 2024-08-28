@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Wind direction. </summary>
     public partial class WindDirection

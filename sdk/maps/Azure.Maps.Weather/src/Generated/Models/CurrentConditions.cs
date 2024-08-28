@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> The CurrentConditions. </summary>
     public partial class CurrentConditions

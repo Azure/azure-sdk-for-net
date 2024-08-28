@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Phrase summaries for the entire forecast period. </summary>
     public partial class MinuteForecastSummary

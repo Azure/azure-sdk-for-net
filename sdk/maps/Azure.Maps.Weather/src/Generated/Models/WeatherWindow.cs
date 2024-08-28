@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Forecast window for the storm. </summary>
     public partial class WeatherWindow

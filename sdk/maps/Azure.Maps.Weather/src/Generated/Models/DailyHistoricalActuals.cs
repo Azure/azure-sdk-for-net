@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> The DailyHistoricalActuals. </summary>
     public partial class DailyHistoricalActuals

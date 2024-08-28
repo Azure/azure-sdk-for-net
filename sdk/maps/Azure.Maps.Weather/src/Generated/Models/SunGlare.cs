@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> A rating that indicates how blinding the sun is for the driver. </summary>
     public partial class SunGlare

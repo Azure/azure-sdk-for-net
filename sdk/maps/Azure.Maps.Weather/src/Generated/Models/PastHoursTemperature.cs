@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Summary of temperature fluctuations over the number of past hours. </summary>
     public partial class PastHoursTemperature

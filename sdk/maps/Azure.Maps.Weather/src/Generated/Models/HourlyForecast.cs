@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> The HourlyForecast. </summary>
     public partial class HourlyForecast

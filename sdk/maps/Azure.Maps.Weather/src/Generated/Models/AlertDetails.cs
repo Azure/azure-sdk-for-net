@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Information about a severe weather alert issued within an affected area(s). If multiple alerts are active for the same location, the alerts will be returned in order of `priority` within the API response, with the highest priority alert being returned at the top of the response. </summary>
     public partial class AlertDetails

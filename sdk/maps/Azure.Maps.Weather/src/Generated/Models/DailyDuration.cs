@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> The DailyDuration. </summary>
     public readonly partial struct DailyDuration : IEquatable<DailyDuration>

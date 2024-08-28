@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Detailed information about an individual pollutant. Not returned if `pollutants`=false. </summary>
     public partial class Pollutant

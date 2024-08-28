@@ -8,7 +8,7 @@
 using System;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> The GeoJsonFeatureData. </summary>
     public partial class GeoJsonFeatureData

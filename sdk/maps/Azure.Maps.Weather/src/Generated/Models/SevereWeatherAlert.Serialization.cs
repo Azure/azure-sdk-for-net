@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     public partial class SevereWeatherAlert
     {
@@ -107,7 +107,7 @@ namespace Azure.Maps.Weather
                     List<AlertDetails> array = new List<AlertDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Weather.AlertDetails.DeserializeAlertDetails(item));
+                        array.Add(Models.AlertDetails.DeserializeAlertDetails(item));
                     }
                     alertAreas = array;
                     continue;

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Information about the air quality in a specific location at a specific time. </summary>
     public partial class DailyAirQuality

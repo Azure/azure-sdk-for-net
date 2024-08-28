@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> The BasinId. </summary>
     public readonly partial struct BasinId : IEquatable<BasinId>

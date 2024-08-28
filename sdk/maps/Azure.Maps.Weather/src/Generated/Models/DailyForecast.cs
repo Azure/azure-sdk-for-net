@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> The DailyForecast. </summary>
     public partial class DailyForecast

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Summary for the main conditions for the requested time period. Notice that summary can cover only part of the time period. </summary>
     public partial class DailyForecastSummary

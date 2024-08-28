@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Description of a severe weather alert. </summary>
     public partial class SevereWeatherAlertDescription
