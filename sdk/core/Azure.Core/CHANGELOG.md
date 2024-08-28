@@ -12,6 +12,7 @@
 
 - Upgraded dependency on System.Text.Json to 6.0.9
 - Added a new constructor on `AzureEventSourceListener` for callers that don't need the formatted message ([#45191](https://github.com/Azure/azure-sdk-for-net/pull/45191)).
+- Remove unused callback from `HttpRequestMessage` options in `HttpClientTransport` transport.
 
 ## 1.42.0 (2024-08-01)
 
