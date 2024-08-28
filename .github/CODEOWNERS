@@ -1006,6 +1006,9 @@
 # PRLabel: %Network - Network Cloud
 /sdk/networkcloud/                                                 @Azure/azure-sdk-write-networkcloud
 
+# ServiceLabel: %Network - Network Cloud %Mgmt
+# ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
+
 # PRLabel: %New Relic
 /sdk/newrelicobservability/Azure.ResourceManager.*/                @dipeshbhakat-microsoft @vipray-ms
 
