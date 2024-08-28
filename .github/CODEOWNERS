@@ -390,6 +390,9 @@
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
 
+# ServiceLabel: %Container Orchestrator Runtime
+/sdk/containerorchestratorruntime/                                 @HE-Xinyu @ddadaal
+
 # ServiceLabel: %Cosmos
 /sdk/cosmosdb/                                                     @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar
 
