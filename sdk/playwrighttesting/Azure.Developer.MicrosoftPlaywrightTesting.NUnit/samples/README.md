@@ -13,4 +13,3 @@ description: Samples for the Azure.Developer.MicrosoftPlaywrightTesting.NUnit cl
 
 - [Customising service parameters]<!--(https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit/samples/Sample1_CustomisingServiceParameters.md)-->
 - [Set default authentication mechanism]<!--(https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit/samples/Sample2_SetDefaultAuthenticationMechanism.md)-->
-- [Manually connecting to browsers]<!--(https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit/samples/Sample3_ManuallyConnectingToBrowsers.md)-->

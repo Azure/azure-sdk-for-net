@@ -2,7 +2,7 @@
 
 Microsoft Playwright Testing is a fully managed service that uses the cloud to enable you to run Playwright tests with much higher parallelization across different operating system-browser combinations simultaneously. This means faster test runs with broader scenario coverage, which helps speed up delivery of features without sacrificing quality. The service also enables you to publish test results and related artifacts to the service and view them in the service portal enabling faster and easier troubleshooting. With Microsoft Playwright Testing service, you can release features faster and more confidently.
 
-Ready to get started? Jump into our [quickstart guide](#get-started)!
+Ready to get started? Jump into our [quickstart guide]<!--(https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit/README.md#getting-started)-->!
 
 ## Useful links
 - [Quickstart: Run end-to-end tests at scale](https://aka.ms/mpt/quickstart)
@@ -46,16 +46,16 @@ dotnet add package Azure.Developer.MicrosoftPlaywrightTesting.NUnit --prerelease
 
 ### Set up Microsoft Playwright Testing
 
-1. Create a file `PlaywrightServiceSetup.cs` in the root directory with the below content
+Create a file `PlaywrightServiceSetup.cs` in the root directory with the below content
 
-    ```c#
-    using Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
+```C# Snippet:Sample2_SetDefaultAuthenticationMechanism
+using Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 
-    namespace PlaywrightTests; // Remember to change this as per your project namespace
+namespace PlaywrightATests; // Remember to change this as per your project namespace
 
-    [SetUpFixture]
-    public class PlaywrightServiceSetup : PlaywrightServiceNUnit;
-    ```
+[SetUpFixture]
+public class PlaywrightServiceSetup : PlaywrightServiceNUnit {};
+```
 
 > [!NOTE]
 > Make sure your project uses `Microsoft.Playwright.NUnit` version 1.37 or above.

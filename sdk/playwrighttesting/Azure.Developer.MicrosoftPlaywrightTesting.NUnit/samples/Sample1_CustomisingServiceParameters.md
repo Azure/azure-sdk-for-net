@@ -1,6 +1,6 @@
 ## Learn about different available service parameters and how to use them
 
-Follow the steps listed in this [README](../../README.md) to integrate your existing Playwright test suite with the Microsoft Playwright Testing service.
+Follow the steps listed in this [README]<!--(https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit/README.md)--> to integrate your existing Playwright test suite with the Microsoft Playwright Testing service.
 
 This guide explains the different options available to you in the Azure.Developer.MicrosoftPlaywrightTesting.NUnit package and how to use them.
 
@@ -8,37 +8,37 @@ This guide explains the different options available to you in the Azure.Develope
 
 1. Create a `.runsettings` file in the root directory:
 
-    ```xml
-    <?xml version="1.0" encoding="utf-8"?>
-    <RunSettings>
-        <TestRunParameters>
-            <!-- The below parameters are optional -->
-            <Parameter name="Os" value="linux" />
-            <Parameter name="RunId" value="sample-run-id" />
-            <Parameter name="ExposeNetwork" value="<loopback>" />
-            <Parameter name="DefaultAuth" value="ENTRA" />
-            <Parameter name="UseCloudHostedBrowsers" value="true" />
-            <Parameter name="AzureTokenCredentialType" value="DefaultAzureCredential" />
-            <Parameter name="ManagedIdentityClientId" value="77bfc267-86cb-4eeb-9e4a-747a217a318c" />
-            <Parameter name="EnableGitHubSummary" value="false" />
-        </TestRunParameters>
-        <!-- Enable Reporting feature -->
-        <LoggerRunSettings>
-            <Loggers>
-                <Logger friendlyName="ms-playwright-service" enabled="true" />
-            </Loggers>
-        </LoggerRunSettings>
-    </RunSettings>
-    ```
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+    <TestRunParameters>
+        <!-- The below parameters are optional -->
+        <Parameter name="Os" value="linux" />
+        <Parameter name="RunId" value="sample-run-id" />
+        <Parameter name="ExposeNetwork" value="<loopback>" />
+        <Parameter name="DefaultAuth" value="ENTRA" />
+        <Parameter name="UseCloudHostedBrowsers" value="true" />
+        <Parameter name="AzureTokenCredentialType" value="DefaultAzureCredential" />
+        <Parameter name="ManagedIdentityClientId" value="77bfc267-86cb-4eeb-9e4a-747a217a318c" />
+        <Parameter name="EnableGitHubSummary" value="false" />
+    </TestRunParameters>
+    <!-- Enable Reporting feature -->
+    <LoggerRunSettings>
+        <Loggers>
+            <Logger friendlyName="ms-playwright-service" enabled="true" />
+        </Loggers>
+    </LoggerRunSettings>
+</RunSettings>
+```
 
   > [!NOTE]
   > You can also modify the runid by setting the environment variable `PLAYWRIGHT_SERVICE_RUN_ID`.
 
 2. Run tests using the above `.runsettings` file:
 
-    ```dotnetcli
-    dotnet test --settings .runsettings
-    ```
+```dotnetcli
+dotnet test --settings .runsettings
+```
 
 #### Known issue: Minimal support for Azure Identity library credentials
 
@@ -48,7 +48,7 @@ Along with this, we also support passing a Managed Identity ClientId to be used 
 
 If you only want to use cloud-hosted browsers along with your tests, you can disable the reporting feature by removing the logger from the runsettings file and then modify the `PlaywrightServiceSetup.cs` file as per the following.
 
-```c#
+```C# Snippet:Sample1_CustomisingServiceParameters
 using Azure.Core;
 using Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 using Azure.Identity;
@@ -60,9 +60,8 @@ public class PlaywrightServiceSetup : PlaywrightServiceNUnit
 {
     public static readonly TokenCredential managedIdentityCredential = new ManagedIdentityCredential();
 
-    public PlaywrightServiceSetup() : base(managedIdentityCredential)
-    { }
-};
+    public PlaywrightServiceSetup() : base(managedIdentityCredential) {}
+}
 ```
 
 ## Settings
