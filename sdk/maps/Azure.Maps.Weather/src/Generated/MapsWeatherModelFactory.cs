@@ -9,14 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Maps.Weather
+namespace Azure.Maps.Weather.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class MapsWeatherModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Weather.HourlyForecastResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HourlyForecastResult"/>. </summary>
         /// <param name="forecasts"> Forecast data for each returned hour. </param>
-        /// <returns> A new <see cref="Weather.HourlyForecastResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.HourlyForecastResult"/> instance for mocking. </returns>
         public static HourlyForecastResult HourlyForecastResult(IEnumerable<HourlyForecast> forecasts = null)
         {
             forecasts ??= new List<HourlyForecast>();
@@ -24,7 +24,7 @@ namespace Azure.Maps.Weather
             return new HourlyForecastResult(forecasts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.HourlyForecast"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HourlyForecast"/>. </summary>
         /// <param name="timestamp"> Date and time of the forecast in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="iconCode"> Numeric value representing an image that displays the `iconPhrase`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#weather-icons) for details. </param>
         /// <param name="iconPhrase"> Phrase description of the weather icon. </param>
@@ -57,7 +57,7 @@ namespace Azure.Maps.Weather
         /// <param name="snow"> Snow. </param>
         /// <param name="ice"> Ice. </param>
         /// <param name="cloudCover"> Percent representing cloud cover. </param>
-        /// <returns> A new <see cref="Weather.HourlyForecast"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.HourlyForecast"/> instance for mocking. </returns>
         public static HourlyForecast HourlyForecast(DateTimeOffset? timestamp = null, IconCode? iconCode = null, string iconPhrase = null, bool? hasPrecipitation = null, bool? isDaylight = null, WeatherValue temperature = null, WeatherValue realFeelTemperature = null, WeatherValue wetBulbTemperature = null, WeatherValue dewPoint = null, WindDetails wind = null, WindDetails windGust = null, int? relativeHumidity = null, WeatherValue visibility = null, WeatherValue cloudCeiling = null, int? uvIndex = null, string uvIndexDescription = null, int? precipitationProbability = null, int? rainProbability = null, int? snowProbability = null, int? iceProbability = null, WeatherValue totalLiquid = null, WeatherValue rain = null, WeatherValue snow = null, WeatherValue ice = null, int? cloudCover = null)
         {
             return new HourlyForecast(
@@ -88,39 +88,39 @@ namespace Azure.Maps.Weather
                 cloudCover);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherValue"/>. </summary>
         /// <param name="value"> Rounded value. </param>
         /// <param name="unitLabel"> Type of unit for the returned value. </param>
         /// <param name="unitType"> Numeric ID value associated with the type of unit being displayed. Can be used for unit translation. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#unittype) for details. </param>
-        /// <returns> A new <see cref="Weather.WeatherValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherValue"/> instance for mocking. </returns>
         public static WeatherValue WeatherValue(float? value = null, string unitLabel = null, UnitType? unitType = null)
         {
             return new WeatherValue(value, unitLabel, unitType);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WindDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WindDetails"/>. </summary>
         /// <param name="direction"> Wind direction. </param>
         /// <param name="speed"> Speed of the wind in specified unit. </param>
-        /// <returns> A new <see cref="Weather.WindDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WindDetails"/> instance for mocking. </returns>
         public static WindDetails WindDetails(WindDirection direction = null, WeatherValue speed = null)
         {
             return new WindDetails(direction, speed);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WindDirection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WindDirection"/>. </summary>
         /// <param name="degrees"> Wind direction in Azimuth degrees,  starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </param>
         /// <param name="description"> Direction abbreviation in the specified language. </param>
-        /// <returns> A new <see cref="Weather.WindDirection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WindDirection"/> instance for mocking. </returns>
         public static WindDirection WindDirection(int? degrees = null, string description = null)
         {
             return new WindDirection(degrees, description);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.MinuteForecastResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MinuteForecastResult"/>. </summary>
         /// <param name="summary"> Phrase summaries for the entire forecast period. </param>
         /// <param name="intervalSummaries"> Summary information for each interval in the forecast. The Summaries breaks down each potential interval where precipitation starts and stops. </param>
         /// <param name="intervals"> Forecast data for each interval in the forecast. </param>
-        /// <returns> A new <see cref="Weather.MinuteForecastResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.MinuteForecastResult"/> instance for mocking. </returns>
         public static MinuteForecastResult MinuteForecastResult(MinuteForecastSummary summary = null, IEnumerable<IntervalSummary> intervalSummaries = null, IEnumerable<ForecastInterval> intervals = null)
         {
             intervalSummaries ??= new List<IntervalSummary>();
@@ -129,19 +129,19 @@ namespace Azure.Maps.Weather
             return new MinuteForecastResult(summary, intervalSummaries?.ToList(), intervals?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.MinuteForecastSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MinuteForecastSummary"/>. </summary>
         /// <param name="briefPhrase60"> Summary phrase for the next 60 minutes. Phrase length is approximately 60 characters. </param>
         /// <param name="shortDescription"> Short summary phrase for the next 120 minutes. Phrase length is approximately 25 characters. </param>
         /// <param name="briefDescription"> Summary phrase for the next 120 minutes. Phrase length is approximately 60 characters. </param>
         /// <param name="longPhrase"> Long summary phrase for the next 120 minutes. Phrase length is 60+ characters. </param>
         /// <param name="iconCode"> Numeric value representing an image that displays the `iconPhrase`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#weather-icons) for details. </param>
-        /// <returns> A new <see cref="Weather.MinuteForecastSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.MinuteForecastSummary"/> instance for mocking. </returns>
         public static MinuteForecastSummary MinuteForecastSummary(string briefPhrase60 = null, string shortDescription = null, string briefDescription = null, string longPhrase = null, IconCode? iconCode = null)
         {
             return new MinuteForecastSummary(briefPhrase60, shortDescription, briefDescription, longPhrase, iconCode);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.IntervalSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntervalSummary"/>. </summary>
         /// <param name="startMinute"> The first minute to which the summary applies. </param>
         /// <param name="endMinute"> The last minute to which the summary applies. </param>
         /// <param name="totalMinutes"> The number of minutes for which the summary applies. </param>
@@ -149,7 +149,7 @@ namespace Azure.Maps.Weather
         /// <param name="briefDescription"> Brief summary phrase. Phrase length is approximately 60 characters. </param>
         /// <param name="longPhrase"> Long summary phrase. Phrase length is 60+ characters. </param>
         /// <param name="iconCode"> Numeric value representing an image that displays the `iconPhrase`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#weather-icons) for details. </param>
-        /// <returns> A new <see cref="Weather.IntervalSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.IntervalSummary"/> instance for mocking. </returns>
         public static IntervalSummary IntervalSummary(int? startMinute = null, int? endMinute = null, int? totalMinutes = null, string shortDescription = null, string briefDescription = null, string longPhrase = null, IconCode? iconCode = null)
         {
             return new IntervalSummary(
@@ -162,7 +162,7 @@ namespace Azure.Maps.Weather
                 iconCode);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.ForecastInterval"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ForecastInterval"/>. </summary>
         /// <param name="startTime"> The date and time for the start of the interval in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="minute"> The first minute for the interval. </param>
         /// <param name="decibelRelativeToZ"> A unit that represents forecasted precipitation intensity. </param>
@@ -173,7 +173,7 @@ namespace Azure.Maps.Weather
         /// <param name="precipitationType"> Specifies the type of precipitation ("Rain" "Snow" "Ice" or "Mix"). If dbz is zero, precipitationType is not present in the response. </param>
         /// <param name="iconCode"> Numeric value representing an image that displays the `iconPhrase`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#weather-icons) for details. </param>
         /// <param name="cloudCover"> Percent representing cloud cover. </param>
-        /// <returns> A new <see cref="Weather.ForecastInterval"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ForecastInterval"/> instance for mocking. </returns>
         public static ForecastInterval ForecastInterval(DateTimeOffset? startTime = null, int? minute = null, double? decibelRelativeToZ = null, string shortDescription = null, string threshold = null, ColorValue color = null, ColorValue simplifiedColor = null, PrecipitationType? precipitationType = null, IconCode? iconCode = null, int? cloudCover = null)
         {
             return new ForecastInterval(
@@ -189,20 +189,20 @@ namespace Azure.Maps.Weather
                 cloudCover);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.ColorValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ColorValue"/>. </summary>
         /// <param name="red"> Red component of the RGB value. </param>
         /// <param name="green"> Green component of the RGB value. </param>
         /// <param name="blue"> Blue component of the RGB value. </param>
         /// <param name="hex"> Hexadecimal color value. </param>
-        /// <returns> A new <see cref="Weather.ColorValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ColorValue"/> instance for mocking. </returns>
         public static ColorValue ColorValue(int? red = null, int? green = null, int? blue = null, string hex = null)
         {
             return new ColorValue(red, green, blue, hex);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.QuarterDayForecastResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuarterDayForecastResult"/>. </summary>
         /// <param name="forecasts"> Forecast data for each quarter in the response. </param>
-        /// <returns> A new <see cref="Weather.QuarterDayForecastResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.QuarterDayForecastResult"/> instance for mocking. </returns>
         public static QuarterDayForecastResult QuarterDayForecastResult(IEnumerable<QuarterDayForecast> forecasts = null)
         {
             forecasts ??= new List<QuarterDayForecast>();
@@ -210,7 +210,7 @@ namespace Azure.Maps.Weather
             return new QuarterDayForecastResult(forecasts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.QuarterDayForecast"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuarterDayForecast"/>. </summary>
         /// <param name="dateTime"> Date of the forecast as example, 2019-10-27T00:00:00. </param>
         /// <param name="effectiveDate"> Date and time of the beginning of the forecast quarter displayed in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="quarter"> Quarter of the day. </param>
@@ -234,7 +234,7 @@ namespace Azure.Maps.Weather
         /// <param name="rain"> Rain. </param>
         /// <param name="snow"> Snow. </param>
         /// <param name="ice"> Ice. </param>
-        /// <returns> A new <see cref="Weather.QuarterDayForecast"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.QuarterDayForecast"/> instance for mocking. </returns>
         public static QuarterDayForecast QuarterDayForecast(DateTimeOffset? dateTime = null, DateTimeOffset? effectiveDate = null, DayQuarter? quarter = null, IconCode? iconCode = null, string iconPhrase = null, string phrase = null, WeatherValueRange temperature = null, WeatherValueRange realFeelTemperature = null, WeatherValue dewPoint = null, int? relativeHumidity = null, WindDetails wind = null, WindDetails windGust = null, WeatherValue visibility = null, int? cloudCover = null, bool? hasPrecipitation = null, PrecipitationType? precipitationType = null, string precipitationIntensity = null, int? precipitationProbability = null, int? thunderstormProbability = null, WeatherValue totalLiquid = null, WeatherValue rain = null, WeatherValue snow = null, WeatherValue ice = null)
         {
             return new QuarterDayForecast(
@@ -263,18 +263,18 @@ namespace Azure.Maps.Weather
                 ice);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherValueRange"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherValueRange"/>. </summary>
         /// <param name="minimum"> Minimum temperature for the time period. </param>
         /// <param name="maximum"> Maximum temperature for the time period. </param>
-        /// <returns> A new <see cref="Weather.WeatherValueRange"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherValueRange"/> instance for mocking. </returns>
         public static WeatherValueRange WeatherValueRange(WeatherValue minimum = null, WeatherValue maximum = null)
         {
             return new WeatherValueRange(minimum, maximum);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.CurrentConditionsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CurrentConditionsResult"/>. </summary>
         /// <param name="results"> Detailed current weather conditions. </param>
-        /// <returns> A new <see cref="Weather.CurrentConditionsResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CurrentConditionsResult"/> instance for mocking. </returns>
         public static CurrentConditionsResult CurrentConditionsResult(IEnumerable<CurrentConditions> results = null)
         {
             results ??= new List<CurrentConditions>();
@@ -282,7 +282,7 @@ namespace Azure.Maps.Weather
             return new CurrentConditionsResult(results?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.CurrentConditions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CurrentConditions"/>. </summary>
         /// <param name="dateTime"> Date and time of the current observation displayed in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="description"> Phrase description of the current weather condition.  Displayed in specified language. </param>
         /// <param name="iconCode"> Numeric value representing an image that displays the `iconPhrase`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#weather-icons) for details. </param>
@@ -349,7 +349,7 @@ namespace Azure.Maps.Weather
         /// <param name="wetBulbTemperature"> The temperature to which air may be cooled by evaporating water into it at constant pressure until it reaches saturation. </param>
         /// <param name="precipitationSummary"> Summary of precipitation amounts over the past 24 hours. </param>
         /// <param name="temperatureSummary"> Summary of temperature fluctuations over the past 6, 12, and 24 hours. </param>
-        /// <returns> A new <see cref="Weather.CurrentConditions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CurrentConditions"/> instance for mocking. </returns>
         public static CurrentConditions CurrentConditions(DateTimeOffset? dateTime = null, string description = null, IconCode? iconCode = null, bool? hasPrecipitation = null, bool? isDaytime = null, WeatherValue temperature = null, WeatherValue realFeelTemperature = null, WeatherValue realFeelTemperatureShade = null, int? relativeHumidity = null, WeatherValue dewPoint = null, WindDetails wind = null, WindDetails windGust = null, int? uvIndex = null, string uvIndexDescription = null, WeatherValue visibility = null, string obstructionsToVisibility = null, int? cloudCover = null, WeatherValue cloudCeiling = null, WeatherValue pressure = null, PressureTendency pressureTendency = null, WeatherValue pastTwentyFourHourTemperatureDeparture = null, WeatherValue apparentTemperature = null, WeatherValue windChillTemperature = null, WeatherValue wetBulbTemperature = null, PrecipitationSummary precipitationSummary = null, TemperatureSummary temperatureSummary = null)
         {
             return new CurrentConditions(
@@ -381,16 +381,16 @@ namespace Azure.Maps.Weather
                 temperatureSummary);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.PressureTendency"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PressureTendency"/>. </summary>
         /// <param name="description"> Description of the pressure tendency in specified language. </param>
         /// <param name="code"> Pressure tendency code regardless of language. One of F=Falling, S=Steady, R=Rising. </param>
-        /// <returns> A new <see cref="Weather.PressureTendency"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PressureTendency"/> instance for mocking. </returns>
         public static PressureTendency PressureTendency(string description = null, string code = null)
         {
             return new PressureTendency(description, code);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.PrecipitationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PrecipitationSummary"/>. </summary>
         /// <param name="pastHour"> The amount of precipitation (liquid equivalent) that has fallen in the past hour. </param>
         /// <param name="pastThreeHours"> The amount of precipitation (liquid equivalent) that has fallen in the past three hours. </param>
         /// <param name="pastSixHours"> The amount of precipitation (liquid equivalent) that has fallen in the past six hours. Contains Metric and Imperial Values. </param>
@@ -398,7 +398,7 @@ namespace Azure.Maps.Weather
         /// <param name="pastTwelveHours"> The amount of precipitation (liquid equivalent) that has fallen in the past 12 hours. </param>
         /// <param name="pastEighteenHours"> The amount of precipitation (liquid equivalent) that has fallen in the past 18 hours. </param>
         /// <param name="pastTwentyFourHours"> The amount of precipitation (liquid equivalent) that has fallen in the past 24 hours. </param>
-        /// <returns> A new <see cref="Weather.PrecipitationSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PrecipitationSummary"/> instance for mocking. </returns>
         public static PrecipitationSummary PrecipitationSummary(WeatherValue pastHour = null, WeatherValue pastThreeHours = null, WeatherValue pastSixHours = null, WeatherValue pastNineHours = null, WeatherValue pastTwelveHours = null, WeatherValue pastEighteenHours = null, WeatherValue pastTwentyFourHours = null)
         {
             return new PrecipitationSummary(
@@ -411,29 +411,29 @@ namespace Azure.Maps.Weather
                 pastTwentyFourHours);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.TemperatureSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TemperatureSummary"/>. </summary>
         /// <param name="pastSixHours"> Summary of temperature fluctuations over the past 6 hours. </param>
         /// <param name="pastTwelveHours"> Summary of temperature fluctuations over the past 12 hours. </param>
         /// <param name="pastTwentyFourHours"> Summary of temperature fluctuations over the past 24 hours. </param>
-        /// <returns> A new <see cref="Weather.TemperatureSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.TemperatureSummary"/> instance for mocking. </returns>
         public static TemperatureSummary TemperatureSummary(PastHoursTemperature pastSixHours = null, PastHoursTemperature pastTwelveHours = null, PastHoursTemperature pastTwentyFourHours = null)
         {
             return new TemperatureSummary(pastSixHours, pastTwelveHours, pastTwentyFourHours);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.PastHoursTemperature"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PastHoursTemperature"/>. </summary>
         /// <param name="minimum"> minimum. </param>
         /// <param name="maximum"> maximum. </param>
-        /// <returns> A new <see cref="Weather.PastHoursTemperature"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PastHoursTemperature"/> instance for mocking. </returns>
         public static PastHoursTemperature PastHoursTemperature(WeatherValue minimum = null, WeatherValue maximum = null)
         {
             return new PastHoursTemperature(minimum, maximum);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyForecastResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyForecastResult"/>. </summary>
         /// <param name="summary"> Summary for the main conditions for the requested time period. Notice that summary can cover only part of the time period. </param>
         /// <param name="forecasts"> Forecast data for each requested day. </param>
-        /// <returns> A new <see cref="Weather.DailyForecastResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyForecastResult"/> instance for mocking. </returns>
         public static DailyForecastResult DailyForecastResult(DailyForecastSummary summary = null, IEnumerable<DailyForecast> forecasts = null)
         {
             forecasts ??= new List<DailyForecast>();
@@ -441,19 +441,19 @@ namespace Azure.Maps.Weather
             return new DailyForecastResult(summary, forecasts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyForecastSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyForecastSummary"/>. </summary>
         /// <param name="startDate"> Date and time that the summary is in effect, displayed in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="endDate"> Date and time that the summary period ends, displayed in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="severity"> severity. </param>
         /// <param name="phrase"> Summary phrase of the daily forecast.  Displayed in specified language. </param>
         /// <param name="category"> one or 2 word(s) to summarize the phrase. </param>
-        /// <returns> A new <see cref="Weather.DailyForecastSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyForecastSummary"/> instance for mocking. </returns>
         public static DailyForecastSummary DailyForecastSummary(DateTimeOffset? startDate = null, DateTimeOffset? endDate = null, int? severity = null, string phrase = null, string category = null)
         {
             return new DailyForecastSummary(startDate, endDate, severity, phrase, category);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyForecast"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyForecast"/>. </summary>
         /// <param name="dateTime"> Date and time of the current observation displayed in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="temperature"> Temperature values for the day. </param>
         /// <param name="realFeelTemperature"> RealFeel™ Temperature being returned. </param>
@@ -464,7 +464,7 @@ namespace Azure.Maps.Weather
         /// <param name="daytimeForecast"> Day forecast detail. </param>
         /// <param name="nighttimeForecast"> Night forecast detail. </param>
         /// <param name="sources"> Source(s) of the forecast data. </param>
-        /// <returns> A new <see cref="Weather.DailyForecast"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyForecast"/> instance for mocking. </returns>
         public static DailyForecast DailyForecast(DateTimeOffset? dateTime = null, WeatherValueRange temperature = null, WeatherValueRange realFeelTemperature = null, WeatherValueRange realFeelTemperatureShade = null, float? hoursOfSun = null, DegreeDaySummary meanTemperatureDeviation = null, IEnumerable<AirAndPollen> airQuality = null, DailyForecastDetail daytimeForecast = null, DailyForecastDetail nighttimeForecast = null, IEnumerable<string> sources = null)
         {
             airQuality ??= new List<AirAndPollen>();
@@ -483,28 +483,28 @@ namespace Azure.Maps.Weather
                 sources?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DegreeDaySummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DegreeDaySummary"/>. </summary>
         /// <param name="heating"> Number of degrees that the mean temperature is below 65 degrees F/ 18 degree C. </param>
         /// <param name="cooling"> Number of degrees that the mean temperature is above 65 degrees F/ 18 degree C. </param>
-        /// <returns> A new <see cref="Weather.DegreeDaySummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DegreeDaySummary"/> instance for mocking. </returns>
         public static DegreeDaySummary DegreeDaySummary(WeatherValue heating = null, WeatherValue cooling = null)
         {
             return new DegreeDaySummary(heating, cooling);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.AirAndPollen"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AirAndPollen"/>. </summary>
         /// <param name="description"> Name of the pollen or pollutant. For example, grass, mold, weed, air quality, tree and UV index. </param>
         /// <param name="value"> Value of the given type above. Values associated with mold, grass, weed and tree are in units of parts per cubic meter. Both air quality and UV are indices, so they are unitless. </param>
         /// <param name="category"> Category of the air quality or pollution type. For example, low, high, good, moderate, unhealthy, hazardous. </param>
         /// <param name="categoryValue"> Value associated with the air quality or pollution category. These values range from 1 to 6. 1 implying good conditions, 6 implying hazardous conditions. </param>
         /// <param name="airQualityType"> Only exists for air quality. Examples include ozone and particle pollution. </param>
-        /// <returns> A new <see cref="Weather.AirAndPollen"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.AirAndPollen"/> instance for mocking. </returns>
         public static AirAndPollen AirAndPollen(string description = null, int? value = null, string category = null, int? categoryValue = null, string airQualityType = null)
         {
             return new AirAndPollen(description, value, category, categoryValue, airQualityType);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyForecastDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyForecastDetail"/>. </summary>
         /// <param name="iconCode"> Numeric value representing an image that displays the `iconPhrase`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#weather-icons) for details. </param>
         /// <param name="iconPhrase"> Phrase description of the icon. Displayed in specified language. For example, 'Sunny'. </param>
         /// <param name="localSource"> Local weather data provider information. </param>
@@ -529,7 +529,7 @@ namespace Azure.Maps.Weather
         /// <param name="hoursOfSnow"> Hours of snow. </param>
         /// <param name="hoursOfIce"> Hours of ice. </param>
         /// <param name="cloudCover"> Percent representing cloud cover. </param>
-        /// <returns> A new <see cref="Weather.DailyForecastDetail"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyForecastDetail"/> instance for mocking. </returns>
         public static DailyForecastDetail DailyForecastDetail(IconCode? iconCode = null, string iconPhrase = null, LocalSource localSource = null, bool? hasPrecipitation = null, PrecipitationType? precipitationType = null, string precipitationIntensity = null, string shortDescription = null, string longPhrase = null, int? precipitationProbability = null, int? thunderstormProbability = null, int? rainProbability = null, int? snowProbability = null, int? iceProbability = null, WindDetails wind = null, WindDetails windGust = null, WeatherValue totalLiquid = null, WeatherValue rain = null, WeatherValue snow = null, WeatherValue ice = null, float? hoursOfPrecipitation = null, float? hoursOfRain = null, float? hoursOfSnow = null, float? hoursOfIce = null, int? cloudCover = null)
         {
             return new DailyForecastDetail(
@@ -559,20 +559,20 @@ namespace Azure.Maps.Weather
                 cloudCover);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.LocalSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LocalSource"/>. </summary>
         /// <param name="id"> Numeric identifier, unique to the local data provider. </param>
         /// <param name="name"> Name of the local data provider. Name is displayed in the language specified by language code in URL, if available. Otherwise, Name is displayed in English or the language in which the name was provided. </param>
         /// <param name="weatherCode"> Weather code provided by the local data provider. This weather code allows the forecast to be matched to icons provided by the local data provider instead of Azure Maps icons. </param>
-        /// <returns> A new <see cref="Weather.LocalSource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.LocalSource"/> instance for mocking. </returns>
         public static LocalSource LocalSource(int? id = null, string name = null, string weatherCode = null)
         {
             return new LocalSource(id, name, weatherCode);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherAlongRouteResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherAlongRouteResult"/>. </summary>
         /// <param name="summary"> Short summary of the weather along the route. </param>
         /// <param name="waypoints"> Data for each waypoint returned in the same order as specified in the request. </param>
-        /// <returns> A new <see cref="Weather.WeatherAlongRouteResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherAlongRouteResult"/> instance for mocking. </returns>
         public static WeatherAlongRouteResult WeatherAlongRouteResult(WeatherAlongRouteSummary summary = null, IEnumerable<WaypointForecast> waypoints = null)
         {
             waypoints ??= new List<WaypointForecast>();
@@ -580,16 +580,16 @@ namespace Azure.Maps.Weather
             return new WeatherAlongRouteResult(summary, waypoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherAlongRouteSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherAlongRouteSummary"/>. </summary>
         /// <param name="iconCode"> Numeric value representing an image that displays the `iconPhrase`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#weather-icons) for details. </param>
         /// <param name="hazards"> Description of the weather hazard affecting the trip. </param>
-        /// <returns> A new <see cref="Weather.WeatherAlongRouteSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherAlongRouteSummary"/> instance for mocking. </returns>
         public static WeatherAlongRouteSummary WeatherAlongRouteSummary(IconCode? iconCode = null, WeatherHazards hazards = null)
         {
             return new WeatherAlongRouteSummary(iconCode, hazards);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherHazards"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherHazards"/>. </summary>
         /// <param name="maxHazardIndex">
         /// A severity/hazard index.
         ///   * `0` - No hazard.
@@ -599,7 +599,7 @@ namespace Azure.Maps.Weather
         ///   * `4` - Life threatening, emergency.
         /// </param>
         /// <param name="details"> Details of the weather hazards affecting the trip. </param>
-        /// <returns> A new <see cref="Weather.WeatherHazards"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherHazards"/> instance for mocking. </returns>
         public static WeatherHazards WeatherHazards(HazardIndex? maxHazardIndex = null, IEnumerable<HazardDetail> details = null)
         {
             details ??= new List<HazardDetail>();
@@ -607,7 +607,7 @@ namespace Azure.Maps.Weather
             return new WeatherHazards(maxHazardIndex, details?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.HazardDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HazardDetail"/>. </summary>
         /// <param name="hazardIndex">
         /// A severity/hazard index.
         ///   * `0` - No hazard.
@@ -618,13 +618,13 @@ namespace Azure.Maps.Weather
         /// </param>
         /// <param name="hazardCode"> A unique identifier (non-displayable) for each type of hazard: LightRain, ModerateRain, HeavyRain, LightMix, ModerateMix, HeavyMix, LightSnow, ModerateSnow, HeavySnow, LightIce, ModerateIce, HeavyIce, Hail, LargeHail, SunGlare, SunGlareHigh, Lightning, SevereLightning, WindModerate, WindHigh, WindExtreme, FloodWarning, FlashFloodWarning, TornadoWarning, TsunamiWarning, SevereThunderstormWarning. </param>
         /// <param name="shortDescription"> A displayable short phrase describing the forecasted conditions and precipitation intensity/type. </param>
-        /// <returns> A new <see cref="Weather.HazardDetail"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.HazardDetail"/> instance for mocking. </returns>
         public static HazardDetail HazardDetail(HazardIndex? hazardIndex = null, string hazardCode = null, string shortDescription = null)
         {
             return new HazardDetail(hazardIndex, hazardCode, shortDescription);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WaypointForecast"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WaypointForecast"/>. </summary>
         /// <param name="iconCode"> Numeric value representing an image that displays the `iconPhrase`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#weather-icons) for details. </param>
         /// <param name="shortDescription"> A displayable short phrase describing the forecasted conditions and precipitation intensity/type. </param>
         /// <param name="isDaytime"> Indicates the time of the day. True indicates 'day',', false indicates 'night. </param>
@@ -637,7 +637,7 @@ namespace Azure.Maps.Weather
         /// <param name="sunGlare"> A rating that indicates how blinding the sun is for the driver. </param>
         /// <param name="hazards"> Description of the weather hazard affecting the trip. </param>
         /// <param name="notifications"> List of weather hazard notifications. </param>
-        /// <returns> A new <see cref="Weather.WaypointForecast"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WaypointForecast"/> instance for mocking. </returns>
         public static WaypointForecast WaypointForecast(IconCode? iconCode = null, string shortDescription = null, bool? isDaytime = null, int? cloudCover = null, WeatherValue temperature = null, WindDetails wind = null, WindDetails windGust = null, WeatherAlongRoutePrecipitation precipitation = null, int? lightningCount = null, SunGlare sunGlare = null, WeatherHazards hazards = null, IEnumerable<WeatherNotification> notifications = null)
         {
             notifications ??= new List<WeatherNotification>();
@@ -657,25 +657,25 @@ namespace Azure.Maps.Weather
                 notifications?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherAlongRoutePrecipitation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherAlongRoutePrecipitation"/>. </summary>
         /// <param name="dbz"> The forecasted precipitation intensity in dBZ (decibels relative to Z) from 0.0 to 100.0. </param>
         /// <param name="type"> Precipitation type. If precipitation should occur, the type that it will be: "RAIN," "HAIL," "SNOW," "ICE," or "MIX.". </param>
-        /// <returns> A new <see cref="Weather.WeatherAlongRoutePrecipitation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherAlongRoutePrecipitation"/> instance for mocking. </returns>
         public static WeatherAlongRoutePrecipitation WeatherAlongRoutePrecipitation(double? dbz = null, string type = null)
         {
             return new WeatherAlongRoutePrecipitation(dbz, type);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.SunGlare"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SunGlare"/>. </summary>
         /// <param name="calculatedVehicleHeading"> If the vehicle heading value is not provided for a waypoint, then the service will calculate a heading based upon the location of neighboring waypoints if provided. </param>
         /// <param name="glareIndex"> An index from 0 to 100 indicating sun glare intensity for a driver. A value of 50 and above can be considered a hazard for some drivers and a value of 100 signifies the driver is driving straight into the sun and atmospheric conditions are clear allowing for the full intensity of the sun to blind the driver. </param>
-        /// <returns> A new <see cref="Weather.SunGlare"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SunGlare"/> instance for mocking. </returns>
         public static SunGlare SunGlare(int? calculatedVehicleHeading = null, int? glareIndex = null)
         {
             return new SunGlare(calculatedVehicleHeading, glareIndex);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherNotification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherNotification"/>. </summary>
         /// <param name="type"> A type of notification generated to warn drivers of the onset of a hazard, or increase in intensity of a hazard. </param>
         /// <param name="hazardIndex">
         /// A severity/hazard index.
@@ -687,15 +687,15 @@ namespace Azure.Maps.Weather
         /// </param>
         /// <param name="hazardCode"> A unique identifier (non-displayable) for each type of hazard: LightRain, ModerateRain, HeavyRain, LightMix, ModerateMix, HeavyMix, LightSnow, ModerateSnow, HeavySnow, LightIce, ModerateIce, HeavyIce, Hail, LargeHail, SunGlare, SunGlareHigh, Lightning, SevereLightning, WindModerate, WindHigh, WindExtreme, FloodWarning, FlashFloodWarning, TornadoWarning, TsunamiWarning, SevereThunderstormWarning. </param>
         /// <param name="shortDescription"> A displayable short phrase describing the forecasted conditions and precipitation intensity/type. </param>
-        /// <returns> A new <see cref="Weather.WeatherNotification"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherNotification"/> instance for mocking. </returns>
         public static WeatherNotification WeatherNotification(string type = null, HazardIndex? hazardIndex = null, string hazardCode = null, string shortDescription = null)
         {
             return new WeatherNotification(type, hazardIndex, hazardCode, shortDescription);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.SevereWeatherAlertsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SevereWeatherAlertsResult"/>. </summary>
         /// <param name="results"> A list of all severe weather alerts for the queried location. </param>
-        /// <returns> A new <see cref="Weather.SevereWeatherAlertsResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SevereWeatherAlertsResult"/> instance for mocking. </returns>
         public static SevereWeatherAlertsResult SevereWeatherAlertsResult(IEnumerable<SevereWeatherAlert> results = null)
         {
             results ??= new List<SevereWeatherAlert>();
@@ -703,7 +703,7 @@ namespace Azure.Maps.Weather
             return new SevereWeatherAlertsResult(results?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.SevereWeatherAlert"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SevereWeatherAlert"/>. </summary>
         /// <param name="countryCode"> 2-character ISO 3166-1 Alpha-2 country code, for example, "US". </param>
         /// <param name="alertId"> A unique numerical identifier for a weather alert. </param>
         /// <param name="description"> Description of the alert. </param>
@@ -715,7 +715,7 @@ namespace Azure.Maps.Weather
         /// <param name="sourceId"> A numerical identifier associated with the source provider name of the alert data. </param>
         /// <param name="disclaimer"> A disclaimer regarding the source of the alert information. This field is not always available. For example, disclaimer may include details about the delays or potential issues related to the alarm. </param>
         /// <param name="alertDetails"> Information about the alert specific to the affected area(s). </param>
-        /// <returns> A new <see cref="Weather.SevereWeatherAlert"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SevereWeatherAlert"/> instance for mocking. </returns>
         public static SevereWeatherAlert SevereWeatherAlert(string countryCode = null, int? alertId = null, SevereWeatherAlertDescription description = null, string category = null, int? priority = null, string classification = null, string level = null, string source = null, int? sourceId = null, string disclaimer = null, IEnumerable<AlertDetails> alertDetails = null)
         {
             alertDetails ??= new List<AlertDetails>();
@@ -734,16 +734,16 @@ namespace Azure.Maps.Weather
                 alertDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.SevereWeatherAlertDescription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SevereWeatherAlertDescription"/>. </summary>
         /// <param name="description"> Description of the alert in the specified language. By default English (en-US) is returned if the language parameter is not specified in the request. </param>
         /// <param name="status"> Description of the alert in English (en-US). </param>
-        /// <returns> A new <see cref="Weather.SevereWeatherAlertDescription"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SevereWeatherAlertDescription"/> instance for mocking. </returns>
         public static SevereWeatherAlertDescription SevereWeatherAlertDescription(string description = null, string status = null)
         {
             return new SevereWeatherAlertDescription(description, status);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.AlertDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AlertDetails"/>. </summary>
         /// <param name="name"> The name of an area which is affected by the alert. The location that was requested falls under the alert area. </param>
         /// <param name="description"> Text summarizing the alert in the returned area. </param>
         /// <param name="startTime"> The start date and time of the alert in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. If the alert crosses multiple time zones the returned time in the response is the local time to the requested coordinate location. </param>
@@ -751,7 +751,7 @@ namespace Azure.Maps.Weather
         /// <param name="latestStatus"> The latest status of the alert in the current area. </param>
         /// <param name="details"> Full details associated with the alert. Returned if `details`=True. This field is always returned in the language(s) of choice by the issuing provider and Azure Maps only returns what is created by the provider. Please note, some countries/regions may offer their native language and English. Language parameter won’t apply to this field. </param>
         /// <param name="language"> Language of the `alertDetails`. This field  helps to point out that the language of the `alertDetails` may differ from the requested language parameter. Returned if `details`=True. Language code has been derived from the ISO 639-1 Alpha-2 codes. </param>
-        /// <returns> A new <see cref="Weather.AlertDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.AlertDetails"/> instance for mocking. </returns>
         public static AlertDetails AlertDetails(string name = null, string description = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, LatestStatus latestStatus = null, string details = null, string language = null)
         {
             return new AlertDetails(
@@ -764,18 +764,18 @@ namespace Azure.Maps.Weather
                 language);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.LatestStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LatestStatus"/>. </summary>
         /// <param name="localized"> The latest status keyword for the alert, in the specified language. By default, returned in English (en-US). </param>
         /// <param name="english"> Latest status keyword for the alert, in English (en-US). </param>
-        /// <returns> A new <see cref="Weather.LatestStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.LatestStatus"/> instance for mocking. </returns>
         public static LatestStatus LatestStatus(string localized = null, LatestStatusKeyword? english = null)
         {
             return new LatestStatus(localized, english);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyIndicesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyIndicesResult"/>. </summary>
         /// <param name="results"> A list of all daily indices for the queried location. </param>
-        /// <returns> A new <see cref="Weather.DailyIndicesResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyIndicesResult"/> instance for mocking. </returns>
         public static DailyIndicesResult DailyIndicesResult(IEnumerable<DailyIndex> results = null)
         {
             results ??= new List<DailyIndex>();
@@ -783,7 +783,7 @@ namespace Azure.Maps.Weather
             return new DailyIndicesResult(results?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyIndex"/>. </summary>
         /// <param name="indexName"> Name of the index, for example, "Construction", "Outdoor Activity", "Flight Delays". </param>
         /// <param name="indexId"> Numeric ID used to identify the specific index. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#daily-index-range-sets) for details and to see the supported index IDs. For example, the index ID can support UI visualization scenarios. </param>
         /// <param name="dateTime"> Date and time of the current observation displayed in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
@@ -792,7 +792,7 @@ namespace Azure.Maps.Weather
         /// <param name="categoryValue"> Level that the index value falls under, represented by an integer. This value can be 1 through 5 and should be used in combination with the `ascending` flag because it can differ among indices. For example, the following values apply for Mosquito Activity: Low=1, Moderate=2, High=3, Very High=4, and Extreme=5. </param>
         /// <param name="isAscending"> Describes the direction of the `value` and `categoryValue`. For example, when set to `true`, the poorest index value is 0 and the best index value is 10. When set to `true`, the poorest index value is 10 and the best index value is 0. </param>
         /// <param name="description"> A textual explanation that can be used for display purposes to summarize the index value and category. For example, when the index value for Flight Delays is very good, the description will be "Conditions are excellent for flying!". </param>
-        /// <returns> A new <see cref="Weather.DailyIndex"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyIndex"/> instance for mocking. </returns>
         public static DailyIndex DailyIndex(string indexName = null, int? indexId = null, DateTimeOffset? dateTime = null, float? value = null, string categoryDescription = null, int? categoryValue = null, bool? isAscending = null, string description = null)
         {
             return new DailyIndex(
@@ -806,10 +806,10 @@ namespace Azure.Maps.Weather
                 description);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.ActiveStormResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ActiveStormResult"/>. </summary>
         /// <param name="activeStorms"> All government-issued active storms. </param>
         /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
-        /// <returns> A new <see cref="Weather.ActiveStormResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ActiveStormResult"/> instance for mocking. </returns>
         public static ActiveStormResult ActiveStormResult(IEnumerable<ActiveStorm> activeStorms = null, string nextLink = null)
         {
             activeStorms ??= new List<ActiveStorm>();
@@ -817,14 +817,14 @@ namespace Azure.Maps.Weather
             return new ActiveStormResult(activeStorms?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.ActiveStorm"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ActiveStorm"/>. </summary>
         /// <param name="year"> Year of origination. </param>
         /// <param name="basinId"> Basin identifier (AL, EP, SI, NI, CP, NP, SP). </param>
         /// <param name="name"> The name of the depression. </param>
         /// <param name="isActive"> True if the depression has been updated recently. </param>
         /// <param name="isSubtropical"> True when the depression is classified as a subtropical cyclone. </param>
         /// <param name="govId"> Government storm ID. This will match the depression number. </param>
-        /// <returns> A new <see cref="Weather.ActiveStorm"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ActiveStorm"/> instance for mocking. </returns>
         public static ActiveStorm ActiveStorm(string year = null, BasinId? basinId = null, string name = null, bool? isActive = null, bool? isSubtropical = null, int? govId = null)
         {
             return new ActiveStorm(
@@ -836,10 +836,10 @@ namespace Azure.Maps.Weather
                 govId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.StormSearchResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StormSearchResult"/>. </summary>
         /// <param name="storms"> Search government-issued storms. </param>
         /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
-        /// <returns> A new <see cref="Weather.StormSearchResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StormSearchResult"/> instance for mocking. </returns>
         public static StormSearchResult StormSearchResult(IEnumerable<StormSearchResultItem> storms = null, string nextLink = null)
         {
             storms ??= new List<StormSearchResultItem>();
@@ -847,7 +847,7 @@ namespace Azure.Maps.Weather
             return new StormSearchResult(storms?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.StormSearchResultItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StormSearchResultItem"/>. </summary>
         /// <param name="year"> Year of origination. </param>
         /// <param name="basinId"> Basin identifier (AL, EP, SI, NI, CP, NP, SP). </param>
         /// <param name="name"> The name of the depression. </param>
@@ -855,7 +855,7 @@ namespace Azure.Maps.Weather
         /// <param name="isRetired"> True if the storm name has been permanently retired in the source basin. </param>
         /// <param name="isSubtropical"> True when the depression is classified as a subtropical cyclone. </param>
         /// <param name="govId"> Government storm ID. This will match the depression number. </param>
-        /// <returns> A new <see cref="Weather.StormSearchResultItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StormSearchResultItem"/> instance for mocking. </returns>
         public static StormSearchResultItem StormSearchResultItem(string year = null, BasinId? basinId = null, string name = null, bool? isActive = null, bool? isRetired = null, bool? isSubtropical = null, int? govId = null)
         {
             return new StormSearchResultItem(
@@ -868,10 +868,10 @@ namespace Azure.Maps.Weather
                 govId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.StormForecastResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StormForecastResult"/>. </summary>
         /// <param name="stormForecasts"> The list of Government-issued forecasts. </param>
         /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
-        /// <returns> A new <see cref="Weather.StormForecastResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StormForecastResult"/> instance for mocking. </returns>
         public static StormForecastResult StormForecastResult(IEnumerable<StormForecast> stormForecasts = null, string nextLink = null)
         {
             stormForecasts ??= new List<StormForecast>();
@@ -879,7 +879,7 @@ namespace Azure.Maps.Weather
             return new StormForecastResult(stormForecasts?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.StormForecast"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StormForecast"/>. </summary>
         /// <param name="timestamp"> Datetime the forecast is valid, displayed in ISO8601 format. </param>
         /// <param name="initializedTimestamp"> Datetime the forecast was created, displayed in ISO8601 format. </param>
         /// <param name="coordinates"> Coordinates of the storm. </param>
@@ -888,7 +888,7 @@ namespace Azure.Maps.Weather
         /// <param name="status"> Possible status values include:&lt;ul&gt;&lt;li&gt;Cyclonic storm&lt;/li&gt;&lt;li&gt;Deep depression&lt;/li&gt;&lt;li&gt;Depression&lt;/li&gt;&lt;li&gt;Extremely severe cyclonic storm&lt;/li&gt;&lt;li&gt;Hurricane category (1-5)&lt;/li&gt;&lt;li&gt;Intense tropical cyclone&lt;/li&gt;&lt;li&gt;Moderate tropical storm&lt;/li&gt;&lt;li&gt;Post-tropical cyclone&lt;/li&gt;&lt;li&gt;Potential tropical cyclone&lt;/li&gt;&lt;li&gt;Severe cyclonic storm&lt;/li&gt;&lt;li&gt;Severe tropical storm&lt;/li&gt;&lt;li&gt;Subtropical&lt;/li&gt;&lt;li&gt;Super cyclonic storm&lt;/li&gt;&lt;li&gt;Tropical cyclone&lt;/li&gt;&lt;li&gt;Tropical cyclone category (1-5)&lt;/li&gt;&lt;li&gt;Tropical depression&lt;/li&gt;&lt;li&gt;Tropical disturbance&lt;/li&gt;&lt;li&gt;Tropical storm&lt;/li&gt;&lt;li&gt;Typhoon&lt;/li&gt;&lt;li&gt;Very intense tropical cyclone&lt;/li&gt;&lt;li&gt;Very severe cyclonic storm&lt;/li&gt;&lt;li&gt;Very strong typhoon&lt;/li&gt;&lt;li&gt;Violent typhoon&lt;/li&gt;&lt;/ul&gt;. </param>
         /// <param name="weatherWindow"> Contains information about the forecast window for the storm during the specified time period (not the entire cone). If windowGeometry=true in the request, this object will include geoJSON details for window geometry. </param>
         /// <param name="windRadiiSummary"> Displayed when details=true or radiiGeometry=true in the request. </param>
-        /// <returns> A new <see cref="Weather.StormForecast"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StormForecast"/> instance for mocking. </returns>
         public static StormForecast StormForecast(string timestamp = null, string initializedTimestamp = null, LatLongPair coordinates = null, WeatherValue maxWindGust = null, WeatherValue sustainedWind = null, string status = null, WeatherWindow weatherWindow = null, IEnumerable<StormWindRadiiSummary> windRadiiSummary = null)
         {
             windRadiiSummary ??= new List<StormWindRadiiSummary>();
@@ -904,16 +904,16 @@ namespace Azure.Maps.Weather
                 windRadiiSummary?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.LatLongPair"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LatLongPair"/>. </summary>
         /// <param name="latitude"> Latitude property. </param>
         /// <param name="longitude"> Longitude property. </param>
-        /// <returns> A new <see cref="Weather.LatLongPair"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.LatLongPair"/> instance for mocking. </returns>
         public static LatLongPair LatLongPair(double? latitude = null, double? longitude = null)
         {
             return new LatLongPair(latitude, longitude);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherWindow"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherWindow"/>. </summary>
         /// <param name="topLeft"> Location of the point on the left side of the window at the time of the timeframe. </param>
         /// <param name="bottomRight"> Location of the point on the right side of the window at the end of the timeframe. </param>
         /// <param name="beginTimestamp"> DateTime of the beginning of the window of movement, displayed in ISO8601 format. </param>
@@ -923,9 +923,9 @@ namespace Azure.Maps.Weather
         /// <param name="geometry">
         /// Displayed when windowGeometry=true in request. GeoJSON object containing coordinates describing the window of movement during the specified timeframe.
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Weather.GeoJsonGeometryCollection"/>, <see cref="Weather.GeoJsonLineString"/>, <see cref="Weather.GeoJsonMultiLineString"/>, <see cref="Weather.GeoJsonMultiPoint"/>, <see cref="Weather.GeoJsonMultiPolygon"/>, <see cref="Weather.GeoJsonPoint"/> and <see cref="Weather.GeoJsonPolygon"/>.
+        /// The available derived classes include <see cref="Models.GeoJsonLineString"/>, <see cref="Models.GeoJsonMultiLineString"/>, <see cref="Models.GeoJsonMultiPoint"/>, <see cref="Models.GeoJsonMultiPolygon"/>, <see cref="Models.GeoJsonPoint"/> and <see cref="Models.GeoJsonPolygon"/>.
         /// </param>
-        /// <returns> A new <see cref="Weather.WeatherWindow"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherWindow"/> instance for mocking. </returns>
         public static WeatherWindow WeatherWindow(LatLongPair topLeft = null, LatLongPair bottomRight = null, DateTimeOffset? beginTimestamp = null, DateTimeOffset? endTimestamp = null, string beginStatus = null, string endStatus = null, GeoJsonGeometry geometry = null)
         {
             return new WeatherWindow(
@@ -938,16 +938,16 @@ namespace Azure.Maps.Weather
                 geometry);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.StormWindRadiiSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StormWindRadiiSummary"/>. </summary>
         /// <param name="timestamp"> DateTime for which the wind radii summary data is valid, displayed in ISO8601 format. </param>
         /// <param name="windSpeed"> Wind speed associated with the radiusSectorData. </param>
         /// <param name="radiusSectorData"> Contains the information needed to plot wind radius quadrants. Bearing 0–90 = NE quadrant; 90–180 = SE quadrant; 180–270 = SW quadrant; 270–360 = NW quadrant. </param>
         /// <param name="radiiGeometry">
         /// GeoJSON object. Displayed when radiiGeometry=true in request. Describes the outline of the wind radius quadrants.
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Weather.GeoJsonGeometryCollection"/>, <see cref="Weather.GeoJsonLineString"/>, <see cref="Weather.GeoJsonMultiLineString"/>, <see cref="Weather.GeoJsonMultiPoint"/>, <see cref="Weather.GeoJsonMultiPolygon"/>, <see cref="Weather.GeoJsonPoint"/> and <see cref="Weather.GeoJsonPolygon"/>.
+        /// The available derived classes include <see cref="Models.GeoJsonLineString"/>, <see cref="Models.GeoJsonMultiLineString"/>, <see cref="Models.GeoJsonMultiPoint"/>, <see cref="Models.GeoJsonMultiPolygon"/>, <see cref="Models.GeoJsonPoint"/> and <see cref="Models.GeoJsonPolygon"/>.
         /// </param>
-        /// <returns> A new <see cref="Weather.StormWindRadiiSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StormWindRadiiSummary"/> instance for mocking. </returns>
         public static StormWindRadiiSummary StormWindRadiiSummary(string timestamp = null, WeatherValue windSpeed = null, IEnumerable<RadiusSector> radiusSectorData = null, GeoJsonGeometry radiiGeometry = null)
         {
             radiusSectorData ??= new List<RadiusSector>();
@@ -955,20 +955,20 @@ namespace Azure.Maps.Weather
             return new StormWindRadiiSummary(timestamp, windSpeed, radiusSectorData?.ToList(), radiiGeometry);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.RadiusSector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RadiusSector"/>. </summary>
         /// <param name="beginBearing"> Bearing, in degrees, of the beginning of the quadrant. </param>
         /// <param name="endBearing"> Bearing, in degrees, of the end of the quadrant. </param>
         /// <param name="radius"> The radius of the quadrant, in nautical miles. </param>
-        /// <returns> A new <see cref="Weather.RadiusSector"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.RadiusSector"/> instance for mocking. </returns>
         public static RadiusSector RadiusSector(double? beginBearing = null, double? endBearing = null, double? radius = null)
         {
             return new RadiusSector(beginBearing, endBearing, radius);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.StormLocationsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StormLocationsResult"/>. </summary>
         /// <param name="stormLocations"> Locations for an individual government-issued storm. </param>
         /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
-        /// <returns> A new <see cref="Weather.StormLocationsResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StormLocationsResult"/> instance for mocking. </returns>
         public static StormLocationsResult StormLocationsResult(IEnumerable<StormLocation> stormLocations = null, string nextLink = null)
         {
             stormLocations ??= new List<StormLocation>();
@@ -976,7 +976,7 @@ namespace Azure.Maps.Weather
             return new StormLocationsResult(stormLocations?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.StormLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StormLocation"/>. </summary>
         /// <param name="timestamp"> Datetime the forecast is valid, displayed in ISO8601 format. </param>
         /// <param name="coordinates"> Coordinates of the storm. </param>
         /// <param name="maxWindGust"> Maximum wind gust speed associated with the storm. May be NULL. </param>
@@ -988,7 +988,7 @@ namespace Azure.Maps.Weather
         /// <param name="hasTropicalPotential"> True when storm may develop into a Tropical System. </param>
         /// <param name="isPostTropical"> True when the storm is weakening away, and will no longer become a tropical system. </param>
         /// <param name="windRadiiSummary"> Displayed when details=true or radiiGeometry=true in the request. </param>
-        /// <returns> A new <see cref="Weather.StormLocation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StormLocation"/> instance for mocking. </returns>
         public static StormLocation StormLocation(string timestamp = null, LatLongPair coordinates = null, WeatherValue maxWindGust = null, WeatherValue sustainedWind = null, WeatherValue minimumPressure = null, WindDetails movement = null, string status = null, bool? isSubtropical = null, bool? hasTropicalPotential = null, bool? isPostTropical = null, IEnumerable<StormWindRadiiSummary> windRadiiSummary = null)
         {
             windRadiiSummary ??= new List<StormWindRadiiSummary>();
@@ -1007,10 +1007,10 @@ namespace Azure.Maps.Weather
                 windRadiiSummary?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.AirQualityResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AirQualityResult"/>. </summary>
         /// <param name="airQualityResults"> A list of all air quality results for the queried location. </param>
         /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
-        /// <returns> A new <see cref="Weather.AirQualityResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.AirQualityResult"/> instance for mocking. </returns>
         public static AirQualityResult AirQualityResult(IEnumerable<AirQuality> airQualityResults = null, string nextLink = null)
         {
             airQualityResults ??= new List<AirQuality>();
@@ -1018,7 +1018,7 @@ namespace Azure.Maps.Weather
             return new AirQualityResult(airQualityResults?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.AirQuality"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AirQuality"/>. </summary>
         /// <param name="timestamp"> Date and time of the current observation displayed in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="index"> Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information. </param>
         /// <param name="globalIndex"> Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality. </param>
@@ -1027,7 +1027,7 @@ namespace Azure.Maps.Weather
         /// <param name="categoryColor"> A unique color corresponding to the category of this air quality result. </param>
         /// <param name="description"> A textual explanation of this air quality result in the requested language. </param>
         /// <param name="pollutants"> Information about individual pollutants. </param>
-        /// <returns> A new <see cref="Weather.AirQuality"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.AirQuality"/> instance for mocking. </returns>
         public static AirQuality AirQuality(DateTimeOffset? timestamp = null, float? index = null, float? globalIndex = null, DominantPollutant? dominantPollutant = null, string category = null, string categoryColor = null, string description = null, IEnumerable<Pollutant> pollutants = null)
         {
             pollutants ??= new List<Pollutant>();
@@ -1043,22 +1043,22 @@ namespace Azure.Maps.Weather
                 pollutants?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.Pollutant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Pollutant"/>. </summary>
         /// <param name="type"> Type of pollutant. Please note that more may be added at any time. </param>
         /// <param name="name"> The name of the pollutant in English. </param>
         /// <param name="index"> Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information. </param>
         /// <param name="globalIndex"> Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality. </param>
         /// <param name="concentration"> An object containing the number of pollutant particles per volume of air. </param>
-        /// <returns> A new <see cref="Weather.Pollutant"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Pollutant"/> instance for mocking. </returns>
         public static Pollutant Pollutant(PollutantType? type = null, string name = null, float? index = null, float? globalIndex = null, WeatherValue concentration = null)
         {
             return new Pollutant(type, name, index, globalIndex, concentration);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyAirQualityForecastResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyAirQualityForecastResult"/>. </summary>
         /// <param name="airQualityResults"> A list of all daily air quality forecasts for the queried location. </param>
         /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
-        /// <returns> A new <see cref="Weather.DailyAirQualityForecastResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyAirQualityForecastResult"/> instance for mocking. </returns>
         public static DailyAirQualityForecastResult DailyAirQualityForecastResult(IEnumerable<DailyAirQuality> airQualityResults = null, string nextLink = null)
         {
             airQualityResults ??= new List<DailyAirQuality>();
@@ -1066,7 +1066,7 @@ namespace Azure.Maps.Weather
             return new DailyAirQualityForecastResult(airQualityResults?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyAirQuality"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyAirQuality"/>. </summary>
         /// <param name="timestamp"> Date and time of the current observation displayed in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="index"> Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information. </param>
         /// <param name="globalIndex"> Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality. </param>
@@ -1074,7 +1074,7 @@ namespace Azure.Maps.Weather
         /// <param name="category"> One-word description of the air quality in the requested language. For example, "Excellent". </param>
         /// <param name="categoryColor"> A unique color corresponding to the category of this air quality result. </param>
         /// <param name="description"> A textual explanation of this air quality result in the requested language. </param>
-        /// <returns> A new <see cref="Weather.DailyAirQuality"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyAirQuality"/> instance for mocking. </returns>
         public static DailyAirQuality DailyAirQuality(DateTimeOffset? timestamp = null, float? index = null, float? globalIndex = null, DominantPollutant? dominantPollutant = null, string category = null, string categoryColor = null, string description = null)
         {
             return new DailyAirQuality(
@@ -1087,10 +1087,10 @@ namespace Azure.Maps.Weather
                 description);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyHistoricalActualsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyHistoricalActualsResult"/>. </summary>
         /// <param name="historicalActuals"> Historical actuals for each requested day. </param>
         /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
-        /// <returns> A new <see cref="Weather.DailyHistoricalActualsResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyHistoricalActualsResult"/> instance for mocking. </returns>
         public static DailyHistoricalActualsResult DailyHistoricalActualsResult(IEnumerable<DailyHistoricalActuals> historicalActuals = null, string nextLink = null)
         {
             historicalActuals ??= new List<DailyHistoricalActuals>();
@@ -1098,14 +1098,14 @@ namespace Azure.Maps.Weather
             return new DailyHistoricalActualsResult(historicalActuals?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyHistoricalActuals"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyHistoricalActuals"/>. </summary>
         /// <param name="timestamp"> Date and time of the current observation displayed in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="temperature"> Temperature values. </param>
         /// <param name="degreeDaySummary"> Summary of heating or cooling degree day information. Degree days are measures of how cold or warm a location is. A degree day compares the mean (the average of the high and low) outdoor temperatures recorded for a location to a standard temperature of 65 degrees F/ 18 degree C. </param>
         /// <param name="precipitation"> The amount of precipitation (liquid equivalent) that has fallen. </param>
         /// <param name="snowfall"> The amount of snow that has fallen. </param>
         /// <param name="snowDepth"> Snow depth. </param>
-        /// <returns> A new <see cref="Weather.DailyHistoricalActuals"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyHistoricalActuals"/> instance for mocking. </returns>
         public static DailyHistoricalActuals DailyHistoricalActuals(DateTimeOffset? timestamp = null, WeatherValueMaxMinAvg temperature = null, DegreeDaySummary degreeDaySummary = null, WeatherValue precipitation = null, WeatherValue snowfall = null, WeatherValue snowDepth = null)
         {
             return new DailyHistoricalActuals(
@@ -1117,20 +1117,20 @@ namespace Azure.Maps.Weather
                 snowDepth);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherValueMaxMinAvg"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherValueMaxMinAvg"/>. </summary>
         /// <param name="maximum"> Maximum temperature for the time period. </param>
         /// <param name="minimum"> Minimum temperature for the time period. </param>
         /// <param name="average"> Average temperature for the time period. </param>
-        /// <returns> A new <see cref="Weather.WeatherValueMaxMinAvg"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherValueMaxMinAvg"/> instance for mocking. </returns>
         public static WeatherValueMaxMinAvg WeatherValueMaxMinAvg(WeatherValue maximum = null, WeatherValue minimum = null, WeatherValue average = null)
         {
             return new WeatherValueMaxMinAvg(maximum, minimum, average);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyHistoricalRecordsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyHistoricalRecordsResult"/>. </summary>
         /// <param name="historicalRecords"> Historical records for each requested day. </param>
         /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
-        /// <returns> A new <see cref="Weather.DailyHistoricalRecordsResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyHistoricalRecordsResult"/> instance for mocking. </returns>
         public static DailyHistoricalRecordsResult DailyHistoricalRecordsResult(IEnumerable<DailyHistoricalRecords> historicalRecords = null, string nextLink = null)
         {
             historicalRecords ??= new List<DailyHistoricalRecords>();
@@ -1138,50 +1138,50 @@ namespace Azure.Maps.Weather
             return new DailyHistoricalRecordsResult(historicalRecords?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyHistoricalRecords"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyHistoricalRecords"/>. </summary>
         /// <param name="timestamp"> Date and time of the current observation displayed in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="temperature"> Temperature value. </param>
         /// <param name="precipitation"> Maximum amount of precipitation (liquid equivalent) that has fallen. </param>
         /// <param name="snowfall"> Maximum snowfall. </param>
-        /// <returns> A new <see cref="Weather.DailyHistoricalRecords"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyHistoricalRecords"/> instance for mocking. </returns>
         public static DailyHistoricalRecords DailyHistoricalRecords(DateTimeOffset? timestamp = null, WeatherValueYearMaxMinAvg temperature = null, WeatherValueYearMax precipitation = null, WeatherValueYearMax snowfall = null)
         {
             return new DailyHistoricalRecords(timestamp, temperature, precipitation, snowfall);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherValueYearMaxMinAvg"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherValueYearMaxMinAvg"/>. </summary>
         /// <param name="maximum"> Maximum temperature for the time period. </param>
         /// <param name="minimum"> Minimum temperature for the time period. </param>
         /// <param name="average"> Average temperature for the time period. </param>
-        /// <returns> A new <see cref="Weather.WeatherValueYearMaxMinAvg"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherValueYearMaxMinAvg"/> instance for mocking. </returns>
         public static WeatherValueYearMaxMinAvg WeatherValueYearMaxMinAvg(WeatherValueYear maximum = null, WeatherValueYear minimum = null, WeatherValue average = null)
         {
             return new WeatherValueYearMaxMinAvg(maximum, minimum, average);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherValueYear"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherValueYear"/>. </summary>
         /// <param name="value"> Rounded value. </param>
         /// <param name="unit"> Type of unit for the returned value. </param>
         /// <param name="unitType"> Numeric ID value associated with the type of unit being displayed. Can be used for unit translation. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#daily-index-range-sets) for details. </param>
         /// <param name="year"> Year the value occurred. </param>
-        /// <returns> A new <see cref="Weather.WeatherValueYear"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherValueYear"/> instance for mocking. </returns>
         public static WeatherValueYear WeatherValueYear(float? value = null, string unit = null, int? unitType = null, int? year = null)
         {
             return new WeatherValueYear(value, unit, unitType, year);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.WeatherValueYearMax"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeatherValueYearMax"/>. </summary>
         /// <param name="maximum"> Maximum temperature for the time period. </param>
-        /// <returns> A new <see cref="Weather.WeatherValueYearMax"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WeatherValueYearMax"/> instance for mocking. </returns>
         public static WeatherValueYearMax WeatherValueYearMax(WeatherValueYear maximum = null)
         {
             return new WeatherValueYearMax(maximum);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyHistoricalNormalsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyHistoricalNormalsResult"/>. </summary>
         /// <param name="historicalNormals"> Historical normals for each requested day. </param>
         /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
-        /// <returns> A new <see cref="Weather.DailyHistoricalNormalsResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyHistoricalNormalsResult"/> instance for mocking. </returns>
         public static DailyHistoricalNormalsResult DailyHistoricalNormalsResult(IEnumerable<DailyHistoricalNormals> historicalNormals = null, string nextLink = null)
         {
             historicalNormals ??= new List<DailyHistoricalNormals>();
@@ -1189,20 +1189,20 @@ namespace Azure.Maps.Weather
             return new DailyHistoricalNormalsResult(historicalNormals?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.DailyHistoricalNormals"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DailyHistoricalNormals"/>. </summary>
         /// <param name="timestamp"> Date and time of the current observation displayed in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. </param>
         /// <param name="temperature"> Temperature values. </param>
         /// <param name="degreeDaySummary"> Summary of heating or cooling degree day information. </param>
         /// <param name="precipitation"> The amount of precipitation (liquid equivalent) that has fallen. </param>
-        /// <returns> A new <see cref="Weather.DailyHistoricalNormals"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DailyHistoricalNormals"/> instance for mocking. </returns>
         public static DailyHistoricalNormals DailyHistoricalNormals(DateTimeOffset? timestamp = null, WeatherValueMaxMinAvg temperature = null, DegreeDaySummary degreeDaySummary = null, WeatherValue precipitation = null)
         {
             return new DailyHistoricalNormals(timestamp, temperature, degreeDaySummary, precipitation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonPoint"/>. </summary>
         /// <param name="coordinates"> A `Position` is an array of numbers with two or more elements. The first two elements are _longitude_ and _latitude_, precisely in that order. _Altitude/Elevation_ is an optional third element. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.1) for details. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonPoint"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.GeoJsonPoint"/> instance for mocking. </returns>
         public static GeoJsonPoint GeoJsonPoint(IEnumerable<double> coordinates = null)
         {
             coordinates ??= new List<double>();
@@ -1210,19 +1210,9 @@ namespace Azure.Maps.Weather
             return new GeoJsonPoint(GeoJsonObjectType.GeoJsonPoint, coordinates?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonPointData"/>. </summary>
-        /// <param name="coordinates"> A `Position` is an array of numbers with two or more elements. The first two elements are _longitude_ and _latitude_, precisely in that order. _Altitude/Elevation_ is an optional third element. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.1) for details. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonPointData"/> instance for mocking. </returns>
-        public static GeoJsonPointData GeoJsonPointData(IEnumerable<double> coordinates = null)
-        {
-            coordinates ??= new List<double>();
-
-            return new GeoJsonPointData(coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonMultiPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiPoint"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiPoint` geometry. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonMultiPoint"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.GeoJsonMultiPoint"/> instance for mocking. </returns>
         public static GeoJsonMultiPoint GeoJsonMultiPoint(IEnumerable<IList<double>> coordinates = null)
         {
             coordinates ??= new List<IList<double>>();
@@ -1230,19 +1220,9 @@ namespace Azure.Maps.Weather
             return new GeoJsonMultiPoint(GeoJsonObjectType.GeoJsonMultiPoint, coordinates?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonMultiPointData"/>. </summary>
-        /// <param name="coordinates"> Coordinates for the `GeoJson MultiPoint` geometry. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonMultiPointData"/> instance for mocking. </returns>
-        public static GeoJsonMultiPointData GeoJsonMultiPointData(IEnumerable<IList<double>> coordinates = null)
-        {
-            coordinates ??= new List<IList<double>>();
-
-            return new GeoJsonMultiPointData(coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonLineString"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonLineString"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson LineString` geometry. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonLineString"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.GeoJsonLineString"/> instance for mocking. </returns>
         public static GeoJsonLineString GeoJsonLineString(IEnumerable<IList<double>> coordinates = null)
         {
             coordinates ??= new List<IList<double>>();
@@ -1250,19 +1230,9 @@ namespace Azure.Maps.Weather
             return new GeoJsonLineString(GeoJsonObjectType.GeoJsonLineString, coordinates?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonLineStringData"/>. </summary>
-        /// <param name="coordinates"> Coordinates for the `GeoJson LineString` geometry. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonLineStringData"/> instance for mocking. </returns>
-        public static GeoJsonLineStringData GeoJsonLineStringData(IEnumerable<IList<double>> coordinates = null)
-        {
-            coordinates ??= new List<IList<double>>();
-
-            return new GeoJsonLineStringData(coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonMultiLineString"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiLineString"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiLineString` geometry. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonMultiLineString"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.GeoJsonMultiLineString"/> instance for mocking. </returns>
         public static GeoJsonMultiLineString GeoJsonMultiLineString(IEnumerable<IList<IList<double>>> coordinates = null)
         {
             coordinates ??= new List<IList<IList<double>>>();
@@ -1270,19 +1240,9 @@ namespace Azure.Maps.Weather
             return new GeoJsonMultiLineString(GeoJsonObjectType.GeoJsonMultiLineString, coordinates?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonMultiLineStringData"/>. </summary>
-        /// <param name="coordinates"> Coordinates for the `GeoJson MultiLineString` geometry. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonMultiLineStringData"/> instance for mocking. </returns>
-        public static GeoJsonMultiLineStringData GeoJsonMultiLineStringData(IEnumerable<IList<IList<double>>> coordinates = null)
-        {
-            coordinates ??= new List<IList<IList<double>>>();
-
-            return new GeoJsonMultiLineStringData(coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonPolygon"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonPolygon"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonPolygon"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.GeoJsonPolygon"/> instance for mocking. </returns>
         public static GeoJsonPolygon GeoJsonPolygon(IEnumerable<IList<IList<double>>> coordinates = null)
         {
             coordinates ??= new List<IList<IList<double>>>();
@@ -1290,19 +1250,9 @@ namespace Azure.Maps.Weather
             return new GeoJsonPolygon(GeoJsonObjectType.GeoJsonPolygon, coordinates?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonPolygonData"/>. </summary>
-        /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonPolygonData"/> instance for mocking. </returns>
-        public static GeoJsonPolygonData GeoJsonPolygonData(IEnumerable<IList<IList<double>>> coordinates = null)
-        {
-            coordinates ??= new List<IList<IList<double>>>();
-
-            return new GeoJsonPolygonData(coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonMultiPolygon"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiPolygon"/>. </summary>
         /// <param name="coordinates"> Contains a list of valid `GeoJSON Polygon` objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
-        /// <returns> A new <see cref="Weather.GeoJsonMultiPolygon"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.GeoJsonMultiPolygon"/> instance for mocking. </returns>
         public static GeoJsonMultiPolygon GeoJsonMultiPolygon(IEnumerable<IList<IList<IList<double>>>> coordinates = null)
         {
             coordinates ??= new List<IList<IList<IList<double>>>>();
@@ -1310,92 +1260,19 @@ namespace Azure.Maps.Weather
             return new GeoJsonMultiPolygon(GeoJsonObjectType.GeoJsonMultiPolygon, coordinates?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonMultiPolygonData"/>. </summary>
-        /// <param name="coordinates"> Contains a list of valid `GeoJSON Polygon` objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
-        /// <returns> A new <see cref="Weather.GeoJsonMultiPolygonData"/> instance for mocking. </returns>
-        public static GeoJsonMultiPolygonData GeoJsonMultiPolygonData(IEnumerable<IList<IList<IList<double>>>> coordinates = null)
-        {
-            coordinates ??= new List<IList<IList<IList<double>>>>();
-
-            return new GeoJsonMultiPolygonData(coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonGeometryCollection"/>. </summary>
-        /// <param name="geometries">
-        /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Weather.GeoJsonGeometryCollection"/>, <see cref="Weather.GeoJsonLineString"/>, <see cref="Weather.GeoJsonMultiLineString"/>, <see cref="Weather.GeoJsonMultiPoint"/>, <see cref="Weather.GeoJsonMultiPolygon"/>, <see cref="Weather.GeoJsonPoint"/> and <see cref="Weather.GeoJsonPolygon"/>.
-        /// </param>
-        /// <returns> A new <see cref="Weather.GeoJsonGeometryCollection"/> instance for mocking. </returns>
-        public static GeoJsonGeometryCollection GeoJsonGeometryCollection(IEnumerable<GeoJsonGeometry> geometries = null)
-        {
-            geometries ??= new List<GeoJsonGeometry>();
-
-            return new GeoJsonGeometryCollection(GeoJsonObjectType.GeoJsonGeometryCollection, geometries?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonGeometryCollectionData"/>. </summary>
-        /// <param name="geometries">
-        /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Weather.GeoJsonGeometryCollection"/>, <see cref="Weather.GeoJsonLineString"/>, <see cref="Weather.GeoJsonMultiLineString"/>, <see cref="Weather.GeoJsonMultiPoint"/>, <see cref="Weather.GeoJsonMultiPolygon"/>, <see cref="Weather.GeoJsonPoint"/> and <see cref="Weather.GeoJsonPolygon"/>.
-        /// </param>
-        /// <returns> A new <see cref="Weather.GeoJsonGeometryCollectionData"/> instance for mocking. </returns>
-        public static GeoJsonGeometryCollectionData GeoJsonGeometryCollectionData(IEnumerable<GeoJsonGeometry> geometries = null)
-        {
-            geometries ??= new List<GeoJsonGeometry>();
-
-            return new GeoJsonGeometryCollectionData(geometries?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonFeature"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonFeature"/>. </summary>
         /// <param name="geometry">
         /// A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Weather.GeoJsonGeometryCollection"/>, <see cref="Weather.GeoJsonLineString"/>, <see cref="Weather.GeoJsonMultiLineString"/>, <see cref="Weather.GeoJsonMultiPoint"/>, <see cref="Weather.GeoJsonMultiPolygon"/>, <see cref="Weather.GeoJsonPoint"/> and <see cref="Weather.GeoJsonPolygon"/>.
+        /// The available derived classes include <see cref="Models.GeoJsonLineString"/>, <see cref="Models.GeoJsonMultiLineString"/>, <see cref="Models.GeoJsonMultiPoint"/>, <see cref="Models.GeoJsonMultiPolygon"/>, <see cref="Models.GeoJsonPoint"/> and <see cref="Models.GeoJsonPolygon"/>.
         /// </param>
         /// <param name="properties"> Properties can contain any additional metadata about the `Feature`. Value can be any JSON object or a JSON null value. </param>
         /// <param name="id"> Identifier for the feature. </param>
         /// <param name="featureType"> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonFeature"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.GeoJsonFeature"/> instance for mocking. </returns>
         public static GeoJsonFeature GeoJsonFeature(GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null)
         {
             return new GeoJsonFeature(GeoJsonObjectType.GeoJsonFeature, geometry, properties, id, featureType);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonFeatureData"/>. </summary>
-        /// <param name="geometry">
-        /// A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Weather.GeoJsonGeometryCollection"/>, <see cref="Weather.GeoJsonLineString"/>, <see cref="Weather.GeoJsonMultiLineString"/>, <see cref="Weather.GeoJsonMultiPoint"/>, <see cref="Weather.GeoJsonMultiPolygon"/>, <see cref="Weather.GeoJsonPoint"/> and <see cref="Weather.GeoJsonPolygon"/>.
-        /// </param>
-        /// <param name="properties"> Properties can contain any additional metadata about the `Feature`. Value can be any JSON object or a JSON null value. </param>
-        /// <param name="id"> Identifier for the feature. </param>
-        /// <param name="featureType"> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonFeatureData"/> instance for mocking. </returns>
-        public static GeoJsonFeatureData GeoJsonFeatureData(GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null)
-        {
-            return new GeoJsonFeatureData(geometry, properties, id, featureType);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonFeatureCollection"/>. </summary>
-        /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonFeatureCollection"/> instance for mocking. </returns>
-        public static GeoJsonFeatureCollection GeoJsonFeatureCollection(IEnumerable<GeoJsonFeature> features = null)
-        {
-            features ??= new List<GeoJsonFeature>();
-
-            return new GeoJsonFeatureCollection(GeoJsonObjectType.GeoJsonFeatureCollection, features?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Weather.GeoJsonFeatureCollectionData"/>. </summary>
-        /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
-        /// <returns> A new <see cref="Weather.GeoJsonFeatureCollectionData"/> instance for mocking. </returns>
-        public static GeoJsonFeatureCollectionData GeoJsonFeatureCollectionData(IEnumerable<GeoJsonFeature> features = null)
-        {
-            features ??= new List<GeoJsonFeature>();
-
-            return new GeoJsonFeatureCollectionData(features?.ToList());
         }
     }
 }

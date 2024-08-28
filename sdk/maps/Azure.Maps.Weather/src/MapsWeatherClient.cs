@@ -14,6 +14,7 @@ using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
+using Azure.Maps.Weather.Models;
 
 namespace Azure.Maps.Weather
 {
@@ -1143,7 +1144,7 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetTropicalStormSearchAsync(format, year, basinId, governmentStormId, cancellationToken).ConfigureAwait(false);
+                return await restClient.SearchTropicalStormAsync(format, year, basinId, governmentStormId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1179,7 +1180,7 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetTropicalStormSearch(format, year, basinId, governmentStormId, cancellationToken);
+                return restClient.SearchTropicalStorm(format, year, basinId, governmentStormId, cancellationToken);
             }
             catch (Exception e)
             {

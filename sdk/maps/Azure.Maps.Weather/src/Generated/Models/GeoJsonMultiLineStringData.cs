@@ -13,7 +13,7 @@ using Azure.Maps.Common;
 namespace Azure.Maps.Weather.Models
 {
     /// <summary> The GeoJsonMultiLineStringData. </summary>
-    public partial class GeoJsonMultiLineStringData
+    internal partial class GeoJsonMultiLineStringData
     {
         /// <summary> Initializes a new instance of <see cref="GeoJsonMultiLineStringData"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiLineString` geometry. </param>

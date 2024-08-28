@@ -13,7 +13,7 @@ using Azure.Maps.Common;
 namespace Azure.Maps.Weather.Models
 {
     /// <summary> A valid `GeoJSON FeatureCollection` object type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.3) for details. </summary>
-    public partial class GeoJsonFeatureCollection : GeoJsonObject
+    internal partial class GeoJsonFeatureCollection : GeoJsonObject
     {
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollection"/>. </summary>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
+using Azure.Maps.Weather.Models;
 
 namespace Azure.Maps.Weather
 {
@@ -1192,7 +1193,7 @@ namespace Azure.Maps.Weather
             }
         }
 
-        internal HttpMessage CreateGetTropicalStormSearchRequest(JsonFormat format, int year, BasinId? basinId, int? governmentStormId)
+        internal HttpMessage CreateSearchTropicalStormRequest(JsonFormat format, int year, BasinId? basinId, int? governmentStormId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1230,9 +1231,9 @@ namespace Azure.Maps.Weather
         ///
         /// The `Get Tropical Storm Search` API is an HTTP `GET` request that returns a list of government-issued tropical storms by year, basin ID, and government ID. Information about the tropical storms includes, government ID, basin ID, status, year, name and if it is subtropical.
         /// </remarks>
-        public async Task<Response<StormSearchResult>> GetTropicalStormSearchAsync(JsonFormat format, int year, BasinId? basinId = null, int? governmentStormId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StormSearchResult>> SearchTropicalStormAsync(JsonFormat format, int year, BasinId? basinId = null, int? governmentStormId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetTropicalStormSearchRequest(format, year, basinId, governmentStormId);
+            using var message = CreateSearchTropicalStormRequest(format, year, basinId, governmentStormId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1258,9 +1259,9 @@ namespace Azure.Maps.Weather
         ///
         /// The `Get Tropical Storm Search` API is an HTTP `GET` request that returns a list of government-issued tropical storms by year, basin ID, and government ID. Information about the tropical storms includes, government ID, basin ID, status, year, name and if it is subtropical.
         /// </remarks>
-        public Response<StormSearchResult> GetTropicalStormSearch(JsonFormat format, int year, BasinId? basinId = null, int? governmentStormId = null, CancellationToken cancellationToken = default)
+        public Response<StormSearchResult> SearchTropicalStorm(JsonFormat format, int year, BasinId? basinId = null, int? governmentStormId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetTropicalStormSearchRequest(format, year, basinId, governmentStormId);
+            using var message = CreateSearchTropicalStormRequest(format, year, basinId, governmentStormId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Maps.Weather.Models
 {
-    public partial class GeoJsonMultiPolygonData
+    internal partial class GeoJsonMultiPolygonData
     {
         internal static GeoJsonMultiPolygonData DeserializeGeoJsonMultiPolygonData(JsonElement element)
         {

@@ -13,7 +13,7 @@ using Azure.Maps.Common;
 namespace Azure.Maps.Weather.Models
 {
     /// <summary> Data contained by a `GeoJson MultiPoint`. </summary>
-    public partial class GeoJsonMultiPointData
+    internal partial class GeoJsonMultiPointData
     {
         /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPointData"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiPoint` geometry. </param>
