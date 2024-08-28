@@ -121,9 +121,9 @@
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0-beta.1" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.12.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.6.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.6.0" />
     <PackageReference Update="Azure.Storage.Common" Version="12.20.1" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.21.1" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.19.1" />
@@ -187,7 +187,7 @@
     These are dependencies for Track 2 integration packages
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.'))">
-    <PackageReference Update="Apache.Avro" Version="1.11.0" />
+    <PackageReference Update="Apache.Avro" Version="1.12.0" />
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
     <PackageReference Update="Google.Protobuf" Version="3.24.3" />
@@ -227,7 +227,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240813.7" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240827.2" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240813.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="All" />
@@ -267,8 +267,8 @@
     <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.0.0" />
     <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.1.0" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.4.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
+    <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.6.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.20.0" />
     <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.8.0" />
     <PackageReference Update="BenchmarkDotNet" Version="0.13.4" />
@@ -388,7 +388,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20240806.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20240823.1</TestProxyVersion>
   </PropertyGroup>
 
 </Project>

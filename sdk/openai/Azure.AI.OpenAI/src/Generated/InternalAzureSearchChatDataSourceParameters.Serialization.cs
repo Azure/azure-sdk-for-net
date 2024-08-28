@@ -21,37 +21,37 @@ namespace Azure.AI.OpenAI.Chat
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TopNDocuments))
+            if (SerializedAdditionalRawData?.ContainsKey("top_n_documents") != true && Optional.IsDefined(TopNDocuments))
             {
                 writer.WritePropertyName("top_n_documents"u8);
                 writer.WriteNumberValue(TopNDocuments.Value);
             }
-            if (Optional.IsDefined(InScope))
+            if (SerializedAdditionalRawData?.ContainsKey("in_scope") != true && Optional.IsDefined(InScope))
             {
                 writer.WritePropertyName("in_scope"u8);
                 writer.WriteBooleanValue(InScope.Value);
             }
-            if (Optional.IsDefined(Strictness))
+            if (SerializedAdditionalRawData?.ContainsKey("strictness") != true && Optional.IsDefined(Strictness))
             {
                 writer.WritePropertyName("strictness"u8);
                 writer.WriteNumberValue(Strictness.Value);
             }
-            if (Optional.IsDefined(RoleInformation))
+            if (SerializedAdditionalRawData?.ContainsKey("role_information") != true && Optional.IsDefined(RoleInformation))
             {
                 writer.WritePropertyName("role_information"u8);
                 writer.WriteStringValue(RoleInformation);
             }
-            if (Optional.IsDefined(MaxSearchQueries))
+            if (SerializedAdditionalRawData?.ContainsKey("max_search_queries") != true && Optional.IsDefined(MaxSearchQueries))
             {
                 writer.WritePropertyName("max_search_queries"u8);
                 writer.WriteNumberValue(MaxSearchQueries.Value);
             }
-            if (Optional.IsDefined(AllowPartialResult))
+            if (SerializedAdditionalRawData?.ContainsKey("allow_partial_result") != true && Optional.IsDefined(AllowPartialResult))
             {
                 writer.WritePropertyName("allow_partial_result"u8);
                 writer.WriteBooleanValue(AllowPartialResult.Value);
             }
-            if (Optional.IsCollectionDefined(_internalIncludeContexts))
+            if (SerializedAdditionalRawData?.ContainsKey("include_contexts") != true && Optional.IsCollectionDefined(_internalIncludeContexts))
             {
                 writer.WritePropertyName("include_contexts"u8);
                 writer.WriteStartArray();
@@ -61,41 +61,54 @@ namespace Azure.AI.OpenAI.Chat
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("endpoint"u8);
-            writer.WriteStringValue(Endpoint.AbsoluteUri);
-            writer.WritePropertyName("index_name"u8);
-            writer.WriteStringValue(IndexName);
-            writer.WritePropertyName("authentication"u8);
-            writer.WriteObjectValue<DataSourceAuthentication>(Authentication, options);
-            if (Optional.IsDefined(FieldMappings))
+            if (SerializedAdditionalRawData?.ContainsKey("endpoint") != true)
+            {
+                writer.WritePropertyName("endpoint"u8);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("index_name") != true)
+            {
+                writer.WritePropertyName("index_name"u8);
+                writer.WriteStringValue(IndexName);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("authentication") != true)
+            {
+                writer.WritePropertyName("authentication"u8);
+                writer.WriteObjectValue<DataSourceAuthentication>(Authentication, options);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("fields_mapping") != true && Optional.IsDefined(FieldMappings))
             {
                 writer.WritePropertyName("fields_mapping"u8);
                 writer.WriteObjectValue<DataSourceFieldMappings>(FieldMappings, options);
             }
-            if (Optional.IsDefined(QueryType))
+            if (SerializedAdditionalRawData?.ContainsKey("query_type") != true && Optional.IsDefined(QueryType))
             {
                 writer.WritePropertyName("query_type"u8);
                 writer.WriteStringValue(QueryType.Value.ToString());
             }
-            if (Optional.IsDefined(SemanticConfiguration))
+            if (SerializedAdditionalRawData?.ContainsKey("semantic_configuration") != true && Optional.IsDefined(SemanticConfiguration))
             {
                 writer.WritePropertyName("semantic_configuration"u8);
                 writer.WriteStringValue(SemanticConfiguration);
             }
-            if (Optional.IsDefined(Filter))
+            if (SerializedAdditionalRawData?.ContainsKey("filter") != true && Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Optional.IsDefined(VectorizationSource))
+            if (SerializedAdditionalRawData?.ContainsKey("embedding_dependency") != true && Optional.IsDefined(VectorizationSource))
             {
                 writer.WritePropertyName("embedding_dependency"u8);
                 writer.WriteObjectValue<DataSourceVectorizer>(VectorizationSource, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (SerializedAdditionalRawData != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in SerializedAdditionalRawData)
                 {
+                    if (ModelSerializationExtensions.IsSentinelValue(item.Value))
+                    {
+                        continue;
+                    }
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
@@ -267,6 +280,7 @@ namespace Azure.AI.OpenAI.Chat
                 }
                 if (options.Format != "W")
                 {
+                    rawDataDictionary ??= new Dictionary<string, BinaryData>();
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
