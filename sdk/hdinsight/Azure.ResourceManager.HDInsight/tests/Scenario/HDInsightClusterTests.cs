@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             string rgName = Recording.GenerateAssetName(DefaultResourceGroupPrefix);
             _storageAccountName = Recording.GenerateAssetName("azstorageforcluster");
             _containerName = Recording.GenerateAssetName("container");
-            _clusterName = Recording.GenerateAssetName("cluster");
+            _clusterName = Recording.GenerateAssetName("hdi");
             _resourceGroup = await CreateResourceGroup(rgName);
             if (Mode == RecordedTestMode.Playback)
             {
