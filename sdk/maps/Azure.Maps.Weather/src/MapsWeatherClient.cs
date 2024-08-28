@@ -22,22 +22,14 @@ namespace Azure.Maps.Weather
     /// <summary> The Weather service client. </summary>
     public partial class MapsWeatherClient
     {
-        private const string AuthorizationHeader = "subscription-key";
-        // private readonly AzureKeyCredential _keyCredential;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://atlas.microsoft.com/.default" };
-        // private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
-        // private readonly Uri _endpoint;
-        // private readonly string _clientId;
-        // private readonly string _apiVersion;
-
-
-        internal WeatherRestClient restClient { get; }
-        /// <summary> The _clientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics _clientDiagnostics { get; }
-
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        private readonly HttpPipeline _pipeline;
+
+        /// <summary> The restClient is used to access Render REST client. </summary>
+        internal WeatherRestClient restClient { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics _clientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of MapsWeatherClient. </summary>
         protected MapsWeatherClient()

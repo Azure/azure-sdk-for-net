@@ -9,7 +9,6 @@ namespace Azure.Maps.Weather
         public MapsWeatherClient(Azure.AzureSasCredential credential, Azure.Maps.Weather.MapsWeatherClientOptions options) { }
         public MapsWeatherClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsWeatherClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Weather.MapsWeatherClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.Maps.Weather.Models.DailyAirQualityForecastResult> GetAirQualityDailyForecasts(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, int? duration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyAirQualityForecastResult>> GetAirQualityDailyForecastsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, int? duration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.AirQualityResult> GetAirQualityHourlyForecasts(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, int? duration, bool? includePollutantDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
