@@ -31,6 +31,10 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private string botAppId = "BOT_APP_ID";
 
+        private string fileSourceUrl = "FILE_SOURCE_URL";
+
+        private string cognitiveServiceEndpoint = "COGNITIVE_SERVICE_ENDPOINT";
+
         /// <summary>
         /// The resource identifier associated with the Azure Communication Service.
         /// </summary>
@@ -97,5 +101,15 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         public string AppCallbackUrl => $"{AppBaseUrl}/api/incident/callback?SecretKey={WebUtility.UrlEncode(IncomingRequestSecret)}";
 
         public string WebsocketUrl => $"wss://testwebsocket.webpubsub.azure.com/client/hubs/media?access_token=helloworld";
+
+        /// <summary>
+        /// file source for automated testing
+        /// </summary>
+        public string FileSourceUrl => GetRecordedOptionalVariable(fileSourceUrl, options => options.IsSecret("https://sanitized.skype.com/prompt.wav"));
+
+        /// <summary>
+        /// Cognitive service endpoint for automated testing
+        /// </summary>
+        public string CognitiveServiceEndpoint => GetRecordedOptionalVariable(cognitiveServiceEndpoint, options => options.IsSecret("https://sanitized.skype.com"));
     }
 }
