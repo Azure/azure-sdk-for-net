@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <PackageId>AzureClientPlugin</PackageId>
+    <PackageId>Azure.Generator</PackageId>
     <Version>1.0.0-beta.1</Version>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 	<NoWarn>CS8002</NoWarn>
@@ -9,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Generator.CSharp.ClientModel" />
+		<PackageReference Include="Azure.Core" />
 	</ItemGroup>
 
 	<!-- Copy output to package dist path for local execution -->

@@ -11,7 +11,8 @@
     <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
 
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
-    <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
+    <IsGeneratorLibrary Condition="'$(IsGeneratorLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator'))">true</IsGeneratorLibrary>
+    <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.')) and '$(IsGeneratorLibrary)' != 'true'">true</IsClientLibrary>
     <IsFunctionsLibrary Condition="'$(IsFunctionsLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.'))">true</IsFunctionsLibrary>
 
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
@@ -133,6 +134,7 @@
 
     <RequiredTargetFrameworks>net452;netstandard1.4;net461;netstandard2.0</RequiredTargetFrameworks>
     <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(IsGeneratorLibrary)' == 'true'">net8.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">

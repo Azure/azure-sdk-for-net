@@ -1,8 +1,0 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageVersion Include="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20240820.5" />
-  </ItemGroup>
-</Project>
