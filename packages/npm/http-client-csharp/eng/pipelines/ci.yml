@@ -53,12 +53,10 @@ extends:
                   npm run lint
                 displayName: "Emitter linter check"
                 workingDirectory: $(Build.SourcesDirectory)/packages/npm/http-client-csharp/emitter
-              - task: Npm@1
+              - script: |
+                  npm run build
                 displayName: 'Build Azure csharp client emitter and generator'
-                inputs:
-                  command: custom
-                  customCommand: run build
-                  workingDir: $(Build.SourcesDirectory)/packages/npm/http-client-csharp             
+                workingDirectory: $(Build.SourcesDirectory)/packages/npm/http-client-csharp
               - pwsh: ./packages/npm/http-client-csharp/eng/scripts/CodeGenerationCheck.ps1
                 displayName: "Check if generated code is up-to-date"
                 env:
