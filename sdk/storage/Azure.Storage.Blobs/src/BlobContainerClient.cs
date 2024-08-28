@@ -3801,23 +3801,7 @@ namespace Azure.Storage.Blobs
             // Deep copy of builder so we don't modify the user's origial BlobSasBuilder.
             builder = BlobSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ContainerName if it is null.
-            builder.BlobContainerName ??= Name;
-
-            if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.BlobContainerName),
-                    nameof(BlobSasBuilder),
-                    nameof(Name));
-            }
-            if (!string.IsNullOrEmpty(builder.BlobName))
-            {
-                throw Errors.SasBuilderEmptyParam(
-                    nameof(builder),
-                    nameof(builder.BlobName),
-                    nameof(Constants.Blob.Container.Name));
-            }
+            SetBuilderAndValidate(builder);
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign)
@@ -3962,23 +3946,7 @@ namespace Azure.Storage.Blobs
             // Deep copy of builder so we don't modify the user's origial BlobSasBuilder.
             builder = BlobSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ContainerName if it is null.
-            builder.BlobContainerName ??= Name;
-
-            if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.BlobContainerName),
-                    nameof(BlobSasBuilder),
-                    nameof(Name));
-            }
-            if (!string.IsNullOrEmpty(builder.BlobName))
-            {
-                throw Errors.SasBuilderEmptyParam(
-                    nameof(builder),
-                    nameof(builder.BlobName),
-                    nameof(Constants.Blob.Container.Name));
-            }
+            SetBuilderAndValidate(builder);
             if (string.IsNullOrEmpty(AccountName))
             {
                 throw Errors.SasClientMissingData(nameof(AccountName));
@@ -4026,6 +3994,28 @@ namespace Azure.Storage.Blobs
             return _parentBlobServiceClient;
         }
         #endregion
+
+        private void SetBuilderAndValidate(BlobSasBuilder builder)
+        {
+            // Assign builder's ContainerName if it is null.
+            builder.BlobContainerName ??= Name;
+
+            // Validate that builder is properly set
+            if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobContainerName),
+                    nameof(BlobSasBuilder),
+                    nameof(Name));
+            }
+            if (!string.IsNullOrEmpty(builder.BlobName))
+            {
+                throw Errors.SasBuilderEmptyParam(
+                nameof(builder),
+                    nameof(builder.BlobName),
+                    nameof(Constants.Blob.Container.Name));
+            }
+        }
     }
 
     namespace Specialized

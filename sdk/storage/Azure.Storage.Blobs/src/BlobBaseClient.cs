@@ -6792,39 +6792,7 @@ namespace Azure.Storage.Blobs.Specialized
             // Deep copy of builder so we don't modify the user's original BlobSasBuilder.
             builder = BlobSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ContainerName, BlobName, Snapshot, BlobVersionId, and EncryptionScope if they are null.
-            builder.BlobContainerName ??= BlobContainerName;
-            builder.BlobName ??= Name;
-            builder.Snapshot ??= _snapshot;
-            builder.BlobVersionId ??= _blobVersionId;
-            builder.EncryptionScope ??= _clientConfiguration.EncryptionScope;
-
-            if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.BlobContainerName),
-                    nameof(BlobSasBuilder),
-                    nameof(BlobContainerName));
-            }
-            if (!builder.BlobName.Equals(Name, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.BlobName),
-                    nameof(BlobSasBuilder),
-                    nameof(Name));
-            }
-            if (string.Compare(_snapshot, builder.Snapshot, StringComparison.InvariantCulture) != 0)
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.Snapshot),
-                    nameof(BlobSasBuilder));
-            }
-            if (string.Compare(_blobVersionId, builder.BlobVersionId, StringComparison.InvariantCulture) != 0)
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.BlobVersionId),
-                    nameof(BlobSasBuilder));
-            }
+            SetBuilderAndValidate(builder);
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign)
@@ -6976,39 +6944,7 @@ namespace Azure.Storage.Blobs.Specialized
             // Deep copy of builder so we don't modify the user's origial BlobSasBuilder.
             builder = BlobSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ContainerName, BlobName, Snapshot, BlobVersionId, and EncryptionScope if they are null.
-            builder.BlobContainerName ??= BlobContainerName;
-            builder.BlobName ??= Name;
-            builder.Snapshot ??= _snapshot;
-            builder.BlobVersionId ??= _blobVersionId;
-            builder.EncryptionScope ??= _clientConfiguration.EncryptionScope;
-
-            if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.BlobContainerName),
-                    nameof(BlobSasBuilder),
-                    nameof(BlobContainerName));
-            }
-            if (!builder.BlobName.Equals(Name, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.BlobName),
-                    nameof(BlobSasBuilder),
-                    nameof(Name));
-            }
-            if (string.Compare(_snapshot, builder.Snapshot, StringComparison.InvariantCulture) != 0)
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.Snapshot),
-                    nameof(BlobSasBuilder));
-            }
-            if (string.Compare(_blobVersionId, builder.BlobVersionId, StringComparison.InvariantCulture) != 0)
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.BlobVersionId),
-                    nameof(BlobSasBuilder));
-            }
+            SetBuilderAndValidate(builder);
             if (string.IsNullOrEmpty(AccountName))
             {
                 throw Errors.SasClientMissingData(nameof(AccountName));
@@ -7054,6 +6990,44 @@ namespace Azure.Storage.Blobs.Specialized
             return _parentBlobContainerClient;
         }
         #endregion
+
+        private void SetBuilderAndValidate(BlobSasBuilder builder)
+        {
+            // Assign builder's ContainerName, BlobName, Snapshot, BlobVersionId, and EncryptionScope if they are null.
+            builder.BlobContainerName ??= BlobContainerName;
+            builder.BlobName ??= Name;
+            builder.Snapshot ??= _snapshot;
+            builder.BlobVersionId ??= _blobVersionId;
+            builder.EncryptionScope ??= _clientConfiguration.EncryptionScope;
+
+            // Validate that builder is properly set
+            if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobContainerName),
+                    nameof(BlobSasBuilder),
+                    nameof(BlobContainerName));
+            }
+            if (!builder.BlobName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobName),
+                    nameof(BlobSasBuilder),
+                    nameof(Name));
+            }
+            if (string.Compare(_snapshot, builder.Snapshot, StringComparison.InvariantCulture) != 0)
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.Snapshot),
+                    nameof(BlobSasBuilder));
+            }
+            if (string.Compare(_blobVersionId, builder.BlobVersionId, StringComparison.InvariantCulture) != 0)
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobVersionId),
+                    nameof(BlobSasBuilder));
+            }
+        }
     }
 
     /// <summary>
