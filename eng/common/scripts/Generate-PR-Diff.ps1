@@ -51,6 +51,5 @@ $result = [PSCustomObject]@{
 $json = $result | ConvertTo-Json
 $json | Out-File $ArtifactName
 
-Write-Host "Generated diff.json file at $ArtifactName"
-"  " + ($json -replace '\n', '\n  ') | Out-Host 
-
+Write-Host "`nGenerated $ArtifactName`:"
+'  ' + ($json -replace "`n", "`n  ") | Out-Host 
