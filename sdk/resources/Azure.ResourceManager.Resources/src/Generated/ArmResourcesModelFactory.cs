@@ -973,6 +973,33 @@ namespace Azure.ResourceManager.Resources.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Resources.DataBoundaryDefinitionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Data boundary properties. </param>
+        /// <returns> A new <see cref="Resources.DataBoundaryDefinitionData"/> instance for mocking. </returns>
+        public static DataBoundaryDefinitionData DataBoundaryDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataBoundaryProperties properties = null)
+        {
+            return new DataBoundaryDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoundaryProperties"/>. </summary>
+        /// <param name="dataBoundary"> The data boundary definition. </param>
+        /// <param name="provisioningState"> Denotes the state of provisioning. </param>
+        /// <returns> A new <see cref="Models.DataBoundaryProperties"/> instance for mocking. </returns>
+        public static DataBoundaryProperties DataBoundaryProperties(DataBoundary? dataBoundary = null, ProvisioningState? provisioningState = null)
+        {
+            return new DataBoundaryProperties(dataBoundary, provisioningState, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.AzurePowerShellScript"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
