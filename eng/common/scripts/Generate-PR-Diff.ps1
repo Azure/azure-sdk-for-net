@@ -48,4 +48,9 @@ $result = [PSCustomObject]@{
     "PRNumber" = if ($env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER) { $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER } else { "-1" }
 }
 
-$result | ConvertTo-Json | Out-File $ArtifactName
+$json = $result | ConvertTo-Json
+$json | Out-File $ArtifactName
+
+Write-Host "Generated diff.json file at $ArtifactName"
+"  " + ($json -replace '\n', '\n  ') | Out-Host 
+
