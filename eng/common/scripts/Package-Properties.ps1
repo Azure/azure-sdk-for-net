@@ -15,7 +15,7 @@ class PackageProps
     [boolean]$IsNewSdk
     [string]$ArtifactName
     [string]$ReleaseStatus
-    [string[]]$CanaryPackages
+    [string[]]$AdditionalValidationPackages
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {
@@ -113,11 +113,6 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $diff = Get-Content $InputDiffJson | ConvertFrom-Json
     $targetedFiles = $diff.ChangedFiles
 
-    $customDependentPackagesHandler = $false
-    if ($DependentPackagesFromPackageSetFn -and (Test-Path "Function:$DependentPackagesFromPackageSetFn")) {
-        $customDependentPackagesHandler = $true
-    }
-
     $dependentPackagesForInclusion = @()
     $lookup = @{}
 
@@ -134,26 +129,24 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg
 
-                if ($customDependentPackagesHandler -and $pkg.CanaryPackages) {
-                    $dependentPackagesForInclusion += $pkg.CanaryPackages
+                if ($pkg.AdditionalValidationPackages) {
+                    $dependentPackagesForInclusion += $pkg.AdditionalValidationPackages
                 }
             }
         }
     }
 
-    # there is a custom function to get dependent packages from a changed package set and diff
-    if ($customDependentPackagesHandler)
-    {
-        $packagesWithChanges += &$DependentPackagesFromPackageSetFn $packagesWithChanges $diff
-    }
-    else {
-        foreach ($addition in $dependentPackagesForInclusion) {
-            $key = $addition.Replace($RepoRoot, "").SubString(1)
+    foreach ($addition in $dependentPackagesForInclusion) {
+        $key = $addition.Replace($RepoRoot, "").SubString(1)
 
-            if ($lookup[$key]) {
-                $packagesWithChanges += $lookup[$key]
-            }
+        if ($lookup[$key]) {
+            $packagesWithChanges += $lookup[$key]
         }
+    }
+
+    if ($AdditionalValidationPackagesFromPackageSetFn -and (Test-Path "Function:$AdditionalValidationPackagesFromPackageSetFn"))
+    {
+        $packagesWithChanges += &$AdditionalValidationPackagesFromPackageSetFn $packagesWithChanges $diff
     }
 
     return $packagesWithChanges
