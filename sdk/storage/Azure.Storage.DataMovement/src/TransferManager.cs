@@ -80,11 +80,7 @@ namespace Azure.Storage.DataMovement
         private CancellationTokenSource _channelCancellationTokenSource;
         private CancellationToken _cancellationToken => _channelCancellationTokenSource.Token;
 
-        /// <summary>
-        /// Array pools for reading from streams to upload
-        /// </summary>
-        internal ArrayPool<byte> UploadArrayPool => _arrayPool;
-        private ArrayPool<byte> _arrayPool;
+        private readonly ArrayPool<byte> _arrayPool;
 
         internal ClientDiagnostics ClientDiagnostics { get; }
 
