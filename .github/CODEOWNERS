@@ -734,11 +734,11 @@
 # ServiceLabel: %Network - Private Link
 # ServiceOwners:                                                   @privlinksuppgithub
 
+# PRLabel: %Network - Network Cloud
+/sdk/networkcloud/                                                 @Azure/azure-sdk-write-networkcloud
+
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
-
-# PRLabel: %Network Cloud
-/sdk/networkcloud/                                                 @Azure/azure-sdk-write-networkcloud
 
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
