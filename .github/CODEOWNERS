@@ -1004,7 +1004,7 @@
 # ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %NetworkCloud
-/sdk/networkcloud/                                                 @Azure/azure-sdk-write-networkcloud
+/sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud
 
 # ServiceLabel: %NetworkCloud %Mgmt
 # ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
