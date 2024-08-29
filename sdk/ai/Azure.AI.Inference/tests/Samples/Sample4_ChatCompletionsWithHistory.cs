@@ -25,7 +25,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 #endif
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
             var messages = new List<ChatRequestMessage>()
             {
                 new ChatRequestSystemMessage("You are an AI assistant that helps people find information. Your replies are short, no more than two sentences."),
@@ -71,7 +71,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 #endif
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
             var messages = new List<ChatRequestMessage>()
             {
                 new ChatRequestSystemMessage("You are an AI assistant that helps people find information. Your replies are short, no more than two sentences."),

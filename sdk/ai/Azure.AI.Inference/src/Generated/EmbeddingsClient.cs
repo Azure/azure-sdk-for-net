@@ -15,8 +15,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Inference
 {
     // Data plane generated client.
-    /// <summary> The ChatCompletions service client. </summary>
-    public partial class ChatCompletionsClient
+    /// <summary> The Embeddings service client. </summary>
+    public partial class EmbeddingsClient
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -33,33 +33,33 @@ namespace Azure.AI.Inference
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ChatCompletionsClient for mocking. </summary>
-        protected ChatCompletionsClient()
+        /// <summary> Initializes a new instance of EmbeddingsClient for mocking. </summary>
+        protected EmbeddingsClient()
         {
         }
 
-        /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
+        /// <summary> Initializes a new instance of EmbeddingsClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ChatCompletionsClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIInferenceClientOptions())
+        public EmbeddingsClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIInferenceClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
+        /// <summary> Initializes a new instance of EmbeddingsClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ChatCompletionsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIInferenceClientOptions())
+        public EmbeddingsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIInferenceClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
+        /// <summary> Initializes a new instance of EmbeddingsClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ChatCompletionsClient(Uri endpoint, AzureKeyCredential credential, AzureAIInferenceClientOptions options)
+        public EmbeddingsClient(Uri endpoint, AzureKeyCredential credential, AzureAIInferenceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -72,12 +72,12 @@ namespace Azure.AI.Inference
             _apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
+        /// <summary> Initializes a new instance of EmbeddingsClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ChatCompletionsClient(Uri endpoint, TokenCredential credential, AzureAIInferenceClientOptions options)
+        public EmbeddingsClient(Uri endpoint, TokenCredential credential, AzureAIInferenceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -91,10 +91,8 @@ namespace Azure.AI.Inference
         }
 
         /// <summary>
-        /// [Protocol Method] Gets chat completions for the provided chat messages.
-        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
-        /// provided prompt data. The method makes a REST API call to the `/chat/completions` route
-        /// on the given endpoint.
+        /// [Protocol Method] Return the embedding vectors for given text prompts.
+        /// The method makes a REST API call to the `/embeddings` route on the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -103,26 +101,31 @@ namespace Azure.AI.Inference
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CompleteAsync(ChatCompletionsOptions,ExtraParameters?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="EmbedAsync(EmbeddingsOptions,ExtraParameters?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="extraParams"> The <see cref="string"/> to use. Allowed values: "error" | "drop" | "pass-through". </param>
+        /// <param name="extraParams">
+        /// Controls what happens if extra parameters, undefined by the REST API,
+        /// are passed in the JSON request payload.
+        /// This sets the HTTP request header `extra-parameters`. Allowed values: "error" | "drop" | "pass-through"
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CompleteAsync(RequestContent content, string extraParams = null, RequestContext context = null)
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='EmbedAsync(RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> EmbedAsync(RequestContent content, string extraParams = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.Complete");
+            using var scope = ClientDiagnostics.CreateScope("EmbeddingsClient.Embed");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCompleteRequest(content, extraParams, context);
+                using HttpMessage message = CreateEmbedRequest(content, extraParams, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -133,10 +136,8 @@ namespace Azure.AI.Inference
         }
 
         /// <summary>
-        /// [Protocol Method] Gets chat completions for the provided chat messages.
-        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
-        /// provided prompt data. The method makes a REST API call to the `/chat/completions` route
-        /// on the given endpoint.
+        /// [Protocol Method] Return the embedding vectors for given text prompts.
+        /// The method makes a REST API call to the `/embeddings` route on the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -145,26 +146,31 @@ namespace Azure.AI.Inference
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Complete(ChatCompletionsOptions,ExtraParameters?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Embed(EmbeddingsOptions,ExtraParameters?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="extraParams"> The <see cref="string"/> to use. Allowed values: "error" | "drop" | "pass-through". </param>
+        /// <param name="extraParams">
+        /// Controls what happens if extra parameters, undefined by the REST API,
+        /// are passed in the JSON request payload.
+        /// This sets the HTTP request header `extra-parameters`. Allowed values: "error" | "drop" | "pass-through"
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response Complete(RequestContent content, string extraParams = null, RequestContext context = null)
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='Embed(RequestContent,string,RequestContext)']/*" />
+        public virtual Response Embed(RequestContent content, string extraParams = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.Complete");
+            using var scope = ClientDiagnostics.CreateScope("EmbeddingsClient.Embed");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCompleteRequest(content, extraParams, context);
+                using HttpMessage message = CreateEmbedRequest(content, extraParams, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -181,7 +187,7 @@ namespace Azure.AI.Inference
         /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(CancellationToken)']/*" />
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(CancellationToken)']/*" />
         public virtual async Task<Response<ModelInfo>> GetModelInfoAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -196,7 +202,7 @@ namespace Azure.AI.Inference
         /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfo(CancellationToken)']/*" />
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='GetModelInfo(CancellationToken)']/*" />
         public virtual Response<ModelInfo> GetModelInfo(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -225,10 +231,10 @@ namespace Azure.AI.Inference
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(RequestContext)']/*" />
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetModelInfoAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.GetModelInfo");
+            using var scope = ClientDiagnostics.CreateScope("EmbeddingsClient.GetModelInfo");
             scope.Start();
             try
             {
@@ -263,10 +269,10 @@ namespace Azure.AI.Inference
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfo(RequestContext)']/*" />
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='GetModelInfo(RequestContext)']/*" />
         public virtual Response GetModelInfo(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.GetModelInfo");
+            using var scope = ClientDiagnostics.CreateScope("EmbeddingsClient.GetModelInfo");
             scope.Start();
             try
             {
@@ -280,14 +286,14 @@ namespace Azure.AI.Inference
             }
         }
 
-        internal HttpMessage CreateCompleteRequest(RequestContent content, string extraParams, RequestContext context)
+        internal HttpMessage CreateEmbedRequest(RequestContent content, string extraParams, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/chat/completions", false);
+            uri.AppendPath("/embeddings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

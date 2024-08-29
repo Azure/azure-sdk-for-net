@@ -138,5 +138,42 @@ namespace Azure.AI.Inference
         {
             return new ModelInfo(modelName, modelType, modelProviderName, serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.EmbeddingsResult"/>. </summary>
+        /// <param name="id"> Unique identifier for the embeddings result. </param>
+        /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
+        /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
+        /// <param name="model"> The model ID used to generate this result. </param>
+        /// <returns> A new <see cref="Inference.EmbeddingsResult"/> instance for mocking. </returns>
+        public static EmbeddingsResult EmbeddingsResult(string id = null, IEnumerable<EmbeddingItem> data = null, EmbeddingsUsage usage = null, string model = null)
+        {
+            data ??= new List<EmbeddingItem>();
+
+            return new EmbeddingsResult(id, data?.ToList(), usage, model, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.EmbeddingItem"/>. </summary>
+        /// <param name="embedding">
+        /// List of embedding values for the input prompt. These represent a measurement of the
+        /// vector-based relatedness of the provided input. Or a base64 encoded string of the embedding vector.
+        /// </param>
+        /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
+        /// <returns> A new <see cref="Inference.EmbeddingItem"/> instance for mocking. </returns>
+        public static EmbeddingItem EmbeddingItem(BinaryData embedding = null, int index = default)
+        {
+            return new EmbeddingItem(embedding, index, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.EmbeddingsUsage"/>. </summary>
+        /// <param name="promptTokens"> Number of tokens in the request. </param>
+        /// <param name="totalTokens">
+        /// Total number of tokens transacted in this request/response. Should equal the
+        /// number of tokens in the request.
+        /// </param>
+        /// <returns> A new <see cref="Inference.EmbeddingsUsage"/> instance for mocking. </returns>
+        public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
+        {
+            return new EmbeddingsUsage(promptTokens, totalTokens, serializedAdditionalRawData: null);
+        }
     }
 }

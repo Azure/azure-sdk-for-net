@@ -29,7 +29,7 @@ namespace Azure.AI.Inference.Tests.Samples
             // the credential object is still required. So create with a dummy value.
             var credential = new AzureKeyCredential("foo");
 
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
 
             var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
@@ -78,7 +78,7 @@ namespace Azure.AI.Inference.Tests.Samples
             // the credential object is still required. So create with a dummy value.
             var credential = new AzureKeyCredential("foo");
 
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
 
             var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
@@ -124,7 +124,7 @@ namespace Azure.AI.Inference.Tests.Samples
 
 #endif
 
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
             BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://cognitiveservices.azure.com/.default" });
             clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
@@ -170,7 +170,7 @@ namespace Azure.AI.Inference.Tests.Samples
 
 #endif
 
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
             BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://cognitiveservices.azure.com/.default" });
             clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);

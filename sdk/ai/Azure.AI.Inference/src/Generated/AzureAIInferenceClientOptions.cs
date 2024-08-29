@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.Inference
 {
-    /// <summary> Client options for ChatCompletionsClient. </summary>
-    public partial class ChatCompletionsClientOptions : ClientOptions
+    /// <summary> Client options for Azure.AI.Inference library clients. </summary>
+    public partial class AzureAIInferenceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_05_01_Preview;
 
@@ -24,8 +24,8 @@ namespace Azure.AI.Inference
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of ChatCompletionsClientOptions. </summary>
-        public ChatCompletionsClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of AzureAIInferenceClientOptions. </summary>
+        public AzureAIInferenceClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

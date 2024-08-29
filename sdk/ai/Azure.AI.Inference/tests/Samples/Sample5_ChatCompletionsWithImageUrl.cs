@@ -21,7 +21,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
             ChatMessageImageContentItem imageContentItem =
                 new ChatMessageImageContentItem(
@@ -33,7 +33,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential("foo");
             var key = TestEnvironment.AoaiKey;
 
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
 
             var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
@@ -82,7 +82,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
             ChatMessageImageContentItem imageContentItem =
                 new ChatMessageImageContentItem(
@@ -94,7 +94,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential("foo");
             var key = TestEnvironment.AoaiKey;
 
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
 
             var client = new ChatCompletionsClient(endpoint, credential, clientOptions);

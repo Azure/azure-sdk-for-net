@@ -9,6 +9,8 @@ namespace Azure.AI.Inference.Tests
     {
         public string MistralSmallEndpoint => GetRecordedVariable("AZUREAI_MISTRAL_SMALL_URL");
         public string MistralSmallApiKey => GetRecordedVariable("AZUREAI_MISTRAL_SMALL_KEY", options => options.IsSecret());
+        public string CohereEmbeddingEndpoint => GetRecordedVariable("AZUREAI_COHERE_EMBEDDING_URL");
+        public string CohereEmbeddingApiKey => GetRecordedVariable("AZUREAI_COHERE_EMBEDDING_KEY", options => options.IsSecret());
         public string GithubEndpoint => GetRecordedVariable("AZUREAI_GITHUB_URL");
         public string GithubToken => GetRecordedVariable("AZUREAI_GITHUB_TOKEN", options => options.IsSecret());
         public string AoaiEndpoint => GetRecordedVariable("AOAI_CHAT_COMPLETIONS_ENDPOINT");

@@ -26,7 +26,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 #endif
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
             FunctionDefinition futureTemperatureFunction = new FunctionDefinition("get_future_temperature")
             {
@@ -135,7 +135,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 #endif
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
             FunctionDefinition futureTemperatureFunction = new FunctionDefinition("get_future_temperature")
             {

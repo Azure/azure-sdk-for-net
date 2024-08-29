@@ -3,24 +3,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using File = System.IO.File;
 
 namespace Azure.AI.Inference.Tests
 {
-    public class InferenceClientTest: RecordedTestBase<InferenceClientTestEnvironment>
+    public class ChatCompletionsClientTest: RecordedTestBase<InferenceClientTestEnvironment>
     {
         public enum TargetModel
         {
@@ -46,7 +43,7 @@ namespace Azure.AI.Inference.Tests
             UsingBinaryData,
         }
 
-        public InferenceClientTest(bool isAsync) : base(isAsync)
+        public ChatCompletionsClientTest(bool isAsync) : base(isAsync)
         {
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
         }
@@ -59,7 +56,7 @@ namespace Azure.AI.Inference.Tests
             var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
             var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 
-            var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, new ChatCompletionsClientOptions());
+            var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, new AzureAIInferenceClientOptions());
 
             var requestOptions = new ChatCompletionsOptions()
             {
@@ -92,7 +89,7 @@ namespace Azure.AI.Inference.Tests
             var entraIdCredential = TestEnvironment.Credential;
 
             CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
 
             BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(entraIdCredential, new string[] { "https://cognitiveservices.azure.com/.default" });
@@ -140,7 +137,7 @@ namespace Azure.AI.Inference.Tests
             var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
             var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 
-            var clientOptions = new ChatCompletionsClientOptions();
+            var clientOptions = new AzureAIInferenceClientOptions();
             var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
 
             var requestOptions = new ChatCompletionsOptions()
@@ -205,7 +202,7 @@ namespace Azure.AI.Inference.Tests
             var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 
             CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
 
             var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
@@ -321,7 +318,7 @@ namespace Azure.AI.Inference.Tests
             var githubModelName = "gpt-4o";
 
             CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
 
             // Uncomment the following lines to enable enhanced log output
@@ -466,7 +463,7 @@ namespace Azure.AI.Inference.Tests
             var aoaiKey = new AzureKeyCredential("foo");
 
             CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
             clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(TestEnvironment), HttpPipelinePosition.PerCall);
 
@@ -578,12 +575,12 @@ namespace Azure.AI.Inference.Tests
             }
         }
 
-        private ChatCompletionsClient CreateClient(Uri endpoint, AzureKeyCredential credential, ChatCompletionsClientOptions clientOptions)
+        private ChatCompletionsClient CreateClient(Uri endpoint, AzureKeyCredential credential, AzureAIInferenceClientOptions clientOptions)
         {
             return InstrumentClient(new ChatCompletionsClient(endpoint, credential, InstrumentClientOptions(clientOptions)));
         }
 
-        private ChatCompletionsClient CreateClient(Uri endpoint, TokenCredential credential, ChatCompletionsClientOptions clientOptions)
+        private ChatCompletionsClient CreateClient(Uri endpoint, TokenCredential credential, AzureAIInferenceClientOptions clientOptions)
         {
             return InstrumentClient(new ChatCompletionsClient(endpoint, credential, InstrumentClientOptions(clientOptions)));
         }
