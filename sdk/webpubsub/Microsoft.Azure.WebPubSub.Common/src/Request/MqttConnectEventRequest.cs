@@ -54,7 +54,7 @@ public class MqttConnectEventRequest : ConnectEventRequest
         {
             MqttProtocolVersion.V311 => new MqttConnectEventErrorResponse(code.ToMqttV311ConnectReturnCode(), message),
             MqttProtocolVersion.V500 => new MqttConnectEventErrorResponse(code.ToMqttV500ConnectReasonCode(), message),
-            _ => throw new NotSupportedException()
+            _ => throw new ArgumentOutOfRangeException($"MQTT protocol version {Mqtt.ProtocolVersion} is invalid.")
         };
     }
 

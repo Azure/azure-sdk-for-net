@@ -48,6 +48,10 @@ internal class MqttConnectPropertiesJsonConverter : JsonConverter<MqttConnectPro
                     case MqttConnectProperties.UserPropertiesProperty:
                         userProperties = JsonSerializer.Deserialize<IReadOnlyList<MqttUserProperty>>(ref reader, options);
                         break;
+
+                    default:
+                        reader.Skip();
+                        break;
                 }
             }
         }
@@ -63,20 +67,6 @@ internal class MqttConnectPropertiesJsonConverter : JsonConverter<MqttConnectPro
 
     public override void Write(Utf8JsonWriter writer, MqttConnectProperties value, JsonSerializerOptions options)
     {
-        writer.WriteStartObject();
-
-        writer.WritePropertyName(MqttConnectProperties.ProtocolVersionProperty);
-        JsonSerializer.Serialize(writer, value.ProtocolVersion, options);
-
-        writer.WritePropertyName(MqttConnectProperties.UsernameProperty);
-        writer.WriteStringValue(value.Username);
-
-        writer.WritePropertyName(MqttConnectProperties.PasswordProperty);
-        writer.WriteStringValue(value.Password);
-
-        writer.WritePropertyName(MqttConnectProperties.UserPropertiesProperty);
-        JsonSerializer.Serialize(writer, value.UserProperties, options);
-
-        writer.WriteEndObject();
+        throw new NotImplementedException();
     }
 }

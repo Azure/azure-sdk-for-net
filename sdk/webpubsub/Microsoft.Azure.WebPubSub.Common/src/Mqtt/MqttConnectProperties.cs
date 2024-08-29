@@ -28,7 +28,7 @@ public class MqttConnectProperties
     /// <param name="username"></param>
     /// <param name="password"></param>
     /// <param name="userProperties"></param>
-    public MqttConnectProperties(MqttProtocolVersion protocolVersion, string? username, string? password, IReadOnlyList<MqttUserProperty>? userProperties)
+    internal MqttConnectProperties(MqttProtocolVersion protocolVersion, string? username, string? password, IReadOnlyList<MqttUserProperty>? userProperties)
     {
         ProtocolVersion = protocolVersion;
         Username = username;

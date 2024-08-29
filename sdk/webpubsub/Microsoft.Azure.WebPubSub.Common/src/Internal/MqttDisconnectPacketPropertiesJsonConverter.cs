@@ -38,6 +38,10 @@ internal class MqttDisconnectPacketPropertiesJsonConverter : JsonConverter<MqttD
                     case MqttDisconnectPacketProperties.UserPropertiesProperty:
                         userProperties = JsonSerializer.Deserialize<List<MqttUserProperty>>(ref reader, options);
                         break;
+
+                    default:
+                        reader.Skip();
+                        break;
                 }
             }
         }

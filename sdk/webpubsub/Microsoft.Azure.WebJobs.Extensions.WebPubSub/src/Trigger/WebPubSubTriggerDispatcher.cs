@@ -186,12 +186,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                         if (context is MqttConnectionContext mqttContext && requestType == RequestType.Connect)
                         {
                             var mqttProtocolVersion = ((MqttConnectEventRequest)eventRequest).Mqtt.ProtocolVersion;
-                            var errorResponse = mqttProtocolVersion switch
-                            {
-                                MqttProtocolVersion.V311 => new MqttConnectEventErrorResponse(MqttV500ConnectReasonCode.ServerUnavailable, ex.Message),
-                                MqttProtocolVersion.V500 => new MqttConnectEventErrorResponse(MqttV500ConnectReasonCode.ServerUnavailable, ex.Message),
-                                _ => throw new NotSupportedException($"MQTT protocol version {mqttProtocolVersion} is not supported yet.")
-                            };
+                            var errorResponse = ((MqttConnectEventRequest)eventRequest).CreateErrorResponse(WebPubSubErrorCode.ServerError, ex.Message);
                             return Utilities.BuildErrorResponse(errorResponse);
                         }
                         var error = new EventErrorResponse(WebPubSubErrorCode.ServerError, ex.Message);

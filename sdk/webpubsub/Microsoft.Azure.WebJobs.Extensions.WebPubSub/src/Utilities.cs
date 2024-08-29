@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             return error switch
             {
-                MqttConnectEventErrorResponse mqttConnectError => BuildErrorResponse(JsonConvert.SerializeObject(mqttConnectError), mqttConnectError.Code),
+                MqttConnectEventErrorResponse mqttConnectError => BuildErrorResponse(JsonConvert.SerializeObject(mqttConnectError, MqttConnectEventErrorResponseJsonConverter.Instance), mqttConnectError.Code),
                 _ => BuildErrorResponse(error.ErrorMessage, error.Code)
             };
         }
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     if (context is MqttConnectionContext mqttContext)
                     {
                         var mqttErrorConnectResponse = response.ToObject<MqttConnectEventErrorResponseContent>();
-                        return BuildErrorResponse(JsonConvert.SerializeObject(mqttErrorConnectResponse), mqttErrorConnectResponse.Code);
+                        return BuildErrorResponse(JsonConvert.SerializeObject(mqttErrorConnectResponse, MqttConnectEventErrorResponseJsonConverter.Instance), mqttErrorConnectResponse.Code);
                     }
                     var error = response.ToObject<EventErrorResponse>();
                     return BuildErrorResponse(error);

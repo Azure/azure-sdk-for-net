@@ -37,6 +37,10 @@ internal class MqttDisconnectedEventRequestPropertiesJsonConverter : JsonConvert
                     case MqttDisconnectedEventRequestProperties.DisconnectPacketProperty:
                         disconnectPacket = JsonSerializer.Deserialize<MqttDisconnectPacketProperties>(ref reader, options);
                         break;
+
+                    default:
+                        reader.Skip();
+                        break;
                 }
             }
         }

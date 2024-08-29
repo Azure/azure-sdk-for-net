@@ -146,7 +146,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttConnectProperties
     {
-        public MqttConnectProperties(Microsoft.Azure.WebPubSub.Common.MqttProtocolVersion protocolVersion, string? username, string? password, System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? userProperties) { }
+        internal MqttConnectProperties() { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="password")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("password")]
         public string? Password { get { throw null; } protected set { } }
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttDisconnectedEventRequestProperties
     {
-        public MqttDisconnectedEventRequestProperties(bool initiatedByClient, Microsoft.Azure.WebPubSub.Common.MqttDisconnectPacketProperties? disconnectPacket) { }
+        internal MqttDisconnectedEventRequestProperties() { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="disconnectPacket")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("disconnectPacket")]
         public Microsoft.Azure.WebPubSub.Common.MqttDisconnectPacketProperties? DisconnectPacket { get { throw null; } }
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttDisconnectPacketProperties
     {
-        public MqttDisconnectPacketProperties(Microsoft.Azure.WebPubSub.Common.MqttDisconnectReasonCode code, System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? userProperties) { }
+        internal MqttDisconnectPacketProperties() { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="code")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("code")]
         public Microsoft.Azure.WebPubSub.Common.MqttDisconnectReasonCode Code { get { throw null; } }

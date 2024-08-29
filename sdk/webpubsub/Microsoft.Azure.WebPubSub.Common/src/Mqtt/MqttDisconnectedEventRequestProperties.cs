@@ -37,7 +37,7 @@ public class MqttDisconnectedEventRequestProperties
     /// </summary>
     /// <param name="initiatedByClient"></param>
     /// <param name="disconnectPacket"></param>
-    public MqttDisconnectedEventRequestProperties(bool initiatedByClient, MqttDisconnectPacketProperties? disconnectPacket)
+    internal MqttDisconnectedEventRequestProperties(bool initiatedByClient, MqttDisconnectPacketProperties? disconnectPacket)
     {
         InitiatedByClient = initiatedByClient;
         DisconnectPacket = disconnectPacket;

@@ -24,7 +24,7 @@ public class MqttDisconnectPacketProperties
     /// </summary>
     /// <param name="code"></param>
     /// <param name="userProperties"></param>
-    public MqttDisconnectPacketProperties(MqttDisconnectReasonCode code, IReadOnlyList<MqttUserProperty>? userProperties)
+    internal MqttDisconnectPacketProperties(MqttDisconnectReasonCode code, IReadOnlyList<MqttUserProperty>? userProperties)
     {
         Code = code;
         UserProperties = userProperties;
