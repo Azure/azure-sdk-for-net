@@ -48,7 +48,6 @@
         "textAnalyticsName":  "[format('textanalytics-{0}', parameters('baseName'))]",
         "resourceGroupName":"[concat('rg-',parameters('endpointPrefix'),'-',parameters('baseName'))]",
         "textAnalyticsResourceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName') , '/providers/Microsoft.CognitiveServices/accounts/', variables('textAnalyticsName'))]",
-        "taRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
         "healthInsightsName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
         "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('cognitiveServicesEndpointSuffix'))]",
         "systemAndUserIdentities": {
@@ -105,15 +104,15 @@
             ]
         },
         {
-          "type": "Microsoft.CognitiveServices/accounts",
-          "apiVersion": "2023-10-01-preview",
+          "type": "Microsoft.CognitiveServices/accounts/providers/roleAssignments",
+          "apiVersion": "2022-04-01",
           "name": "[format('{0}/Microsoft.Authorization/{1}', variables('textAnalyticsName'), guid(variables('textAnalyticsName')))]",
           "dependsOn": [
             "[resourceId('Microsoft.CognitiveServices/accounts', variables('textAnalyticsName'))]"
             ],
           "properties": {
           "principalId": "[parameters('testApplicationOid')]",
-          "roleDefinitionId":"[variables('taRoleId')]"
+          "roleDefinitionId":"[subscriptionResourceId('Microsoft.CognitiveServices/providers/roleDefinitions', 'a97b65f3-24c7-4388-baec-2e87135dc908')]"
           }
         }
     ],
