@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="EnrollmentAccountListResult"/>. </summary>
         internal EnrollmentAccountListResult()
         {
-            Value = new ChangeTrackingList<EnrollmentAccountData>();
+            Value = new ChangeTrackingList<BillingEnrollmentAccountData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EnrollmentAccountListResult"/>. </summary>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="value"> The list of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnrollmentAccountListResult(string nextLink, IReadOnlyList<EnrollmentAccountData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnrollmentAccountListResult(string nextLink, IReadOnlyList<BillingEnrollmentAccountData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
         /// <summary> The list of resources. </summary>
-        public IReadOnlyList<EnrollmentAccountData> Value { get; }
+        public IReadOnlyList<BillingEnrollmentAccountData> Value { get; }
     }
 }

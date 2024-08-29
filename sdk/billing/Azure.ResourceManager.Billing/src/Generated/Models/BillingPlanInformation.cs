@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
         /// <param name="transactions"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPlanInformation(Price pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IList<PaymentDetail> transactions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingPlanInformation(BillingPrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IList<PaymentDetail> transactions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PricingCurrencyTotal = pricingCurrencyTotal;
             StartOn = startOn;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Amount of money to be paid for the Order. Tax is not included. </summary>
-        public Price PricingCurrencyTotal { get; set; }
+        public BillingPrice PricingCurrencyTotal { get; set; }
         /// <summary> Date when the billing plan has started. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </summary>

@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="associatedTenantName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssociatedTenantData>> GetAsync(string billingAccountName, string associatedTenantName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingAssociatedTenantData>> GetAsync(string billingAccountName, string associatedTenantName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        AssociatedTenantData value = default;
+                        BillingAssociatedTenantData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssociatedTenantData.DeserializeAssociatedTenantData(document.RootElement);
+                        value = BillingAssociatedTenantData.DeserializeBillingAssociatedTenantData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AssociatedTenantData)null, message.Response);
+                    return Response.FromValue((BillingAssociatedTenantData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="associatedTenantName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssociatedTenantData> Get(string billingAccountName, string associatedTenantName, CancellationToken cancellationToken = default)
+        public Response<BillingAssociatedTenantData> Get(string billingAccountName, string associatedTenantName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));
@@ -188,19 +188,19 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        AssociatedTenantData value = default;
+                        BillingAssociatedTenantData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssociatedTenantData.DeserializeAssociatedTenantData(document.RootElement);
+                        value = BillingAssociatedTenantData.DeserializeBillingAssociatedTenantData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AssociatedTenantData)null, message.Response);
+                    return Response.FromValue((BillingAssociatedTenantData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string billingAccountName, string associatedTenantName, AssociatedTenantData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string billingAccountName, string associatedTenantName, BillingAssociatedTenantData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string billingAccountName, string associatedTenantName, AssociatedTenantData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string billingAccountName, string associatedTenantName, BillingAssociatedTenantData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="associatedTenantName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string billingAccountName, string associatedTenantName, AssociatedTenantData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string billingAccountName, string associatedTenantName, BillingAssociatedTenantData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="associatedTenantName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string billingAccountName, string associatedTenantName, AssociatedTenantData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string billingAccountName, string associatedTenantName, BillingAssociatedTenantData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));

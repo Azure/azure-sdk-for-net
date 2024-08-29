@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Billing.Models
             ReservationBillingPlan? billingPlan = default;
             int? quantity = default;
             string displayName = default;
-            AppliedScopeType? appliedScopeType = default;
+            BillingAppliedScopeType? appliedScopeType = default;
             IList<string> appliedScopes = default;
             ReservationAppliedScopeProperties appliedScopeProperties = default;
             bool? renew = default;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Billing.Models
                             {
                                 continue;
                             }
-                            appliedScopeType = new AppliedScopeType(property0.Value.GetString());
+                            appliedScopeType = new BillingAppliedScopeType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("appliedScopes"u8))

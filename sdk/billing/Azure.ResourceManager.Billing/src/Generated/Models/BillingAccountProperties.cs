@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="qualifications"> Qualifications for pricing on a billing account. Values may be Commercial, Education, Charity or Government. </param>
         /// <param name="taxIds"> A list of tax identifiers for the billing account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAccountProperties(ProvisioningState? provisioningState, AccountStatus? accountStatus, AccountType? accountType, AccountSubType? accountSubType, BillingAccountStatusReasonCode? accountStatusReasonCode, AgreementType? agreementType, string displayName, BillingAccountPropertiesEnrollmentDetails enrollmentDetails, bool? hasReadAccess, bool? hasNoBillingProfiles, string notificationEmailAddress, string primaryBillingTenantId, BillingAccountPropertiesSoldTo soldTo, BillingAccountPropertiesRegistrationNumber registrationNumber, IReadOnlyList<BillingRelationshipType> billingRelationshipTypes, IReadOnlyList<string> qualifications, IList<TaxIdentifier> taxIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingAccountProperties(BillingProvisioningState? provisioningState, BillingAccountStatus? accountStatus, BillingAccountType? accountType, BillingAccountSubType? accountSubType, BillingAccountStatusReasonCode? accountStatusReasonCode, BillingAgreementType? agreementType, string displayName, EnrollmentDetails enrollmentDetails, bool? hasReadAccess, bool? hasNoBillingProfiles, string notificationEmailAddress, string primaryBillingTenantId, BillingAddressDetails soldTo, RegistrationNumber registrationNumber, IReadOnlyList<BillingRelationshipType> billingRelationshipTypes, IReadOnlyList<string> qualifications, IList<TaxIdentifier> taxIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             AccountStatus = accountStatus;
@@ -95,21 +95,21 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> The current status of the billing account. </summary>
-        public AccountStatus? AccountStatus { get; }
+        public BillingAccountStatus? AccountStatus { get; }
         /// <summary> The type of customer. </summary>
-        public AccountType? AccountType { get; }
+        public BillingAccountType? AccountType { get; }
         /// <summary> The tier of the account. </summary>
-        public AccountSubType? AccountSubType { get; }
+        public BillingAccountSubType? AccountSubType { get; }
         /// <summary> Reason for the specified billing account status. </summary>
         public BillingAccountStatusReasonCode? AccountStatusReasonCode { get; }
         /// <summary> The type of agreement. </summary>
-        public AgreementType? AgreementType { get; }
+        public BillingAgreementType? AgreementType { get; }
         /// <summary> The billing account name. </summary>
         public string DisplayName { get; set; }
         /// <summary> The properties of an enrollment. </summary>
-        public BillingAccountPropertiesEnrollmentDetails EnrollmentDetails { get; set; }
+        public EnrollmentDetails EnrollmentDetails { get; set; }
         /// <summary> Indicates whether user has read access to the billing account. </summary>
         public bool? HasReadAccess { get; set; }
         /// <summary> Indicates whether or not the billing account has any billing profiles. </summary>
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The tenant that was used to set up the billing account. By default, only users from this tenant can get role assignments on the billing account and all purchases are provisioned in this tenant. </summary>
         public string PrimaryBillingTenantId { get; set; }
         /// <summary> The address of the individual or organization that is responsible for the billing account. </summary>
-        public BillingAccountPropertiesSoldTo SoldTo { get; set; }
+        public BillingAddressDetails SoldTo { get; set; }
         /// <summary> Describes the registration number of the organization linked with the billing account. </summary>
-        public BillingAccountPropertiesRegistrationNumber RegistrationNumber { get; set; }
+        public RegistrationNumber RegistrationNumber { get; set; }
         /// <summary> Identifies the billing relationships represented by a billing account. The billing relationship may be between Microsoft, the customer, and/or a third-party. </summary>
         public IReadOnlyList<BillingRelationshipType> BillingRelationshipTypes { get; }
         /// <summary> Qualifications for pricing on a billing account. Values may be Commercial, Education, Charity or Government. </summary>

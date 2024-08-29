@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="productName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductData>> GetAsync(string billingAccountName, string productName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingProductData>> GetAsync(string billingAccountName, string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
@@ -709,13 +709,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        ProductData value = default;
+                        BillingProductData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProductData.DeserializeProductData(document.RootElement);
+                        value = BillingProductData.DeserializeBillingProductData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProductData)null, message.Response);
+                    return Response.FromValue((BillingProductData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="productName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductData> Get(string billingAccountName, string productName, CancellationToken cancellationToken = default)
+        public Response<BillingProductData> Get(string billingAccountName, string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
@@ -738,19 +738,19 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        ProductData value = default;
+                        BillingProductData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProductData.DeserializeProductData(document.RootElement);
+                        value = BillingProductData.DeserializeBillingProductData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProductData)null, message.Response);
+                    return Response.FromValue((BillingProductData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string billingAccountName, string productName, ProductPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string billingAccountName, string productName, BillingProductPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string billingAccountName, string productName, ProductPatch patch)
+        internal HttpMessage CreateUpdateRequest(string billingAccountName, string productName, BillingProductPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="productName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductData>> UpdateAsync(string billingAccountName, string productName, ProductPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingProductData>> UpdateAsync(string billingAccountName, string productName, BillingProductPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
@@ -803,9 +803,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        ProductData value = default;
+                        BillingProductData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProductData.DeserializeProductData(document.RootElement);
+                        value = BillingProductData.DeserializeBillingProductData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="productName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductData> Update(string billingAccountName, string productName, ProductPatch patch, CancellationToken cancellationToken = default)
+        public Response<BillingProductData> Update(string billingAccountName, string productName, BillingProductPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
@@ -832,9 +832,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        ProductData value = default;
+                        BillingProductData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProductData.DeserializeProductData(document.RootElement);
+                        value = BillingProductData.DeserializeBillingProductData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

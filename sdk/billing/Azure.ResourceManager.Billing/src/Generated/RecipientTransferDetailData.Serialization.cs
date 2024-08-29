@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Billing
             SystemData systemData = default;
             DateTimeOffset? expirationTime = default;
             IReadOnlyList<EligibleProductType> allowedProductType = default;
-            TransferStatus? transferStatus = default;
+            PartnerTransferStatus? transferStatus = default;
             string recipientEmailId = default;
             string initiatorEmailId = default;
             string resellerId = default;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            transferStatus = new TransferStatus(property0.Value.GetString());
+                            transferStatus = new PartnerTransferStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("recipientEmailId"u8))

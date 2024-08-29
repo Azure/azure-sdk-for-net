@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="productId"> The ID that uniquely identifies a product. </param>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPropertyProperties(AgreementType? billingAccountAgreementType, string billingAccountDisplayName, string billingAccountId, string accountAdminNotificationEmailAddress, string billingAccountSoldToCountry, AccountStatus? billingAccountStatus, BillingAccountStatusReasonCode? billingAccountStatusReasonCode, AccountType? billingAccountType, AccountSubType? billingAccountSubType, string billingCurrency, string billingProfileDisplayName, string billingProfileId, SpendingLimit? billingProfileSpendingLimit, IReadOnlyList<SpendingLimitDetails> billingProfileSpendingLimitDetails, BillingProfileStatus? billingProfileStatus, BillingProfileStatusReasonCode? billingProfileStatusReasonCode, PaymentMethodFamily? billingProfilePaymentMethodFamily, string billingProfilePaymentMethodType, string billingTenantId, string costCenter, string customerDisplayName, string customerId, CustomerStatus? customerStatus, string invoiceSectionDisplayName, string invoiceSectionId, InvoiceSectionState? invoiceSectionStatus, InvoiceSectionStateReasonCode? invoiceSectionStatusReasonCode, bool? isTransitionedBillingAccount, string skuDescription, string skuId, BillingSubscriptionStatus? subscriptionBillingStatus, IReadOnlyList<BillingSubscriptionStatusDetails> subscriptionBillingStatusDetails, SubscriptionBillingType? subscriptionBillingType, BillingPropertyPropertiesSubscriptionServiceUsageAddress subscriptionServiceUsageAddress, SubscriptionWorkloadType? subscriptionWorkloadType, BillingPropertyPropertiesEnrollmentDetails enrollmentDetails, bool? isAccountAdmin, string productId, string productName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingPropertyProperties(BillingAgreementType? billingAccountAgreementType, string billingAccountDisplayName, string billingAccountId, string accountAdminNotificationEmailAddress, string billingAccountSoldToCountry, BillingAccountStatus? billingAccountStatus, BillingAccountStatusReasonCode? billingAccountStatusReasonCode, BillingAccountType? billingAccountType, BillingAccountSubType? billingAccountSubType, string billingCurrency, string billingProfileDisplayName, string billingProfileId, SpendingLimit? billingProfileSpendingLimit, IReadOnlyList<SpendingLimitDetails> billingProfileSpendingLimitDetails, BillingProfileStatus? billingProfileStatus, BillingProfileStatusReasonCode? billingProfileStatusReasonCode, BillingPaymentMethodFamily? billingProfilePaymentMethodFamily, string billingProfilePaymentMethodType, string billingTenantId, string costCenter, string customerDisplayName, string customerId, CustomerStatus? customerStatus, string invoiceSectionDisplayName, string invoiceSectionId, InvoiceSectionState? invoiceSectionStatus, InvoiceSectionStateReasonCode? invoiceSectionStatusReasonCode, bool? isTransitionedBillingAccount, string skuDescription, string skuId, BillingSubscriptionStatus? subscriptionBillingStatus, IReadOnlyList<BillingSubscriptionStatusDetails> subscriptionBillingStatusDetails, SubscriptionBillingType? subscriptionBillingType, BillingPropertyPropertiesSubscriptionServiceUsageAddress subscriptionServiceUsageAddress, SubscriptionWorkloadType? subscriptionWorkloadType, BillingPropertyPropertiesEnrollmentDetails enrollmentDetails, bool? isAccountAdmin, string productId, string productName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingAccountAgreementType = billingAccountAgreementType;
             BillingAccountDisplayName = billingAccountDisplayName;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The type of agreement. </summary>
-        public AgreementType? BillingAccountAgreementType { get; }
+        public BillingAgreementType? BillingAccountAgreementType { get; }
         /// <summary> The name of the billing account. </summary>
         public string BillingAccountDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing account. </summary>
@@ -148,13 +148,13 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The country of the individual or organization that is responsible for the billing account. </summary>
         public string BillingAccountSoldToCountry { get; }
         /// <summary> The current status of the billing account. </summary>
-        public AccountStatus? BillingAccountStatus { get; }
+        public BillingAccountStatus? BillingAccountStatus { get; }
         /// <summary> Reason for the specified billing account status. </summary>
         public BillingAccountStatusReasonCode? BillingAccountStatusReasonCode { get; }
         /// <summary> The type of customer. </summary>
-        public AccountType? BillingAccountType { get; }
+        public BillingAccountType? BillingAccountType { get; }
         /// <summary> The tier of the account. </summary>
-        public AccountSubType? BillingAccountSubType { get; }
+        public BillingAccountSubType? BillingAccountSubType { get; }
         /// <summary> The billing currency for the subscription. Available for billing accounts with agreement type Enterprise Agreement. </summary>
         public string BillingCurrency { get; }
         /// <summary> The name of the billing profile. </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Reason for the specified billing profile status. </summary>
         public BillingProfileStatusReasonCode? BillingProfileStatusReasonCode { get; }
         /// <summary> The payment method family of the primary payment method for the billing profile. </summary>
-        public PaymentMethodFamily? BillingProfilePaymentMethodFamily { get; }
+        public BillingPaymentMethodFamily? BillingProfilePaymentMethodFamily { get; }
         /// <summary> The payment method type of the primary payment method for the billing profile. </summary>
         public string BillingProfilePaymentMethodType { get; }
         /// <summary> The Azure AD tenant ID of the billing account for the subscription. </summary>

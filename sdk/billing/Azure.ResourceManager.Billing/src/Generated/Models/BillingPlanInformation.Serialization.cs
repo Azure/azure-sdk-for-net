@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Price pricingCurrencyTotal = default;
+            BillingPrice pricingCurrencyTotal = default;
             DateTimeOffset? startDate = default;
             DateTimeOffset? nextPaymentDueDate = default;
             IList<PaymentDetail> transactions = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = Price.DeserializePrice(property.Value, options);
+                    pricingCurrencyTotal = BillingPrice.DeserializeBillingPrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startDate"u8))

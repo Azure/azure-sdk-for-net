@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MoveBillingSubscriptionEligibilityResult>> ValidateMoveEligibilityAsync(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingSubscriptionValidateMoveEligibilityResult>> ValidateMoveEligibilityAsync(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
@@ -1053,9 +1053,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        MoveBillingSubscriptionEligibilityResult value = default;
+                        BillingSubscriptionValidateMoveEligibilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MoveBillingSubscriptionEligibilityResult.DeserializeMoveBillingSubscriptionEligibilityResult(document.RootElement);
+                        value = BillingSubscriptionValidateMoveEligibilityResult.DeserializeBillingSubscriptionValidateMoveEligibilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MoveBillingSubscriptionEligibilityResult> ValidateMoveEligibility(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
+        public Response<BillingSubscriptionValidateMoveEligibilityResult> ValidateMoveEligibility(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
@@ -1082,9 +1082,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        MoveBillingSubscriptionEligibilityResult value = default;
+                        BillingSubscriptionValidateMoveEligibilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MoveBillingSubscriptionEligibilityResult.DeserializeMoveBillingSubscriptionEligibilityResult(document.RootElement);
+                        value = BillingSubscriptionValidateMoveEligibilityResult.DeserializeBillingSubscriptionValidateMoveEligibilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1266,7 +1266,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string billingAccountName, string billingSubscriptionName, BillingAccountBillingSubscriptionPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string billingAccountName, string billingSubscriptionName, BillingSubscriptionPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1278,7 +1278,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string billingAccountName, string billingSubscriptionName, BillingAccountBillingSubscriptionPatch patch)
+        internal HttpMessage CreateUpdateRequest(string billingAccountName, string billingSubscriptionName, BillingSubscriptionPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string billingAccountName, string billingSubscriptionName, BillingAccountBillingSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string billingAccountName, string billingSubscriptionName, BillingSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
@@ -1332,7 +1332,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingSubscriptionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string billingAccountName, string billingSubscriptionName, BillingAccountBillingSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string billingAccountName, string billingSubscriptionName, BillingSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));

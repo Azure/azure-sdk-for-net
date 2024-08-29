@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            BillingProvisioningState? provisioningState = default;
             DateTimeOffset? createdOn = default;
             string createdByPrincipalTenantId = default;
             string createdByPrincipalId = default;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new BillingProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdOn"u8))

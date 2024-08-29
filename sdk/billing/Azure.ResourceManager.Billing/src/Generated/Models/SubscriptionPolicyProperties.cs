@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="provisioningState"> The provisioning state of the resource during a long-running operation. </param>
         /// <param name="policies"> List of all policies defined at the billing scope. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionPolicyProperties(ProvisioningState? provisioningState, IList<PolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubscriptionPolicyProperties(BillingProvisioningState? provisioningState, IList<PolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Policies = policies;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> List of all policies defined at the billing scope. </summary>
         public IList<PolicySummary> Policies { get; }
     }

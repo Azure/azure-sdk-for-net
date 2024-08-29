@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="status"> Describes whether the payment is completed, failed, pending, cancelled or scheduled in the future. </param>
         /// <param name="extendedStatusInfo"> Extended status information for the reservation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationPaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? paymentOn, Price pricingCurrencyTotal, Price billingCurrencyTotal, string billingAccount, PaymentStatus? status, ReservationExtendedStatusInfo extendedStatusInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReservationPaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? paymentOn, BillingPrice pricingCurrencyTotal, BillingPrice billingCurrencyTotal, string billingAccount, PaymentStatus? status, ReservationExtendedStatusInfo extendedStatusInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DueOn = dueOn;
             PaymentOn = paymentOn;
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Date when the transaction is completed. Is null when it is scheduled. </summary>
         public DateTimeOffset? PaymentOn { get; set; }
         /// <summary> Amount in pricing currency. Tax not included. </summary>
-        public Price PricingCurrencyTotal { get; set; }
+        public BillingPrice PricingCurrencyTotal { get; set; }
         /// <summary> Amount charged in Billing currency. Tax not included. Is null for future payments. </summary>
-        public Price BillingCurrencyTotal { get; set; }
+        public BillingPrice BillingCurrencyTotal { get; set; }
         /// <summary> Shows the Account that is charged for this payment. </summary>
         public string BillingAccount { get; set; }
         /// <summary> Describes whether the payment is completed, failed, pending, cancelled or scheduled in the future. </summary>

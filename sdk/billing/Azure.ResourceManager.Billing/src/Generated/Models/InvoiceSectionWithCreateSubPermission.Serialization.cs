@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Billing.Models
             BillingProfileStatus? billingProfileStatus = default;
             BillingProfileStatusReasonCode? billingProfileStatusReasonCode = default;
             SpendingLimit? billingProfileSpendingLimit = default;
-            IReadOnlyList<AzurePlan> enabledAzurePlans = default;
+            IReadOnlyList<BillingAzurePlan> enabledAzurePlans = default;
             string invoiceSectionDisplayName = default;
             string invoiceSectionId = default;
             string invoiceSectionSystemId = default;
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<AzurePlan> array = new List<AzurePlan>();
+                    List<BillingAzurePlan> array = new List<BillingAzurePlan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzurePlan.DeserializeAzurePlan(item, options));
+                        array.Add(BillingAzurePlan.DeserializeBillingAzurePlan(item, options));
                     }
                     enabledAzurePlans = array;
                     continue;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Billing.Models
                 billingProfileStatus,
                 billingProfileStatusReasonCode,
                 billingProfileSpendingLimit,
-                enabledAzurePlans ?? new ChangeTrackingList<AzurePlan>(),
+                enabledAzurePlans ?? new ChangeTrackingList<BillingAzurePlan>(),
                 invoiceSectionDisplayName,
                 invoiceSectionId,
                 invoiceSectionSystemId,

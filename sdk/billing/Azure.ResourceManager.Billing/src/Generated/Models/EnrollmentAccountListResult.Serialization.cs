@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<EnrollmentAccountData> value = default;
+            IReadOnlyList<BillingEnrollmentAccountData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<EnrollmentAccountData> array = new List<EnrollmentAccountData>();
+                    List<BillingEnrollmentAccountData> array = new List<BillingEnrollmentAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnrollmentAccountData.DeserializeEnrollmentAccountData(item, options));
+                        array.Add(BillingEnrollmentAccountData.DeserializeBillingEnrollmentAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EnrollmentAccountListResult(nextLink, value ?? new ChangeTrackingList<EnrollmentAccountData>(), serializedAdditionalRawData);
+            return new EnrollmentAccountListResult(nextLink, value ?? new ChangeTrackingList<BillingEnrollmentAccountData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnrollmentAccountListResult>.Write(ModelReaderWriterOptions options)

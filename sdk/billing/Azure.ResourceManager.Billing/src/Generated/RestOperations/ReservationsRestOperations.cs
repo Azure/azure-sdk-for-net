@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationData>> GetByReservationOrderAsync(string billingAccountName, string reservationOrderId, string reservationId, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingReservationData>> GetByReservationOrderAsync(string billingAccountName, string reservationOrderId, string reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -382,13 +382,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        ReservationData value = default;
+                        BillingReservationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReservationData.DeserializeReservationData(document.RootElement);
+                        value = BillingReservationData.DeserializeBillingReservationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReservationData)null, message.Response);
+                    return Response.FromValue((BillingReservationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationData> GetByReservationOrder(string billingAccountName, string reservationOrderId, string reservationId, string expand = null, CancellationToken cancellationToken = default)
+        public Response<BillingReservationData> GetByReservationOrder(string billingAccountName, string reservationOrderId, string reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -414,19 +414,19 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        ReservationData value = default;
+                        BillingReservationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReservationData.DeserializeReservationData(document.RootElement);
+                        value = BillingReservationData.DeserializeBillingReservationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReservationData)null, message.Response);
+                    return Response.FromValue((BillingReservationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateUpdateByBillingAccountRequestUri(string billingAccountName, string reservationOrderId, string reservationId, ReservationPatch patch)
+        internal RequestUriBuilder CreateUpdateByBillingAccountRequestUri(string billingAccountName, string reservationOrderId, string reservationId, BillingReservationPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateUpdateByBillingAccountRequest(string billingAccountName, string reservationOrderId, string reservationId, ReservationPatch patch)
+        internal HttpMessage CreateUpdateByBillingAccountRequest(string billingAccountName, string reservationOrderId, string reservationId, BillingReservationPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateByBillingAccountAsync(string billingAccountName, string reservationOrderId, string reservationId, ReservationPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateByBillingAccountAsync(string billingAccountName, string reservationOrderId, string reservationId, BillingReservationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateByBillingAccount(string billingAccountName, string reservationOrderId, string reservationId, ReservationPatch patch, CancellationToken cancellationToken = default)
+        public Response UpdateByBillingAccount(string billingAccountName, string reservationOrderId, string reservationId, BillingReservationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));

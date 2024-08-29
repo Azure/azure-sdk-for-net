@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="status"> Status of the payment method. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPaymentMethodLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accountHolderName, string displayName, string expiration, PaymentMethodFamily? family, string lastFourDigits, IReadOnlyList<PaymentMethodLogo> logos, PaymentMethodProperties paymentMethod, string paymentMethodId, string paymentMethodType, PaymentMethodStatus? status, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BillingPaymentMethodLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accountHolderName, string displayName, string expiration, BillingPaymentMethodFamily? family, string lastFourDigits, IReadOnlyList<PaymentMethodLogo> logos, PaymentMethodProjectionProperties paymentMethod, ResourceIdentifier paymentMethodId, string paymentMethodType, BillingPaymentMethodStatus? status, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AccountHolderName = accountHolderName;
             DisplayName = displayName;
@@ -98,19 +98,19 @@ namespace Azure.ResourceManager.Billing
         /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>
         public string Expiration { get; }
         /// <summary> The family of payment method. </summary>
-        public PaymentMethodFamily? Family { get; }
+        public BillingPaymentMethodFamily? Family { get; }
         /// <summary> Last four digits of payment method. </summary>
         public string LastFourDigits { get; }
         /// <summary> The list of logos for the payment method. </summary>
         public IReadOnlyList<PaymentMethodLogo> Logos { get; }
         /// <summary> Projection of a payment method. Will not be returned in this or future versions. </summary>
-        public PaymentMethodProperties PaymentMethod { get; set; }
+        public PaymentMethodProjectionProperties PaymentMethod { get; set; }
         /// <summary> Id of payment method. Example: /providers/Microsoft.Billing/paymentMethods/ABCDABCDABC0. </summary>
-        public string PaymentMethodId { get; set; }
+        public ResourceIdentifier PaymentMethodId { get; set; }
         /// <summary> The type of payment method. </summary>
         public string PaymentMethodType { get; }
         /// <summary> Status of the payment method. </summary>
-        public PaymentMethodStatus? Status { get; }
+        public BillingPaymentMethodStatus? Status { get; }
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         public IDictionary<string, string> Tags { get; }
     }

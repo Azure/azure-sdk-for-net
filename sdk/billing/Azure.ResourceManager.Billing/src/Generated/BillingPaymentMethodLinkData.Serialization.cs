@@ -163,13 +163,13 @@ namespace Azure.ResourceManager.Billing
             string accountHolderName = default;
             string displayName = default;
             string expiration = default;
-            PaymentMethodFamily? family = default;
+            BillingPaymentMethodFamily? family = default;
             string lastFourDigits = default;
             IReadOnlyList<PaymentMethodLogo> logos = default;
-            PaymentMethodProperties paymentMethod = default;
-            string paymentMethodId = default;
+            PaymentMethodProjectionProperties paymentMethod = default;
+            ResourceIdentifier paymentMethodId = default;
             string paymentMethodType = default;
-            PaymentMethodStatus? status = default;
+            BillingPaymentMethodStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            family = new PaymentMethodFamily(property0.Value.GetString());
+                            family = new BillingPaymentMethodFamily(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastFourDigits"u8))
@@ -270,12 +270,16 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            paymentMethod = PaymentMethodProperties.DeserializePaymentMethodProperties(property0.Value, options);
+                            paymentMethod = PaymentMethodProjectionProperties.DeserializePaymentMethodProjectionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("paymentMethodId"u8))
                         {
-                            paymentMethodId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            paymentMethodId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("paymentMethodType"u8))
@@ -289,7 +293,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            status = new PaymentMethodStatus(property0.Value.GetString());
+                            status = new BillingPaymentMethodStatus(property0.Value.GetString());
                             continue;
                         }
                     }

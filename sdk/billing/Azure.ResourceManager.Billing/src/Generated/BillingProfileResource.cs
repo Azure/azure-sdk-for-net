@@ -36,6 +36,8 @@ namespace Azure.ResourceManager.Billing
 
         private readonly ClientDiagnostics _billingProfileClientDiagnostics;
         private readonly BillingProfilesRestOperations _billingProfileRestClient;
+        private readonly ClientDiagnostics _availableBalancesClientDiagnostics;
+        private readonly AvailableBalancesRestOperations _availableBalancesRestClient;
         private readonly ClientDiagnostics _billingPermissionsClientDiagnostics;
         private readonly BillingPermissionsRestOperations _billingPermissionsRestClient;
         private readonly ClientDiagnostics _billingRequestClientDiagnostics;
@@ -44,10 +46,10 @@ namespace Azure.ResourceManager.Billing
         private readonly BillingRoleAssignmentsRestOperations _billingRoleAssignmentsRestClient;
         private readonly ClientDiagnostics _invoicesClientDiagnostics;
         private readonly InvoicesRestOperations _invoicesRestClient;
-        private readonly ClientDiagnostics _productClientDiagnostics;
-        private readonly ProductsRestOperations _productRestClient;
-        private readonly ClientDiagnostics _reservationClientDiagnostics;
-        private readonly ReservationsRestOperations _reservationRestClient;
+        private readonly ClientDiagnostics _billingProductProductsClientDiagnostics;
+        private readonly ProductsRestOperations _billingProductProductsRestClient;
+        private readonly ClientDiagnostics _billingReservationReservationsClientDiagnostics;
+        private readonly ReservationsRestOperations _billingReservationReservationsRestClient;
         private readonly ClientDiagnostics _transactionsClientDiagnostics;
         private readonly TransactionsRestOperations _transactionsRestClient;
         private readonly BillingProfileData _data;
@@ -77,6 +79,8 @@ namespace Azure.ResourceManager.Billing
             _billingProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string billingProfileApiVersion);
             _billingProfileRestClient = new BillingProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingProfileApiVersion);
+            _availableBalancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _availableBalancesRestClient = new AvailableBalancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _billingPermissionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _billingPermissionsRestClient = new BillingPermissionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _billingRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingRequestResource.ResourceType.Namespace, Diagnostics);
@@ -86,12 +90,12 @@ namespace Azure.ResourceManager.Billing
             _billingRoleAssignmentsRestClient = new BillingRoleAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _invoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _invoicesRestClient = new InvoicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _productClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProductResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ProductResource.ResourceType, out string productApiVersion);
-            _productRestClient = new ProductsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, productApiVersion);
-            _reservationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ReservationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ReservationResource.ResourceType, out string reservationApiVersion);
-            _reservationRestClient = new ReservationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reservationApiVersion);
+            _billingProductProductsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingProductResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BillingProductResource.ResourceType, out string billingProductProductsApiVersion);
+            _billingProductProductsRestClient = new ProductsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingProductProductsApiVersion);
+            _billingReservationReservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingReservationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BillingReservationResource.ResourceType, out string billingReservationReservationsApiVersion);
+            _billingReservationReservationsRestClient = new ReservationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingReservationReservationsApiVersion);
             _transactionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _transactionsRestClient = new TransactionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -120,18 +124,11 @@ namespace Azure.ResourceManager.Billing
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a BillingAccountBillingProfileAvailableBalanceResource along with the instance operations that can be performed on it in the BillingProfile. </summary>
-        /// <returns> Returns a <see cref="BillingAccountBillingProfileAvailableBalanceResource"/> object. </returns>
-        public virtual BillingAccountBillingProfileAvailableBalanceResource GetBillingAccountBillingProfileAvailableBalance()
+        /// <summary> Gets a collection of BillingProfileRoleAssignmentResources in the BillingProfile. </summary>
+        /// <returns> An object representing collection of BillingProfileRoleAssignmentResources and their operations over a BillingProfileRoleAssignmentResource. </returns>
+        public virtual BillingProfileRoleAssignmentCollection GetBillingProfileRoleAssignments()
         {
-            return new BillingAccountBillingProfileAvailableBalanceResource(Client, Id.AppendChildResource("availableBalance", "default"));
-        }
-
-        /// <summary> Gets a collection of BillingAccountBillingProfileBillingRoleAssignmentResources in the BillingProfile. </summary>
-        /// <returns> An object representing collection of BillingAccountBillingProfileBillingRoleAssignmentResources and their operations over a BillingAccountBillingProfileBillingRoleAssignmentResource. </returns>
-        public virtual BillingAccountBillingProfileBillingRoleAssignmentCollection GetBillingAccountBillingProfileBillingRoleAssignments()
-        {
-            return GetCachedClient(client => new BillingAccountBillingProfileBillingRoleAssignmentCollection(client, Id));
+            return GetCachedClient(client => new BillingProfileRoleAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -151,7 +148,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountBillingProfileBillingRoleAssignmentResource"/></description>
+        /// <description><see cref="BillingProfileRoleAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,9 +157,9 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingAccountBillingProfileBillingRoleAssignmentResource>> GetBillingAccountBillingProfileBillingRoleAssignmentAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingProfileRoleAssignmentResource>> GetBillingProfileRoleAssignmentAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await GetBillingAccountBillingProfileBillingRoleAssignments().GetAsync(billingRoleAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingProfileRoleAssignments().GetAsync(billingRoleAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -182,7 +179,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountBillingProfileBillingRoleAssignmentResource"/></description>
+        /// <description><see cref="BillingProfileRoleAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,47 +188,16 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingAccountBillingProfileBillingRoleAssignmentResource> GetBillingAccountBillingProfileBillingRoleAssignment(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingProfileRoleAssignmentResource> GetBillingProfileRoleAssignment(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetBillingAccountBillingProfileBillingRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
+            return GetBillingProfileRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingAccountBillingProfileBillingRoleDefinitionResources in the BillingProfile. </summary>
-        /// <returns> An object representing collection of BillingAccountBillingProfileBillingRoleDefinitionResources and their operations over a BillingAccountBillingProfileBillingRoleDefinitionResource. </returns>
-        public virtual BillingAccountBillingProfileBillingRoleDefinitionCollection GetBillingAccountBillingProfileBillingRoleDefinitions()
+        /// <summary> Gets a collection of BillingProfileRoleDefinitionResources in the BillingProfile. </summary>
+        /// <returns> An object representing collection of BillingProfileRoleDefinitionResources and their operations over a BillingProfileRoleDefinitionResource. </returns>
+        public virtual BillingProfileRoleDefinitionCollection GetBillingProfileRoleDefinitions()
         {
-            return GetCachedClient(client => new BillingAccountBillingProfileBillingRoleDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the definition for a role on a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions/{roleDefinitionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_GetByBillingProfile</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountBillingProfileBillingRoleDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingAccountBillingProfileBillingRoleDefinitionResource>> GetBillingAccountBillingProfileBillingRoleDefinitionAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
-        {
-            return await GetBillingAccountBillingProfileBillingRoleDefinitions().GetAsync(roleDefinitionName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new BillingProfileRoleDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -251,7 +217,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountBillingProfileBillingRoleDefinitionResource"/></description>
+        /// <description><see cref="BillingProfileRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,16 +226,47 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingAccountBillingProfileBillingRoleDefinitionResource> GetBillingAccountBillingProfileBillingRoleDefinition(string roleDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingProfileRoleDefinitionResource>> GetBillingProfileRoleDefinitionAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetBillingAccountBillingProfileBillingRoleDefinitions().Get(roleDefinitionName, cancellationToken);
+            return await GetBillingProfileRoleDefinitions().GetAsync(roleDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of BillingAccountBillingProfileBillingSubscriptionResources in the BillingProfile. </summary>
-        /// <returns> An object representing collection of BillingAccountBillingProfileBillingSubscriptionResources and their operations over a BillingAccountBillingProfileBillingSubscriptionResource. </returns>
-        public virtual BillingAccountBillingProfileBillingSubscriptionCollection GetBillingAccountBillingProfileBillingSubscriptions()
+        /// <summary>
+        /// Gets the definition for a role on a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions/{roleDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingRoleDefinition_GetByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingProfileRoleDefinitionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BillingProfileRoleDefinitionResource> GetBillingProfileRoleDefinition(string roleDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new BillingAccountBillingProfileBillingSubscriptionCollection(client, Id));
+            return GetBillingProfileRoleDefinitions().Get(roleDefinitionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BillingProfileSubscriptionResources in the BillingProfile. </summary>
+        /// <returns> An object representing collection of BillingProfileSubscriptionResources and their operations over a BillingProfileSubscriptionResource. </returns>
+        public virtual BillingProfileSubscriptionCollection GetBillingProfileSubscriptions()
+        {
+            return GetCachedClient(client => new BillingProfileSubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -289,7 +286,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountBillingProfileBillingSubscriptionResource"/></description>
+        /// <description><see cref="BillingProfileSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,9 +296,9 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingAccountBillingProfileBillingSubscriptionResource>> GetBillingAccountBillingProfileBillingSubscriptionAsync(string billingSubscriptionName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingProfileSubscriptionResource>> GetBillingProfileSubscriptionAsync(string billingSubscriptionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetBillingAccountBillingProfileBillingSubscriptions().GetAsync(billingSubscriptionName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetBillingProfileSubscriptions().GetAsync(billingSubscriptionName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -321,7 +318,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountBillingProfileBillingSubscriptionResource"/></description>
+        /// <description><see cref="BillingProfileSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,47 +328,16 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingAccountBillingProfileBillingSubscriptionResource> GetBillingAccountBillingProfileBillingSubscription(string billingSubscriptionName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<BillingProfileSubscriptionResource> GetBillingProfileSubscription(string billingSubscriptionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetBillingAccountBillingProfileBillingSubscriptions().Get(billingSubscriptionName, expand, cancellationToken);
+            return GetBillingProfileSubscriptions().Get(billingSubscriptionName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingAccountBillingProfileCustomerResources in the BillingProfile. </summary>
-        /// <returns> An object representing collection of BillingAccountBillingProfileCustomerResources and their operations over a BillingAccountBillingProfileCustomerResource. </returns>
-        public virtual BillingAccountBillingProfileCustomerCollection GetBillingAccountBillingProfileCustomers()
+        /// <summary> Gets a collection of BillingProfileCustomerResources in the BillingProfile. </summary>
+        /// <returns> An object representing collection of BillingProfileCustomerResources and their operations over a BillingProfileCustomerResource. </returns>
+        public virtual BillingProfileCustomerCollection GetBillingProfileCustomers()
         {
-            return GetCachedClient(client => new BillingAccountBillingProfileCustomerCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a customer by its ID. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Customers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountBillingProfileCustomerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingAccountBillingProfileCustomerResource>> GetBillingAccountBillingProfileCustomerAsync(string customerName, CancellationToken cancellationToken = default)
-        {
-            return await GetBillingAccountBillingProfileCustomers().GetAsync(customerName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new BillingProfileCustomerCollection(client, Id));
         }
 
         /// <summary>
@@ -391,7 +357,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountBillingProfileCustomerResource"/></description>
+        /// <description><see cref="BillingProfileCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,16 +366,47 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingAccountBillingProfileCustomerResource> GetBillingAccountBillingProfileCustomer(string customerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingProfileCustomerResource>> GetBillingProfileCustomerAsync(string customerName, CancellationToken cancellationToken = default)
         {
-            return GetBillingAccountBillingProfileCustomers().Get(customerName, cancellationToken);
+            return await GetBillingProfileCustomers().GetAsync(customerName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of InvoiceSectionResources in the BillingProfile. </summary>
-        /// <returns> An object representing collection of InvoiceSectionResources and their operations over a InvoiceSectionResource. </returns>
-        public virtual InvoiceSectionCollection GetInvoiceSections()
+        /// <summary>
+        /// Gets a customer by its ID. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Customers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingProfileCustomerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BillingProfileCustomerResource> GetBillingProfileCustomer(string customerName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new InvoiceSectionCollection(client, Id));
+            return GetBillingProfileCustomers().Get(customerName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BillingInvoiceSectionResources in the BillingProfile. </summary>
+        /// <returns> An object representing collection of BillingInvoiceSectionResources and their operations over a BillingInvoiceSectionResource. </returns>
+        public virtual BillingInvoiceSectionCollection GetBillingInvoiceSections()
+        {
+            return GetCachedClient(client => new BillingInvoiceSectionCollection(client, Id));
         }
 
         /// <summary>
@@ -429,7 +426,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InvoiceSectionResource"/></description>
+        /// <description><see cref="BillingInvoiceSectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,9 +435,9 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="invoiceSectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="invoiceSectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<InvoiceSectionResource>> GetInvoiceSectionAsync(string invoiceSectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingInvoiceSectionResource>> GetBillingInvoiceSectionAsync(string invoiceSectionName, CancellationToken cancellationToken = default)
         {
-            return await GetInvoiceSections().GetAsync(invoiceSectionName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingInvoiceSections().GetAsync(invoiceSectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -460,7 +457,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InvoiceSectionResource"/></description>
+        /// <description><see cref="BillingInvoiceSectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,9 +466,9 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="invoiceSectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="invoiceSectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<InvoiceSectionResource> GetInvoiceSection(string invoiceSectionName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingInvoiceSectionResource> GetBillingInvoiceSection(string invoiceSectionName, CancellationToken cancellationToken = default)
         {
-            return GetInvoiceSections().Get(invoiceSectionName, cancellationToken);
+            return GetBillingInvoiceSections().Get(invoiceSectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BillingPaymentMethodLinkResources in the BillingProfile. </summary>
@@ -798,6 +795,74 @@ namespace Azure.ResourceManager.Billing
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The Available Credit or Payment on Account Balance for a billing profile. The credit balance can be used to settle due or past due invoices and is supported for billing accounts with agreement type Microsoft Customer Agreement. The payment on account balance is supported for billing accounts with agreement type Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/availableBalance/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableBalances_GetByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<BillingAvailableBalanceData>> GetBillingProfileAvailableBalanceAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _availableBalancesClientDiagnostics.CreateScope("BillingProfileResource.GetBillingProfileAvailableBalance");
+            scope.Start();
+            try
+            {
+                var response = await _availableBalancesRestClient.GetByBillingProfileAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The Available Credit or Payment on Account Balance for a billing profile. The credit balance can be used to settle due or past due invoices and is supported for billing accounts with agreement type Microsoft Customer Agreement. The payment on account balance is supported for billing accounts with agreement type Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/availableBalance/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableBalances_GetByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<BillingAvailableBalanceData> GetBillingProfileAvailableBalance(CancellationToken cancellationToken = default)
+        {
+            using var scope = _availableBalancesClientDiagnostics.CreateScope("BillingProfileResource.GetBillingProfileAvailableBalance");
+            scope.Start();
+            try
+            {
+                var response = _availableBalancesRestClient.GetByBillingProfile(Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -1241,14 +1306,14 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InvoiceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InvoiceData> GetInvoicesAsync(BillingProfileResourceGetInvoicesOptions options, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BillingInvoiceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingInvoiceData> GetInvoicesAsync(BillingProfileResourceGetInvoicesOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new BillingProfileResourceGetInvoicesOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _invoicesRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _invoicesRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => InvoiceData.DeserializeInvoiceData(e), _invoicesClientDiagnostics, Pipeline, "BillingProfileResource.GetInvoices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BillingInvoiceData.DeserializeBillingInvoiceData(e), _invoicesClientDiagnostics, Pipeline, "BillingProfileResource.GetInvoices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1270,14 +1335,14 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InvoiceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InvoiceData> GetInvoices(BillingProfileResourceGetInvoicesOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingInvoiceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingInvoiceData> GetInvoices(BillingProfileResourceGetInvoicesOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new BillingProfileResourceGetInvoicesOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _invoicesRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _invoicesRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => InvoiceData.DeserializeInvoiceData(e), _invoicesClientDiagnostics, Pipeline, "BillingProfileResource.GetInvoices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BillingInvoiceData.DeserializeBillingInvoiceData(e), _invoicesClientDiagnostics, Pipeline, "BillingProfileResource.GetInvoices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1297,20 +1362,20 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProductResource"/></description>
+        /// <description><see cref="BillingProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProductResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductResource> GetProductsAsync(BillingProfileResourceGetProductsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingProductResource> GetProductsAsync(BillingProfileResourceGetProductsOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new BillingProfileResourceGetProductsOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _productRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProductResource(Client, ProductData.DeserializeProductData(e)), _productClientDiagnostics, Pipeline, "BillingProfileResource.GetProducts", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingProductProductsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingProductProductsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingProductResource(Client, BillingProductData.DeserializeBillingProductData(e)), _billingProductProductsClientDiagnostics, Pipeline, "BillingProfileResource.GetProducts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1330,20 +1395,20 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProductResource"/></description>
+        /// <description><see cref="BillingProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProductResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductResource> GetProducts(BillingProfileResourceGetProductsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingProductResource> GetProducts(BillingProfileResourceGetProductsOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new BillingProfileResourceGetProductsOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _productRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProductResource(Client, ProductData.DeserializeProductData(e)), _productClientDiagnostics, Pipeline, "BillingProfileResource.GetProducts", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingProductProductsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingProductProductsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingProductResource(Client, BillingProductData.DeserializeBillingProductData(e)), _billingProductProductsClientDiagnostics, Pipeline, "BillingProfileResource.GetProducts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1363,20 +1428,20 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReservationResource"/></description>
+        /// <description><see cref="BillingReservationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationResource> GetReservationsAsync(BillingProfileResourceGetReservationsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BillingReservationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingReservationResource> GetReservationsAsync(BillingProfileResourceGetReservationsOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new BillingProfileResourceGetReservationsOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Skiptoken, options.RefreshSummary, options.SelectedState, options.Take);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Skiptoken, options.RefreshSummary, options.SelectedState, options.Take);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationResource(Client, ReservationData.DeserializeReservationData(e)), _reservationClientDiagnostics, Pipeline, "BillingProfileResource.GetReservations", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingReservationReservationsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Skiptoken, options.RefreshSummary, options.SelectedState, options.Take);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingReservationReservationsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Skiptoken, options.RefreshSummary, options.SelectedState, options.Take);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingReservationResource(Client, BillingReservationData.DeserializeBillingReservationData(e)), _billingReservationReservationsClientDiagnostics, Pipeline, "BillingProfileResource.GetReservations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1396,20 +1461,20 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReservationResource"/></description>
+        /// <description><see cref="BillingReservationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationResource> GetReservations(BillingProfileResourceGetReservationsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingReservationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingReservationResource> GetReservations(BillingProfileResourceGetReservationsOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new BillingProfileResourceGetReservationsOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Skiptoken, options.RefreshSummary, options.SelectedState, options.Take);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Skiptoken, options.RefreshSummary, options.SelectedState, options.Take);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationResource(Client, ReservationData.DeserializeReservationData(e)), _reservationClientDiagnostics, Pipeline, "BillingProfileResource.GetReservations", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingReservationReservationsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Skiptoken, options.RefreshSummary, options.SelectedState, options.Take);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingReservationReservationsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Skiptoken, options.RefreshSummary, options.SelectedState, options.Take);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingReservationResource(Client, BillingReservationData.DeserializeBillingReservationData(e)), _billingReservationReservationsClientDiagnostics, Pipeline, "BillingProfileResource.GetReservations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

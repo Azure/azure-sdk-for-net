@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            BillingProvisioningState? provisioningState = default;
             BillingProfilePolicyPropertiesEnterpriseAgreementPolicies enterpriseAgreementPolicies = default;
             InvoiceSectionLabelManagementPolicy? invoiceSectionLabelManagement = default;
             MarketplacePurchasesPolicy? marketplacePurchases = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new BillingProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enterpriseAgreementPolicies"u8))

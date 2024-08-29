@@ -184,14 +184,14 @@ namespace Azure.ResourceManager.Billing.Mocking
             return GetBillingRequests().Get(billingRequestName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingAccountBillingSubscriptionInvoiceResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of SubscriptionBillingInvoiceResources in the TenantResource. </summary>
         /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BillingAccountBillingSubscriptionInvoiceResources and their operations over a BillingAccountBillingSubscriptionInvoiceResource. </returns>
-        public virtual BillingAccountBillingSubscriptionInvoiceCollection GetBillingAccountBillingSubscriptionInvoices(string subscriptionId)
+        /// <returns> An object representing collection of SubscriptionBillingInvoiceResources and their operations over a SubscriptionBillingInvoiceResource. </returns>
+        public virtual SubscriptionBillingInvoiceCollection GetSubscriptionBillingInvoices(string subscriptionId)
         {
-            return new BillingAccountBillingSubscriptionInvoiceCollection(Client, Id, subscriptionId);
+            return new SubscriptionBillingInvoiceCollection(Client, Id, subscriptionId);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountBillingSubscriptionInvoiceResource"/></description>
+        /// <description><see cref="SubscriptionBillingInvoiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingAccountBillingSubscriptionInvoiceResource>> GetBillingAccountBillingSubscriptionInvoiceAsync(string subscriptionId, string invoiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionBillingInvoiceResource>> GetSubscriptionBillingInvoiceAsync(string subscriptionId, string invoiceName, CancellationToken cancellationToken = default)
         {
-            return await GetBillingAccountBillingSubscriptionInvoices(subscriptionId).GetAsync(invoiceName, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionBillingInvoices(subscriptionId).GetAsync(invoiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountBillingSubscriptionInvoiceResource"/></description>
+        /// <description><see cref="SubscriptionBillingInvoiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,47 +253,16 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingAccountBillingSubscriptionInvoiceResource> GetBillingAccountBillingSubscriptionInvoice(string subscriptionId, string invoiceName, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionBillingInvoiceResource> GetSubscriptionBillingInvoice(string subscriptionId, string invoiceName, CancellationToken cancellationToken = default)
         {
-            return GetBillingAccountBillingSubscriptionInvoices(subscriptionId).Get(invoiceName, cancellationToken);
+            return GetSubscriptionBillingInvoices(subscriptionId).Get(invoiceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantBillingAccountInvoiceResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of TenantBillingAccountInvoiceResources and their operations over a TenantBillingAccountInvoiceResource. </returns>
-        public virtual TenantBillingAccountInvoiceCollection GetTenantBillingAccountInvoices()
+        /// <summary> Gets a collection of DefaultBillingInvoiceResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of DefaultBillingInvoiceResources and their operations over a DefaultBillingInvoiceResource. </returns>
+        public virtual DefaultBillingInvoiceCollection GetDefaultBillingInvoices()
         {
-            return GetCachedClient(client => new TenantBillingAccountInvoiceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an invoice by ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantBillingAccountInvoiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TenantBillingAccountInvoiceResource>> GetTenantBillingAccountInvoiceAsync(string invoiceName, CancellationToken cancellationToken = default)
-        {
-            return await GetTenantBillingAccountInvoices().GetAsync(invoiceName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new DefaultBillingInvoiceCollection(client, Id));
         }
 
         /// <summary>
@@ -313,7 +282,7 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TenantBillingAccountInvoiceResource"/></description>
+        /// <description><see cref="DefaultBillingInvoiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,9 +291,40 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TenantBillingAccountInvoiceResource> GetTenantBillingAccountInvoice(string invoiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefaultBillingInvoiceResource>> GetDefaultBillingInvoiceAsync(string invoiceName, CancellationToken cancellationToken = default)
         {
-            return GetTenantBillingAccountInvoices().Get(invoiceName, cancellationToken);
+            return await GetDefaultBillingInvoices().GetAsync(invoiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an invoice by ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DefaultBillingInvoiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DefaultBillingInvoiceResource> GetDefaultBillingInvoice(string invoiceName, CancellationToken cancellationToken = default)
+        {
+            return GetDefaultBillingInvoices().Get(invoiceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BillingPaymentMethodResources in the TenantResource. </summary>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <param name="details"> Address details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual async Task<Response<AddressValidationResponse>> ValidateAddresAsync(AddressDetails details, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingAddressValidationResult>> ValidateAddresAsync(BillingAddressDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <param name="details"> Address details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual Response<AddressValidationResponse> ValidateAddres(AddressDetails details, CancellationToken cancellationToken = default)
+        public virtual Response<BillingAddressValidationResult> ValidateAddres(BillingAddressDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 

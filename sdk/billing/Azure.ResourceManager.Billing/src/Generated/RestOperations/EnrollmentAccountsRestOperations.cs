@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="departmentName"/> or <paramref name="enrollmentAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="departmentName"/> or <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EnrollmentAccountData>> GetByDepartmentAsync(string billingAccountName, string departmentName, string enrollmentAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingEnrollmentAccountData>> GetByDepartmentAsync(string billingAccountName, string departmentName, string enrollmentAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(departmentName, nameof(departmentName));
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        EnrollmentAccountData value = default;
+                        BillingEnrollmentAccountData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EnrollmentAccountData.DeserializeEnrollmentAccountData(document.RootElement);
+                        value = BillingEnrollmentAccountData.DeserializeBillingEnrollmentAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EnrollmentAccountData)null, message.Response);
+                    return Response.FromValue((BillingEnrollmentAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="departmentName"/> or <paramref name="enrollmentAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="departmentName"/> or <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EnrollmentAccountData> GetByDepartment(string billingAccountName, string departmentName, string enrollmentAccountName, CancellationToken cancellationToken = default)
+        public Response<BillingEnrollmentAccountData> GetByDepartment(string billingAccountName, string departmentName, string enrollmentAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(departmentName, nameof(departmentName));
@@ -120,13 +120,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        EnrollmentAccountData value = default;
+                        BillingEnrollmentAccountData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EnrollmentAccountData.DeserializeEnrollmentAccountData(document.RootElement);
+                        value = BillingEnrollmentAccountData.DeserializeBillingEnrollmentAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EnrollmentAccountData)null, message.Response);
+                    return Response.FromValue((BillingEnrollmentAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="enrollmentAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EnrollmentAccountData>> GetAsync(string billingAccountName, string enrollmentAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingEnrollmentAccountData>> GetAsync(string billingAccountName, string enrollmentAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(enrollmentAccountName, nameof(enrollmentAccountName));
@@ -325,13 +325,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        EnrollmentAccountData value = default;
+                        BillingEnrollmentAccountData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EnrollmentAccountData.DeserializeEnrollmentAccountData(document.RootElement);
+                        value = BillingEnrollmentAccountData.DeserializeBillingEnrollmentAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EnrollmentAccountData)null, message.Response);
+                    return Response.FromValue((BillingEnrollmentAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="enrollmentAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EnrollmentAccountData> Get(string billingAccountName, string enrollmentAccountName, CancellationToken cancellationToken = default)
+        public Response<BillingEnrollmentAccountData> Get(string billingAccountName, string enrollmentAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(enrollmentAccountName, nameof(enrollmentAccountName));
@@ -354,13 +354,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        EnrollmentAccountData value = default;
+                        BillingEnrollmentAccountData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EnrollmentAccountData.DeserializeEnrollmentAccountData(document.RootElement);
+                        value = BillingEnrollmentAccountData.DeserializeBillingEnrollmentAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EnrollmentAccountData)null, message.Response);
+                    return Response.FromValue((BillingEnrollmentAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

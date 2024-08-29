@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            BillingProvisioningState? provisioningState = default;
             IDictionary<string, string> additionalInformation = default;
             BillingRequestPropertiesReviewedBy reviewedBy = default;
             DateTimeOffset? reviewalDate = default;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new BillingProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("additionalInformation"u8))

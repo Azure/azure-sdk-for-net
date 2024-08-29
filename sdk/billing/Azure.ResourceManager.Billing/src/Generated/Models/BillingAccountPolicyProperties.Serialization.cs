@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
-            BillingAccountPolicyPropertiesEnterpriseAgreementPolicies enterpriseAgreementPolicies = default;
+            BillingProvisioningState? provisioningState = default;
+            EnterpriseAgreementPolicies enterpriseAgreementPolicies = default;
             MarketplacePurchasesPolicy? marketplacePurchases = default;
             ReservationPurchasesPolicy? reservationPurchases = default;
             SavingsPlanPurchasesPolicy? savingsPlanPurchases = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new BillingProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enterpriseAgreementPolicies"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    enterpriseAgreementPolicies = BillingAccountPolicyPropertiesEnterpriseAgreementPolicies.DeserializeBillingAccountPolicyPropertiesEnterpriseAgreementPolicies(property.Value, options);
+                    enterpriseAgreementPolicies = EnterpriseAgreementPolicies.DeserializeEnterpriseAgreementPolicies(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("marketplacePurchases"u8))

@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvailableBalanceData>> GetByBillingAccountAsync(string billingAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingAvailableBalanceData>> GetByBillingAccountAsync(string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
@@ -78,13 +79,11 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        AvailableBalanceData value = default;
+                        BillingAvailableBalanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AvailableBalanceData.DeserializeAvailableBalanceData(document.RootElement);
+                        value = BillingAvailableBalanceData.DeserializeBillingAvailableBalanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((AvailableBalanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvailableBalanceData> GetByBillingAccount(string billingAccountName, CancellationToken cancellationToken = default)
+        public Response<BillingAvailableBalanceData> GetByBillingAccount(string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
@@ -105,13 +104,11 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        AvailableBalanceData value = default;
+                        BillingAvailableBalanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AvailableBalanceData.DeserializeAvailableBalanceData(document.RootElement);
+                        value = BillingAvailableBalanceData.DeserializeBillingAvailableBalanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((AvailableBalanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -155,7 +152,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvailableBalanceData>> GetByBillingProfileAsync(string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingAvailableBalanceData>> GetByBillingProfileAsync(string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -166,13 +163,11 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        AvailableBalanceData value = default;
+                        BillingAvailableBalanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AvailableBalanceData.DeserializeAvailableBalanceData(document.RootElement);
+                        value = BillingAvailableBalanceData.DeserializeBillingAvailableBalanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((AvailableBalanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -184,7 +179,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvailableBalanceData> GetByBillingProfile(string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
+        public Response<BillingAvailableBalanceData> GetByBillingProfile(string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -195,13 +190,11 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        AvailableBalanceData value = default;
+                        BillingAvailableBalanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AvailableBalanceData.DeserializeAvailableBalanceData(document.RootElement);
+                        value = BillingAvailableBalanceData.DeserializeBillingAvailableBalanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((AvailableBalanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

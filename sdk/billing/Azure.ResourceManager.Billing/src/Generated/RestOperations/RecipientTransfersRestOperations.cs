@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Billing
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateAcceptRequestUri(string transferName, AcceptTransferRequest acceptTransferRequest)
+        internal RequestUriBuilder CreateAcceptRequestUri(string transferName, AcceptTransferContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateAcceptRequest(string transferName, AcceptTransferRequest acceptTransferRequest)
+        internal HttpMessage CreateAcceptRequest(string transferName, AcceptTransferContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,25 +61,25 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(acceptTransferRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Accepts a transfer request. </summary>
         /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
-        /// <param name="acceptTransferRequest"> Request parameters that are provided to the accept transfer operation. </param>
+        /// <param name="content"> Request parameters that are provided to the accept transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> or <paramref name="acceptTransferRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecipientTransferDetailData>> AcceptAsync(string transferName, AcceptTransferRequest acceptTransferRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<RecipientTransferDetailData>> AcceptAsync(string transferName, AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
-            Argument.AssertNotNull(acceptTransferRequest, nameof(acceptTransferRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateAcceptRequest(transferName, acceptTransferRequest);
+            using var message = CreateAcceptRequest(transferName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> Accepts a transfer request. </summary>
         /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
-        /// <param name="acceptTransferRequest"> Request parameters that are provided to the accept transfer operation. </param>
+        /// <param name="content"> Request parameters that are provided to the accept transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> or <paramref name="acceptTransferRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecipientTransferDetailData> Accept(string transferName, AcceptTransferRequest acceptTransferRequest, CancellationToken cancellationToken = default)
+        public Response<RecipientTransferDetailData> Accept(string transferName, AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
-            Argument.AssertNotNull(acceptTransferRequest, nameof(acceptTransferRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateAcceptRequest(transferName, acceptTransferRequest);
+            using var message = CreateAcceptRequest(transferName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateValidateRequestUri(string transferName, AcceptTransferRequest acceptTransferRequest)
+        internal RequestUriBuilder CreateValidateRequestUri(string transferName, AcceptTransferContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateValidateRequest(string transferName, AcceptTransferRequest acceptTransferRequest)
+        internal HttpMessage CreateValidateRequest(string transferName, AcceptTransferContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -147,25 +147,25 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(acceptTransferRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Validates if a subscription or a reservation can be transferred. Use this operation to validate your subscriptions or reservation before using the accept transfer operation. </summary>
         /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
-        /// <param name="acceptTransferRequest"> Request parameters that are provided to the validate transfer operation. </param>
+        /// <param name="content"> Request parameters that are provided to the validate transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> or <paramref name="acceptTransferRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ValidateTransferListResponse>> ValidateAsync(string transferName, AcceptTransferRequest acceptTransferRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<ValidateTransferListResponse>> ValidateAsync(string transferName, AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
-            Argument.AssertNotNull(acceptTransferRequest, nameof(acceptTransferRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateRequest(transferName, acceptTransferRequest);
+            using var message = CreateValidateRequest(transferName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -183,16 +183,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> Validates if a subscription or a reservation can be transferred. Use this operation to validate your subscriptions or reservation before using the accept transfer operation. </summary>
         /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
-        /// <param name="acceptTransferRequest"> Request parameters that are provided to the validate transfer operation. </param>
+        /// <param name="content"> Request parameters that are provided to the validate transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> or <paramref name="acceptTransferRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ValidateTransferListResponse> Validate(string transferName, AcceptTransferRequest acceptTransferRequest, CancellationToken cancellationToken = default)
+        public Response<ValidateTransferListResponse> Validate(string transferName, AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
-            Argument.AssertNotNull(acceptTransferRequest, nameof(acceptTransferRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateRequest(transferName, acceptTransferRequest);
+            using var message = CreateValidateRequest(transferName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

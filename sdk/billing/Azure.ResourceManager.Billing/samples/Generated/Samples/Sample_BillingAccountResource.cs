@@ -16,6 +16,31 @@ namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingAccountResource
     {
+        // AvailableBalanceGetByBillingAccount
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetBillingAccountAvailableBalance_AvailableBalanceGetByBillingAccount()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/availableBalanceGetByBillingAccount.json
+            // this example is just showing the usage of "AvailableBalances_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // invoke the operation
+            BillingAvailableBalanceData result = await billingAccount.GetBillingAccountAvailableBalanceAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // PaymentTermsAdd
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -405,7 +430,7 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             {
                 Properties = new BillingAccountProperties()
                 {
-                    EnrollmentDetails = new BillingAccountPropertiesEnrollmentDetails()
+                    EnrollmentDetails = new EnrollmentDetails()
                     {
                         PoNumber = "poNumber123",
                     },
@@ -446,7 +471,7 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
                 Properties = new BillingAccountProperties()
                 {
                     DisplayName = "Test Account",
-                    SoldTo = new BillingAccountPropertiesSoldTo("1 Microsoft Way", "US")
+                    SoldTo = new BillingAddressDetails("1 Microsoft Way", "US")
                     {
                         City = "Redmond",
                         CompanyName = "Contoso",
@@ -641,11 +666,11 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
 
             // invoke the operation and iterate over the result
             BillingAccountResourceGetByBillingAccountSavingsPlanOptions options = new BillingAccountResourceGetByBillingAccountSavingsPlanOptions() { Take = 3, SelectedState = "Succeeded", RefreshSummary = "true" };
-            await foreach (SavingsPlanModelResource item in billingAccount.GetByBillingAccountSavingsPlanAsync(options))
+            await foreach (BillingSavingsPlanModelResource item in billingAccount.GetByBillingAccountSavingsPlanAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SavingsPlanModelData resourceData = item.Data;
+                BillingSavingsPlanModelData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -712,11 +737,11 @@ InvoiceName = "G987654321",
 
             // invoke the operation and iterate over the result
             BillingAccountResourceGetReservationsOptions options = new BillingAccountResourceGetReservationsOptions() { SelectedState = "Succeeded" };
-            await foreach (ReservationResource item in billingAccount.GetReservationsAsync(options))
+            await foreach (BillingReservationResource item in billingAccount.GetReservationsAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ReservationData resourceData = item.Data;
+                BillingReservationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

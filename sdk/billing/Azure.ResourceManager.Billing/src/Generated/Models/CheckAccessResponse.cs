@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="accessDecision"> Access Decision, specifies access is allowed or not. </param>
         /// <param name="action"> Gets or sets an action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckAccessResponse(AccessDecision? accessDecision, string action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CheckAccessResponse(BillingProfileAccessDecision? accessDecision, string action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessDecision = accessDecision;
             Action = action;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Access Decision, specifies access is allowed or not. </summary>
-        public AccessDecision? AccessDecision { get; }
+        public BillingProfileAccessDecision? AccessDecision { get; }
         /// <summary> Gets or sets an action. </summary>
         public string Action { get; }
     }

@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             string displayName = default;
-            AppliedScopeType? appliedScopeType = default;
-            AppliedScopeProperties appliedScopeProperties = default;
+            BillingAppliedScopeType? appliedScopeType = default;
+            BillingAppliedScopeProperties appliedScopeProperties = default;
             bool? renew = default;
-            RenewProperties renewProperties = default;
+            BillingRenewProperties renewProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    appliedScopeType = new AppliedScopeType(property.Value.GetString());
+                    appliedScopeType = new BillingAppliedScopeType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("appliedScopeProperties"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property.Value, options);
+                    appliedScopeProperties = BillingAppliedScopeProperties.DeserializeBillingAppliedScopeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("renew"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value, options);
+                    renewProperties = BillingRenewProperties.DeserializeBillingRenewProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

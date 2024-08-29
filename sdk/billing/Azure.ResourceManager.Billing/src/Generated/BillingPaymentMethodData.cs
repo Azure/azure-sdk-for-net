@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing
     /// A class representing the BillingPaymentMethod data model.
     /// A payment method.
     /// </summary>
-    public partial class BillingPaymentMethodData : TrackedResourceData
+    public partial class BillingPaymentMethodData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Billing
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public BillingPaymentMethodData(AzureLocation location) : base(location)
+        public BillingPaymentMethodData()
         {
             Logos = new ChangeTrackingList<PaymentMethodLogo>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodData"/>. </summary>
@@ -63,9 +63,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="idPropertiesId"> Id of payment method. </param>
+        /// <param name="paymentMethodId"> Id of payment method. </param>
         /// <param name="accountHolderName"> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </param>
         /// <param name="displayName"> The display name of the payment method. </param>
         /// <param name="expiration"> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </param>
@@ -74,10 +72,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="logos"> The list of logos for the payment method. </param>
         /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
+        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string idPropertiesId, string accountHolderName, string displayName, string expiration, PaymentMethodFamily? family, string lastFourDigits, IList<PaymentMethodLogo> logos, string paymentMethodType, PaymentMethodStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier paymentMethodId, string accountHolderName, string displayName, string expiration, BillingPaymentMethodFamily? family, string lastFourDigits, IList<PaymentMethodLogo> logos, string paymentMethodType, BillingPaymentMethodStatus? status, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            IdPropertiesId = idPropertiesId;
+            PaymentMethodId = paymentMethodId;
             AccountHolderName = accountHolderName;
             DisplayName = displayName;
             Expiration = expiration;
@@ -86,16 +85,12 @@ namespace Azure.ResourceManager.Billing
             Logos = logos;
             PaymentMethodType = paymentMethodType;
             Status = status;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodData"/> for deserialization. </summary>
-        internal BillingPaymentMethodData()
-        {
-        }
-
         /// <summary> Id of payment method. </summary>
-        public string IdPropertiesId { get; }
+        public ResourceIdentifier PaymentMethodId { get; }
         /// <summary> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </summary>
         public string AccountHolderName { get; }
         /// <summary> The display name of the payment method. </summary>
@@ -103,7 +98,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>
         public string Expiration { get; }
         /// <summary> The family of payment method. </summary>
-        public PaymentMethodFamily? Family { get; set; }
+        public BillingPaymentMethodFamily? Family { get; set; }
         /// <summary> Last four digits of payment method. </summary>
         public string LastFourDigits { get; }
         /// <summary> The list of logos for the payment method. </summary>
@@ -111,6 +106,8 @@ namespace Azure.ResourceManager.Billing
         /// <summary> The type of payment method. </summary>
         public string PaymentMethodType { get; }
         /// <summary> Status of the payment method. </summary>
-        public PaymentMethodStatus? Status { get; set; }
+        public BillingPaymentMethodStatus? Status { get; set; }
+        /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

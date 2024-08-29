@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationOrderData>> GetByBillingAccountAsync(string billingAccountName, string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingReservationOrderData>> GetByBillingAccountAsync(string billingAccountName, string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -92,13 +92,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        ReservationOrderData value = default;
+                        BillingReservationOrderData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReservationOrderData.DeserializeReservationOrderData(document.RootElement);
+                        value = BillingReservationOrderData.DeserializeBillingReservationOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReservationOrderData)null, message.Response);
+                    return Response.FromValue((BillingReservationOrderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationOrderData> GetByBillingAccount(string billingAccountName, string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public Response<BillingReservationOrderData> GetByBillingAccount(string billingAccountName, string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        ReservationOrderData value = default;
+                        BillingReservationOrderData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReservationOrderData.DeserializeReservationOrderData(document.RootElement);
+                        value = BillingReservationOrderData.DeserializeBillingReservationOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReservationOrderData)null, message.Response);
+                    return Response.FromValue((BillingReservationOrderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

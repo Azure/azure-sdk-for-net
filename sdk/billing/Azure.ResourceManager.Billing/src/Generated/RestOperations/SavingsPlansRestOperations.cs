@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SavingsPlanModelData>> GetByBillingAccountAsync(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingSavingsPlanModelData>> GetByBillingAccountAsync(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
@@ -322,13 +322,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        SavingsPlanModelData value = default;
+                        BillingSavingsPlanModelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SavingsPlanModelData.DeserializeSavingsPlanModelData(document.RootElement);
+                        value = BillingSavingsPlanModelData.DeserializeBillingSavingsPlanModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SavingsPlanModelData)null, message.Response);
+                    return Response.FromValue((BillingSavingsPlanModelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SavingsPlanModelData> GetByBillingAccount(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
+        public Response<BillingSavingsPlanModelData> GetByBillingAccount(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
@@ -354,19 +354,19 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        SavingsPlanModelData value = default;
+                        BillingSavingsPlanModelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SavingsPlanModelData.DeserializeSavingsPlanModelData(document.RootElement);
+                        value = BillingSavingsPlanModelData.DeserializeBillingSavingsPlanModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SavingsPlanModelData)null, message.Response);
+                    return Response.FromValue((BillingSavingsPlanModelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateUpdateByBillingAccountRequestUri(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, SavingsPlanModelPatch patch)
+        internal RequestUriBuilder CreateUpdateByBillingAccountRequestUri(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, BillingSavingsPlanModelPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateUpdateByBillingAccountRequest(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, SavingsPlanModelPatch patch)
+        internal HttpMessage CreateUpdateByBillingAccountRequest(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, BillingSavingsPlanModelPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateByBillingAccountAsync(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, SavingsPlanModelPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateByBillingAccountAsync(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, BillingSavingsPlanModelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateByBillingAccount(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, SavingsPlanModelPatch patch, CancellationToken cancellationToken = default)
+        public Response UpdateByBillingAccount(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, BillingSavingsPlanModelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            IReadOnlyList<ReservationOrderData> value = default;
+            IReadOnlyList<BillingReservationOrderData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<ReservationOrderData> array = new List<ReservationOrderData>();
+                    List<BillingReservationOrderData> array = new List<BillingReservationOrderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationOrderData.DeserializeReservationOrderData(item, options));
+                        array.Add(BillingReservationOrderData.DeserializeBillingReservationOrderData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ReservationOrderList(value ?? new ChangeTrackingList<ReservationOrderData>(), nextLink, serializedAdditionalRawData);
+            return new ReservationOrderList(value ?? new ChangeTrackingList<BillingReservationOrderData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationOrderList>.Write(ModelReaderWriterOptions options)

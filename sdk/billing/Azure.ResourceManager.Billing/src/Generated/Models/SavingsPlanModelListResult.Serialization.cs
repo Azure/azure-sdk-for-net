@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             SavingsPlanSummaryCount summary = default;
-            IReadOnlyList<SavingsPlanModelData> value = default;
+            IReadOnlyList<BillingSavingsPlanModelData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<SavingsPlanModelData> array = new List<SavingsPlanModelData>();
+                    List<BillingSavingsPlanModelData> array = new List<BillingSavingsPlanModelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanModelData.DeserializeSavingsPlanModelData(item, options));
+                        array.Add(BillingSavingsPlanModelData.DeserializeBillingSavingsPlanModelData(item, options));
                     }
                     value = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SavingsPlanModelListResult(value ?? new ChangeTrackingList<SavingsPlanModelData>(), nextLink, serializedAdditionalRawData, summary);
+            return new SavingsPlanModelListResult(value ?? new ChangeTrackingList<BillingSavingsPlanModelData>(), nextLink, serializedAdditionalRawData, summary);
         }
 
         BinaryData IPersistableModel<SavingsPlanModelListResult>.Write(ModelReaderWriterOptions options)

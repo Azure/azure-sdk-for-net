@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="AssociatedTenantListResult"/>. </summary>
         internal AssociatedTenantListResult()
         {
-            Value = new ChangeTrackingList<AssociatedTenantData>();
+            Value = new ChangeTrackingList<BillingAssociatedTenantData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AssociatedTenantListResult"/>. </summary>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="value"> The list of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssociatedTenantListResult(string nextLink, IReadOnlyList<AssociatedTenantData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssociatedTenantListResult(string nextLink, IReadOnlyList<BillingAssociatedTenantData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
         /// <summary> The list of resources. </summary>
-        public IReadOnlyList<AssociatedTenantData> Value { get; }
+        public IReadOnlyList<BillingAssociatedTenantData> Value { get; }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="reviewOn"> This is the date-time when the Azure hybrid benefit needs to be reviewed. </param>
         /// <param name="instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationPurchaseRequest(BillingSkuName sku, AzureLocation? location, string reservedResourceType, string billingScopeId, string term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, AppliedScopeType? appliedScopeType, IList<string> appliedScopes, ReservationAppliedScopeProperties appliedScopeProperties, bool? renew, InstanceFlexibility? instanceFlexibilityPropertiesInstanceFlexibility, DateTimeOffset? reviewOn, InstanceFlexibility? instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReservationPurchaseRequest(BillingSkuName sku, AzureLocation? location, string reservedResourceType, string billingScopeId, string term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, BillingAppliedScopeType? appliedScopeType, IList<string> appliedScopes, ReservationAppliedScopeProperties appliedScopeProperties, bool? renew, InstanceFlexibility? instanceFlexibilityPropertiesInstanceFlexibility, DateTimeOffset? reviewOn, InstanceFlexibility? instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Location = location;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Friendly name of the reservation. </summary>
         public string DisplayName { get; set; }
         /// <summary> Type of the Applied Scope. </summary>
-        public AppliedScopeType? AppliedScopeType { get; set; }
+        public BillingAppliedScopeType? AppliedScopeType { get; set; }
         /// <summary> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </summary>
         public IList<string> AppliedScopes { get; }
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>

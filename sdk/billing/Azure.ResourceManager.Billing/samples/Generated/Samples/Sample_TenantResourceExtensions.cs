@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Billing.Samples
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            AddressDetails details = new AddressDetails("1 Test", "us")
+            BillingAddressDetails details = new BillingAddressDetails("1 Test", "us")
             {
                 City = "bellevue",
                 PostalCode = "12345",
                 Region = "wa",
             };
-            AddressValidationResponse result = await tenantResource.ValidateAddresAsync(details);
+            BillingAddressValidationResult result = await tenantResource.ValidateAddresAsync(details);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.Billing.Samples
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            AddressDetails details = new AddressDetails("1 Test", "us")
+            BillingAddressDetails details = new BillingAddressDetails("1 Test", "us")
             {
                 City = "bellevue",
                 PostalCode = "12345",
                 Region = "wa",
             };
-            AddressValidationResponse result = await tenantResource.ValidateAddresAsync(details);
+            BillingAddressValidationResult result = await tenantResource.ValidateAddresAsync(details);
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="nextLink"> Url to get the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="summary"> The roll out count summary of the savings plans. </param>
-        internal SavingsPlanModelListResult(IReadOnlyList<SavingsPlanModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData, SavingsPlanSummaryCount summary) : base(value, nextLink, serializedAdditionalRawData)
+        internal SavingsPlanModelListResult(IReadOnlyList<BillingSavingsPlanModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData, SavingsPlanSummaryCount summary) : base(value, nextLink, serializedAdditionalRawData)
         {
             Summary = summary;
         }

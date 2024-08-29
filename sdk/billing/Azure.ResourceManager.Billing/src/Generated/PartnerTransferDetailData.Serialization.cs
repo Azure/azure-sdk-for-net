@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Billing
             ResourceType type = default;
             SystemData systemData = default;
             DateTimeOffset? expirationTime = default;
-            TransferStatus? transferStatus = default;
+            PartnerTransferStatus? transferStatus = default;
             string recipientEmailId = default;
             InitiatorCustomerType? initiatorCustomerType = default;
             string initiatorEmailId = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            transferStatus = new TransferStatus(property0.Value.GetString());
+                            transferStatus = new PartnerTransferStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("recipientEmailId"u8))

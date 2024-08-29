@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<AssociatedTenantData> value = default;
+            IReadOnlyList<BillingAssociatedTenantData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<AssociatedTenantData> array = new List<AssociatedTenantData>();
+                    List<BillingAssociatedTenantData> array = new List<BillingAssociatedTenantData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssociatedTenantData.DeserializeAssociatedTenantData(item, options));
+                        array.Add(BillingAssociatedTenantData.DeserializeBillingAssociatedTenantData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssociatedTenantListResult(nextLink, value ?? new ChangeTrackingList<AssociatedTenantData>(), serializedAdditionalRawData);
+            return new AssociatedTenantListResult(nextLink, value ?? new ChangeTrackingList<BillingAssociatedTenantData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssociatedTenantListResult>.Write(ModelReaderWriterOptions options)

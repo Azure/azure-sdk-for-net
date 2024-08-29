@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The address of the individual or organization where service subscription is being used. Available for agreement type Microsoft Online Services Program. This property can be updated via patch. </summary>
-    public partial class BillingPropertyPropertiesSubscriptionServiceUsageAddress : AddressDetails
+    public partial class BillingPropertyPropertiesSubscriptionServiceUsageAddress : BillingAddressDetails
     {
         /// <summary> Initializes a new instance of <see cref="BillingPropertyPropertiesSubscriptionServiceUsageAddress"/>. </summary>
         /// <param name="addressLine1"> Address line 1. </param>

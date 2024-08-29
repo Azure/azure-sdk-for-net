@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Billing.Samples
             RecipientTransferDetailResource recipientTransferDetail = client.GetRecipientTransferDetailResource(recipientTransferDetailResourceId);
 
             // invoke the operation
-            AcceptTransferRequest acceptTransferRequest = new AcceptTransferRequest()
+            AcceptTransferContent content = new AcceptTransferContent()
             {
                 ProductDetails =
 {
@@ -50,7 +50,7 @@ ProductId = "reservedInstanceId",
 }
 },
             };
-            RecipientTransferDetailResource result = await recipientTransferDetail.AcceptAsync(acceptTransferRequest);
+            RecipientTransferDetailResource result = await recipientTransferDetail.AcceptAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -79,7 +79,7 @@ ProductId = "reservedInstanceId",
             RecipientTransferDetailResource recipientTransferDetail = client.GetRecipientTransferDetailResource(recipientTransferDetailResourceId);
 
             // invoke the operation and iterate over the result
-            AcceptTransferRequest acceptTransferRequest = new AcceptTransferRequest()
+            AcceptTransferContent content = new AcceptTransferContent()
             {
                 ProductDetails =
 {
@@ -94,7 +94,7 @@ ProductId = "reservedInstanceId",
 }
 },
             };
-            await foreach (ValidateTransferResponse item in recipientTransferDetail.ValidateAsync(acceptTransferRequest))
+            await foreach (ValidateTransferResponse item in recipientTransferDetail.ValidateAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

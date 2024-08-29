@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="lastUpdatedBy"> The principal of the entity who last updated the request. </param>
         /// <param name="lastUpdatedOn"> Date and time of last update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingRequestProperties(ProvisioningState? provisioningState, IDictionary<string, string> additionalInformation, BillingRequestPropertiesReviewedBy reviewedBy, DateTimeOffset? reviewalOn, string billingAccountId, string billingAccountName, string billingAccountDisplayName, string billingAccountPrimaryBillingTenantId, string billingProfileId, string billingProfileName, string billingProfileDisplayName, BillingRequestPropertiesCreatedBy createdBy, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string decisionReason, string invoiceSectionId, string invoiceSectionName, string invoiceSectionDisplayName, string customerId, string customerName, string customerDisplayName, string subscriptionId, string subscriptionName, string subscriptionDisplayName, string justification, IList<Principal> recipients, string requestScope, string billingScope, BillingRequestStatus? status, BillingRequestType? requestType, BillingRequestPropertiesLastUpdatedBy lastUpdatedBy, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingRequestProperties(BillingProvisioningState? provisioningState, IDictionary<string, string> additionalInformation, BillingRequestPropertiesReviewedBy reviewedBy, DateTimeOffset? reviewalOn, string billingAccountId, string billingAccountName, string billingAccountDisplayName, string billingAccountPrimaryBillingTenantId, string billingProfileId, string billingProfileName, string billingProfileDisplayName, BillingRequestPropertiesCreatedBy createdBy, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string decisionReason, string invoiceSectionId, string invoiceSectionName, string invoiceSectionDisplayName, string customerId, string customerName, string customerDisplayName, string subscriptionId, string subscriptionName, string subscriptionDisplayName, string justification, IList<Principal> recipients, string requestScope, string billingScope, BillingRequestStatus? status, BillingRequestType? requestType, BillingRequestPropertiesLastUpdatedBy lastUpdatedBy, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             AdditionalInformation = additionalInformation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> Additional information for the billing request. </summary>
         public IDictionary<string, string> AdditionalInformation { get; }
         /// <summary> The principal of the request reviewer. Will only be set if request is approved. </summary>

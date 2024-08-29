@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="InvoiceSectionWithCreateSubPermission"/>. </summary>
         internal InvoiceSectionWithCreateSubPermission()
         {
-            EnabledAzurePlans = new ChangeTrackingList<AzurePlan>();
+            EnabledAzurePlans = new ChangeTrackingList<BillingAzurePlan>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InvoiceSectionWithCreateSubPermission"/>. </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="invoiceSectionId"> The fully qualified ID that uniquely identifies an invoice section. </param>
         /// <param name="invoiceSectionSystemId"> The system generated unique identifier for an invoice section. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InvoiceSectionWithCreateSubPermission(string billingProfileDisplayName, string billingProfileId, string billingProfileSystemId, BillingProfileStatus? billingProfileStatus, BillingProfileStatusReasonCode? billingProfileStatusReasonCode, SpendingLimit? billingProfileSpendingLimit, IReadOnlyList<AzurePlan> enabledAzurePlans, string invoiceSectionDisplayName, string invoiceSectionId, string invoiceSectionSystemId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InvoiceSectionWithCreateSubPermission(string billingProfileDisplayName, string billingProfileId, string billingProfileSystemId, BillingProfileStatus? billingProfileStatus, BillingProfileStatusReasonCode? billingProfileStatusReasonCode, SpendingLimit? billingProfileSpendingLimit, IReadOnlyList<BillingAzurePlan> enabledAzurePlans, string invoiceSectionDisplayName, string invoiceSectionId, string invoiceSectionSystemId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingProfileDisplayName = billingProfileDisplayName;
             BillingProfileId = billingProfileId;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The billing profile spending limit. </summary>
         public SpendingLimit? BillingProfileSpendingLimit { get; }
         /// <summary> Enabled azure plans for the associated billing profile. </summary>
-        public IReadOnlyList<AzurePlan> EnabledAzurePlans { get; }
+        public IReadOnlyList<BillingAzurePlan> EnabledAzurePlans { get; }
         /// <summary> The name of the invoice section. </summary>
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>

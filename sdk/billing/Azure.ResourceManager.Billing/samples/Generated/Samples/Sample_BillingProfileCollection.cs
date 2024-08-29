@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Billing.Samples
                     DisplayName = "Billing Profile 1",
                     EnabledAzurePlans =
 {
-new AzurePlan()
+new BillingAzurePlan()
 {
 SkuId = "0001",
-},new AzurePlan()
+},new BillingAzurePlan()
 {
 SkuId = "0002",
 }

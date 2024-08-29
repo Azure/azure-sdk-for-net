@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="BillingProfileProperties"/>. </summary>
         public BillingProfileProperties()
         {
-            EnabledAzurePlans = new ChangeTrackingList<AzurePlan>();
+            EnabledAzurePlans = new ChangeTrackingList<BillingAzurePlan>();
             InvoiceRecipients = new ChangeTrackingList<string>();
             SpendingLimitDetails = new ChangeTrackingList<SpendingLimitDetails>();
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="currentPaymentTerm"> The current payment term of the billing profile. </param>
         /// <param name="otherPaymentTerms"> The other payment terms of the billing profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingProfileProperties(ProvisioningState? provisioningState, BillingRelationshipType? billingRelationshipType, BillingProfilePropertiesBillTo billTo, string currency, string displayName, IList<AzurePlan> enabledAzurePlans, bool? hasReadAccess, BillingProfilePropertiesIndirectRelationshipInfo indirectRelationshipInfo, int? invoiceDay, bool? invoiceEmailOptIn, IList<string> invoiceRecipients, string poNumber, BillingProfilePropertiesShipTo shipTo, BillingProfilePropertiesSoldTo soldTo, SpendingLimit? spendingLimit, IReadOnlyList<SpendingLimitDetails> spendingLimitDetails, BillingProfileStatus? status, BillingProfileStatusReasonCode? statusReasonCode, string systemId, IDictionary<string, string> tags, IReadOnlyList<string> targetClouds, BillingProfilePropertiesCurrentPaymentTerm currentPaymentTerm, IReadOnlyList<PaymentTerm> otherPaymentTerms, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingProfileProperties(BillingProvisioningState? provisioningState, BillingRelationshipType? billingRelationshipType, BillingProfilePropertiesBillTo billTo, string currency, string displayName, IList<BillingAzurePlan> enabledAzurePlans, bool? hasReadAccess, BillingProfilePropertiesIndirectRelationshipInfo indirectRelationshipInfo, int? invoiceDay, bool? invoiceEmailOptIn, IList<string> invoiceRecipients, string poNumber, BillingProfilePropertiesShipTo shipTo, BillingProfilePropertiesSoldTo soldTo, SpendingLimit? spendingLimit, IReadOnlyList<SpendingLimitDetails> spendingLimitDetails, BillingProfileStatus? status, BillingProfileStatusReasonCode? statusReasonCode, string systemId, IDictionary<string, string> tags, IReadOnlyList<string> targetClouds, BillingProfilePropertiesCurrentPaymentTerm currentPaymentTerm, IReadOnlyList<PaymentTerm> otherPaymentTerms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             BillingRelationshipType = billingRelationshipType;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> Identifies the billing relationship represented by the billing profile. The billing relationship may be between Microsoft, the customer, and/or a third-party. </summary>
         public BillingRelationshipType? BillingRelationshipType { get; }
         /// <summary> Billing address. </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The name of the billing profile. </summary>
         public string DisplayName { get; set; }
         /// <summary> Information about the enabled azure plans. </summary>
-        public IList<AzurePlan> EnabledAzurePlans { get; }
+        public IList<BillingAzurePlan> EnabledAzurePlans { get; }
         /// <summary> Indicates whether user has read access to the billing profile. </summary>
         public bool? HasReadAccess { get; }
         /// <summary> Identifies the billing profile that is linked to another billing profile in indirect purchase motion. </summary>

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="ReservationsListResult"/>. </summary>
         internal ReservationsListResult()
         {
-            Value = new ChangeTrackingList<ReservationData>();
+            Value = new ChangeTrackingList<BillingReservationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReservationsListResult"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="summary"> The roll out count summary of the reservations. </param>
         /// <param name="value"> The list of reservations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationsListResult(string nextLink, ReservationSummary summary, IReadOnlyList<ReservationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReservationsListResult(string nextLink, ReservationSummary summary, IReadOnlyList<BillingReservationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Summary = summary;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The roll out count summary of the reservations. </summary>
         public ReservationSummary Summary { get; }
         /// <summary> The list of reservations. </summary>
-        public IReadOnlyList<ReservationData> Value { get; }
+        public IReadOnlyList<BillingReservationData> Value { get; }
     }
 }

@@ -39,8 +39,6 @@ namespace Azure.ResourceManager.Billing
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -63,10 +61,10 @@ namespace Azure.ResourceManager.Billing
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IdPropertiesId))
+            if (options.Format != "W" && Optional.IsDefined(PaymentMethodId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(IdPropertiesId);
+                writer.WriteStringValue(PaymentMethodId);
             }
             if (options.Format != "W" && Optional.IsDefined(AccountHolderName))
             {
@@ -153,20 +151,19 @@ namespace Azure.ResourceManager.Billing
                 return null;
             }
             IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string id0 = default;
+            ResourceIdentifier id0 = default;
             string accountHolderName = default;
             string displayName = default;
             string expiration = default;
-            PaymentMethodFamily? family = default;
+            BillingPaymentMethodFamily? family = default;
             string lastFourDigits = default;
             IList<PaymentMethodLogo> logos = default;
             string paymentMethodType = default;
-            PaymentMethodStatus? status = default;
+            BillingPaymentMethodStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,11 +180,6 @@ namespace Azure.ResourceManager.Billing
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -225,7 +217,11 @@ namespace Azure.ResourceManager.Billing
                     {
                         if (property0.NameEquals("id"u8))
                         {
-                            id0 = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            id0 = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("accountHolderName"u8))
@@ -249,7 +245,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            family = new PaymentMethodFamily(property0.Value.GetString());
+                            family = new BillingPaymentMethodFamily(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastFourDigits"u8))
@@ -282,7 +278,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            status = new PaymentMethodStatus(property0.Value.GetString());
+                            status = new BillingPaymentMethodStatus(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -299,8 +295,6 @@ namespace Azure.ResourceManager.Billing
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 id0,
                 accountHolderName,
                 displayName,
@@ -310,6 +304,7 @@ namespace Azure.ResourceManager.Billing
                 logos ?? new ChangeTrackingList<PaymentMethodLogo>(),
                 paymentMethodType,
                 status,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

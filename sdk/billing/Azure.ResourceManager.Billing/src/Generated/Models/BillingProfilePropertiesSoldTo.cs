@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The address of the individual or organization that is responsible for the billing account. </summary>
-    public partial class BillingProfilePropertiesSoldTo : AddressDetails
+    public partial class BillingProfilePropertiesSoldTo : BillingAddressDetails
     {
         /// <summary> Initializes a new instance of <see cref="BillingProfilePropertiesSoldTo"/>. </summary>
         /// <param name="addressLine1"> Address line 1. </param>

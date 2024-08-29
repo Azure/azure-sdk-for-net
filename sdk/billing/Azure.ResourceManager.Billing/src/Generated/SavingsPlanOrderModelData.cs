@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="productCode"> Represents UPN. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanOrderModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSku sku, string displayName, string provisioningState, string billingScopeId, string billingProfileId, string customerId, string billingAccountId, SavingsPlanTerm? term, BillingPlan? billingPlan, DateTimeOffset? benefitStartOn, DateTimeOffset? expiryOn, BillingPlanInformation planInformation, IList<string> savingsPlans, ExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SavingsPlanOrderModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSku sku, string displayName, string provisioningState, string billingScopeId, ResourceIdentifier billingProfileId, ResourceIdentifier customerId, ResourceIdentifier billingAccountId, BillingSavingsPlanTerm? term, BillingPlan? billingPlan, DateTimeOffset? benefitStartOn, DateTimeOffset? expiryOn, BillingPlanInformation planInformation, IList<string> savingsPlans, ExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             DisplayName = displayName;
@@ -132,13 +132,13 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
         public string BillingScopeId { get; set; }
         /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
-        public string BillingProfileId { get; }
+        public ResourceIdentifier BillingProfileId { get; }
         /// <summary> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </summary>
-        public string CustomerId { get; }
+        public ResourceIdentifier CustomerId { get; }
         /// <summary> Fully-qualified identifier of the billing account where the savings plan is applied. </summary>
-        public string BillingAccountId { get; }
+        public ResourceIdentifier BillingAccountId { get; }
         /// <summary> Represents the Savings plan term in ISO 8601 format. </summary>
-        public SavingsPlanTerm? Term { get; set; }
+        public BillingSavingsPlanTerm? Term { get; set; }
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </summary>
         public BillingPlan? BillingPlan { get; set; }
         /// <summary> DateTime when the savings plan benefit started. </summary>

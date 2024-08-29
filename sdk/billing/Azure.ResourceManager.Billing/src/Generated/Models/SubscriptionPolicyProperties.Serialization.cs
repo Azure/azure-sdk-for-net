@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            BillingProvisioningState? provisioningState = default;
             IList<PolicySummary> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new BillingProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policies"u8))

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Billing.Samples
             {
                 Properties = new BillingAccountPolicyProperties()
                 {
-                    EnterpriseAgreementPolicies = new BillingAccountPolicyPropertiesEnterpriseAgreementPolicies()
+                    EnterpriseAgreementPolicies = new EnterpriseAgreementPolicies()
                     {
                         AuthenticationType = EnrollmentAuthLevelState.OrganizationalAccountOnly,
                     },

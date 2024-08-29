@@ -164,20 +164,20 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
-            AccountStatus? accountStatus = default;
-            AccountType? accountType = default;
-            AccountSubType? accountSubType = default;
+            BillingProvisioningState? provisioningState = default;
+            BillingAccountStatus? accountStatus = default;
+            BillingAccountType? accountType = default;
+            BillingAccountSubType? accountSubType = default;
             BillingAccountStatusReasonCode? accountStatusReasonCode = default;
-            AgreementType? agreementType = default;
+            BillingAgreementType? agreementType = default;
             string displayName = default;
-            BillingAccountPropertiesEnrollmentDetails enrollmentDetails = default;
+            EnrollmentDetails enrollmentDetails = default;
             bool? hasReadAccess = default;
             bool? hasNoBillingProfiles = default;
             string notificationEmailAddress = default;
             string primaryBillingTenantId = default;
-            BillingAccountPropertiesSoldTo soldTo = default;
-            BillingAccountPropertiesRegistrationNumber registrationNumber = default;
+            BillingAddressDetails soldTo = default;
+            RegistrationNumber registrationNumber = default;
             IReadOnlyList<BillingRelationshipType> billingRelationshipTypes = default;
             IReadOnlyList<string> qualifications = default;
             IList<TaxIdentifier> taxIds = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new BillingProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accountStatus"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    accountStatus = new AccountStatus(property.Value.GetString());
+                    accountStatus = new BillingAccountStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accountType"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    accountType = new AccountType(property.Value.GetString());
+                    accountType = new BillingAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accountSubType"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    accountSubType = new AccountSubType(property.Value.GetString());
+                    accountSubType = new BillingAccountSubType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accountStatusReasonCode"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    agreementType = new AgreementType(property.Value.GetString());
+                    agreementType = new BillingAgreementType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    enrollmentDetails = BillingAccountPropertiesEnrollmentDetails.DeserializeBillingAccountPropertiesEnrollmentDetails(property.Value, options);
+                    enrollmentDetails = EnrollmentDetails.DeserializeEnrollmentDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hasReadAccess"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    soldTo = BillingAccountPropertiesSoldTo.DeserializeBillingAccountPropertiesSoldTo(property.Value, options);
+                    soldTo = BillingAddressDetails.DeserializeBillingAddressDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("registrationNumber"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    registrationNumber = BillingAccountPropertiesRegistrationNumber.DeserializeBillingAccountPropertiesRegistrationNumber(property.Value, options);
+                    registrationNumber = RegistrationNumber.DeserializeRegistrationNumber(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingRelationshipTypes"u8))

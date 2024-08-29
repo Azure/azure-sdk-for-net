@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.Billing.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BillingAccountBillingProfileCustomerResource created on azure
-            // for more information of creating BillingAccountBillingProfileCustomerResource, please refer to the document of BillingAccountBillingProfileCustomerResource
+            // this example assumes you already have this BillingProfileCustomerResource created on azure
+            // for more information of creating BillingProfileCustomerResource, please refer to the document of BillingProfileCustomerResource
             string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
             string billingProfileName = "xxxx-xxxx-xxx-xxx";
             string customerName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingAccountBillingProfileCustomerResourceId = BillingAccountBillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
-            BillingAccountBillingProfileCustomerResource billingAccountBillingProfileCustomer = client.GetBillingAccountBillingProfileCustomerResource(billingAccountBillingProfileCustomerResourceId);
+            ResourceIdentifier billingProfileCustomerResourceId = BillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
+            BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
 
             // get the collection of this PartnerTransferDetailResource
-            PartnerTransferDetailCollection collection = billingAccountBillingProfileCustomer.GetPartnerTransferDetails();
+            PartnerTransferDetailCollection collection = billingProfileCustomer.GetPartnerTransferDetails();
 
             // invoke the operation
             string transferName = "aabb123";
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.Billing.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BillingAccountBillingProfileCustomerResource created on azure
-            // for more information of creating BillingAccountBillingProfileCustomerResource, please refer to the document of BillingAccountBillingProfileCustomerResource
+            // this example assumes you already have this BillingProfileCustomerResource created on azure
+            // for more information of creating BillingProfileCustomerResource, please refer to the document of BillingProfileCustomerResource
             string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
             string billingProfileName = "xxxx-xxxx-xxx-xxx";
             string customerName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingAccountBillingProfileCustomerResourceId = BillingAccountBillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
-            BillingAccountBillingProfileCustomerResource billingAccountBillingProfileCustomer = client.GetBillingAccountBillingProfileCustomerResource(billingAccountBillingProfileCustomerResourceId);
+            ResourceIdentifier billingProfileCustomerResourceId = BillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
+            BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
 
             // get the collection of this PartnerTransferDetailResource
-            PartnerTransferDetailCollection collection = billingAccountBillingProfileCustomer.GetPartnerTransferDetails();
+            PartnerTransferDetailCollection collection = billingProfileCustomer.GetPartnerTransferDetails();
 
             // invoke the operation
             string transferName = "aabb123";
@@ -94,16 +94,16 @@ namespace Azure.ResourceManager.Billing.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BillingAccountBillingProfileCustomerResource created on azure
-            // for more information of creating BillingAccountBillingProfileCustomerResource, please refer to the document of BillingAccountBillingProfileCustomerResource
+            // this example assumes you already have this BillingProfileCustomerResource created on azure
+            // for more information of creating BillingProfileCustomerResource, please refer to the document of BillingProfileCustomerResource
             string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
             string billingProfileName = "xxxx-xxxx-xxx-xxx";
             string customerName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingAccountBillingProfileCustomerResourceId = BillingAccountBillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
-            BillingAccountBillingProfileCustomerResource billingAccountBillingProfileCustomer = client.GetBillingAccountBillingProfileCustomerResource(billingAccountBillingProfileCustomerResourceId);
+            ResourceIdentifier billingProfileCustomerResourceId = BillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
+            BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
 
             // get the collection of this PartnerTransferDetailResource
-            PartnerTransferDetailCollection collection = billingAccountBillingProfileCustomer.GetPartnerTransferDetails();
+            PartnerTransferDetailCollection collection = billingProfileCustomer.GetPartnerTransferDetails();
 
             // invoke the operation
             string transferName = "aabb123";
@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.Billing.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BillingAccountBillingProfileCustomerResource created on azure
-            // for more information of creating BillingAccountBillingProfileCustomerResource, please refer to the document of BillingAccountBillingProfileCustomerResource
+            // this example assumes you already have this BillingProfileCustomerResource created on azure
+            // for more information of creating BillingProfileCustomerResource, please refer to the document of BillingProfileCustomerResource
             string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
             string billingProfileName = "xxxx-xxxx-xxx-xxx";
             string customerName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingAccountBillingProfileCustomerResourceId = BillingAccountBillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
-            BillingAccountBillingProfileCustomerResource billingAccountBillingProfileCustomer = client.GetBillingAccountBillingProfileCustomerResource(billingAccountBillingProfileCustomerResourceId);
+            ResourceIdentifier billingProfileCustomerResourceId = BillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
+            BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
 
             // get the collection of this PartnerTransferDetailResource
-            PartnerTransferDetailCollection collection = billingAccountBillingProfileCustomer.GetPartnerTransferDetails();
+            PartnerTransferDetailCollection collection = billingProfileCustomer.GetPartnerTransferDetails();
 
             // invoke the operation
             string transferName = "aabb123";
@@ -177,16 +177,16 @@ namespace Azure.ResourceManager.Billing.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BillingAccountBillingProfileCustomerResource created on azure
-            // for more information of creating BillingAccountBillingProfileCustomerResource, please refer to the document of BillingAccountBillingProfileCustomerResource
+            // this example assumes you already have this BillingProfileCustomerResource created on azure
+            // for more information of creating BillingProfileCustomerResource, please refer to the document of BillingProfileCustomerResource
             string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
             string billingProfileName = "xxxx-xxxx-xxx-xxx";
             string customerName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingAccountBillingProfileCustomerResourceId = BillingAccountBillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
-            BillingAccountBillingProfileCustomerResource billingAccountBillingProfileCustomer = client.GetBillingAccountBillingProfileCustomerResource(billingAccountBillingProfileCustomerResourceId);
+            ResourceIdentifier billingProfileCustomerResourceId = BillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
+            BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
 
             // get the collection of this PartnerTransferDetailResource
-            PartnerTransferDetailCollection collection = billingAccountBillingProfileCustomer.GetPartnerTransferDetails();
+            PartnerTransferDetailCollection collection = billingProfileCustomer.GetPartnerTransferDetails();
 
             // invoke the operation and iterate over the result
             await foreach (PartnerTransferDetailResource item in collection.GetAllAsync())

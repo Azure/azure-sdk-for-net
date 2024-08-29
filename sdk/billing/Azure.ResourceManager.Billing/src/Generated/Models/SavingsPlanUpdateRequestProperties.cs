@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="renew"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="renewProperties"> Properties specific to renew. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanUpdateRequestProperties(string displayName, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, bool? renew, RenewProperties renewProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SavingsPlanUpdateRequestProperties(string displayName, BillingAppliedScopeType? appliedScopeType, BillingAppliedScopeProperties appliedScopeProperties, bool? renew, BillingRenewProperties renewProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             AppliedScopeType = appliedScopeType;
@@ -70,21 +70,21 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Display name. </summary>
         public string DisplayName { get; set; }
         /// <summary> Type of the Applied Scope. </summary>
-        public AppliedScopeType? AppliedScopeType { get; set; }
+        public BillingAppliedScopeType? AppliedScopeType { get; set; }
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
-        public AppliedScopeProperties AppliedScopeProperties { get; set; }
+        public BillingAppliedScopeProperties AppliedScopeProperties { get; set; }
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
         public bool? Renew { get; set; }
         /// <summary> Properties specific to renew. </summary>
-        internal RenewProperties RenewProperties { get; set; }
+        internal BillingRenewProperties RenewProperties { get; set; }
         /// <summary> Purchase request. </summary>
-        public PurchaseRequest RenewPurchaseProperties
+        public BillingPurchaseProperties RenewPurchaseProperties
         {
             get => RenewProperties is null ? default : RenewProperties.PurchaseProperties;
             set
             {
                 if (RenewProperties is null)
-                    RenewProperties = new RenewProperties();
+                    RenewProperties = new BillingRenewProperties();
                 RenewProperties.PurchaseProperties = value;
             }
         }

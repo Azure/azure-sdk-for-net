@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="paymentType"> The type of payment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Payment(PaymentAmount amount, DateTimeOffset? @on, string paymentMethodId, PaymentMethodFamily? paymentMethodFamily, string paymentMethodType, string paymentType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Payment(PaymentAmount amount, DateTimeOffset? @on, string paymentMethodId, BillingPaymentMethodFamily? paymentMethodFamily, string paymentMethodType, string paymentType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Amount = amount;
             On = @on;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The ID that uniquely identifies the payment method used for the invoice. </summary>
         public string PaymentMethodId { get; }
         /// <summary> The family of payment method. </summary>
-        public PaymentMethodFamily? PaymentMethodFamily { get; }
+        public BillingPaymentMethodFamily? PaymentMethodFamily { get; }
         /// <summary> The type of payment method. </summary>
         public string PaymentMethodType { get; }
         /// <summary> The type of payment. </summary>

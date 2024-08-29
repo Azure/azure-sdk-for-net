@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.Billing
             string displayName = default;
             string provisioningState = default;
             string billingScopeId = default;
-            string billingProfileId = default;
-            string customerId = default;
-            string billingAccountId = default;
-            SavingsPlanTerm? term = default;
+            ResourceIdentifier billingProfileId = default;
+            ResourceIdentifier customerId = default;
+            ResourceIdentifier billingAccountId = default;
+            BillingSavingsPlanTerm? term = default;
             BillingPlan? billingPlan = default;
             DateTimeOffset? benefitStartTime = default;
             DateTimeOffset? expiryDateTime = default;
@@ -270,17 +270,29 @@ namespace Azure.ResourceManager.Billing
                         }
                         if (property0.NameEquals("billingProfileId"u8))
                         {
-                            billingProfileId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            billingProfileId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("customerId"u8))
                         {
-                            customerId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            customerId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("billingAccountId"u8))
                         {
-                            billingAccountId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            billingAccountId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("term"u8))
@@ -289,7 +301,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            term = new SavingsPlanTerm(property0.Value.GetString());
+                            term = new BillingSavingsPlanTerm(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("billingPlan"u8))

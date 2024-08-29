@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Billing
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SavingsPlanModelResources in the SavingsPlanOrderModel. </summary>
-        /// <returns> An object representing collection of SavingsPlanModelResources and their operations over a SavingsPlanModelResource. </returns>
-        public virtual SavingsPlanModelCollection GetSavingsPlanModels()
+        /// <summary> Gets a collection of BillingSavingsPlanModelResources in the SavingsPlanOrderModel. </summary>
+        /// <returns> An object representing collection of BillingSavingsPlanModelResources and their operations over a BillingSavingsPlanModelResource. </returns>
+        public virtual BillingSavingsPlanModelCollection GetBillingSavingsPlanModels()
         {
-            return GetCachedClient(client => new SavingsPlanModelCollection(client, Id));
+            return GetCachedClient(client => new BillingSavingsPlanModelCollection(client, Id));
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SavingsPlanModelResource"/></description>
+        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SavingsPlanModelResource>> GetSavingsPlanModelAsync(string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingSavingsPlanModelResource>> GetBillingSavingsPlanModelAsync(string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetSavingsPlanModels().GetAsync(savingsPlanId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetBillingSavingsPlanModels().GetAsync(savingsPlanId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SavingsPlanModelResource"/></description>
+        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SavingsPlanModelResource> GetSavingsPlanModel(string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<BillingSavingsPlanModelResource> GetBillingSavingsPlanModel(string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSavingsPlanModels().Get(savingsPlanId, expand, cancellationToken);
+            return GetBillingSavingsPlanModels().Get(savingsPlanId, expand, cancellationToken);
         }
 
         /// <summary>

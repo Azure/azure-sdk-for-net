@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Billing.Models
             string invoiceId = default;
             string invoiceName = default;
             DateTimeOffset? date = default;
-            PaymentMethodFamily? paymentMethodType = default;
+            BillingPaymentMethodFamily? paymentMethodType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    paymentMethodType = new PaymentMethodFamily(property.Value.GetString());
+                    paymentMethodType = new BillingPaymentMethodFamily(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

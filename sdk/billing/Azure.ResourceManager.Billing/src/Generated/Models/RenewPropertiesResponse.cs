@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="pricingCurrencyTotal"> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </param>
         /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RenewPropertiesResponse(ReservationPurchaseRequest purchaseProperties, Price pricingCurrencyTotal, Price billingCurrencyTotal, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RenewPropertiesResponse(ReservationPurchaseRequest purchaseProperties, BillingPrice pricingCurrencyTotal, BillingPrice billingCurrencyTotal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PurchaseProperties = purchaseProperties;
             PricingCurrencyTotal = pricingCurrencyTotal;
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The request for reservation purchase. </summary>
         public ReservationPurchaseRequest PurchaseProperties { get; set; }
         /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </summary>
-        public Price PricingCurrencyTotal { get; set; }
+        public BillingPrice PricingCurrencyTotal { get; set; }
         /// <summary> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </summary>
-        public Price BillingCurrencyTotal { get; set; }
+        public BillingPrice BillingCurrencyTotal { get; set; }
     }
 }

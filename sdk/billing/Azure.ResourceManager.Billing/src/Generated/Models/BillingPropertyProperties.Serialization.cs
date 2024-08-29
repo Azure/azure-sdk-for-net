@@ -269,15 +269,15 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            AgreementType? billingAccountAgreementType = default;
+            BillingAgreementType? billingAccountAgreementType = default;
             string billingAccountDisplayName = default;
             string billingAccountId = default;
             string accountAdminNotificationEmailAddress = default;
             string billingAccountSoldToCountry = default;
-            AccountStatus? billingAccountStatus = default;
+            BillingAccountStatus? billingAccountStatus = default;
             BillingAccountStatusReasonCode? billingAccountStatusReasonCode = default;
-            AccountType? billingAccountType = default;
-            AccountSubType? billingAccountSubType = default;
+            BillingAccountType? billingAccountType = default;
+            BillingAccountSubType? billingAccountSubType = default;
             string billingCurrency = default;
             string billingProfileDisplayName = default;
             string billingProfileId = default;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Billing.Models
             IReadOnlyList<SpendingLimitDetails> billingProfileSpendingLimitDetails = default;
             BillingProfileStatus? billingProfileStatus = default;
             BillingProfileStatusReasonCode? billingProfileStatusReasonCode = default;
-            PaymentMethodFamily? billingProfilePaymentMethodFamily = default;
+            BillingPaymentMethodFamily? billingProfilePaymentMethodFamily = default;
             string billingProfilePaymentMethodType = default;
             string billingTenantId = default;
             string costCenter = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billingAccountAgreementType = new AgreementType(property.Value.GetString());
+                    billingAccountAgreementType = new BillingAgreementType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingAccountDisplayName"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billingAccountStatus = new AccountStatus(property.Value.GetString());
+                    billingAccountStatus = new BillingAccountStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingAccountStatusReasonCode"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billingAccountType = new AccountType(property.Value.GetString());
+                    billingAccountType = new BillingAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingAccountSubType"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billingAccountSubType = new AccountSubType(property.Value.GetString());
+                    billingAccountSubType = new BillingAccountSubType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingCurrency"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billingProfilePaymentMethodFamily = new PaymentMethodFamily(property.Value.GetString());
+                    billingProfilePaymentMethodFamily = new BillingPaymentMethodFamily(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfilePaymentMethodType"u8))

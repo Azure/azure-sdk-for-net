@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            BillingProvisioningState? provisioningState = default;
             BillingRelationshipType? billingRelationshipType = default;
             BillingProfilePropertiesBillTo billTo = default;
             string currency = default;
             string displayName = default;
-            IList<AzurePlan> enabledAzurePlans = default;
+            IList<BillingAzurePlan> enabledAzurePlans = default;
             bool? hasReadAccess = default;
             BillingProfilePropertiesIndirectRelationshipInfo indirectRelationshipInfo = default;
             int? invoiceDay = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new BillingProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingRelationshipType"u8))
@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<AzurePlan> array = new List<AzurePlan>();
+                    List<BillingAzurePlan> array = new List<BillingAzurePlan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzurePlan.DeserializeAzurePlan(item, options));
+                        array.Add(BillingAzurePlan.DeserializeBillingAzurePlan(item, options));
                     }
                     enabledAzurePlans = array;
                     continue;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Billing.Models
                 billTo,
                 currency,
                 displayName,
-                enabledAzurePlans ?? new ChangeTrackingList<AzurePlan>(),
+                enabledAzurePlans ?? new ChangeTrackingList<BillingAzurePlan>(),
                 hasReadAccess,
                 indirectRelationshipInfo,
                 invoiceDay,

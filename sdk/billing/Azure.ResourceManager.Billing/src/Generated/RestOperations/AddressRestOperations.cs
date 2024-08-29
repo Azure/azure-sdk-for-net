@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Billing
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateValidateRequestUri(AddressDetails details)
+        internal RequestUriBuilder CreateValidateRequestUri(BillingAddressDetails details)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateValidateRequest(AddressDetails details)
+        internal HttpMessage CreateValidateRequest(BillingAddressDetails details)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="details"> Address details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public async Task<Response<AddressValidationResponse>> ValidateAsync(AddressDetails details, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingAddressValidationResult>> ValidateAsync(BillingAddressDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        AddressValidationResponse value = default;
+                        BillingAddressValidationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AddressValidationResponse.DeserializeAddressValidationResponse(document.RootElement);
+                        value = BillingAddressValidationResult.DeserializeBillingAddressValidationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="details"> Address details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public Response<AddressValidationResponse> Validate(AddressDetails details, CancellationToken cancellationToken = default)
+        public Response<BillingAddressValidationResult> Validate(BillingAddressDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        AddressValidationResponse value = default;
+                        BillingAddressValidationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AddressValidationResponse.DeserializeAddressValidationResponse(document.RootElement);
+                        value = BillingAddressValidationResult.DeserializeBillingAddressValidationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

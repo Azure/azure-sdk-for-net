@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="ProductListResult"/>. </summary>
         internal ProductListResult()
         {
-            Value = new ChangeTrackingList<ProductData>();
+            Value = new ChangeTrackingList<BillingProductData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductListResult"/>. </summary>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="value"> The list of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductListResult(string nextLink, IReadOnlyList<ProductData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductListResult(string nextLink, IReadOnlyList<BillingProductData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
         /// <summary> The list of resources. </summary>
-        public IReadOnlyList<ProductData> Value { get; }
+        public IReadOnlyList<BillingProductData> Value { get; }
     }
 }

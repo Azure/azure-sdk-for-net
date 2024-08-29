@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             ReservationPurchaseRequest purchaseProperties = default;
-            Price pricingCurrencyTotal = default;
-            Price billingCurrencyTotal = default;
+            BillingPrice pricingCurrencyTotal = default;
+            BillingPrice billingCurrencyTotal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = Price.DeserializePrice(property.Value, options);
+                    pricingCurrencyTotal = BillingPrice.DeserializeBillingPrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = Price.DeserializePrice(property.Value, options);
+                    billingCurrencyTotal = BillingPrice.DeserializeBillingPrice(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="detailedTransferStatus"> Detailed transfer status. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerTransferDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expireOn, TransferStatus? transferStatus, string recipientEmailId, InitiatorCustomerType? initiatorCustomerType, string initiatorEmailId, string resellerId, string resellerName, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PartnerTransferDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expireOn, PartnerTransferStatus? transferStatus, string recipientEmailId, InitiatorCustomerType? initiatorCustomerType, string initiatorEmailId, string resellerId, string resellerName, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExpireOn = expireOn;
             TransferStatus = transferStatus;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> The time at which the transfer request expires. </summary>
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Overall transfer status. </summary>
-        public TransferStatus? TransferStatus { get; }
+        public PartnerTransferStatus? TransferStatus { get; }
         /// <summary> The email ID of the user to whom the transfer request was sent. </summary>
         public string RecipientEmailId { get; }
         /// <summary> The type of customer who sent the transfer request. </summary>

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingRoleAssignmentProperties(ProvisioningState? provisioningState, DateTimeOffset? createdOn, string createdByPrincipalTenantId, string createdByPrincipalId, string createdByPrincipalPuid, string createdByUserEmailAddress, DateTimeOffset? modifiedOn, string modifiedByPrincipalPuid, string modifiedByUserEmailAddress, string modifiedByPrincipalId, string modifiedByPrincipalTenantId, string principalPuid, string principalId, string principalTenantId, string roleDefinitionId, string scope, string userAuthenticationType, string userEmailAddress, string principalTenantName, string principalDisplayName, PrincipalType? principalType, string billingRequestId, string billingAccountId, string billingAccountDisplayName, string billingProfileId, string billingProfileDisplayName, string invoiceSectionId, string invoiceSectionDisplayName, string customerId, string customerDisplayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingRoleAssignmentProperties(BillingProvisioningState? provisioningState, DateTimeOffset? createdOn, string createdByPrincipalTenantId, string createdByPrincipalId, string createdByPrincipalPuid, string createdByUserEmailAddress, DateTimeOffset? modifiedOn, string modifiedByPrincipalPuid, string modifiedByUserEmailAddress, string modifiedByPrincipalId, string modifiedByPrincipalTenantId, string principalPuid, string principalId, string principalTenantId, string roleDefinitionId, string scope, string userAuthenticationType, string userEmailAddress, string principalTenantName, string principalDisplayName, PrincipalType? principalType, string billingRequestId, string billingAccountId, string billingAccountDisplayName, string billingProfileId, string billingProfileDisplayName, string invoiceSectionId, string invoiceSectionDisplayName, string customerId, string customerDisplayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> The date the role assignment was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The tenant Id of the user who created the role assignment. </summary>

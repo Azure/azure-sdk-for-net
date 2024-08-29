@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, string beneficiaryTenantId, Beneficiary beneficiary, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string customerName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuId, string skuDescription, SystemOverrides systemOverrides, Uri resourceUri, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, string provisioningTenantId, BillingSubscriptionStatus? status, BillingSubscriptionOperationStatus? operationStatus, ProvisioningState? provisioningState, string subscriptionId, IReadOnlyList<string> suspensionReasons, IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails, DateTimeOffset? enrollmentAccountStartOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BillingSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, string beneficiaryTenantId, BillingBeneficiary beneficiary, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string customerName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuId, string skuDescription, BillingSystemOverrides systemOverrides, Uri resourceUri, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, Guid? provisioningTenantId, BillingSubscriptionStatus? status, BillingSubscriptionOperationStatus? operationStatus, BillingProvisioningState? provisioningState, string subscriptionId, IReadOnlyList<string> suspensionReasons, IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails, DateTimeOffset? enrollmentAccountStartOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AutoRenew = autoRenew;
             BeneficiaryTenantId = beneficiaryTenantId;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> The provisioning tenant of the subscription. </summary>
         public string BeneficiaryTenantId { get; set; }
         /// <summary> The beneficiary of the billing subscription. </summary>
-        public Beneficiary Beneficiary { get; set; }
+        public BillingBeneficiary Beneficiary { get; set; }
         /// <summary> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </summary>
         public string BillingFrequency { get; set; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> The SKU description of the product for which the subscription is purchased. This field is is only available for billing accounts with agreement type Microsoft Customer Agreement and Microsoft Partner Agreement. </summary>
         public string SkuDescription { get; }
         /// <summary> System imposed policies that regulate behavior of the subscription. </summary>
-        public SystemOverrides SystemOverrides { get; set; }
+        public BillingSystemOverrides SystemOverrides { get; set; }
         /// <summary> Unique identifier of the linked resource. </summary>
         public Uri ResourceUri { get; }
         /// <summary> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </summary>
@@ -242,13 +242,13 @@ namespace Azure.ResourceManager.Billing
         /// <summary> End date of the term in UTC time. </summary>
         public DateTimeOffset? TermEndOn { get; }
         /// <summary> The tenant in which the subscription is provisioned. </summary>
-        public string ProvisioningTenantId { get; set; }
+        public Guid? ProvisioningTenantId { get; set; }
         /// <summary> The status of the subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
         public BillingSubscriptionStatus? Status { get; }
         /// <summary> The status of an operation on the subscription. When None, there is no ongoing operation. When LockedForUpdate, write operations will be blocked on the Billing Subscription. Other is the default value and you may need to refer to the latest API version for more details. </summary>
         public BillingSubscriptionOperationStatus? OperationStatus { get; }
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> The ID of the subscription. </summary>
         public string SubscriptionId { get; }
         /// <summary> The suspension reason for a subscription. This field is not available for Enterprise Agreement billing accounts. </summary>

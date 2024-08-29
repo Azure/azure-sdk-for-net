@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="transferName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransferDetailData>> GetAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingTransferDetailData>> GetAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        TransferDetailData value = default;
+                        BillingTransferDetailData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransferDetailData.DeserializeTransferDetailData(document.RootElement);
+                        value = BillingTransferDetailData.DeserializeBillingTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TransferDetailData)null, message.Response);
+                    return Response.FromValue((BillingTransferDetailData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="transferName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransferDetailData> Get(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default)
+        public Response<BillingTransferDetailData> Get(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        TransferDetailData value = default;
+                        BillingTransferDetailData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransferDetailData.DeserializeTransferDetailData(document.RootElement);
+                        value = BillingTransferDetailData.DeserializeBillingTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TransferDetailData)null, message.Response);
+                    return Response.FromValue((BillingTransferDetailData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateInitiateRequestUri(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, TransferDetailCreateOrUpdateContent content)
+        internal RequestUriBuilder CreateInitiateRequestUri(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, BillingTransferDetailCreateOrUpdateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateInitiateRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, TransferDetailCreateOrUpdateContent content)
+        internal HttpMessage CreateInitiateRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, BillingTransferDetailCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/>, <paramref name="transferName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransferDetailData>> InitiateAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, TransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingTransferDetailData>> InitiateAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, BillingTransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                 case 201:
                     {
-                        TransferDetailData value = default;
+                        BillingTransferDetailData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransferDetailData.DeserializeTransferDetailData(document.RootElement);
+                        value = BillingTransferDetailData.DeserializeBillingTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/>, <paramref name="transferName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransferDetailData> Initiate(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, TransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<BillingTransferDetailData> Initiate(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, BillingTransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                 case 201:
                     {
-                        TransferDetailData value = default;
+                        BillingTransferDetailData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransferDetailData.DeserializeTransferDetailData(document.RootElement);
+                        value = BillingTransferDetailData.DeserializeBillingTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="transferName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransferDetailData>> CancelAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingTransferDetailData>> CancelAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -311,9 +311,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        TransferDetailData value = default;
+                        BillingTransferDetailData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransferDetailData.DeserializeTransferDetailData(document.RootElement);
+                        value = BillingTransferDetailData.DeserializeBillingTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="transferName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransferDetailData> Cancel(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default)
+        public Response<BillingTransferDetailData> Cancel(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -342,9 +342,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        TransferDetailData value = default;
+                        BillingTransferDetailData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransferDetailData.DeserializeTransferDetailData(document.RootElement);
+                        value = BillingTransferDetailData.DeserializeBillingTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

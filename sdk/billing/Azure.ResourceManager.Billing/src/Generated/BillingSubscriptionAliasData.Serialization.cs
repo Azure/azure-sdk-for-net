@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(ProvisioningTenantId))
             {
                 writer.WritePropertyName("provisioningTenantId"u8);
-                writer.WriteStringValue(ProvisioningTenantId);
+                writer.WriteStringValue(ProvisioningTenantId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Billing
             SystemData systemData = default;
             BillingSubscriptionAutoRenewState? autoRenew = default;
             string beneficiaryTenantId = default;
-            Beneficiary beneficiary = default;
+            BillingBeneficiary beneficiary = default;
             string billingFrequency = default;
             ResourceIdentifier billingProfileId = default;
             IReadOnlyDictionary<string, string> billingPolicies = default;
@@ -385,15 +385,15 @@ namespace Azure.ResourceManager.Billing
             SubscriptionRenewalTermDetails renewalTermDetails = default;
             string skuId = default;
             string skuDescription = default;
-            SystemOverrides systemOverrides = default;
+            BillingSystemOverrides systemOverrides = default;
             Uri resourceUri = default;
             TimeSpan? termDuration = default;
             DateTimeOffset? termStartDate = default;
             DateTimeOffset? termEndDate = default;
-            string provisioningTenantId = default;
+            Guid? provisioningTenantId = default;
             BillingSubscriptionStatus? status = default;
             BillingSubscriptionOperationStatus? operationStatus = default;
-            ProvisioningState? provisioningState = default;
+            BillingProvisioningState? provisioningState = default;
             string subscriptionId = default;
             IReadOnlyList<string> suspensionReasons = default;
             IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            beneficiary = Beneficiary.DeserializeBeneficiary(property0.Value, options);
+                            beneficiary = BillingBeneficiary.DeserializeBillingBeneficiary(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("billingFrequency"u8))
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            systemOverrides = SystemOverrides.DeserializeSystemOverrides(property0.Value, options);
+                            systemOverrides = BillingSystemOverrides.DeserializeBillingSystemOverrides(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceUri"u8))
@@ -706,7 +706,11 @@ namespace Azure.ResourceManager.Billing
                         }
                         if (property0.NameEquals("provisioningTenantId"u8))
                         {
-                            provisioningTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -733,7 +737,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new BillingProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("subscriptionId"u8))

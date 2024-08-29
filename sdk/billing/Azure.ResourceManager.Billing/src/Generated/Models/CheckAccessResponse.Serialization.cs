@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            AccessDecision? accessDecision = default;
+            BillingProfileAccessDecision? accessDecision = default;
             string action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    accessDecision = new AccessDecision(property.Value.GetString());
+                    accessDecision = new BillingProfileAccessDecision(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("action"u8))

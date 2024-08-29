@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="InvoiceSectionListResult"/>. </summary>
         internal InvoiceSectionListResult()
         {
-            Value = new ChangeTrackingList<InvoiceSectionData>();
+            Value = new ChangeTrackingList<BillingInvoiceSectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InvoiceSectionListResult"/>. </summary>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="value"> The list of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InvoiceSectionListResult(string nextLink, IReadOnlyList<InvoiceSectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InvoiceSectionListResult(string nextLink, IReadOnlyList<BillingInvoiceSectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
         /// <summary> The list of resources. </summary>
-        public IReadOnlyList<InvoiceSectionData> Value { get; }
+        public IReadOnlyList<BillingInvoiceSectionData> Value { get; }
     }
 }

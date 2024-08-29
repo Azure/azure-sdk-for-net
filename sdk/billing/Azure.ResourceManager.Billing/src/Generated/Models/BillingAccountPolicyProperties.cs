@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="savingsPlanPurchases"> The policy that controls whether users with Azure savings plan purchase are allowed. </param>
         /// <param name="policies"> List of all policies defined at the billing scope. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAccountPolicyProperties(ProvisioningState? provisioningState, BillingAccountPolicyPropertiesEnterpriseAgreementPolicies enterpriseAgreementPolicies, MarketplacePurchasesPolicy? marketplacePurchases, ReservationPurchasesPolicy? reservationPurchases, SavingsPlanPurchasesPolicy? savingsPlanPurchases, IList<PolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingAccountPolicyProperties(BillingProvisioningState? provisioningState, EnterpriseAgreementPolicies enterpriseAgreementPolicies, MarketplacePurchasesPolicy? marketplacePurchases, ReservationPurchasesPolicy? reservationPurchases, SavingsPlanPurchasesPolicy? savingsPlanPurchases, IList<PolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             EnterpriseAgreementPolicies = enterpriseAgreementPolicies;
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> The policies for Enterprise Agreement enrollments. </summary>
-        public BillingAccountPolicyPropertiesEnterpriseAgreementPolicies EnterpriseAgreementPolicies { get; set; }
+        public EnterpriseAgreementPolicies EnterpriseAgreementPolicies { get; set; }
         /// <summary> The policy that controls whether Azure marketplace purchases are allowed. </summary>
         public MarketplacePurchasesPolicy? MarketplacePurchases { get; set; }
         /// <summary> The policy that controls whether Azure reservation purchases are allowed. </summary>

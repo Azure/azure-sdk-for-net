@@ -189,18 +189,18 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="acceptTransferRequest"> Request parameters that are provided to the accept transfer operation. </param>
+        /// <param name="content"> Request parameters that are provided to the accept transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="acceptTransferRequest"/> is null. </exception>
-        public virtual async Task<Response<RecipientTransferDetailResource>> AcceptAsync(AcceptTransferRequest acceptTransferRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<RecipientTransferDetailResource>> AcceptAsync(AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(acceptTransferRequest, nameof(acceptTransferRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _recipientTransferDetailRecipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailResource.Accept");
             scope.Start();
             try
             {
-                var response = await _recipientTransferDetailRecipientTransfersRestClient.AcceptAsync(Id.Name, acceptTransferRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _recipientTransferDetailRecipientTransfersRestClient.AcceptAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RecipientTransferDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -231,18 +231,18 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="acceptTransferRequest"> Request parameters that are provided to the accept transfer operation. </param>
+        /// <param name="content"> Request parameters that are provided to the accept transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="acceptTransferRequest"/> is null. </exception>
-        public virtual Response<RecipientTransferDetailResource> Accept(AcceptTransferRequest acceptTransferRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<RecipientTransferDetailResource> Accept(AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(acceptTransferRequest, nameof(acceptTransferRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _recipientTransferDetailRecipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailResource.Accept");
             scope.Start();
             try
             {
-                var response = _recipientTransferDetailRecipientTransfersRestClient.Accept(Id.Name, acceptTransferRequest, cancellationToken);
+                var response = _recipientTransferDetailRecipientTransfersRestClient.Accept(Id.Name, content, cancellationToken);
                 return Response.FromValue(new RecipientTransferDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,15 +273,15 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="acceptTransferRequest"> Request parameters that are provided to the validate transfer operation. </param>
+        /// <param name="content"> Request parameters that are provided to the validate transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="acceptTransferRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="ValidateTransferResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ValidateTransferResponse> ValidateAsync(AcceptTransferRequest acceptTransferRequest, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ValidateTransferResponse> ValidateAsync(AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(acceptTransferRequest, nameof(acceptTransferRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _recipientTransferDetailRecipientTransfersRestClient.CreateValidateRequest(Id.Name, acceptTransferRequest);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recipientTransferDetailRecipientTransfersRestClient.CreateValidateRequest(Id.Name, content);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ValidateTransferResponse.DeserializeValidateTransferResponse(e), _recipientTransferDetailRecipientTransfersClientDiagnostics, Pipeline, "RecipientTransferDetailResource.Validate", "value", null, cancellationToken);
         }
 
@@ -306,15 +306,15 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="acceptTransferRequest"> Request parameters that are provided to the validate transfer operation. </param>
+        /// <param name="content"> Request parameters that are provided to the validate transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="acceptTransferRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ValidateTransferResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ValidateTransferResponse> Validate(AcceptTransferRequest acceptTransferRequest, CancellationToken cancellationToken = default)
+        public virtual Pageable<ValidateTransferResponse> Validate(AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(acceptTransferRequest, nameof(acceptTransferRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _recipientTransferDetailRecipientTransfersRestClient.CreateValidateRequest(Id.Name, acceptTransferRequest);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recipientTransferDetailRecipientTransfersRestClient.CreateValidateRequest(Id.Name, content);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ValidateTransferResponse.DeserializeValidateTransferResponse(e), _recipientTransferDetailRecipientTransfersClientDiagnostics, Pipeline, "RecipientTransferDetailResource.Validate", "value", null, cancellationToken);
         }
 

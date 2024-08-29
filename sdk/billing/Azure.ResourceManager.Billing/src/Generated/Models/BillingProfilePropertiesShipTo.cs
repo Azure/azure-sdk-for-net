@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The default address where the products are shipped, or the services are being used. If a ship to is not specified for a product or a subscription, then this address will be used. </summary>
-    public partial class BillingProfilePropertiesShipTo : AddressDetails
+    public partial class BillingProfilePropertiesShipTo : BillingAddressDetails
     {
         /// <summary> Initializes a new instance of <see cref="BillingProfilePropertiesShipTo"/>. </summary>
         /// <param name="addressLine1"> Address line 1. </param>

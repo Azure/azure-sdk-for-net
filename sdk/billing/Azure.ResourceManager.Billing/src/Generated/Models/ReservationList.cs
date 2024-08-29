@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="ReservationList"/>. </summary>
         internal ReservationList()
         {
-            Value = new ChangeTrackingList<ReservationData>();
+            Value = new ChangeTrackingList<BillingReservationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReservationList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Url to get the next page of reservations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationList(IReadOnlyList<ReservationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReservationList(IReadOnlyList<BillingReservationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<ReservationData> Value { get; }
+        public IReadOnlyList<BillingReservationData> Value { get; }
         /// <summary> Url to get the next page of reservations. </summary>
         public string NextLink { get; }
     }

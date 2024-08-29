@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="on"> The date of the payments on account. </param>
         /// <param name="paymentMethodType"> Payment on Account type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PaymentOnAccount(PaymentOnAccountAmount amount, string billingProfileId, string billingProfileDisplayName, string invoiceId, string invoiceName, DateTimeOffset? @on, PaymentMethodFamily? paymentMethodType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PaymentOnAccount(PaymentOnAccountAmount amount, string billingProfileId, string billingProfileDisplayName, string invoiceId, string invoiceName, DateTimeOffset? @on, BillingPaymentMethodFamily? paymentMethodType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Amount = amount;
             BillingProfileId = billingProfileId;
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The date of the payments on account. </summary>
         public DateTimeOffset? On { get; }
         /// <summary> Payment on Account type. </summary>
-        public PaymentMethodFamily? PaymentMethodType { get; }
+        public BillingPaymentMethodFamily? PaymentMethodType { get; }
     }
 }

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="supportedAccounts"> List of supported account types. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecipientTransferDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expireOn, IReadOnlyList<EligibleProductType> allowedProductType, TransferStatus? transferStatus, string recipientEmailId, string initiatorEmailId, string resellerId, string resellerName, InitiatorCustomerType? initiatorCustomerType, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, string customerTenantId, IReadOnlyList<SupportedAccountType> supportedAccounts, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RecipientTransferDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expireOn, IReadOnlyList<EligibleProductType> allowedProductType, PartnerTransferStatus? transferStatus, string recipientEmailId, string initiatorEmailId, string resellerId, string resellerName, InitiatorCustomerType? initiatorCustomerType, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, string customerTenantId, IReadOnlyList<SupportedAccountType> supportedAccounts, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExpireOn = expireOn;
             AllowedProductType = allowedProductType;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Type of subscriptions that can be transferred. </summary>
         public IReadOnlyList<EligibleProductType> AllowedProductType { get; }
         /// <summary> Overall transfer status. </summary>
-        public TransferStatus? TransferStatus { get; }
+        public PartnerTransferStatus? TransferStatus { get; }
         /// <summary> The email ID of the user to whom the transfer request was sent. </summary>
         public string RecipientEmailId { get; }
         /// <summary> The email ID of the user who sent the transfer request. </summary>

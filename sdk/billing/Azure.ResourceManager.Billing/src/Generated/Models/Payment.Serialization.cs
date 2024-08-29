@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Billing.Models
             PaymentAmount amount = default;
             DateTimeOffset? date = default;
             string paymentMethodId = default;
-            PaymentMethodFamily? paymentMethodFamily = default;
+            BillingPaymentMethodFamily? paymentMethodFamily = default;
             string paymentMethodType = default;
             string paymentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    paymentMethodFamily = new PaymentMethodFamily(property.Value.GetString());
+                    paymentMethodFamily = new BillingPaymentMethodFamily(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("paymentMethodType"u8))
