@@ -1,7 +1,7 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     MaxParallel: 6
     ServiceDirectory: batch
