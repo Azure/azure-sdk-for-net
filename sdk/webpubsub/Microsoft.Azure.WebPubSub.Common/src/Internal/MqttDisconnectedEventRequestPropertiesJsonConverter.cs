@@ -25,7 +25,7 @@ internal class MqttDisconnectedEventRequestPropertiesJsonConverter : JsonConvert
 
             if (reader.TokenType == JsonTokenType.PropertyName)
             {
-                string propertyName = reader.GetString();
+                var propertyName = reader.GetString();
                 reader.Read();
 
                 switch (propertyName)
