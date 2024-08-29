@@ -105,8 +105,8 @@
             ]
         },
         {
-          "type": "Microsoft.CognitiveServices/accounts/providers/roleAssignments",
-          "apiVersion": "2022-04-01",
+          "type": "Microsoft.CognitiveServices/accounts",
+          "apiVersion": "2023-10-01-preview",
           "name": "[format('{0}/Microsoft.Authorization/{1}', variables('textAnalyticsName'), guid(variables('textAnalyticsName')))]",
           "dependsOn": [
             "[resourceId('Microsoft.CognitiveServices/accounts', variables('textAnalyticsName'))]"
