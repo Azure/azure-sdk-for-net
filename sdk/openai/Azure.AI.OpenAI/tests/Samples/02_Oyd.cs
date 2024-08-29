@@ -4,17 +4,8 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.AI.OpenAI.Chat;
-using Azure.Core.TestFramework;
 using Azure.Identity;
-using OpenAI.Audio;
 using OpenAI.Chat;
 
 namespace Azure.AI.OpenAI.Samples;

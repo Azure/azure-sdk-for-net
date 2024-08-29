@@ -1,16 +1,15 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.IO;
-using Azure.Core.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests
 {
-    internal class Assets
+    public class Assets
     {
-        private readonly TestEnvironment _env;
-
-        public Assets(TestEnvironment env)
+        public Assets()
         {
-            _env = env ?? throw new ArgumentNullException(nameof(env));
             HelloWorld = new()
             {
                 Type = AssetType.Audio,
@@ -61,7 +60,7 @@ namespace Azure.AI.OpenAI.Tests
         }
     }
 
-    internal enum AssetType
+    public enum AssetType
     {
         Text,
         Audio,
@@ -69,14 +68,14 @@ namespace Azure.AI.OpenAI.Tests
         Raw
     }
 
-    internal class AssetInfo
+    public class AssetInfo
     {
-        public AssetType Type { get; init; }
-        public string Language { get; init; }
-        public string Name { get; init; }
-        public string RelativePath { get; init; }
-        public string Description { get; init; }
-        public string MimeType { get; init; }
-        public Uri Url { get; init; }
+        required public AssetType Type { get; init; }
+        required public string Name { get; init; }
+        required public string RelativePath { get; init; }
+        required public string MimeType { get; init; }
+        public string? Language { get; init; }
+        public string? Description { get; init; }
+        public Uri? Url { get; init; }
     }
 }

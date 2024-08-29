@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,9 +8,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using Azure.Core.TestFramework;
+using OpenAI.TestFramework;
+using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -57,8 +55,8 @@ internal class TestConfig
                 {
                     AssetsJson,
                     Path.Combine(AssetsSubFolder, AssetsJson),
-                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Azure", AssetsSubFolder, AssetsJson),
-                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".Azure", AssetsSubFolder, AssetsJson),
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".azure", AssetsSubFolder, AssetsJson),
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".azure", AssetsSubFolder, AssetsJson),
                 }
                 .Select(f => ReadJsonConfig(f))
                 .FirstOrDefault(c => c != null)
