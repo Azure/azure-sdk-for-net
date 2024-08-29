@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="errors"> Collection of errors encountered on this ComputeInstance. </param>
         /// <param name="state"> The current state of this ComputeInstance. </param>
         /// <param name="computeInstanceAuthorizationType"> The Compute Instance Authorization type. Available values are personal (default). </param>
+        /// <param name="enableOSPatching"> Enable Auto OS Patching. Possible values are: true, false. </param>
+        /// <param name="enableRootAccess"> Enable root access. Possible values are: true, false. </param>
+        /// <param name="enableSso"> Enable SSO (single sign on). Possible values are: true, false. </param>
+        /// <param name="releaseQuotaOnStop"> Release quota if compute instance stopped. Possible values are: true - release quota if compute instance stopped. false - don't release quota when compute instance stopped. </param>
         /// <param name="personalComputeInstanceSettings"> Settings for a personal compute instance. </param>
         /// <param name="setupScriptsSettings"> Details of customized scripts to execute for setting up the cluster. </param>
         /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
         /// <param name="versions"> ComputeInstance version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceAutologgerSettings autologgerSettings, MachineLearningComputeInstanceSshSettings sshSettings, IList<CustomService> customServices, ImageMetadata osImageMetadata, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningError> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, string idleTimeBeforeShutdown, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceAutologgerSettings autologgerSettings, MachineLearningComputeInstanceSshSettings sshSettings, IList<CustomService> customServices, ImageMetadata osImageMetadata, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningError> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, bool? enableOSPatching, bool? enableRootAccess, bool? enableSso, bool? releaseQuotaOnStop, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, string idleTimeBeforeShutdown, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmSize = vmSize;
             Subnet = subnet;
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Errors = errors;
             State = state;
             ComputeInstanceAuthorizationType = computeInstanceAuthorizationType;
+            EnableOSPatching = enableOSPatching;
+            EnableRootAccess = enableRootAccess;
+            EnableSso = enableSso;
+            ReleaseQuotaOnStop = releaseQuotaOnStop;
             PersonalComputeInstanceSettings = personalComputeInstanceSettings;
             SetupScriptsSettings = setupScriptsSettings;
             LastOperation = lastOperation;
@@ -155,6 +163,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningComputeInstanceState? State { get; }
         /// <summary> The Compute Instance Authorization type. Available values are personal (default). </summary>
         public MachineLearningComputeInstanceAuthorizationType? ComputeInstanceAuthorizationType { get; set; }
+        /// <summary> Enable Auto OS Patching. Possible values are: true, false. </summary>
+        public bool? EnableOSPatching { get; set; }
+        /// <summary> Enable root access. Possible values are: true, false. </summary>
+        public bool? EnableRootAccess { get; set; }
+        /// <summary> Enable SSO (single sign on). Possible values are: true, false. </summary>
+        public bool? EnableSso { get; set; }
+        /// <summary> Release quota if compute instance stopped. Possible values are: true - release quota if compute instance stopped. false - don't release quota when compute instance stopped. </summary>
+        public bool? ReleaseQuotaOnStop { get; set; }
         /// <summary> Settings for a personal compute instance. </summary>
         internal PersonalComputeInstanceSettings PersonalComputeInstanceSettings { get; set; }
         /// <summary> A user explicitly assigned to a personal compute instance. </summary>

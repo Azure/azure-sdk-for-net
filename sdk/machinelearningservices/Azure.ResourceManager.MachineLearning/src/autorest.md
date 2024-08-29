@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: MachineLearning
 namespace: Azure.ResourceManager.MachineLearning
-require: https://github.com/Azure/azure-rest-api-specs/blob/3eb9ec8e9c8f717c6b461c4c0f49a4662fb948fd/specification/machinelearningservices/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/edb7904bfead536c7aa9716d44dba15bdabd0b00/specification/machinelearningservices/resource-manager/readme.md
 #tag: package-preview-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -273,7 +273,7 @@ rename-mapping:
   ProvisioningStatus: MachineLearningComputeProvisioningStatus
   ScheduleBase: MachineLearningScheduleBase
   ScheduleStatus: MachineLearningScheduleStatus
-  TriggerType: MachineLearningTriggerType
+  ComputeTriggerType: MachineLearningTriggerType
   RecurrenceTrigger: MachineLearningRecurrenceTrigger
   ConnectionCategory: MachineLearningConnectionCategory
   ContainerType: MachineLearningContainerType
@@ -518,6 +518,9 @@ rename-mapping:
   StatusMessageLevel: JobStatusMessageLevel
   ImageType.azureml: AzureML
   ProtectionLevel: IntellectualProtectionLevel
+  OsPatchingStatus.latestPatchTime: -|date-time
+  OsPatchingStatus.scheduledRebootTime: -|date-time
+  ServerlessComputeSettings.serverlessComputeNoPublicIP : HasNoPublicIP
 
 suppress-abstract-base-class:
 - MachineLearningJobProperties

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </param>
-        /// <param name="port"> Port for endpoint set by user. </param>
+        /// <param name="port"> Port for endpoint. </param>
         /// <param name="properties"> Additional properties to set on the endpoint. </param>
         /// <param name="status"> Status of endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </summary>
         public JobNodes Nodes { get; set; }
-        /// <summary> Port for endpoint set by user. </summary>
+        /// <summary> Port for endpoint. </summary>
         public int? Port { get; set; }
         /// <summary> Additional properties to set on the endpoint. </summary>
         public IDictionary<string, string> Properties { get; set; }

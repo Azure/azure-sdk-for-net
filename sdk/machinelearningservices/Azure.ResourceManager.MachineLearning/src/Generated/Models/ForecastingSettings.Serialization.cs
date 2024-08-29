@@ -55,23 +55,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("featureLags"u8);
                 writer.WriteStringValue(FeatureLags.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(FeaturesUnknownAtForecastTime))
-            {
-                if (FeaturesUnknownAtForecastTime != null)
-                {
-                    writer.WritePropertyName("featuresUnknownAtForecastTime"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in FeaturesUnknownAtForecastTime)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("featuresUnknownAtForecastTime");
-                }
-            }
             if (Optional.IsDefined(ForecastHorizon))
             {
                 writer.WritePropertyName("forecastHorizon"u8);
@@ -203,7 +186,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string countryOrRegionForHolidays = default;
             int? cvStepSize = default;
             MachineLearningFeatureLag? featureLags = default;
-            IList<string> featuresUnknownAtForecastTime = default;
             ForecastHorizon forecastHorizon = default;
             string frequency = default;
             ForecastingSeasonality seasonality = default;
@@ -245,21 +227,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     featureLags = new MachineLearningFeatureLag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("featuresUnknownAtForecastTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        featuresUnknownAtForecastTime = null;
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    featuresUnknownAtForecastTime = array;
                     continue;
                 }
                 if (property.NameEquals("forecastHorizon"u8))
@@ -372,7 +339,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 countryOrRegionForHolidays,
                 cvStepSize,
                 featureLags,
-                featuresUnknownAtForecastTime ?? new ChangeTrackingList<string>(),
                 forecastHorizon,
                 frequency,
                 seasonality,

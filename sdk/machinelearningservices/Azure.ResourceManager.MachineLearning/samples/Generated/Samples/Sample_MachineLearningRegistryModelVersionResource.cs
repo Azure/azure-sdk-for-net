@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteRegistryModelVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registry/ModelVersion/delete.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Registry/ModelVersion/delete.json
             // this example is just showing the usage of "RegistryModelVersions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetRegistryModelVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registry/ModelVersion/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Registry/ModelVersion/get.json
             // this example is just showing the usage of "RegistryModelVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateRegistryModelVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registry/ModelVersion/createOrUpdate.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Registry/ModelVersion/createOrUpdate.json
             // this example is just showing the usage of "RegistryModelVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,76 +136,12 @@ Data =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Package Registry Model Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Package_PackageRegistryModelVersion()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registry/ModelVersion/package.json
-            // this example is just showing the usage of "RegistryModelVersions_Package" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MachineLearningRegistryModelVersionResource created on azure
-            // for more information of creating MachineLearningRegistryModelVersionResource, please refer to the document of MachineLearningRegistryModelVersionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "test-rg";
-            string registryName = "my-aml-registry";
-            string modelName = "string";
-            string version = "string";
-            ResourceIdentifier machineLearningRegistryModelVersionResourceId = MachineLearningRegistryModelVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, modelName, version);
-            MachineLearningRegistryModelVersionResource machineLearningRegistryModelVersion = client.GetMachineLearningRegistryModelVersionResource(machineLearningRegistryModelVersionResourceId);
-
-            // invoke the operation
-            ModelPackageContent content = new ModelPackageContent(new AzureMLBatchInferencingServer()
-            {
-                CodeConfiguration = new MachineLearningCodeConfiguration("string")
-                {
-                    CodeId = new ResourceIdentifier("string"),
-                },
-            }, "string")
-            {
-                BaseEnvironmentSource = new BaseEnvironmentType(new ResourceIdentifier("string")),
-                EnvironmentVariables =
-{
-["string"] = "string",
-},
-                Inputs =
-{
-new ModelPackageInput(PackageInputType.UriFile,new PackageInputPathUri()
-{
-Uri = new Uri("string"),
-})
-{
-Mode = PackageInputDeliveryMode.Download,
-MountPath = "string",
-}
-},
-                ModelConfiguration = new ModelConfiguration()
-                {
-                    Mode = new PackageInputDeliveryMode("ReadOnlyMount"),
-                    MountPath = "string",
-                },
-                Tags =
-{
-["string"] = "string",
-},
-            };
-            ArmOperation<ModelPackageResult> lro = await machineLearningRegistryModelVersion.PackageAsync(WaitUntil.Completed, content);
-            ModelPackageResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
         // CreateOrGetStartPendingUpload Registry Model Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrGetStartPendingUpload_CreateOrGetStartPendingUploadRegistryModelVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registry/ModelVersion/createOrGetStartPendingUpload.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Registry/ModelVersion/createOrGetStartPendingUpload.json
             // this example is just showing the usage of "RegistryModelVersions_CreateOrGetStartPendingUpload" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -227,7 +163,7 @@ MountPath = "string",
             PendingUploadRequestDto body = new PendingUploadRequestDto()
             {
                 PendingUploadId = "string",
-                PendingUploadType = PendingUploadType.None,
+                PendingUploadType = PendingUploadType.TemporaryBlobReference,
             };
             PendingUploadResponseDto result = await machineLearningRegistryModelVersion.CreateOrGetStartPendingUploadAsync(body);
 
