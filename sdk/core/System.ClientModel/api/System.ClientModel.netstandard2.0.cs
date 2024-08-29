@@ -70,6 +70,20 @@ namespace System.ClientModel
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
     }
+    public partial class Credential
+    {
+        public Credential(string token, string tokenType, System.DateTimeOffset expiresOn) { }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } protected set { } }
+        public System.DateTimeOffset? RefreshOn { get { throw null; } protected set { } }
+        public string Token { get { throw null; } protected set { } }
+        public string TokenType { get { throw null; } protected set { } }
+    }
+    public abstract partial class CredentialProvider
+    {
+        protected CredentialProvider() { }
+        public abstract System.ClientModel.Credential GetCredential(System.Collections.Generic.IReadOnlyDictionary<string, object> context, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Credential> GetCredentialAsync(System.Collections.Generic.IReadOnlyDictionary<string, object> context, System.Threading.CancellationToken cancellationToken);
+    }
     public abstract partial class PageCollection<T> : System.Collections.Generic.IEnumerable<System.ClientModel.PageResult<T>>, System.Collections.IEnumerable
     {
         protected PageCollection() { }
@@ -87,6 +101,17 @@ namespace System.ClientModel
         public System.ClientModel.ContinuationToken PageToken { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
         public static System.ClientModel.PageResult<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.ContinuationToken pageToken, System.ClientModel.ContinuationToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+    }
+    public abstract partial class RefreshableCredential : System.ClientModel.Credential
+    {
+        public RefreshableCredential(string token, string tokenType, System.DateTimeOffset expiry, System.ClientModel.CredentialProvider credentialProvider, System.ClientModel.RefreshStrategy refreshStategy) : base (default(string), default(string), default(System.DateTimeOffset)) { }
+        public System.ClientModel.CredentialProvider CredentialProvider { get { throw null; } set { } }
+        public System.ClientModel.RefreshStrategy RefreshStrategy { get { throw null; } set { } }
+    }
+    public abstract partial class RefreshStrategy
+    {
+        protected RefreshStrategy() { }
+        public abstract System.Threading.Tasks.Task RefreshAsync(System.ClientModel.RefreshableCredential credential, System.Threading.CancellationToken cancellationToken);
     }
 }
 namespace System.ClientModel.Primitives
