@@ -3,6 +3,7 @@
 ## 12.20.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added GenerateUserDelegationSasUri() for DataLakePathClient, DataLakeFileSystemClient, and DataLakeDirectoryClient
 
 ### Breaking Changes
 
