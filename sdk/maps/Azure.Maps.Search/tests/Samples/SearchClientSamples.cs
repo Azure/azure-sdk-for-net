@@ -87,10 +87,11 @@ namespace Azure.Maps.Search.Tests
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsSearchClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetGeocoding
-            var query = "15171 NE 24th St, Redmond, WA 98052, United States";
-            Response <GeocodingResponse> result = client.GetGeocoding(query);
-            Console.WriteLine("Result for query: \"{0}\"", query);
-            Console.WriteLine(result);
+            Response<GeocodingResponse> searchResult = client.GetGeocoding("1 Microsoft Way, Redmond, WA 98052");
+            for (int i = 0; i < searchResult.Value.Features.Count; i++)
+            {
+                Console.WriteLine("Coordinate:" + string.Join(",", searchResult.Value.Features[i].Geometry.Coordinates));
+            }
             #endregion
         }
 
@@ -112,11 +113,19 @@ namespace Azure.Maps.Search.Tests
                         },
                         new GeocodingQuery()
                         {
-                             Coordinates = new GeoPosition(121.5, 25.0)
+                             AddressLine = "400 Broad St"
                         },
                     };
             Response<GeocodingBatchResponse> results = client.GetGeocodingBatch(queries);
-            Console.WriteLine(results);
+
+            //Print coordinates
+            for (var i = 0; i < results.Value.BatchItems.Count; i++)
+            {
+                for (var j = 0; j < results.Value.BatchItems[i].Features.Count; j++)
+                {
+                    Console.WriteLine("Coordinates: " + string.Join(",", results.Value.BatchItems[i].Features[j].Geometry.Coordinates));
+                }
+            }
             #endregion
         }
 
@@ -132,10 +141,20 @@ namespace Azure.Maps.Search.Tests
             #region Snippet:GetPolygon
             GetPolygonOptions options = new GetPolygonOptions()
             {
-                Coordinates = new GeoPosition(121.5, 25.0)
+                Coordinates = new GeoPosition(-122.204141, 47.61256),
+                ResultType = BoundaryResultTypeEnum.Locality,
+                Resolution = ResolutionEnum.Small,
             };
             Response<Boundary> result = client.GetPolygon(options);
-            Console.WriteLine(result);
+            var count = ((GeoJsonPolygon)((GeoJsonGeometryCollection)result.Value.Geometry).Geometries[0]).Coordinates.Count;
+            for (var i = 0; i < count; i++)
+            {
+                var coorCount = ((GeoJsonPolygon)((GeoJsonGeometryCollection)result.Value.Geometry).Geometries[0]).Coordinates[i].Count;
+                for (var j = 0; j < coorCount; j++)
+                {
+                    Console.WriteLine(string.Join(",", ((GeoJsonPolygon)((GeoJsonGeometryCollection)result.Value.Geometry).Geometries[0]).Coordinates[i][j]));
+                }
+            }
             #endregion
         }
 
@@ -151,6 +170,12 @@ namespace Azure.Maps.Search.Tests
             #region Snippet:GetReverseGeocoding
             GeoPosition coordinates = new GeoPosition(-122.138685, 47.6305637);
             Response<GeocodingResponse> result = client.GetReverseGeocoding(coordinates);
+
+            //Print addresses
+            for (int i = 0; i < result.Value.Features.Count; i++)
+            {
+                Console.WriteLine(result.Value.Features[i].Properties.Address.FormattedAddress);
+            }
             #endregion
         }
 
@@ -168,14 +193,22 @@ namespace Azure.Maps.Search.Tests
                     {
                         new ReverseGeocodingQuery()
                         {
-                            Coordinates = new GeoPosition(121.53, 25.0)
+                            Coordinates = new GeoPosition(-122.349309, 47.620498)
                         },
                         new ReverseGeocodingQuery()
                         {
-                            Coordinates = new GeoPosition(121.5, 25.0)
+                            Coordinates = new GeoPosition(-122.138679, 47.630356),
+                            ResultTypes = new List<ReverseGeocodingResultTypeEnum>(){ ReverseGeocodingResultTypeEnum.Address, ReverseGeocodingResultTypeEnum.Neighborhood }
                         },
                     };
             Response<GeocodingBatchResponse> result = client.GetReverseGeocodingBatch(items);
+
+            //Print addresses
+            for (var i = 0; i < result.Value.BatchItems.Count; i++)
+            {
+                Console.WriteLine(result.Value.BatchItems[i].Features[0].Properties.Address.AddressLine);
+                Console.WriteLine(result.Value.BatchItems[i].Features[0].Properties.Address.Neighborhood);
+            }
             #endregion
         }
     }
