@@ -71,7 +71,7 @@ namespace Azure.Storage.DataMovement
             _cancellationTokenSource = new();
             _jobsProcessor = ChannelProcessing.NewProcessor<TransferJobInternal>(ProcessJobAsync, parallelism: 1);
             _partsProcessor = ChannelProcessing.NewProcessor<JobPartInternal>(ProcessPartAsync, DataMovementConstants.MaxJobPartReaders);
-            _chunksProcessor = ChannelProcessing.NewProcessor<Func<Task>>(ProcessChunk, options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks);
+            _chunksProcessor = ChannelProcessing.NewProcessor<Func<Task>>(Task.Run, options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks);
             TransferCheckpointStoreOptions checkpointerOptions = options?.CheckpointerOptions != default ? new TransferCheckpointStoreOptions(options.CheckpointerOptions) : default;
             _checkpointer = checkpointerOptions != default ? checkpointerOptions.GetCheckpointer() : CreateDefaultCheckpointer();
             _resumeProviders = options?.ResumeProviders != null ? new(options.ResumeProviders) : new();
@@ -81,48 +81,19 @@ namespace Azure.Storage.DataMovement
             ClientDiagnostics = new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default);
         }
 
-        #region Job Channel Management
-        internal async ValueTask QueueJobAsync(TransferJobInternal job)
-        {
-            await _jobsProcessor.QueueAsync(
-                job,
-                cancellationToken: _cancellationToken).ConfigureAwait(false);
-        }
-
         private async Task ProcessJobAsync(TransferJobInternal job, CancellationToken _)
         {
             await foreach (JobPartInternal partItem in job.ProcessJobToJobPartAsync().ConfigureAwait(false))
             {
-                job.QueueJobPart();
-                await QueueJobPartAsync(partItem).ConfigureAwait(false);
+                job.IncrementJobParts();
+                await _partsProcessor.QueueAsync(partItem).ConfigureAwait(false);
             }
         }
-        #endregion Job Channel Management
-
-        #region Job Part Channel Management
-        internal async Task QueueJobPartAsync(JobPartInternal part)
-        {
-            await _partsProcessor.QueueAsync(part, _cancellationToken).ConfigureAwait(false);
-        }
-
         private async Task ProcessPartAsync(JobPartInternal part, CancellationToken _)
         {
-            part.SetQueueChunkDelegate(QueueJobChunkAsync);
+            part.SetQueueChunkDelegate(_chunksProcessor.QueueAsync);
             await part.ProcessPartToChunkAsync().ConfigureAwait(false);
         }
-        #endregion Job Part Channel Management
-
-        #region Job Chunk Management
-        internal async Task QueueJobChunkAsync(Func<Task> item)
-        {
-            await _chunksProcessor.QueueAsync(item, _cancellationToken).ConfigureAwait(false);
-        }
-
-        internal async Task ProcessChunk(Func<Task> chunk, CancellationToken _)
-        {
-            await Task.Run(chunk).ConfigureAwait(false);
-        }
-        #endregion Job Chunk Management
 
         #region Transfer Job Management
         /// <summary>
@@ -410,7 +381,7 @@ namespace Azure.Storage.DataMovement
                 throw Errors.InvalidTransferResourceTypes();
             }
             // Queue Job
-            await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+            await _jobsProcessor.QueueAsync(transferJobInternal, _cancellationToken).ConfigureAwait(false);
 
             return dataTransfer;
         }

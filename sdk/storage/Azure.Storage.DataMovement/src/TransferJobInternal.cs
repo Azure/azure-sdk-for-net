@@ -506,7 +506,7 @@ namespace Azure.Storage.DataMovement
             return new HashSet<Uri>(_jobParts.Select(x => x._sourceResource.Uri));
         }
 
-        internal void QueueJobPart()
+        internal void IncrementJobParts()
         {
             _progressTracker.IncrementQueuedFiles();
         }
