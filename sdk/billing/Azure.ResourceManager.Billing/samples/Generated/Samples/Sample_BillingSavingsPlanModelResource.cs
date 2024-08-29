@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Billing.Samples
                         AppliedScopeType = BillingAppliedScopeType.ManagementGroup,
                         Commitment = new BillingBenefitCommitment()
                         {
-                            Grain = CommitmentGrain.Hourly,
+                            Grain = BillingBenefitCommitmentGrain.Hourly,
                             CurrencyCode = "USD",
                             Amount = 0.001,
                         },
@@ -179,7 +179,7 @@ SubscriptionId = "/subscriptions/50000000-0000-0000-0000-000000000000",
 }
 },
             };
-            SavingsPlanValidateResponse result = await billingSavingsPlanModel.ValidateUpdateByBillingAccountAsync(content);
+            SavingsPlanValidateResult result = await billingSavingsPlanModel.ValidateUpdateByBillingAccountAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

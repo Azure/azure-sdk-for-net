@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="BillingAccountPolicyProperties"/>. </summary>
         public BillingAccountPolicyProperties()
         {
-            Policies = new ChangeTrackingList<PolicySummary>();
+            Policies = new ChangeTrackingList<BillingPolicySummary>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingAccountPolicyProperties"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="savingsPlanPurchases"> The policy that controls whether users with Azure savings plan purchase are allowed. </param>
         /// <param name="policies"> List of all policies defined at the billing scope. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAccountPolicyProperties(BillingProvisioningState? provisioningState, EnterpriseAgreementPolicies enterpriseAgreementPolicies, MarketplacePurchasesPolicy? marketplacePurchases, ReservationPurchasesPolicy? reservationPurchases, SavingsPlanPurchasesPolicy? savingsPlanPurchases, IList<PolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingAccountPolicyProperties(BillingProvisioningState? provisioningState, EnterpriseAgreementPolicies enterpriseAgreementPolicies, MarketplacePurchasesPolicy? marketplacePurchases, ReservationPurchasesPolicy? reservationPurchases, SavingsPlanPurchasesPolicy? savingsPlanPurchases, IList<BillingPolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             EnterpriseAgreementPolicies = enterpriseAgreementPolicies;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The policy that controls whether users with Azure savings plan purchase are allowed. </summary>
         public SavingsPlanPurchasesPolicy? SavingsPlanPurchases { get; set; }
         /// <summary> List of all policies defined at the billing scope. </summary>
-        public IList<PolicySummary> Policies { get; }
+        public IList<BillingPolicySummary> Policies { get; }
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RefundTransactionDetails"/>. </summary>
         public RefundTransactionDetails()
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="amountRefunded"> The amount refunded. </param>
         /// <param name="refundOperationId"> The ID of refund operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RefundTransactionDetails(RefundTransactionDetailsAmountRequested amountRequested, RefundTransactionDetailsAmountRefunded amountRefunded, string refundOperationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RefundTransactionDetails(BillingAmount amountRequested, BillingAmount amountRefunded, string refundOperationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AmountRequested = amountRequested;
             AmountRefunded = amountRefunded;
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The amount of refund requested. </summary>
-        public RefundTransactionDetailsAmountRequested AmountRequested { get; set; }
+        public BillingAmount AmountRequested { get; }
         /// <summary> The amount refunded. </summary>
-        public RefundTransactionDetailsAmountRefunded AmountRefunded { get; set; }
+        public BillingAmount AmountRefunded { get; }
         /// <summary> The ID of refund operation. </summary>
         public string RefundOperationId { get; set; }
     }

@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("invoiceDay"u8);
                 writer.WriteNumberValue(InvoiceDay.Value);
             }
-            if (Optional.IsDefined(InvoiceEmailOptIn))
+            if (Optional.IsDefined(IsInvoiceEmailOptIn))
             {
                 writer.WritePropertyName("invoiceEmailOptIn"u8);
-                writer.WriteBooleanValue(InvoiceEmailOptIn.Value);
+                writer.WriteBooleanValue(IsInvoiceEmailOptIn.Value);
             }
             if (Optional.IsCollectionDefined(InvoiceRecipients))
             {
@@ -212,27 +212,27 @@ namespace Azure.ResourceManager.Billing.Models
             }
             BillingProvisioningState? provisioningState = default;
             BillingRelationshipType? billingRelationshipType = default;
-            BillingProfilePropertiesBillTo billTo = default;
+            BillingAddressDetails billTo = default;
             string currency = default;
             string displayName = default;
             IList<BillingAzurePlan> enabledAzurePlans = default;
             bool? hasReadAccess = default;
-            BillingProfilePropertiesIndirectRelationshipInfo indirectRelationshipInfo = default;
+            IndirectRelationshipInfo indirectRelationshipInfo = default;
             int? invoiceDay = default;
             bool? invoiceEmailOptIn = default;
             IList<string> invoiceRecipients = default;
             string poNumber = default;
-            BillingProfilePropertiesShipTo shipTo = default;
-            BillingProfilePropertiesSoldTo soldTo = default;
-            SpendingLimit? spendingLimit = default;
+            BillingAddressDetails shipTo = default;
+            BillingAddressDetails soldTo = default;
+            BillingSpendingLimit? spendingLimit = default;
             IReadOnlyList<SpendingLimitDetails> spendingLimitDetails = default;
             BillingProfileStatus? status = default;
             BillingProfileStatusReasonCode? statusReasonCode = default;
             string systemId = default;
             IDictionary<string, string> tags = default;
             IReadOnlyList<string> targetClouds = default;
-            BillingProfilePropertiesCurrentPaymentTerm currentPaymentTerm = default;
-            IReadOnlyList<PaymentTerm> otherPaymentTerms = default;
+            BillingPaymentTerm currentPaymentTerm = default;
+            IReadOnlyList<BillingPaymentTerm> otherPaymentTerms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billTo = BillingProfilePropertiesBillTo.DeserializeBillingProfilePropertiesBillTo(property.Value, options);
+                    billTo = BillingAddressDetails.DeserializeBillingAddressDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("currency"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    indirectRelationshipInfo = BillingProfilePropertiesIndirectRelationshipInfo.DeserializeBillingProfilePropertiesIndirectRelationshipInfo(property.Value, options);
+                    indirectRelationshipInfo = IndirectRelationshipInfo.DeserializeIndirectRelationshipInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("invoiceDay"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    shipTo = BillingProfilePropertiesShipTo.DeserializeBillingProfilePropertiesShipTo(property.Value, options);
+                    shipTo = BillingAddressDetails.DeserializeBillingAddressDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("soldTo"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    soldTo = BillingProfilePropertiesSoldTo.DeserializeBillingProfilePropertiesSoldTo(property.Value, options);
+                    soldTo = BillingAddressDetails.DeserializeBillingAddressDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("spendingLimit"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    spendingLimit = new SpendingLimit(property.Value.GetString());
+                    spendingLimit = new BillingSpendingLimit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("spendingLimitDetails"u8))
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    currentPaymentTerm = BillingProfilePropertiesCurrentPaymentTerm.DeserializeBillingProfilePropertiesCurrentPaymentTerm(property.Value, options);
+                    currentPaymentTerm = BillingPaymentTerm.DeserializeBillingPaymentTerm(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("otherPaymentTerms"u8))
@@ -450,10 +450,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<PaymentTerm> array = new List<PaymentTerm>();
+                    List<BillingPaymentTerm> array = new List<BillingPaymentTerm>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentTerm.DeserializePaymentTerm(item, options));
+                        array.Add(BillingPaymentTerm.DeserializeBillingPaymentTerm(item, options));
                     }
                     otherPaymentTerms = array;
                     continue;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Billing.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 targetClouds ?? new ChangeTrackingList<string>(),
                 currentPaymentTerm,
-                otherPaymentTerms ?? new ChangeTrackingList<PaymentTerm>(),
+                otherPaymentTerms ?? new ChangeTrackingList<BillingPaymentTerm>(),
                 serializedAdditionalRawData);
         }
 

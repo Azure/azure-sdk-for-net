@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="AcceptTransferContent"/>. </summary>
         public AcceptTransferContent()
         {
-            ProductDetails = new ChangeTrackingList<ProductDetails>();
+            ProductDetails = new ChangeTrackingList<BillingProductDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcceptTransferContent"/>. </summary>
         /// <param name="productDetails"> Request parameters to accept transfer. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcceptTransferContent(IList<ProductDetails> productDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AcceptTransferContent(IList<BillingProductDetails> productDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProductDetails = productDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Request parameters to accept transfer. </summary>
-        public IList<ProductDetails> ProductDetails { get; }
+        public IList<BillingProductDetails> ProductDetails { get; }
     }
 }

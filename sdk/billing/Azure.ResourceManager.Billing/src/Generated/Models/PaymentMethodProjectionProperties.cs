@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PaymentMethodProjectionProperties(ResourceIdentifier paymentMethodId, string accountHolderName, string displayName, string expiration, BillingPaymentMethodFamily? family, string lastFourDigits, IList<PaymentMethodLogo> logos, string paymentMethodType, BillingPaymentMethodStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PaymentMethodProjectionProperties(ResourceIdentifier paymentMethodId, string accountHolderName, string displayName, string expiration, PaymentMethodFamily? family, string lastFourDigits, IList<PaymentMethodLogo> logos, string paymentMethodType, PaymentMethodStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PaymentMethodId = paymentMethodId;
             AccountHolderName = accountHolderName;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>
         public string Expiration { get; }
         /// <summary> The family of payment method. </summary>
-        public BillingPaymentMethodFamily? Family { get; set; }
+        public PaymentMethodFamily? Family { get; set; }
         /// <summary> Last four digits of payment method. </summary>
         public string LastFourDigits { get; }
         /// <summary> The list of logos for the payment method. </summary>
@@ -94,6 +94,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The type of payment method. </summary>
         public string PaymentMethodType { get; }
         /// <summary> Status of the payment method. </summary>
-        public BillingPaymentMethodStatus? Status { get; set; }
+        public PaymentMethodStatus? Status { get; set; }
     }
 }

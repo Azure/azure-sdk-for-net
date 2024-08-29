@@ -276,13 +276,13 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters that are provided to the validate transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ValidateTransferResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ValidateTransferResponse> ValidateAsync(AcceptTransferContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BillingTransferValidationResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingTransferValidationResult> ValidateAsync(AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recipientTransferDetailRecipientTransfersRestClient.CreateValidateRequest(Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ValidateTransferResponse.DeserializeValidateTransferResponse(e), _recipientTransferDetailRecipientTransfersClientDiagnostics, Pipeline, "RecipientTransferDetailResource.Validate", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BillingTransferValidationResult.DeserializeBillingTransferValidationResult(e), _recipientTransferDetailRecipientTransfersClientDiagnostics, Pipeline, "RecipientTransferDetailResource.Validate", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -309,13 +309,13 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters that are provided to the validate transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="ValidateTransferResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ValidateTransferResponse> Validate(AcceptTransferContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTransferValidationResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingTransferValidationResult> Validate(AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recipientTransferDetailRecipientTransfersRestClient.CreateValidateRequest(Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ValidateTransferResponse.DeserializeValidateTransferResponse(e), _recipientTransferDetailRecipientTransfersClientDiagnostics, Pipeline, "RecipientTransferDetailResource.Validate", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BillingTransferValidationResult.DeserializeBillingTransferValidationResult(e), _recipientTransferDetailRecipientTransfersClientDiagnostics, Pipeline, "RecipientTransferDetailResource.Validate", "value", null, cancellationToken);
         }
 
         /// <summary>

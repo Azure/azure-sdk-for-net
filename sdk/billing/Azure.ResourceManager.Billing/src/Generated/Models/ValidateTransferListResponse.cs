@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="ValidateTransferListResponse"/>. </summary>
         internal ValidateTransferListResponse()
         {
-            Value = new ChangeTrackingList<ValidateTransferResponse>();
+            Value = new ChangeTrackingList<BillingTransferValidationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateTransferListResponse"/>. </summary>
         /// <param name="value"> The list of transfer validation results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateTransferListResponse(IReadOnlyList<ValidateTransferResponse> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ValidateTransferListResponse(IReadOnlyList<BillingTransferValidationResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of transfer validation results. </summary>
-        public IReadOnlyList<ValidateTransferResponse> Value { get; }
+        public IReadOnlyList<BillingTransferValidationResult> Value { get; }
     }
 }

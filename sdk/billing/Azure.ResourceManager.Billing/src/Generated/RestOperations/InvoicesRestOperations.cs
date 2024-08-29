@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateDownloadDocumentsByBillingAccountRequestUri(string billingAccountName, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest)
+        internal RequestUriBuilder CreateDownloadDocumentsByBillingAccountRequestUri(string billingAccountName, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateDownloadDocumentsByBillingAccountRequest(string billingAccountName, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest)
+        internal HttpMessage CreateDownloadDocumentsByBillingAccountRequest(string billingAccountName, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DownloadDocumentsByBillingAccountAsync(string billingAccountName, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> DownloadDocumentsByBillingAccountAsync(string billingAccountName, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DownloadDocumentsByBillingAccount(string billingAccountName, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        public Response DownloadDocumentsByBillingAccount(string billingAccountName, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateDownloadDocumentsByBillingSubscriptionRequestUri(string subscriptionId, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest)
+        internal RequestUriBuilder CreateDownloadDocumentsByBillingSubscriptionRequestUri(string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateDownloadDocumentsByBillingSubscriptionRequest(string subscriptionId, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest)
+        internal HttpMessage CreateDownloadDocumentsByBillingSubscriptionRequest(string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DownloadDocumentsByBillingSubscriptionAsync(string subscriptionId, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> DownloadDocumentsByBillingSubscriptionAsync(string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DownloadDocumentsByBillingSubscription(string subscriptionId, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        public Response DownloadDocumentsByBillingSubscription(string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             BillingAmount amount = default;
-            IReadOnlyList<PaymentOnAccount> paymentsOnAccount = default;
+            IReadOnlyList<BillingPaymentOnAccount> paymentsOnAccount = default;
             BillingAmount totalPaymentsOnAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<PaymentOnAccount> array = new List<PaymentOnAccount>();
+                    List<BillingPaymentOnAccount> array = new List<BillingPaymentOnAccount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentOnAccount.DeserializePaymentOnAccount(item, options));
+                        array.Add(BillingPaymentOnAccount.DeserializeBillingPaymentOnAccount(item, options));
                     }
                     paymentsOnAccount = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BillingAvailableBalanceProperties(amount, paymentsOnAccount ?? new ChangeTrackingList<PaymentOnAccount>(), totalPaymentsOnAccount, serializedAdditionalRawData);
+            return new BillingAvailableBalanceProperties(amount, paymentsOnAccount ?? new ChangeTrackingList<BillingPaymentOnAccount>(), totalPaymentsOnAccount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingAvailableBalanceProperties>.Write(ModelReaderWriterOptions options)

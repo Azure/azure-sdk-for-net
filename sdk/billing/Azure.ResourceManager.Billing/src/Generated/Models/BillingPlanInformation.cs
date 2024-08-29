@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="BillingPlanInformation"/>. </summary>
         public BillingPlanInformation()
         {
-            Transactions = new ChangeTrackingList<PaymentDetail>();
+            Transactions = new ChangeTrackingList<BillingPlanPaymentDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingPlanInformation"/>. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
         /// <param name="transactions"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPlanInformation(BillingPrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IList<PaymentDetail> transactions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingPlanInformation(BillingPrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IList<BillingPlanPaymentDetail> transactions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PricingCurrencyTotal = pricingCurrencyTotal;
             StartOn = startOn;
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </summary>
         public DateTimeOffset? NextPaymentDueOn { get; set; }
         /// <summary> Gets the transactions. </summary>
-        public IList<PaymentDetail> Transactions { get; }
+        public IList<BillingPlanPaymentDetail> Transactions { get; }
     }
 }

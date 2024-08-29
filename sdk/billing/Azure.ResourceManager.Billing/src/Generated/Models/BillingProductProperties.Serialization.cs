@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("invoiceSectionDisplayName"u8);
                 writer.WriteStringValue(InvoiceSectionDisplayName);
             }
-            if (Optional.IsDefined(LastCharge))
+            if (options.Format != "W" && Optional.IsDefined(LastCharge))
             {
                 writer.WritePropertyName("lastCharge"u8);
                 writer.WriteObjectValue(LastCharge, options);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(Reseller))
+            if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
                 writer.WriteObjectValue(Reseller, options);
@@ -177,15 +177,15 @@ namespace Azure.ResourceManager.Billing.Models
             BillingSubscriptionAutoRenewState? autoRenew = default;
             string availabilityId = default;
             string billingFrequency = default;
-            string billingProfileId = default;
+            ResourceIdentifier billingProfileId = default;
             string billingProfileDisplayName = default;
-            string customerId = default;
+            ResourceIdentifier customerId = default;
             string customerDisplayName = default;
             string displayName = default;
             string endDate = default;
-            string invoiceSectionId = default;
+            ResourceIdentifier invoiceSectionId = default;
             string invoiceSectionDisplayName = default;
-            ProductPropertiesLastCharge lastCharge = default;
+            BillingAmount lastCharge = default;
             string lastChargeDate = default;
             string productType = default;
             string productTypeId = default;
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Billing.Models
             string skuDescription = default;
             string purchaseDate = default;
             long? quantity = default;
-            ProductStatus? status = default;
+            BillingProductStatus? status = default;
             Guid? tenantId = default;
-            ProductPropertiesReseller reseller = default;
+            BillingAmount reseller = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("billingProfileId"u8))
                 {
-                    billingProfileId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfileId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfileDisplayName"u8))
@@ -231,7 +235,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("customerId"u8))
                 {
-                    customerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customerDisplayName"u8))
@@ -251,7 +259,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("invoiceSectionId"u8))
                 {
-                    invoiceSectionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invoiceSectionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("invoiceSectionDisplayName"u8))
@@ -265,7 +277,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    lastCharge = ProductPropertiesLastCharge.DeserializeProductPropertiesLastCharge(property.Value, options);
+                    lastCharge = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastChargeDate"u8))
@@ -313,7 +325,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    status = new ProductStatus(property.Value.GetString());
+                    status = new BillingProductStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tenantId"u8))
@@ -331,7 +343,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    reseller = ProductPropertiesReseller.DeserializeProductPropertiesReseller(property.Value, options);
+                    reseller = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

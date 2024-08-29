@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             Guid? tenantId = default;
-            string managementGroupId = default;
+            ResourceIdentifier managementGroupId = default;
             string subscriptionId = default;
-            string resourceGroupId = default;
+            ResourceIdentifier resourceGroupId = default;
             string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("managementGroupId"u8))
                 {
-                    managementGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managementGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"u8))
@@ -119,7 +123,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("resourceGroupId"u8))
                 {
-                    resourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))

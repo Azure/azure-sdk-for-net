@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Billing.Models
         public BillingAgreementProperties()
         {
             BillingProfileInfo = new ChangeTrackingList<BillingProfileInfo>();
-            Participants = new ChangeTrackingList<Participant>();
+            Participants = new ChangeTrackingList<BillingAgreementParticipant>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingAgreementProperties"/>. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="status"> The current status of the agreement. </param>
         /// <param name="leadBillingAccountName"> The ID of the lead billing account if this agreement is part of the Customer Affiliate Purchase Terms. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAgreementProperties(AgreementAcceptanceMode? acceptanceMode, string agreementLink, IReadOnlyList<BillingProfileInfo> billingProfileInfo, Category? category, string displayName, DateTimeOffset? effectiveOn, DateTimeOffset? expireOn, IReadOnlyList<Participant> participants, string status, string leadBillingAccountName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingAgreementProperties(AgreementAcceptanceMode? acceptanceMode, string agreementLink, IReadOnlyList<BillingProfileInfo> billingProfileInfo, BillingAgreementCategory? category, string displayName, DateTimeOffset? effectiveOn, DateTimeOffset? expireOn, IReadOnlyList<BillingAgreementParticipant> participants, string status, string leadBillingAccountName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AcceptanceMode = acceptanceMode;
             AgreementLink = agreementLink;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The list of billing profiles associated with agreement and present only for specific agreements. </summary>
         public IReadOnlyList<BillingProfileInfo> BillingProfileInfo { get; }
         /// <summary> The category of the agreement. </summary>
-        public Category? Category { get; }
+        public BillingAgreementCategory? Category { get; }
         /// <summary> The name of the agreement signed by a customer. </summary>
         public string DisplayName { get; }
         /// <summary> The date from which the agreement is effective. </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The date when the agreement expires. </summary>
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> The list of participants that participates in acceptance of an agreement. </summary>
-        public IReadOnlyList<Participant> Participants { get; }
+        public IReadOnlyList<BillingAgreementParticipant> Participants { get; }
         /// <summary> The current status of the agreement. </summary>
         public string Status { get; }
         /// <summary> The ID of the lead billing account if this agreement is part of the Customer Affiliate Purchase Terms. </summary>

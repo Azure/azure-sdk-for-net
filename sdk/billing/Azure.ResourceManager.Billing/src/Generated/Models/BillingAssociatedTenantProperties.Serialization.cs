@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Billing.Models
             string displayName = default;
             Guid? tenantId = default;
             BillingManagementTenantState? billingManagementState = default;
-            ProvisioningTenantState? provisioningManagementState = default;
+            BillingProvisioningTenantState? provisioningManagementState = default;
             string provisioningBillingRequestId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    provisioningManagementState = new ProvisioningTenantState(property.Value.GetString());
+                    provisioningManagementState = new BillingProvisioningTenantState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningBillingRequestId"u8))

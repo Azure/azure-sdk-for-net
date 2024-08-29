@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(CustomerTenantId))
             {
                 writer.WritePropertyName("customerTenantId"u8);
-                writer.WriteStringValue(CustomerTenantId);
+                writer.WriteStringValue(CustomerTenantId.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedAccounts))
             {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.Billing
             InitiatorCustomerType? initiatorCustomerType = default;
             string canceledBy = default;
             IReadOnlyList<DetailedTransferStatus> detailedTransferStatus = default;
-            string customerTenantId = default;
-            IReadOnlyList<SupportedAccountType> supportedAccounts = default;
+            Guid? customerTenantId = default;
+            IReadOnlyList<BillingSupportedAccountType> supportedAccounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -325,7 +325,11 @@ namespace Azure.ResourceManager.Billing
                         }
                         if (property0.NameEquals("customerTenantId"u8))
                         {
-                            customerTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            customerTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("supportedAccounts"u8))
@@ -334,10 +338,10 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            List<SupportedAccountType> array = new List<SupportedAccountType>();
+                            List<BillingSupportedAccountType> array = new List<BillingSupportedAccountType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new SupportedAccountType(item.GetString()));
+                                array.Add(new BillingSupportedAccountType(item.GetString()));
                             }
                             supportedAccounts = array;
                             continue;
@@ -367,7 +371,7 @@ namespace Azure.ResourceManager.Billing
                 canceledBy,
                 detailedTransferStatus ?? new ChangeTrackingList<DetailedTransferStatus>(),
                 customerTenantId,
-                supportedAccounts ?? new ChangeTrackingList<SupportedAccountType>(),
+                supportedAccounts ?? new ChangeTrackingList<BillingSupportedAccountType>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

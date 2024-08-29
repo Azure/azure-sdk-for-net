@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="BillingRoleAssignmentProperties"/>. </summary>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        public BillingRoleAssignmentProperties(string roleDefinitionId)
+        public BillingRoleAssignmentProperties(ResourceIdentifier roleDefinitionId)
         {
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingRoleAssignmentProperties(BillingProvisioningState? provisioningState, DateTimeOffset? createdOn, string createdByPrincipalTenantId, string createdByPrincipalId, string createdByPrincipalPuid, string createdByUserEmailAddress, DateTimeOffset? modifiedOn, string modifiedByPrincipalPuid, string modifiedByUserEmailAddress, string modifiedByPrincipalId, string modifiedByPrincipalTenantId, string principalPuid, string principalId, string principalTenantId, string roleDefinitionId, string scope, string userAuthenticationType, string userEmailAddress, string principalTenantName, string principalDisplayName, PrincipalType? principalType, string billingRequestId, string billingAccountId, string billingAccountDisplayName, string billingProfileId, string billingProfileDisplayName, string invoiceSectionId, string invoiceSectionDisplayName, string customerId, string customerDisplayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingRoleAssignmentProperties(BillingProvisioningState? provisioningState, DateTimeOffset? createdOn, Guid? createdByPrincipalTenantId, string createdByPrincipalId, string createdByPrincipalPuid, string createdByUserEmailAddress, DateTimeOffset? modifiedOn, string modifiedByPrincipalPuid, string modifiedByUserEmailAddress, string modifiedByPrincipalId, Guid? modifiedByPrincipalTenantId, string principalPuid, string principalId, Guid? principalTenantId, ResourceIdentifier roleDefinitionId, string scope, string userAuthenticationType, string userEmailAddress, string principalTenantName, string principalDisplayName, BillingPrincipalType? principalType, ResourceIdentifier billingRequestId, ResourceIdentifier billingAccountId, string billingAccountDisplayName, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, ResourceIdentifier customerId, string customerDisplayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The date the role assignment was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The tenant Id of the user who created the role assignment. </summary>
-        public string CreatedByPrincipalTenantId { get; }
+        public Guid? CreatedByPrincipalTenantId { get; }
         /// <summary> The object ID of the user who created the role assignment. </summary>
         public string CreatedByPrincipalId { get; }
         /// <summary> The principal PUID of the user who created the role assignment. </summary>
@@ -148,15 +149,15 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The principal PUID of the user who modified the role assignment. </summary>
         public string ModifiedByPrincipalId { get; }
         /// <summary> The tenant Id of the user who modified the role assignment. </summary>
-        public string ModifiedByPrincipalTenantId { get; }
+        public Guid? ModifiedByPrincipalTenantId { get; }
         /// <summary> The principal PUID of the user to whom the role was assigned. </summary>
         public string PrincipalPuid { get; set; }
         /// <summary> The object id of the user to whom the role was assigned. </summary>
         public string PrincipalId { get; set; }
         /// <summary> The principal tenant id of the user to whom the role was assigned. </summary>
-        public string PrincipalTenantId { get; set; }
+        public Guid? PrincipalTenantId { get; set; }
         /// <summary> The ID of the role definition. </summary>
-        public string RoleDefinitionId { get; set; }
+        public ResourceIdentifier RoleDefinitionId { get; set; }
         /// <summary> The scope at which the role was assigned. </summary>
         public string Scope { get; set; }
         /// <summary> The authentication type of the user, whether Organization or MSA, of the user to whom the role was assigned. This is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
@@ -168,23 +169,23 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The display name of the principal to whom the role was assigned. </summary>
         public string PrincipalDisplayName { get; }
         /// <summary> The type of a role Assignment. </summary>
-        public PrincipalType? PrincipalType { get; }
+        public BillingPrincipalType? PrincipalType { get; }
         /// <summary> The ID of the billing request that was created for the role assignment. This is only applicable to cross tenant role assignments or role assignments created through the billing request. </summary>
-        public string BillingRequestId { get; }
+        public ResourceIdentifier BillingRequestId { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing account. </summary>
-        public string BillingAccountId { get; }
+        public ResourceIdentifier BillingAccountId { get; }
         /// <summary> The name of the billing account. </summary>
         public string BillingAccountDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
-        public string BillingProfileId { get; }
+        public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The name of the billing profile. </summary>
         public string BillingProfileDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
-        public string InvoiceSectionId { get; }
+        public ResourceIdentifier InvoiceSectionId { get; }
         /// <summary> The name of the invoice section. </summary>
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
-        public string CustomerId { get; }
+        public ResourceIdentifier CustomerId { get; }
         /// <summary> The name of the customer. </summary>
         public string CustomerDisplayName { get; }
     }

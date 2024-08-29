@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="cancellation"> The policy override for the subscription indicates whether the self-serve cancellation or seat reduction is allowed. </param>
         /// <param name="cancellationAllowedEndOn"> The end date in UTC time by when the self-serve cancellation ends. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingSystemOverrides(Cancellation? cancellation, DateTimeOffset? cancellationAllowedEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingSystemOverrides(PolicyOverrideCancellation? cancellation, DateTimeOffset? cancellationAllowedEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Cancellation = cancellation;
             CancellationAllowedEndOn = cancellationAllowedEndOn;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The policy override for the subscription indicates whether the self-serve cancellation or seat reduction is allowed. </summary>
-        public Cancellation? Cancellation { get; }
+        public PolicyOverrideCancellation? Cancellation { get; }
         /// <summary> The end date in UTC time by when the self-serve cancellation ends. </summary>
         public DateTimeOffset? CancellationAllowedEndOn { get; }
     }

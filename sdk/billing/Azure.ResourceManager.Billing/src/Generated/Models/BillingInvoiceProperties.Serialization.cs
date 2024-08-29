@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AmountDue))
+            if (options.Format != "W" && Optional.IsDefined(AmountDue))
             {
                 writer.WritePropertyName("amountDue"u8);
                 writer.WriteObjectValue(AmountDue, options);
             }
-            if (Optional.IsDefined(AzurePrepaymentApplied))
+            if (options.Format != "W" && Optional.IsDefined(AzurePrepaymentApplied))
             {
                 writer.WritePropertyName("azurePrepaymentApplied"u8);
                 writer.WriteObjectValue(AzurePrepaymentApplied, options);
             }
-            if (Optional.IsDefined(BilledAmount))
+            if (options.Format != "W" && Optional.IsDefined(BilledAmount))
             {
                 writer.WritePropertyName("billedAmount"u8);
                 writer.WriteObjectValue(BilledAmount, options);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (Optional.IsDefined(CreditAmount))
+            if (options.Format != "W" && Optional.IsDefined(CreditAmount))
             {
                 writer.WritePropertyName("creditAmount"u8);
                 writer.WriteObjectValue(CreditAmount, options);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FreeAzureCreditApplied))
+            if (options.Format != "W" && Optional.IsDefined(FreeAzureCreditApplied))
             {
                 writer.WritePropertyName("freeAzureCreditApplied"u8);
                 writer.WriteObjectValue(FreeAzureCreditApplied, options);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("purchaseOrderNumber"u8);
                 writer.WriteStringValue(PurchaseOrderNumber);
             }
-            if (Optional.IsDefined(RebillDetails))
+            if (options.Format != "W" && Optional.IsDefined(RebillDetails))
             {
                 writer.WritePropertyName("rebillDetails"u8);
                 writer.WriteObjectValue(RebillDetails, options);
@@ -166,17 +166,17 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("specialTaxationType"u8);
                 writer.WriteStringValue(SpecialTaxationType.Value.ToString());
             }
-            if (Optional.IsDefined(SubTotal))
+            if (options.Format != "W" && Optional.IsDefined(SubTotal))
             {
                 writer.WritePropertyName("subTotal"u8);
                 writer.WriteObjectValue(SubTotal, options);
             }
-            if (Optional.IsDefined(TaxAmount))
+            if (options.Format != "W" && Optional.IsDefined(TaxAmount))
             {
                 writer.WritePropertyName("taxAmount"u8);
                 writer.WriteObjectValue(TaxAmount, options);
             }
-            if (Optional.IsDefined(TotalAmount))
+            if (options.Format != "W" && Optional.IsDefined(TotalAmount))
             {
                 writer.WritePropertyName("totalAmount"u8);
                 writer.WriteObjectValue(TotalAmount, options);
@@ -224,35 +224,35 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            InvoicePropertiesAmountDue amountDue = default;
-            InvoicePropertiesAzurePrepaymentApplied azurePrepaymentApplied = default;
-            InvoicePropertiesBilledAmount billedAmount = default;
+            BillingAmount amountDue = default;
+            BillingAmount azurePrepaymentApplied = default;
+            BillingAmount billedAmount = default;
             string billedDocumentId = default;
             string billingProfileDisplayName = default;
             ResourceIdentifier billingProfileId = default;
-            InvoicePropertiesCreditAmount creditAmount = default;
+            BillingAmount creditAmount = default;
             string creditForDocumentId = default;
             IReadOnlyList<InvoiceDocument> documents = default;
             InvoiceDocumentType? documentType = default;
             DateTimeOffset? dueDate = default;
-            IReadOnlyList<FailedPayment> failedPayments = default;
-            InvoicePropertiesFreeAzureCreditApplied freeAzureCreditApplied = default;
+            IReadOnlyList<BillingInvoiceFailedPayment> failedPayments = default;
+            BillingAmount freeAzureCreditApplied = default;
             DateTimeOffset? invoiceDate = default;
             DateTimeOffset? invoicePeriodEndDate = default;
             DateTimeOffset? invoicePeriodStartDate = default;
-            InvoiceType? invoiceType = default;
+            BillingInvoiceType? invoiceType = default;
             bool? isMonthlyInvoice = default;
-            IReadOnlyList<Payment> payments = default;
+            IReadOnlyList<BillingInvoicePayment> payments = default;
             string purchaseOrderNumber = default;
-            InvoicePropertiesRebillDetails rebillDetails = default;
-            InvoiceStatus? status = default;
+            RebillDetails rebillDetails = default;
+            BillingInvoiceStatus? status = default;
             string subscriptionDisplayName = default;
             string subscriptionId = default;
             SpecialTaxationType? specialTaxationType = default;
-            InvoicePropertiesSubTotal subTotal = default;
-            InvoicePropertiesTaxAmount taxAmount = default;
-            InvoicePropertiesTotalAmount totalAmount = default;
-            InvoicePropertiesRefundDetails refundDetails = default;
+            BillingAmount subTotal = default;
+            BillingAmount taxAmount = default;
+            BillingAmount totalAmount = default;
+            RefundDetailsSummary refundDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    amountDue = InvoicePropertiesAmountDue.DeserializeInvoicePropertiesAmountDue(property.Value, options);
+                    amountDue = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azurePrepaymentApplied"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    azurePrepaymentApplied = InvoicePropertiesAzurePrepaymentApplied.DeserializeInvoicePropertiesAzurePrepaymentApplied(property.Value, options);
+                    azurePrepaymentApplied = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billedAmount"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billedAmount = InvoicePropertiesBilledAmount.DeserializeInvoicePropertiesBilledAmount(property.Value, options);
+                    billedAmount = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billedDocumentId"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    creditAmount = InvoicePropertiesCreditAmount.DeserializeInvoicePropertiesCreditAmount(property.Value, options);
+                    creditAmount = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("creditForDocumentId"u8))
@@ -355,10 +355,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<FailedPayment> array = new List<FailedPayment>();
+                    List<BillingInvoiceFailedPayment> array = new List<BillingInvoiceFailedPayment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FailedPayment.DeserializeFailedPayment(item, options));
+                        array.Add(BillingInvoiceFailedPayment.DeserializeBillingInvoiceFailedPayment(item, options));
                     }
                     failedPayments = array;
                     continue;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    freeAzureCreditApplied = InvoicePropertiesFreeAzureCreditApplied.DeserializeInvoicePropertiesFreeAzureCreditApplied(property.Value, options);
+                    freeAzureCreditApplied = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("invoiceDate"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    invoiceType = new InvoiceType(property.Value.GetString());
+                    invoiceType = new BillingInvoiceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isMonthlyInvoice"u8))
@@ -423,10 +423,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<Payment> array = new List<Payment>();
+                    List<BillingInvoicePayment> array = new List<BillingInvoicePayment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Payment.DeserializePayment(item, options));
+                        array.Add(BillingInvoicePayment.DeserializeBillingInvoicePayment(item, options));
                     }
                     payments = array;
                     continue;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    rebillDetails = InvoicePropertiesRebillDetails.DeserializeInvoicePropertiesRebillDetails(property.Value, options);
+                    rebillDetails = RebillDetails.DeserializeRebillDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    status = new InvoiceStatus(property.Value.GetString());
+                    status = new BillingInvoiceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscriptionDisplayName"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    subTotal = InvoicePropertiesSubTotal.DeserializeInvoicePropertiesSubTotal(property.Value, options);
+                    subTotal = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("taxAmount"u8))
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    taxAmount = InvoicePropertiesTaxAmount.DeserializeInvoicePropertiesTaxAmount(property.Value, options);
+                    taxAmount = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("totalAmount"u8))
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    totalAmount = InvoicePropertiesTotalAmount.DeserializeInvoicePropertiesTotalAmount(property.Value, options);
+                    totalAmount = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("refundDetails"u8))
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    refundDetails = InvoicePropertiesRefundDetails.DeserializeInvoicePropertiesRefundDetails(property.Value, options);
+                    refundDetails = RefundDetailsSummary.DeserializeRefundDetailsSummary(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -527,14 +527,14 @@ namespace Azure.ResourceManager.Billing.Models
                 documents ?? new ChangeTrackingList<InvoiceDocument>(),
                 documentType,
                 dueDate,
-                failedPayments ?? new ChangeTrackingList<FailedPayment>(),
+                failedPayments ?? new ChangeTrackingList<BillingInvoiceFailedPayment>(),
                 freeAzureCreditApplied,
                 invoiceDate,
                 invoicePeriodEndDate,
                 invoicePeriodStartDate,
                 invoiceType,
                 isMonthlyInvoice,
-                payments ?? new ChangeTrackingList<Payment>(),
+                payments ?? new ChangeTrackingList<BillingInvoicePayment>(),
                 purchaseOrderNumber,
                 rebillDetails,
                 status,

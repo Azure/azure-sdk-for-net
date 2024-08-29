@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
 
             // invoke the operation
-            CancelSubscriptionContent content = new CancelSubscriptionContent(CancellationReason.Compromise)
+            CancelSubscriptionContent content = new CancelSubscriptionContent(CustomerSubscriptionCancellationReason.Compromise)
             {
-                CustomerId = "11111111-1111-1111-1111-111111111111",
+                CustomerId = new ResourceIdentifier("11111111-1111-1111-1111-111111111111"),
             };
             await billingSubscription.CancelAsync(WaitUntil.Completed, content);
 

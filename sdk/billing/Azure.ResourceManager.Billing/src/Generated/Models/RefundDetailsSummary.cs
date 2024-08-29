@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RefundDetailsSummary"/>. </summary>
         public RefundDetailsSummary()
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="refundOperationId"> The ID of refund operation. </param>
         /// <param name="refundReason"> The reason for refund. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RefundDetailsSummary(DateTimeOffset? requestedOn, DateTimeOffset? approvedOn, DateTimeOffset? completedOn, RefundDetailsSummaryAmountRequested amountRequested, RefundDetailsSummaryAmountRefunded amountRefunded, string rebillInvoiceId, int? transactionCount, RefundStatus? refundStatus, string refundOperationId, RefundReasonCode? refundReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RefundDetailsSummary(DateTimeOffset? requestedOn, DateTimeOffset? approvedOn, DateTimeOffset? completedOn, BillingAmount amountRequested, BillingAmount amountRefunded, ResourceIdentifier rebillInvoiceId, int? transactionCount, RefundStatus? refundStatus, string refundOperationId, RefundReasonCode? refundReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RequestedOn = requestedOn;
             ApprovedOn = approvedOn;
@@ -84,11 +85,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Date when the refund was completed. </summary>
         public DateTimeOffset? CompletedOn { get; }
         /// <summary> The amount of refund requested. </summary>
-        public RefundDetailsSummaryAmountRequested AmountRequested { get; set; }
+        public BillingAmount AmountRequested { get; }
         /// <summary> The amount refunded. </summary>
-        public RefundDetailsSummaryAmountRefunded AmountRefunded { get; set; }
+        public BillingAmount AmountRefunded { get; }
         /// <summary> The invoice ID of the rebill invoice for a refund. </summary>
-        public string RebillInvoiceId { get; }
+        public ResourceIdentifier RebillInvoiceId { get; }
         /// <summary> The number of transactions refunded. </summary>
         public int? TransactionCount { get; }
         /// <summary> The status of refund request. </summary>

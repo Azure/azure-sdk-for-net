@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(BillingAccountPrimaryBillingTenantId))
             {
                 writer.WritePropertyName("billingAccountPrimaryBillingTenantId"u8);
-                writer.WriteStringValue(BillingAccountPrimaryBillingTenantId);
+                writer.WriteStringValue(BillingAccountPrimaryBillingTenantId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
             {
@@ -237,35 +237,35 @@ namespace Azure.ResourceManager.Billing.Models
             }
             BillingProvisioningState? provisioningState = default;
             IDictionary<string, string> additionalInformation = default;
-            BillingRequestPropertiesReviewedBy reviewedBy = default;
+            BillingPrincipal reviewedBy = default;
             DateTimeOffset? reviewalDate = default;
-            string billingAccountId = default;
+            ResourceIdentifier billingAccountId = default;
             string billingAccountName = default;
             string billingAccountDisplayName = default;
-            string billingAccountPrimaryBillingTenantId = default;
-            string billingProfileId = default;
+            Guid? billingAccountPrimaryBillingTenantId = default;
+            ResourceIdentifier billingProfileId = default;
             string billingProfileName = default;
             string billingProfileDisplayName = default;
-            BillingRequestPropertiesCreatedBy createdBy = default;
+            BillingPrincipal createdBy = default;
             DateTimeOffset? creationDate = default;
             DateTimeOffset? expirationDate = default;
             string decisionReason = default;
-            string invoiceSectionId = default;
+            ResourceIdentifier invoiceSectionId = default;
             string invoiceSectionName = default;
             string invoiceSectionDisplayName = default;
-            string customerId = default;
+            ResourceIdentifier customerId = default;
             string customerName = default;
             string customerDisplayName = default;
             string subscriptionId = default;
             string subscriptionName = default;
             string subscriptionDisplayName = default;
             string justification = default;
-            IList<Principal> recipients = default;
+            IList<BillingPrincipal> recipients = default;
             string requestScope = default;
             string billingScope = default;
             BillingRequestStatus? status = default;
             BillingRequestType? type = default;
-            BillingRequestPropertiesLastUpdatedBy lastUpdatedBy = default;
+            BillingPrincipal lastUpdatedBy = default;
             DateTimeOffset? lastUpdatedDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    reviewedBy = BillingRequestPropertiesReviewedBy.DeserializeBillingRequestPropertiesReviewedBy(property.Value, options);
+                    reviewedBy = BillingPrincipal.DeserializeBillingPrincipal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reviewalDate"u8))
@@ -314,7 +314,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("billingAccountId"u8))
                 {
-                    billingAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingAccountName"u8))
@@ -329,12 +333,20 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("billingAccountPrimaryBillingTenantId"u8))
                 {
-                    billingAccountPrimaryBillingTenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingAccountPrimaryBillingTenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("billingProfileId"u8))
                 {
-                    billingProfileId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfileId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfileName"u8))
@@ -353,7 +365,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    createdBy = BillingRequestPropertiesCreatedBy.DeserializeBillingRequestPropertiesCreatedBy(property.Value, options);
+                    createdBy = BillingPrincipal.DeserializeBillingPrincipal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("creationDate"u8))
@@ -381,7 +393,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("invoiceSectionId"u8))
                 {
-                    invoiceSectionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invoiceSectionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("invoiceSectionName"u8))
@@ -396,7 +412,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("customerId"u8))
                 {
-                    customerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customerName"u8))
@@ -435,10 +455,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<Principal> array = new List<Principal>();
+                    List<BillingPrincipal> array = new List<BillingPrincipal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Principal.DeserializePrincipal(item, options));
+                        array.Add(BillingPrincipal.DeserializeBillingPrincipal(item, options));
                     }
                     recipients = array;
                     continue;
@@ -477,7 +497,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    lastUpdatedBy = BillingRequestPropertiesLastUpdatedBy.DeserializeBillingRequestPropertiesLastUpdatedBy(property.Value, options);
+                    lastUpdatedBy = BillingPrincipal.DeserializeBillingPrincipal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedDate"u8))
@@ -521,7 +541,7 @@ namespace Azure.ResourceManager.Billing.Models
                 subscriptionName,
                 subscriptionDisplayName,
                 justification,
-                recipients ?? new ChangeTrackingList<Principal>(),
+                recipients ?? new ChangeTrackingList<BillingPrincipal>(),
                 requestScope,
                 billingScope,
                 status,

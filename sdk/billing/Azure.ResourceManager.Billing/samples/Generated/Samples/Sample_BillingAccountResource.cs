@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation
-            IEnumerable<PaymentTerm> arrayOfPaymentTerm = new PaymentTerm[]
+            IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm = new BillingPaymentTerm[]
             {
-new PaymentTerm()
+new BillingPaymentTerm()
 {
 Term = "net10",
 StartOn = DateTimeOffset.Parse("2023-01-05T22:39:34.2606750Z"),
@@ -131,7 +131,7 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation
-            TransitionDetails result = await billingAccount.ConfirmTransitionAsync();
+            BillingTransitionDetails result = await billingAccount.ConfirmTransitionAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -184,9 +184,9 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation
-            IEnumerable<PaymentTerm> arrayOfPaymentTerm = new PaymentTerm[]
+            IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm = new BillingPaymentTerm[]
             {
-new PaymentTerm()
+new BillingPaymentTerm()
 {
 Term = "net10",
 StartOn = DateTimeOffset.Parse("2023-02-05T22:39:34.2606750Z"),
@@ -218,9 +218,9 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation
-            IEnumerable<PaymentTerm> arrayOfPaymentTerm = new PaymentTerm[]
+            IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm = new BillingPaymentTerm[]
             {
-new PaymentTerm()
+new BillingPaymentTerm()
 {
 Term = "net10",
 StartOn = DateTimeOffset.Parse("2023-01-05T22:39:34.2606750Z"),
@@ -430,7 +430,7 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             {
                 Properties = new BillingAccountProperties()
                 {
-                    EnrollmentDetails = new EnrollmentDetails()
+                    EnrollmentDetails = new BillingAccountEnrollmentDetails()
                     {
                         PoNumber = "poNumber123",
                     },
@@ -538,14 +538,14 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation and iterate over the result
-            CheckAccessRequest checkAccessRequest = new CheckAccessRequest()
+            BillingCheckAccessContent content = new BillingCheckAccessContent()
             {
                 Actions =
 {
 "Microsoft.Billing/billingAccounts/read","Microsoft.Subscription/subscriptions/write"
 },
             };
-            await foreach (CheckAccessResponse item in billingAccount.CheckAccessBillingPermissionsAsync(checkAccessRequest))
+            await foreach (BillingCheckAccessResult item in billingAccount.CheckAccessBillingPermissionsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -606,10 +606,10 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation
-            BillingRoleAssignmentProperties billingRoleAssignmentProperties = new BillingRoleAssignmentProperties("/providers/Microsoft.Billing/billingAccounts/00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2018-09-30/billingRoleDefinitions/10000000-aaaa-bbbb-cccc-100000000000")
+            BillingRoleAssignmentProperties billingRoleAssignmentProperties = new BillingRoleAssignmentProperties(new ResourceIdentifier("/providers/Microsoft.Billing/billingAccounts/00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2018-09-30/billingRoleDefinitions/10000000-aaaa-bbbb-cccc-100000000000"))
             {
                 PrincipalId = "00000000-0000-0000-0000-000000000000",
-                PrincipalTenantId = "076915e7-de10-4323-bb34-a58c904068bb",
+                PrincipalTenantId = Guid.Parse("076915e7-de10-4323-bb34-a58c904068bb"),
                 UserEmailAddress = "john@contoso.com",
             };
             ArmOperation<BillingRoleAssignmentData> lro = await billingAccount.CreateByBillingAccountBillingRoleAssignmentAsync(WaitUntil.Completed, billingRoleAssignmentProperties);
@@ -698,20 +698,20 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation
-            IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest = new DocumentDownloadRequest[]
+            IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest = new BillingDocumentDownloadRequestContent[]
             {
-new DocumentDownloadRequest()
+new BillingDocumentDownloadRequestContent()
 {
 DocumentName = "12345678",
 InvoiceName = "G123456789",
-},new DocumentDownloadRequest()
+},new BillingDocumentDownloadRequestContent()
 {
 DocumentName = "12345678",
 InvoiceName = "G987654321",
 }
             };
-            ArmOperation<DocumentDownloadResult> lro = await billingAccount.DownloadDocumentsByBillingAccountInvoiceAsync(WaitUntil.Completed, arrayOfDocumentDownloadRequest);
-            DocumentDownloadResult result = lro.Value;
+            ArmOperation<BillingDocumentDownloadResult> lro = await billingAccount.DownloadDocumentsByBillingAccountInvoiceAsync(WaitUntil.Completed, arrayOfDocumentDownloadRequest);
+            BillingDocumentDownloadResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

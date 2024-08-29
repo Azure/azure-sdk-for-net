@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Billing.Models
             InvoiceDocumentType? kind = default;
             string name = default;
             Uri url = default;
-            DocumentSource? source = default;
+            BillingDocumentSource? source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    source = new DocumentSource(property.Value.GetString());
+                    source = new BillingDocumentSource(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

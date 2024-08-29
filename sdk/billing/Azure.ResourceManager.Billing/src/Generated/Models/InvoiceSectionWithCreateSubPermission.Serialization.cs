@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             string billingProfileDisplayName = default;
-            string billingProfileId = default;
+            ResourceIdentifier billingProfileId = default;
             string billingProfileSystemId = default;
             BillingProfileStatus? billingProfileStatus = default;
             BillingProfileStatusReasonCode? billingProfileStatusReasonCode = default;
-            SpendingLimit? billingProfileSpendingLimit = default;
+            BillingSpendingLimit? billingProfileSpendingLimit = default;
             IReadOnlyList<BillingAzurePlan> enabledAzurePlans = default;
             string invoiceSectionDisplayName = default;
-            string invoiceSectionId = default;
+            ResourceIdentifier invoiceSectionId = default;
             string invoiceSectionSystemId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("billingProfileId"u8))
                 {
-                    billingProfileId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfileId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfileSystemId"u8))
@@ -172,7 +176,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billingProfileSpendingLimit = new SpendingLimit(property.Value.GetString());
+                    billingProfileSpendingLimit = new BillingSpendingLimit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enabledAzurePlans"u8))
@@ -196,7 +200,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("invoiceSectionId"u8))
                 {
-                    invoiceSectionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invoiceSectionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("invoiceSectionSystemId"u8))

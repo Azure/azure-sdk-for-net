@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AmountRequested))
+            if (options.Format != "W" && Optional.IsDefined(AmountRequested))
             {
                 writer.WritePropertyName("amountRequested"u8);
                 writer.WriteObjectValue(AmountRequested, options);
             }
-            if (Optional.IsDefined(AmountRefunded))
+            if (options.Format != "W" && Optional.IsDefined(AmountRefunded))
             {
                 writer.WritePropertyName("amountRefunded"u8);
                 writer.WriteObjectValue(AmountRefunded, options);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            RefundTransactionDetailsAmountRequested amountRequested = default;
-            RefundTransactionDetailsAmountRefunded amountRefunded = default;
+            BillingAmount amountRequested = default;
+            BillingAmount amountRefunded = default;
             string refundOperationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    amountRequested = RefundTransactionDetailsAmountRequested.DeserializeRefundTransactionDetailsAmountRequested(property.Value, options);
+                    amountRequested = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("amountRefunded"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    amountRefunded = RefundTransactionDetailsAmountRefunded.DeserializeRefundTransactionDetailsAmountRefunded(property.Value, options);
+                    amountRefunded = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("refundOperationId"u8))

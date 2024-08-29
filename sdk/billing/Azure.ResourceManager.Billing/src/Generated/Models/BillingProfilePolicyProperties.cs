@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="BillingProfilePolicyProperties"/>. </summary>
         public BillingProfilePolicyProperties()
         {
-            Policies = new ChangeTrackingList<PolicySummary>();
+            Policies = new ChangeTrackingList<BillingPolicySummary>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingProfilePolicyProperties"/>. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="viewCharges"> The policy that controls whether the users in customer's organization can view charges at pay-as-you-go prices. </param>
         /// <param name="policies"> List of all policies defined at the billing scope. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingProfilePolicyProperties(BillingProvisioningState? provisioningState, BillingProfilePolicyPropertiesEnterpriseAgreementPolicies enterpriseAgreementPolicies, InvoiceSectionLabelManagementPolicy? invoiceSectionLabelManagement, MarketplacePurchasesPolicy? marketplacePurchases, ReservationPurchasesPolicy? reservationPurchases, SavingsPlanPurchasesPolicy? savingsPlanPurchases, ViewChargesPolicy? viewCharges, IList<PolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingProfilePolicyProperties(BillingProvisioningState? provisioningState, EnterpriseAgreementPolicies enterpriseAgreementPolicies, InvoiceSectionLabelManagementPolicy? invoiceSectionLabelManagement, MarketplacePurchasesPolicy? marketplacePurchases, ReservationPurchasesPolicy? reservationPurchases, SavingsPlanPurchasesPolicy? savingsPlanPurchases, ViewChargesPolicy? viewCharges, IList<BillingPolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             EnterpriseAgreementPolicies = enterpriseAgreementPolicies;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
         public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> The policies for Enterprise Agreement enrollments. </summary>
-        public BillingProfilePolicyPropertiesEnterpriseAgreementPolicies EnterpriseAgreementPolicies { get; set; }
+        public EnterpriseAgreementPolicies EnterpriseAgreementPolicies { get; set; }
         /// <summary> The policy that controls invoice section label management at invoice section scope. This is allowed by default. </summary>
         public InvoiceSectionLabelManagementPolicy? InvoiceSectionLabelManagement { get; set; }
         /// <summary> The policy that controls whether Azure marketplace purchases are allowed. </summary>
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The policy that controls whether the users in customer's organization can view charges at pay-as-you-go prices. </summary>
         public ViewChargesPolicy? ViewCharges { get; set; }
         /// <summary> List of all policies defined at the billing scope. </summary>
-        public IList<PolicySummary> Policies { get; }
+        public IList<BillingPolicySummary> Policies { get; }
     }
 }

@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="status"> The current status of the agreement. </param>
         /// <param name="leadBillingAccountName"> The ID of the lead billing account if this agreement is part of the Customer Affiliate Purchase Terms. </param>
         /// <returns> A new <see cref="Models.BillingAgreementProperties"/> instance for mocking. </returns>
-        public static BillingAgreementProperties BillingAgreementProperties(AgreementAcceptanceMode? acceptanceMode = null, string agreementLink = null, IEnumerable<BillingProfileInfo> billingProfileInfo = null, Category? category = null, string displayName = null, DateTimeOffset? effectiveOn = null, DateTimeOffset? expireOn = null, IEnumerable<Participant> participants = null, string status = null, string leadBillingAccountName = null)
+        public static BillingAgreementProperties BillingAgreementProperties(AgreementAcceptanceMode? acceptanceMode = null, string agreementLink = null, IEnumerable<BillingProfileInfo> billingProfileInfo = null, BillingAgreementCategory? category = null, string displayName = null, DateTimeOffset? effectiveOn = null, DateTimeOffset? expireOn = null, IEnumerable<BillingAgreementParticipant> participants = null, string status = null, string leadBillingAccountName = null)
         {
             billingProfileInfo ??= new List<BillingProfileInfo>();
-            participants ??= new List<Participant>();
+            participants ??= new List<BillingAgreementParticipant>();
 
             return new BillingAgreementProperties(
                 acceptanceMode,
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingProfileSystemId"> The fully qualified ID that uniquely identifies a billing profile. </param>
         /// <param name="indirectRelationshipOrganizationName"> Billing account name. Available for a specific type of agreement. </param>
         /// <returns> A new <see cref="Models.BillingProfileInfo"/> instance for mocking. </returns>
-        public static BillingProfileInfo BillingProfileInfo(string billingAccountId = null, string billingProfileDisplayName = null, string billingProfileId = null, string billingProfileSystemId = null, string indirectRelationshipOrganizationName = null)
+        public static BillingProfileInfo BillingProfileInfo(ResourceIdentifier billingAccountId = null, string billingProfileDisplayName = null, ResourceIdentifier billingProfileId = null, string billingProfileSystemId = null, string indirectRelationshipOrganizationName = null)
         {
             return new BillingProfileInfo(
                 billingAccountId,
@@ -88,14 +88,14 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Participant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingAgreementParticipant"/>. </summary>
         /// <param name="email"> The email address of the participant. </param>
         /// <param name="status"> The acceptance status of the participant. </param>
         /// <param name="statusOn"> The date when the status got changed. </param>
-        /// <returns> A new <see cref="Models.Participant"/> instance for mocking. </returns>
-        public static Participant Participant(string email = null, string status = null, DateTimeOffset? statusOn = null)
+        /// <returns> A new <see cref="Models.BillingAgreementParticipant"/> instance for mocking. </returns>
+        public static BillingAgreementParticipant BillingAgreementParticipant(string email = null, string status = null, DateTimeOffset? statusOn = null)
         {
-            return new Participant(email, status, statusOn, serializedAdditionalRawData: null);
+            return new BillingAgreementParticipant(email, status, statusOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Billing.BillingAssociatedTenantData"/>. </summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="provisioningManagementState"> The state determines whether subscriptions and licenses can be provisioned in the associated tenant. It can be set to 'Pending' to initiate a billing request. </param>
         /// <param name="provisioningBillingRequestId"> The unique identifier for the billing request that is created when enabling provisioning for an associated tenant. </param>
         /// <returns> A new <see cref="Models.BillingAssociatedTenantProperties"/> instance for mocking. </returns>
-        public static BillingAssociatedTenantProperties BillingAssociatedTenantProperties(BillingProvisioningState? provisioningState = null, string displayName = null, Guid? tenantId = null, BillingManagementTenantState? billingManagementState = null, ProvisioningTenantState? provisioningManagementState = null, string provisioningBillingRequestId = null)
+        public static BillingAssociatedTenantProperties BillingAssociatedTenantProperties(BillingProvisioningState? provisioningState = null, string displayName = null, Guid? tenantId = null, BillingManagementTenantState? billingManagementState = null, BillingProvisioningTenantState? provisioningManagementState = null, string provisioningBillingRequestId = null)
         {
             return new BillingAssociatedTenantProperties(
                 provisioningState,
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="paymentsOnAccount"> The list of payments on accounts. </param>
         /// <param name="totalPaymentsOnAccount"> Total amount of payments on accounts. </param>
         /// <returns> A new <see cref="Models.BillingAvailableBalanceProperties"/> instance for mocking. </returns>
-        public static BillingAvailableBalanceProperties BillingAvailableBalanceProperties(BillingAmount amount = null, IEnumerable<PaymentOnAccount> paymentsOnAccount = null, BillingAmount totalPaymentsOnAccount = null)
+        public static BillingAvailableBalanceProperties BillingAvailableBalanceProperties(BillingAmount amount = null, IEnumerable<BillingPaymentOnAccount> paymentsOnAccount = null, BillingAmount totalPaymentsOnAccount = null)
         {
-            paymentsOnAccount ??= new List<PaymentOnAccount>();
+            paymentsOnAccount ??= new List<BillingPaymentOnAccount>();
 
             return new BillingAvailableBalanceProperties(amount, paymentsOnAccount?.ToList(), totalPaymentsOnAccount, serializedAdditionalRawData: null);
         }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingAmount(currency, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PaymentOnAccount"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingPaymentOnAccount"/>. </summary>
         /// <param name="amount"> Payment on Account amount. </param>
         /// <param name="billingProfileId"> The ID of the billing profile for the payments on account. </param>
         /// <param name="billingProfileDisplayName"> The name of the billing profile for the payments on account. </param>
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="invoiceName"> The name of the invoice for the payments on account. </param>
         /// <param name="on"> The date of the payments on account. </param>
         /// <param name="paymentMethodType"> Payment on Account type. </param>
-        /// <returns> A new <see cref="Models.PaymentOnAccount"/> instance for mocking. </returns>
-        public static PaymentOnAccount PaymentOnAccount(PaymentOnAccountAmount amount = null, string billingProfileId = null, string billingProfileDisplayName = null, string invoiceId = null, string invoiceName = null, DateTimeOffset? @on = null, BillingPaymentMethodFamily? paymentMethodType = null)
+        /// <returns> A new <see cref="Models.BillingPaymentOnAccount"/> instance for mocking. </returns>
+        public static BillingPaymentOnAccount BillingPaymentOnAccount(CreatedSubscriptionReseller amount = null, ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, ResourceIdentifier invoiceId = null, string invoiceName = null, DateTimeOffset? @on = null, PaymentMethodFamily? paymentMethodType = null)
         {
-            return new PaymentOnAccount(
+            return new BillingPaymentOnAccount(
                 amount,
                 billingProfileId,
                 billingProfileDisplayName,
@@ -205,24 +205,24 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PaymentOnAccountAmount"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.PaymentOnAccountAmount"/> instance for mocking. </returns>
-        public static PaymentOnAccountAmount PaymentOnAccountAmount(string currency = null, float? value = null)
+        /// <summary> Initializes a new instance of <see cref="Models.CreatedSubscriptionReseller"/>. </summary>
+        /// <param name="resellerId"> The MPN ID of the reseller. </param>
+        /// <param name="description"> The name of the reseller. </param>
+        /// <returns> A new <see cref="Models.CreatedSubscriptionReseller"/> instance for mocking. </returns>
+        public static CreatedSubscriptionReseller CreatedSubscriptionReseller(string resellerId = null, string description = null)
         {
-            return new PaymentOnAccountAmount(currency, value, serializedAdditionalRawData: null);
+            return new CreatedSubscriptionReseller(resellerId, description, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PaymentTerm"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingPaymentTerm"/>. </summary>
         /// <param name="term"> Represents duration in netXX format. Always in days. </param>
         /// <param name="startOn"> The date on when the defined 'Payment Term' will be effective from and is always in UTC. </param>
         /// <param name="endOn"> The date on when the defined 'Payment Term' will end and is always in UTC. </param>
         /// <param name="isDefault"> Indicates payment term is the standard payment term. </param>
-        /// <returns> A new <see cref="Models.PaymentTerm"/> instance for mocking. </returns>
-        public static PaymentTerm PaymentTerm(string term = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, bool? isDefault = null)
+        /// <returns> A new <see cref="Models.BillingPaymentTerm"/> instance for mocking. </returns>
+        public static BillingPaymentTerm BillingPaymentTerm(string term = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, bool? isDefault = null)
         {
-            return new PaymentTerm(term, startOn, endOn, isDefault, serializedAdditionalRawData: null);
+            return new BillingPaymentTerm(term, startOn, endOn, isDefault, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Billing.BillingAccountData"/>. </summary>
@@ -266,11 +266,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="qualifications"> Qualifications for pricing on a billing account. Values may be Commercial, Education, Charity or Government. </param>
         /// <param name="taxIds"> A list of tax identifiers for the billing account. </param>
         /// <returns> A new <see cref="Models.BillingAccountProperties"/> instance for mocking. </returns>
-        public static BillingAccountProperties BillingAccountProperties(BillingProvisioningState? provisioningState = null, BillingAccountStatus? accountStatus = null, BillingAccountType? accountType = null, BillingAccountSubType? accountSubType = null, BillingAccountStatusReasonCode? accountStatusReasonCode = null, BillingAgreementType? agreementType = null, string displayName = null, EnrollmentDetails enrollmentDetails = null, bool? hasReadAccess = null, bool? hasNoBillingProfiles = null, string notificationEmailAddress = null, string primaryBillingTenantId = null, BillingAddressDetails soldTo = null, RegistrationNumber registrationNumber = null, IEnumerable<BillingRelationshipType> billingRelationshipTypes = null, IEnumerable<string> qualifications = null, IEnumerable<TaxIdentifier> taxIds = null)
+        public static BillingAccountProperties BillingAccountProperties(BillingProvisioningState? provisioningState = null, BillingAccountStatus? accountStatus = null, BillingAccountType? accountType = null, BillingAccountSubType? accountSubType = null, BillingAccountStatusReasonCode? accountStatusReasonCode = null, BillingAgreementType? agreementType = null, string displayName = null, BillingAccountEnrollmentDetails enrollmentDetails = null, bool? hasReadAccess = null, bool? hasNoBillingProfiles = null, string notificationEmailAddress = null, Guid? primaryBillingTenantId = null, BillingAddressDetails soldTo = null, BillingRegistrationNumber registrationNumber = null, IEnumerable<BillingRelationshipType> billingRelationshipTypes = null, IEnumerable<string> qualifications = null, IEnumerable<BillingTaxIdentifier> taxIds = null)
         {
             billingRelationshipTypes ??= new List<BillingRelationshipType>();
             qualifications ??= new List<string>();
-            taxIds ??= new List<TaxIdentifier>();
+            taxIds ??= new List<BillingTaxIdentifier>();
 
             return new BillingAccountProperties(
                 provisioningState,
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EnrollmentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingAccountEnrollmentDetails"/>. </summary>
         /// <param name="startOn"> The start date of the enrollment. </param>
         /// <param name="endOn"> The end date of the enrollment. </param>
         /// <param name="currency"> The billing currency for the enrollment. </param>
@@ -309,10 +309,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="markupStatus"> Markup status of enrollment, applicable only for indirect enrollments. </param>
         /// <param name="indirectRelationshipInfo"> The properties of an enrollment which are applicable only for indirect enrollments. </param>
         /// <param name="invoiceRecipient"> The contact who receives invoices of the enrollment. </param>
-        /// <returns> A new <see cref="Models.EnrollmentDetails"/> instance for mocking. </returns>
-        public static EnrollmentDetails EnrollmentDetails(DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string currency = null, string channel = null, string language = null, string countryCode = null, string billingCycle = null, ExtendedTermOption? extendedTermOption = null, SupportLevel? supportLevel = null, string supportCoverage = null, string cloud = null, string poNumber = null, MarkupStatus? markupStatus = null, EnrollmentDetailsIndirectRelationshipInfo indirectRelationshipInfo = null, string invoiceRecipient = null)
+        /// <returns> A new <see cref="Models.BillingAccountEnrollmentDetails"/> instance for mocking. </returns>
+        public static BillingAccountEnrollmentDetails BillingAccountEnrollmentDetails(DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string currency = null, string channel = null, string language = null, string countryCode = null, string billingCycle = null, ExtendedTermOption? extendedTermOption = null, BillingEnrollmentSupportLevel? supportLevel = null, string supportCoverage = null, string cloud = null, string poNumber = null, EnrollmentMarkupStatus? markupStatus = null, IndirectRelationshipInfo indirectRelationshipInfo = null, string invoiceRecipient = null)
         {
-            return new EnrollmentDetails(
+            return new BillingAccountEnrollmentDetails(
                 startOn,
                 endOn,
                 currency,
@@ -331,25 +331,25 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RegistrationNumber"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingRegistrationNumber"/>. </summary>
         /// <param name="id"> The unique identification number of the organization linked with the billing account. </param>
-        /// <param name="required"> Identifies if the registration number is required for the billing account. </param>
-        /// <param name="numberType"> The types of registration number allowed based on the country of the billing account. </param>
-        /// <returns> A new <see cref="Models.RegistrationNumber"/> instance for mocking. </returns>
-        public static RegistrationNumber RegistrationNumber(string id = null, bool? required = null, IEnumerable<string> numberType = null)
+        /// <param name="isRequired"> Identifies if the registration number is required for the billing account. </param>
+        /// <param name="registrationNumberType"> The types of registration number allowed based on the country of the billing account. </param>
+        /// <returns> A new <see cref="Models.BillingRegistrationNumber"/> instance for mocking. </returns>
+        public static BillingRegistrationNumber BillingRegistrationNumber(string id = null, bool? isRequired = null, IEnumerable<string> registrationNumberType = null)
         {
-            numberType ??= new List<string>();
+            registrationNumberType ??= new List<string>();
 
-            return new RegistrationNumber(id, required, numberType?.ToList(), serializedAdditionalRawData: null);
+            return new BillingRegistrationNumber(id, isRequired, registrationNumberType?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TransitionDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingTransitionDetails"/>. </summary>
         /// <param name="transitionOn"> The transition completion date. </param>
         /// <param name="anniversaryDay"> The anniversary day of the pre-transitioned account of type Microsoft Online Services Program. </param>
-        /// <returns> A new <see cref="Models.TransitionDetails"/> instance for mocking. </returns>
-        public static TransitionDetails TransitionDetails(DateTimeOffset? transitionOn = null, int? anniversaryDay = null)
+        /// <returns> A new <see cref="Models.BillingTransitionDetails"/> instance for mocking. </returns>
+        public static BillingTransitionDetails BillingTransitionDetails(DateTimeOffset? transitionOn = null, int? anniversaryDay = null)
         {
-            return new TransitionDetails(transitionOn, anniversaryDay, serializedAdditionalRawData: null);
+            return new BillingTransitionDetails(transitionOn, anniversaryDay, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InvoiceSectionWithCreateSubPermission"/>. </summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="invoiceSectionId"> The fully qualified ID that uniquely identifies an invoice section. </param>
         /// <param name="invoiceSectionSystemId"> The system generated unique identifier for an invoice section. </param>
         /// <returns> A new <see cref="Models.InvoiceSectionWithCreateSubPermission"/> instance for mocking. </returns>
-        public static InvoiceSectionWithCreateSubPermission InvoiceSectionWithCreateSubPermission(string billingProfileDisplayName = null, string billingProfileId = null, string billingProfileSystemId = null, BillingProfileStatus? billingProfileStatus = null, BillingProfileStatusReasonCode? billingProfileStatusReasonCode = null, SpendingLimit? billingProfileSpendingLimit = null, IEnumerable<BillingAzurePlan> enabledAzurePlans = null, string invoiceSectionDisplayName = null, string invoiceSectionId = null, string invoiceSectionSystemId = null)
+        public static InvoiceSectionWithCreateSubPermission InvoiceSectionWithCreateSubPermission(string billingProfileDisplayName = null, ResourceIdentifier billingProfileId = null, string billingProfileSystemId = null, BillingProfileStatus? billingProfileStatus = null, BillingProfileStatusReasonCode? billingProfileStatusReasonCode = null, BillingSpendingLimit? billingProfileSpendingLimit = null, IEnumerable<BillingAzurePlan> enabledAzurePlans = null, string invoiceSectionDisplayName = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionSystemId = null)
         {
             enabledAzurePlans ??= new List<BillingAzurePlan>();
 
@@ -448,13 +448,13 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingPermission(actions?.ToList(), notActions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckAccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingCheckAccessResult"/>. </summary>
         /// <param name="accessDecision"> Access Decision, specifies access is allowed or not. </param>
         /// <param name="action"> Gets or sets an action. </param>
-        /// <returns> A new <see cref="Models.CheckAccessResponse"/> instance for mocking. </returns>
-        public static CheckAccessResponse CheckAccessResponse(BillingProfileAccessDecision? accessDecision = null, string action = null)
+        /// <returns> A new <see cref="Models.BillingCheckAccessResult"/> instance for mocking. </returns>
+        public static BillingCheckAccessResult BillingCheckAccessResult(BillingProfileAccessDecision? accessDecision = null, string action = null)
         {
-            return new CheckAccessResponse(accessDecision, action, serializedAdditionalRawData: null);
+            return new BillingCheckAccessResult(accessDecision, action, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeleteBillingProfileEligibilityResult"/>. </summary>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="hasReadAccess"> Indicates whether user has read access to the billing profile. </param>
         /// <param name="indirectRelationshipInfo"> Identifies the billing profile that is linked to another billing profile in indirect purchase motion. </param>
         /// <param name="invoiceDay"> The day of the month when the invoice for the billing profile is generated. </param>
-        /// <param name="invoiceEmailOptIn"> Flag controlling whether the invoices for the billing profile are sent through email. </param>
+        /// <param name="isInvoiceEmailOptIn"> Flag controlling whether the invoices for the billing profile are sent through email. </param>
         /// <param name="invoiceRecipients"> The list of email addresses to receive invoices by email for the billing profile. </param>
         /// <param name="poNumber"> The default purchase order number that will appear on the invoices generated for the billing profile. </param>
         /// <param name="shipTo"> The default address where the products are shipped, or the services are being used. If a ship to is not specified for a product or a subscription, then this address will be used. </param>
@@ -524,14 +524,14 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="currentPaymentTerm"> The current payment term of the billing profile. </param>
         /// <param name="otherPaymentTerms"> The other payment terms of the billing profile. </param>
         /// <returns> A new <see cref="Models.BillingProfileProperties"/> instance for mocking. </returns>
-        public static BillingProfileProperties BillingProfileProperties(BillingProvisioningState? provisioningState = null, BillingRelationshipType? billingRelationshipType = null, BillingProfilePropertiesBillTo billTo = null, string currency = null, string displayName = null, IEnumerable<BillingAzurePlan> enabledAzurePlans = null, bool? hasReadAccess = null, BillingProfilePropertiesIndirectRelationshipInfo indirectRelationshipInfo = null, int? invoiceDay = null, bool? invoiceEmailOptIn = null, IEnumerable<string> invoiceRecipients = null, string poNumber = null, BillingProfilePropertiesShipTo shipTo = null, BillingProfilePropertiesSoldTo soldTo = null, SpendingLimit? spendingLimit = null, IEnumerable<SpendingLimitDetails> spendingLimitDetails = null, BillingProfileStatus? status = null, BillingProfileStatusReasonCode? statusReasonCode = null, string systemId = null, IDictionary<string, string> tags = null, IEnumerable<string> targetClouds = null, BillingProfilePropertiesCurrentPaymentTerm currentPaymentTerm = null, IEnumerable<PaymentTerm> otherPaymentTerms = null)
+        public static BillingProfileProperties BillingProfileProperties(BillingProvisioningState? provisioningState = null, BillingRelationshipType? billingRelationshipType = null, BillingAddressDetails billTo = null, string currency = null, string displayName = null, IEnumerable<BillingAzurePlan> enabledAzurePlans = null, bool? hasReadAccess = null, IndirectRelationshipInfo indirectRelationshipInfo = null, int? invoiceDay = null, bool? isInvoiceEmailOptIn = null, IEnumerable<string> invoiceRecipients = null, string poNumber = null, BillingAddressDetails shipTo = null, BillingAddressDetails soldTo = null, BillingSpendingLimit? spendingLimit = null, IEnumerable<SpendingLimitDetails> spendingLimitDetails = null, BillingProfileStatus? status = null, BillingProfileStatusReasonCode? statusReasonCode = null, string systemId = null, IDictionary<string, string> tags = null, IEnumerable<string> targetClouds = null, BillingPaymentTerm currentPaymentTerm = null, IEnumerable<BillingPaymentTerm> otherPaymentTerms = null)
         {
             enabledAzurePlans ??= new List<BillingAzurePlan>();
             invoiceRecipients ??= new List<string>();
             spendingLimitDetails ??= new List<SpendingLimitDetails>();
             tags ??= new Dictionary<string, string>();
             targetClouds ??= new List<string>();
-            otherPaymentTerms ??= new List<PaymentTerm>();
+            otherPaymentTerms ??= new List<BillingPaymentTerm>();
 
             return new BillingProfileProperties(
                 provisioningState,
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Billing.Models
                 hasReadAccess,
                 indirectRelationshipInfo,
                 invoiceDay,
-                invoiceEmailOptIn,
+                isInvoiceEmailOptIn,
                 invoiceRecipients?.ToList(),
                 poNumber,
                 shipTo,
@@ -578,17 +578,6 @@ namespace Azure.ResourceManager.Billing.Models
                 limitType,
                 status,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BillingProfilePropertiesCurrentPaymentTerm"/>. </summary>
-        /// <param name="term"> Represents duration in netXX format. Always in days. </param>
-        /// <param name="startOn"> The date on when the defined 'Payment Term' will be effective from and is always in UTC. </param>
-        /// <param name="endOn"> The date on when the defined 'Payment Term' will end and is always in UTC. </param>
-        /// <param name="isDefault"> Indicates payment term is the standard payment term. </param>
-        /// <returns> A new <see cref="Models.BillingProfilePropertiesCurrentPaymentTerm"/> instance for mocking. </returns>
-        public static BillingProfilePropertiesCurrentPaymentTerm BillingProfilePropertiesCurrentPaymentTerm(string term = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, bool? isDefault = null)
-        {
-            return new BillingProfilePropertiesCurrentPaymentTerm(term, startOn, endOn, isDefault, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Billing.BillingPropertyData"/>. </summary>
@@ -654,7 +643,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="productId"> The ID that uniquely identifies a product. </param>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
         /// <returns> A new <see cref="Models.BillingPropertyProperties"/> instance for mocking. </returns>
-        public static BillingPropertyProperties BillingPropertyProperties(BillingAgreementType? billingAccountAgreementType = null, string billingAccountDisplayName = null, string billingAccountId = null, string accountAdminNotificationEmailAddress = null, string billingAccountSoldToCountry = null, BillingAccountStatus? billingAccountStatus = null, BillingAccountStatusReasonCode? billingAccountStatusReasonCode = null, BillingAccountType? billingAccountType = null, BillingAccountSubType? billingAccountSubType = null, string billingCurrency = null, string billingProfileDisplayName = null, string billingProfileId = null, SpendingLimit? billingProfileSpendingLimit = null, IEnumerable<SpendingLimitDetails> billingProfileSpendingLimitDetails = null, BillingProfileStatus? billingProfileStatus = null, BillingProfileStatusReasonCode? billingProfileStatusReasonCode = null, BillingPaymentMethodFamily? billingProfilePaymentMethodFamily = null, string billingProfilePaymentMethodType = null, string billingTenantId = null, string costCenter = null, string customerDisplayName = null, string customerId = null, CustomerStatus? customerStatus = null, string invoiceSectionDisplayName = null, string invoiceSectionId = null, InvoiceSectionState? invoiceSectionStatus = null, InvoiceSectionStateReasonCode? invoiceSectionStatusReasonCode = null, bool? isTransitionedBillingAccount = null, string skuDescription = null, string skuId = null, BillingSubscriptionStatus? subscriptionBillingStatus = null, IEnumerable<BillingSubscriptionStatusDetails> subscriptionBillingStatusDetails = null, SubscriptionBillingType? subscriptionBillingType = null, BillingPropertyPropertiesSubscriptionServiceUsageAddress subscriptionServiceUsageAddress = null, SubscriptionWorkloadType? subscriptionWorkloadType = null, BillingPropertyPropertiesEnrollmentDetails enrollmentDetails = null, bool? isAccountAdmin = null, string productId = null, string productName = null)
+        public static BillingPropertyProperties BillingPropertyProperties(BillingAgreementType? billingAccountAgreementType = null, string billingAccountDisplayName = null, ResourceIdentifier billingAccountId = null, string accountAdminNotificationEmailAddress = null, string billingAccountSoldToCountry = null, BillingAccountStatus? billingAccountStatus = null, BillingAccountStatusReasonCode? billingAccountStatusReasonCode = null, BillingAccountType? billingAccountType = null, BillingAccountSubType? billingAccountSubType = null, string billingCurrency = null, string billingProfileDisplayName = null, ResourceIdentifier billingProfileId = null, BillingSpendingLimit? billingProfileSpendingLimit = null, IEnumerable<SpendingLimitDetails> billingProfileSpendingLimitDetails = null, BillingProfileStatus? billingProfileStatus = null, BillingProfileStatusReasonCode? billingProfileStatusReasonCode = null, PaymentMethodFamily? billingProfilePaymentMethodFamily = null, string billingProfilePaymentMethodType = null, Guid? billingTenantId = null, string costCenter = null, string customerDisplayName = null, ResourceIdentifier customerId = null, BillingCustomerStatus? customerStatus = null, string invoiceSectionDisplayName = null, ResourceIdentifier invoiceSectionId = null, InvoiceSectionState? invoiceSectionStatus = null, InvoiceSectionStateReasonCode? invoiceSectionStatusReasonCode = null, bool? isTransitionedBillingAccount = null, string skuDescription = null, string skuId = null, BillingSubscriptionStatus? subscriptionBillingStatus = null, IEnumerable<BillingSubscriptionStatusDetails> subscriptionBillingStatusDetails = null, SubscriptionBillingType? subscriptionBillingType = null, BillingAddressDetails subscriptionServiceUsageAddress = null, SubscriptionWorkloadType? subscriptionWorkloadType = null, SubscriptionEnrollmentDetails enrollmentDetails = null, bool? isAccountAdmin = null, string productId = null, string productName = null)
         {
             billingProfileSpendingLimitDetails ??= new List<SpendingLimitDetails>();
             subscriptionBillingStatusDetails ??= new List<BillingSubscriptionStatusDetails>();
@@ -767,10 +756,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="lastUpdatedBy"> The principal of the entity who last updated the request. </param>
         /// <param name="lastUpdatedOn"> Date and time of last update. </param>
         /// <returns> A new <see cref="Models.BillingRequestProperties"/> instance for mocking. </returns>
-        public static BillingRequestProperties BillingRequestProperties(BillingProvisioningState? provisioningState = null, IDictionary<string, string> additionalInformation = null, BillingRequestPropertiesReviewedBy reviewedBy = null, DateTimeOffset? reviewalOn = null, string billingAccountId = null, string billingAccountName = null, string billingAccountDisplayName = null, string billingAccountPrimaryBillingTenantId = null, string billingProfileId = null, string billingProfileName = null, string billingProfileDisplayName = null, BillingRequestPropertiesCreatedBy createdBy = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, string decisionReason = null, string invoiceSectionId = null, string invoiceSectionName = null, string invoiceSectionDisplayName = null, string customerId = null, string customerName = null, string customerDisplayName = null, string subscriptionId = null, string subscriptionName = null, string subscriptionDisplayName = null, string justification = null, IEnumerable<Principal> recipients = null, string requestScope = null, string billingScope = null, BillingRequestStatus? status = null, BillingRequestType? requestType = null, BillingRequestPropertiesLastUpdatedBy lastUpdatedBy = null, DateTimeOffset? lastUpdatedOn = null)
+        public static BillingRequestProperties BillingRequestProperties(BillingProvisioningState? provisioningState = null, IDictionary<string, string> additionalInformation = null, BillingPrincipal reviewedBy = null, DateTimeOffset? reviewalOn = null, ResourceIdentifier billingAccountId = null, string billingAccountName = null, string billingAccountDisplayName = null, Guid? billingAccountPrimaryBillingTenantId = null, ResourceIdentifier billingProfileId = null, string billingProfileName = null, string billingProfileDisplayName = null, BillingPrincipal createdBy = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, string decisionReason = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionName = null, string invoiceSectionDisplayName = null, ResourceIdentifier customerId = null, string customerName = null, string customerDisplayName = null, string subscriptionId = null, string subscriptionName = null, string subscriptionDisplayName = null, string justification = null, IEnumerable<BillingPrincipal> recipients = null, string requestScope = null, string billingScope = null, BillingRequestStatus? status = null, BillingRequestType? requestType = null, BillingPrincipal lastUpdatedBy = null, DateTimeOffset? lastUpdatedOn = null)
         {
             additionalInformation ??= new Dictionary<string, string>();
-            recipients ??= new List<Principal>();
+            recipients ??= new List<BillingPrincipal>();
 
             return new BillingRequestProperties(
                 provisioningState,
@@ -862,7 +851,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <returns> A new <see cref="Models.BillingRoleAssignmentProperties"/> instance for mocking. </returns>
-        public static BillingRoleAssignmentProperties BillingRoleAssignmentProperties(BillingProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, string createdByPrincipalTenantId = null, string createdByPrincipalId = null, string createdByPrincipalPuid = null, string createdByUserEmailAddress = null, DateTimeOffset? modifiedOn = null, string modifiedByPrincipalPuid = null, string modifiedByUserEmailAddress = null, string modifiedByPrincipalId = null, string modifiedByPrincipalTenantId = null, string principalPuid = null, string principalId = null, string principalTenantId = null, string roleDefinitionId = null, string scope = null, string userAuthenticationType = null, string userEmailAddress = null, string principalTenantName = null, string principalDisplayName = null, PrincipalType? principalType = null, string billingRequestId = null, string billingAccountId = null, string billingAccountDisplayName = null, string billingProfileId = null, string billingProfileDisplayName = null, string invoiceSectionId = null, string invoiceSectionDisplayName = null, string customerId = null, string customerDisplayName = null)
+        public static BillingRoleAssignmentProperties BillingRoleAssignmentProperties(BillingProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, Guid? createdByPrincipalTenantId = null, string createdByPrincipalId = null, string createdByPrincipalPuid = null, string createdByUserEmailAddress = null, DateTimeOffset? modifiedOn = null, string modifiedByPrincipalPuid = null, string modifiedByUserEmailAddress = null, string modifiedByPrincipalId = null, Guid? modifiedByPrincipalTenantId = null, string principalPuid = null, string principalId = null, Guid? principalTenantId = null, ResourceIdentifier roleDefinitionId = null, string scope = null, string userAuthenticationType = null, string userEmailAddress = null, string principalTenantName = null, string principalDisplayName = null, BillingPrincipalType? principalType = null, ResourceIdentifier billingRequestId = null, ResourceIdentifier billingAccountId = null, string billingAccountDisplayName = null, ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, ResourceIdentifier customerId = null, string customerDisplayName = null)
         {
             return new BillingRoleAssignmentProperties(
                 provisioningState,
@@ -994,19 +983,19 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PaymentDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingPlanPaymentDetail"/>. </summary>
         /// <param name="dueOn"> Date when the payment needs to be done. </param>
-        /// <param name="paymentOn"> Date when the transaction is completed. Null when it is scheduled. </param>
+        /// <param name="paymentCompletedOn"> Date when the transaction is completed. Null when it is scheduled. </param>
         /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>
         /// <param name="billingCurrencyTotal"> Amount charged in Billing currency. Tax not included. Is null for future payments. </param>
         /// <param name="status"> Describes whether the payment is completed, failed, pending, cancelled or scheduled in the future. </param>
         /// <param name="extendedStatusInfo"> Extended status information. </param>
-        /// <returns> A new <see cref="Models.PaymentDetail"/> instance for mocking. </returns>
-        public static PaymentDetail PaymentDetail(DateTimeOffset? dueOn = null, DateTimeOffset? paymentOn = null, BillingPrice pricingCurrencyTotal = null, BillingPrice billingCurrencyTotal = null, PaymentStatus? status = null, ExtendedStatusInfo extendedStatusInfo = null)
+        /// <returns> A new <see cref="Models.BillingPlanPaymentDetail"/> instance for mocking. </returns>
+        public static BillingPlanPaymentDetail BillingPlanPaymentDetail(DateTimeOffset? dueOn = null, DateTimeOffset? paymentCompletedOn = null, BillingPrice pricingCurrencyTotal = null, BillingPrice billingCurrencyTotal = null, BillingPaymentStatus? status = null, ExtendedStatusInfo extendedStatusInfo = null)
         {
-            return new PaymentDetail(
+            return new BillingPlanPaymentDetail(
                 dueOn,
-                paymentOn,
+                paymentCompletedOn,
                 pricingCurrencyTotal,
                 billingCurrencyTotal,
                 status,
@@ -1098,33 +1087,33 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="trend"> The trend for a savings plan's utilization. </param>
         /// <param name="aggregates"> The array of aggregates of a savings plan's utilization. </param>
         /// <returns> A new <see cref="Models.SavingsPlanUtilization"/> instance for mocking. </returns>
-        public static SavingsPlanUtilization SavingsPlanUtilization(string trend = null, IEnumerable<UtilizationAggregates> aggregates = null)
+        public static SavingsPlanUtilization SavingsPlanUtilization(string trend = null, IEnumerable<SavingsPlanUtilizationAggregates> aggregates = null)
         {
-            aggregates ??= new List<UtilizationAggregates>();
+            aggregates ??= new List<SavingsPlanUtilizationAggregates>();
 
             return new SavingsPlanUtilization(trend, aggregates?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UtilizationAggregates"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanUtilizationAggregates"/>. </summary>
         /// <param name="grain"> The grain of the aggregate. </param>
         /// <param name="grainUnit"> The grain unit of the aggregate. </param>
         /// <param name="value"> The aggregate value. </param>
         /// <param name="valueUnit"> The aggregate value unit. </param>
-        /// <returns> A new <see cref="Models.UtilizationAggregates"/> instance for mocking. </returns>
-        public static UtilizationAggregates UtilizationAggregates(float? grain = null, string grainUnit = null, float? value = null, string valueUnit = null)
+        /// <returns> A new <see cref="Models.SavingsPlanUtilizationAggregates"/> instance for mocking. </returns>
+        public static SavingsPlanUtilizationAggregates SavingsPlanUtilizationAggregates(float? grain = null, string grainUnit = null, float? value = null, string valueUnit = null)
         {
-            return new UtilizationAggregates(grain, grainUnit, value, valueUnit, serializedAdditionalRawData: null);
+            return new SavingsPlanUtilizationAggregates(grain, grainUnit, value, valueUnit, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanValidateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanValidateResult"/>. </summary>
         /// <param name="benefits"></param>
         /// <param name="nextLink"> Url to get the next page. </param>
-        /// <returns> A new <see cref="Models.SavingsPlanValidateResponse"/> instance for mocking. </returns>
-        public static SavingsPlanValidateResponse SavingsPlanValidateResponse(IEnumerable<SavingsPlanValidResponseProperty> benefits = null, string nextLink = null)
+        /// <returns> A new <see cref="Models.SavingsPlanValidateResult"/> instance for mocking. </returns>
+        public static SavingsPlanValidateResult SavingsPlanValidateResult(IEnumerable<SavingsPlanValidResponseProperty> benefits = null, string nextLink = null)
         {
             benefits ??= new List<SavingsPlanValidResponseProperty>();
 
-            return new SavingsPlanValidateResponse(benefits?.ToList(), nextLink, serializedAdditionalRawData: null);
+            return new SavingsPlanValidateResult(benefits?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanValidResponseProperty"/>. </summary>
@@ -1143,7 +1132,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="autoRenew"> Indicates whether auto renewal is turned on or off for a product. </param>
-        /// <param name="beneficiaryTenantId"> The provisioning tenant of the subscription. </param>
+        /// <param name="subscriptionBeneficiaryTenantId"> The provisioning tenant of the subscription. </param>
         /// <param name="beneficiary"> The beneficiary of the billing subscription. </param>
         /// <param name="billingFrequency"> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </param>
         /// <param name="billingProfileId"> The fully qualified ID that uniquely identifies a billing profile. </param>
@@ -1151,7 +1140,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="consumptionCostCenter"> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement or Enterprise Agreement Type billing accounts. </param>
-        /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
+        /// <param name="subscriptionCustomerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
         /// <param name="displayName"> The name of the billing subscription. </param>
@@ -1189,7 +1178,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Billing.BillingSubscriptionData"/> instance for mocking. </returns>
-        public static BillingSubscriptionData BillingSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BillingSubscriptionAutoRenewState? autoRenew = null, string beneficiaryTenantId = null, BillingBeneficiary beneficiary = null, string billingFrequency = null, ResourceIdentifier billingProfileId = null, IReadOnlyDictionary<string, string> billingPolicies = null, string billingProfileDisplayName = null, string billingProfileName = null, string consumptionCostCenter = null, string customerId = null, string customerDisplayName = null, string customerName = null, string displayName = null, string enrollmentAccountId = null, string enrollmentAccountDisplayName = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, string invoiceSectionName = null, BillingAmount lastMonthCharges = null, BillingAmount monthToDateCharges = null, string nextBillingCycleBillingFrequency = null, string offerId = null, string productCategory = null, string productType = null, string productTypeId = null, DateTimeOffset? purchaseOn = null, long? quantity = null, CreatedSubscriptionReseller reseller = null, SubscriptionRenewalTermDetails renewalTermDetails = null, string skuId = null, string skuDescription = null, BillingSystemOverrides systemOverrides = null, Uri resourceUri = null, TimeSpan? termDuration = null, DateTimeOffset? termStartOn = null, DateTimeOffset? termEndOn = null, Guid? provisioningTenantId = null, BillingSubscriptionStatus? status = null, BillingSubscriptionOperationStatus? operationStatus = null, BillingProvisioningState? provisioningState = null, string subscriptionId = null, IEnumerable<string> suspensionReasons = null, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = null, DateTimeOffset? enrollmentAccountStartOn = null, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = null, IDictionary<string, string> tags = null)
+        public static BillingSubscriptionData BillingSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BillingSubscriptionAutoRenewState? autoRenew = null, Guid? subscriptionBeneficiaryTenantId = null, BillingBeneficiary beneficiary = null, string billingFrequency = null, ResourceIdentifier billingProfileId = null, IReadOnlyDictionary<string, string> billingPolicies = null, string billingProfileDisplayName = null, string billingProfileName = null, string consumptionCostCenter = null, string subscriptionCustomerId = null, string customerDisplayName = null, string customerName = null, string displayName = null, string enrollmentAccountId = null, string enrollmentAccountDisplayName = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, string invoiceSectionName = null, BillingAmount lastMonthCharges = null, BillingAmount monthToDateCharges = null, string nextBillingCycleBillingFrequency = null, string offerId = null, string productCategory = null, string productType = null, string productTypeId = null, DateTimeOffset? purchaseOn = null, long? quantity = null, CreatedSubscriptionReseller reseller = null, SubscriptionRenewalTermDetails renewalTermDetails = null, string skuId = null, string skuDescription = null, BillingSystemOverrides systemOverrides = null, Uri resourceUri = null, TimeSpan? termDuration = null, DateTimeOffset? termStartOn = null, DateTimeOffset? termEndOn = null, Guid? provisioningTenantId = null, BillingSubscriptionStatus? status = null, BillingSubscriptionOperationStatus? operationStatus = null, BillingProvisioningState? provisioningState = null, string subscriptionId = null, IEnumerable<string> suspensionReasons = null, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = null, DateTimeOffset? enrollmentAccountStartOn = null, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = null, IDictionary<string, string> tags = null)
         {
             billingPolicies ??= new Dictionary<string, string>();
             suspensionReasons ??= new List<string>();
@@ -1202,7 +1191,7 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 autoRenew,
-                beneficiaryTenantId,
+                subscriptionBeneficiaryTenantId,
                 beneficiary,
                 billingFrequency,
                 billingProfileId,
@@ -1210,7 +1199,7 @@ namespace Azure.ResourceManager.Billing.Models
                 billingProfileDisplayName,
                 billingProfileName,
                 consumptionCostCenter,
-                customerId,
+                subscriptionCustomerId,
                 customerDisplayName,
                 customerName,
                 displayName,
@@ -1250,15 +1239,6 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CreatedSubscriptionReseller"/>. </summary>
-        /// <param name="resellerId"> The MPN ID of the reseller. </param>
-        /// <param name="description"> The name of the reseller. </param>
-        /// <returns> A new <see cref="Models.CreatedSubscriptionReseller"/> instance for mocking. </returns>
-        public static CreatedSubscriptionReseller CreatedSubscriptionReseller(string resellerId = null, string description = null)
-        {
-            return new CreatedSubscriptionReseller(resellerId, description, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.SubscriptionRenewalTermDetails"/>. </summary>
         /// <param name="billingFrequency"> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </param>
         /// <param name="productId"> Id of the product for which the subscription is purchased. </param>
@@ -1285,7 +1265,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="cancellation"> The policy override for the subscription indicates whether the self-serve cancellation or seat reduction is allowed. </param>
         /// <param name="cancellationAllowedEndOn"> The end date in UTC time by when the self-serve cancellation ends. </param>
         /// <returns> A new <see cref="Models.BillingSystemOverrides"/> instance for mocking. </returns>
-        public static BillingSystemOverrides BillingSystemOverrides(Cancellation? cancellation = null, DateTimeOffset? cancellationAllowedEndOn = null)
+        public static BillingSystemOverrides BillingSystemOverrides(PolicyOverrideCancellation? cancellation = null, DateTimeOffset? cancellationAllowedEndOn = null)
         {
             return new BillingSystemOverrides(cancellation, cancellationAllowedEndOn, serializedAdditionalRawData: null);
         }
@@ -1296,7 +1276,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="autoRenew"> Indicates whether auto renewal is turned on or off for a product. </param>
-        /// <param name="beneficiaryTenantId"> The provisioning tenant of the subscription. </param>
+        /// <param name="subscriptionAliasBeneficiaryTenantId"> The provisioning tenant of the subscription. </param>
         /// <param name="beneficiary"> The beneficiary of the billing subscription. </param>
         /// <param name="billingFrequency"> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </param>
         /// <param name="billingProfileId"> The fully qualified ID that uniquely identifies a billing profile. </param>
@@ -1304,7 +1284,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="consumptionCostCenter"> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement or Enterprise Agreement Type billing accounts. </param>
-        /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
+        /// <param name="subscriptionAliasCustomerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
         /// <param name="displayName"> The name of the billing subscription. </param>
@@ -1340,10 +1320,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="suspensionReasonDetails"> The suspension details for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
         /// <param name="enrollmentAccountStartOn"> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement Type. </param>
         /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </param>
-        /// <param name="billingSubscriptionId"> The ID of the billing subscription with the subscription alias. </param>
+        /// <param name="subscriptionAliasSubscriptionId"> The ID of the billing subscription with the subscription alias. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Billing.BillingSubscriptionAliasData"/> instance for mocking. </returns>
-        public static BillingSubscriptionAliasData BillingSubscriptionAliasData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BillingSubscriptionAutoRenewState? autoRenew = null, string beneficiaryTenantId = null, BillingBeneficiary beneficiary = null, string billingFrequency = null, ResourceIdentifier billingProfileId = null, IReadOnlyDictionary<string, string> billingPolicies = null, string billingProfileDisplayName = null, string billingProfileName = null, string consumptionCostCenter = null, string customerId = null, string customerDisplayName = null, string customerName = null, string displayName = null, string enrollmentAccountId = null, string enrollmentAccountDisplayName = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, string invoiceSectionName = null, BillingAmount lastMonthCharges = null, BillingAmount monthToDateCharges = null, string nextBillingCycleBillingFrequency = null, string offerId = null, string productCategory = null, string productType = null, string productTypeId = null, DateTimeOffset? purchaseOn = null, long? quantity = null, CreatedSubscriptionReseller reseller = null, SubscriptionRenewalTermDetails renewalTermDetails = null, string skuId = null, string skuDescription = null, BillingSystemOverrides systemOverrides = null, Uri resourceUri = null, TimeSpan? termDuration = null, DateTimeOffset? termStartOn = null, DateTimeOffset? termEndOn = null, Guid? provisioningTenantId = null, BillingSubscriptionStatus? status = null, BillingSubscriptionOperationStatus? operationStatus = null, BillingProvisioningState? provisioningState = null, string subscriptionId = null, IEnumerable<string> suspensionReasons = null, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = null, DateTimeOffset? enrollmentAccountStartOn = null, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = null, ResourceIdentifier billingSubscriptionId = null, IDictionary<string, string> tags = null)
+        public static BillingSubscriptionAliasData BillingSubscriptionAliasData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BillingSubscriptionAutoRenewState? autoRenew = null, Guid? subscriptionAliasBeneficiaryTenantId = null, BillingBeneficiary beneficiary = null, string billingFrequency = null, ResourceIdentifier billingProfileId = null, IReadOnlyDictionary<string, string> billingPolicies = null, string billingProfileDisplayName = null, string billingProfileName = null, string consumptionCostCenter = null, string subscriptionAliasCustomerId = null, string customerDisplayName = null, string customerName = null, string displayName = null, string enrollmentAccountId = null, string enrollmentAccountDisplayName = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, string invoiceSectionName = null, BillingAmount lastMonthCharges = null, BillingAmount monthToDateCharges = null, string nextBillingCycleBillingFrequency = null, string offerId = null, string productCategory = null, string productType = null, string productTypeId = null, DateTimeOffset? purchaseOn = null, long? quantity = null, CreatedSubscriptionReseller reseller = null, SubscriptionRenewalTermDetails renewalTermDetails = null, string skuId = null, string skuDescription = null, BillingSystemOverrides systemOverrides = null, Uri resourceUri = null, TimeSpan? termDuration = null, DateTimeOffset? termStartOn = null, DateTimeOffset? termEndOn = null, Guid? provisioningTenantId = null, BillingSubscriptionStatus? status = null, BillingSubscriptionOperationStatus? operationStatus = null, BillingProvisioningState? provisioningState = null, string subscriptionId = null, IEnumerable<string> suspensionReasons = null, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = null, DateTimeOffset? enrollmentAccountStartOn = null, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = null, string subscriptionAliasSubscriptionId = null, IDictionary<string, string> tags = null)
         {
             billingPolicies ??= new Dictionary<string, string>();
             suspensionReasons ??= new List<string>();
@@ -1356,7 +1336,7 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 autoRenew,
-                beneficiaryTenantId,
+                subscriptionAliasBeneficiaryTenantId,
                 beneficiary,
                 billingFrequency,
                 billingProfileId,
@@ -1364,7 +1344,7 @@ namespace Azure.ResourceManager.Billing.Models
                 billingProfileDisplayName,
                 billingProfileName,
                 consumptionCostCenter,
-                customerId,
+                subscriptionAliasCustomerId,
                 customerDisplayName,
                 customerName,
                 displayName,
@@ -1400,7 +1380,7 @@ namespace Azure.ResourceManager.Billing.Models
                 suspensionReasonDetails?.ToList(),
                 enrollmentAccountStartOn,
                 subscriptionEnrollmentAccountStatus,
-                billingSubscriptionId,
+                subscriptionAliasSubscriptionId,
                 tags,
                 serializedAdditionalRawData: null);
         }
@@ -1409,7 +1389,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="cancellationReason"> Cancellation reason. </param>
         /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <returns> A new <see cref="Models.CancelSubscriptionContent"/> instance for mocking. </returns>
-        public static CancelSubscriptionContent CancelSubscriptionContent(CancellationReason cancellationReason = default, string customerId = null)
+        public static CancelSubscriptionContent CancelSubscriptionContent(CustomerSubscriptionCancellationReason cancellationReason = default, ResourceIdentifier customerId = null)
         {
             return new CancelSubscriptionContent(cancellationReason, customerId, serializedAdditionalRawData: null);
         }
@@ -1485,7 +1465,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Models.BillingSubscriptionPatch"/> instance for mocking. </returns>
-        public static BillingSubscriptionPatch BillingSubscriptionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BillingSubscriptionAutoRenewState? autoRenew = null, string beneficiaryTenantId = null, BillingBeneficiary beneficiary = null, string billingFrequency = null, ResourceIdentifier billingProfileId = null, IReadOnlyDictionary<string, string> billingPolicies = null, string billingProfileDisplayName = null, string billingProfileName = null, string consumptionCostCenter = null, string customerId = null, string customerDisplayName = null, string customerName = null, string displayName = null, string enrollmentAccountId = null, string enrollmentAccountDisplayName = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, string invoiceSectionName = null, BillingAmount lastMonthCharges = null, BillingAmount monthToDateCharges = null, string nextBillingCycleBillingFrequency = null, string offerId = null, string productCategory = null, string productType = null, string productTypeId = null, DateTimeOffset? purchaseOn = null, long? quantity = null, CreatedSubscriptionReseller reseller = null, SubscriptionRenewalTermDetails renewalTermDetails = null, string skuId = null, string skuDescription = null, BillingSystemOverrides systemOverrides = null, Uri resourceUri = null, TimeSpan? termDuration = null, DateTimeOffset? termStartOn = null, DateTimeOffset? termEndOn = null, Guid? provisioningTenantId = null, BillingSubscriptionStatus? status = null, BillingSubscriptionOperationStatus? operationStatus = null, BillingProvisioningState? provisioningState = null, string subscriptionId = null, IEnumerable<string> suspensionReasons = null, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = null, DateTimeOffset? enrollmentAccountStartOn = null, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = null, IDictionary<string, string> tags = null)
+        public static BillingSubscriptionPatch BillingSubscriptionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BillingSubscriptionAutoRenewState? autoRenew = null, Guid? beneficiaryTenantId = null, BillingBeneficiary beneficiary = null, string billingFrequency = null, ResourceIdentifier billingProfileId = null, IReadOnlyDictionary<string, string> billingPolicies = null, string billingProfileDisplayName = null, string billingProfileName = null, string consumptionCostCenter = null, string customerId = null, string customerDisplayName = null, string customerName = null, string displayName = null, string enrollmentAccountId = null, string enrollmentAccountDisplayName = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, string invoiceSectionName = null, BillingAmount lastMonthCharges = null, BillingAmount monthToDateCharges = null, string nextBillingCycleBillingFrequency = null, string offerId = null, string productCategory = null, string productType = null, string productTypeId = null, DateTimeOffset? purchaseOn = null, long? quantity = null, CreatedSubscriptionReseller reseller = null, SubscriptionRenewalTermDetails renewalTermDetails = null, string skuId = null, string skuDescription = null, BillingSystemOverrides systemOverrides = null, Uri resourceUri = null, TimeSpan? termDuration = null, DateTimeOffset? termStartOn = null, DateTimeOffset? termEndOn = null, Guid? provisioningTenantId = null, BillingSubscriptionStatus? status = null, BillingSubscriptionOperationStatus? operationStatus = null, BillingProvisioningState? provisioningState = null, string subscriptionId = null, IEnumerable<string> suspensionReasons = null, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = null, DateTimeOffset? enrollmentAccountStartOn = null, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = null, IDictionary<string, string> tags = null)
         {
             billingPolicies ??= new Dictionary<string, string>();
             suspensionReasons ??= new List<string>();
@@ -1578,7 +1558,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="resellers"> The list of resellers for which an Azure plan is enabled for the customer. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Models.BillingCustomerProperties"/> instance for mocking. </returns>
-        public static BillingCustomerProperties BillingCustomerProperties(string billingProfileDisplayName = null, string billingProfileId = null, string displayName = null, string systemId = null, CustomerStatus? status = null, IEnumerable<BillingAzurePlan> enabledAzurePlans = null, IEnumerable<CreatedSubscriptionReseller> resellers = null, IDictionary<string, string> tags = null)
+        public static BillingCustomerProperties BillingCustomerProperties(string billingProfileDisplayName = null, ResourceIdentifier billingProfileId = null, string displayName = null, string systemId = null, BillingCustomerStatus? status = null, IEnumerable<BillingAzurePlan> enabledAzurePlans = null, IEnumerable<CreatedSubscriptionReseller> resellers = null, IDictionary<string, string> tags = null)
         {
             enabledAzurePlans ??= new List<BillingAzurePlan>();
             resellers ??= new List<CreatedSubscriptionReseller>();
@@ -1732,11 +1712,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="totalAmount"> The amount due when the invoice was generated. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </param>
         /// <param name="refundDetails"> The details of a refund request. </param>
         /// <returns> A new <see cref="Models.BillingInvoiceProperties"/> instance for mocking. </returns>
-        public static BillingInvoiceProperties BillingInvoiceProperties(InvoicePropertiesAmountDue amountDue = null, InvoicePropertiesAzurePrepaymentApplied azurePrepaymentApplied = null, InvoicePropertiesBilledAmount billedAmount = null, string billedDocumentId = null, string billingProfileDisplayName = null, ResourceIdentifier billingProfileId = null, InvoicePropertiesCreditAmount creditAmount = null, string creditForDocumentId = null, IEnumerable<InvoiceDocument> documents = null, InvoiceDocumentType? documentType = null, DateTimeOffset? dueOn = null, IEnumerable<FailedPayment> failedPayments = null, InvoicePropertiesFreeAzureCreditApplied freeAzureCreditApplied = null, DateTimeOffset? invoiceOn = null, DateTimeOffset? invoicePeriodEndOn = null, DateTimeOffset? invoicePeriodStartOn = null, InvoiceType? invoiceType = null, bool? isMonthlyInvoice = null, IEnumerable<Payment> payments = null, string purchaseOrderNumber = null, InvoicePropertiesRebillDetails rebillDetails = null, InvoiceStatus? status = null, string subscriptionDisplayName = null, string subscriptionId = null, SpecialTaxationType? specialTaxationType = null, InvoicePropertiesSubTotal subTotal = null, InvoicePropertiesTaxAmount taxAmount = null, InvoicePropertiesTotalAmount totalAmount = null, InvoicePropertiesRefundDetails refundDetails = null)
+        public static BillingInvoiceProperties BillingInvoiceProperties(BillingAmount amountDue = null, BillingAmount azurePrepaymentApplied = null, BillingAmount billedAmount = null, string billedDocumentId = null, string billingProfileDisplayName = null, ResourceIdentifier billingProfileId = null, BillingAmount creditAmount = null, string creditForDocumentId = null, IEnumerable<InvoiceDocument> documents = null, InvoiceDocumentType? documentType = null, DateTimeOffset? dueOn = null, IEnumerable<BillingInvoiceFailedPayment> failedPayments = null, BillingAmount freeAzureCreditApplied = null, DateTimeOffset? invoiceOn = null, DateTimeOffset? invoicePeriodEndOn = null, DateTimeOffset? invoicePeriodStartOn = null, BillingInvoiceType? invoiceType = null, bool? isMonthlyInvoice = null, IEnumerable<BillingInvoicePayment> payments = null, string purchaseOrderNumber = null, RebillDetails rebillDetails = null, BillingInvoiceStatus? status = null, string subscriptionDisplayName = null, string subscriptionId = null, SpecialTaxationType? specialTaxationType = null, BillingAmount subTotal = null, BillingAmount taxAmount = null, BillingAmount totalAmount = null, RefundDetailsSummary refundDetails = null)
         {
             documents ??= new List<InvoiceDocument>();
-            failedPayments ??= new List<FailedPayment>();
-            payments ??= new List<Payment>();
+            failedPayments ??= new List<BillingInvoiceFailedPayment>();
+            payments ??= new List<BillingInvoicePayment>();
 
             return new BillingInvoiceProperties(
                 amountDue,
@@ -1771,42 +1751,6 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InvoicePropertiesAmountDue"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesAmountDue"/> instance for mocking. </returns>
-        public static InvoicePropertiesAmountDue InvoicePropertiesAmountDue(string currency = null, float? value = null)
-        {
-            return new InvoicePropertiesAmountDue(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InvoicePropertiesAzurePrepaymentApplied"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesAzurePrepaymentApplied"/> instance for mocking. </returns>
-        public static InvoicePropertiesAzurePrepaymentApplied InvoicePropertiesAzurePrepaymentApplied(string currency = null, float? value = null)
-        {
-            return new InvoicePropertiesAzurePrepaymentApplied(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InvoicePropertiesBilledAmount"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesBilledAmount"/> instance for mocking. </returns>
-        public static InvoicePropertiesBilledAmount InvoicePropertiesBilledAmount(string currency = null, float? value = null)
-        {
-            return new InvoicePropertiesBilledAmount(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InvoicePropertiesCreditAmount"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesCreditAmount"/> instance for mocking. </returns>
-        public static InvoicePropertiesCreditAmount InvoicePropertiesCreditAmount(string currency = null, float? value = null)
-        {
-            return new InvoicePropertiesCreditAmount(currency, value, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.InvoiceDocument"/>. </summary>
         /// <param name="documentNumbers"> The document numbers for the invoice document. </param>
         /// <param name="externalUri"> The URL to download the invoice document if the source is external to Microsoft.Billing. </param>
@@ -1815,7 +1759,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="uri"> The URL to download the invoice document if the source is internal to Microsoft.Billing. </param>
         /// <param name="source"> The source of the document. ENF for Brazil and DRS for rest of the world. </param>
         /// <returns> A new <see cref="Models.InvoiceDocument"/> instance for mocking. </returns>
-        public static InvoiceDocument InvoiceDocument(IEnumerable<string> documentNumbers = null, Uri externalUri = null, InvoiceDocumentType? kind = null, string name = null, Uri uri = null, DocumentSource? source = null)
+        public static InvoiceDocument InvoiceDocument(IEnumerable<string> documentNumbers = null, Uri externalUri = null, InvoiceDocumentType? kind = null, string name = null, Uri uri = null, BillingDocumentSource? source = null)
         {
             documentNumbers ??= new List<string>();
 
@@ -1829,37 +1773,28 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FailedPayment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingInvoiceFailedPayment"/>. </summary>
         /// <param name="on"> The date when the payment was attempted. </param>
         /// <param name="failedPaymentReason"> The reason that the payment failed. </param>
-        /// <returns> A new <see cref="Models.FailedPayment"/> instance for mocking. </returns>
-        public static FailedPayment FailedPayment(DateTimeOffset? @on = null, FailedPaymentReason? failedPaymentReason = null)
+        /// <returns> A new <see cref="Models.BillingInvoiceFailedPayment"/> instance for mocking. </returns>
+        public static BillingInvoiceFailedPayment BillingInvoiceFailedPayment(DateTimeOffset? @on = null, BillingInvoiceFailedPaymentReason? failedPaymentReason = null)
         {
-            return new FailedPayment(@on, failedPaymentReason, serializedAdditionalRawData: null);
+            return new BillingInvoiceFailedPayment(@on, failedPaymentReason, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InvoicePropertiesFreeAzureCreditApplied"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesFreeAzureCreditApplied"/> instance for mocking. </returns>
-        public static InvoicePropertiesFreeAzureCreditApplied InvoicePropertiesFreeAzureCreditApplied(string currency = null, float? value = null)
-        {
-            return new InvoicePropertiesFreeAzureCreditApplied(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.Payment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingInvoicePayment"/>. </summary>
         /// <param name="amount"> The paid amount. </param>
-        /// <param name="on"> The date when the payment was made. </param>
+        /// <param name="madeOn"> The date when the payment was made. </param>
         /// <param name="paymentMethodId"> The ID that uniquely identifies the payment method used for the invoice. </param>
         /// <param name="paymentMethodFamily"> The family of payment method. </param>
         /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="paymentType"> The type of payment. </param>
-        /// <returns> A new <see cref="Models.Payment"/> instance for mocking. </returns>
-        public static Payment Payment(PaymentAmount amount = null, DateTimeOffset? @on = null, string paymentMethodId = null, BillingPaymentMethodFamily? paymentMethodFamily = null, string paymentMethodType = null, string paymentType = null)
+        /// <returns> A new <see cref="Models.BillingInvoicePayment"/> instance for mocking. </returns>
+        public static BillingInvoicePayment BillingInvoicePayment(BillingAmount amount = null, DateTimeOffset? madeOn = null, ResourceIdentifier paymentMethodId = null, PaymentMethodFamily? paymentMethodFamily = null, string paymentMethodType = null, string paymentType = null)
         {
-            return new Payment(
+            return new BillingInvoicePayment(
                 amount,
-                @on,
+                madeOn,
                 paymentMethodId,
                 paymentMethodFamily,
                 paymentMethodType,
@@ -1867,88 +1802,14 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PaymentAmount"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.PaymentAmount"/> instance for mocking. </returns>
-        public static PaymentAmount PaymentAmount(string currency = null, float? value = null)
-        {
-            return new PaymentAmount(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InvoicePropertiesRebillDetails"/>. </summary>
-        /// <param name="invoiceDocumentId"> The ID of invoice. </param>
-        /// <param name="creditNoteDocumentId"> The ID of credit note. </param>
-        /// <param name="rebillDetailsValue"> The rebill details of an invoice. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesRebillDetails"/> instance for mocking. </returns>
-        public static InvoicePropertiesRebillDetails InvoicePropertiesRebillDetails(string invoiceDocumentId = null, string creditNoteDocumentId = null, RebillDetails rebillDetailsValue = null)
-        {
-            return new InvoicePropertiesRebillDetails(invoiceDocumentId, creditNoteDocumentId, rebillDetailsValue, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.RebillDetails"/>. </summary>
         /// <param name="invoiceDocumentId"> The ID of invoice. </param>
         /// <param name="creditNoteDocumentId"> The ID of credit note. </param>
         /// <param name="rebillDetailsValue"> The rebill details of an invoice. </param>
         /// <returns> A new <see cref="Models.RebillDetails"/> instance for mocking. </returns>
-        public static RebillDetails RebillDetails(string invoiceDocumentId = null, string creditNoteDocumentId = null, RebillDetails rebillDetailsValue = null)
+        public static RebillDetails RebillDetails(ResourceIdentifier invoiceDocumentId = null, ResourceIdentifier creditNoteDocumentId = null, RebillDetails rebillDetailsValue = null)
         {
             return new RebillDetails(invoiceDocumentId, creditNoteDocumentId, rebillDetailsValue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InvoicePropertiesSubTotal"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesSubTotal"/> instance for mocking. </returns>
-        public static InvoicePropertiesSubTotal InvoicePropertiesSubTotal(string currency = null, float? value = null)
-        {
-            return new InvoicePropertiesSubTotal(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InvoicePropertiesTaxAmount"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesTaxAmount"/> instance for mocking. </returns>
-        public static InvoicePropertiesTaxAmount InvoicePropertiesTaxAmount(string currency = null, float? value = null)
-        {
-            return new InvoicePropertiesTaxAmount(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InvoicePropertiesTotalAmount"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesTotalAmount"/> instance for mocking. </returns>
-        public static InvoicePropertiesTotalAmount InvoicePropertiesTotalAmount(string currency = null, float? value = null)
-        {
-            return new InvoicePropertiesTotalAmount(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InvoicePropertiesRefundDetails"/>. </summary>
-        /// <param name="requestedOn"> Date when the refund was requested. </param>
-        /// <param name="approvedOn"> Date when the refund was approved. </param>
-        /// <param name="completedOn"> Date when the refund was completed. </param>
-        /// <param name="amountRequested"> The amount of refund requested. </param>
-        /// <param name="amountRefunded"> The amount refunded. </param>
-        /// <param name="rebillInvoiceId"> The invoice ID of the rebill invoice for a refund. </param>
-        /// <param name="transactionCount"> The number of transactions refunded. </param>
-        /// <param name="refundStatus"> The status of refund request. </param>
-        /// <param name="refundOperationId"> The ID of refund operation. </param>
-        /// <param name="refundReason"> The reason for refund. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesRefundDetails"/> instance for mocking. </returns>
-        public static InvoicePropertiesRefundDetails InvoicePropertiesRefundDetails(DateTimeOffset? requestedOn = null, DateTimeOffset? approvedOn = null, DateTimeOffset? completedOn = null, RefundDetailsSummaryAmountRequested amountRequested = null, RefundDetailsSummaryAmountRefunded amountRefunded = null, string rebillInvoiceId = null, int? transactionCount = null, RefundStatus? refundStatus = null, string refundOperationId = null, RefundReasonCode? refundReason = null)
-        {
-            return new InvoicePropertiesRefundDetails(
-                requestedOn,
-                approvedOn,
-                completedOn,
-                amountRequested,
-                amountRefunded,
-                rebillInvoiceId,
-                transactionCount,
-                refundStatus,
-                refundOperationId,
-                refundReason,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RefundDetailsSummary"/>. </summary>
@@ -1963,7 +1824,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="refundOperationId"> The ID of refund operation. </param>
         /// <param name="refundReason"> The reason for refund. </param>
         /// <returns> A new <see cref="Models.RefundDetailsSummary"/> instance for mocking. </returns>
-        public static RefundDetailsSummary RefundDetailsSummary(DateTimeOffset? requestedOn = null, DateTimeOffset? approvedOn = null, DateTimeOffset? completedOn = null, RefundDetailsSummaryAmountRequested amountRequested = null, RefundDetailsSummaryAmountRefunded amountRefunded = null, string rebillInvoiceId = null, int? transactionCount = null, RefundStatus? refundStatus = null, string refundOperationId = null, RefundReasonCode? refundReason = null)
+        public static RefundDetailsSummary RefundDetailsSummary(DateTimeOffset? requestedOn = null, DateTimeOffset? approvedOn = null, DateTimeOffset? completedOn = null, BillingAmount amountRequested = null, BillingAmount amountRefunded = null, ResourceIdentifier rebillInvoiceId = null, int? transactionCount = null, RefundStatus? refundStatus = null, string refundOperationId = null, RefundReasonCode? refundReason = null)
         {
             return new RefundDetailsSummary(
                 requestedOn,
@@ -1979,31 +1840,13 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RefundDetailsSummaryAmountRequested"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.RefundDetailsSummaryAmountRequested"/> instance for mocking. </returns>
-        public static RefundDetailsSummaryAmountRequested RefundDetailsSummaryAmountRequested(string currency = null, float? value = null)
-        {
-            return new RefundDetailsSummaryAmountRequested(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RefundDetailsSummaryAmountRefunded"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.RefundDetailsSummaryAmountRefunded"/> instance for mocking. </returns>
-        public static RefundDetailsSummaryAmountRefunded RefundDetailsSummaryAmountRefunded(string currency = null, float? value = null)
-        {
-            return new RefundDetailsSummaryAmountRefunded(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentDownloadResult"/>. </summary>
-        /// <param name="expiryTime"> The time in UTC when the download URL will expire. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingDocumentDownloadResult"/>. </summary>
+        /// <param name="expireOn"> The time in UTC when the download URL will expire. </param>
         /// <param name="uri"> The URL to the PDF or .zip file. </param>
-        /// <returns> A new <see cref="Models.DocumentDownloadResult"/> instance for mocking. </returns>
-        public static DocumentDownloadResult DocumentDownloadResult(string expiryTime = null, Uri uri = null)
+        /// <returns> A new <see cref="Models.BillingDocumentDownloadResult"/> instance for mocking. </returns>
+        public static BillingDocumentDownloadResult BillingDocumentDownloadResult(DateTimeOffset? expireOn = null, Uri uri = null)
         {
-            return new DocumentDownloadResult(expiryTime, uri, serializedAdditionalRawData: null);
+            return new BillingDocumentDownloadResult(expireOn, uri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeleteInvoiceSectionEligibilityResult"/>. </summary>
@@ -2089,7 +1932,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="status"> Status of the payment method. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Billing.BillingPaymentMethodLinkData"/> instance for mocking. </returns>
-        public static BillingPaymentMethodLinkData BillingPaymentMethodLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string accountHolderName = null, string displayName = null, string expiration = null, BillingPaymentMethodFamily? family = null, string lastFourDigits = null, IEnumerable<PaymentMethodLogo> logos = null, PaymentMethodProjectionProperties paymentMethod = null, ResourceIdentifier paymentMethodId = null, string paymentMethodType = null, BillingPaymentMethodStatus? status = null, IDictionary<string, string> tags = null)
+        public static BillingPaymentMethodLinkData BillingPaymentMethodLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string accountHolderName = null, string displayName = null, string expiration = null, PaymentMethodFamily? family = null, string lastFourDigits = null, IEnumerable<PaymentMethodLogo> logos = null, PaymentMethodProjectionProperties paymentMethod = null, ResourceIdentifier paymentMethodId = null, string paymentMethodType = null, PaymentMethodStatus? status = null, IDictionary<string, string> tags = null)
         {
             logos ??= new List<PaymentMethodLogo>();
             tags ??= new Dictionary<string, string>();
@@ -2133,7 +1976,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
         /// <returns> A new <see cref="Models.PaymentMethodProjectionProperties"/> instance for mocking. </returns>
-        public static PaymentMethodProjectionProperties PaymentMethodProjectionProperties(ResourceIdentifier paymentMethodId = null, string accountHolderName = null, string displayName = null, string expiration = null, BillingPaymentMethodFamily? family = null, string lastFourDigits = null, IEnumerable<PaymentMethodLogo> logos = null, string paymentMethodType = null, BillingPaymentMethodStatus? status = null)
+        public static PaymentMethodProjectionProperties PaymentMethodProjectionProperties(ResourceIdentifier paymentMethodId = null, string accountHolderName = null, string displayName = null, string expiration = null, PaymentMethodFamily? family = null, string lastFourDigits = null, IEnumerable<PaymentMethodLogo> logos = null, string paymentMethodType = null, PaymentMethodStatus? status = null)
         {
             logos ??= new List<PaymentMethodLogo>();
 
@@ -2166,7 +2009,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="status"> Status of the payment method. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Billing.BillingPaymentMethodData"/> instance for mocking. </returns>
-        public static BillingPaymentMethodData BillingPaymentMethodData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier paymentMethodId = null, string accountHolderName = null, string displayName = null, string expiration = null, BillingPaymentMethodFamily? family = null, string lastFourDigits = null, IEnumerable<PaymentMethodLogo> logos = null, string paymentMethodType = null, BillingPaymentMethodStatus? status = null, IDictionary<string, string> tags = null)
+        public static BillingPaymentMethodData BillingPaymentMethodData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier paymentMethodId = null, string accountHolderName = null, string displayName = null, string expiration = null, PaymentMethodFamily? family = null, string lastFourDigits = null, IEnumerable<PaymentMethodLogo> logos = null, string paymentMethodType = null, PaymentMethodStatus? status = null, IDictionary<string, string> tags = null)
         {
             logos ??= new List<PaymentMethodLogo>();
             tags ??= new Dictionary<string, string>();
@@ -2216,9 +2059,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="viewCharges"> The policy that controls whether the users in customer's organization can view charges at pay-as-you-go prices. </param>
         /// <param name="policies"> List of all policies defined at the billing scope. </param>
         /// <returns> A new <see cref="Models.BillingCustomerPolicyProperties"/> instance for mocking. </returns>
-        public static BillingCustomerPolicyProperties BillingCustomerPolicyProperties(BillingProvisioningState? provisioningState = null, ViewChargesPolicy viewCharges = default, IEnumerable<PolicySummary> policies = null)
+        public static BillingCustomerPolicyProperties BillingCustomerPolicyProperties(BillingProvisioningState? provisioningState = null, ViewChargesPolicy viewCharges = default, IEnumerable<BillingPolicySummary> policies = null)
         {
-            policies ??= new List<PolicySummary>();
+            policies ??= new List<BillingPolicySummary>();
 
             return new BillingCustomerPolicyProperties(provisioningState, viewCharges, policies?.ToList(), serializedAdditionalRawData: null);
         }
@@ -2255,9 +2098,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="viewCharges"> The policy that controls whether the users in customer's organization can view charges at pay-as-you-go prices. </param>
         /// <param name="policies"> List of all policies defined at the billing scope. </param>
         /// <returns> A new <see cref="Models.BillingProfilePolicyProperties"/> instance for mocking. </returns>
-        public static BillingProfilePolicyProperties BillingProfilePolicyProperties(BillingProvisioningState? provisioningState = null, BillingProfilePolicyPropertiesEnterpriseAgreementPolicies enterpriseAgreementPolicies = null, InvoiceSectionLabelManagementPolicy? invoiceSectionLabelManagement = null, MarketplacePurchasesPolicy? marketplacePurchases = null, ReservationPurchasesPolicy? reservationPurchases = null, SavingsPlanPurchasesPolicy? savingsPlanPurchases = null, ViewChargesPolicy? viewCharges = null, IEnumerable<PolicySummary> policies = null)
+        public static BillingProfilePolicyProperties BillingProfilePolicyProperties(BillingProvisioningState? provisioningState = null, EnterpriseAgreementPolicies enterpriseAgreementPolicies = null, InvoiceSectionLabelManagementPolicy? invoiceSectionLabelManagement = null, MarketplacePurchasesPolicy? marketplacePurchases = null, ReservationPurchasesPolicy? reservationPurchases = null, SavingsPlanPurchasesPolicy? savingsPlanPurchases = null, ViewChargesPolicy? viewCharges = null, IEnumerable<BillingPolicySummary> policies = null)
         {
-            policies ??= new List<PolicySummary>();
+            policies ??= new List<BillingPolicySummary>();
 
             return new BillingProfilePolicyProperties(
                 provisioningState,
@@ -2301,9 +2144,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="savingsPlanPurchases"> The policy that controls whether users with Azure savings plan purchase are allowed. </param>
         /// <param name="policies"> List of all policies defined at the billing scope. </param>
         /// <returns> A new <see cref="Models.BillingAccountPolicyProperties"/> instance for mocking. </returns>
-        public static BillingAccountPolicyProperties BillingAccountPolicyProperties(BillingProvisioningState? provisioningState = null, EnterpriseAgreementPolicies enterpriseAgreementPolicies = null, MarketplacePurchasesPolicy? marketplacePurchases = null, ReservationPurchasesPolicy? reservationPurchases = null, SavingsPlanPurchasesPolicy? savingsPlanPurchases = null, IEnumerable<PolicySummary> policies = null)
+        public static BillingAccountPolicyProperties BillingAccountPolicyProperties(BillingProvisioningState? provisioningState = null, EnterpriseAgreementPolicies enterpriseAgreementPolicies = null, MarketplacePurchasesPolicy? marketplacePurchases = null, ReservationPurchasesPolicy? reservationPurchases = null, SavingsPlanPurchasesPolicy? savingsPlanPurchases = null, IEnumerable<BillingPolicySummary> policies = null)
         {
-            policies ??= new List<PolicySummary>();
+            policies ??= new List<BillingPolicySummary>();
 
             return new BillingAccountPolicyProperties(
                 provisioningState,
@@ -2341,9 +2184,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="provisioningState"> The provisioning state of the resource during a long-running operation. </param>
         /// <param name="policies"> List of all policies defined at the billing scope. </param>
         /// <returns> A new <see cref="Models.SubscriptionPolicyProperties"/> instance for mocking. </returns>
-        public static SubscriptionPolicyProperties SubscriptionPolicyProperties(BillingProvisioningState? provisioningState = null, IEnumerable<PolicySummary> policies = null)
+        public static SubscriptionPolicyProperties SubscriptionPolicyProperties(BillingProvisioningState? provisioningState = null, IEnumerable<BillingPolicySummary> policies = null)
         {
-            policies ??= new List<PolicySummary>();
+            policies ??= new List<BillingPolicySummary>();
 
             return new SubscriptionPolicyProperties(provisioningState, policies?.ToList(), serializedAdditionalRawData: null);
         }
@@ -2394,7 +2237,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="tenantId"> The id of the tenant in which the product is used. </param>
         /// <param name="reseller"> Reseller for this product. The fields is not available for Microsoft Partner Agreement products. </param>
         /// <returns> A new <see cref="Models.BillingProductProperties"/> instance for mocking. </returns>
-        public static BillingProductProperties BillingProductProperties(BillingSubscriptionAutoRenewState? autoRenew = null, string availabilityId = null, string billingFrequency = null, string billingProfileId = null, string billingProfileDisplayName = null, string customerId = null, string customerDisplayName = null, string displayName = null, string endDate = null, string invoiceSectionId = null, string invoiceSectionDisplayName = null, ProductPropertiesLastCharge lastCharge = null, string lastChargeDate = null, string productType = null, string productTypeId = null, string skuId = null, string skuDescription = null, string purchaseDate = null, long? quantity = null, ProductStatus? status = null, Guid? tenantId = null, ProductPropertiesReseller reseller = null)
+        public static BillingProductProperties BillingProductProperties(BillingSubscriptionAutoRenewState? autoRenew = null, string availabilityId = null, string billingFrequency = null, ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, ResourceIdentifier customerId = null, string customerDisplayName = null, string displayName = null, string endDate = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, BillingAmount lastCharge = null, string lastChargeDate = null, string productType = null, string productTypeId = null, string skuId = null, string skuDescription = null, string purchaseDate = null, long? quantity = null, BillingProductStatus? status = null, Guid? tenantId = null, BillingAmount reseller = null)
         {
             return new BillingProductProperties(
                 autoRenew,
@@ -2422,41 +2265,13 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProductPropertiesLastCharge"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.ProductPropertiesLastCharge"/> instance for mocking. </returns>
-        public static ProductPropertiesLastCharge ProductPropertiesLastCharge(string currency = null, float? value = null)
-        {
-            return new ProductPropertiesLastCharge(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProductPropertiesReseller"/>. </summary>
-        /// <param name="resellerId"> The MPN ID of the reseller. </param>
-        /// <param name="description"> The name of the reseller. </param>
-        /// <returns> A new <see cref="Models.ProductPropertiesReseller"/> instance for mocking. </returns>
-        public static ProductPropertiesReseller ProductPropertiesReseller(string resellerId = null, string description = null)
-        {
-            return new ProductPropertiesReseller(resellerId, description, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.MoveProductEligibilityResult"/>. </summary>
         /// <param name="isMoveEligible"> Specifies whether the subscription is eligible to be transferred. </param>
         /// <param name="errorDetails"> Error details of the transfer eligibility validation. </param>
         /// <returns> A new <see cref="Models.MoveProductEligibilityResult"/> instance for mocking. </returns>
-        public static MoveProductEligibilityResult MoveProductEligibilityResult(bool? isMoveEligible = null, MoveProductEligibilityResultErrorDetails errorDetails = null)
+        public static MoveProductEligibilityResult MoveProductEligibilityResult(bool? isMoveEligible = null, MoveProductErrorDetails errorDetails = null)
         {
             return new MoveProductEligibilityResult(isMoveEligible, errorDetails, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MoveProductEligibilityResultErrorDetails"/>. </summary>
-        /// <param name="code"> Error code for the product transfer validation. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="details"> Error details of the transfer eligibility validation. </param>
-        /// <returns> A new <see cref="Models.MoveProductEligibilityResultErrorDetails"/> instance for mocking. </returns>
-        public static MoveProductEligibilityResultErrorDetails MoveProductEligibilityResultErrorDetails(MoveValidationErrorCode? code = null, string message = null, string details = null)
-        {
-            return new MoveProductEligibilityResultErrorDetails(code, message, details, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoveProductErrorDetails"/>. </summary>
@@ -2538,7 +2353,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="trend"> last 7 day utilization trend for a reservation. </param>
         /// <param name="aggregates"> The array of aggregates of a reservation's utilization. </param>
         /// <returns> A new <see cref="Billing.BillingReservationData"/> instance for mocking. </returns>
-        public static BillingReservationData BillingReservationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, int? etag = null, string skuName = null, string reservedResourceType = null, InstanceFlexibility? instanceFlexibility = null, string displayName = null, IEnumerable<string> appliedScopes = null, string appliedScopeType = null, bool? isArchived = null, string capabilities = null, float? quantity = null, string provisioningState = null, DateTimeOffset? effectiveOn = null, DateTimeOffset? benefitStartOn = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? reservationExpireOn = null, DateTimeOffset? reviewOn = null, string skuDescription = null, ReservationExtendedStatusInfo extendedStatusInfo = null, ReservationBillingPlan? billingPlan = null, string displayProvisioningState = null, string provisioningSubState = null, DateTimeOffset? purchaseOn = null, DateTimeOffset? reservationPurchaseOn = null, ReservationSplitProperties splitProperties = null, ReservationMergeProperties mergeProperties = null, ReservationSwapProperties swapProperties = null, ReservationAppliedScopeProperties appliedScopeProperties = null, string billingScopeId = null, bool? isRenewed = null, string renewSource = null, string renewDestination = null, RenewPropertiesResponse renewProperties = null, string term = null, string userFriendlyAppliedScopeType = null, string userFriendlyRenewState = null, string productCode = null, string trend = null, IEnumerable<ReservationUtilizationAggregates> aggregates = null)
+        public static BillingReservationData BillingReservationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, int? etag = null, string skuName = null, string reservedResourceType = null, InstanceFlexibility? instanceFlexibility = null, string displayName = null, IEnumerable<string> appliedScopes = null, string appliedScopeType = null, bool? isArchived = null, string capabilities = null, float? quantity = null, string provisioningState = null, DateTimeOffset? effectiveOn = null, DateTimeOffset? benefitStartOn = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? reservationExpireOn = null, DateTimeOffset? reviewOn = null, string skuDescription = null, ReservationExtendedStatusInfo extendedStatusInfo = null, ReservationBillingPlan? billingPlan = null, string displayProvisioningState = null, string provisioningSubState = null, DateTimeOffset? purchaseOn = null, DateTimeOffset? reservationPurchaseOn = null, ReservationSplitProperties splitProperties = null, ReservationMergeProperties mergeProperties = null, ReservationSwapProperties swapProperties = null, ReservationAppliedScopeProperties appliedScopeProperties = null, string billingScopeId = null, bool? isRenewed = null, string renewSource = null, string renewDestination = null, ReservationRenewProperties renewProperties = null, string term = null, string userFriendlyAppliedScopeType = null, string userFriendlyRenewState = null, string productCode = null, string trend = null, IEnumerable<ReservationUtilizationAggregates> aggregates = null)
         {
             tags ??= new Dictionary<string, string>();
             appliedScopes ??= new List<string>();
@@ -2705,19 +2520,19 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Transaction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingTransactionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> A transaction. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <returns> A new <see cref="Models.Transaction"/> instance for mocking. </returns>
-        public static Transaction Transaction(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TransactionProperties properties = null, IDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="Models.BillingTransactionData"/> instance for mocking. </returns>
+        public static BillingTransactionData BillingTransactionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BillingTransactionProperties properties = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new Transaction(
+            return new BillingTransactionData(
                 id,
                 name,
                 resourceType,
@@ -2727,98 +2542,113 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TransactionPropertiesAzureCreditApplied"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesAzureCreditApplied"/> instance for mocking. </returns>
-        public static TransactionPropertiesAzureCreditApplied TransactionPropertiesAzureCreditApplied(string currency = null, float? value = null)
+        /// <summary> Initializes a new instance of <see cref="Models.BillingTransactionProperties"/>. </summary>
+        /// <param name="azureCreditApplied"> The amount of any Azure credits automatically applied to this transaction. </param>
+        /// <param name="azurePlan"> Details of the Azure plan. </param>
+        /// <param name="billingCurrency"> The ISO 4217 code for the currency in which this transaction is billed. </param>
+        /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
+        /// <param name="billingProfileId"> The fully qualified ID that uniquely identifies a billing profile. </param>
+        /// <param name="consumptionCommitmentDecremented"> The amount of Microsoft Azure Consumption Commitment(MACC) decrement through the transaction. </param>
+        /// <param name="customerDisplayName"> The name of the customer. </param>
+        /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
+        /// <param name="creditType"> The credit type of the transaction. Applies only to credited transactions. </param>
+        /// <param name="on"> The date of transaction. </param>
+        /// <param name="discount"> The percentage discount, if any, applied to this transaction. </param>
+        /// <param name="effectivePrice"> The price of the product after applying any discounts. </param>
+        /// <param name="exchangeRate"> The exchange rate used to convert charged amount to billing currency, if applicable. </param>
+        /// <param name="invoice"> Invoice name on which the transaction was billed or 'Pending' if the transaction is not billed. </param>
+        /// <param name="invoiceId"> The fully qualified ID of the invoice on which the transaction was billed. This field is only applicable for transactions which are billed. </param>
+        /// <param name="invoiceSectionDisplayName"> The name of the invoice section. </param>
+        /// <param name="invoiceSectionId"> The fully qualified ID that uniquely identifies an invoice section. </param>
+        /// <param name="isThirdParty"> Whether or not the transaction is third party. </param>
+        /// <param name="kind"> Type of the transaction, billed or unbilled. </param>
+        /// <param name="marketPrice"> The retail price of the product. </param>
+        /// <param name="partNumber"> The part number of the product for which the transaction took place. The field is only applicable for Enterprise Agreement invoices. </param>
+        /// <param name="pricingCurrency"> The ISO 4217 code for the currency in which the product is priced. </param>
+        /// <param name="productDescription"> The description of the product for which the transaction took place. </param>
+        /// <param name="productFamily"> The family of the product for which the transaction took place. </param>
+        /// <param name="productTypeId"> The ID of the product type for which the transaction took place. </param>
+        /// <param name="productType"> The type of the product for which the transaction took place. </param>
+        /// <param name="quantity"> The quantity purchased in the transaction. </param>
+        /// <param name="reasonCode"> There reason code for the transaction. </param>
+        /// <param name="servicePeriodStartOn"> The date of the purchase of the product, or the start date of the month in which usage started. </param>
+        /// <param name="servicePeriodEndOn"> The end date of the product term, or the end date of the month in which usage ended. </param>
+        /// <param name="subTotal"> The pre-tax charged amount for the transaction. </param>
+        /// <param name="tax"> The tax amount applied to the transaction. </param>
+        /// <param name="transactionAmount"> The charge associated with the transaction. </param>
+        /// <param name="transactionType"> The type of transaction. </param>
+        /// <param name="units"> The number of units used for a given product. </param>
+        /// <param name="unitOfMeasure"> The unit of measure used to bill for the product. For example, compute services are billed per hour. </param>
+        /// <param name="unitType"> The description for the unit of measure for a given product. </param>
+        /// <param name="specialTaxationType"> Identifies the type of tax calculation used for the invoice. The field is applicable only to invoices with special tax calculation logic. </param>
+        /// <param name="refundTransactionDetails"> The refund details of a transaction. </param>
+        /// <returns> A new <see cref="Models.BillingTransactionProperties"/> instance for mocking. </returns>
+        public static BillingTransactionProperties BillingTransactionProperties(BillingAmount azureCreditApplied = null, string azurePlan = null, string billingCurrency = null, BinaryData billingProfileDisplayName = null, ResourceIdentifier billingProfileId = null, BillingAmount consumptionCommitmentDecremented = null, string customerDisplayName = null, ResourceIdentifier customerId = null, BillingTransactionCreditType? creditType = null, DateTimeOffset? @on = null, float? discount = null, BillingAmount effectivePrice = null, float? exchangeRate = null, string invoice = null, ResourceIdentifier invoiceId = null, string invoiceSectionDisplayName = null, ResourceIdentifier invoiceSectionId = null, bool? isThirdParty = null, BillingTransactionKind? kind = null, BillingAmount marketPrice = null, string partNumber = null, string pricingCurrency = null, string productDescription = null, string productFamily = null, string productTypeId = null, string productType = null, int? quantity = null, string reasonCode = null, DateTimeOffset? servicePeriodStartOn = null, DateTimeOffset? servicePeriodEndOn = null, BillingAmount subTotal = null, BillingAmount tax = null, BillingAmount transactionAmount = null, string transactionType = null, float? units = null, string unitOfMeasure = null, string unitType = null, SpecialTaxationType? specialTaxationType = null, RefundTransactionDetails refundTransactionDetails = null)
         {
-            return new TransactionPropertiesAzureCreditApplied(currency, value, serializedAdditionalRawData: null);
+            return new BillingTransactionProperties(
+                azureCreditApplied,
+                azurePlan,
+                billingCurrency,
+                billingProfileDisplayName,
+                billingProfileId,
+                consumptionCommitmentDecremented,
+                customerDisplayName,
+                customerId,
+                creditType,
+                @on,
+                discount,
+                effectivePrice,
+                exchangeRate,
+                invoice,
+                invoiceId,
+                invoiceSectionDisplayName,
+                invoiceSectionId,
+                isThirdParty,
+                kind,
+                marketPrice,
+                partNumber,
+                pricingCurrency,
+                productDescription,
+                productFamily,
+                productTypeId,
+                productType,
+                quantity,
+                reasonCode,
+                servicePeriodStartOn,
+                servicePeriodEndOn,
+                subTotal,
+                tax,
+                transactionAmount,
+                transactionType,
+                units,
+                unitOfMeasure,
+                unitType,
+                specialTaxationType,
+                refundTransactionDetails,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TransactionPropertiesConsumptionCommitmentDecremented"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesConsumptionCommitmentDecremented"/> instance for mocking. </returns>
-        public static TransactionPropertiesConsumptionCommitmentDecremented TransactionPropertiesConsumptionCommitmentDecremented(string currency = null, float? value = null)
+        /// <summary> Initializes a new instance of <see cref="Models.RefundTransactionDetails"/>. </summary>
+        /// <param name="amountRequested"> The amount of refund requested. </param>
+        /// <param name="amountRefunded"> The amount refunded. </param>
+        /// <param name="refundOperationId"> The ID of refund operation. </param>
+        /// <returns> A new <see cref="Models.RefundTransactionDetails"/> instance for mocking. </returns>
+        public static RefundTransactionDetails RefundTransactionDetails(BillingAmount amountRequested = null, BillingAmount amountRefunded = null, string refundOperationId = null)
         {
-            return new TransactionPropertiesConsumptionCommitmentDecremented(currency, value, serializedAdditionalRawData: null);
+            return new RefundTransactionDetails(amountRequested, amountRefunded, refundOperationId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TransactionPropertiesEffectivePrice"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesEffectivePrice"/> instance for mocking. </returns>
-        public static TransactionPropertiesEffectivePrice TransactionPropertiesEffectivePrice(string currency = null, float? value = null)
-        {
-            return new TransactionPropertiesEffectivePrice(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TransactionPropertiesMarketPrice"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesMarketPrice"/> instance for mocking. </returns>
-        public static TransactionPropertiesMarketPrice TransactionPropertiesMarketPrice(string currency = null, float? value = null)
-        {
-            return new TransactionPropertiesMarketPrice(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TransactionPropertiesSubTotal"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesSubTotal"/> instance for mocking. </returns>
-        public static TransactionPropertiesSubTotal TransactionPropertiesSubTotal(string currency = null, float? value = null)
-        {
-            return new TransactionPropertiesSubTotal(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TransactionPropertiesTax"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesTax"/> instance for mocking. </returns>
-        public static TransactionPropertiesTax TransactionPropertiesTax(string currency = null, float? value = null)
-        {
-            return new TransactionPropertiesTax(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TransactionPropertiesTransactionAmount"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesTransactionAmount"/> instance for mocking. </returns>
-        public static TransactionPropertiesTransactionAmount TransactionPropertiesTransactionAmount(string currency = null, float? value = null)
-        {
-            return new TransactionPropertiesTransactionAmount(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RefundTransactionDetailsAmountRequested"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.RefundTransactionDetailsAmountRequested"/> instance for mocking. </returns>
-        public static RefundTransactionDetailsAmountRequested RefundTransactionDetailsAmountRequested(string currency = null, float? value = null)
-        {
-            return new RefundTransactionDetailsAmountRequested(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RefundTransactionDetailsAmountRefunded"/>. </summary>
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.RefundTransactionDetailsAmountRefunded"/> instance for mocking. </returns>
-        public static RefundTransactionDetailsAmountRefunded RefundTransactionDetailsAmountRefunded(string currency = null, float? value = null)
-        {
-            return new RefundTransactionDetailsAmountRefunded(currency, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TransactionSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingTransactionSummary"/>. </summary>
         /// <param name="azureCreditApplied"> The total amount of any Azure credits applied. </param>
         /// <param name="billingCurrency"> The ISO 4217 code for the currency in which the transactions are billed. </param>
         /// <param name="consumptionCommitmentDecremented"> The total Microsoft Azure Consumption Commitment (MACC) decrement through the invoice. </param>
         /// <param name="subTotal"> The total pre-tax charged amount. </param>
         /// <param name="tax"> The total tax amount applied. </param>
         /// <param name="total"> The total charges. </param>
-        /// <returns> A new <see cref="Models.TransactionSummary"/> instance for mocking. </returns>
-        public static TransactionSummary TransactionSummary(float? azureCreditApplied = null, string billingCurrency = null, float? consumptionCommitmentDecremented = null, float? subTotal = null, float? tax = null, float? total = null)
+        /// <returns> A new <see cref="Models.BillingTransactionSummary"/> instance for mocking. </returns>
+        public static BillingTransactionSummary BillingTransactionSummary(float? azureCreditApplied = null, string billingCurrency = null, float? consumptionCommitmentDecremented = null, float? subTotal = null, float? tax = null, float? total = null)
         {
-            return new TransactionSummary(
+            return new BillingTransactionSummary(
                 azureCreditApplied,
                 billingCurrency,
                 consumptionCommitmentDecremented,
@@ -2869,7 +2699,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="transferStatus"> Transfer status. </param>
         /// <param name="errorDetails"> Error details for transfer execution. </param>
         /// <returns> A new <see cref="Models.DetailedTransferStatus"/> instance for mocking. </returns>
-        public static DetailedTransferStatus DetailedTransferStatus(ProductType? productType = null, string productId = null, string productName = null, string skuDescription = null, ProductTransferStatus? transferStatus = null, TransferError errorDetails = null)
+        public static DetailedTransferStatus DetailedTransferStatus(BillingProductType? productType = null, string productId = null, string productName = null, string skuDescription = null, BillingProductTransferStatus? transferStatus = null, BillingTransferError errorDetails = null)
         {
             return new DetailedTransferStatus(
                 productType,
@@ -2881,13 +2711,13 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TransferError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingTransferError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
-        /// <returns> A new <see cref="Models.TransferError"/> instance for mocking. </returns>
-        public static TransferError TransferError(string code = null, string message = null)
+        /// <returns> A new <see cref="Models.BillingTransferError"/> instance for mocking. </returns>
+        public static BillingTransferError BillingTransferError(string code = null, string message = null)
         {
-            return new TransferError(code, message, serializedAdditionalRawData: null);
+            return new BillingTransferError(code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Billing.PartnerTransferDetailData"/>. </summary>
@@ -2948,11 +2778,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="supportedAccounts"> List of supported account types. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Billing.RecipientTransferDetailData"/> instance for mocking. </returns>
-        public static RecipientTransferDetailData RecipientTransferDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? expireOn = null, IEnumerable<EligibleProductType> allowedProductType = null, PartnerTransferStatus? transferStatus = null, string recipientEmailId = null, string initiatorEmailId = null, string resellerId = null, string resellerName = null, InitiatorCustomerType? initiatorCustomerType = null, string canceledBy = null, IEnumerable<DetailedTransferStatus> detailedTransferStatus = null, string customerTenantId = null, IEnumerable<SupportedAccountType> supportedAccounts = null, IDictionary<string, string> tags = null)
+        public static RecipientTransferDetailData RecipientTransferDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? expireOn = null, IEnumerable<EligibleProductType> allowedProductType = null, PartnerTransferStatus? transferStatus = null, string recipientEmailId = null, string initiatorEmailId = null, string resellerId = null, string resellerName = null, InitiatorCustomerType? initiatorCustomerType = null, string canceledBy = null, IEnumerable<DetailedTransferStatus> detailedTransferStatus = null, Guid? customerTenantId = null, IEnumerable<BillingSupportedAccountType> supportedAccounts = null, IDictionary<string, string> tags = null)
         {
             allowedProductType ??= new List<EligibleProductType>();
             detailedTransferStatus ??= new List<DetailedTransferStatus>();
-            supportedAccounts ??= new List<SupportedAccountType>();
+            supportedAccounts ??= new List<BillingSupportedAccountType>();
             tags ??= new Dictionary<string, string>();
 
             return new RecipientTransferDetailData(
@@ -2976,75 +2806,26 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ValidateTransferResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingTransferValidationResult"/>. </summary>
         /// <param name="status"> The status of validation. </param>
         /// <param name="productId"> The product id for which this result applies. </param>
         /// <param name="results"> The array of validation results. </param>
-        /// <returns> A new <see cref="Models.ValidateTransferResponse"/> instance for mocking. </returns>
-        public static ValidateTransferResponse ValidateTransferResponse(string status = null, string productId = null, IEnumerable<ValidationResultProperties> results = null)
+        /// <returns> A new <see cref="Models.BillingTransferValidationResult"/> instance for mocking. </returns>
+        public static BillingTransferValidationResult BillingTransferValidationResult(string status = null, string productId = null, IEnumerable<BillingTransferValidationResultProperties> results = null)
         {
-            results ??= new List<ValidationResultProperties>();
+            results ??= new List<BillingTransferValidationResultProperties>();
 
-            return new ValidateTransferResponse(status, productId, results?.ToList(), serializedAdditionalRawData: null);
+            return new BillingTransferValidationResult(status, productId, results?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ValidationResultProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingTransferValidationResultProperties"/>. </summary>
         /// <param name="level"> Result Level. </param>
         /// <param name="code"> Result Code. </param>
         /// <param name="message"> The validation message. </param>
-        /// <returns> A new <see cref="Models.ValidationResultProperties"/> instance for mocking. </returns>
-        public static ValidationResultProperties ValidationResultProperties(string level = null, string code = null, string message = null)
+        /// <returns> A new <see cref="Models.BillingTransferValidationResultProperties"/> instance for mocking. </returns>
+        public static BillingTransferValidationResultProperties BillingTransferValidationResultProperties(string level = null, string code = null, string message = null)
         {
-            return new ValidationResultProperties(level, code, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of BillingSubscriptionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="autoRenew"> Indicates whether auto renewal is turned on or off for a subscription. </param>
-        /// <param name="beneficiaryTenantId"> The provisioning tenant of the subscription. </param>
-        /// <param name="billingFrequency"> The billing frequency of the subscription in the ISO8601 format. Example: P1M, P3M, P1Y. </param>
-        /// <param name="billingProfileId"> The ID of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="billingPolicies"> Dictionary of billing policies associated with the subscription. </param>
-        /// <param name="billingProfileDisplayName"> The display name of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="billingProfileName"> The name of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="consumptionCostCenter"> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement Type billing accounts. </param>
-        /// <param name="customerId"> The ID of the customer for whom the subscription was created. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="customerDisplayName"> The name of the customer for whom the subscription was created. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="displayName"> The name of the subscription. </param>
-        /// <param name="enrollmentAccountId"> The enrollment Account ID associated with the subscription. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <param name="enrollmentAccountDisplayName"> The enrollment Account name associated with the subscription. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <param name="invoiceSectionId"> The ID of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="invoiceSectionDisplayName"> The display name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="invoiceSectionName"> The name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="lastMonthCharges"> The last month's charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="monthToDateCharges"> The current month to date charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="nextBillingCycleBillingFrequency"> Next billing cycle details of the subscription. </param>
-        /// <param name="offerId"> The offer ID for the subscription. This field is only available for the Microsoft Online Services Program billing accounts. </param>
-        /// <param name="productCategory"> The category of the product for which the subscription is purchased. Possible values include: AzureSupport, Hardware, ReservationOrder, SaaS, SavingsPlanOrder, Software, UsageBased, Other. </param>
-        /// <param name="productType"> The type of the product for which the subscription is purchased. </param>
-        /// <param name="productTypeId"> The ID of the product for which the subscription is purchased. </param>
-        /// <param name="purchaseOn"> The purchase date of the subscription in UTC time. </param>
-        /// <param name="quantity"> The number of licenses purchased for the subscription. </param>
-        /// <param name="reseller"> The reseller for which the subscription is created. The field is available for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="renewalTermDetails"> The term details of the subscription at the next renewal. </param>
-        /// <param name="skuDescription"> The SKU description of the product for which the subscription is purchased. This field is only available for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="skuId"> The SKU ID of the product for which the subscription is purchased. This field is only available for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="status"> The status of the subscription. This field is not available for Enterprise Agreement billing accounts. </param>
-        /// <param name="subscriptionId"> The ID of the usage-based subscription. This field is only available for usage-based subscriptions of Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="suspensionReasons"> The suspension reason for the subscription. This field is not available for Enterprise Agreement billing accounts. </param>
-        /// <param name="termDuration"> The duration for which you can use the subscription. Example P1Y and P1M. </param>
-        /// <param name="termStartOn"> The start date of the term in UTC time. </param>
-        /// <param name="termEndOn"> The end date of the term in UTC time. </param>
-        /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <param name="enrollmentAccountStartOn"> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Billing.BillingSubscriptionData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BillingSubscriptionData BillingSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, string beneficiaryTenantId, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, string nextBillingCycleBillingFrequency, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuDescription, string skuId, BillingSubscriptionStatus? status, string subscriptionId, IEnumerable<string> suspensionReasons, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, DateTimeOffset? enrollmentAccountStartOn)
-        {
-            return BillingSubscriptionData(id: id, name: name, resourceType: resourceType, systemData: systemData, autoRenew: autoRenew, beneficiaryTenantId: beneficiaryTenantId, beneficiary: default, billingFrequency: billingFrequency, billingProfileId: billingProfileId, billingPolicies: billingPolicies, billingProfileDisplayName: billingProfileDisplayName, billingProfileName: billingProfileName, consumptionCostCenter: consumptionCostCenter, customerId: customerId, customerDisplayName: customerDisplayName, customerName: default, displayName: displayName, enrollmentAccountId: enrollmentAccountId, enrollmentAccountDisplayName: enrollmentAccountDisplayName, invoiceSectionId: invoiceSectionId, invoiceSectionDisplayName: invoiceSectionDisplayName, invoiceSectionName: invoiceSectionName, lastMonthCharges: lastMonthCharges, monthToDateCharges: monthToDateCharges, nextBillingCycleBillingFrequency: nextBillingCycleBillingFrequency, offerId: offerId, productCategory: productCategory, productType: productType, productTypeId: productTypeId, purchaseOn: purchaseOn, quantity: quantity, reseller: reseller, renewalTermDetails: renewalTermDetails, skuId: skuId, skuDescription: skuDescription, systemOverrides: default, resourceUri: default, termDuration: termDuration, termStartOn: termStartOn, termEndOn: termEndOn, provisioningTenantId: default, status: status, operationStatus: default, provisioningState: default, subscriptionId: subscriptionId, suspensionReasons: suspensionReasons, suspensionReasonDetails: default, enrollmentAccountStartOn: enrollmentAccountStartOn, subscriptionEnrollmentAccountStatus: subscriptionEnrollmentAccountStatus, tags: default);
+            return new BillingTransferValidationResultProperties(level, code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of SubscriptionRenewalTermDetails. </summary>
@@ -3060,54 +2841,24 @@ namespace Azure.ResourceManager.Billing.Models
             return SubscriptionRenewalTermDetails(billingFrequency: billingFrequency, productId: default, productTypeId: productTypeId, skuId: skuId, termDuration: termDuration, quantity: quantity, termEndOn: default);
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionAliasData. </summary>
+        /// <summary> Initializes a new instance of BillingPaymentMethodData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="autoRenew"> Indicates whether auto renewal is turned on or off for a subscription. </param>
-        /// <param name="beneficiaryTenantId"> The provisioning tenant of the subscription. </param>
-        /// <param name="billingFrequency"> The billing frequency of the subscription in the ISO8601 format. Example: P1M, P3M, P1Y. </param>
-        /// <param name="billingProfileId"> The ID of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="billingPolicies"> Dictionary of billing policies associated with the subscription. </param>
-        /// <param name="billingProfileDisplayName"> The display name of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="billingProfileName"> The name of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="consumptionCostCenter"> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement Type billing accounts. </param>
-        /// <param name="customerId"> The ID of the customer for whom the subscription was created. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="customerDisplayName"> The name of the customer for whom the subscription was created. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="displayName"> The name of the subscription. </param>
-        /// <param name="enrollmentAccountId"> The enrollment Account ID associated with the subscription. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <param name="enrollmentAccountDisplayName"> The enrollment Account name associated with the subscription. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <param name="invoiceSectionId"> The ID of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="invoiceSectionDisplayName"> The display name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="invoiceSectionName"> The name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="lastMonthCharges"> The last month's charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="monthToDateCharges"> The current month to date charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="nextBillingCycleBillingFrequency"> Next billing cycle details of the subscription. </param>
-        /// <param name="offerId"> The offer ID for the subscription. This field is only available for the Microsoft Online Services Program billing accounts. </param>
-        /// <param name="productCategory"> The category of the product for which the subscription is purchased. Possible values include: AzureSupport, Hardware, ReservationOrder, SaaS, SavingsPlanOrder, Software, UsageBased, Other. </param>
-        /// <param name="productType"> The type of the product for which the subscription is purchased. </param>
-        /// <param name="productTypeId"> The ID of the product for which the subscription is purchased. </param>
-        /// <param name="purchaseOn"> The purchase date of the subscription in UTC time. </param>
-        /// <param name="quantity"> The number of licenses purchased for the subscription. </param>
-        /// <param name="reseller"> The reseller for which the subscription is created. The field is available for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="renewalTermDetails"> The term details of the subscription at the next renewal. </param>
-        /// <param name="skuDescription"> The SKU description of the product for which the subscription is purchased. This field is only available for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="skuId"> The SKU ID of the product for which the subscription is purchased. This field is only available for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="status"> The status of the subscription. This field is not available for Enterprise Agreement billing accounts. </param>
-        /// <param name="subscriptionId"> The ID of the usage-based subscription. This field is only available for usage-based subscriptions of Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="suspensionReasons"> The suspension reason for the subscription. This field is not available for Enterprise Agreement billing accounts. </param>
-        /// <param name="termDuration"> The duration for which you can use the subscription. Example P1Y and P1M. </param>
-        /// <param name="termStartOn"> The start date of the term in UTC time. </param>
-        /// <param name="termEndOn"> The end date of the term in UTC time. </param>
-        /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <param name="enrollmentAccountStartOn"> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <param name="billingSubscriptionId"> The ID of the billing subscription with the subscription alias. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Billing.BillingSubscriptionAliasData" /> instance for mocking. </returns>
+        /// <param name="family"> The family of payment method. </param>
+        /// <param name="paymentMethodType"> The type of payment method. </param>
+        /// <param name="accountHolderName"> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </param>
+        /// <param name="expiration"> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </param>
+        /// <param name="lastFourDigits"> Last four digits of payment method. </param>
+        /// <param name="displayName"> The display name of the payment method. </param>
+        /// <param name="logos"> The list of logos for the payment method. </param>
+        /// <param name="status"> Status of the payment method. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Billing.BillingPaymentMethodData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BillingSubscriptionAliasData BillingSubscriptionAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, string beneficiaryTenantId, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, string nextBillingCycleBillingFrequency, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuDescription, string skuId, BillingSubscriptionStatus? status, string subscriptionId, IEnumerable<string> suspensionReasons, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, DateTimeOffset? enrollmentAccountStartOn, ResourceIdentifier billingSubscriptionId)
+        public static BillingPaymentMethodData BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodFamily? family, string paymentMethodType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IEnumerable<PaymentMethodLogo> logos, PaymentMethodStatus? status)
         {
-            return BillingSubscriptionAliasData(id: id, name: name, resourceType: resourceType, systemData: systemData, autoRenew: autoRenew, beneficiaryTenantId: beneficiaryTenantId, beneficiary: default, billingFrequency: billingFrequency, billingProfileId: billingProfileId, billingPolicies: billingPolicies, billingProfileDisplayName: billingProfileDisplayName, billingProfileName: billingProfileName, consumptionCostCenter: consumptionCostCenter, customerId: customerId, customerDisplayName: customerDisplayName, customerName: default, displayName: displayName, enrollmentAccountId: enrollmentAccountId, enrollmentAccountDisplayName: enrollmentAccountDisplayName, invoiceSectionId: invoiceSectionId, invoiceSectionDisplayName: invoiceSectionDisplayName, invoiceSectionName: invoiceSectionName, lastMonthCharges: lastMonthCharges, monthToDateCharges: monthToDateCharges, nextBillingCycleBillingFrequency: nextBillingCycleBillingFrequency, offerId: offerId, productCategory: productCategory, productType: productType, productTypeId: productTypeId, purchaseOn: purchaseOn, quantity: quantity, reseller: reseller, renewalTermDetails: renewalTermDetails, skuId: skuId, skuDescription: skuDescription, systemOverrides: default, resourceUri: default, termDuration: termDuration, termStartOn: termStartOn, termEndOn: termEndOn, provisioningTenantId: default, status: status, operationStatus: default, provisioningState: default, subscriptionId: subscriptionId, suspensionReasons: suspensionReasons, suspensionReasonDetails: default, enrollmentAccountStartOn: enrollmentAccountStartOn, subscriptionEnrollmentAccountStatus: subscriptionEnrollmentAccountStatus, billingSubscriptionId: billingSubscriptionId, tags: default);
+            return BillingPaymentMethodData(id: id, name: name, resourceType: resourceType, systemData: systemData, paymentMethodId: default, accountHolderName: accountHolderName, displayName: displayName, expiration: expiration, family: family, lastFourDigits: lastFourDigits, logos: logos, paymentMethodType: paymentMethodType, status: status, tags: default);
         }
 
         /// <summary> Initializes a new instance of BillingPaymentMethodLinkData. </summary>

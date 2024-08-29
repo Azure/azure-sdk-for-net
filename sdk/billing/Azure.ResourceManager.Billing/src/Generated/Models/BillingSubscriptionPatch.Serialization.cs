@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(BeneficiaryTenantId))
             {
                 writer.WritePropertyName("beneficiaryTenantId"u8);
-                writer.WriteStringValue(BeneficiaryTenantId);
+                writer.WriteStringValue(BeneficiaryTenantId.Value);
             }
             if (Optional.IsDefined(Beneficiary))
             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Billing.Models
             ResourceType type = default;
             SystemData systemData = default;
             BillingSubscriptionAutoRenewState? autoRenew = default;
-            string beneficiaryTenantId = default;
+            Guid? beneficiaryTenantId = default;
             BillingBeneficiary beneficiary = default;
             string billingFrequency = default;
             ResourceIdentifier billingProfileId = default;
@@ -455,7 +455,11 @@ namespace Azure.ResourceManager.Billing.Models
                         }
                         if (property0.NameEquals("beneficiaryTenantId"u8))
                         {
-                            beneficiaryTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            beneficiaryTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("beneficiary"u8))

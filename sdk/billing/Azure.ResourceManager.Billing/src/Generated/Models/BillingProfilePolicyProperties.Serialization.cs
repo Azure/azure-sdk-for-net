@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             BillingProvisioningState? provisioningState = default;
-            BillingProfilePolicyPropertiesEnterpriseAgreementPolicies enterpriseAgreementPolicies = default;
+            EnterpriseAgreementPolicies enterpriseAgreementPolicies = default;
             InvoiceSectionLabelManagementPolicy? invoiceSectionLabelManagement = default;
             MarketplacePurchasesPolicy? marketplacePurchases = default;
             ReservationPurchasesPolicy? reservationPurchases = default;
             SavingsPlanPurchasesPolicy? savingsPlanPurchases = default;
             ViewChargesPolicy? viewCharges = default;
-            IList<PolicySummary> policies = default;
+            IList<BillingPolicySummary> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    enterpriseAgreementPolicies = BillingProfilePolicyPropertiesEnterpriseAgreementPolicies.DeserializeBillingProfilePolicyPropertiesEnterpriseAgreementPolicies(property.Value, options);
+                    enterpriseAgreementPolicies = EnterpriseAgreementPolicies.DeserializeEnterpriseAgreementPolicies(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("invoiceSectionLabelManagement"u8))
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<PolicySummary> array = new List<PolicySummary>();
+                    List<BillingPolicySummary> array = new List<BillingPolicySummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicySummary.DeserializePolicySummary(item, options));
+                        array.Add(BillingPolicySummary.DeserializeBillingPolicySummary(item, options));
                     }
                     policies = array;
                     continue;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Billing.Models
                 reservationPurchases,
                 savingsPlanPurchases,
                 viewCharges,
-                policies ?? new ChangeTrackingList<PolicySummary>(),
+                policies ?? new ChangeTrackingList<BillingPolicySummary>(),
                 serializedAdditionalRawData);
         }
 

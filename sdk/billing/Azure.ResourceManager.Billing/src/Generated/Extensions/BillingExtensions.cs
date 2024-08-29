@@ -1586,7 +1586,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil,string,IEnumerable{DocumentDownloadRequest},CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil,string,IEnumerable{BillingDocumentDownloadRequestContent},CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1596,7 +1596,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="subscriptionId"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
-        public static async Task<ArmOperation<DocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -1621,7 +1621,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil,string,IEnumerable{DocumentDownloadRequest},CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil,string,IEnumerable{BillingDocumentDownloadRequestContent},CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1631,7 +1631,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="subscriptionId"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
-        public static ArmOperation<DocumentDownloadResult> DownloadDocumentsByBillingSubscriptionInvoice(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        public static ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingSubscriptionInvoice(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

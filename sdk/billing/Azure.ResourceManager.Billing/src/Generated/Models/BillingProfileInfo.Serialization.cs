@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            string billingAccountId = default;
+            ResourceIdentifier billingAccountId = default;
             string billingProfileDisplayName = default;
-            string billingProfileId = default;
+            ResourceIdentifier billingProfileId = default;
             string billingProfileSystemId = default;
             string indirectRelationshipOrganizationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,11 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 if (property.NameEquals("billingAccountId"u8))
                 {
-                    billingAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfileDisplayName"u8))
@@ -110,7 +114,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("billingProfileId"u8))
                 {
-                    billingProfileId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfileId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfileSystemId"u8))

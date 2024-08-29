@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Billing
         {
             AllowedProductType = new ChangeTrackingList<EligibleProductType>();
             DetailedTransferStatus = new ChangeTrackingList<DetailedTransferStatus>();
-            SupportedAccounts = new ChangeTrackingList<SupportedAccountType>();
+            SupportedAccounts = new ChangeTrackingList<BillingSupportedAccountType>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="supportedAccounts"> List of supported account types. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecipientTransferDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expireOn, IReadOnlyList<EligibleProductType> allowedProductType, PartnerTransferStatus? transferStatus, string recipientEmailId, string initiatorEmailId, string resellerId, string resellerName, InitiatorCustomerType? initiatorCustomerType, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, string customerTenantId, IReadOnlyList<SupportedAccountType> supportedAccounts, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RecipientTransferDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expireOn, IReadOnlyList<EligibleProductType> allowedProductType, PartnerTransferStatus? transferStatus, string recipientEmailId, string initiatorEmailId, string resellerId, string resellerName, InitiatorCustomerType? initiatorCustomerType, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, Guid? customerTenantId, IReadOnlyList<BillingSupportedAccountType> supportedAccounts, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExpireOn = expireOn;
             AllowedProductType = allowedProductType;
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Detailed transfer status. </summary>
         public IReadOnlyList<DetailedTransferStatus> DetailedTransferStatus { get; }
         /// <summary> The customer tenant id. </summary>
-        public string CustomerTenantId { get; }
+        public Guid? CustomerTenantId { get; }
         /// <summary> List of supported account types. </summary>
-        public IReadOnlyList<SupportedAccountType> SupportedAccounts { get; }
+        public IReadOnlyList<BillingSupportedAccountType> SupportedAccounts { get; }
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         public IDictionary<string, string> Tags { get; }
     }

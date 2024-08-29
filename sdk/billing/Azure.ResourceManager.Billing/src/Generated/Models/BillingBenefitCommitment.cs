@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="amount"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="grain"> Commitment grain. </param>
-        internal BillingBenefitCommitment(string currencyCode, double? amount, IDictionary<string, BinaryData> serializedAdditionalRawData, CommitmentGrain? grain) : base(currencyCode, amount, serializedAdditionalRawData)
+        internal BillingBenefitCommitment(string currencyCode, double? amount, IDictionary<string, BinaryData> serializedAdditionalRawData, BillingBenefitCommitmentGrain? grain) : base(currencyCode, amount, serializedAdditionalRawData)
         {
             Grain = grain;
         }
 
         /// <summary> Commitment grain. </summary>
-        public CommitmentGrain? Grain { get; set; }
+        public BillingBenefitCommitmentGrain? Grain { get; set; }
     }
 }

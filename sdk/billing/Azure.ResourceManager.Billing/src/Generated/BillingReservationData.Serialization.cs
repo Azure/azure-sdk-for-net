@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Billing
             bool? renew = default;
             string renewSource = default;
             string renewDestination = default;
-            RenewPropertiesResponse renewProperties = default;
+            ReservationRenewProperties renewProperties = default;
             string term = default;
             string userFriendlyAppliedScopeType = default;
             string userFriendlyRenewState = default;
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            renewProperties = RenewPropertiesResponse.DeserializeRenewPropertiesResponse(property0.Value, options);
+                            renewProperties = ReservationRenewProperties.DeserializeReservationRenewProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("term"u8))

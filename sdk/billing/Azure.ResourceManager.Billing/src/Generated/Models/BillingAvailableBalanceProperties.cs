@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="BillingAvailableBalanceProperties"/>. </summary>
         public BillingAvailableBalanceProperties()
         {
-            PaymentsOnAccount = new ChangeTrackingList<PaymentOnAccount>();
+            PaymentsOnAccount = new ChangeTrackingList<BillingPaymentOnAccount>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingAvailableBalanceProperties"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="paymentsOnAccount"> The list of payments on accounts. </param>
         /// <param name="totalPaymentsOnAccount"> Total amount of payments on accounts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAvailableBalanceProperties(BillingAmount amount, IReadOnlyList<PaymentOnAccount> paymentsOnAccount, BillingAmount totalPaymentsOnAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingAvailableBalanceProperties(BillingAmount amount, IReadOnlyList<BillingPaymentOnAccount> paymentsOnAccount, BillingAmount totalPaymentsOnAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Amount = amount;
             PaymentsOnAccount = paymentsOnAccount;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Credit amount for immediate payment. </summary>
         public BillingAmount Amount { get; }
         /// <summary> The list of payments on accounts. </summary>
-        public IReadOnlyList<PaymentOnAccount> PaymentsOnAccount { get; }
+        public IReadOnlyList<BillingPaymentOnAccount> PaymentsOnAccount { get; }
         /// <summary> Total amount of payments on accounts. </summary>
         public BillingAmount TotalPaymentsOnAccount { get; }
     }

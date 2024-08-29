@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Billing.Models
         public BillingCustomerPolicyProperties(ViewChargesPolicy viewCharges)
         {
             ViewCharges = viewCharges;
-            Policies = new ChangeTrackingList<PolicySummary>();
+            Policies = new ChangeTrackingList<BillingPolicySummary>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingCustomerPolicyProperties"/>. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="viewCharges"> The policy that controls whether the users in customer's organization can view charges at pay-as-you-go prices. </param>
         /// <param name="policies"> List of all policies defined at the billing scope. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingCustomerPolicyProperties(BillingProvisioningState? provisioningState, ViewChargesPolicy viewCharges, IList<PolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingCustomerPolicyProperties(BillingProvisioningState? provisioningState, ViewChargesPolicy viewCharges, IList<BillingPolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ViewCharges = viewCharges;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The policy that controls whether the users in customer's organization can view charges at pay-as-you-go prices. </summary>
         public ViewChargesPolicy ViewCharges { get; set; }
         /// <summary> List of all policies defined at the billing scope. </summary>
-        public IList<PolicySummary> Policies { get; }
+        public IList<BillingPolicySummary> Policies { get; }
     }
 }

@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.Billing.Samples
             // invoke the operation
             BillingRoleAssignmentData data = new BillingRoleAssignmentData()
             {
-                Properties = new BillingRoleAssignmentProperties("/providers/Microsoft.Billing/billingAccounts/7898901/departments/12345/billingRoleDefinitions/9f1983cb-2574-400c-87e9-34cf8e2280db")
+                Properties = new BillingRoleAssignmentProperties(new ResourceIdentifier("/providers/Microsoft.Billing/billingAccounts/7898901/departments/12345/billingRoleDefinitions/9f1983cb-2574-400c-87e9-34cf8e2280db"))
                 {
                     PrincipalId = "00000000-0000-0000-0000-000000000000",
-                    PrincipalTenantId = "076915e7-de10-4323-bb34-a58c904068bb",
+                    PrincipalTenantId = Guid.Parse("076915e7-de10-4323-bb34-a58c904068bb"),
                     UserEmailAddress = "john@contoso.com",
                 },
             };

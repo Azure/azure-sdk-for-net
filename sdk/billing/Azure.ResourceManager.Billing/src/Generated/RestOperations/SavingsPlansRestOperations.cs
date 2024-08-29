@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SavingsPlanValidateResponse>> ValidateUpdateByBillingAccountAsync(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<SavingsPlanValidateResult>> ValidateUpdateByBillingAccountAsync(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
@@ -519,9 +519,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        SavingsPlanValidateResponse value = default;
+                        SavingsPlanValidateResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
+                        value = SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SavingsPlanValidateResponse> ValidateUpdateByBillingAccount(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        public Response<SavingsPlanValidateResult> ValidateUpdateByBillingAccount(string billingAccountName, string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
@@ -550,9 +550,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        SavingsPlanValidateResponse value = default;
+                        SavingsPlanValidateResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
+                        value = SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

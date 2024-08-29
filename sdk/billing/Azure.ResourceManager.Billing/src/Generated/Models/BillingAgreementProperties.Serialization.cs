@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.Billing.Models
             AgreementAcceptanceMode? acceptanceMode = default;
             string agreementLink = default;
             IReadOnlyList<BillingProfileInfo> billingProfileInfo = default;
-            Category? category = default;
+            BillingAgreementCategory? category = default;
             string displayName = default;
             DateTimeOffset? effectiveDate = default;
             DateTimeOffset? expirationDate = default;
-            IReadOnlyList<Participant> participants = default;
+            IReadOnlyList<BillingAgreementParticipant> participants = default;
             string status = default;
             string leadBillingAccountName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    category = new Category(property.Value.GetString());
+                    category = new BillingAgreementCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<Participant> array = new List<Participant>();
+                    List<BillingAgreementParticipant> array = new List<BillingAgreementParticipant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Participant.DeserializeParticipant(item, options));
+                        array.Add(BillingAgreementParticipant.DeserializeBillingAgreementParticipant(item, options));
                     }
                     participants = array;
                     continue;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Billing.Models
                 displayName,
                 effectiveDate,
                 expirationDate,
-                participants ?? new ChangeTrackingList<Participant>(),
+                participants ?? new ChangeTrackingList<BillingAgreementParticipant>(),
                 status,
                 leadBillingAccountName,
                 serializedAdditionalRawData);

@@ -22,7 +22,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 request-path-to-resource-name:
@@ -61,10 +61,21 @@ override-operation-name:
 
 format-by-name-rules:
   'tenantId': 'uuid'
+  '*TenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'billingAccountId': 'arm-id'
+  'billingProfileId': 'arm-id'
+  'customerId': 'arm-id'
+  'roleDefinitionId': 'arm-id'
+  'billingRequestId': 'arm-id'
+  'invoiceSectionId': 'arm-id'
+  'paymentMethodId': 'arm-id'
+  'destinationInvoiceSectionId': 'arm-id'
+  'managementGroupId': 'arm-id'
+  'resourceGroupId': 'arm-id'
 
 acronym-mapping:
   CPU: Cpu
@@ -94,20 +105,43 @@ rename-mapping:
   AcceptTransferRequest: AcceptTransferContent
   AccessDecision: BillingProfileAccessDecision
   AddressValidationResponse: BillingAddressValidationResult
-  AppliedScopeProperties.managementGroupId: -|arm-id
-  AppliedScopeProperties.resourceGroupId: -|arm-id
   AutoRenew: BillingSubscriptionAutoRenewState
   Amount: BillingAmount
+  AvailableBalance: BillingAvailableBalanceData
   AzurePlan: BillingAzurePlan
-  BillingSubscriptionAlias.properties.billingSubscriptionId: -|arm-id
-  BillingSubscriptionAlias.properties.provisioningTenantId: -|uuid
+  BillingProfileProperties.invoiceEmailOptIn: IsInvoiceEmailOptIn
+  BillingRelationshipType.CSPPartner: CspPartner
+  BillingRelationshipType.CSPCustomer: CspCustomer
+  BillingSubscription.properties.customerId: SubscriptionCustomerId
+  BillingSubscription.properties.beneficiaryTenantId: SubscriptionBeneficiaryTenantId
+  BillingSubscriptionAlias.properties.billingSubscriptionId: SubscriptionAliasSubscriptionId
+  BillingSubscriptionAlias.properties.customerId: SubscriptionAliasCustomerId
+  BillingSubscriptionAlias.properties.beneficiaryTenantId: SubscriptionAliasBeneficiaryTenantId
+  Cancellation: PolicyOverrideCancellation
+  CancellationReason: CustomerSubscriptionCancellationReason
+  Category: BillingAgreementCategory
+  CheckAccessRequest: BillingCheckAccessContent
+  CheckAccessResponse: BillingCheckAccessResult
   Commitment: BillingBenefitCommitment
-  InvoiceProperties.billingProfileId: -|arm-id
+  CommitmentGrain: BillingBenefitCommitmentGrain
+  CreditType: BillingTransactionCreditType
+  CustomerStatus: BillingCustomerStatus
+  DocumentDownloadRequest: BillingDocumentDownloadRequestContent
+  DocumentDownloadResult: BillingDocumentDownloadResult
+  DocumentDownloadResult.expiryTime: ExpireOn|date-time
+  DocumentSource: BillingDocumentSource
+  DocumentSource.DRS: Drs
+  DocumentSource.ENF: Enf
+  EnrollmentDetails: BillingAccountEnrollmentDetails
+  FailedPayment: BillingInvoiceFailedPayment
+  FailedPaymentReason: BillingInvoiceFailedPaymentReason
+  MarkupStatus: EnrollmentMarkupStatus
   MoveBillingSubscriptionRequest: BillingSubscriptionMoveContent
-  MoveBillingSubscriptionRequest.destinationInvoiceSectionId: -|arm-id
   MoveBillingSubscriptionEligibilityResult: BillingSubscriptionValidateMoveEligibilityResult
   MoveBillingSubscriptionErrorDetails: BillingSubscriptionValidateMoveEligibilityError
+  MoveProductRequest: MoveProductContent
   NextBillingCycleDetails.billingFrequency: NextBillingCycleBillingFrequency
+  Participant: BillingAgreementParticipant
   RenewalTermDetails: SubscriptionRenewalTermDetails
   Reseller: CreatedSubscriptionReseller
   Reservation.properties.expiryDate: ExpireOn|date-time
@@ -116,25 +150,35 @@ rename-mapping:
   Reservation.properties.purchaseDateTime: ReservationPurchaseOn
   Reservation.properties.archived: IsArchived
   Reservation.properties.renew: IsRenewed
-  ReservationOrder.properties.customerId: -|arm-id
-  ReservationOrder.properties.billingProfileId: -|arm-id
-  ReservationOrder.properties.billingAccountId: -|arm-id
   ReservationOrder.properties.expiryDate: ExpireOn
   ReservationOrder.properties.expiryDateTime: ReservationExpireOn
   ReservationOrder.properties.reviewDateTime: ReviewedOn
-  AvailableBalance: BillingAvailableBalanceData
-  PaymentMethod.properties.id: PaymentMethodId
-  PaymentMethodLink.properties.paymentMethodId: -|arm-id
+  Payment: BillingInvoicePayment
+  Payment.date: MadeOn
+  PaymentDetail: BillingPlanPaymentDetail
+  PaymentDetail.paymentDate: PaymentCompletedOn
+  PaymentMethod.properties.id: PaymentMethodId|arm-id
   PaymentMethodProperties.id: PaymentMethodId|arm-id
   PaymentMethodProperties: PaymentMethodProjectionProperties
+  PaymentOnAccount.invoiceId: -|arm-id
   PurchaseRequest: BillingPurchaseProperties
-  TransferStatus: PartnerTransferStatus
+  PurchaseRequest.properties.renew: IsRenewed
+  RebillDetails.invoiceDocumentId: -|arm-id
+  RebillDetails.creditNoteDocumentId: -|arm-id
+  RefundDetailsSummary.rebillInvoiceId: -|arm-id
+  RegistrationNumber.required: IsRequired
+  RenewPropertiesResponse: ReservationRenewProperties
   SavingsPlanModel: BillingSavingsPlanModel
-  SavingsPlanModel.properties.billingProfileId: -|arm-id
-  SavingsPlanModel.properties.customerId: -|arm-id
-  SavingsPlanModel.properties.billingAccountId: -|arm-id
   SavingsPlanModel.properties.renew: IsRenewed
+  SavingsPlanValidateResponse: SavingsPlanValidateResult
+  SupportLevel: BillingEnrollmentSupportLevel
+  Transaction: BillingTransactionData
+  TransactionProperties.invoiceId: -|arm-id
+  TransferStatus: PartnerTransferStatus
   Utilization: SavingsPlanUtilization
+  UtilizationAggregates: SavingsPlanUtilizationAggregates
+  ValidateTransferResponse: BillingTransferValidationResult
+  ValidationResultProperties: BillingTransferValidationResultProperties
 
 prepend-rp-prefix:
   - AccountStatus
@@ -163,27 +207,49 @@ prepend-rp-prefix:
   - InvoiceProperties
   - InvoiceSection
   - InvoiceSectionProperties
+  - InvoiceStatus
+  - InvoiceType
   - PaymentMethod
-  - PaymentMethodFamily
   - PaymentMethodLink
-  - PaymentMethodStatus
+  - PaymentOnAccount
+  - PaymentStatus
+  - PaymentTerm
+  - PolicySummary
+  - PolicyType
   - Price
+  - Principal
+  - PrincipalType
   - ProvisioningState
   - Product
   - ProductProperties
+  - ProductDetails
+  - ProductStatus
+  - ProductTransferStatus
+  - ProductType
+  - ProvisioningTenantState
   - RenewProperties
   - Reservation
   - ReservationOrder
+  - RegistrationNumber
   - SavingsPlanTerm
+  - SpendingLimit
+  - SupportedAccountType
   - SystemOverrides
+  - TaxIdentifier
+  - TaxIdentifierType
+  - TaxIdentifierStatus
+  - TransactionKind
+  - TransactionProperties
+  - TransactionSummary
   - TransferDetails
+  - TransferError
+  - TransferStatus
+  - TransitionDetails
 
 directive:
   - from: billingSubscription.json
     where: $.definitions
     transform: >
-      $.BillingSubscriptionProperties.properties.billingProfileId['x-ms-format'] = 'arm-id';
-      $.BillingSubscriptionProperties.properties.invoiceSectionId['x-ms-format'] = 'arm-id';
       $.BillingSubscriptionProperties.properties.termDuration['format'] = 'duration';
       $.BillingSubscriptionSplitRequest.properties.termDuration['format'] = 'duration';
       $.RenewalTermDetails.properties.termDuration['format'] = 'duration';
@@ -199,6 +265,8 @@ directive:
     transform: >
       delete $.BillingAccountPolicyProperties.properties.enterpriseAgreementPolicies.allOf;
       $.BillingAccountPolicyProperties.properties.enterpriseAgreementPolicies['$ref'] = '#/definitions/EnterpriseAgreementPolicies';
+      delete $.BillingProfilePolicyProperties.properties.enterpriseAgreementPolicies.allOf;
+      $.BillingProfilePolicyProperties.properties.enterpriseAgreementPolicies['$ref'] = '#/definitions/EnterpriseAgreementPolicies';
   - from: billingAccount.json
     where: $.definitions
     transform: >
@@ -208,5 +276,105 @@ directive:
       $.BillingAccountProperties.properties.soldTo['$ref'] = './types.json#/definitions/AddressDetails';
       delete $.BillingAccountProperties.properties.registrationNumber.allOf;
       $.BillingAccountProperties.properties.registrationNumber['$ref'] = '#/definitions/RegistrationNumber';
+  - from: billingProfile.json
+    where: $.definitions
+    transform: >
+      delete $.BillingProfileProperties.properties.billTo.allOf;
+      $.BillingProfileProperties.properties.billTo['$ref'] = './types.json#/definitions/AddressDetails';
+      delete $.BillingProfileProperties.properties.indirectRelationshipInfo.allOf;
+      $.BillingProfileProperties.properties.indirectRelationshipInfo['$ref'] = './types.json#/definitions/IndirectRelationshipInfo';
+      delete $.BillingProfileProperties.properties.shipTo.allOf;
+      $.BillingProfileProperties.properties.shipTo['$ref'] = './types.json#/definitions/AddressDetails';
+      delete $.BillingProfileProperties.properties.soldTo.allOf;
+      $.BillingProfileProperties.properties.soldTo['$ref'] = './types.json#/definitions/AddressDetails';
+      delete $.BillingProfileProperties.properties.currentPaymentTerm.allOf;
+      $.BillingProfileProperties.properties.currentPaymentTerm['$ref'] = '#/definitions/PaymentTerm';
+  - from: billingProperty.json
+    where: $.definitions
+    transform: >
+      delete $.BillingPropertyProperties.properties.subscriptionServiceUsageAddress.allOf;
+      $.BillingPropertyProperties.properties.subscriptionServiceUsageAddress['$ref'] = './types.json#/definitions/AddressDetails';
+      delete $.BillingPropertyProperties.properties.enrollmentDetails.allOf;
+      $.BillingPropertyProperties.properties.enrollmentDetails['$ref'] = '#/definitions/SubscriptionEnrollmentDetails';
+  - from: billingRequest.json
+    where: $.definitions
+    transform: >
+      delete $.BillingRequestProperties.properties.reviewedBy.allOf;
+      $.BillingRequestProperties.properties.reviewedBy['$ref'] = '#/definitions/Principal';
+      delete $.BillingRequestProperties.properties.createdBy.allOf;
+      $.BillingRequestProperties.properties.createdBy['$ref'] = '#/definitions/Principal';
+      delete $.BillingRequestProperties.properties.lastUpdatedBy.allOf;
+      $.BillingRequestProperties.properties.lastUpdatedBy['$ref'] = '#/definitions/Principal';
+  - from: billingAccount.json
+    where: $.definitions
+    transform: >
+      delete $.EnrollmentDetails.properties.indirectRelationshipInfo.allOf;
+      $.EnrollmentDetails.properties.indirectRelationshipInfo['$ref'] = './types.json#/definitions/IndirectRelationshipInfo';
+  - from: invoice.json
+    where: $.definitions
+    transform: >
+      delete $.InvoiceProperties.properties.amountDue.allOf;
+      $.InvoiceProperties.properties.amountDue['$ref'] = './types.json#/definitions/Amount';
+      delete $.InvoiceProperties.properties.azurePrepaymentApplied.allOf;
+      $.InvoiceProperties.properties.azurePrepaymentApplied['$ref'] = './types.json#/definitions/Amount';
+      delete $.InvoiceProperties.properties.billedAmount.allOf;
+      $.InvoiceProperties.properties.billedAmount['$ref'] = './types.json#/definitions/Amount';
+      delete $.InvoiceProperties.properties.creditAmount.allOf;
+      $.InvoiceProperties.properties.creditAmount['$ref'] = './types.json#/definitions/Amount';
+      delete $.InvoiceProperties.properties.freeAzureCreditApplied.allOf;
+      $.InvoiceProperties.properties.freeAzureCreditApplied['$ref'] = './types.json#/definitions/Amount';
+      delete $.InvoiceProperties.properties.rebillDetails.allOf;
+      $.InvoiceProperties.properties.rebillDetails['$ref'] = '#/definitions/RebillDetails';
+      delete $.InvoiceProperties.properties.subTotal.allOf;
+      $.InvoiceProperties.properties.subTotal['$ref'] = './types.json#/definitions/Amount';
+      delete $.InvoiceProperties.properties.taxAmount.allOf;
+      $.InvoiceProperties.properties.taxAmount['$ref'] = './types.json#/definitions/Amount';
+      delete $.InvoiceProperties.properties.totalAmount.allOf;
+      $.InvoiceProperties.properties.totalAmount['$ref'] = './types.json#/definitions/Amount';
+      delete $.InvoiceProperties.properties.refundDetails.allOf;
+      $.InvoiceProperties.properties.refundDetails['$ref'] = '#/definitions/RefundDetailsSummary';
+      delete $.Payment.properties.amount.allOf;
+      $.Payment.properties.amount['$ref'] = './types.json#/definitions/Amount';
+      delete $.RefundDetailsSummary.properties.amountRequested.allOf;
+      $.RefundDetailsSummary.properties.amountRequested['$ref'] = './types.json#/definitions/Amount';
+      delete $.RefundDetailsSummary.properties.amountRefunded.allOf;
+      $.RefundDetailsSummary.properties.amountRefunded['$ref'] = './types.json#/definitions/Amount';
+  - from: product.json
+    where: $.definitions
+    transform: >
+      delete $.MoveProductEligibilityResult.properties.errorDetails.allOf;
+      $.MoveProductEligibilityResult.properties.errorDetails['$ref'] = '#/definitions/MoveProductErrorDetails';
+      delete $.ProductProperties.properties.lastCharge.allOf;
+      $.ProductProperties.properties.lastCharge['$ref'] = './types.json#/definitions/Amount';
+      delete $.ProductProperties.properties.reseller.allOf;
+      $.ProductProperties.properties.reseller['$ref'] = './types.json#/definitions/Amount';
+  - from: availableBalance.json
+    where: $.definitions
+    transform: >
+      delete $.PaymentOnAccount.properties.amount.allOf;
+      $.PaymentOnAccount.properties.amount['$ref'] = './types.json#/definitions/Reseller';
+  - from: transaction.json
+    where: $.definitions
+    transform: >
+      delete $.RefundTransactionDetails.properties.amountRequested.allOf;
+      $.RefundTransactionDetails.properties.amountRequested['$ref'] = './types.json#/definitions/Amount';
+      delete $.RefundTransactionDetails.properties.amountRefunded.allOf;
+      $.RefundTransactionDetails.properties.amountRefunded['$ref'] = './types.json#/definitions/Amount';
+      delete $.TransactionProperties.properties.azureCreditApplied.allOf;
+      $.TransactionProperties.properties.azureCreditApplied['$ref'] = './types.json#/definitions/Amount';
+      delete $.TransactionProperties.properties.consumptionCommitmentDecremented.allOf;
+      $.TransactionProperties.properties.consumptionCommitmentDecremented['$ref'] = './types.json#/definitions/Amount';
+      delete $.TransactionProperties.properties.effectivePrice.allOf;
+      $.TransactionProperties.properties.effectivePrice['$ref'] = './types.json#/definitions/Amount';
+      delete $.TransactionProperties.properties.marketPrice.allOf;
+      $.TransactionProperties.properties.marketPrice['$ref'] = './types.json#/definitions/Amount';
+      delete $.TransactionProperties.properties.subTotal.allOf;
+      $.TransactionProperties.properties.subTotal['$ref'] = './types.json#/definitions/Amount';
+      delete $.TransactionProperties.properties.tax.allOf;
+      $.TransactionProperties.properties.tax['$ref'] = './types.json#/definitions/Amount';
+      delete $.TransactionProperties.properties.transactionAmount.allOf;
+      $.TransactionProperties.properties.transactionAmount['$ref'] = './types.json#/definitions/Amount';
+      delete $.TransactionProperties.properties.refundTransactionDetails.allOf;
+      $.TransactionProperties.properties.refundTransactionDetails['$ref'] = '#/definitions/RefundTransactionDetails';
 
 ```

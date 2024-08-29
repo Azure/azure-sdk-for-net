@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(BillingTenantId))
             {
                 writer.WritePropertyName("billingTenantId"u8);
-                writer.WriteStringValue(BillingTenantId);
+                writer.WriteStringValue(BillingTenantId.Value);
             }
             if (Optional.IsDefined(CostCenter))
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
             BillingAgreementType? billingAccountAgreementType = default;
             string billingAccountDisplayName = default;
-            string billingAccountId = default;
+            ResourceIdentifier billingAccountId = default;
             string accountAdminNotificationEmailAddress = default;
             string billingAccountSoldToCountry = default;
             BillingAccountStatus? billingAccountStatus = default;
@@ -280,20 +280,20 @@ namespace Azure.ResourceManager.Billing.Models
             BillingAccountSubType? billingAccountSubType = default;
             string billingCurrency = default;
             string billingProfileDisplayName = default;
-            string billingProfileId = default;
-            SpendingLimit? billingProfileSpendingLimit = default;
+            ResourceIdentifier billingProfileId = default;
+            BillingSpendingLimit? billingProfileSpendingLimit = default;
             IReadOnlyList<SpendingLimitDetails> billingProfileSpendingLimitDetails = default;
             BillingProfileStatus? billingProfileStatus = default;
             BillingProfileStatusReasonCode? billingProfileStatusReasonCode = default;
-            BillingPaymentMethodFamily? billingProfilePaymentMethodFamily = default;
+            PaymentMethodFamily? billingProfilePaymentMethodFamily = default;
             string billingProfilePaymentMethodType = default;
-            string billingTenantId = default;
+            Guid? billingTenantId = default;
             string costCenter = default;
             string customerDisplayName = default;
-            string customerId = default;
-            CustomerStatus? customerStatus = default;
+            ResourceIdentifier customerId = default;
+            BillingCustomerStatus? customerStatus = default;
             string invoiceSectionDisplayName = default;
-            string invoiceSectionId = default;
+            ResourceIdentifier invoiceSectionId = default;
             InvoiceSectionState? invoiceSectionStatus = default;
             InvoiceSectionStateReasonCode? invoiceSectionStatusReasonCode = default;
             bool? isTransitionedBillingAccount = default;
@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.Billing.Models
             BillingSubscriptionStatus? subscriptionBillingStatus = default;
             IReadOnlyList<BillingSubscriptionStatusDetails> subscriptionBillingStatusDetails = default;
             SubscriptionBillingType? subscriptionBillingType = default;
-            BillingPropertyPropertiesSubscriptionServiceUsageAddress subscriptionServiceUsageAddress = default;
+            BillingAddressDetails subscriptionServiceUsageAddress = default;
             SubscriptionWorkloadType? subscriptionWorkloadType = default;
-            BillingPropertyPropertiesEnrollmentDetails enrollmentDetails = default;
+            SubscriptionEnrollmentDetails enrollmentDetails = default;
             bool? isAccountAdmin = default;
             string productId = default;
             string productName = default;
@@ -328,7 +328,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("billingAccountId"u8))
                 {
-                    billingAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accountAdminNotificationEmailAddress"u8))
@@ -389,7 +393,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("billingProfileId"u8))
                 {
-                    billingProfileId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfileId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfileSpendingLimit"u8))
@@ -398,7 +406,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billingProfileSpendingLimit = new SpendingLimit(property.Value.GetString());
+                    billingProfileSpendingLimit = new BillingSpendingLimit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfileSpendingLimitDetails"u8))
@@ -439,7 +447,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billingProfilePaymentMethodFamily = new BillingPaymentMethodFamily(property.Value.GetString());
+                    billingProfilePaymentMethodFamily = new PaymentMethodFamily(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfilePaymentMethodType"u8))
@@ -449,7 +457,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("billingTenantId"u8))
                 {
-                    billingTenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingTenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("costCenter"u8))
@@ -464,7 +476,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("customerId"u8))
                 {
-                    customerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customerStatus"u8))
@@ -473,7 +489,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    customerStatus = new CustomerStatus(property.Value.GetString());
+                    customerStatus = new BillingCustomerStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("invoiceSectionDisplayName"u8))
@@ -483,7 +499,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("invoiceSectionId"u8))
                 {
-                    invoiceSectionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invoiceSectionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("invoiceSectionStatus"u8))
@@ -561,7 +581,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    subscriptionServiceUsageAddress = BillingPropertyPropertiesSubscriptionServiceUsageAddress.DeserializeBillingPropertyPropertiesSubscriptionServiceUsageAddress(property.Value, options);
+                    subscriptionServiceUsageAddress = BillingAddressDetails.DeserializeBillingAddressDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subscriptionWorkloadType"u8))
@@ -579,7 +599,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    enrollmentDetails = BillingPropertyPropertiesEnrollmentDetails.DeserializeBillingPropertyPropertiesEnrollmentDetails(property.Value, options);
+                    enrollmentDetails = SubscriptionEnrollmentDetails.DeserializeSubscriptionEnrollmentDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAccountAdmin"u8))

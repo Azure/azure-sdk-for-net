@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="SubscriptionPolicyProperties"/>. </summary>
         public SubscriptionPolicyProperties()
         {
-            Policies = new ChangeTrackingList<PolicySummary>();
+            Policies = new ChangeTrackingList<BillingPolicySummary>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionPolicyProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the resource during a long-running operation. </param>
         /// <param name="policies"> List of all policies defined at the billing scope. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionPolicyProperties(BillingProvisioningState? provisioningState, IList<PolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubscriptionPolicyProperties(BillingProvisioningState? provisioningState, IList<BillingPolicySummary> policies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Policies = policies;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
         public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> List of all policies defined at the billing scope. </summary>
-        public IList<PolicySummary> Policies { get; }
+        public IList<BillingPolicySummary> Policies { get; }
     }
 }

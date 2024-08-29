@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Billing
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateAddPaymentTermsRequestUri(string billingAccountName, IEnumerable<PaymentTerm> arrayOfPaymentTerm)
+        internal RequestUriBuilder CreateAddPaymentTermsRequestUri(string billingAccountName, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateAddPaymentTermsRequest(string billingAccountName, IEnumerable<PaymentTerm> arrayOfPaymentTerm)
+        internal HttpMessage CreateAddPaymentTermsRequest(string billingAccountName, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="arrayOfPaymentTerm"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> AddPaymentTermsAsync(string billingAccountName, IEnumerable<PaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
+        public async Task<Response> AddPaymentTermsAsync(string billingAccountName, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="arrayOfPaymentTerm"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response AddPaymentTerms(string billingAccountName, IEnumerable<PaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
+        public Response AddPaymentTerms(string billingAccountName, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransitionDetails>> ConfirmTransitionAsync(string billingAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingTransitionDetails>> ConfirmTransitionAsync(string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
@@ -239,9 +239,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        TransitionDetails value = default;
+                        BillingTransitionDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransitionDetails.DeserializeTransitionDetails(document.RootElement);
+                        value = BillingTransitionDetails.DeserializeBillingTransitionDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransitionDetails> ConfirmTransition(string billingAccountName, CancellationToken cancellationToken = default)
+        public Response<BillingTransitionDetails> ConfirmTransition(string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        TransitionDetails value = default;
+                        BillingTransitionDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransitionDetails.DeserializeTransitionDetails(document.RootElement);
+                        value = BillingTransitionDetails.DeserializeBillingTransitionDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateValidatePaymentTermsRequestUri(string billingAccountName, IEnumerable<PaymentTerm> arrayOfPaymentTerm)
+        internal RequestUriBuilder CreateValidatePaymentTermsRequestUri(string billingAccountName, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateValidatePaymentTermsRequest(string billingAccountName, IEnumerable<PaymentTerm> arrayOfPaymentTerm)
+        internal HttpMessage CreateValidatePaymentTermsRequest(string billingAccountName, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="arrayOfPaymentTerm"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PaymentTermsEligibilityResult>> ValidatePaymentTermsAsync(string billingAccountName, IEnumerable<PaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
+        public async Task<Response<PaymentTermsEligibilityResult>> ValidatePaymentTermsAsync(string billingAccountName, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="arrayOfPaymentTerm"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PaymentTermsEligibilityResult> ValidatePaymentTerms(string billingAccountName, IEnumerable<PaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
+        public Response<PaymentTermsEligibilityResult> ValidatePaymentTerms(string billingAccountName, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));

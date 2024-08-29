@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Billing.Models
             BillingPrice pricingCurrencyTotal = default;
             BillingPrice billingCurrencyTotal = default;
             string billingAccount = default;
-            PaymentStatus? status = default;
+            BillingPaymentStatus? status = default;
             ReservationExtendedStatusInfo extendedStatusInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    status = new PaymentStatus(property.Value.GetString());
+                    status = new BillingPaymentStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extendedStatusInfo"u8))

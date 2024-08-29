@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="resellers"> The list of resellers for which an Azure plan is enabled for the customer. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingCustomerProperties(string billingProfileDisplayName, string billingProfileId, string displayName, string systemId, CustomerStatus? status, IList<BillingAzurePlan> enabledAzurePlans, IList<CreatedSubscriptionReseller> resellers, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingCustomerProperties(string billingProfileDisplayName, ResourceIdentifier billingProfileId, string displayName, string systemId, BillingCustomerStatus? status, IList<BillingAzurePlan> enabledAzurePlans, IList<CreatedSubscriptionReseller> resellers, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingProfileDisplayName = billingProfileDisplayName;
             BillingProfileId = billingProfileId;
@@ -79,13 +80,13 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The name of the billing profile. </summary>
         public string BillingProfileDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
-        public string BillingProfileId { get; }
+        public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The name of the customer. </summary>
         public string DisplayName { get; }
         /// <summary> The system generated unique identifier for a customer. </summary>
         public string SystemId { get; }
         /// <summary> Identifies the status of an customer. This is an upcoming property that will be populated in the future. </summary>
-        public CustomerStatus? Status { get; }
+        public BillingCustomerStatus? Status { get; }
         /// <summary> Azure plans enabled for the customer. </summary>
         public IList<BillingAzurePlan> EnabledAzurePlans { get; }
         /// <summary> The list of resellers for which an Azure plan is enabled for the customer. </summary>

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="transferStatus"> Transfer status. </param>
         /// <param name="errorDetails"> Error details for transfer execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DetailedTransferStatus(ProductType? productType, string productId, string productName, string skuDescription, ProductTransferStatus? transferStatus, TransferError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DetailedTransferStatus(BillingProductType? productType, string productId, string productName, string skuDescription, BillingProductTransferStatus? transferStatus, BillingTransferError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProductType = productType;
             ProductId = productId;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Type of product that is transferred. </summary>
-        public ProductType? ProductType { get; }
+        public BillingProductType? ProductType { get; }
         /// <summary> The ID of the product that is transferred. </summary>
         public string ProductId { get; }
         /// <summary> The name of the product that is transferred. </summary>
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The SKU of the product that is transferred. </summary>
         public string SkuDescription { get; }
         /// <summary> Transfer status. </summary>
-        public ProductTransferStatus? TransferStatus { get; }
+        public BillingProductTransferStatus? TransferStatus { get; }
         /// <summary> Error details for transfer execution. </summary>
-        public TransferError ErrorDetails { get; }
+        public BillingTransferError ErrorDetails { get; }
     }
 }

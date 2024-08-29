@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="invoiceSectionId"> The fully qualified ID that uniquely identifies an invoice section. </param>
         /// <param name="invoiceSectionSystemId"> The system generated unique identifier for an invoice section. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InvoiceSectionWithCreateSubPermission(string billingProfileDisplayName, string billingProfileId, string billingProfileSystemId, BillingProfileStatus? billingProfileStatus, BillingProfileStatusReasonCode? billingProfileStatusReasonCode, SpendingLimit? billingProfileSpendingLimit, IReadOnlyList<BillingAzurePlan> enabledAzurePlans, string invoiceSectionDisplayName, string invoiceSectionId, string invoiceSectionSystemId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InvoiceSectionWithCreateSubPermission(string billingProfileDisplayName, ResourceIdentifier billingProfileId, string billingProfileSystemId, BillingProfileStatus? billingProfileStatus, BillingProfileStatusReasonCode? billingProfileStatusReasonCode, BillingSpendingLimit? billingProfileSpendingLimit, IReadOnlyList<BillingAzurePlan> enabledAzurePlans, string invoiceSectionDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionSystemId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingProfileDisplayName = billingProfileDisplayName;
             BillingProfileId = billingProfileId;
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The name of the billing profile. </summary>
         public string BillingProfileDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
-        public string BillingProfileId { get; }
+        public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The system generated unique identifier for a billing profile. </summary>
         public string BillingProfileSystemId { get; }
         /// <summary> The status of the billing profile. </summary>
@@ -89,13 +90,13 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Reason for the specified billing profile status. </summary>
         public BillingProfileStatusReasonCode? BillingProfileStatusReasonCode { get; }
         /// <summary> The billing profile spending limit. </summary>
-        public SpendingLimit? BillingProfileSpendingLimit { get; }
+        public BillingSpendingLimit? BillingProfileSpendingLimit { get; }
         /// <summary> Enabled azure plans for the associated billing profile. </summary>
         public IReadOnlyList<BillingAzurePlan> EnabledAzurePlans { get; }
         /// <summary> The name of the invoice section. </summary>
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
-        public string InvoiceSectionId { get; }
+        public ResourceIdentifier InvoiceSectionId { get; }
         /// <summary> The system generated unique identifier for an invoice section. </summary>
         public string InvoiceSectionSystemId { get; }
     }

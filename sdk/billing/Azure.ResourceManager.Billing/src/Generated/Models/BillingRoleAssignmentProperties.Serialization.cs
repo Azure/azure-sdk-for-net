@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(CreatedByPrincipalTenantId))
             {
                 writer.WritePropertyName("createdByPrincipalTenantId"u8);
-                writer.WriteStringValue(CreatedByPrincipalTenantId);
+                writer.WriteStringValue(CreatedByPrincipalTenantId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedByPrincipalId))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(ModifiedByPrincipalTenantId))
             {
                 writer.WritePropertyName("modifiedByPrincipalTenantId"u8);
-                writer.WriteStringValue(ModifiedByPrincipalTenantId);
+                writer.WriteStringValue(ModifiedByPrincipalTenantId.Value);
             }
             if (Optional.IsDefined(PrincipalPuid))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(PrincipalTenantId))
             {
                 writer.WritePropertyName("principalTenantId"u8);
-                writer.WriteStringValue(PrincipalTenantId);
+                writer.WriteStringValue(PrincipalTenantId.Value);
             }
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
             BillingProvisioningState? provisioningState = default;
             DateTimeOffset? createdOn = default;
-            string createdByPrincipalTenantId = default;
+            Guid? createdByPrincipalTenantId = default;
             string createdByPrincipalId = default;
             string createdByPrincipalPuid = default;
             string createdByUserEmailAddress = default;
@@ -221,25 +221,25 @@ namespace Azure.ResourceManager.Billing.Models
             string modifiedByPrincipalPuid = default;
             string modifiedByUserEmailAddress = default;
             string modifiedByPrincipalId = default;
-            string modifiedByPrincipalTenantId = default;
+            Guid? modifiedByPrincipalTenantId = default;
             string principalPuid = default;
             string principalId = default;
-            string principalTenantId = default;
-            string roleDefinitionId = default;
+            Guid? principalTenantId = default;
+            ResourceIdentifier roleDefinitionId = default;
             string scope = default;
             string userAuthenticationType = default;
             string userEmailAddress = default;
             string principalTenantName = default;
             string principalDisplayName = default;
-            PrincipalType? principalType = default;
-            string billingRequestId = default;
-            string billingAccountId = default;
+            BillingPrincipalType? principalType = default;
+            ResourceIdentifier billingRequestId = default;
+            ResourceIdentifier billingAccountId = default;
             string billingAccountDisplayName = default;
-            string billingProfileId = default;
+            ResourceIdentifier billingProfileId = default;
             string billingProfileDisplayName = default;
-            string invoiceSectionId = default;
+            ResourceIdentifier invoiceSectionId = default;
             string invoiceSectionDisplayName = default;
-            string customerId = default;
+            ResourceIdentifier customerId = default;
             string customerDisplayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -265,7 +265,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("createdByPrincipalTenantId"u8))
                 {
-                    createdByPrincipalTenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdByPrincipalTenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("createdByPrincipalId"u8))
@@ -309,7 +313,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("modifiedByPrincipalTenantId"u8))
                 {
-                    modifiedByPrincipalTenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modifiedByPrincipalTenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("principalPuid"u8))
@@ -324,12 +332,16 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("principalTenantId"u8))
                 {
-                    principalTenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    principalTenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("roleDefinitionId"u8))
                 {
-                    roleDefinitionId = property.Value.GetString();
+                    roleDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scope"u8))
@@ -363,17 +375,25 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    principalType = new PrincipalType(property.Value.GetString());
+                    principalType = new BillingPrincipalType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingRequestId"u8))
                 {
-                    billingRequestId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingRequestId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingAccountId"u8))
                 {
-                    billingAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingAccountDisplayName"u8))
@@ -383,7 +403,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("billingProfileId"u8))
                 {
-                    billingProfileId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfileId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfileDisplayName"u8))
@@ -393,7 +417,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("invoiceSectionId"u8))
                 {
-                    invoiceSectionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invoiceSectionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("invoiceSectionDisplayName"u8))
@@ -403,7 +431,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("customerId"u8))
                 {
-                    customerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customerDisplayName"u8))

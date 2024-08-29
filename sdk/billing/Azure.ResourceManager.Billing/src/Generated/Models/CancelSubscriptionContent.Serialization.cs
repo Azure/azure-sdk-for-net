@@ -71,20 +71,24 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            CancellationReason cancellationReason = default;
-            string customerId = default;
+            CustomerSubscriptionCancellationReason cancellationReason = default;
+            ResourceIdentifier customerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cancellationReason"u8))
                 {
-                    cancellationReason = new CancellationReason(property.Value.GetString());
+                    cancellationReason = new CustomerSubscriptionCancellationReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customerId"u8))
                 {
-                    customerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

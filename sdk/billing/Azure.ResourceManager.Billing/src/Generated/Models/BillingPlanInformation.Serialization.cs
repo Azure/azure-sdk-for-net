@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Billing.Models
             BillingPrice pricingCurrencyTotal = default;
             DateTimeOffset? startDate = default;
             DateTimeOffset? nextPaymentDueDate = default;
-            IList<PaymentDetail> transactions = default;
+            IList<BillingPlanPaymentDetail> transactions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<PaymentDetail> array = new List<PaymentDetail>();
+                    List<BillingPlanPaymentDetail> array = new List<BillingPlanPaymentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentDetail.DeserializePaymentDetail(item, options));
+                        array.Add(BillingPlanPaymentDetail.DeserializeBillingPlanPaymentDetail(item, options));
                     }
                     transactions = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BillingPlanInformation(pricingCurrencyTotal, startDate, nextPaymentDueDate, transactions ?? new ChangeTrackingList<PaymentDetail>(), serializedAdditionalRawData);
+            return new BillingPlanInformation(pricingCurrencyTotal, startDate, nextPaymentDueDate, transactions ?? new ChangeTrackingList<BillingPlanPaymentDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingPlanInformation>.Write(ModelReaderWriterOptions options)

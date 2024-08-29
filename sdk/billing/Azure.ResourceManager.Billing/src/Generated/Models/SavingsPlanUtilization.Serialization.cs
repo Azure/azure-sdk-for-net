@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             string trend = default;
-            IReadOnlyList<UtilizationAggregates> aggregates = default;
+            IReadOnlyList<SavingsPlanUtilizationAggregates> aggregates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<UtilizationAggregates> array = new List<UtilizationAggregates>();
+                    List<SavingsPlanUtilizationAggregates> array = new List<SavingsPlanUtilizationAggregates>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UtilizationAggregates.DeserializeUtilizationAggregates(item, options));
+                        array.Add(SavingsPlanUtilizationAggregates.DeserializeSavingsPlanUtilizationAggregates(item, options));
                     }
                     aggregates = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SavingsPlanUtilization(trend, aggregates ?? new ChangeTrackingList<UtilizationAggregates>(), serializedAdditionalRawData);
+            return new SavingsPlanUtilization(trend, aggregates ?? new ChangeTrackingList<SavingsPlanUtilizationAggregates>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanUtilization>.Write(ModelReaderWriterOptions options)

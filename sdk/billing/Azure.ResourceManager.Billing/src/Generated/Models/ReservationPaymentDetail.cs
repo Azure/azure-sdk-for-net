@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="status"> Describes whether the payment is completed, failed, pending, cancelled or scheduled in the future. </param>
         /// <param name="extendedStatusInfo"> Extended status information for the reservation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationPaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? paymentOn, BillingPrice pricingCurrencyTotal, BillingPrice billingCurrencyTotal, string billingAccount, PaymentStatus? status, ReservationExtendedStatusInfo extendedStatusInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReservationPaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? paymentOn, BillingPrice pricingCurrencyTotal, BillingPrice billingCurrencyTotal, string billingAccount, BillingPaymentStatus? status, ReservationExtendedStatusInfo extendedStatusInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DueOn = dueOn;
             PaymentOn = paymentOn;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Shows the Account that is charged for this payment. </summary>
         public string BillingAccount { get; set; }
         /// <summary> Describes whether the payment is completed, failed, pending, cancelled or scheduled in the future. </summary>
-        public PaymentStatus? Status { get; set; }
+        public BillingPaymentStatus? Status { get; set; }
         /// <summary> Extended status information for the reservation. </summary>
         public ReservationExtendedStatusInfo ExtendedStatusInfo { get; set; }
     }

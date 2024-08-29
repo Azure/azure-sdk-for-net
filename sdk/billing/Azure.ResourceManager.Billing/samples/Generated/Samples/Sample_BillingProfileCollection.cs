@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Billing.Samples
             {
                 Properties = new BillingProfileProperties()
                 {
-                    BillTo = new BillingProfilePropertiesBillTo("Test Address1", "US")
+                    BillTo = new BillingAddressDetails("Test Address1", "US")
                     {
                         AddressLine2 = "Test Address2",
                         AddressLine3 = "Test Address3",
@@ -171,9 +171,9 @@ SkuId = "0001",
 SkuId = "0002",
 }
 },
-                    InvoiceEmailOptIn = true,
+                    IsInvoiceEmailOptIn = true,
                     PoNumber = "ABC12345",
-                    ShipTo = new BillingProfilePropertiesShipTo("Test Address1", "US")
+                    ShipTo = new BillingAddressDetails("Test Address1", "US")
                     {
                         AddressLine2 = "Test Address2",
                         AddressLine3 = "Test Address3",

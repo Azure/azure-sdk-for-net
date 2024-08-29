@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="autoRenew"> Indicates whether auto renewal is turned on or off for a product. </param>
-        /// <param name="beneficiaryTenantId"> The provisioning tenant of the subscription. </param>
+        /// <param name="subscriptionBeneficiaryTenantId"> The provisioning tenant of the subscription. </param>
         /// <param name="beneficiary"> The beneficiary of the billing subscription. </param>
         /// <param name="billingFrequency"> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </param>
         /// <param name="billingProfileId"> The fully qualified ID that uniquely identifies a billing profile. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="consumptionCostCenter"> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement or Enterprise Agreement Type billing accounts. </param>
-        /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
+        /// <param name="subscriptionCustomerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
         /// <param name="displayName"> The name of the billing subscription. </param>
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Billing
         /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, string beneficiaryTenantId, BillingBeneficiary beneficiary, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string customerName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuId, string skuDescription, BillingSystemOverrides systemOverrides, Uri resourceUri, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, Guid? provisioningTenantId, BillingSubscriptionStatus? status, BillingSubscriptionOperationStatus? operationStatus, BillingProvisioningState? provisioningState, string subscriptionId, IReadOnlyList<string> suspensionReasons, IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails, DateTimeOffset? enrollmentAccountStartOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BillingSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, Guid? subscriptionBeneficiaryTenantId, BillingBeneficiary beneficiary, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string subscriptionCustomerId, string customerDisplayName, string customerName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuId, string skuDescription, BillingSystemOverrides systemOverrides, Uri resourceUri, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, Guid? provisioningTenantId, BillingSubscriptionStatus? status, BillingSubscriptionOperationStatus? operationStatus, BillingProvisioningState? provisioningState, string subscriptionId, IReadOnlyList<string> suspensionReasons, IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails, DateTimeOffset? enrollmentAccountStartOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AutoRenew = autoRenew;
-            BeneficiaryTenantId = beneficiaryTenantId;
+            SubscriptionBeneficiaryTenantId = subscriptionBeneficiaryTenantId;
             Beneficiary = beneficiary;
             BillingFrequency = billingFrequency;
             BillingProfileId = billingProfileId;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Billing
             BillingProfileDisplayName = billingProfileDisplayName;
             BillingProfileName = billingProfileName;
             ConsumptionCostCenter = consumptionCostCenter;
-            CustomerId = customerId;
+            SubscriptionCustomerId = subscriptionCustomerId;
             CustomerDisplayName = customerDisplayName;
             CustomerName = customerName;
             DisplayName = displayName;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Indicates whether auto renewal is turned on or off for a product. </summary>
         public BillingSubscriptionAutoRenewState? AutoRenew { get; set; }
         /// <summary> The provisioning tenant of the subscription. </summary>
-        public string BeneficiaryTenantId { get; set; }
+        public Guid? SubscriptionBeneficiaryTenantId { get; set; }
         /// <summary> The beneficiary of the billing subscription. </summary>
         public BillingBeneficiary Beneficiary { get; set; }
         /// <summary> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement or Enterprise Agreement Type billing accounts. </summary>
         public string ConsumptionCostCenter { get; set; }
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
-        public string CustomerId { get; set; }
+        public string SubscriptionCustomerId { get; set; }
         /// <summary> The name of the customer. </summary>
         public string CustomerDisplayName { get; }
         /// <summary> The ID that uniquely identifies a customer. </summary>

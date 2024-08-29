@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // invoke the operation
             string documentName = "12345678";
-            ArmOperation<DocumentDownloadResult> lro = await subscriptionBillingInvoice.DownloadByBillingSubscriptionAsync(WaitUntil.Completed, documentName: documentName);
-            DocumentDownloadResult result = lro.Value;
+            ArmOperation<BillingDocumentDownloadResult> lro = await subscriptionBillingInvoice.DownloadByBillingSubscriptionAsync(WaitUntil.Completed, documentName: documentName);
+            BillingDocumentDownloadResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

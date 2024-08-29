@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateMoveRequestUri(string billingAccountName, string productName, MoveProductRequest moveProductRequest)
+        internal RequestUriBuilder CreateMoveRequestUri(string billingAccountName, string productName, MoveProductContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateMoveRequest(string billingAccountName, string productName, MoveProductRequest moveProductRequest)
+        internal HttpMessage CreateMoveRequest(string billingAccountName, string productName, MoveProductContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -511,9 +511,9 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(moveProductRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -521,17 +521,17 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Moves a product's charges to a new invoice section. The new invoice section must belong to the same billing profile as the existing invoice section. This operation is supported only for products that are purchased with a recurring charge and for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
-        /// <param name="moveProductRequest"> The properties of the product to initiate a transfer. </param>
+        /// <param name="content"> The properties of the product to initiate a transfer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="productName"/> or <paramref name="moveProductRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="productName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> MoveAsync(string billingAccountName, string productName, MoveProductRequest moveProductRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> MoveAsync(string billingAccountName, string productName, MoveProductContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNull(moveProductRequest, nameof(moveProductRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateMoveRequest(billingAccountName, productName, moveProductRequest);
+            using var message = CreateMoveRequest(billingAccountName, productName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -546,17 +546,17 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Moves a product's charges to a new invoice section. The new invoice section must belong to the same billing profile as the existing invoice section. This operation is supported only for products that are purchased with a recurring charge and for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
-        /// <param name="moveProductRequest"> The properties of the product to initiate a transfer. </param>
+        /// <param name="content"> The properties of the product to initiate a transfer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="productName"/> or <paramref name="moveProductRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="productName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Move(string billingAccountName, string productName, MoveProductRequest moveProductRequest, CancellationToken cancellationToken = default)
+        public Response Move(string billingAccountName, string productName, MoveProductContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNull(moveProductRequest, nameof(moveProductRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateMoveRequest(billingAccountName, productName, moveProductRequest);
+            using var message = CreateMoveRequest(billingAccountName, productName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateValidateMoveEligibilityRequestUri(string billingAccountName, string productName, MoveProductRequest moveProductRequest)
+        internal RequestUriBuilder CreateValidateMoveEligibilityRequestUri(string billingAccountName, string productName, MoveProductContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateValidateMoveEligibilityRequest(string billingAccountName, string productName, MoveProductRequest moveProductRequest)
+        internal HttpMessage CreateValidateMoveEligibilityRequest(string billingAccountName, string productName, MoveProductContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -597,9 +597,9 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(moveProductRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -607,17 +607,17 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Validates if a product's charges can be moved to a new invoice section. This operation is supported only for products that are purchased with a recurring charge and for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
-        /// <param name="moveProductRequest"> The properties of the product to initiate a transfer. </param>
+        /// <param name="content"> The properties of the product to initiate a transfer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="productName"/> or <paramref name="moveProductRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="productName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MoveProductEligibilityResult>> ValidateMoveEligibilityAsync(string billingAccountName, string productName, MoveProductRequest moveProductRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<MoveProductEligibilityResult>> ValidateMoveEligibilityAsync(string billingAccountName, string productName, MoveProductContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNull(moveProductRequest, nameof(moveProductRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateMoveEligibilityRequest(billingAccountName, productName, moveProductRequest);
+            using var message = CreateValidateMoveEligibilityRequest(billingAccountName, productName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -636,17 +636,17 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Validates if a product's charges can be moved to a new invoice section. This operation is supported only for products that are purchased with a recurring charge and for billing accounts with agreement type Microsoft Customer Agreement. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
-        /// <param name="moveProductRequest"> The properties of the product to initiate a transfer. </param>
+        /// <param name="content"> The properties of the product to initiate a transfer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="productName"/> or <paramref name="moveProductRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="productName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MoveProductEligibilityResult> ValidateMoveEligibility(string billingAccountName, string productName, MoveProductRequest moveProductRequest, CancellationToken cancellationToken = default)
+        public Response<MoveProductEligibilityResult> ValidateMoveEligibility(string billingAccountName, string productName, MoveProductContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNull(moveProductRequest, nameof(moveProductRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateMoveEligibilityRequest(billingAccountName, productName, moveProductRequest);
+            using var message = CreateValidateMoveEligibilityRequest(billingAccountName, productName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

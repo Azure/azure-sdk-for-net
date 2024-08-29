@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="productId"> The ID that uniquely identifies a product. </param>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPropertyProperties(BillingAgreementType? billingAccountAgreementType, string billingAccountDisplayName, string billingAccountId, string accountAdminNotificationEmailAddress, string billingAccountSoldToCountry, BillingAccountStatus? billingAccountStatus, BillingAccountStatusReasonCode? billingAccountStatusReasonCode, BillingAccountType? billingAccountType, BillingAccountSubType? billingAccountSubType, string billingCurrency, string billingProfileDisplayName, string billingProfileId, SpendingLimit? billingProfileSpendingLimit, IReadOnlyList<SpendingLimitDetails> billingProfileSpendingLimitDetails, BillingProfileStatus? billingProfileStatus, BillingProfileStatusReasonCode? billingProfileStatusReasonCode, BillingPaymentMethodFamily? billingProfilePaymentMethodFamily, string billingProfilePaymentMethodType, string billingTenantId, string costCenter, string customerDisplayName, string customerId, CustomerStatus? customerStatus, string invoiceSectionDisplayName, string invoiceSectionId, InvoiceSectionState? invoiceSectionStatus, InvoiceSectionStateReasonCode? invoiceSectionStatusReasonCode, bool? isTransitionedBillingAccount, string skuDescription, string skuId, BillingSubscriptionStatus? subscriptionBillingStatus, IReadOnlyList<BillingSubscriptionStatusDetails> subscriptionBillingStatusDetails, SubscriptionBillingType? subscriptionBillingType, BillingPropertyPropertiesSubscriptionServiceUsageAddress subscriptionServiceUsageAddress, SubscriptionWorkloadType? subscriptionWorkloadType, BillingPropertyPropertiesEnrollmentDetails enrollmentDetails, bool? isAccountAdmin, string productId, string productName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingPropertyProperties(BillingAgreementType? billingAccountAgreementType, string billingAccountDisplayName, ResourceIdentifier billingAccountId, string accountAdminNotificationEmailAddress, string billingAccountSoldToCountry, BillingAccountStatus? billingAccountStatus, BillingAccountStatusReasonCode? billingAccountStatusReasonCode, BillingAccountType? billingAccountType, BillingAccountSubType? billingAccountSubType, string billingCurrency, string billingProfileDisplayName, ResourceIdentifier billingProfileId, BillingSpendingLimit? billingProfileSpendingLimit, IReadOnlyList<SpendingLimitDetails> billingProfileSpendingLimitDetails, BillingProfileStatus? billingProfileStatus, BillingProfileStatusReasonCode? billingProfileStatusReasonCode, PaymentMethodFamily? billingProfilePaymentMethodFamily, string billingProfilePaymentMethodType, Guid? billingTenantId, string costCenter, string customerDisplayName, ResourceIdentifier customerId, BillingCustomerStatus? customerStatus, string invoiceSectionDisplayName, ResourceIdentifier invoiceSectionId, InvoiceSectionState? invoiceSectionStatus, InvoiceSectionStateReasonCode? invoiceSectionStatusReasonCode, bool? isTransitionedBillingAccount, string skuDescription, string skuId, BillingSubscriptionStatus? subscriptionBillingStatus, IReadOnlyList<BillingSubscriptionStatusDetails> subscriptionBillingStatusDetails, SubscriptionBillingType? subscriptionBillingType, BillingAddressDetails subscriptionServiceUsageAddress, SubscriptionWorkloadType? subscriptionWorkloadType, SubscriptionEnrollmentDetails enrollmentDetails, bool? isAccountAdmin, string productId, string productName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingAccountAgreementType = billingAccountAgreementType;
             BillingAccountDisplayName = billingAccountDisplayName;
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The name of the billing account. </summary>
         public string BillingAccountDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing account. </summary>
-        public string BillingAccountId { get; }
+        public ResourceIdentifier BillingAccountId { get; }
         /// <summary> Notification email address for legacy account. Available for agreement type Microsoft Online Services Program. </summary>
         public string AccountAdminNotificationEmailAddress { get; }
         /// <summary> The country of the individual or organization that is responsible for the billing account. </summary>
@@ -160,9 +161,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The name of the billing profile. </summary>
         public string BillingProfileDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
-        public string BillingProfileId { get; }
+        public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The billing profile spending limit. </summary>
-        public SpendingLimit? BillingProfileSpendingLimit { get; }
+        public BillingSpendingLimit? BillingProfileSpendingLimit { get; }
         /// <summary> The details of billing profile spending limit. </summary>
         public IReadOnlyList<SpendingLimitDetails> BillingProfileSpendingLimitDetails { get; }
         /// <summary> The status of the billing profile. </summary>
@@ -170,23 +171,23 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Reason for the specified billing profile status. </summary>
         public BillingProfileStatusReasonCode? BillingProfileStatusReasonCode { get; }
         /// <summary> The payment method family of the primary payment method for the billing profile. </summary>
-        public BillingPaymentMethodFamily? BillingProfilePaymentMethodFamily { get; }
+        public PaymentMethodFamily? BillingProfilePaymentMethodFamily { get; }
         /// <summary> The payment method type of the primary payment method for the billing profile. </summary>
         public string BillingProfilePaymentMethodType { get; }
         /// <summary> The Azure AD tenant ID of the billing account for the subscription. </summary>
-        public string BillingTenantId { get; }
+        public Guid? BillingTenantId { get; }
         /// <summary> The cost center applied to the subscription. Available for agreement type Microsoft Customer Agreement and Microsoft Partner Agreement. This property can be updated via patch. </summary>
         public string CostCenter { get; set; }
         /// <summary> The name of the customer. </summary>
         public string CustomerDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
-        public string CustomerId { get; }
+        public ResourceIdentifier CustomerId { get; }
         /// <summary> Identifies the status of an customer. This is an upcoming property that will be populated in the future. </summary>
-        public CustomerStatus? CustomerStatus { get; }
+        public BillingCustomerStatus? CustomerStatus { get; }
         /// <summary> The name of the invoice section. </summary>
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
-        public string InvoiceSectionId { get; }
+        public ResourceIdentifier InvoiceSectionId { get; }
         /// <summary> Identifies the status of an invoice section. </summary>
         public InvoiceSectionState? InvoiceSectionStatus { get; }
         /// <summary> Reason for the specified invoice section status. </summary>
@@ -204,11 +205,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The type of billing subscription. </summary>
         public SubscriptionBillingType? SubscriptionBillingType { get; }
         /// <summary> The address of the individual or organization where service subscription is being used. Available for agreement type Microsoft Online Services Program. This property can be updated via patch. </summary>
-        public BillingPropertyPropertiesSubscriptionServiceUsageAddress SubscriptionServiceUsageAddress { get; set; }
+        public BillingAddressDetails SubscriptionServiceUsageAddress { get; set; }
         /// <summary> The Azure workload type of the subscription. </summary>
         public SubscriptionWorkloadType? SubscriptionWorkloadType { get; }
         /// <summary> The enrollment details for the subscription. Available for billing accounts with agreement type Enterprise Agreement. </summary>
-        public BillingPropertyPropertiesEnrollmentDetails EnrollmentDetails { get; set; }
+        public SubscriptionEnrollmentDetails EnrollmentDetails { get; set; }
         /// <summary> Indicates whether user is the account admin. </summary>
         public bool? IsAccountAdmin { get; }
         /// <summary> The ID that uniquely identifies a product. </summary>

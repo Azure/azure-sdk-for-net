@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.Billing.Samples
             {
                 ProductDetails =
 {
-new ProductDetails()
+new BillingProductDetails()
 {
-ProductType = ProductType.AzureSubscription,
+ProductType = BillingProductType.AzureSubscription,
 ProductId = "subscriptionId",
-},new ProductDetails()
+},new BillingProductDetails()
 {
-ProductType = ProductType.AzureReservation,
+ProductType = BillingProductType.AzureReservation,
 ProductId = "reservedInstanceId",
 }
 },
@@ -83,18 +83,18 @@ ProductId = "reservedInstanceId",
             {
                 ProductDetails =
 {
-new ProductDetails()
+new BillingProductDetails()
 {
-ProductType = ProductType.AzureSubscription,
+ProductType = BillingProductType.AzureSubscription,
 ProductId = "subscriptionId",
-},new ProductDetails()
+},new BillingProductDetails()
 {
-ProductType = ProductType.AzureReservation,
+ProductType = BillingProductType.AzureReservation,
 ProductId = "reservedInstanceId",
 }
 },
             };
-            await foreach (ValidateTransferResponse item in recipientTransferDetail.ValidateAsync(content))
+            await foreach (BillingTransferValidationResult item in recipientTransferDetail.ValidateAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

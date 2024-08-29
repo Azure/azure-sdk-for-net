@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.Billing
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="documentName"> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DocumentDownloadResult>> DownloadByBillingSubscriptionAsync(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadByBillingSubscriptionAsync(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionBillingInvoiceInvoicesClientDiagnostics.CreateScope("SubscriptionBillingInvoiceResource.DownloadByBillingSubscription");
             scope.Start();
             try
             {
                 var response = await _subscriptionBillingInvoiceInvoicesRestClient.DownloadByBillingSubscriptionAsync(Id.Parent.Name, Id.Name, documentName, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), _subscriptionBillingInvoiceInvoicesClientDiagnostics, Pipeline, _subscriptionBillingInvoiceInvoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _subscriptionBillingInvoiceInvoicesClientDiagnostics, Pipeline, _subscriptionBillingInvoiceInvoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,14 +235,14 @@ namespace Azure.ResourceManager.Billing
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="documentName"> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DocumentDownloadResult> DownloadByBillingSubscription(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadByBillingSubscription(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionBillingInvoiceInvoicesClientDiagnostics.CreateScope("SubscriptionBillingInvoiceResource.DownloadByBillingSubscription");
             scope.Start();
             try
             {
                 var response = _subscriptionBillingInvoiceInvoicesRestClient.DownloadByBillingSubscription(Id.Parent.Name, Id.Name, documentName, cancellationToken);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), _subscriptionBillingInvoiceInvoicesClientDiagnostics, Pipeline, _subscriptionBillingInvoiceInvoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _subscriptionBillingInvoiceInvoicesClientDiagnostics, Pipeline, _subscriptionBillingInvoiceInvoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

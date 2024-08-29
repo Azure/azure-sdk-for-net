@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
 
             // invoke the operation and iterate over the result
-            CheckAccessRequest checkAccessRequest = new CheckAccessRequest()
+            BillingCheckAccessContent content = new BillingCheckAccessContent()
             {
                 Actions =
 {
 "Microsoft.Billing/billingAccounts/read","Microsoft.Subscription/subscriptions/write"
 },
             };
-            await foreach (CheckAccessResponse item in billingProfile.CheckAccessBillingPermissionsAsync(checkAccessRequest))
+            await foreach (BillingCheckAccessResult item in billingProfile.CheckAccessBillingPermissionsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Billing.Samples
             {
                 Properties = new BillingProfileProperties()
                 {
-                    BillTo = new BillingProfilePropertiesBillTo("Test Address1", "US")
+                    BillTo = new BillingAddressDetails("Test Address1", "US")
                     {
                         AddressLine2 = "Test Address2",
                         AddressLine3 = "Test Address3",
@@ -264,9 +264,9 @@ SkuId = "0001",
 SkuId = "0002",
 }
 },
-                    InvoiceEmailOptIn = true,
+                    IsInvoiceEmailOptIn = true,
                     PoNumber = "ABC12345",
-                    ShipTo = new BillingProfilePropertiesShipTo("Test Address1", "US")
+                    ShipTo = new BillingAddressDetails("Test Address1", "US")
                     {
                         AddressLine2 = "Test Address2",
                         AddressLine3 = "Test Address3",
@@ -347,10 +347,10 @@ SkuId = "0002",
             BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
 
             // invoke the operation
-            BillingRoleAssignmentProperties billingRoleAssignmentProperties = new BillingRoleAssignmentProperties("/providers/Microsoft.Billing/billingAccounts/00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2018-09-30/billingProfiles/BKM6-54VH-BG7-PGB/billingRoleDefinitions/10000000-aaaa-bbbb-cccc-100000000000")
+            BillingRoleAssignmentProperties billingRoleAssignmentProperties = new BillingRoleAssignmentProperties(new ResourceIdentifier("/providers/Microsoft.Billing/billingAccounts/00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2018-09-30/billingProfiles/BKM6-54VH-BG7-PGB/billingRoleDefinitions/10000000-aaaa-bbbb-cccc-100000000000"))
             {
                 PrincipalId = "00000000-0000-0000-0000-000000000000",
-                PrincipalTenantId = "076915e7-de10-4323-bb34-a58c904068bb",
+                PrincipalTenantId = Guid.Parse("076915e7-de10-4323-bb34-a58c904068bb"),
                 UserEmailAddress = "john@contoso.com",
             };
             ArmOperation<BillingRoleAssignmentData> lro = await billingProfile.CreateByBillingProfileBillingRoleAssignmentAsync(WaitUntil.Completed, billingRoleAssignmentProperties);
@@ -508,7 +508,7 @@ SkuId = "0002",
 
             // invoke the operation and iterate over the result
             BillingProfileResourceGetTransactionsOptions options = new BillingProfileResourceGetTransactionsOptions(periodStartDate: DateTimeOffset.Parse("2024-04-01"), periodEndDate: DateTimeOffset.Parse("2023-05-30"), type: TransactionType.Billed) { Filter = "properties/date gt '2020-10-01'", Search = "storage" };
-            await foreach (Transaction item in billingProfile.GetTransactionsAsync(options))
+            await foreach (BillingTransactionData item in billingProfile.GetTransactionsAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

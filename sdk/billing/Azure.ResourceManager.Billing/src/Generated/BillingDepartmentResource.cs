@@ -448,16 +448,16 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkAccessRequest"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CheckAccessResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CheckAccessResponse> CheckAccessBillingPermissionsAsync(CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingCheckAccessResult> CheckAccessBillingPermissionsAsync(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByDepartmentRequest(Id.Parent.Name, Id.Name, checkAccessRequest);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CheckAccessResponse.DeserializeCheckAccessResponse(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingDepartmentResource.CheckAccessBillingPermissions", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByDepartmentRequest(Id.Parent.Name, Id.Name, content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BillingCheckAccessResult.DeserializeBillingCheckAccessResult(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingDepartmentResource.CheckAccessBillingPermissions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -477,16 +477,16 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkAccessRequest"/> is null. </exception>
-        /// <returns> A collection of <see cref="CheckAccessResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CheckAccessResponse> CheckAccessBillingPermissions(CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingCheckAccessResult> CheckAccessBillingPermissions(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByDepartmentRequest(Id.Parent.Name, Id.Name, checkAccessRequest);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CheckAccessResponse.DeserializeCheckAccessResponse(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingDepartmentResource.CheckAccessBillingPermissions", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByDepartmentRequest(Id.Parent.Name, Id.Name, content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BillingCheckAccessResult.DeserializeBillingCheckAccessResult(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingDepartmentResource.CheckAccessBillingPermissions", "", null, cancellationToken);
         }
     }
 }

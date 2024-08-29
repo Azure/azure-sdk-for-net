@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingProductResource billingProduct = client.GetBillingProductResource(billingProductResourceId);
 
             // invoke the operation
-            MoveProductRequest moveProductRequest = new MoveProductRequest("/providers/Microsoft.Billing/billingAccounts/a1a9c77e-4cec-4a6c-a089-867d973a6074:a80d3b1f-c626-4e5e-82ed-1173bd91c838_2019-05-31/billingProfiles/ea36e548-1505-41db-bebc-46fff3d37998/invoiceSections/Q7GV-UUVA-PJA-TGB");
-            ArmOperation<BillingProductResource> lro = await billingProduct.MoveAsync(WaitUntil.Completed, moveProductRequest);
+            MoveProductContent content = new MoveProductContent(new ResourceIdentifier("/providers/Microsoft.Billing/billingAccounts/a1a9c77e-4cec-4a6c-a089-867d973a6074:a80d3b1f-c626-4e5e-82ed-1173bd91c838_2019-05-31/billingProfiles/ea36e548-1505-41db-bebc-46fff3d37998/invoiceSections/Q7GV-UUVA-PJA-TGB"));
+            ArmOperation<BillingProductResource> lro = await billingProduct.MoveAsync(WaitUntil.Completed, content);
             BillingProductResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingProductResource billingProduct = client.GetBillingProductResource(billingProductResourceId);
 
             // invoke the operation
-            MoveProductRequest moveProductRequest = new MoveProductRequest("/providers/Microsoft.Billing/billingAccounts/a1a9c77e-4cec-4a6c-a089-867d973a6074:a80d3b1f-c626-4e5e-82ed-1173bd91c838_2019-05-31/billingProfiles/ea36e548-1505-41db-bebc-46fff3d37998/invoiceSections/Q7GV-UUVA-PJA-TGB");
-            MoveProductEligibilityResult result = await billingProduct.ValidateMoveEligibilityAsync(moveProductRequest);
+            MoveProductContent content = new MoveProductContent(new ResourceIdentifier("/providers/Microsoft.Billing/billingAccounts/a1a9c77e-4cec-4a6c-a089-867d973a6074:a80d3b1f-c626-4e5e-82ed-1173bd91c838_2019-05-31/billingProfiles/ea36e548-1505-41db-bebc-46fff3d37998/invoiceSections/Q7GV-UUVA-PJA-TGB"));
+            MoveProductEligibilityResult result = await billingProduct.ValidateMoveEligibilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingProductResource billingProduct = client.GetBillingProductResource(billingProductResourceId);
 
             // invoke the operation
-            MoveProductRequest moveProductRequest = new MoveProductRequest("/providers/Microsoft.Billing/billingAccounts/a1a9c77e-4cec-4a6c-a089-867d973a6074:a80d3b1f-c626-4e5e-82ed-1173bd91c838_2019-05-31/billingProfiles/ea36e548-1505-41db-bebc-46fff3d37998/invoiceSections/Q7GV-UUVA-PJA-TGB");
-            MoveProductEligibilityResult result = await billingProduct.ValidateMoveEligibilityAsync(moveProductRequest);
+            MoveProductContent content = new MoveProductContent(new ResourceIdentifier("/providers/Microsoft.Billing/billingAccounts/a1a9c77e-4cec-4a6c-a089-867d973a6074:a80d3b1f-c626-4e5e-82ed-1173bd91c838_2019-05-31/billingProfiles/ea36e548-1505-41db-bebc-46fff3d37998/invoiceSections/Q7GV-UUVA-PJA-TGB"));
+            MoveProductEligibilityResult result = await billingProduct.ValidateMoveEligibilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

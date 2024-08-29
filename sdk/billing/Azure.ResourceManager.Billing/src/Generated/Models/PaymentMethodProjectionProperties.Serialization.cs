@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.Billing.Models
             string accountHolderName = default;
             string displayName = default;
             string expiration = default;
-            BillingPaymentMethodFamily? family = default;
+            PaymentMethodFamily? family = default;
             string lastFourDigits = default;
             IList<PaymentMethodLogo> logos = default;
             string paymentMethodType = default;
-            BillingPaymentMethodStatus? status = default;
+            PaymentMethodStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    family = new BillingPaymentMethodFamily(property.Value.GetString());
+                    family = new PaymentMethodFamily(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastFourDigits"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    status = new BillingPaymentMethodStatus(property.Value.GetString());
+                    status = new PaymentMethodStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

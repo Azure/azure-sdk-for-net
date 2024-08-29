@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingDepartmentResource billingDepartment = client.GetBillingDepartmentResource(billingDepartmentResourceId);
 
             // invoke the operation and iterate over the result
-            CheckAccessRequest checkAccessRequest = new CheckAccessRequest()
+            BillingCheckAccessContent content = new BillingCheckAccessContent()
             {
                 Actions =
 {
 "Microsoft.Billing/billingAccounts/read","Microsoft.Subscription/subscriptions/write"
 },
             };
-            await foreach (CheckAccessResponse item in billingDepartment.CheckAccessBillingPermissionsAsync(checkAccessRequest))
+            await foreach (BillingCheckAccessResult item in billingDepartment.CheckAccessBillingPermissionsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="tenantId"> The id of the tenant in which the product is used. </param>
         /// <param name="reseller"> Reseller for this product. The fields is not available for Microsoft Partner Agreement products. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingProductProperties(BillingSubscriptionAutoRenewState? autoRenew, string availabilityId, string billingFrequency, string billingProfileId, string billingProfileDisplayName, string customerId, string customerDisplayName, string displayName, string endDate, string invoiceSectionId, string invoiceSectionDisplayName, ProductPropertiesLastCharge lastCharge, string lastChargeDate, string productType, string productTypeId, string skuId, string skuDescription, string purchaseDate, long? quantity, ProductStatus? status, Guid? tenantId, ProductPropertiesReseller reseller, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingProductProperties(BillingSubscriptionAutoRenewState? autoRenew, string availabilityId, string billingFrequency, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier customerId, string customerDisplayName, string displayName, string endDate, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, BillingAmount lastCharge, string lastChargeDate, string productType, string productTypeId, string skuId, string skuDescription, string purchaseDate, long? quantity, BillingProductStatus? status, Guid? tenantId, BillingAmount reseller, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AutoRenew = autoRenew;
             AvailabilityId = availabilityId;
@@ -108,11 +109,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The frequency at which the product will be billed. </summary>
         public string BillingFrequency { get; }
         /// <summary> The ID of the billing profile to which the product is billed. </summary>
-        public string BillingProfileId { get; }
+        public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The name of the billing profile to which the product is billed. </summary>
         public string BillingProfileDisplayName { get; }
         /// <summary> The ID of the customer for whom the product was purchased. The field is applicable only for Microsoft Partner Agreement billing account. </summary>
-        public string CustomerId { get; }
+        public ResourceIdentifier CustomerId { get; }
         /// <summary> The name of the customer for whom the product was purchased. The field is applicable only for Microsoft Partner Agreement billing account. </summary>
         public string CustomerDisplayName { get; }
         /// <summary> The display name of the product. </summary>
@@ -120,11 +121,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The date when the product will be renewed or canceled. </summary>
         public string EndDate { get; }
         /// <summary> The ID of the invoice section to which the product is billed. </summary>
-        public string InvoiceSectionId { get; }
+        public ResourceIdentifier InvoiceSectionId { get; }
         /// <summary> The name of the invoice section to which the product is billed. </summary>
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The last month charges. </summary>
-        public ProductPropertiesLastCharge LastCharge { get; set; }
+        public BillingAmount LastCharge { get; }
         /// <summary> The date of the last charge. </summary>
         public string LastChargeDate { get; }
         /// <summary> The description of the type of product. </summary>
@@ -140,10 +141,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The quantity purchased for the product. </summary>
         public long? Quantity { get; }
         /// <summary> The status of the product. </summary>
-        public ProductStatus? Status { get; }
+        public BillingProductStatus? Status { get; }
         /// <summary> The id of the tenant in which the product is used. </summary>
         public Guid? TenantId { get; }
         /// <summary> Reseller for this product. The fields is not available for Microsoft Partner Agreement products. </summary>
-        public ProductPropertiesReseller Reseller { get; set; }
+        public BillingAmount Reseller { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Initializes a new instance of <see cref="CancelSubscriptionContent"/>. </summary>
         /// <param name="cancellationReason"> Cancellation reason. </param>
-        public CancelSubscriptionContent(CancellationReason cancellationReason)
+        public CancelSubscriptionContent(CustomerSubscriptionCancellationReason cancellationReason)
         {
             CancellationReason = cancellationReason;
         }
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="cancellationReason"> Cancellation reason. </param>
         /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CancelSubscriptionContent(CancellationReason cancellationReason, string customerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CancelSubscriptionContent(CustomerSubscriptionCancellationReason cancellationReason, ResourceIdentifier customerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CancellationReason = cancellationReason;
             CustomerId = customerId;
@@ -69,8 +70,8 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Cancellation reason. </summary>
-        public CancellationReason CancellationReason { get; }
+        public CustomerSubscriptionCancellationReason CancellationReason { get; }
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
-        public string CustomerId { get; set; }
+        public ResourceIdentifier CustomerId { get; set; }
     }
 }

@@ -1433,7 +1433,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="arrayOfPaymentTerm"> The properties of payment term. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="arrayOfPaymentTerm"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingAccountResource>> AddPaymentTermsAsync(WaitUntil waitUntil, IEnumerable<PaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingAccountResource>> AddPaymentTermsAsync(WaitUntil waitUntil, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));
 
@@ -1479,7 +1479,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="arrayOfPaymentTerm"> The properties of payment term. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="arrayOfPaymentTerm"/> is null. </exception>
-        public virtual ArmOperation<BillingAccountResource> AddPaymentTerms(WaitUntil waitUntil, IEnumerable<PaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingAccountResource> AddPaymentTerms(WaitUntil waitUntil, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));
 
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TransitionDetails>> ConfirmTransitionAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingTransitionDetails>> ConfirmTransitionAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountResource.ConfirmTransition");
             scope.Start();
@@ -1646,7 +1646,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TransitionDetails> ConfirmTransition(CancellationToken cancellationToken = default)
+        public virtual Response<BillingTransitionDetails> ConfirmTransition(CancellationToken cancellationToken = default)
         {
             using var scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountResource.ConfirmTransition");
             scope.Start();
@@ -1748,7 +1748,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="arrayOfPaymentTerm"> The properties of payment term. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="arrayOfPaymentTerm"/> is null. </exception>
-        public virtual async Task<Response<PaymentTermsEligibilityResult>> ValidatePaymentTermsAsync(IEnumerable<PaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PaymentTermsEligibilityResult>> ValidatePaymentTermsAsync(IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));
 
@@ -1790,7 +1790,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="arrayOfPaymentTerm"> The properties of payment term. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="arrayOfPaymentTerm"/> is null. </exception>
-        public virtual Response<PaymentTermsEligibilityResult> ValidatePaymentTerms(IEnumerable<PaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
+        public virtual Response<PaymentTermsEligibilityResult> ValidatePaymentTerms(IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));
 
@@ -1877,16 +1877,16 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkAccessRequest"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CheckAccessResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CheckAccessResponse> CheckAccessBillingPermissionsAsync(CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingCheckAccessResult> CheckAccessBillingPermissionsAsync(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByBillingAccountRequest(Id.Name, checkAccessRequest);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CheckAccessResponse.DeserializeCheckAccessResponse(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingAccountResource.CheckAccessBillingPermissions", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByBillingAccountRequest(Id.Name, content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BillingCheckAccessResult.DeserializeBillingCheckAccessResult(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingAccountResource.CheckAccessBillingPermissions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1906,16 +1906,16 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkAccessRequest"/> is null. </exception>
-        /// <returns> A collection of <see cref="CheckAccessResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CheckAccessResponse> CheckAccessBillingPermissions(CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingCheckAccessResult> CheckAccessBillingPermissions(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByBillingAccountRequest(Id.Name, checkAccessRequest);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CheckAccessResponse.DeserializeCheckAccessResponse(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingAccountResource.CheckAccessBillingPermissions", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByBillingAccountRequest(Id.Name, content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BillingCheckAccessResult.DeserializeBillingCheckAccessResult(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingAccountResource.CheckAccessBillingPermissions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2235,7 +2235,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="arrayOfDocumentDownloadRequest"> A list of download details for individual documents. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation<DocumentDownloadResult>> DownloadDocumentsByBillingAccountInvoiceAsync(WaitUntil waitUntil, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingAccountInvoiceAsync(WaitUntil waitUntil, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
 
@@ -2244,7 +2244,7 @@ namespace Azure.ResourceManager.Billing
             try
             {
                 var response = await _invoicesRestClient.DownloadDocumentsByBillingAccountAsync(Id.Name, arrayOfDocumentDownloadRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), _invoicesClientDiagnostics, Pipeline, _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, arrayOfDocumentDownloadRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _invoicesClientDiagnostics, Pipeline, _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, arrayOfDocumentDownloadRequest).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2277,7 +2277,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="arrayOfDocumentDownloadRequest"> A list of download details for individual documents. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
-        public virtual ArmOperation<DocumentDownloadResult> DownloadDocumentsByBillingAccountInvoice(WaitUntil waitUntil, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingAccountInvoice(WaitUntil waitUntil, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
 
@@ -2286,7 +2286,7 @@ namespace Azure.ResourceManager.Billing
             try
             {
                 var response = _invoicesRestClient.DownloadDocumentsByBillingAccount(Id.Name, arrayOfDocumentDownloadRequest, cancellationToken);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), _invoicesClientDiagnostics, Pipeline, _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, arrayOfDocumentDownloadRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _invoicesClientDiagnostics, Pipeline, _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, arrayOfDocumentDownloadRequest).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

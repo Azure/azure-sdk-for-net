@@ -274,19 +274,19 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="moveProductRequest"> The properties of the product to initiate a transfer. </param>
+        /// <param name="content"> The properties of the product to initiate a transfer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveProductRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingProductResource>> MoveAsync(WaitUntil waitUntil, MoveProductRequest moveProductRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BillingProductResource>> MoveAsync(WaitUntil waitUntil, MoveProductContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveProductRequest, nameof(moveProductRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.Move");
             scope.Start();
             try
             {
-                var response = await _billingProductProductsRestClient.MoveAsync(Id.Parent.Name, Id.Name, moveProductRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingProductResource>(new BillingProductOperationSource(Client), _billingProductProductsClientDiagnostics, Pipeline, _billingProductProductsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, moveProductRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await _billingProductProductsRestClient.MoveAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingArmOperation<BillingProductResource>(new BillingProductOperationSource(Client), _billingProductProductsClientDiagnostics, Pipeline, _billingProductProductsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -320,19 +320,19 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="moveProductRequest"> The properties of the product to initiate a transfer. </param>
+        /// <param name="content"> The properties of the product to initiate a transfer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveProductRequest"/> is null. </exception>
-        public virtual ArmOperation<BillingProductResource> Move(WaitUntil waitUntil, MoveProductRequest moveProductRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BillingProductResource> Move(WaitUntil waitUntil, MoveProductContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveProductRequest, nameof(moveProductRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.Move");
             scope.Start();
             try
             {
-                var response = _billingProductProductsRestClient.Move(Id.Parent.Name, Id.Name, moveProductRequest, cancellationToken);
-                var operation = new BillingArmOperation<BillingProductResource>(new BillingProductOperationSource(Client), _billingProductProductsClientDiagnostics, Pipeline, _billingProductProductsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, moveProductRequest).Request, response, OperationFinalStateVia.Location);
+                var response = _billingProductProductsRestClient.Move(Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new BillingArmOperation<BillingProductResource>(new BillingProductOperationSource(Client), _billingProductProductsClientDiagnostics, Pipeline, _billingProductProductsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -365,18 +365,18 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="moveProductRequest"> The properties of the product to initiate a transfer. </param>
+        /// <param name="content"> The properties of the product to initiate a transfer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveProductRequest"/> is null. </exception>
-        public virtual async Task<Response<MoveProductEligibilityResult>> ValidateMoveEligibilityAsync(MoveProductRequest moveProductRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<MoveProductEligibilityResult>> ValidateMoveEligibilityAsync(MoveProductContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveProductRequest, nameof(moveProductRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.ValidateMoveEligibility");
             scope.Start();
             try
             {
-                var response = await _billingProductProductsRestClient.ValidateMoveEligibilityAsync(Id.Parent.Name, Id.Name, moveProductRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _billingProductProductsRestClient.ValidateMoveEligibilityAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -407,18 +407,18 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="moveProductRequest"> The properties of the product to initiate a transfer. </param>
+        /// <param name="content"> The properties of the product to initiate a transfer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveProductRequest"/> is null. </exception>
-        public virtual Response<MoveProductEligibilityResult> ValidateMoveEligibility(MoveProductRequest moveProductRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<MoveProductEligibilityResult> ValidateMoveEligibility(MoveProductContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveProductRequest, nameof(moveProductRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.ValidateMoveEligibility");
             scope.Start();
             try
             {
-                var response = _billingProductProductsRestClient.ValidateMoveEligibility(Id.Parent.Name, Id.Name, moveProductRequest, cancellationToken);
+                var response = _billingProductProductsRestClient.ValidateMoveEligibility(Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

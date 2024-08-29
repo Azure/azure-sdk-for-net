@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Billing.Models
         {
             BillingRelationshipTypes = new ChangeTrackingList<BillingRelationshipType>();
             Qualifications = new ChangeTrackingList<string>();
-            TaxIds = new ChangeTrackingList<TaxIdentifier>();
+            TaxIds = new ChangeTrackingList<BillingTaxIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingAccountProperties"/>. </summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="qualifications"> Qualifications for pricing on a billing account. Values may be Commercial, Education, Charity or Government. </param>
         /// <param name="taxIds"> A list of tax identifiers for the billing account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAccountProperties(BillingProvisioningState? provisioningState, BillingAccountStatus? accountStatus, BillingAccountType? accountType, BillingAccountSubType? accountSubType, BillingAccountStatusReasonCode? accountStatusReasonCode, BillingAgreementType? agreementType, string displayName, EnrollmentDetails enrollmentDetails, bool? hasReadAccess, bool? hasNoBillingProfiles, string notificationEmailAddress, string primaryBillingTenantId, BillingAddressDetails soldTo, RegistrationNumber registrationNumber, IReadOnlyList<BillingRelationshipType> billingRelationshipTypes, IReadOnlyList<string> qualifications, IList<TaxIdentifier> taxIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingAccountProperties(BillingProvisioningState? provisioningState, BillingAccountStatus? accountStatus, BillingAccountType? accountType, BillingAccountSubType? accountSubType, BillingAccountStatusReasonCode? accountStatusReasonCode, BillingAgreementType? agreementType, string displayName, BillingAccountEnrollmentDetails enrollmentDetails, bool? hasReadAccess, bool? hasNoBillingProfiles, string notificationEmailAddress, Guid? primaryBillingTenantId, BillingAddressDetails soldTo, BillingRegistrationNumber registrationNumber, IReadOnlyList<BillingRelationshipType> billingRelationshipTypes, IReadOnlyList<string> qualifications, IList<BillingTaxIdentifier> taxIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             AccountStatus = accountStatus;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The billing account name. </summary>
         public string DisplayName { get; set; }
         /// <summary> The properties of an enrollment. </summary>
-        public EnrollmentDetails EnrollmentDetails { get; set; }
+        public BillingAccountEnrollmentDetails EnrollmentDetails { get; set; }
         /// <summary> Indicates whether user has read access to the billing account. </summary>
         public bool? HasReadAccess { get; set; }
         /// <summary> Indicates whether or not the billing account has any billing profiles. </summary>
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Notification email address for legacy account. Available for agreement type Microsoft Online Services Program. </summary>
         public string NotificationEmailAddress { get; set; }
         /// <summary> The tenant that was used to set up the billing account. By default, only users from this tenant can get role assignments on the billing account and all purchases are provisioned in this tenant. </summary>
-        public string PrimaryBillingTenantId { get; set; }
+        public Guid? PrimaryBillingTenantId { get; set; }
         /// <summary> The address of the individual or organization that is responsible for the billing account. </summary>
         public BillingAddressDetails SoldTo { get; set; }
         /// <summary> Describes the registration number of the organization linked with the billing account. </summary>
-        public RegistrationNumber RegistrationNumber { get; set; }
+        public BillingRegistrationNumber RegistrationNumber { get; set; }
         /// <summary> Identifies the billing relationships represented by a billing account. The billing relationship may be between Microsoft, the customer, and/or a third-party. </summary>
         public IReadOnlyList<BillingRelationshipType> BillingRelationshipTypes { get; }
         /// <summary> Qualifications for pricing on a billing account. Values may be Commercial, Education, Charity or Government. </summary>
         public IReadOnlyList<string> Qualifications { get; }
         /// <summary> A list of tax identifiers for the billing account. </summary>
-        public IList<TaxIdentifier> TaxIds { get; }
+        public IList<BillingTaxIdentifier> TaxIds { get; }
     }
 }

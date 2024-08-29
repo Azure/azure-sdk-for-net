@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="resourceGroupId"> Fully-qualified identifier of the resource group. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationAppliedScopeProperties(Guid? tenantId, string managementGroupId, string subscriptionId, string resourceGroupId, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReservationAppliedScopeProperties(Guid? tenantId, ResourceIdentifier managementGroupId, string subscriptionId, ResourceIdentifier resourceGroupId, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             ManagementGroupId = managementGroupId;
@@ -70,11 +71,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Tenant ID where the reservation should apply benefit. </summary>
         public Guid? TenantId { get; set; }
         /// <summary> Fully-qualified identifier of the management group where the benefit must be applied. </summary>
-        public string ManagementGroupId { get; set; }
+        public ResourceIdentifier ManagementGroupId { get; set; }
         /// <summary> Fully-qualified identifier of the subscription. </summary>
         public string SubscriptionId { get; set; }
         /// <summary> Fully-qualified identifier of the resource group. </summary>
-        public string ResourceGroupId { get; set; }
+        public ResourceIdentifier ResourceGroupId { get; set; }
         /// <summary> Display name. </summary>
         public string DisplayName { get; set; }
     }

@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="SavingsPlanUtilization"/>. </summary>
         internal SavingsPlanUtilization()
         {
-            Aggregates = new ChangeTrackingList<UtilizationAggregates>();
+            Aggregates = new ChangeTrackingList<SavingsPlanUtilizationAggregates>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanUtilization"/>. </summary>
         /// <param name="trend"> The trend for a savings plan's utilization. </param>
         /// <param name="aggregates"> The array of aggregates of a savings plan's utilization. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanUtilization(string trend, IReadOnlyList<UtilizationAggregates> aggregates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SavingsPlanUtilization(string trend, IReadOnlyList<SavingsPlanUtilizationAggregates> aggregates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Trend = trend;
             Aggregates = aggregates;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The trend for a savings plan's utilization. </summary>
         public string Trend { get; }
         /// <summary> The array of aggregates of a savings plan's utilization. </summary>
-        public IReadOnlyList<UtilizationAggregates> Aggregates { get; }
+        public IReadOnlyList<SavingsPlanUtilizationAggregates> Aggregates { get; }
     }
 }

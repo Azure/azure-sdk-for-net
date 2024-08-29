@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request body for patching a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SavingsPlanValidateResponse>> ValidateUpdateByBillingAccountAsync(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SavingsPlanValidateResult>> ValidateUpdateByBillingAccountAsync(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request body for patching a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SavingsPlanValidateResponse> ValidateUpdateByBillingAccount(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SavingsPlanValidateResult> ValidateUpdateByBillingAccount(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

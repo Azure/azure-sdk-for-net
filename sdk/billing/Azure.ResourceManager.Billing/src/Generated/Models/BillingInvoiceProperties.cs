@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Billing.Models
         public BillingInvoiceProperties()
         {
             Documents = new ChangeTrackingList<InvoiceDocument>();
-            FailedPayments = new ChangeTrackingList<FailedPayment>();
-            Payments = new ChangeTrackingList<Payment>();
+            FailedPayments = new ChangeTrackingList<BillingInvoiceFailedPayment>();
+            Payments = new ChangeTrackingList<BillingInvoicePayment>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingInvoiceProperties"/>. </summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="totalAmount"> The amount due when the invoice was generated. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </param>
         /// <param name="refundDetails"> The details of a refund request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingInvoiceProperties(InvoicePropertiesAmountDue amountDue, InvoicePropertiesAzurePrepaymentApplied azurePrepaymentApplied, InvoicePropertiesBilledAmount billedAmount, string billedDocumentId, string billingProfileDisplayName, ResourceIdentifier billingProfileId, InvoicePropertiesCreditAmount creditAmount, string creditForDocumentId, IReadOnlyList<InvoiceDocument> documents, InvoiceDocumentType? documentType, DateTimeOffset? dueOn, IReadOnlyList<FailedPayment> failedPayments, InvoicePropertiesFreeAzureCreditApplied freeAzureCreditApplied, DateTimeOffset? invoiceOn, DateTimeOffset? invoicePeriodEndOn, DateTimeOffset? invoicePeriodStartOn, InvoiceType? invoiceType, bool? isMonthlyInvoice, IReadOnlyList<Payment> payments, string purchaseOrderNumber, InvoicePropertiesRebillDetails rebillDetails, InvoiceStatus? status, string subscriptionDisplayName, string subscriptionId, SpecialTaxationType? specialTaxationType, InvoicePropertiesSubTotal subTotal, InvoicePropertiesTaxAmount taxAmount, InvoicePropertiesTotalAmount totalAmount, InvoicePropertiesRefundDetails refundDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingInvoiceProperties(BillingAmount amountDue, BillingAmount azurePrepaymentApplied, BillingAmount billedAmount, string billedDocumentId, string billingProfileDisplayName, ResourceIdentifier billingProfileId, BillingAmount creditAmount, string creditForDocumentId, IReadOnlyList<InvoiceDocument> documents, InvoiceDocumentType? documentType, DateTimeOffset? dueOn, IReadOnlyList<BillingInvoiceFailedPayment> failedPayments, BillingAmount freeAzureCreditApplied, DateTimeOffset? invoiceOn, DateTimeOffset? invoicePeriodEndOn, DateTimeOffset? invoicePeriodStartOn, BillingInvoiceType? invoiceType, bool? isMonthlyInvoice, IReadOnlyList<BillingInvoicePayment> payments, string purchaseOrderNumber, RebillDetails rebillDetails, BillingInvoiceStatus? status, string subscriptionDisplayName, string subscriptionId, SpecialTaxationType? specialTaxationType, BillingAmount subTotal, BillingAmount taxAmount, BillingAmount totalAmount, RefundDetailsSummary refundDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AmountDue = amountDue;
             AzurePrepaymentApplied = azurePrepaymentApplied;
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The amount due as of now. </summary>
-        public InvoicePropertiesAmountDue AmountDue { get; set; }
+        public BillingAmount AmountDue { get; }
         /// <summary> The amount of Azure prepayment applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public InvoicePropertiesAzurePrepaymentApplied AzurePrepaymentApplied { get; set; }
+        public BillingAmount AzurePrepaymentApplied { get; }
         /// <summary> The total charges for the invoice billing period. </summary>
-        public InvoicePropertiesBilledAmount BilledAmount { get; set; }
+        public BillingAmount BilledAmount { get; }
         /// <summary> The Id of the active invoice which is originally billed after this invoice was voided. This field is applicable to the void invoices only. </summary>
         public string BilledDocumentId { get; }
         /// <summary> The name of the billing profile for which the invoice is generated. </summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The ID of the billing profile for which the invoice is generated. </summary>
         public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The total refund for returns and cancellations during the invoice billing period. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public InvoicePropertiesCreditAmount CreditAmount { get; set; }
+        public BillingAmount CreditAmount { get; }
         /// <summary> The Id of the invoice which got voided and this credit note was issued as a result. This field is applicable to the credit notes only. </summary>
         public string CreditForDocumentId { get; }
         /// <summary> List of documents available to download and view such as invoice, credit note, or tax receipt. </summary>
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The due date for the invoice. </summary>
         public DateTimeOffset? DueOn { get; }
         /// <summary> List of failed payments. </summary>
-        public IReadOnlyList<FailedPayment> FailedPayments { get; }
+        public IReadOnlyList<BillingInvoiceFailedPayment> FailedPayments { get; }
         /// <summary> The amount of free Azure credits applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public InvoicePropertiesFreeAzureCreditApplied FreeAzureCreditApplied { get; set; }
+        public BillingAmount FreeAzureCreditApplied { get; }
         /// <summary> The date when the invoice was generated. </summary>
         public DateTimeOffset? InvoiceOn { get; }
         /// <summary> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </summary>
@@ -152,17 +152,17 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </summary>
         public DateTimeOffset? InvoicePeriodStartOn { get; }
         /// <summary> Invoice type. </summary>
-        public InvoiceType? InvoiceType { get; }
+        public BillingInvoiceType? InvoiceType { get; }
         /// <summary> Specifies if the invoice is generated as part of monthly invoicing cycle or not. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
         public bool? IsMonthlyInvoice { get; }
         /// <summary> List of payments. </summary>
-        public IReadOnlyList<Payment> Payments { get; }
+        public IReadOnlyList<BillingInvoicePayment> Payments { get; }
         /// <summary> An optional purchase order number for the invoice. </summary>
         public string PurchaseOrderNumber { get; }
         /// <summary> Rebill details for an invoice. </summary>
-        public InvoicePropertiesRebillDetails RebillDetails { get; set; }
+        public RebillDetails RebillDetails { get; }
         /// <summary> The current status of the invoice. </summary>
-        public InvoiceStatus? Status { get; }
+        public BillingInvoiceStatus? Status { get; }
         /// <summary> The name of the billing subscription for which the invoice is generated. </summary>
         public string SubscriptionDisplayName { get; }
         /// <summary> The ID of the subscription for which the invoice is generated. </summary>
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Identifies the type of tax calculation used for the invoice. The field is applicable only to invoices with special tax calculation logic. </summary>
         public SpecialTaxationType? SpecialTaxationType { get; }
         /// <summary> The pre-tax amount due. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public InvoicePropertiesSubTotal SubTotal { get; set; }
+        public BillingAmount SubTotal { get; }
         /// <summary> The amount of tax charged for the billing period. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public InvoicePropertiesTaxAmount TaxAmount { get; set; }
+        public BillingAmount TaxAmount { get; }
         /// <summary> The amount due when the invoice was generated. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public InvoicePropertiesTotalAmount TotalAmount { get; set; }
+        public BillingAmount TotalAmount { get; }
         /// <summary> The details of a refund request. </summary>
-        public InvoicePropertiesRefundDetails RefundDetails { get; set; }
+        public RefundDetailsSummary RefundDetails { get; set; }
     }
 }

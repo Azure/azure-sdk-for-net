@@ -280,14 +280,14 @@ namespace Azure.ResourceManager.Billing
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="documentName"> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DocumentDownloadResult>> DownloadByBillingAccountAsync(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadByBillingAccountAsync(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
         {
             using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadByBillingAccount");
             scope.Start();
             try
             {
                 var response = await _billingInvoiceInvoicesRestClient.DownloadByBillingAccountAsync(Id.Parent.Name, Id.Name, documentName, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadByBillingAccountRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadByBillingAccountRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -323,14 +323,14 @@ namespace Azure.ResourceManager.Billing
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="documentName"> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DocumentDownloadResult> DownloadByBillingAccount(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadByBillingAccount(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
         {
             using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadByBillingAccount");
             scope.Start();
             try
             {
                 var response = _billingInvoiceInvoicesRestClient.DownloadByBillingAccount(Id.Parent.Name, Id.Name, documentName, cancellationToken);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadByBillingAccountRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadByBillingAccountRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -365,14 +365,14 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DocumentDownloadResult>> DownloadSummaryByBillingAccountAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadSummaryByBillingAccountAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadSummaryByBillingAccount");
             scope.Start();
             try
             {
                 var response = await _billingInvoiceInvoicesRestClient.DownloadSummaryByBillingAccountAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadSummaryByBillingAccountRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadSummaryByBillingAccountRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -407,14 +407,14 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DocumentDownloadResult> DownloadSummaryByBillingAccount(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadSummaryByBillingAccount(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadSummaryByBillingAccount");
             scope.Start();
             try
             {
                 var response = _billingInvoiceInvoicesRestClient.DownloadSummaryByBillingAccount(Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadSummaryByBillingAccountRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadSummaryByBillingAccountRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -445,14 +445,14 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Transaction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Transaction> GetTransactionsAsync(BillingInvoiceResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingTransactionData> GetTransactionsAsync(BillingInvoiceResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new BillingInvoiceResourceGetTransactionsOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _transactionsRestClient.CreateListByInvoiceRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _transactionsRestClient.CreateListByInvoiceNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Transaction.DeserializeTransaction(e), _transactionsClientDiagnostics, Pipeline, "BillingInvoiceResource.GetTransactions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BillingTransactionData.DeserializeBillingTransactionData(e), _transactionsClientDiagnostics, Pipeline, "BillingInvoiceResource.GetTransactions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -474,14 +474,14 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Transaction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Transaction> GetTransactions(BillingInvoiceResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingTransactionData> GetTransactions(BillingInvoiceResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new BillingInvoiceResourceGetTransactionsOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _transactionsRestClient.CreateListByInvoiceRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _transactionsRestClient.CreateListByInvoiceNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Transaction.DeserializeTransaction(e), _transactionsClientDiagnostics, Pipeline, "BillingInvoiceResource.GetTransactions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BillingTransactionData.DeserializeBillingTransactionData(e), _transactionsClientDiagnostics, Pipeline, "BillingInvoiceResource.GetTransactions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -503,14 +503,14 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DocumentDownloadResult>> TransactionsDownloadByInvoiceTransactionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> TransactionsDownloadByInvoiceTransactionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.TransactionsDownloadByInvoiceTransaction");
             scope.Start();
             try
             {
                 var response = await _transactionsRestClient.TransactionsDownloadByInvoiceAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), _transactionsClientDiagnostics, Pipeline, _transactionsRestClient.CreateTransactionsDownloadByInvoiceRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _transactionsClientDiagnostics, Pipeline, _transactionsRestClient.CreateTransactionsDownloadByInvoiceRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -541,14 +541,14 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DocumentDownloadResult> TransactionsDownloadByInvoiceTransaction(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingDocumentDownloadResult> TransactionsDownloadByInvoiceTransaction(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.TransactionsDownloadByInvoiceTransaction");
             scope.Start();
             try
             {
                 var response = _transactionsRestClient.TransactionsDownloadByInvoice(Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), _transactionsClientDiagnostics, Pipeline, _transactionsRestClient.CreateTransactionsDownloadByInvoiceRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _transactionsClientDiagnostics, Pipeline, _transactionsRestClient.CreateTransactionsDownloadByInvoiceRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="filter"> The filter query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
         /// <param name="search"> The search query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TransactionSummary>> GetTransactionSummaryByInvoiceTransactionAsync(string filter = null, string search = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingTransactionSummary>> GetTransactionSummaryByInvoiceTransactionAsync(string filter = null, string search = null, CancellationToken cancellationToken = default)
         {
             using var scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.GetTransactionSummaryByInvoiceTransaction");
             scope.Start();
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="filter"> The filter query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
         /// <param name="search"> The search query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TransactionSummary> GetTransactionSummaryByInvoiceTransaction(string filter = null, string search = null, CancellationToken cancellationToken = default)
+        public virtual Response<BillingTransactionSummary> GetTransactionSummaryByInvoiceTransaction(string filter = null, string search = null, CancellationToken cancellationToken = default)
         {
             using var scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.GetTransactionSummaryByInvoiceTransaction");
             scope.Start();

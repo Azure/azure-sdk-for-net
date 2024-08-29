@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="invoiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransactionSummary>> GetTransactionSummaryByInvoiceAsync(string billingAccountName, string invoiceName, string filter = null, string search = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingTransactionSummary>> GetTransactionSummaryByInvoiceAsync(string billingAccountName, string invoiceName, string filter = null, string search = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
@@ -817,9 +817,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        TransactionSummary value = default;
+                        BillingTransactionSummary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransactionSummary.DeserializeTransactionSummary(document.RootElement);
+                        value = BillingTransactionSummary.DeserializeBillingTransactionSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="invoiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransactionSummary> GetTransactionSummaryByInvoice(string billingAccountName, string invoiceName, string filter = null, string search = null, CancellationToken cancellationToken = default)
+        public Response<BillingTransactionSummary> GetTransactionSummaryByInvoice(string billingAccountName, string invoiceName, string filter = null, string search = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
@@ -846,9 +846,9 @@ namespace Azure.ResourceManager.Billing
             {
                 case 200:
                     {
-                        TransactionSummary value = default;
+                        BillingTransactionSummary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransactionSummary.DeserializeTransactionSummary(document.RootElement);
+                        value = BillingTransactionSummary.DeserializeBillingTransactionSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

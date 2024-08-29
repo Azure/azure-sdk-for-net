@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="provisioningManagementState"> The state determines whether subscriptions and licenses can be provisioned in the associated tenant. It can be set to 'Pending' to initiate a billing request. </param>
         /// <param name="provisioningBillingRequestId"> The unique identifier for the billing request that is created when enabling provisioning for an associated tenant. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAssociatedTenantProperties(BillingProvisioningState? provisioningState, string displayName, Guid? tenantId, BillingManagementTenantState? billingManagementState, ProvisioningTenantState? provisioningManagementState, string provisioningBillingRequestId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingAssociatedTenantProperties(BillingProvisioningState? provisioningState, string displayName, Guid? tenantId, BillingManagementTenantState? billingManagementState, BillingProvisioningTenantState? provisioningManagementState, string provisioningBillingRequestId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The state determines whether users from the associated tenant can be assigned roles for commerce activities like viewing and downloading invoices, managing payments, and making purchases. </summary>
         public BillingManagementTenantState? BillingManagementState { get; set; }
         /// <summary> The state determines whether subscriptions and licenses can be provisioned in the associated tenant. It can be set to 'Pending' to initiate a billing request. </summary>
-        public ProvisioningTenantState? ProvisioningManagementState { get; set; }
+        public BillingProvisioningTenantState? ProvisioningManagementState { get; set; }
         /// <summary> The unique identifier for the billing request that is created when enabling provisioning for an associated tenant. </summary>
         public string ProvisioningBillingRequestId { get; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Billing.Models
         public BillingRequestProperties()
         {
             AdditionalInformation = new ChangeTrackingDictionary<string, string>();
-            Recipients = new ChangeTrackingList<Principal>();
+            Recipients = new ChangeTrackingList<BillingPrincipal>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingRequestProperties"/>. </summary>
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="lastUpdatedBy"> The principal of the entity who last updated the request. </param>
         /// <param name="lastUpdatedOn"> Date and time of last update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingRequestProperties(BillingProvisioningState? provisioningState, IDictionary<string, string> additionalInformation, BillingRequestPropertiesReviewedBy reviewedBy, DateTimeOffset? reviewalOn, string billingAccountId, string billingAccountName, string billingAccountDisplayName, string billingAccountPrimaryBillingTenantId, string billingProfileId, string billingProfileName, string billingProfileDisplayName, BillingRequestPropertiesCreatedBy createdBy, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string decisionReason, string invoiceSectionId, string invoiceSectionName, string invoiceSectionDisplayName, string customerId, string customerName, string customerDisplayName, string subscriptionId, string subscriptionName, string subscriptionDisplayName, string justification, IList<Principal> recipients, string requestScope, string billingScope, BillingRequestStatus? status, BillingRequestType? requestType, BillingRequestPropertiesLastUpdatedBy lastUpdatedBy, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingRequestProperties(BillingProvisioningState? provisioningState, IDictionary<string, string> additionalInformation, BillingPrincipal reviewedBy, DateTimeOffset? reviewalOn, ResourceIdentifier billingAccountId, string billingAccountName, string billingAccountDisplayName, Guid? billingAccountPrimaryBillingTenantId, ResourceIdentifier billingProfileId, string billingProfileName, string billingProfileDisplayName, BillingPrincipal createdBy, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string decisionReason, ResourceIdentifier invoiceSectionId, string invoiceSectionName, string invoiceSectionDisplayName, ResourceIdentifier customerId, string customerName, string customerDisplayName, string subscriptionId, string subscriptionName, string subscriptionDisplayName, string justification, IList<BillingPrincipal> recipients, string requestScope, string billingScope, BillingRequestStatus? status, BillingRequestType? requestType, BillingPrincipal lastUpdatedBy, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             AdditionalInformation = additionalInformation;
@@ -128,25 +129,25 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Additional information for the billing request. </summary>
         public IDictionary<string, string> AdditionalInformation { get; }
         /// <summary> The principal of the request reviewer. Will only be set if request is approved. </summary>
-        public BillingRequestPropertiesReviewedBy ReviewedBy { get; set; }
+        public BillingPrincipal ReviewedBy { get; set; }
         /// <summary> The date and time when the request was reviewed. </summary>
         public DateTimeOffset? ReviewalOn { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing account. </summary>
-        public string BillingAccountId { get; }
+        public ResourceIdentifier BillingAccountId { get; }
         /// <summary> The ID that uniquely identifies a billing account. </summary>
         public string BillingAccountName { get; }
         /// <summary> The name of the billing account. </summary>
         public string BillingAccountDisplayName { get; }
         /// <summary> The primary tenant ID of the billing account for which the billing request was submitted. </summary>
-        public string BillingAccountPrimaryBillingTenantId { get; }
+        public Guid? BillingAccountPrimaryBillingTenantId { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
-        public string BillingProfileId { get; }
+        public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The ID that uniquely identifies a billing profile. </summary>
         public string BillingProfileName { get; }
         /// <summary> The name of the billing profile. </summary>
         public string BillingProfileDisplayName { get; }
         /// <summary> The principal of the entity who created the request. </summary>
-        public BillingRequestPropertiesCreatedBy CreatedBy { get; set; }
+        public BillingPrincipal CreatedBy { get; set; }
         /// <summary> The date and time when the request was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The date and time when the request expires. </summary>
@@ -154,13 +155,13 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The reason to approve or decline the request. </summary>
         public string DecisionReason { get; set; }
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
-        public string InvoiceSectionId { get; }
+        public ResourceIdentifier InvoiceSectionId { get; }
         /// <summary> The ID that uniquely identifies an invoice section. </summary>
         public string InvoiceSectionName { get; }
         /// <summary> The name of the invoice section. </summary>
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
-        public string CustomerId { get; }
+        public ResourceIdentifier CustomerId { get; }
         /// <summary> The ID that uniquely identifies a customer. </summary>
         public string CustomerName { get; }
         /// <summary> The name of the customer. </summary>
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Justification for submitting request. </summary>
         public string Justification { get; set; }
         /// <summary> The recipients of the billing request. </summary>
-        public IList<Principal> Recipients { get; }
+        public IList<BillingPrincipal> Recipients { get; }
         /// <summary> The billing scope for which the request was submitted (ex. '/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}'). </summary>
         public string RequestScope { get; set; }
         /// <summary> The billing scope for which the request will be applied. This is a read only property derived by the service. </summary>
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Type of billing request. </summary>
         public BillingRequestType? RequestType { get; set; }
         /// <summary> The principal of the entity who last updated the request. </summary>
-        public BillingRequestPropertiesLastUpdatedBy LastUpdatedBy { get; set; }
+        public BillingPrincipal LastUpdatedBy { get; set; }
         /// <summary> Date and time of last update. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
     }

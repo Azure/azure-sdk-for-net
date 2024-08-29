@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Billing.Samples
                 {
                     DisplayName = "Contoso Finance",
                     BillingManagementState = BillingManagementTenantState.Active,
-                    ProvisioningManagementState = ProvisioningTenantState.Pending,
+                    ProvisioningManagementState = BillingProvisioningTenantState.Pending,
                 },
             };
             ArmOperation<BillingAssociatedTenantResource> lro = await billingAssociatedTenant.UpdateAsync(WaitUntil.Completed, data);

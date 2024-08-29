@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Billing.Samples
             {
                 Properties = new BillingPropertyProperties()
                 {
-                    SubscriptionServiceUsageAddress = new BillingPropertyPropertiesSubscriptionServiceUsageAddress("Address line 1", "US")
+                    SubscriptionServiceUsageAddress = new BillingAddressDetails("Address line 1", "US")
                     {
                         AddressLine2 = "Address line 2",
                         City = "City",

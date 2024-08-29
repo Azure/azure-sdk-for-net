@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateCheckAccessByBillingProfileRequestUri(string billingAccountName, string billingProfileName, CheckAccessRequest checkAccessRequest)
+        internal RequestUriBuilder CreateCheckAccessByBillingProfileRequestUri(string billingAccountName, string billingProfileName, BillingCheckAccessContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateCheckAccessByBillingProfileRequest(string billingAccountName, string billingProfileName, CheckAccessRequest checkAccessRequest)
+        internal HttpMessage CreateCheckAccessByBillingProfileRequest(string billingAccountName, string billingProfileName, BillingCheckAccessContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -230,9 +230,9 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkAccessRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -240,28 +240,28 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Provides a list of check access response objects for a billing profile. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<CheckAccessResponse>>> CheckAccessByBillingProfileAsync(string billingAccountName, string billingProfileName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<BillingCheckAccessResult>>> CheckAccessByBillingProfileAsync(string billingAccountName, string billingProfileName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByBillingProfileRequest(billingAccountName, billingProfileName, checkAccessRequest);
+            using var message = CreateCheckAccessByBillingProfileRequest(billingAccountName, billingProfileName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -274,28 +274,28 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Provides a list of check access response objects for a billing profile. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<CheckAccessResponse>> CheckAccessByBillingProfile(string billingAccountName, string billingProfileName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<BillingCheckAccessResult>> CheckAccessByBillingProfile(string billingAccountName, string billingProfileName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByBillingProfileRequest(billingAccountName, billingProfileName, checkAccessRequest);
+            using var message = CreateCheckAccessByBillingProfileRequest(billingAccountName, billingProfileName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateCheckAccessByCustomerRequestUri(string billingAccountName, string billingProfileName, string customerName, CheckAccessRequest checkAccessRequest)
+        internal RequestUriBuilder CreateCheckAccessByCustomerRequestUri(string billingAccountName, string billingProfileName, string customerName, BillingCheckAccessContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateCheckAccessByCustomerRequest(string billingAccountName, string billingProfileName, string customerName, CheckAccessRequest checkAccessRequest)
+        internal HttpMessage CreateCheckAccessByCustomerRequest(string billingAccountName, string billingProfileName, string customerName, BillingCheckAccessContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -432,9 +432,9 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkAccessRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -443,29 +443,29 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="customerName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="customerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<CheckAccessResponse>>> CheckAccessByCustomerAsync(string billingAccountName, string billingProfileName, string customerName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<BillingCheckAccessResult>>> CheckAccessByCustomerAsync(string billingAccountName, string billingProfileName, string customerName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
             Argument.AssertNotNullOrEmpty(customerName, nameof(customerName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByCustomerRequest(billingAccountName, billingProfileName, customerName, checkAccessRequest);
+            using var message = CreateCheckAccessByCustomerRequest(billingAccountName, billingProfileName, customerName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -479,29 +479,29 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="customerName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="customerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<CheckAccessResponse>> CheckAccessByCustomer(string billingAccountName, string billingProfileName, string customerName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<BillingCheckAccessResult>> CheckAccessByCustomer(string billingAccountName, string billingProfileName, string customerName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
             Argument.AssertNotNullOrEmpty(customerName, nameof(customerName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByCustomerRequest(billingAccountName, billingProfileName, customerName, checkAccessRequest);
+            using var message = CreateCheckAccessByCustomerRequest(billingAccountName, billingProfileName, customerName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateCheckAccessByInvoiceSectionRequestUri(string billingAccountName, string billingProfileName, string invoiceSectionName, CheckAccessRequest checkAccessRequest)
+        internal RequestUriBuilder CreateCheckAccessByInvoiceSectionRequestUri(string billingAccountName, string billingProfileName, string invoiceSectionName, BillingCheckAccessContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateCheckAccessByInvoiceSectionRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, CheckAccessRequest checkAccessRequest)
+        internal HttpMessage CreateCheckAccessByInvoiceSectionRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, BillingCheckAccessContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -638,9 +638,9 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkAccessRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -649,29 +649,29 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="invoiceSectionName"> The ID that uniquely identifies an invoice section. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceSectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<CheckAccessResponse>>> CheckAccessByInvoiceSectionAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<BillingCheckAccessResult>>> CheckAccessByInvoiceSectionAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
             Argument.AssertNotNullOrEmpty(invoiceSectionName, nameof(invoiceSectionName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByInvoiceSectionRequest(billingAccountName, billingProfileName, invoiceSectionName, checkAccessRequest);
+            using var message = CreateCheckAccessByInvoiceSectionRequest(billingAccountName, billingProfileName, invoiceSectionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -685,29 +685,29 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="invoiceSectionName"> The ID that uniquely identifies an invoice section. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/>, <paramref name="invoiceSectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceSectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<CheckAccessResponse>> CheckAccessByInvoiceSection(string billingAccountName, string billingProfileName, string invoiceSectionName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<BillingCheckAccessResult>> CheckAccessByInvoiceSection(string billingAccountName, string billingProfileName, string invoiceSectionName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
             Argument.AssertNotNullOrEmpty(invoiceSectionName, nameof(invoiceSectionName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByInvoiceSectionRequest(billingAccountName, billingProfileName, invoiceSectionName, checkAccessRequest);
+            using var message = CreateCheckAccessByInvoiceSectionRequest(billingAccountName, billingProfileName, invoiceSectionName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateCheckAccessByBillingAccountRequestUri(string billingAccountName, CheckAccessRequest checkAccessRequest)
+        internal RequestUriBuilder CreateCheckAccessByBillingAccountRequestUri(string billingAccountName, BillingCheckAccessContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateCheckAccessByBillingAccountRequest(string billingAccountName, CheckAccessRequest checkAccessRequest)
+        internal HttpMessage CreateCheckAccessByBillingAccountRequest(string billingAccountName, BillingCheckAccessContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -742,36 +742,36 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkAccessRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Provides a list of check access response objects for a billing account. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<CheckAccessResponse>>> CheckAccessByBillingAccountAsync(string billingAccountName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<BillingCheckAccessResult>>> CheckAccessByBillingAccountAsync(string billingAccountName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByBillingAccountRequest(billingAccountName, checkAccessRequest);
+            using var message = CreateCheckAccessByBillingAccountRequest(billingAccountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -783,27 +783,27 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> Provides a list of check access response objects for a billing account. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<CheckAccessResponse>> CheckAccessByBillingAccount(string billingAccountName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<BillingCheckAccessResult>> CheckAccessByBillingAccount(string billingAccountName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByBillingAccountRequest(billingAccountName, checkAccessRequest);
+            using var message = CreateCheckAccessByBillingAccountRequest(billingAccountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateCheckAccessByDepartmentRequestUri(string billingAccountName, string departmentName, CheckAccessRequest checkAccessRequest)
+        internal RequestUriBuilder CreateCheckAccessByDepartmentRequestUri(string billingAccountName, string departmentName, BillingCheckAccessContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateCheckAccessByDepartmentRequest(string billingAccountName, string departmentName, CheckAccessRequest checkAccessRequest)
+        internal HttpMessage CreateCheckAccessByDepartmentRequest(string billingAccountName, string departmentName, BillingCheckAccessContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1014,9 +1014,9 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkAccessRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1024,28 +1024,28 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Provides a list of check access response objects for a department. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="departmentName"> The name of the department. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="departmentName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="departmentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<CheckAccessResponse>>> CheckAccessByDepartmentAsync(string billingAccountName, string departmentName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<BillingCheckAccessResult>>> CheckAccessByDepartmentAsync(string billingAccountName, string departmentName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(departmentName, nameof(departmentName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByDepartmentRequest(billingAccountName, departmentName, checkAccessRequest);
+            using var message = CreateCheckAccessByDepartmentRequest(billingAccountName, departmentName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1058,28 +1058,28 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Provides a list of check access response objects for a department. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="departmentName"> The name of the department. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="departmentName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="departmentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<CheckAccessResponse>> CheckAccessByDepartment(string billingAccountName, string departmentName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<BillingCheckAccessResult>> CheckAccessByDepartment(string billingAccountName, string departmentName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(departmentName, nameof(departmentName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByDepartmentRequest(billingAccountName, departmentName, checkAccessRequest);
+            using var message = CreateCheckAccessByDepartmentRequest(billingAccountName, departmentName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        internal RequestUriBuilder CreateCheckAccessByEnrollmentAccountRequestUri(string billingAccountName, string enrollmentAccountName, CheckAccessRequest checkAccessRequest)
+        internal RequestUriBuilder CreateCheckAccessByEnrollmentAccountRequestUri(string billingAccountName, string enrollmentAccountName, BillingCheckAccessContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.Billing
             return uri;
         }
 
-        internal HttpMessage CreateCheckAccessByEnrollmentAccountRequest(string billingAccountName, string enrollmentAccountName, CheckAccessRequest checkAccessRequest)
+        internal HttpMessage CreateCheckAccessByEnrollmentAccountRequest(string billingAccountName, string enrollmentAccountName, BillingCheckAccessContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1204,9 +1204,9 @@ namespace Azure.ResourceManager.Billing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkAccessRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1214,28 +1214,28 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Provides a list of check access response objects for an enrollment account. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="enrollmentAccountName"> The name of the enrollment account. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="enrollmentAccountName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="enrollmentAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<CheckAccessResponse>>> CheckAccessByEnrollmentAccountAsync(string billingAccountName, string enrollmentAccountName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<BillingCheckAccessResult>>> CheckAccessByEnrollmentAccountAsync(string billingAccountName, string enrollmentAccountName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(enrollmentAccountName, nameof(enrollmentAccountName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByEnrollmentAccountRequest(billingAccountName, enrollmentAccountName, checkAccessRequest);
+            using var message = CreateCheckAccessByEnrollmentAccountRequest(billingAccountName, enrollmentAccountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1248,28 +1248,28 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Provides a list of check access response objects for an enrollment account. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="enrollmentAccountName"> The name of the enrollment account. </param>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="enrollmentAccountName"/> or <paramref name="checkAccessRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="enrollmentAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<CheckAccessResponse>> CheckAccessByEnrollmentAccount(string billingAccountName, string enrollmentAccountName, CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<BillingCheckAccessResult>> CheckAccessByEnrollmentAccount(string billingAccountName, string enrollmentAccountName, BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(enrollmentAccountName, nameof(enrollmentAccountName));
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAccessByEnrollmentAccountRequest(billingAccountName, enrollmentAccountName, checkAccessRequest);
+            using var message = CreateCheckAccessByEnrollmentAccountRequest(billingAccountName, enrollmentAccountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<CheckAccessResponse> value = default;
+                        IReadOnlyList<BillingCheckAccessResult> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<CheckAccessResponse> array = new List<CheckAccessResponse>();
+                        List<BillingCheckAccessResult> array = new List<BillingCheckAccessResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CheckAccessResponse.DeserializeCheckAccessResponse(item));
+                            array.Add(BillingCheckAccessResult.DeserializeBillingCheckAccessResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

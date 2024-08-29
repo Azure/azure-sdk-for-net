@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteStringValue(AutoRenew.Value.ToString());
             }
-            if (Optional.IsDefined(BeneficiaryTenantId))
+            if (Optional.IsDefined(SubscriptionAliasBeneficiaryTenantId))
             {
                 writer.WritePropertyName("beneficiaryTenantId"u8);
-                writer.WriteStringValue(BeneficiaryTenantId);
+                writer.WriteStringValue(SubscriptionAliasBeneficiaryTenantId.Value);
             }
             if (Optional.IsDefined(Beneficiary))
             {
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("consumptionCostCenter"u8);
                 writer.WriteStringValue(ConsumptionCostCenter);
             }
-            if (Optional.IsDefined(CustomerId))
+            if (Optional.IsDefined(SubscriptionAliasCustomerId))
             {
                 writer.WritePropertyName("customerId"u8);
-                writer.WriteStringValue(CustomerId);
+                writer.WriteStringValue(SubscriptionAliasCustomerId);
             }
             if (options.Format != "W" && Optional.IsDefined(CustomerDisplayName))
             {
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.Billing
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingSubscriptionId))
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionAliasSubscriptionId))
             {
                 writer.WritePropertyName("billingSubscriptionId"u8);
-                writer.WriteStringValue(BillingSubscriptionId);
+                writer.WriteStringValue(SubscriptionAliasSubscriptionId);
             }
             writer.WritePropertyName("enrollmentAccountSubscriptionDetails"u8);
             writer.WriteStartObject();
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Billing
             ResourceType type = default;
             SystemData systemData = default;
             BillingSubscriptionAutoRenewState? autoRenew = default;
-            string beneficiaryTenantId = default;
+            Guid? beneficiaryTenantId = default;
             BillingBeneficiary beneficiary = default;
             string billingFrequency = default;
             ResourceIdentifier billingProfileId = default;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Billing
             string subscriptionId = default;
             IReadOnlyList<string> suspensionReasons = default;
             IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails = default;
-            ResourceIdentifier billingSubscriptionId = default;
+            string billingSubscriptionId = default;
             DateTimeOffset? enrollmentAccountStartDate = default;
             SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -462,7 +462,11 @@ namespace Azure.ResourceManager.Billing
                         }
                         if (property0.NameEquals("beneficiaryTenantId"u8))
                         {
-                            beneficiaryTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            beneficiaryTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("beneficiary"u8))
@@ -775,11 +779,7 @@ namespace Azure.ResourceManager.Billing
                         }
                         if (property0.NameEquals("billingSubscriptionId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            billingSubscriptionId = new ResourceIdentifier(property0.Value.GetString());
+                            billingSubscriptionId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("enrollmentAccountSubscriptionDetails"u8))

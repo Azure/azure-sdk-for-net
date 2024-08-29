@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -43,10 +44,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RebillDetails"/>. </summary>
-        public RebillDetails()
+        internal RebillDetails()
         {
         }
 
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="creditNoteDocumentId"> The ID of credit note. </param>
         /// <param name="rebillDetailsValue"> The rebill details of an invoice. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RebillDetails(string invoiceDocumentId, string creditNoteDocumentId, RebillDetails rebillDetailsValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RebillDetails(ResourceIdentifier invoiceDocumentId, ResourceIdentifier creditNoteDocumentId, RebillDetails rebillDetailsValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InvoiceDocumentId = invoiceDocumentId;
             CreditNoteDocumentId = creditNoteDocumentId;
@@ -64,9 +65,9 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The ID of invoice. </summary>
-        public string InvoiceDocumentId { get; }
+        public ResourceIdentifier InvoiceDocumentId { get; }
         /// <summary> The ID of credit note. </summary>
-        public string CreditNoteDocumentId { get; }
+        public ResourceIdentifier CreditNoteDocumentId { get; }
         /// <summary> The rebill details of an invoice. </summary>
         public RebillDetails RebillDetailsValue { get; }
     }

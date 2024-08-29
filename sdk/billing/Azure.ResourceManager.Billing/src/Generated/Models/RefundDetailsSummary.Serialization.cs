@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("completedOn"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (Optional.IsDefined(AmountRequested))
+            if (options.Format != "W" && Optional.IsDefined(AmountRequested))
             {
                 writer.WritePropertyName("amountRequested"u8);
                 writer.WriteObjectValue(AmountRequested, options);
             }
-            if (Optional.IsDefined(AmountRefunded))
+            if (options.Format != "W" && Optional.IsDefined(AmountRefunded))
             {
                 writer.WritePropertyName("amountRefunded"u8);
                 writer.WriteObjectValue(AmountRefunded, options);
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.Billing.Models
             DateTimeOffset? requestedOn = default;
             DateTimeOffset? approvedOn = default;
             DateTimeOffset? completedOn = default;
-            RefundDetailsSummaryAmountRequested amountRequested = default;
-            RefundDetailsSummaryAmountRefunded amountRefunded = default;
-            string rebillInvoiceId = default;
+            BillingAmount amountRequested = default;
+            BillingAmount amountRefunded = default;
+            ResourceIdentifier rebillInvoiceId = default;
             int? transactionCount = default;
             RefundStatus? refundStatus = default;
             string refundOperationId = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    amountRequested = RefundDetailsSummaryAmountRequested.DeserializeRefundDetailsSummaryAmountRequested(property.Value, options);
+                    amountRequested = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("amountRefunded"u8))
@@ -170,12 +170,16 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    amountRefunded = RefundDetailsSummaryAmountRefunded.DeserializeRefundDetailsSummaryAmountRefunded(property.Value, options);
+                    amountRefunded = BillingAmount.DeserializeBillingAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rebillInvoiceId"u8))
                 {
-                    rebillInvoiceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rebillInvoiceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("transactionCount"u8))

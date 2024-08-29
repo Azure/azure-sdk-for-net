@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Billing.Models
         private const string DirectValue = "Direct";
         private const string IndirectCustomerValue = "IndirectCustomer";
         private const string IndirectPartnerValue = "IndirectPartner";
-        private const string CSPPartnerValue = "CSPPartner";
-        private const string CSPCustomerValue = "CSPCustomer";
+        private const string CspPartnerValue = "CSPPartner";
+        private const string CspCustomerValue = "CSPCustomer";
 
         /// <summary> Other. </summary>
         public static BillingRelationshipType Other { get; } = new BillingRelationshipType(OtherValue);
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> IndirectPartner. </summary>
         public static BillingRelationshipType IndirectPartner { get; } = new BillingRelationshipType(IndirectPartnerValue);
         /// <summary> CSPPartner. </summary>
-        public static BillingRelationshipType CSPPartner { get; } = new BillingRelationshipType(CSPPartnerValue);
+        public static BillingRelationshipType CspPartner { get; } = new BillingRelationshipType(CspPartnerValue);
         /// <summary> CSPCustomer. </summary>
-        public static BillingRelationshipType CSPCustomer { get; } = new BillingRelationshipType(CSPCustomerValue);
+        public static BillingRelationshipType CspCustomer { get; } = new BillingRelationshipType(CspCustomerValue);
         /// <summary> Determines if two <see cref="BillingRelationshipType"/> values are the same. </summary>
         public static bool operator ==(BillingRelationshipType left, BillingRelationshipType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingRelationshipType"/> values are not the same. </summary>

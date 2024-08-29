@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            IReadOnlyList<ValidateTransferResponse> value = default;
+            IReadOnlyList<BillingTransferValidationResult> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<ValidateTransferResponse> array = new List<ValidateTransferResponse>();
+                    List<BillingTransferValidationResult> array = new List<BillingTransferValidationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ValidateTransferResponse.DeserializeValidateTransferResponse(item, options));
+                        array.Add(BillingTransferValidationResult.DeserializeBillingTransferValidationResult(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ValidateTransferListResponse(value ?? new ChangeTrackingList<ValidateTransferResponse>(), serializedAdditionalRawData);
+            return new ValidateTransferListResponse(value ?? new ChangeTrackingList<BillingTransferValidationResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidateTransferListResponse>.Write(ModelReaderWriterOptions options)

@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // invoke the operation
             string documentName = "12345678";
-            ArmOperation<DocumentDownloadResult> lro = await billingInvoice.DownloadByBillingAccountAsync(WaitUntil.Completed, documentName: documentName);
-            DocumentDownloadResult result = lro.Value;
+            ArmOperation<BillingDocumentDownloadResult> lro = await billingInvoice.DownloadByBillingAccountAsync(WaitUntil.Completed, documentName: documentName);
+            BillingDocumentDownloadResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingInvoiceResource billingInvoice = client.GetBillingInvoiceResource(billingInvoiceResourceId);
 
             // invoke the operation
-            ArmOperation<DocumentDownloadResult> lro = await billingInvoice.DownloadSummaryByBillingAccountAsync(WaitUntil.Completed);
-            DocumentDownloadResult result = lro.Value;
+            ArmOperation<BillingDocumentDownloadResult> lro = await billingInvoice.DownloadSummaryByBillingAccountAsync(WaitUntil.Completed);
+            BillingDocumentDownloadResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // invoke the operation and iterate over the result
             BillingInvoiceResourceGetTransactionsOptions options = new BillingInvoiceResourceGetTransactionsOptions() { };
-            await foreach (Transaction item in billingInvoice.GetTransactionsAsync(options))
+            await foreach (BillingTransactionData item in billingInvoice.GetTransactionsAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingInvoiceResource billingInvoice = client.GetBillingInvoiceResource(billingInvoiceResourceId);
 
             // invoke the operation
-            ArmOperation<DocumentDownloadResult> lro = await billingInvoice.TransactionsDownloadByInvoiceTransactionAsync(WaitUntil.Completed);
-            DocumentDownloadResult result = lro.Value;
+            ArmOperation<BillingDocumentDownloadResult> lro = await billingInvoice.TransactionsDownloadByInvoiceTransactionAsync(WaitUntil.Completed);
+            BillingDocumentDownloadResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingInvoiceResource billingInvoice = client.GetBillingInvoiceResource(billingInvoiceResourceId);
 
             // invoke the operation
-            TransactionSummary result = await billingInvoice.GetTransactionSummaryByInvoiceTransactionAsync();
+            BillingTransactionSummary result = await billingInvoice.GetTransactionSummaryByInvoiceTransactionAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

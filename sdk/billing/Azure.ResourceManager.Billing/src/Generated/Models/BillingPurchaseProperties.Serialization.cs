@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("commitment"u8);
                 writer.WriteObjectValue(Commitment, options);
             }
-            if (Optional.IsDefined(Renew))
+            if (Optional.IsDefined(IsRenewed))
             {
                 writer.WritePropertyName("renew"u8);
-                writer.WriteBooleanValue(Renew.Value);
+                writer.WriteBooleanValue(IsRenewed.Value);
             }
             if (Optional.IsDefined(AppliedScopeProperties))
             {

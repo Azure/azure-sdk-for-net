@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             bool? isMoveEligible = default;
-            MoveProductEligibilityResultErrorDetails errorDetails = default;
+            MoveProductErrorDetails errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    errorDetails = MoveProductEligibilityResultErrorDetails.DeserializeMoveProductEligibilityResultErrorDetails(property.Value, options);
+                    errorDetails = MoveProductErrorDetails.DeserializeMoveProductErrorDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingProfileSystemId"> The fully qualified ID that uniquely identifies a billing profile. </param>
         /// <param name="indirectRelationshipOrganizationName"> Billing account name. Available for a specific type of agreement. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingProfileInfo(string billingAccountId, string billingProfileDisplayName, string billingProfileId, string billingProfileSystemId, string indirectRelationshipOrganizationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingProfileInfo(ResourceIdentifier billingAccountId, string billingProfileDisplayName, ResourceIdentifier billingProfileId, string billingProfileSystemId, string indirectRelationshipOrganizationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingAccountId = billingAccountId;
             BillingProfileDisplayName = billingProfileDisplayName;
@@ -68,11 +69,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The fully qualified ID that uniquely identifies a billing account. </summary>
-        public string BillingAccountId { get; }
+        public ResourceIdentifier BillingAccountId { get; }
         /// <summary> The name of the billing profile. </summary>
         public string BillingProfileDisplayName { get; }
         /// <summary> The friendly ID that uniquely identifies a billing profile. </summary>
-        public string BillingProfileId { get; }
+        public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
         public string BillingProfileSystemId { get; }
         /// <summary> Billing account name. Available for a specific type of agreement. </summary>

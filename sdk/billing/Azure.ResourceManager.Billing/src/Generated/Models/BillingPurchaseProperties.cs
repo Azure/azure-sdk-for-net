@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </param>
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="commitment"> Commitment towards the benefit. </param>
-        /// <param name="renew"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
+        /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPurchaseProperties(BillingSku sku, string displayName, string billingScopeId, BillingSavingsPlanTerm? term, BillingPlan? billingPlan, BillingAppliedScopeType? appliedScopeType, BillingBenefitCommitment commitment, bool? renew, BillingAppliedScopeProperties appliedScopeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingPurchaseProperties(BillingSku sku, string displayName, string billingScopeId, BillingSavingsPlanTerm? term, BillingPlan? billingPlan, BillingAppliedScopeType? appliedScopeType, BillingBenefitCommitment commitment, bool? isRenewed, BillingAppliedScopeProperties appliedScopeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             DisplayName = displayName;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Billing.Models
             BillingPlan = billingPlan;
             AppliedScopeType = appliedScopeType;
             Commitment = commitment;
-            Renew = renew;
+            IsRenewed = isRenewed;
             AppliedScopeProperties = appliedScopeProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Commitment towards the benefit. </summary>
         public BillingBenefitCommitment Commitment { get; set; }
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
-        public bool? Renew { get; set; }
+        public bool? IsRenewed { get; set; }
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
         public BillingAppliedScopeProperties AppliedScopeProperties { get; set; }
     }

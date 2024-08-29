@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Billing.Models
             SpendingLimitDetails = new ChangeTrackingList<SpendingLimitDetails>();
             Tags = new ChangeTrackingDictionary<string, string>();
             TargetClouds = new ChangeTrackingList<string>();
-            OtherPaymentTerms = new ChangeTrackingList<PaymentTerm>();
+            OtherPaymentTerms = new ChangeTrackingList<BillingPaymentTerm>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingProfileProperties"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="hasReadAccess"> Indicates whether user has read access to the billing profile. </param>
         /// <param name="indirectRelationshipInfo"> Identifies the billing profile that is linked to another billing profile in indirect purchase motion. </param>
         /// <param name="invoiceDay"> The day of the month when the invoice for the billing profile is generated. </param>
-        /// <param name="invoiceEmailOptIn"> Flag controlling whether the invoices for the billing profile are sent through email. </param>
+        /// <param name="isInvoiceEmailOptIn"> Flag controlling whether the invoices for the billing profile are sent through email. </param>
         /// <param name="invoiceRecipients"> The list of email addresses to receive invoices by email for the billing profile. </param>
         /// <param name="poNumber"> The default purchase order number that will appear on the invoices generated for the billing profile. </param>
         /// <param name="shipTo"> The default address where the products are shipped, or the services are being used. If a ship to is not specified for a product or a subscription, then this address will be used. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="currentPaymentTerm"> The current payment term of the billing profile. </param>
         /// <param name="otherPaymentTerms"> The other payment terms of the billing profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingProfileProperties(BillingProvisioningState? provisioningState, BillingRelationshipType? billingRelationshipType, BillingProfilePropertiesBillTo billTo, string currency, string displayName, IList<BillingAzurePlan> enabledAzurePlans, bool? hasReadAccess, BillingProfilePropertiesIndirectRelationshipInfo indirectRelationshipInfo, int? invoiceDay, bool? invoiceEmailOptIn, IList<string> invoiceRecipients, string poNumber, BillingProfilePropertiesShipTo shipTo, BillingProfilePropertiesSoldTo soldTo, SpendingLimit? spendingLimit, IReadOnlyList<SpendingLimitDetails> spendingLimitDetails, BillingProfileStatus? status, BillingProfileStatusReasonCode? statusReasonCode, string systemId, IDictionary<string, string> tags, IReadOnlyList<string> targetClouds, BillingProfilePropertiesCurrentPaymentTerm currentPaymentTerm, IReadOnlyList<PaymentTerm> otherPaymentTerms, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingProfileProperties(BillingProvisioningState? provisioningState, BillingRelationshipType? billingRelationshipType, BillingAddressDetails billTo, string currency, string displayName, IList<BillingAzurePlan> enabledAzurePlans, bool? hasReadAccess, IndirectRelationshipInfo indirectRelationshipInfo, int? invoiceDay, bool? isInvoiceEmailOptIn, IList<string> invoiceRecipients, string poNumber, BillingAddressDetails shipTo, BillingAddressDetails soldTo, BillingSpendingLimit? spendingLimit, IReadOnlyList<SpendingLimitDetails> spendingLimitDetails, BillingProfileStatus? status, BillingProfileStatusReasonCode? statusReasonCode, string systemId, IDictionary<string, string> tags, IReadOnlyList<string> targetClouds, BillingPaymentTerm currentPaymentTerm, IReadOnlyList<BillingPaymentTerm> otherPaymentTerms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             BillingRelationshipType = billingRelationshipType;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Billing.Models
             HasReadAccess = hasReadAccess;
             IndirectRelationshipInfo = indirectRelationshipInfo;
             InvoiceDay = invoiceDay;
-            InvoiceEmailOptIn = invoiceEmailOptIn;
+            IsInvoiceEmailOptIn = isInvoiceEmailOptIn;
             InvoiceRecipients = invoiceRecipients;
             PoNumber = poNumber;
             ShipTo = shipTo;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Identifies the billing relationship represented by the billing profile. The billing relationship may be between Microsoft, the customer, and/or a third-party. </summary>
         public BillingRelationshipType? BillingRelationshipType { get; }
         /// <summary> Billing address. </summary>
-        public BillingProfilePropertiesBillTo BillTo { get; set; }
+        public BillingAddressDetails BillTo { get; set; }
         /// <summary> The currency in which the charges for the billing profile are billed. </summary>
         public string Currency { get; }
         /// <summary> The name of the billing profile. </summary>
@@ -124,21 +124,21 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Indicates whether user has read access to the billing profile. </summary>
         public bool? HasReadAccess { get; }
         /// <summary> Identifies the billing profile that is linked to another billing profile in indirect purchase motion. </summary>
-        public BillingProfilePropertiesIndirectRelationshipInfo IndirectRelationshipInfo { get; set; }
+        public IndirectRelationshipInfo IndirectRelationshipInfo { get; set; }
         /// <summary> The day of the month when the invoice for the billing profile is generated. </summary>
         public int? InvoiceDay { get; }
         /// <summary> Flag controlling whether the invoices for the billing profile are sent through email. </summary>
-        public bool? InvoiceEmailOptIn { get; set; }
+        public bool? IsInvoiceEmailOptIn { get; set; }
         /// <summary> The list of email addresses to receive invoices by email for the billing profile. </summary>
         public IList<string> InvoiceRecipients { get; }
         /// <summary> The default purchase order number that will appear on the invoices generated for the billing profile. </summary>
         public string PoNumber { get; set; }
         /// <summary> The default address where the products are shipped, or the services are being used. If a ship to is not specified for a product or a subscription, then this address will be used. </summary>
-        public BillingProfilePropertiesShipTo ShipTo { get; set; }
+        public BillingAddressDetails ShipTo { get; set; }
         /// <summary> The address of the individual or organization that is responsible for the billing account. </summary>
-        public BillingProfilePropertiesSoldTo SoldTo { get; set; }
+        public BillingAddressDetails SoldTo { get; set; }
         /// <summary> The billing profile spending limit. </summary>
-        public SpendingLimit? SpendingLimit { get; }
+        public BillingSpendingLimit? SpendingLimit { get; }
         /// <summary> The details of billing profile spending limit. </summary>
         public IReadOnlyList<SpendingLimitDetails> SpendingLimitDetails { get; }
         /// <summary> The status of the billing profile. </summary>
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Identifies the cloud environments that are associated with a billing profile. This is a system managed optional field and gets updated as the billing profile gets associated with accounts in various clouds. </summary>
         public IReadOnlyList<string> TargetClouds { get; }
         /// <summary> The current payment term of the billing profile. </summary>
-        public BillingProfilePropertiesCurrentPaymentTerm CurrentPaymentTerm { get; set; }
+        public BillingPaymentTerm CurrentPaymentTerm { get; set; }
         /// <summary> The other payment terms of the billing profile. </summary>
-        public IReadOnlyList<PaymentTerm> OtherPaymentTerms { get; }
+        public IReadOnlyList<BillingPaymentTerm> OtherPaymentTerms { get; }
     }
 }

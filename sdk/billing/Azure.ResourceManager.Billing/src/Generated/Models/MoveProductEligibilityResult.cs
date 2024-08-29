@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="isMoveEligible"> Specifies whether the subscription is eligible to be transferred. </param>
         /// <param name="errorDetails"> Error details of the transfer eligibility validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MoveProductEligibilityResult(bool? isMoveEligible, MoveProductEligibilityResultErrorDetails errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MoveProductEligibilityResult(bool? isMoveEligible, MoveProductErrorDetails errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsMoveEligible = isMoveEligible;
             ErrorDetails = errorDetails;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Specifies whether the subscription is eligible to be transferred. </summary>
         public bool? IsMoveEligible { get; }
         /// <summary> Error details of the transfer eligibility validation. </summary>
-        public MoveProductEligibilityResultErrorDetails ErrorDetails { get; }
+        public MoveProductErrorDetails ErrorDetails { get; }
     }
 }

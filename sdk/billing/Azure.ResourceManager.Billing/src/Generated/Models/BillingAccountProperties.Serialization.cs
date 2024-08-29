@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(PrimaryBillingTenantId))
             {
                 writer.WritePropertyName("primaryBillingTenantId"u8);
-                writer.WriteStringValue(PrimaryBillingTenantId);
+                writer.WriteStringValue(PrimaryBillingTenantId.Value);
             }
             if (Optional.IsDefined(SoldTo))
             {
@@ -171,16 +171,16 @@ namespace Azure.ResourceManager.Billing.Models
             BillingAccountStatusReasonCode? accountStatusReasonCode = default;
             BillingAgreementType? agreementType = default;
             string displayName = default;
-            EnrollmentDetails enrollmentDetails = default;
+            BillingAccountEnrollmentDetails enrollmentDetails = default;
             bool? hasReadAccess = default;
             bool? hasNoBillingProfiles = default;
             string notificationEmailAddress = default;
-            string primaryBillingTenantId = default;
+            Guid? primaryBillingTenantId = default;
             BillingAddressDetails soldTo = default;
-            RegistrationNumber registrationNumber = default;
+            BillingRegistrationNumber registrationNumber = default;
             IReadOnlyList<BillingRelationshipType> billingRelationshipTypes = default;
             IReadOnlyList<string> qualifications = default;
-            IList<TaxIdentifier> taxIds = default;
+            IList<BillingTaxIdentifier> taxIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    enrollmentDetails = EnrollmentDetails.DeserializeEnrollmentDetails(property.Value, options);
+                    enrollmentDetails = BillingAccountEnrollmentDetails.DeserializeBillingAccountEnrollmentDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hasReadAccess"u8))
@@ -278,7 +278,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("primaryBillingTenantId"u8))
                 {
-                    primaryBillingTenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryBillingTenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("soldTo"u8))
@@ -296,7 +300,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    registrationNumber = RegistrationNumber.DeserializeRegistrationNumber(property.Value, options);
+                    registrationNumber = BillingRegistrationNumber.DeserializeBillingRegistrationNumber(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingRelationshipTypes"u8))
@@ -333,10 +337,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<TaxIdentifier> array = new List<TaxIdentifier>();
+                    List<BillingTaxIdentifier> array = new List<BillingTaxIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TaxIdentifier.DeserializeTaxIdentifier(item, options));
+                        array.Add(BillingTaxIdentifier.DeserializeBillingTaxIdentifier(item, options));
                     }
                     taxIds = array;
                     continue;
@@ -364,7 +368,7 @@ namespace Azure.ResourceManager.Billing.Models
                 registrationNumber,
                 billingRelationshipTypes ?? new ChangeTrackingList<BillingRelationshipType>(),
                 qualifications ?? new ChangeTrackingList<string>(),
-                taxIds ?? new ChangeTrackingList<TaxIdentifier>(),
+                taxIds ?? new ChangeTrackingList<BillingTaxIdentifier>(),
                 serializedAdditionalRawData);
         }
 

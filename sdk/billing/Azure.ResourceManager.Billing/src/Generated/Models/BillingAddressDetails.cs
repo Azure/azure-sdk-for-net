@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BillingAddressDetails"/>. </summary>
         /// <param name="addressLine1"> Address line 1. </param>

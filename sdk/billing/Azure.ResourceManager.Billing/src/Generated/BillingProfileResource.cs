@@ -940,16 +940,16 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkAccessRequest"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CheckAccessResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CheckAccessResponse> CheckAccessBillingPermissionsAsync(CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingCheckAccessResult> CheckAccessBillingPermissionsAsync(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByBillingProfileRequest(Id.Parent.Name, Id.Name, checkAccessRequest);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CheckAccessResponse.DeserializeCheckAccessResponse(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingProfileResource.CheckAccessBillingPermissions", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByBillingProfileRequest(Id.Parent.Name, Id.Name, content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BillingCheckAccessResult.DeserializeBillingCheckAccessResult(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingProfileResource.CheckAccessBillingPermissions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -969,16 +969,16 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkAccessRequest"> The request object against which access of the caller will be checked. </param>
+        /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkAccessRequest"/> is null. </exception>
-        /// <returns> A collection of <see cref="CheckAccessResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CheckAccessResponse> CheckAccessBillingPermissions(CheckAccessRequest checkAccessRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingCheckAccessResult> CheckAccessBillingPermissions(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkAccessRequest, nameof(checkAccessRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByBillingProfileRequest(Id.Parent.Name, Id.Name, checkAccessRequest);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CheckAccessResponse.DeserializeCheckAccessResponse(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingProfileResource.CheckAccessBillingPermissions", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByBillingProfileRequest(Id.Parent.Name, Id.Name, content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BillingCheckAccessResult.DeserializeBillingCheckAccessResult(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingProfileResource.CheckAccessBillingPermissions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1497,14 +1497,14 @@ namespace Azure.ResourceManager.Billing
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Transaction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Transaction> GetTransactionsAsync(BillingProfileResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingTransactionData> GetTransactionsAsync(BillingProfileResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _transactionsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Type, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _transactionsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Type, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Transaction.DeserializeTransaction(e), _transactionsClientDiagnostics, Pipeline, "BillingProfileResource.GetTransactions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BillingTransactionData.DeserializeBillingTransactionData(e), _transactionsClientDiagnostics, Pipeline, "BillingProfileResource.GetTransactions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1527,14 +1527,14 @@ namespace Azure.ResourceManager.Billing
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="Transaction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Transaction> GetTransactions(BillingProfileResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingTransactionData> GetTransactions(BillingProfileResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _transactionsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Type, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _transactionsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Type, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Transaction.DeserializeTransaction(e), _transactionsClientDiagnostics, Pipeline, "BillingProfileResource.GetTransactions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BillingTransactionData.DeserializeBillingTransactionData(e), _transactionsClientDiagnostics, Pipeline, "BillingProfileResource.GetTransactions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

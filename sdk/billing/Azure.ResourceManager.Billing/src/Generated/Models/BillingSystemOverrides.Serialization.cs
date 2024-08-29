@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Cancellation? cancellation = default;
+            PolicyOverrideCancellation? cancellation = default;
             DateTimeOffset? cancellationAllowedEndDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    cancellation = new Cancellation(property.Value.GetString());
+                    cancellation = new PolicyOverrideCancellation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cancellationAllowedEndDate"u8))

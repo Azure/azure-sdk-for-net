@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="uri"> The URL to download the invoice document if the source is internal to Microsoft.Billing. </param>
         /// <param name="source"> The source of the document. ENF for Brazil and DRS for rest of the world. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InvoiceDocument(IReadOnlyList<string> documentNumbers, Uri externalUri, InvoiceDocumentType? kind, string name, Uri uri, DocumentSource? source, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InvoiceDocument(IReadOnlyList<string> documentNumbers, Uri externalUri, InvoiceDocumentType? kind, string name, Uri uri, BillingDocumentSource? source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DocumentNumbers = documentNumbers;
             ExternalUri = externalUri;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The URL to download the invoice document if the source is internal to Microsoft.Billing. </summary>
         public Uri Uri { get; }
         /// <summary> The source of the document. ENF for Brazil and DRS for rest of the world. </summary>
-        public DocumentSource? Source { get; }
+        public BillingDocumentSource? Source { get; }
     }
 }

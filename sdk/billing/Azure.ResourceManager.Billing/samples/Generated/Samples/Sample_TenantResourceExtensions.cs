@@ -93,20 +93,20 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // invoke the operation
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest = new DocumentDownloadRequest[]
+            IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest = new BillingDocumentDownloadRequestContent[]
             {
-new DocumentDownloadRequest()
+new BillingDocumentDownloadRequestContent()
 {
 DocumentName = "12345678",
 InvoiceName = "E123456789",
-},new DocumentDownloadRequest()
+},new BillingDocumentDownloadRequestContent()
 {
 DocumentName = "12345678",
 InvoiceName = "E987654321",
 }
             };
-            ArmOperation<DocumentDownloadResult> lro = await tenantResource.DownloadDocumentsByBillingSubscriptionInvoiceAsync(WaitUntil.Completed, subscriptionId, arrayOfDocumentDownloadRequest);
-            DocumentDownloadResult result = lro.Value;
+            ArmOperation<BillingDocumentDownloadResult> lro = await tenantResource.DownloadDocumentsByBillingSubscriptionInvoiceAsync(WaitUntil.Completed, subscriptionId, arrayOfDocumentDownloadRequest);
+            BillingDocumentDownloadResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

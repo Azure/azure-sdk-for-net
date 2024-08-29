@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             string billingProfileDisplayName = default;
-            string billingProfileId = default;
+            ResourceIdentifier billingProfileId = default;
             string displayName = default;
             string systemId = default;
-            CustomerStatus? status = default;
+            BillingCustomerStatus? status = default;
             IList<BillingAzurePlan> enabledAzurePlans = default;
             IList<CreatedSubscriptionReseller> resellers = default;
             IDictionary<string, string> tags = default;
@@ -139,7 +139,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("billingProfileId"u8))
                 {
-                    billingProfileId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfileId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -158,7 +162,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    status = new CustomerStatus(property.Value.GetString());
+                    status = new BillingCustomerStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enabledAzurePlans"u8))

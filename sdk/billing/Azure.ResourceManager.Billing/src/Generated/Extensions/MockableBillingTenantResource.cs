@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation<DocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(WaitUntil waitUntil, string subscriptionId, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.Billing.Mocking
             try
             {
                 var response = await InvoicesRestClient.DownloadDocumentsByBillingSubscriptionAsync(subscriptionId, arrayOfDocumentDownloadRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), InvoicesClientDiagnostics, Pipeline, InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, arrayOfDocumentDownloadRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), InvoicesClientDiagnostics, Pipeline, InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, arrayOfDocumentDownloadRequest).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
-        public virtual ArmOperation<DocumentDownloadResult> DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil waitUntil, string subscriptionId, IEnumerable<DocumentDownloadRequest> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Billing.Mocking
             try
             {
                 var response = InvoicesRestClient.DownloadDocumentsByBillingSubscription(subscriptionId, arrayOfDocumentDownloadRequest, cancellationToken);
-                var operation = new BillingArmOperation<DocumentDownloadResult>(new DocumentDownloadResultOperationSource(), InvoicesClientDiagnostics, Pipeline, InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, arrayOfDocumentDownloadRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), InvoicesClientDiagnostics, Pipeline, InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, arrayOfDocumentDownloadRequest).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

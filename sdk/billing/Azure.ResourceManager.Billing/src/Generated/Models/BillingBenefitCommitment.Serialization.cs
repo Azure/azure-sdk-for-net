@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            CommitmentGrain? grain = default;
+            BillingBenefitCommitmentGrain? grain = default;
             string currencyCode = default;
             double? amount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    grain = new CommitmentGrain(property.Value.GetString());
+                    grain = new BillingBenefitCommitmentGrain(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("currencyCode"u8))

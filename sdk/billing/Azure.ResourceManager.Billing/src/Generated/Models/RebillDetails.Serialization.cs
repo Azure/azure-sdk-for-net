@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            string invoiceDocumentId = default;
-            string creditNoteDocumentId = default;
+            ResourceIdentifier invoiceDocumentId = default;
+            ResourceIdentifier creditNoteDocumentId = default;
             RebillDetails rebillDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -88,12 +88,20 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 if (property.NameEquals("invoiceDocumentId"u8))
                 {
-                    invoiceDocumentId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invoiceDocumentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("creditNoteDocumentId"u8))
                 {
-                    creditNoteDocumentId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    creditNoteDocumentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rebillDetails"u8))

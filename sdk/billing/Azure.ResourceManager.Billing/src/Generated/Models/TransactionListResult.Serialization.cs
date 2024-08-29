@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<Transaction> value = default;
+            IReadOnlyList<BillingTransactionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    List<Transaction> array = new List<Transaction>();
+                    List<BillingTransactionData> array = new List<BillingTransactionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Transaction.DeserializeTransaction(item, options));
+                        array.Add(BillingTransactionData.DeserializeBillingTransactionData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TransactionListResult(nextLink, value ?? new ChangeTrackingList<Transaction>(), serializedAdditionalRawData);
+            return new TransactionListResult(nextLink, value ?? new ChangeTrackingList<BillingTransactionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransactionListResult>.Write(ModelReaderWriterOptions options)

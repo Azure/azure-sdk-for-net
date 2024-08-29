@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteStringValue(AutoRenew.Value.ToString());
             }
-            if (Optional.IsDefined(BeneficiaryTenantId))
+            if (Optional.IsDefined(SubscriptionBeneficiaryTenantId))
             {
                 writer.WritePropertyName("beneficiaryTenantId"u8);
-                writer.WriteStringValue(BeneficiaryTenantId);
+                writer.WriteStringValue(SubscriptionBeneficiaryTenantId.Value);
             }
             if (Optional.IsDefined(Beneficiary))
             {
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("consumptionCostCenter"u8);
                 writer.WriteStringValue(ConsumptionCostCenter);
             }
-            if (Optional.IsDefined(CustomerId))
+            if (Optional.IsDefined(SubscriptionCustomerId))
             {
                 writer.WritePropertyName("customerId"u8);
-                writer.WriteStringValue(CustomerId);
+                writer.WriteStringValue(SubscriptionCustomerId);
             }
             if (options.Format != "W" && Optional.IsDefined(CustomerDisplayName))
             {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Billing
             ResourceType type = default;
             SystemData systemData = default;
             BillingSubscriptionAutoRenewState? autoRenew = default;
-            string beneficiaryTenantId = default;
+            Guid? beneficiaryTenantId = default;
             BillingBeneficiary beneficiary = default;
             string billingFrequency = default;
             ResourceIdentifier billingProfileId = default;
@@ -456,7 +456,11 @@ namespace Azure.ResourceManager.Billing
                         }
                         if (property0.NameEquals("beneficiaryTenantId"u8))
                         {
-                            beneficiaryTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            beneficiaryTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("beneficiary"u8))

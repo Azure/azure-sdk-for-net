@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            IList<ProductDetails> productDetails = default;
+            IList<BillingProductDetails> productDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.Billing.Models
                             {
                                 continue;
                             }
-                            List<ProductDetails> array = new List<ProductDetails>();
+                            List<BillingProductDetails> array = new List<BillingProductDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.ProductDetails.DeserializeProductDetails(item, options));
+                                array.Add(BillingProductDetails.DeserializeBillingProductDetails(item, options));
                             }
                             productDetails = array;
                             continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AcceptTransferContent(productDetails ?? new ChangeTrackingList<ProductDetails>(), serializedAdditionalRawData);
+            return new AcceptTransferContent(productDetails ?? new ChangeTrackingList<BillingProductDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcceptTransferContent>.Write(ModelReaderWriterOptions options)

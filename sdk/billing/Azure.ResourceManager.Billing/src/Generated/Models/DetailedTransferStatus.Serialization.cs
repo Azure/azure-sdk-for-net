@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            ProductType? productType = default;
+            BillingProductType? productType = default;
             string productId = default;
             string productName = default;
             string skuDescription = default;
-            ProductTransferStatus? transferStatus = default;
-            TransferError errorDetails = default;
+            BillingProductTransferStatus? transferStatus = default;
+            BillingTransferError errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    productType = new ProductType(property.Value.GetString());
+                    productType = new BillingProductType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("productId"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    transferStatus = new ProductTransferStatus(property.Value.GetString());
+                    transferStatus = new BillingProductTransferStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorDetails"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    errorDetails = TransferError.DeserializeTransferError(property.Value, options);
+                    errorDetails = BillingTransferError.DeserializeBillingTransferError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
