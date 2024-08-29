@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
@@ -111,7 +112,16 @@ public static partial class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return options.GetPersistableInterface(GetInstance<T>()).Create(data, options);
+        var model = GetInstance<T>();
+        if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
+        {
+            Utf8JsonReader reader = new Utf8JsonReader(data);
+            return options.GetJsonInterface(jsonModel).Create(ref reader, options);
+        }
+        else
+        {
+            return options.GetPersistableInterface(model).Create(data, options);
+        }
     }
 
     /// <summary>
@@ -140,7 +150,17 @@ public static partial class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        var obj = options.GetPersistableInterface(GetInstance(returnType)).Create(data, options);
+        var model = GetInstance(returnType);
+        object? obj;
+        if (ShouldWriteAsJson(model, options, out IJsonModel<object>? jsonModel))
+        {
+            Utf8JsonReader reader = new Utf8JsonReader(data);
+            obj = options.GetJsonInterface(jsonModel).Create(ref reader, options);
+        }
+        else
+        {
+            obj = options.GetPersistableInterface(model).Create(data, options);
+        }
         return obj is StructWrapper wrapper ? wrapper.Value : obj;
     }
 
