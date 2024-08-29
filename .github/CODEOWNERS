@@ -1003,10 +1003,10 @@
 # ServiceLabel: %Network - Mobile %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
-# PRLabel: %NetworkCloud
+# PRLabel: %Network - Cloud
 /sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud
 
-# ServiceLabel: %NetworkCloud %Mgmt
+# ServiceLabel: %Network - Cloud %Mgmt
 # ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
 
 # PRLabel: %New Relic
