@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Inference.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Sse;
@@ -47,7 +48,17 @@ namespace Azure.AI.Inference
 
             using RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CompleteAsync(content, extraParams?.ToString(), context).ConfigureAwait(false);
+            using OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
+            Response response;
+            try
+            {
+                response = await CompleteAsync(content, extraParams?.ToString(), context).ConfigureAwait(false);
+                otel.RecordResponse(ChatCompletions.FromResponse(response));
+            }
+            catch (Exception ex)
+            {
+                otel.RecordError(ex);
+            }
             return Response.FromValue(ChatCompletions.FromResponse(response), response);
         }
 
@@ -81,7 +92,17 @@ namespace Azure.AI.Inference
 
             using RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Complete(content, extraParams?.ToString(), context);
+            using OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
+            Response response;
+            try
+            {
+                response = Complete(content, extraParams?.ToString(), context);
+                otel.RecordResponse(ChatCompletions.FromResponse(response));
+            }
+            catch (Exception ex) {
+                otel.RecordError(ex);
+                throw;
+            }
             return Response.FromValue(ChatCompletions.FromResponse(response), response);
         }
 
@@ -120,9 +141,10 @@ namespace Azure.AI.Inference
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
+            OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
             try
             {
-                // Response value object takes IDisposable ownership of message
+                // Response value object takes IDisposable ownership of message and scope.
                 HttpMessage message = CreatePostRequestMessage(chatCompletionsOptions, content, context);
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(
@@ -133,12 +155,15 @@ namespace Azure.AI.Inference
                     baseResponse,
                     (responseForEnumeration)
                         => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
+                            otel,
                             responseForEnumeration.ContentStream,
                             StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
                             cancellationToken));
             }
             catch (Exception e)
             {
+                otel.RecordError(e);
+                otel.Dispose();
                 scope.Failed(e);
                 throw;
             }
@@ -176,9 +201,10 @@ namespace Azure.AI.Inference
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
+            OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
             try
             {
-                // Response value object takes IDisposable ownership of message
+                // Response value object takes IDisposable ownership of message and scope.
                 HttpMessage message = CreatePostRequestMessage(chatCompletionsOptions, content, context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
@@ -186,12 +212,15 @@ namespace Azure.AI.Inference
                     baseResponse,
                     (responseForEnumeration)
                         => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
+                            otel,
                             responseForEnumeration.ContentStream,
                             StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
                             cancellationToken));
             }
             catch (Exception e)
             {
+                otel.RecordError(e);
+                otel.Dispose();
                 scope.Failed(e);
                 throw;
             }

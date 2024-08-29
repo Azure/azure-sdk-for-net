@@ -7,12 +7,14 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
+using Azure.AI.Inference.Telemetry;
 
 namespace Azure.Core.Sse
 {
     internal static class SseAsyncEnumerator<T>
     {
         internal static async IAsyncEnumerable<T> EnumerateFromSseStream(
+            OpenTelemetryScope scope,
             Stream stream,
             Func<JsonElement, IEnumerable<T>> multiElementDeserializer,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -39,6 +41,7 @@ namespace Azure.Core.Sse
                         IEnumerable<T> newItems = multiElementDeserializer.Invoke(sseMessageJson.RootElement);
                         foreach (T item in newItems)
                         {
+                            scope.UpdateStreamResponse(item);
                             yield return item;
                         }
                     }
@@ -48,14 +51,19 @@ namespace Azure.Core.Sse
             {
                 // Always dispose the stream immediately once enumeration is complete for any reason
                 stream.Dispose();
+                // Record the telemetry and dispose the scope.
+                scope.RecordStreamingResponse();
+                scope.Dispose();
             }
         }
 
         internal static IAsyncEnumerable<T> EnumerateFromSseStream(
+            OpenTelemetryScope scope,
             Stream stream,
             Func<JsonElement, T> elementDeserializer,
             CancellationToken cancellationToken = default)
             => EnumerateFromSseStream(
+                scope,
                 stream,
                 (element) => new T[] { elementDeserializer.Invoke(element) },
                 cancellationToken);
