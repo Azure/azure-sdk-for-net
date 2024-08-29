@@ -15,8 +15,8 @@ namespace Azure.Maps.Weather
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.AirQualityResult>> GetAirQualityHourlyForecastsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, int? duration, bool? includePollutantDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.AirQualityResult> GetCurrentAirQuality(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, bool? includePollutantDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.AirQualityResult>> GetCurrentAirQualityAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, bool? includePollutantDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.CurrentConditionsResult> GetCurrentConditions(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, string details, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.CurrentConditionsResult>> GetCurrentConditionsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, string details, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.CurrentConditionsResult> GetCurrentConditions(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, bool details, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.CurrentConditionsResult>> GetCurrentConditionsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, bool details, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.DailyForecastResult> GetDailyForecast(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyForecastResult>> GetDailyForecastAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalActualsResult> GetDailyHistoricalActuals(string format, Azure.Core.GeoJson.GeoPosition coordinates, System.DateTimeOffset startDate, System.DateTimeOffset endDate, string unit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -33,8 +33,8 @@ namespace Azure.Maps.Weather
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.MinuteForecastResult>> GetMinuteForecastAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, int? interval, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.QuarterDayForecastResult> GetQuarterDayForecast(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.QuarterDayForecastResult>> GetQuarterDayForecastAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.SevereWeatherAlertsResult> GetSevereWeatherAlerts(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, string details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, string details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.SevereWeatherAlertsResult> GetSevereWeatherAlerts(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, bool details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, bool details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.ActiveStormResult> GetTropicalStormActive(string format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.ActiveStormResult>> GetTropicalStormActiveAsync(string format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.StormForecastResult> GetTropicalStormForecast(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -55,6 +55,78 @@ namespace Azure.Maps.Weather
         {
             V1_1 = 1,
         }
+    }
+    public partial class WeatherLanguage
+    {
+        public WeatherLanguage(string value) { }
+        public static Azure.Maps.Weather.WeatherLanguage Arabic { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage BanglaBangladesh { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage BanglaIndia { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Bosnian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Bulgarian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Catalan { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Croatian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Czech { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Danish { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage DutchBelgium { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage DutchNetherlands { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage EnglishAustralia { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage EnglishGreatBritain { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage EnglishNewZealand { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage EnglishUsa { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Estonian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Filipino { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Finnish { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage FrenchCanada { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage FrenchFrance { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage German { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Greek { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Gujarati { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Hebrew { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Hindi { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Hungarian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Icelandic { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Indonesian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Italian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Japanese { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Kannada { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Kazakh { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Korean { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Latvian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Lithuanian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Macedonian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Malay { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Marathi { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Norwegian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Polish { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage PortugueseBrazil { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage PortuguesePortugal { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Punjabi { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Romanian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Russian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage SerbianCyrillic { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage SerbianLatin { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage SimplifiedChinese { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Slovak { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Slovenian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage SpanishLatinAmerica { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage SpanishMexico { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage SpanishSpain { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Swedish { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Tamil { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Telugu { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Thai { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage TraditionalChineseHongKong { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage TraditionalChineseTaiwan { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Turkish { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Ukrainian { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Urdu { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Uzbek { get { throw null; } }
+        public static Azure.Maps.Weather.WeatherLanguage Vietnamese { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static implicit operator Azure.Maps.Weather.WeatherLanguage (string value) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Azure.Maps.Weather.Models

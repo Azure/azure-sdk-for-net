@@ -4,9 +4,9 @@
 using System;
 using Azure.Core.TestFramework;
 
-namespace Azure.Maps.TimeZone.Tests
+namespace Azure.Maps.Weather.Tests
 {
-    public class TimeZoneClientTestEnvironment : TestEnvironment
+    public class WeatherClientTestEnvironment : TestEnvironment
     {
         public Uri Endpoint
         {

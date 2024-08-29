@@ -15,6 +15,7 @@ using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
 using Azure.Maps.Weather.Models;
+using Azure.Maps.Weather.Models.Options;
 
 namespace Azure.Maps.Weather
 {
@@ -151,36 +152,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="duration">
-        /// Time frame of the returned weather forecast. By default, the forecast data for next hour will be returned. Available values are
-        ///   * `1` - Return forecast data for the next hour. Default value.
-        ///   * `12` - Return hourly forecast for next 12 hours.
-        ///   * `24` - Return hourly forecast for next 24 hours.
-        ///   * `72` - Return hourly forecast for next 72 hours (3 days).
-        ///   * `120` - Return hourly forecast for next 120 hours (5 days). Only available in S1 SKU.
-        ///   * `240` - Return hourly forecast for next 240 hours (10 days). Only available in S1 SKU.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
+        /// <param name="options"> Get hourly forecast options to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<HourlyForecastResult>> GetHourlyForecastAsync(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HourlyForecastResult>> GetHourlyForecastAsync(GetHourlyForecastOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetHourlyForecast");
             scope.Start();
@@ -188,10 +166,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetHourlyForecastAsync(format, coord, unit, duration, language, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetHourlyForecastAsync("json", coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -521,7 +499,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<CurrentConditionsResult>> GetCurrentConditionsAsync(string format, GeoPosition coordinates, string unit, string details, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CurrentConditionsResult>> GetCurrentConditionsAsync(string format, GeoPosition coordinates, string unit, bool details, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -535,7 +513,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetCurrentConditionsAsync(format, coord, unit, details, duration, language, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetCurrentConditionsAsync(format, coord, unit, details ? "true" : "false", duration, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -582,7 +560,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<CurrentConditionsResult> GetCurrentConditions(string format, GeoPosition coordinates, string unit, string details, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual Response<CurrentConditionsResult> GetCurrentConditions(string format, GeoPosition coordinates, string unit, bool details, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -596,7 +574,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetCurrentConditions(format, coord, unit, details, duration, language, cancellationToken);
+                return restClient.GetCurrentConditions(format, coord, unit, details ? "true" : "false", duration, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -850,7 +828,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(string format, GeoPosition coordinates, string language, string details, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(string format, GeoPosition coordinates, string language, bool details, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -864,7 +842,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetSevereWeatherAlertsAsync(format, coord, language, details, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetSevereWeatherAlertsAsync(format, coord, language, details ? "true" : "false", cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -904,7 +882,7 @@ namespace Azure.Maps.Weather
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<SevereWeatherAlertsResult> GetSevereWeatherAlerts(string format, GeoPosition coordinates, string language, string details, CancellationToken cancellationToken = default)
+        public virtual Response<SevereWeatherAlertsResult> GetSevereWeatherAlerts(string format, GeoPosition coordinates, string language, bool details, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
@@ -918,7 +896,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetSevereWeatherAlerts(format, coord, language, details, cancellationToken);
+                return restClient.GetSevereWeatherAlerts(format, coord, language, details ? "true" : "false", cancellationToken);
             }
             catch (Exception e)
             {
@@ -1928,584 +1906,5 @@ namespace Azure.Maps.Weather
                 throw;
             }
         }
-
-        // internal HttpMessage CreateGetHourlyForecastRequest(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/forecast/hourly/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (unit != null)
-        //     {
-        //         uri.AppendQuery("unit", unit, true);
-        //     }
-        //     if (duration != null)
-        //     {
-        //         uri.AppendQuery("duration", duration.Value, true);
-        //     }
-        //     if (language != null)
-        //     {
-        //         uri.AppendQuery("language", language, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetMinuteForecastRequest(string format, IEnumerable<double> coordinates, int? interval, string language, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/forecast/minute/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (interval != null)
-        //     {
-        //         uri.AppendQuery("interval", interval.Value, true);
-        //     }
-        //     if (language != null)
-        //     {
-        //         uri.AppendQuery("language", language, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetQuarterDayForecastRequest(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/forecast/quarterDay/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (unit != null)
-        //     {
-        //         uri.AppendQuery("unit", unit, true);
-        //     }
-        //     if (duration != null)
-        //     {
-        //         uri.AppendQuery("duration", duration.Value, true);
-        //     }
-        //     if (language != null)
-        //     {
-        //         uri.AppendQuery("language", language, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetCurrentConditionsRequest(string format, IEnumerable<double> coordinates, string unit, string details, int? duration, string language, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/currentConditions/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (unit != null)
-        //     {
-        //         uri.AppendQuery("unit", unit, true);
-        //     }
-        //     if (details != null)
-        //     {
-        //         uri.AppendQuery("details", details, true);
-        //     }
-        //     if (duration != null)
-        //     {
-        //         uri.AppendQuery("duration", duration.Value, true);
-        //     }
-        //     if (language != null)
-        //     {
-        //         uri.AppendQuery("language", language, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetDailyForecastRequest(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/forecast/daily/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (unit != null)
-        //     {
-        //         uri.AppendQuery("unit", unit, true);
-        //     }
-        //     if (duration != null)
-        //     {
-        //         uri.AppendQuery("duration", duration.Value, true);
-        //     }
-        //     if (language != null)
-        //     {
-        //         uri.AppendQuery("language", language, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetWeatherAlongRouteRequest(string format, string query, string language, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/route/", false);
-        //     uri.AppendPath(format, true);
-        //     uri.AppendQuery("query", query, true);
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (language != null)
-        //     {
-        //         uri.AppendQuery("language", language, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetSevereWeatherAlertsRequest(string format, IEnumerable<double> coordinates, string language, string details, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/severe/alerts/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (language != null)
-        //     {
-        //         uri.AppendQuery("language", language, true);
-        //     }
-        //     if (details != null)
-        //     {
-        //         uri.AppendQuery("details", details, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetDailyIndicesRequest(string format, IEnumerable<double> coordinates, string language, int? duration, int? indexId, int? indexGroupId, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/indices/daily/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (language != null)
-        //     {
-        //         uri.AppendQuery("language", language, true);
-        //     }
-        //     if (duration != null)
-        //     {
-        //         uri.AppendQuery("duration", duration.Value, true);
-        //     }
-        //     if (indexId != null)
-        //     {
-        //         uri.AppendQuery("indexId", indexId.Value, true);
-        //     }
-        //     if (indexGroupId != null)
-        //     {
-        //         uri.AppendQuery("indexGroupId", indexGroupId.Value, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetTropicalStormActiveRequest(string format, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/tropical/storms/active/", false);
-        //     uri.AppendPath(format, true);
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateSearchTropicalStormRequest(string format, int year, string basinId, int? governmentStormId, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/tropical/storms/", false);
-        //     uri.AppendPath(format, true);
-        //     uri.AppendQuery("year", year, true);
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (basinId != null)
-        //     {
-        //         uri.AppendQuery("basinId", basinId, true);
-        //     }
-        //     if (governmentStormId != null)
-        //     {
-        //         uri.AppendQuery("govId", governmentStormId.Value, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetTropicalStormForecastRequest(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/tropical/storms/forecasts/", false);
-        //     uri.AppendPath(format, true);
-        //     uri.AppendQuery("year", year, true);
-        //     uri.AppendQuery("basinId", basinId, true);
-        //     uri.AppendQuery("govId", governmentStormId, true);
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (unit != null)
-        //     {
-        //         uri.AppendQuery("unit", unit, true);
-        //     }
-        //     if (includeDetails != null)
-        //     {
-        //         uri.AppendQuery("details", includeDetails.Value, true);
-        //     }
-        //     if (includeGeometricDetails != null)
-        //     {
-        //         uri.AppendQuery("radiiGeometry", includeGeometricDetails.Value, true);
-        //     }
-        //     if (includeWindowGeometry != null)
-        //     {
-        //         uri.AppendQuery("windowGeometry", includeWindowGeometry.Value, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetTropicalStormLocationsRequest(string format, int year, string basinId, int governmentStormId, bool? includeDetails, bool? includeGeometricDetails, string unit, bool? includeCurrentStorm, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/tropical/storms/locations/", false);
-        //     uri.AppendPath(format, true);
-        //     uri.AppendQuery("year", year, true);
-        //     uri.AppendQuery("basinId", basinId, true);
-        //     uri.AppendQuery("govId", governmentStormId, true);
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (includeDetails != null)
-        //     {
-        //         uri.AppendQuery("details", includeDetails.Value, true);
-        //     }
-        //     if (includeGeometricDetails != null)
-        //     {
-        //         uri.AppendQuery("radiiGeometry", includeGeometricDetails.Value, true);
-        //     }
-        //     if (unit != null)
-        //     {
-        //         uri.AppendQuery("unit", unit, true);
-        //     }
-        //     if (includeCurrentStorm != null)
-        //     {
-        //         uri.AppendQuery("current", includeCurrentStorm.Value, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetCurrentAirQualityRequest(string format, IEnumerable<double> coordinates, string language, bool? includePollutantDetails, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/airQuality/current/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (language != null)
-        //     {
-        //         uri.AppendQuery("language", language, true);
-        //     }
-        //     if (includePollutantDetails != null)
-        //     {
-        //         uri.AppendQuery("pollutants", includePollutantDetails.Value, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetAirQualityDailyForecastsRequest(string format, IEnumerable<double> coordinates, string language, int? duration, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/airQuality/forecasts/daily/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (language != null)
-        //     {
-        //         uri.AppendQuery("language", language, true);
-        //     }
-        //     if (duration != null)
-        //     {
-        //         uri.AppendQuery("duration", duration.Value, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetAirQualityHourlyForecastsRequest(string format, IEnumerable<double> coordinates, string language, int? duration, bool? includePollutantDetails, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/airQuality/forecasts/hourly/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (language != null)
-        //     {
-        //         uri.AppendQuery("language", language, true);
-        //     }
-        //     if (duration != null)
-        //     {
-        //         uri.AppendQuery("duration", duration.Value, true);
-        //     }
-        //     if (includePollutantDetails != null)
-        //     {
-        //         uri.AppendQuery("pollutants", includePollutantDetails.Value, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetDailyHistoricalActualsRequest(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/historical/actuals/daily/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("startDate", startDate, "D", true);
-        //     uri.AppendQuery("endDate", endDate, "D", true);
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (unit != null)
-        //     {
-        //         uri.AppendQuery("unit", unit, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetDailyHistoricalRecordsRequest(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/historical/records/daily/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("startDate", startDate, "D", true);
-        //     uri.AppendQuery("endDate", endDate, "D", true);
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (unit != null)
-        //     {
-        //         uri.AppendQuery("unit", unit, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // internal HttpMessage CreateGetDailyHistoricalNormalsRequest(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
-        // {
-        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-        //     var request = message.Request;
-        //     request.Method = RequestMethod.Get;
-        //     var uri = new RawRequestUriBuilder();
-        //     uri.Reset(_endpoint);
-        //     uri.AppendPath("/weather/historical/normals/daily/", false);
-        //     uri.AppendPath(format, true);
-        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-        //     {
-        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
-        //     }
-        //     uri.AppendQuery("startDate", startDate, "D", true);
-        //     uri.AppendQuery("endDate", endDate, "D", true);
-        //     uri.AppendQuery("api-version", _apiVersion, true);
-        //     if (unit != null)
-        //     {
-        //         uri.AppendQuery("unit", unit, true);
-        //     }
-        //     request.Uri = uri;
-        //     request.Headers.Add("Accept", "application/json");
-        //     if (_clientId != null)
-        //     {
-        //         request.Headers.Add("x-ms-client-id", _clientId);
-        //     }
-        //     return message;
-        // }
-
-        // private static ResponseClassifier _responseClassifier200;
-        // private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }
