@@ -1,7 +1,7 @@
 parameters:
   - name: ServiceDirectory
     type: string
-    default: ''
+    default: ""
   - name: DiffDirectory
     type: string
     default: $(Build.ArtifactStagingDirectory)/diff
@@ -11,6 +11,9 @@ parameters:
   - name: TargetPath
     type: string
     default: $(Build.SourcesDirectory)
+  - name: ScriptDirectory
+    type: string
+    default: eng/common/scripts
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:

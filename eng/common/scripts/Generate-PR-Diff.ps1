@@ -13,27 +13,27 @@ The path under which changes will be detected.
 #>
 [CmdletBinding()]
 Param (
-  [Parameter(Mandatory=$True)]
+  [Parameter(Mandatory = $True)]
   [string] $ArtifactPath,
-  [Parameter(Mandatory=$True)]
+  [Parameter(Mandatory = $True)]
   [string] $TargetPath
 )
 
 . (Join-Path $PSScriptRoot "Helpers" "git-helpers.ps1")
 
 function Get-ChangedServices {
-    Param (
-        [Parameter(Mandatory=$True)]
-        [string[]] $ChangedFiles
-    )
+  Param (
+    [Parameter(Mandatory = $True)]
+    [string[]] $ChangedFiles
+  )
 
-    $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([^/]+)") { $matches[1] } } | Sort-Object -Unique
+  $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([^/]+)") { $matches[1] } } | Sort-Object -Unique
 
-    return $changedServices
+  return $changedServices
 }
 
 if (!(Test-Path $ArtifactPath)) {
-    New-Item -ItemType Directory -Path $ArtifactPath | Out-Null
+  New-Item -ItemType Directory -Path $ArtifactPath | Out-Null
 }
 
 $ArtifactPath = Resolve-Path $ArtifactPath
@@ -43,13 +43,13 @@ $changedFiles = Get-ChangedFiles -DiffPath $TargetPath
 $changedServices = Get-ChangedServices -ChangedFiles $changedFiles
 
 $result = [PSCustomObject]@{
-    "ChangedFiles" = $changedFiles
-    "ChangedServices" = $changedServices
-    "PRNumber" = if ($env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER) { $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER } else { "-1" }
+  "ChangedFiles"    = $changedFiles
+  "ChangedServices" = $changedServices
+  "PRNumber"        = if ($env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER) { $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER } else { "-1" }
 }
 
 $json = $result | ConvertTo-Json
 $json | Out-File $ArtifactName
 
-Write-Host "`nGenerated $ArtifactName`:"
-'  ' + ($json -replace "`n", "`n  ") | Out-Host 
+Write-Host "`nGenerated diff.json file at $ArtifactName"
+Write-Host "  $($json -replace "`n", "`n  ")"
