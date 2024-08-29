@@ -12,28 +12,21 @@ namespace System.ClientModel;
 public abstract class RefreshableCredential : Credential
 {
     /// <summary>
-    /// Gets or sets the credential.
-    /// </summary>
-    public CredentialProvider CredentialProvider { get; set; }
-
-    /// <summary>
     /// Gets or sets the refresh strategy.
     /// </summary>
     public RefreshStrategy RefreshStrategy { get; set; }
 
     /// <summary>
-    /// Creates a new instance of <see cref="RefreshableCredential"/> using the provided <paramref name="credentialProvider"/> and <paramref name="refreshStategy"/>.
+    /// Creates a new instance of <see cref="RefreshableCredential"/> using the provided <paramref name="refreshStrategy"/>.
     /// </summary>
     /// <param name="token"></param>
     /// <param name="tokenType"></param>
     /// <param name="expiry"></param>
-    /// <param name="credentialProvider"></param>
-    /// <param name="refreshStategy"></param>
-    public RefreshableCredential(string token, string tokenType, DateTimeOffset expiry, CredentialProvider credentialProvider, RefreshStrategy refreshStategy)
+    /// <param name="refreshStrategy"></param>
+    public RefreshableCredential(string token, string tokenType, DateTimeOffset expiry, RefreshStrategy refreshStrategy)
         : base(token, tokenType, expiry)
     {
-        CredentialProvider = credentialProvider;
-        RefreshStrategy = refreshStategy;
+        RefreshStrategy = refreshStrategy;
     }
 }
 

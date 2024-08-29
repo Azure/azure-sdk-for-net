@@ -104,8 +104,7 @@ namespace System.ClientModel
     }
     public abstract partial class RefreshableCredential : System.ClientModel.Credential
     {
-        public RefreshableCredential(string token, string tokenType, System.DateTimeOffset expiry, System.ClientModel.CredentialProvider credentialProvider, System.ClientModel.RefreshStrategy refreshStategy) : base (default(string), default(string), default(System.DateTimeOffset)) { }
-        public System.ClientModel.CredentialProvider CredentialProvider { get { throw null; } set { } }
+        public RefreshableCredential(string token, string tokenType, System.DateTimeOffset expiry, System.ClientModel.RefreshStrategy refreshStrategy) : base (default(string), default(string), default(System.DateTimeOffset)) { }
         public System.ClientModel.RefreshStrategy RefreshStrategy { get { throw null; } set { } }
     }
     public abstract partial class RefreshStrategy
