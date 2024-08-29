@@ -33,4 +33,21 @@ public class ModelReaderWriterOptions
     /// Gets the format to read and write the model.
     /// </summary>
     public string Format { get; }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="type"></param>
+    /// <param name="proxy"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    public void AddProxy<T>(Type type, IPersistableModel<T> proxy)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public object? ProxiedModel { get; }
 }

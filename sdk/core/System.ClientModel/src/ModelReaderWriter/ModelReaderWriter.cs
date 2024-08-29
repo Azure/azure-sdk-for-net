@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
@@ -131,6 +132,18 @@ public static class ModelReaderWriter
         options ??= ModelReaderWriterOptions.Json;
 
         return GetInstance(returnType).Create(data, options);
+    }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="reader"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    public static T Read<T>(ref Utf8JsonReader reader, ModelReaderWriterOptions? options = default) where T : IJsonModel<T>
+    {
+        throw new NotImplementedException();
     }
 
     private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)

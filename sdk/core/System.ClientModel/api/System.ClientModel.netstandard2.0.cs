@@ -178,6 +178,7 @@ namespace System.ClientModel.Primitives
     {
         public static object? Read(System.BinaryData data, System.Type returnType, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static T? Read<T>(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static T Read<T>(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IJsonModel<T> { throw null; }
         public static System.BinaryData Write(object model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
     }
@@ -186,7 +187,9 @@ namespace System.ClientModel.Primitives
         public ModelReaderWriterOptions(string format) { }
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
+        public object? ProxiedModel { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+        public void AddProxy<T>(System.Type type, System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
     }
     public abstract partial class OperationResult : System.ClientModel.ClientResult
     {
