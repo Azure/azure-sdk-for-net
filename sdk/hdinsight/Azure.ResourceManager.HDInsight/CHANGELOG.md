@@ -1,9 +1,14 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.3 (2024-09-03)
 
 ### Features Added
 
+- Enable setting IP tags when creating HDInsight cluster.
+
+- Enable update the managed identity of the cluster.
+
+- Enable manage Azure Monitor Agent logs integration on an HDInsight cluster.
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 

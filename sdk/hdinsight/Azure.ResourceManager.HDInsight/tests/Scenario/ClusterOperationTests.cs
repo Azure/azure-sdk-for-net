@@ -14,6 +14,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 using Azure.Core;
+using IPTag = Azure.ResourceManager.HDInsight.Models.IPTag;
 
 namespace Azure.ResourceManager.HDInsight.Tests
 {
@@ -229,7 +230,6 @@ namespace Azure.ResourceManager.HDInsight.Tests
         }
 
         [RecordedTest]
-        [Ignore("200: Azure.RequestFailedException : Internal server error occurred while processing the request")]
         public async Task TestCreateClusterWithOutboundAndPrivateLink()
         {
             string clusterName = "hdi-outbounprivatelink";
@@ -238,16 +238,16 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.NetworkProperties = new HDInsightClusterNetworkProperties()
             {
                 ResourceProviderConnection = HDInsightResourceProviderConnection.Outbound,
-                PrivateLink = HDInsightPrivateLinkState.Enabled
+                PrivateLink = HDInsightPrivateLinkState.Enabled,
+                PublicIPTag = new IPTag("FirstPartyUsage","HDInsight")
             };
 
-            var vnetInfo = await CreateDefaultNetwork(_resourceGroup, _vnetName);
-            foreach (var role in properties.ComputeRoles)
+            foreach (var role in properties.ComputeProfile.Roles)
             {
                 role.VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
                 {
-                    Id = vnetInfo.Item1,
-                    Subnet = vnetInfo.Item2.ToString()
+                    Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yuchen-ps-test/providers/Microsoft.Network/virtualNetworks/hdi-vn"),
+                    Subnet ="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yuchen-ps-test/providers/Microsoft.Network/virtualNetworks/hdi-vn/subnets/default"
                 };
             }
 
