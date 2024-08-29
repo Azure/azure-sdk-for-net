@@ -4178,7 +4178,7 @@ namespace Azure.Storage.Files.DataLake
                 throw Errors.SasIncorrectResourceType(
                     nameof(builder),
                     nameof(builder.IsDirectory),
-                    nameof(Constants.FalseName),
+                    Constants.FalseName,
                     nameof(this.GetType));
             }
             if (!builder.FileSystemName.Equals(FileSystemName, StringComparison.InvariantCulture))
