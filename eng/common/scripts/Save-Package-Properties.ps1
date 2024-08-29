@@ -44,19 +44,23 @@ Param (
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-function SetOutput($outputPath, $incomingPackageSpec) {
+function SetOutput($outputPath, $incomingPackageSpec)
+{
 
   # If there is an exsiting package info json file read that and set that as output object which gets properties updated here.
-  if (Test-Path $outputPath) {
+  if (Test-Path $outputPath)
+  {
     Write-Host "Found existing package info json."
     $outputObject = ConvertFrom-Json (Get-Content $outputPath -Raw)
   }
-  else {
+  else
+  {
     $outputObject = $incomingPackageSpec
   }
 
 
-  if ($addDevVersion) {
+  if ($addDevVersion)
+  {
     # Use the "Version" property which was provided by the incoming package spec
     # as the DevVersion. This may be overridden later.
     $outputObject.DevVersion = $incomingPackageSpec.Version
@@ -72,16 +76,19 @@ function SetOutput($outputPath, $incomingPackageSpec) {
     -Value (ConvertTo-Json -InputObject $outputObject -Depth 100)
 }
 
-function GetRelativePath($path) {
+function GetRelativePath($path)
+{
   # If the path is empty return an empty string
-  if (!$path) {
+  if (!$path)
+  {
     return ''
   }
 
   # If the path is already relative return the path. Calling `GetRelativePath`
   # on a relative path converts the relative path to an absolute path based on
   # the current working directory which can result in unexpected outputs.
-  if (![IO.Path]::IsPathRooted($path)) {
+  if (![IO.Path]::IsPathRooted($path))
+  {
     return $path
   }
 
@@ -95,33 +102,40 @@ $exportedPaths = @{}
 
 $allPackageProperties = @()
 
-if ($prDiff) {
+if ($prDiff)
+{
   Write-Host "Getting package properties for PR diff file: $prDiff"
   $allPackageProperties = Get-PrPkgProperties $prDiff
 
-  if (!$allPackageProperties) {
+  if (!$allPackageProperties)
+  {
     Write-Host "No packages found matching PR diff file $prDiff"
     Write-Host "Setting NoPackagesChanged variable to true"
     Write-Host "##vso[task.setvariable variable=NoPackagesChanged]true"
     exit 0
   }
 }
-else {
+else
+{
   Write-Host "Getting package properties for service directory: $serviceDirectory"
   $allPackageProperties = Get-AllPkgProperties $serviceDirectory
 
-  if (!$allPackageProperties) {
+  if (!$allPackageProperties)
+  {
     Write-Error "Package properties are not available for service directory $serviceDirectory"
     exit 1
   }
 }
 
-if (-not (Test-Path -Path $outDirectory)) {
+if (-not (Test-Path -Path $outDirectory))
+{
   New-Item -ItemType Directory -Force -Path $outDirectory | Out-Null
 }
 
-foreach ($pkg in $allPackageProperties) {
-  if ($pkg.Name) {
+foreach ($pkg in $allPackageProperties)
+{
+  if ($pkg.Name)
+  {
     Write-Host ""
     Write-Host "Package Name: $($pkg.Name)"
     Write-Host "Package Version: $($pkg.Version)"
@@ -129,25 +143,31 @@ foreach ($pkg in $allPackageProperties) {
     Write-Host "Artifact Name: $($pkg.ArtifactName)"
     Write-Host "Release date: $($pkg.ReleaseStatus)"
     $configFilePrefix = $pkg.Name
-    if ($pkg.ArtifactName) {
+
+    if ($pkg.ArtifactName)
+    {
       $configFilePrefix = $pkg.ArtifactName
     }
+
     $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
     Write-Host "Output path of json file: $outputPath"
+
     $outDir = Split-Path $outputPath -parent
-    if (-not (Test-Path -path $outDir)) {
+    if (-not (Test-Path -path $outDir))
+    {
       Write-Host "Creating directory $($outDir) for json property file"
       New-Item -ItemType Directory -Path $outDir | Out-Null
     }
 
     # If package properties for a track 2 (IsNewSdk = true) package has
     # already been written, skip writing to that same path.
-    if ($exportedPaths.ContainsKey($outputPath) -and $exportedPaths[$outputPath].IsNewSdk -eq $true) {
+    if ($exportedPaths.ContainsKey($outputPath) -and $exportedPaths[$outputPath].IsNewSdk -eq $true)
+    {
       Write-Host "Track 2 package info with file name $($outputPath) already exported. Skipping export."
       continue
     }
-    $exportedPaths[$outputPath] = $pkg
 
+    $exportedPaths[$outputPath] = $pkg
     SetOutput $outputPath $pkg
   }
 }

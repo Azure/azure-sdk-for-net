@@ -21,7 +21,8 @@ Param (
 
 . (Join-Path $PSScriptRoot "Helpers" "git-helpers.ps1")
 
-function Get-ChangedServices {
+function Get-ChangedServices
+{
   Param (
     [Parameter(Mandatory = $True)]
     [string[]] $ChangedFiles
@@ -32,7 +33,8 @@ function Get-ChangedServices {
   return $changedServices
 }
 
-if (!(Test-Path $ArtifactPath)) {
+if (!(Test-Path $ArtifactPath))
+{
   New-Item -ItemType Directory -Path $ArtifactPath | Out-Null
 }
 
