@@ -120,6 +120,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             bindingData.Add(ConnectionContextBindingName, triggerEvent.ConnectionContext);
             bindingData.Add(SocketIdBindingName, triggerEvent.Request.SocketId);
             bindingData.Add(NamespaceBindingName, triggerEvent.Request.Namespace);
+            if (!string.IsNullOrEmpty(triggerEvent.ConnectionContext.UserId))
+            {
+                bindingData.Add(UserIdName, triggerEvent.ConnectionContext.UserId);
+            }
 
             if (triggerEvent.Request is SocketIOConnectRequest connectEventRequest)
             {
@@ -127,11 +131,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                 bindingData.Add(QueryBindingName, connectEventRequest.Query);
                 bindingData.Add(ClientCertificatesBindingName, connectEventRequest.ClientCertificates);
                 bindingData.Add(HeadersBindingName, connectEventRequest.Headers);
-                if (!string.IsNullOrEmpty(connectEventRequest.Claims["userId"]?.FirstOrDefault()))
-                {
-                    bindingData.Add(UserIdName, connectEventRequest.Claims["userId"].First());
-                }
-                bindingData.Add(UserIdName, connectEventRequest.Headers);
             }
             else if (triggerEvent.Request is SocketIODisconnectedRequest disconnectedEventRequest)
             {
