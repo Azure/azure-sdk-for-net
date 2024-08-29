@@ -15,7 +15,7 @@ public abstract class CredentialProvider
     /// <summary>
     /// Gets the credential.
     /// </summary>
-    /// <param name="context">I don't ;ove this dictionary param, but I'm not sure if there is a better way to handle an implementation agnostic bag of context to the credential. </param>
+    /// <param name="context">I don't love this dictionary param, but I'm not sure if there is a better way to handle an implementation agnostic bag of context to the credential. </param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public abstract ValueTask<Credential> GetCredentialAsync(IReadOnlyDictionary<string, object> context, CancellationToken cancellationToken);
