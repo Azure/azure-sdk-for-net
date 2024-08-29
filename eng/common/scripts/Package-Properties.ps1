@@ -113,7 +113,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $diff = Get-Content $InputDiffJson | ConvertFrom-Json
     $targetedFiles = $diff.ChangedFiles
 
-    $dependentPackagesForInclusion = @()
+    $additionalValidationPackages = @()
     $lookup = @{}
 
     foreach ($pkg in $allPackageProperties)
@@ -130,13 +130,13 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                 $packagesWithChanges += $pkg
 
                 if ($pkg.AdditionalValidationPackages) {
-                    $dependentPackagesForInclusion += $pkg.AdditionalValidationPackages
+                    $additionalValidationPackages += $pkg.AdditionalValidationPackages
                 }
             }
         }
     }
 
-    foreach ($addition in $dependentPackagesForInclusion) {
+    foreach ($addition in $additionalValidationPackages) {
         $key = $addition.Replace($RepoRoot, "").SubString(1)
 
         if ($lookup[$key]) {
