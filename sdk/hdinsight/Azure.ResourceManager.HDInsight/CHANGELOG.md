@@ -9,12 +9,6 @@
 - Enable manage Azure Monitor Agent logs integration on an HDInsight cluster.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.2.0-beta.2 (2023-11-29)
 
 ### Features Added
