@@ -14,7 +14,7 @@ Set these two environment variables before running the sample:
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 var messages = new List<ChatRequestMessage>()
 {
     new ChatRequestSystemMessage("You are an AI assistant that helps people find information. Your replies are short, no more than two sentences."),
@@ -40,7 +40,7 @@ An `async` option is also available.
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 var messages = new List<ChatRequestMessage>()
 {
     new ChatRequestSystemMessage("You are an AI assistant that helps people find information. Your replies are short, no more than two sentences."),

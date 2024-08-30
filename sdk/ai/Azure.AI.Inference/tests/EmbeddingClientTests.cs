@@ -3,20 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Diagnostics;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Identity;
-using Newtonsoft.Json;
 using NUnit.Framework;
-using File = System.IO.File;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -83,7 +73,7 @@ namespace Azure.AI.Inference.Tests
             Assert.That(response.Value.Usage.TotalTokens, Is.GreaterThan(0));
         }
 
-            #region Helpers
+        #region Helpers
         private EmbeddingsClient CreateClient(Uri endpoint, AzureKeyCredential credential, AzureAIInferenceClientOptions clientOptions)
         {
             return InstrumentClient(new EmbeddingsClient(endpoint, credential, InstrumentClientOptions(clientOptions)));
