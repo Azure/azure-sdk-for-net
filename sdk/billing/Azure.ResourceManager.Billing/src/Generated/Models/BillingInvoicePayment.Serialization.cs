@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -166,6 +167,128 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Amount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  amount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Amount))
+                {
+                    builder.Append("  amount: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Amount, options, 2, false, "  amount: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MadeOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  date: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MadeOn))
+                {
+                    builder.Append("  date: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(MadeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PaymentMethodId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  paymentMethodId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PaymentMethodId))
+                {
+                    builder.Append("  paymentMethodId: ");
+                    builder.AppendLine($"'{PaymentMethodId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PaymentMethodFamily), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  paymentMethodFamily: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PaymentMethodFamily))
+                {
+                    builder.Append("  paymentMethodFamily: ");
+                    builder.AppendLine($"'{PaymentMethodFamily.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PaymentMethodType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  paymentMethodType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PaymentMethodType))
+                {
+                    builder.Append("  paymentMethodType: ");
+                    if (PaymentMethodType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PaymentMethodType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PaymentMethodType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PaymentType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  paymentType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PaymentType))
+                {
+                    builder.Append("  paymentType: ");
+                    if (PaymentType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PaymentType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PaymentType}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<BillingInvoicePayment>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingInvoicePayment>)this).GetFormatFromOptions(options) : options.Format;
@@ -174,6 +297,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BillingInvoicePayment)} does not support writing '{options.Format}' format.");
             }

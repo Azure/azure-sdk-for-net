@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The date when the payment was attempted. </summary>
+        [WirePath("date")]
         public DateTimeOffset? On { get; }
         /// <summary> The reason that the payment failed. </summary>
+        [WirePath("failedPaymentReason")]
         public BillingInvoiceFailedPaymentReason? FailedPaymentReason { get; }
     }
 }

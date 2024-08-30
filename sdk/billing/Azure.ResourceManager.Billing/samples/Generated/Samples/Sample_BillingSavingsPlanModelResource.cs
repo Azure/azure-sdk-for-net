@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing.Samples
                         TenantId = Guid.Parse("80000000-0000-0000-0000-000000000000"),
                         ManagementGroupId = new ResourceIdentifier("/providers/Microsoft.Management/managementGroups/mg1"),
                     },
-                    Renew = true,
+                    IsRenewed = true,
                     RenewPurchaseProperties = new BillingPurchaseProperties()
                     {
                         SkuName = "Compute_Savings_Plan",

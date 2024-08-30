@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -184,6 +186,119 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnterpriseAgreementPolicies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enterpriseAgreementPolicies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnterpriseAgreementPolicies))
+                {
+                    builder.Append("  enterpriseAgreementPolicies: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, EnterpriseAgreementPolicies, options, 2, false, "  enterpriseAgreementPolicies: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MarketplacePurchases), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  marketplacePurchases: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MarketplacePurchases))
+                {
+                    builder.Append("  marketplacePurchases: ");
+                    builder.AppendLine($"'{MarketplacePurchases.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReservationPurchases), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reservationPurchases: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReservationPurchases))
+                {
+                    builder.Append("  reservationPurchases: ");
+                    builder.AppendLine($"'{ReservationPurchases.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SavingsPlanPurchases), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  savingsPlanPurchases: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SavingsPlanPurchases))
+                {
+                    builder.Append("  savingsPlanPurchases: ");
+                    builder.AppendLine($"'{SavingsPlanPurchases.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Policies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  policies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Policies))
+                {
+                    if (Policies.Any())
+                    {
+                        builder.Append("  policies: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Policies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  policies: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<BillingAccountPolicyProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingAccountPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -192,6 +307,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support writing '{options.Format}' format.");
             }

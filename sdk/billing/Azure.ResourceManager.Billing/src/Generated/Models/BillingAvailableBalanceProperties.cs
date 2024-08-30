@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Credit amount for immediate payment. </summary>
+        [WirePath("amount")]
         public BillingAmount Amount { get; }
         /// <summary> The list of payments on accounts. </summary>
+        [WirePath("paymentsOnAccount")]
         public IReadOnlyList<BillingPaymentOnAccount> PaymentsOnAccount { get; }
         /// <summary> Total amount of payments on accounts. </summary>
+        [WirePath("totalPaymentsOnAccount")]
         public BillingAmount TotalPaymentsOnAccount { get; }
     }
 }

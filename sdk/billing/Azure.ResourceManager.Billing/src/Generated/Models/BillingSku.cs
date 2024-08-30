@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Name of the SKU to be applied. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

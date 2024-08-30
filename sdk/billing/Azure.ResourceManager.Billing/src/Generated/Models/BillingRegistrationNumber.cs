@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The unique identification number of the organization linked with the billing account. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> Identifies if the registration number is required for the billing account. </summary>
+        [WirePath("required")]
         public bool? IsRequired { get; }
         /// <summary> The types of registration number allowed based on the country of the billing account. </summary>
+        [WirePath("type")]
         public IReadOnlyList<string> RegistrationNumberType { get; }
     }
 }

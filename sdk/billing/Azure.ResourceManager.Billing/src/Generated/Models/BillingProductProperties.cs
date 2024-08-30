@@ -103,48 +103,70 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Indicates whether auto renewal is turned on or off for a product. </summary>
+        [WirePath("autoRenew")]
         public BillingSubscriptionAutoRenewState? AutoRenew { get; set; }
         /// <summary> The availability of the product. </summary>
+        [WirePath("availabilityId")]
         public string AvailabilityId { get; }
         /// <summary> The frequency at which the product will be billed. </summary>
+        [WirePath("billingFrequency")]
         public string BillingFrequency { get; }
         /// <summary> The ID of the billing profile to which the product is billed. </summary>
+        [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The name of the billing profile to which the product is billed. </summary>
+        [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
         /// <summary> The ID of the customer for whom the product was purchased. The field is applicable only for Microsoft Partner Agreement billing account. </summary>
+        [WirePath("customerId")]
         public ResourceIdentifier CustomerId { get; }
         /// <summary> The name of the customer for whom the product was purchased. The field is applicable only for Microsoft Partner Agreement billing account. </summary>
+        [WirePath("customerDisplayName")]
         public string CustomerDisplayName { get; }
         /// <summary> The display name of the product. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The date when the product will be renewed or canceled. </summary>
+        [WirePath("endDate")]
         public string EndDate { get; }
         /// <summary> The ID of the invoice section to which the product is billed. </summary>
+        [WirePath("invoiceSectionId")]
         public ResourceIdentifier InvoiceSectionId { get; }
         /// <summary> The name of the invoice section to which the product is billed. </summary>
+        [WirePath("invoiceSectionDisplayName")]
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The last month charges. </summary>
+        [WirePath("lastCharge")]
         public BillingAmount LastCharge { get; }
         /// <summary> The date of the last charge. </summary>
+        [WirePath("lastChargeDate")]
         public string LastChargeDate { get; }
         /// <summary> The description of the type of product. </summary>
+        [WirePath("productType")]
         public string ProductType { get; }
         /// <summary> The ID of the type of product. </summary>
+        [WirePath("productTypeId")]
         public string ProductTypeId { get; }
         /// <summary> The sku ID of the product. </summary>
+        [WirePath("skuId")]
         public string SkuId { get; }
         /// <summary> The sku description of the product. </summary>
+        [WirePath("skuDescription")]
         public string SkuDescription { get; }
         /// <summary> The date when the product was purchased. </summary>
+        [WirePath("purchaseDate")]
         public string PurchaseDate { get; }
         /// <summary> The quantity purchased for the product. </summary>
+        [WirePath("quantity")]
         public long? Quantity { get; }
         /// <summary> The status of the product. </summary>
+        [WirePath("status")]
         public BillingProductStatus? Status { get; }
         /// <summary> The id of the tenant in which the product is used. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> Reseller for this product. The fields is not available for Microsoft Partner Agreement products. </summary>
+        [WirePath("reseller")]
         public BillingAmount Reseller { get; }
     }
 }

@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Indicates the eligibility status of the payment terms. </summary>
+        [WirePath("eligibilityStatus")]
         public PaymentTermsEligibilityStatus? EligibilityStatus { get; }
         /// <summary> Details of the payment terms eligibility. </summary>
+        [WirePath("eligibilityDetails")]
         public IReadOnlyList<PaymentTermsEligibilityDetail> EligibilityDetails { get; }
     }
 }

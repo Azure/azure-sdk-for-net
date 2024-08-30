@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The email address of the participant. </summary>
+        [WirePath("email")]
         public string Email { get; }
         /// <summary> The acceptance status of the participant. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> The date when the status got changed. </summary>
+        [WirePath("statusDate")]
         public DateTimeOffset? StatusOn { get; }
     }
 }

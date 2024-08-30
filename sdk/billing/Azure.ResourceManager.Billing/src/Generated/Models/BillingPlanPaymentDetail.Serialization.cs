@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -174,6 +175,113 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DueOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dueDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DueOn))
+                {
+                    builder.Append("  dueDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(DueOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PaymentCompletedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  paymentDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PaymentCompletedOn))
+                {
+                    builder.Append("  paymentDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(PaymentCompletedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PricingCurrencyTotal), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pricingCurrencyTotal: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PricingCurrencyTotal))
+                {
+                    builder.Append("  pricingCurrencyTotal: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PricingCurrencyTotal, options, 2, false, "  pricingCurrencyTotal: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingCurrencyTotal), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  billingCurrencyTotal: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BillingCurrencyTotal))
+                {
+                    builder.Append("  billingCurrencyTotal: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BillingCurrencyTotal, options, 2, false, "  billingCurrencyTotal: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedStatusInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  extendedStatusInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExtendedStatusInfo))
+                {
+                    builder.Append("  extendedStatusInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExtendedStatusInfo, options, 2, false, "  extendedStatusInfo: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<BillingPlanPaymentDetail>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingPlanPaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,6 +290,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BillingPlanPaymentDetail)} does not support writing '{options.Format}' format.");
             }

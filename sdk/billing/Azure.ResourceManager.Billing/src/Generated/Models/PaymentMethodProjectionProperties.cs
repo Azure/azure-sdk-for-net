@@ -78,22 +78,31 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Id of payment method. </summary>
+        [WirePath("id")]
         public ResourceIdentifier PaymentMethodId { get; }
         /// <summary> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </summary>
+        [WirePath("accountHolderName")]
         public string AccountHolderName { get; }
         /// <summary> The display name of the payment method. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>
+        [WirePath("expiration")]
         public string Expiration { get; }
         /// <summary> The family of payment method. </summary>
+        [WirePath("family")]
         public PaymentMethodFamily? Family { get; set; }
         /// <summary> Last four digits of payment method. </summary>
+        [WirePath("lastFourDigits")]
         public string LastFourDigits { get; }
         /// <summary> The list of logos for the payment method. </summary>
+        [WirePath("logos")]
         public IList<PaymentMethodLogo> Logos { get; }
         /// <summary> The type of payment method. </summary>
+        [WirePath("paymentMethodType")]
         public string PaymentMethodType { get; }
         /// <summary> Status of the payment method. </summary>
+        [WirePath("status")]
         public PaymentMethodStatus? Status { get; set; }
     }
 }

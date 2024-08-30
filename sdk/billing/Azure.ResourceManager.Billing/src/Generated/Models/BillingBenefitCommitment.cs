@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Commitment grain. </summary>
+        [WirePath("grain")]
         public BillingBenefitCommitmentGrain? Grain { get; set; }
     }
 }

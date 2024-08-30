@@ -110,50 +110,73 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("provisioningState")]
         public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> Identifies the billing relationship represented by the billing profile. The billing relationship may be between Microsoft, the customer, and/or a third-party. </summary>
+        [WirePath("billingRelationshipType")]
         public BillingRelationshipType? BillingRelationshipType { get; }
         /// <summary> Billing address. </summary>
+        [WirePath("billTo")]
         public BillingAddressDetails BillTo { get; set; }
         /// <summary> The currency in which the charges for the billing profile are billed. </summary>
+        [WirePath("currency")]
         public string Currency { get; }
         /// <summary> The name of the billing profile. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Information about the enabled azure plans. </summary>
+        [WirePath("enabledAzurePlans")]
         public IList<BillingAzurePlan> EnabledAzurePlans { get; }
         /// <summary> Indicates whether user has read access to the billing profile. </summary>
+        [WirePath("hasReadAccess")]
         public bool? HasReadAccess { get; }
         /// <summary> Identifies the billing profile that is linked to another billing profile in indirect purchase motion. </summary>
+        [WirePath("indirectRelationshipInfo")]
         public IndirectRelationshipInfo IndirectRelationshipInfo { get; set; }
         /// <summary> The day of the month when the invoice for the billing profile is generated. </summary>
+        [WirePath("invoiceDay")]
         public int? InvoiceDay { get; }
         /// <summary> Flag controlling whether the invoices for the billing profile are sent through email. </summary>
+        [WirePath("invoiceEmailOptIn")]
         public bool? IsInvoiceEmailOptIn { get; set; }
         /// <summary> The list of email addresses to receive invoices by email for the billing profile. </summary>
+        [WirePath("invoiceRecipients")]
         public IList<string> InvoiceRecipients { get; }
         /// <summary> The default purchase order number that will appear on the invoices generated for the billing profile. </summary>
+        [WirePath("poNumber")]
         public string PoNumber { get; set; }
         /// <summary> The default address where the products are shipped, or the services are being used. If a ship to is not specified for a product or a subscription, then this address will be used. </summary>
+        [WirePath("shipTo")]
         public BillingAddressDetails ShipTo { get; set; }
         /// <summary> The address of the individual or organization that is responsible for the billing account. </summary>
+        [WirePath("soldTo")]
         public BillingAddressDetails SoldTo { get; set; }
         /// <summary> The billing profile spending limit. </summary>
+        [WirePath("spendingLimit")]
         public BillingSpendingLimit? SpendingLimit { get; }
         /// <summary> The details of billing profile spending limit. </summary>
+        [WirePath("spendingLimitDetails")]
         public IReadOnlyList<SpendingLimitDetails> SpendingLimitDetails { get; }
         /// <summary> The status of the billing profile. </summary>
+        [WirePath("status")]
         public BillingProfileStatus? Status { get; }
         /// <summary> Reason for the specified billing profile status. </summary>
+        [WirePath("statusReasonCode")]
         public BillingProfileStatusReasonCode? StatusReasonCode { get; }
         /// <summary> The system generated unique identifier for a billing profile. </summary>
+        [WirePath("systemId")]
         public string SystemId { get; }
         /// <summary> Dictionary of metadata associated with the resource. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Identifies the cloud environments that are associated with a billing profile. This is a system managed optional field and gets updated as the billing profile gets associated with accounts in various clouds. </summary>
+        [WirePath("targetClouds")]
         public IReadOnlyList<string> TargetClouds { get; }
         /// <summary> The current payment term of the billing profile. </summary>
+        [WirePath("currentPaymentTerm")]
         public BillingPaymentTerm CurrentPaymentTerm { get; set; }
         /// <summary> The other payment terms of the billing profile. </summary>
+        [WirePath("otherPaymentTerms")]
         public IReadOnlyList<BillingPaymentTerm> OtherPaymentTerms { get; }
     }
 }

@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Gets the benefits. </summary>
+        [WirePath("benefits")]
         public IReadOnlyList<SavingsPlanValidResponseProperty> Benefits { get; }
         /// <summary> Url to get the next page. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

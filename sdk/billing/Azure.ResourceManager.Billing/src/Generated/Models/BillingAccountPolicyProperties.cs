@@ -71,16 +71,22 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("provisioningState")]
         public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> The policies for Enterprise Agreement enrollments. </summary>
+        [WirePath("enterpriseAgreementPolicies")]
         public EnterpriseAgreementPolicies EnterpriseAgreementPolicies { get; set; }
         /// <summary> The policy that controls whether Azure marketplace purchases are allowed. </summary>
+        [WirePath("marketplacePurchases")]
         public MarketplacePurchasesPolicy? MarketplacePurchases { get; set; }
         /// <summary> The policy that controls whether Azure reservation purchases are allowed. </summary>
+        [WirePath("reservationPurchases")]
         public ReservationPurchasesPolicy? ReservationPurchases { get; set; }
         /// <summary> The policy that controls whether users with Azure savings plan purchase are allowed. </summary>
+        [WirePath("savingsPlanPurchases")]
         public SavingsPlanPurchasesPolicy? SavingsPlanPurchases { get; set; }
         /// <summary> List of all policies defined at the billing scope. </summary>
+        [WirePath("policies")]
         public IList<BillingPolicySummary> Policies { get; }
     }
 }

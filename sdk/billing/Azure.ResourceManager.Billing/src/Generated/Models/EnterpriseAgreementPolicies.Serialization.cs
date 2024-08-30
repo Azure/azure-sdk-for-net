@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -122,6 +123,66 @@ namespace Azure.ResourceManager.Billing.Models
             return new EnterpriseAgreementPolicies(authenticationType, accountOwnerViewCharges, departmentAdminViewCharges, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authenticationType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthenticationType))
+                {
+                    builder.Append("  authenticationType: ");
+                    builder.AppendLine($"'{AuthenticationType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountOwnerViewCharges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accountOwnerViewCharges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccountOwnerViewCharges))
+                {
+                    builder.Append("  accountOwnerViewCharges: ");
+                    builder.AppendLine($"'{AccountOwnerViewCharges.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DepartmentAdminViewCharges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  departmentAdminViewCharges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DepartmentAdminViewCharges))
+                {
+                    builder.Append("  departmentAdminViewCharges: ");
+                    builder.AppendLine($"'{DepartmentAdminViewCharges.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EnterpriseAgreementPolicies>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EnterpriseAgreementPolicies>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +191,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EnterpriseAgreementPolicies)} does not support writing '{options.Format}' format.");
             }

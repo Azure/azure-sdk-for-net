@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The Available Credit or Payment on Account Balance. The credit balance can be used to settle due or past due invoices. </summary>
+        [WirePath("properties")]
         public BillingAvailableBalanceProperties Properties { get; set; }
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

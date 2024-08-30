@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> It is an organizational hierarchy within a billing account to administer and manage azure costs. </summary>
+        [WirePath("properties")]
         public BillingEnrollmentAccountProperties Properties { get; set; }
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

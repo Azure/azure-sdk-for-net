@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The email ID of the recipient to whom the transfer request is sent. </summary>
+        [WirePath("properties.recipientEmailId")]
         public string RecipientEmailId { get; set; }
         /// <summary> Optional MPN ID of the reseller for transfer requests that are sent from a Microsoft Partner Agreement billing account. </summary>
+        [WirePath("properties.resellerId")]
         public string ResellerId { get; set; }
     }
 }

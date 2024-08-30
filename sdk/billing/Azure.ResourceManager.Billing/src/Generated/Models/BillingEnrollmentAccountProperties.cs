@@ -78,24 +78,34 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The cost center associated with the enrollment account. </summary>
+        [WirePath("costCenter")]
         public string CostCenter { get; set; }
         /// <summary> The name of the enrollment account. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> The name of the department under which the enrollment account exists. </summary>
+        [WirePath("departmentDisplayName")]
         public string DepartmentDisplayName { get; }
         /// <summary> The ID that uniquely identifies the department. </summary>
+        [WirePath("departmentId")]
         public string DepartmentId { get; }
         /// <summary> Boolean flag which enables subscribers to run development and testing workloads on Azure at special Dev/Test rates. </summary>
+        [WirePath("isDevTestEnabled")]
         public bool? IsDevTestEnabled { get; set; }
         /// <summary> The owner of the enrollment account. </summary>
+        [WirePath("accountOwner")]
         public string AccountOwner { get; }
         /// <summary> The authorization type of the enrollment account. </summary>
+        [WirePath("authType")]
         public string AuthType { get; }
         /// <summary> The status of the enrollment account. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> The date from which the enrollment account became valid and functional. </summary>
+        [WirePath("startDate")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The date of expiration of the enrollment account. </summary>
+        [WirePath("endDate")]
         public DateTimeOffset? EndOn { get; }
     }
 }

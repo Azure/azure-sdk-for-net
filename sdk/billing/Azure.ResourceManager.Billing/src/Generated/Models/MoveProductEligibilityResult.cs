@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Specifies whether the subscription is eligible to be transferred. </summary>
+        [WirePath("isMoveEligible")]
         public bool? IsMoveEligible { get; }
         /// <summary> Error details of the transfer eligibility validation. </summary>
+        [WirePath("errorDetails")]
         public MoveProductErrorDetails ErrorDetails { get; }
     }
 }

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Result Level. </summary>
+        [WirePath("level")]
         public string Level { get; }
         /// <summary> Result Code. </summary>
+        [WirePath("code")]
         public string Code { get; }
         /// <summary> The validation message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Status describing if invoice section is eligible to be deleted. </summary>
+        [WirePath("eligibilityStatus")]
         public DeleteInvoiceSectionEligibilityStatus? EligibilityStatus { get; }
         /// <summary> A list of delete invoice section eligibility result details. </summary>
+        [WirePath("eligibilityDetails")]
         public IReadOnlyList<DeleteInvoiceSectionEligibilityDetail> EligibilityDetails { get; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The name of the reservation sku. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

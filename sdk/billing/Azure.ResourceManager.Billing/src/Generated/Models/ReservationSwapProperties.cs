@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Resource id of the source reservation that gets swapped. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
+        [WirePath("swapSource")]
         public string SwapSource { get; set; }
         /// <summary> Reservation resource id that the original resource gets swapped to. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
+        [WirePath("swapDestination")]
         public string SwapDestination { get; set; }
     }
 }

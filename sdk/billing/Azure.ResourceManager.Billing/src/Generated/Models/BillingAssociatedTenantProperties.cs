@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("provisioningState")]
         public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> The name of the associated tenant. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> The ID that uniquely identifies a tenant. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> The state determines whether users from the associated tenant can be assigned roles for commerce activities like viewing and downloading invoices, managing payments, and making purchases. </summary>
+        [WirePath("billingManagementState")]
         public BillingManagementTenantState? BillingManagementState { get; set; }
         /// <summary> The state determines whether subscriptions and licenses can be provisioned in the associated tenant. It can be set to 'Pending' to initiate a billing request. </summary>
+        [WirePath("provisioningManagementState")]
         public BillingProvisioningTenantState? ProvisioningManagementState { get; set; }
         /// <summary> The unique identifier for the billing request that is created when enabling provisioning for an associated tenant. </summary>
+        [WirePath("provisioningBillingRequestId")]
         public string ProvisioningBillingRequestId { get; }
     }
 }

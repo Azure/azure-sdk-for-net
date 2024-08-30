@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> The SKU to be applied for this resource. </summary>
         internal BillingSku Sku { get; set; }
         /// <summary> Name of the SKU to be applied. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -90,20 +91,28 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Friendly name of the savings plan. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
+        [WirePath("properties.billingScopeId")]
         public string BillingScopeId { get; set; }
         /// <summary> Represents the Savings plan term in ISO 8601 format. </summary>
+        [WirePath("properties.term")]
         public BillingSavingsPlanTerm? Term { get; set; }
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </summary>
+        [WirePath("properties.billingPlan")]
         public BillingPlan? BillingPlan { get; set; }
         /// <summary> Type of the Applied Scope. </summary>
+        [WirePath("properties.appliedScopeType")]
         public BillingAppliedScopeType? AppliedScopeType { get; set; }
         /// <summary> Commitment towards the benefit. </summary>
+        [WirePath("properties.commitment")]
         public BillingBenefitCommitment Commitment { get; set; }
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
+        [WirePath("properties.renew")]
         public bool? IsRenewed { get; set; }
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
+        [WirePath("properties.appliedScopeProperties")]
         public BillingAppliedScopeProperties AppliedScopeProperties { get; set; }
     }
 }

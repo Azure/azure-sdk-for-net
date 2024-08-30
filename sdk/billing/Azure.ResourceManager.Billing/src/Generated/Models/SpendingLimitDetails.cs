@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The initial amount for the billing profile. </summary>
+        [WirePath("amount")]
         public float? Amount { get; }
         /// <summary> The currency in which the charges for the billing profile are billed. </summary>
+        [WirePath("currency")]
         public string Currency { get; }
         /// <summary> The date when this spending limit goes into effect. </summary>
+        [WirePath("startDate")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The date when this spending limit is no longer in effect. </summary>
+        [WirePath("endDate")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The type of spending limit. </summary>
+        [WirePath("type")]
         public SpendingLimitType? LimitType { get; }
         /// <summary> The status of current spending limit. </summary>
+        [WirePath("status")]
         public SpendingLimitStatus? Status { get; }
     }
 }

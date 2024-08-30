@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -234,6 +235,182 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestedOn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedOn))
+                {
+                    builder.Append("  requestedOn: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(RequestedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApprovedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  approvedOn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApprovedOn))
+                {
+                    builder.Append("  approvedOn: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ApprovedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompletedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  completedOn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CompletedOn))
+                {
+                    builder.Append("  completedOn: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CompletedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AmountRequested), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  amountRequested: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AmountRequested))
+                {
+                    builder.Append("  amountRequested: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AmountRequested, options, 2, false, "  amountRequested: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AmountRefunded), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  amountRefunded: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AmountRefunded))
+                {
+                    builder.Append("  amountRefunded: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AmountRefunded, options, 2, false, "  amountRefunded: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RebillInvoiceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rebillInvoiceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RebillInvoiceId))
+                {
+                    builder.Append("  rebillInvoiceId: ");
+                    builder.AppendLine($"'{RebillInvoiceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransactionCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  transactionCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TransactionCount))
+                {
+                    builder.Append("  transactionCount: ");
+                    builder.AppendLine($"{TransactionCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefundStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  refundStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RefundStatus))
+                {
+                    builder.Append("  refundStatus: ");
+                    builder.AppendLine($"'{RefundStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefundOperationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  refundOperationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RefundOperationId))
+                {
+                    builder.Append("  refundOperationId: ");
+                    if (RefundOperationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RefundOperationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RefundOperationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefundReason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  refundReason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RefundReason))
+                {
+                    builder.Append("  refundReason: ");
+                    builder.AppendLine($"'{RefundReason.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RefundDetailsSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RefundDetailsSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -242,6 +419,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RefundDetailsSummary)} does not support writing '{options.Format}' format.");
             }

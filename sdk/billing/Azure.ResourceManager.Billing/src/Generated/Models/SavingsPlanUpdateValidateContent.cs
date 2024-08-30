@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The benefits of a savings plan. </summary>
+        [WirePath("benefits")]
         public IList<SavingsPlanUpdateRequestProperties> Benefits { get; }
     }
 }

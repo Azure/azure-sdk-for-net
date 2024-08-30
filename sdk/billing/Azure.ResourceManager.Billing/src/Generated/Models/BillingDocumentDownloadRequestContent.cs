@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. If omitted, the most recent invoice PDF for the invoice will be returned. </summary>
+        [WirePath("documentName")]
         public string DocumentName { get; set; }
         /// <summary> The ID that uniquely identifies an invoice. </summary>
+        [WirePath("invoiceName")]
         public string InvoiceName { get; set; }
     }
 }

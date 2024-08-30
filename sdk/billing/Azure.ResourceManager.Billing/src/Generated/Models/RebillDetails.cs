@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The ID of invoice. </summary>
+        [WirePath("invoiceDocumentId")]
         public ResourceIdentifier InvoiceDocumentId { get; }
         /// <summary> The ID of credit note. </summary>
+        [WirePath("creditNoteDocumentId")]
         public ResourceIdentifier CreditNoteDocumentId { get; }
         /// <summary> The rebill details of an invoice. </summary>
+        [WirePath("rebillDetails")]
         public RebillDetails RebillDetailsValue { get; }
     }
 }

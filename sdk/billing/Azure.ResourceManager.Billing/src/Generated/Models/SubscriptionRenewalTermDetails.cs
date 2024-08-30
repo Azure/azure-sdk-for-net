@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </summary>
+        [WirePath("billingFrequency")]
         public string BillingFrequency { get; }
         /// <summary> Id of the product for which the subscription is purchased. </summary>
+        [WirePath("productId")]
         public string ProductId { get; }
         /// <summary> Type Id of the product for which the subscription is purchased. </summary>
+        [WirePath("productTypeId")]
         public string ProductTypeId { get; }
         /// <summary> The SKU ID of the product for which the subscription is purchased. This field is is only available  for Microsoft Customer Agreement billing accounts. </summary>
+        [WirePath("skuId")]
         public string SkuId { get; }
         /// <summary> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </summary>
+        [WirePath("termDuration")]
         public TimeSpan? TermDuration { get; }
         /// <summary> The quantity of licenses or fulfillment units for the subscription. </summary>
+        [WirePath("quantity")]
         public long? Quantity { get; }
         /// <summary> End date of the term in UTC time. </summary>
+        [WirePath("termEndDate")]
         public DateTimeOffset? TermEndOn { get; }
     }
 }

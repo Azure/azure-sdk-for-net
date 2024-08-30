@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The list of transfer validation results. </summary>
+        [WirePath("value")]
         public IReadOnlyList<BillingTransferValidationResult> Value { get; }
     }
 }

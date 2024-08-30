@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Access Decision, specifies access is allowed or not. </summary>
+        [WirePath("accessDecision")]
         public BillingProfileAccessDecision? AccessDecision { get; }
         /// <summary> Gets or sets an action. </summary>
+        [WirePath("action")]
         public string Action { get; }
     }
 }

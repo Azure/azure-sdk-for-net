@@ -54,30 +54,35 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="displayName"> Display name. </param>
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
-        /// <param name="renew"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
+        /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="renewProperties"> Properties specific to renew. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanUpdateRequestProperties(string displayName, BillingAppliedScopeType? appliedScopeType, BillingAppliedScopeProperties appliedScopeProperties, bool? renew, BillingRenewProperties renewProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SavingsPlanUpdateRequestProperties(string displayName, BillingAppliedScopeType? appliedScopeType, BillingAppliedScopeProperties appliedScopeProperties, bool? isRenewed, BillingRenewProperties renewProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             AppliedScopeType = appliedScopeType;
             AppliedScopeProperties = appliedScopeProperties;
-            Renew = renew;
+            IsRenewed = isRenewed;
             RenewProperties = renewProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Type of the Applied Scope. </summary>
+        [WirePath("appliedScopeType")]
         public BillingAppliedScopeType? AppliedScopeType { get; set; }
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
+        [WirePath("appliedScopeProperties")]
         public BillingAppliedScopeProperties AppliedScopeProperties { get; set; }
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
-        public bool? Renew { get; set; }
+        [WirePath("renew")]
+        public bool? IsRenewed { get; set; }
         /// <summary> Properties specific to renew. </summary>
         internal BillingRenewProperties RenewProperties { get; set; }
         /// <summary> Purchase request. </summary>
+        [WirePath("renewProperties.purchaseProperties")]
         public BillingPurchaseProperties RenewPurchaseProperties
         {
             get => RenewProperties is null ? default : RenewProperties.PurchaseProperties;

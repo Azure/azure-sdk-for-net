@@ -90,24 +90,34 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Id of payment method. </summary>
+        [WirePath("properties.id")]
         public ResourceIdentifier PaymentMethodId { get; }
         /// <summary> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </summary>
+        [WirePath("properties.accountHolderName")]
         public string AccountHolderName { get; }
         /// <summary> The display name of the payment method. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>
+        [WirePath("properties.expiration")]
         public string Expiration { get; }
         /// <summary> The family of payment method. </summary>
+        [WirePath("properties.family")]
         public PaymentMethodFamily? Family { get; set; }
         /// <summary> Last four digits of payment method. </summary>
+        [WirePath("properties.lastFourDigits")]
         public string LastFourDigits { get; }
         /// <summary> The list of logos for the payment method. </summary>
+        [WirePath("properties.logos")]
         public IList<PaymentMethodLogo> Logos { get; }
         /// <summary> The type of payment method. </summary>
+        [WirePath("properties.paymentMethodType")]
         public string PaymentMethodType { get; }
         /// <summary> Status of the payment method. </summary>
+        [WirePath("properties.status")]
         public PaymentMethodStatus? Status { get; set; }
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

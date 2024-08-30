@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Amount of money to be paid for the Order. Tax is not included. </summary>
+        [WirePath("pricingCurrencyTotal")]
         public BillingPrice PricingCurrencyTotal { get; set; }
         /// <summary> Date when the billing plan has started. </summary>
+        [WirePath("startDate")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </summary>
+        [WirePath("nextPaymentDueDate")]
         public DateTimeOffset? NextPaymentDueOn { get; set; }
         /// <summary> Gets the transactions. </summary>
+        [WirePath("transactions")]
         public IList<BillingPlanPaymentDetail> Transactions { get; }
     }
 }

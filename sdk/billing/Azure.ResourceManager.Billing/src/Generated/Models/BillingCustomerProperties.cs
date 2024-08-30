@@ -78,20 +78,28 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The name of the billing profile. </summary>
+        [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
+        [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The name of the customer. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The system generated unique identifier for a customer. </summary>
+        [WirePath("systemId")]
         public string SystemId { get; }
         /// <summary> Identifies the status of an customer. This is an upcoming property that will be populated in the future. </summary>
+        [WirePath("status")]
         public BillingCustomerStatus? Status { get; }
         /// <summary> Azure plans enabled for the customer. </summary>
+        [WirePath("enabledAzurePlans")]
         public IList<BillingAzurePlan> EnabledAzurePlans { get; }
         /// <summary> The list of resellers for which an Azure plan is enabled for the customer. </summary>
+        [WirePath("resellers")]
         public IList<CreatedSubscriptionReseller> Resellers { get; }
         /// <summary> Dictionary of metadata associated with the resource. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

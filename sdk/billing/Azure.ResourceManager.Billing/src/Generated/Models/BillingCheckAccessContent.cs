@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> List of actions passed in the request body against which the permissions will be checked. </summary>
+        [WirePath("actions")]
         public IList<string> Actions { get; }
     }
 }

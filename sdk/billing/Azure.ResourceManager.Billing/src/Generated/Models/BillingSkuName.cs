@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Gets or sets the name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

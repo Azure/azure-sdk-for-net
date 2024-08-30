@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The set of actions that the caller is allowed to perform. </summary>
+        [WirePath("actions")]
         public IReadOnlyList<string> Actions { get; }
         /// <summary> The set of actions that the caller is not allowed to perform. </summary>
+        [WirePath("notActions")]
         public IReadOnlyList<string> NotActions { get; }
     }
 }

@@ -70,8 +70,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Cancellation reason. </summary>
+        [WirePath("cancellationReason")]
         public CustomerSubscriptionCancellationReason CancellationReason { get; }
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
+        [WirePath("customerId")]
         public ResourceIdentifier CustomerId { get; set; }
     }
 }

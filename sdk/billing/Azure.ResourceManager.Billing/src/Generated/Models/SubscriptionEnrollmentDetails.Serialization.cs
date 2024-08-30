@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -138,6 +139,136 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DepartmentDisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  departmentDisplayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DepartmentDisplayName))
+                {
+                    builder.Append("  departmentDisplayName: ");
+                    if (DepartmentDisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DepartmentDisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DepartmentDisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DepartmentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  departmentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DepartmentId))
+                {
+                    builder.Append("  departmentId: ");
+                    if (DepartmentId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DepartmentId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DepartmentId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnrollmentAccountStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enrollmentAccountStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnrollmentAccountStatus))
+                {
+                    builder.Append("  enrollmentAccountStatus: ");
+                    if (EnrollmentAccountStatus.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EnrollmentAccountStatus}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EnrollmentAccountStatus}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnrollmentAccountDisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enrollmentAccountDisplayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnrollmentAccountDisplayName))
+                {
+                    builder.Append("  enrollmentAccountDisplayName: ");
+                    if (EnrollmentAccountDisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EnrollmentAccountDisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EnrollmentAccountDisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnrollmentAccountId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enrollmentAccountId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnrollmentAccountId))
+                {
+                    builder.Append("  enrollmentAccountId: ");
+                    if (EnrollmentAccountId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EnrollmentAccountId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EnrollmentAccountId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SubscriptionEnrollmentDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionEnrollmentDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,6 +277,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionEnrollmentDetails)} does not support writing '{options.Format}' format.");
             }

@@ -88,34 +88,49 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The start date of the enrollment. </summary>
+        [WirePath("startDate")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end date of the enrollment. </summary>
+        [WirePath("endDate")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> The billing currency for the enrollment. </summary>
+        [WirePath("currency")]
         public string Currency { get; }
         /// <summary> The channel type of the enrollment. </summary>
+        [WirePath("channel")]
         public string Channel { get; }
         /// <summary> The language for the enrollment. </summary>
+        [WirePath("language")]
         public string Language { get; }
         /// <summary> The country code of the enrollment. </summary>
+        [WirePath("countryCode")]
         public string CountryCode { get; }
         /// <summary> The billing cycle for the enrollment. </summary>
+        [WirePath("billingCycle")]
         public string BillingCycle { get; }
         /// <summary> The billing account extension opted by the company. </summary>
+        [WirePath("extendedTermOption")]
         public ExtendedTermOption? ExtendedTermOption { get; }
         /// <summary> The support level offer associated with an enrollment. </summary>
+        [WirePath("supportLevel")]
         public BillingEnrollmentSupportLevel? SupportLevel { get; }
         /// <summary> The support coverage period for the enrollment. </summary>
+        [WirePath("supportCoverage")]
         public string SupportCoverage { get; }
         /// <summary> The cloud of the enrollment. </summary>
+        [WirePath("cloud")]
         public string Cloud { get; }
         /// <summary> The purchase order number of the enrollment. </summary>
+        [WirePath("poNumber")]
         public string PoNumber { get; set; }
         /// <summary> Markup status of enrollment, applicable only for indirect enrollments. </summary>
+        [WirePath("markupStatus")]
         public EnrollmentMarkupStatus? MarkupStatus { get; }
         /// <summary> The properties of an enrollment which are applicable only for indirect enrollments. </summary>
+        [WirePath("indirectRelationshipInfo")]
         public IndirectRelationshipInfo IndirectRelationshipInfo { get; set; }
         /// <summary> The contact who receives invoices of the enrollment. </summary>
+        [WirePath("invoiceRecipient")]
         public string InvoiceRecipient { get; }
     }
 }

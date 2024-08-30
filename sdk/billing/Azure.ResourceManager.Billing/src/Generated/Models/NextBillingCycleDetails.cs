@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Billing frequency of the product under the subscription. </summary>
+        [WirePath("billingFrequency")]
         public string NextBillingCycleBillingFrequency { get; }
     }
 }

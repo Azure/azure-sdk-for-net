@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The status of validation. </summary>
+        [WirePath("properties.status")]
         public string Status { get; }
         /// <summary> The product id for which this result applies. </summary>
+        [WirePath("properties.productId")]
         public string ProductId { get; }
         /// <summary> The array of validation results. </summary>
+        [WirePath("properties.results")]
         public IReadOnlyList<BillingTransferValidationResultProperties> Results { get; }
     }
 }

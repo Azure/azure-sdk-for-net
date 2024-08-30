@@ -73,18 +73,25 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Payment on Account amount. </summary>
+        [WirePath("amount")]
         public CreatedSubscriptionReseller Amount { get; }
         /// <summary> The ID of the billing profile for the payments on account. </summary>
+        [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The name of the billing profile for the payments on account. </summary>
+        [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
         /// <summary> The ID of the invoice for which the payments on account was generated. </summary>
+        [WirePath("invoiceId")]
         public ResourceIdentifier InvoiceId { get; }
         /// <summary> The name of the invoice for the payments on account. </summary>
+        [WirePath("invoiceName")]
         public string InvoiceName { get; }
         /// <summary> The date of the payments on account. </summary>
+        [WirePath("date")]
         public DateTimeOffset? On { get; }
         /// <summary> Payment on Account type. </summary>
+        [WirePath("paymentMethodType")]
         public PaymentMethodFamily? PaymentMethodType { get; }
     }
 }

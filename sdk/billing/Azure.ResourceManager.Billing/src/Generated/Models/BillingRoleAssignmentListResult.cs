@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The link (url) to the next page of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
         /// <summary> The list of resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<BillingRoleAssignmentData> Value { get; }
     }
 }

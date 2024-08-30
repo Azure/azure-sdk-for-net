@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Purchase request. </summary>
+        [WirePath("purchaseProperties")]
         public BillingPurchaseProperties PurchaseProperties { get; set; }
     }
 }

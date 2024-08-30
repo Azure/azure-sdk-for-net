@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The amount of refund requested. </summary>
+        [WirePath("amountRequested")]
         public BillingAmount AmountRequested { get; }
         /// <summary> The amount refunded. </summary>
+        [WirePath("amountRefunded")]
         public BillingAmount AmountRefunded { get; }
         /// <summary> The ID of refund operation. </summary>
+        [WirePath("refundOperationId")]
         public string RefundOperationId { get; set; }
     }
 }

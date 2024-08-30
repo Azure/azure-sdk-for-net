@@ -80,24 +80,34 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The name of the billing profile. </summary>
+        [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
+        [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The system generated unique identifier for a billing profile. </summary>
+        [WirePath("billingProfileSystemId")]
         public string BillingProfileSystemId { get; }
         /// <summary> The status of the billing profile. </summary>
+        [WirePath("billingProfileStatus")]
         public BillingProfileStatus? BillingProfileStatus { get; }
         /// <summary> Reason for the specified billing profile status. </summary>
+        [WirePath("billingProfileStatusReasonCode")]
         public BillingProfileStatusReasonCode? BillingProfileStatusReasonCode { get; }
         /// <summary> The billing profile spending limit. </summary>
+        [WirePath("billingProfileSpendingLimit")]
         public BillingSpendingLimit? BillingProfileSpendingLimit { get; }
         /// <summary> Enabled azure plans for the associated billing profile. </summary>
+        [WirePath("enabledAzurePlans")]
         public IReadOnlyList<BillingAzurePlan> EnabledAzurePlans { get; }
         /// <summary> The name of the invoice section. </summary>
+        [WirePath("invoiceSectionDisplayName")]
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
+        [WirePath("invoiceSectionId")]
         public ResourceIdentifier InvoiceSectionId { get; }
         /// <summary> The system generated unique identifier for an invoice section. </summary>
+        [WirePath("invoiceSectionSystemId")]
         public string InvoiceSectionSystemId { get; }
     }
 }

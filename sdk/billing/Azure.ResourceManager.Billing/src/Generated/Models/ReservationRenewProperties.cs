@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The request for reservation purchase. </summary>
+        [WirePath("purchaseProperties")]
         public ReservationPurchaseRequest PurchaseProperties { get; set; }
         /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </summary>
+        [WirePath("pricingCurrencyTotal")]
         public BillingPrice PricingCurrencyTotal { get; set; }
         /// <summary> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </summary>
+        [WirePath("billingCurrencyTotal")]
         public BillingPrice BillingCurrencyTotal { get; set; }
     }
 }

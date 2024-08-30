@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The fully qualified ID that uniquely identifies a billing account. </summary>
+        [WirePath("billingAccountId")]
         public ResourceIdentifier BillingAccountId { get; }
         /// <summary> The name of the billing profile. </summary>
+        [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
         /// <summary> The friendly ID that uniquely identifies a billing profile. </summary>
+        [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
+        [WirePath("billingProfileSystemId")]
         public string BillingProfileSystemId { get; }
         /// <summary> Billing account name. Available for a specific type of agreement. </summary>
+        [WirePath("indirectRelationshipOrganizationName")]
         public string IndirectRelationshipOrganizationName { get; }
     }
 }

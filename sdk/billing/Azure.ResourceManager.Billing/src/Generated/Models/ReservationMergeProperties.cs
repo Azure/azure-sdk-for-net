@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Reservation resource id Created due to the merge. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
+        [WirePath("mergeDestination")]
         public string MergeDestination { get; set; }
         /// <summary> Resource ids of the source reservation's merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
+        [WirePath("mergeSources")]
         public IList<string> MergeSources { get; }
     }
 }

@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The role description. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> The billingPermissions the role has. </summary>
+        [WirePath("permissions")]
         public IReadOnlyList<BillingPermission> Permissions { get; }
         /// <summary> The name of the role. </summary>
+        [WirePath("roleName")]
         public string RoleName { get; set; }
     }
 }

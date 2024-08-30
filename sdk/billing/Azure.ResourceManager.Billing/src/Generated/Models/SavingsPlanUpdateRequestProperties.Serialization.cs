@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("appliedScopeProperties"u8);
                 writer.WriteObjectValue(AppliedScopeProperties, options);
             }
-            if (Optional.IsDefined(Renew))
+            if (Optional.IsDefined(IsRenewed))
             {
                 writer.WritePropertyName("renew"u8);
-                writer.WriteBooleanValue(Renew.Value);
+                writer.WriteBooleanValue(IsRenewed.Value);
             }
             if (Optional.IsDefined(RenewProperties))
             {

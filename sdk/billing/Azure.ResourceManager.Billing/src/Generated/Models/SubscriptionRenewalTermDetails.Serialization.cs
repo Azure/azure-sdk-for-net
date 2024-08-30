@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -174,6 +175,160 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingFrequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  billingFrequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BillingFrequency))
+                {
+                    builder.Append("  billingFrequency: ");
+                    if (BillingFrequency.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BillingFrequency}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BillingFrequency}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  productId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProductId))
+                {
+                    builder.Append("  productId: ");
+                    if (ProductId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProductId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProductId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductTypeId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  productTypeId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProductTypeId))
+                {
+                    builder.Append("  productTypeId: ");
+                    if (ProductTypeId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProductTypeId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProductTypeId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkuId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  skuId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SkuId))
+                {
+                    builder.Append("  skuId: ");
+                    if (SkuId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SkuId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SkuId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TermDuration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  termDuration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TermDuration))
+                {
+                    builder.Append("  termDuration: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(TermDuration.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Quantity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  quantity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Quantity))
+                {
+                    builder.Append("  quantity: ");
+                    builder.AppendLine($"'{Quantity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TermEndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  termEndDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TermEndOn))
+                {
+                    builder.Append("  termEndDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(TermEndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SubscriptionRenewalTermDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionRenewalTermDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,6 +337,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support writing '{options.Format}' format.");
             }

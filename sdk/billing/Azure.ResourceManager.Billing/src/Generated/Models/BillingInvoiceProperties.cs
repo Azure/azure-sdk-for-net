@@ -120,62 +120,91 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The amount due as of now. </summary>
+        [WirePath("amountDue")]
         public BillingAmount AmountDue { get; }
         /// <summary> The amount of Azure prepayment applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        [WirePath("azurePrepaymentApplied")]
         public BillingAmount AzurePrepaymentApplied { get; }
         /// <summary> The total charges for the invoice billing period. </summary>
+        [WirePath("billedAmount")]
         public BillingAmount BilledAmount { get; }
         /// <summary> The Id of the active invoice which is originally billed after this invoice was voided. This field is applicable to the void invoices only. </summary>
+        [WirePath("billedDocumentId")]
         public string BilledDocumentId { get; }
         /// <summary> The name of the billing profile for which the invoice is generated. </summary>
+        [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
         /// <summary> The ID of the billing profile for which the invoice is generated. </summary>
+        [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The total refund for returns and cancellations during the invoice billing period. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        [WirePath("creditAmount")]
         public BillingAmount CreditAmount { get; }
         /// <summary> The Id of the invoice which got voided and this credit note was issued as a result. This field is applicable to the credit notes only. </summary>
+        [WirePath("creditForDocumentId")]
         public string CreditForDocumentId { get; }
         /// <summary> List of documents available to download and view such as invoice, credit note, or tax receipt. </summary>
+        [WirePath("documents")]
         public IReadOnlyList<InvoiceDocument> Documents { get; }
         /// <summary> The type of the document. </summary>
+        [WirePath("documentType")]
         public InvoiceDocumentType? DocumentType { get; }
         /// <summary> The due date for the invoice. </summary>
+        [WirePath("dueDate")]
         public DateTimeOffset? DueOn { get; }
         /// <summary> List of failed payments. </summary>
+        [WirePath("failedPayments")]
         public IReadOnlyList<BillingInvoiceFailedPayment> FailedPayments { get; }
         /// <summary> The amount of free Azure credits applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        [WirePath("freeAzureCreditApplied")]
         public BillingAmount FreeAzureCreditApplied { get; }
         /// <summary> The date when the invoice was generated. </summary>
+        [WirePath("invoiceDate")]
         public DateTimeOffset? InvoiceOn { get; }
         /// <summary> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </summary>
+        [WirePath("invoicePeriodEndDate")]
         public DateTimeOffset? InvoicePeriodEndOn { get; }
         /// <summary> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </summary>
+        [WirePath("invoicePeriodStartDate")]
         public DateTimeOffset? InvoicePeriodStartOn { get; }
         /// <summary> Invoice type. </summary>
+        [WirePath("invoiceType")]
         public BillingInvoiceType? InvoiceType { get; }
         /// <summary> Specifies if the invoice is generated as part of monthly invoicing cycle or not. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        [WirePath("isMonthlyInvoice")]
         public bool? IsMonthlyInvoice { get; }
         /// <summary> List of payments. </summary>
+        [WirePath("payments")]
         public IReadOnlyList<BillingInvoicePayment> Payments { get; }
         /// <summary> An optional purchase order number for the invoice. </summary>
+        [WirePath("purchaseOrderNumber")]
         public string PurchaseOrderNumber { get; }
         /// <summary> Rebill details for an invoice. </summary>
+        [WirePath("rebillDetails")]
         public RebillDetails RebillDetails { get; }
         /// <summary> The current status of the invoice. </summary>
+        [WirePath("status")]
         public BillingInvoiceStatus? Status { get; }
         /// <summary> The name of the billing subscription for which the invoice is generated. </summary>
+        [WirePath("subscriptionDisplayName")]
         public string SubscriptionDisplayName { get; }
         /// <summary> The ID of the subscription for which the invoice is generated. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
         /// <summary> Identifies the type of tax calculation used for the invoice. The field is applicable only to invoices with special tax calculation logic. </summary>
+        [WirePath("specialTaxationType")]
         public SpecialTaxationType? SpecialTaxationType { get; }
         /// <summary> The pre-tax amount due. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        [WirePath("subTotal")]
         public BillingAmount SubTotal { get; }
         /// <summary> The amount of tax charged for the billing period. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        [WirePath("taxAmount")]
         public BillingAmount TaxAmount { get; }
         /// <summary> The amount due when the invoice was generated. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        [WirePath("totalAmount")]
         public BillingAmount TotalAmount { get; }
         /// <summary> The details of a refund request. </summary>
+        [WirePath("refundDetails")]
         public RefundDetailsSummary RefundDetails { get; set; }
     }
 }

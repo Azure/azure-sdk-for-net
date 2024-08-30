@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Request parameters to accept transfer. </summary>
+        [WirePath("properties.productDetails")]
         public IList<BillingProductDetails> ProductDetails { get; }
     }
 }

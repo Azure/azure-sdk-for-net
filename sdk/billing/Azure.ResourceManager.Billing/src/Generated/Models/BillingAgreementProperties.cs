@@ -80,24 +80,34 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The mode of acceptance for an agreement. </summary>
+        [WirePath("acceptanceMode")]
         public AgreementAcceptanceMode? AcceptanceMode { get; }
         /// <summary> The URL to download the agreement. </summary>
+        [WirePath("agreementLink")]
         public string AgreementLink { get; }
         /// <summary> The list of billing profiles associated with agreement and present only for specific agreements. </summary>
+        [WirePath("billingProfileInfo")]
         public IReadOnlyList<BillingProfileInfo> BillingProfileInfo { get; }
         /// <summary> The category of the agreement. </summary>
+        [WirePath("category")]
         public BillingAgreementCategory? Category { get; }
         /// <summary> The name of the agreement signed by a customer. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The date from which the agreement is effective. </summary>
+        [WirePath("effectiveDate")]
         public DateTimeOffset? EffectiveOn { get; }
         /// <summary> The date when the agreement expires. </summary>
+        [WirePath("expirationDate")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> The list of participants that participates in acceptance of an agreement. </summary>
+        [WirePath("participants")]
         public IReadOnlyList<BillingAgreementParticipant> Participants { get; }
         /// <summary> The current status of the agreement. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> The ID of the lead billing account if this agreement is part of the Customer Affiliate Purchase Terms. </summary>
+        [WirePath("leadBillingAccountName")]
         public string LeadBillingAccountName { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -129,6 +130,97 @@ namespace Azure.ResourceManager.Billing.Models
             return new SavingsPlanUtilizationAggregates(grain, grainUnit, value, valueUnit, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Grain), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  grain: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Grain))
+                {
+                    builder.Append("  grain: ");
+                    builder.AppendLine($"'{Grain.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GrainUnit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  grainUnit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GrainUnit))
+                {
+                    builder.Append("  grainUnit: ");
+                    if (GrainUnit.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GrainUnit}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GrainUnit}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Value))
+                {
+                    builder.Append("  value: ");
+                    builder.AppendLine($"'{Value.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValueUnit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  valueUnit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ValueUnit))
+                {
+                    builder.Append("  valueUnit: ");
+                    if (ValueUnit.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ValueUnit}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ValueUnit}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SavingsPlanUtilizationAggregates>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +229,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SavingsPlanUtilizationAggregates)} does not support writing '{options.Format}' format.");
             }

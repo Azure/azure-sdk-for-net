@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Type of the product that is transferred. </summary>
+        [WirePath("productType")]
         public BillingProductType? ProductType { get; set; }
         /// <summary> The ID of the product that is transferred. </summary>
+        [WirePath("productId")]
         public string ProductId { get; set; }
     }
 }

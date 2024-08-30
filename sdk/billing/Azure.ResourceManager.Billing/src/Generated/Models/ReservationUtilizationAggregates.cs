@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The grain of the aggregate. </summary>
+        [WirePath("grain")]
         public float? Grain { get; }
         /// <summary> The grain unit of the aggregate. </summary>
+        [WirePath("grainUnit")]
         public string GrainUnit { get; }
         /// <summary> The aggregate value. </summary>
+        [WirePath("value")]
         public float? Value { get; }
         /// <summary> The aggregate value unit. </summary>
+        [WirePath("valueUnit")]
         public string ValueUnit { get; }
     }
 }

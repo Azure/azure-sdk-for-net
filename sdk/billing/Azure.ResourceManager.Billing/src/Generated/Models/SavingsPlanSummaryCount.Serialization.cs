@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -222,6 +223,156 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SucceededCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  succeededCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SucceededCount))
+                {
+                    builder.Append("  succeededCount: ");
+                    builder.AppendLine($"'{SucceededCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailedCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failedCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailedCount))
+                {
+                    builder.Append("  failedCount: ");
+                    builder.AppendLine($"'{FailedCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpiringCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expiringCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpiringCount))
+                {
+                    builder.Append("  expiringCount: ");
+                    builder.AppendLine($"'{ExpiringCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpiredCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expiredCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpiredCount))
+                {
+                    builder.Append("  expiredCount: ");
+                    builder.AppendLine($"'{ExpiredCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PendingCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pendingCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PendingCount))
+                {
+                    builder.Append("  pendingCount: ");
+                    builder.AppendLine($"'{PendingCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CancelledCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cancelledCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CancelledCount))
+                {
+                    builder.Append("  cancelledCount: ");
+                    builder.AppendLine($"'{CancelledCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProcessingCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  processingCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProcessingCount))
+                {
+                    builder.Append("  processingCount: ");
+                    builder.AppendLine($"'{ProcessingCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NoBenefitCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  noBenefitCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NoBenefitCount))
+                {
+                    builder.Append("  noBenefitCount: ");
+                    builder.AppendLine($"'{NoBenefitCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WarningCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  warningCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WarningCount))
+                {
+                    builder.Append("  warningCount: ");
+                    builder.AppendLine($"'{WarningCount.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SavingsPlanSummaryCount>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanSummaryCount>)this).GetFormatFromOptions(options) : options.Format;
@@ -230,6 +381,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support writing '{options.Format}' format.");
             }

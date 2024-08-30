@@ -72,10 +72,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("provisioningState")]
         public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> The policy that controls whether the users in customer's organization can view charges at pay-as-you-go prices. </summary>
+        [WirePath("viewCharges")]
         public ViewChargesPolicy ViewCharges { get; set; }
         /// <summary> List of all policies defined at the billing scope. </summary>
+        [WirePath("policies")]
         public IList<BillingPolicySummary> Policies { get; }
     }
 }

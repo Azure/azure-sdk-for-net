@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The ISO 4217 3-letter currency code for the currency used by this purchase record. </summary>
+        [WirePath("currencyCode")]
         public string CurrencyCode { get; set; }
         /// <summary> Gets or sets the amount. </summary>
+        [WirePath("amount")]
         public double? Amount { get; set; }
     }
 }

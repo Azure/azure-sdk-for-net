@@ -137,10 +137,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The amount of any Azure credits automatically applied to this transaction. </summary>
+        [WirePath("azureCreditApplied")]
         public BillingAmount AzureCreditApplied { get; }
         /// <summary> Details of the Azure plan. </summary>
+        [WirePath("azurePlan")]
         public string AzurePlan { get; set; }
         /// <summary> The ISO 4217 code for the currency in which this transaction is billed. </summary>
+        [WirePath("billingCurrency")]
         public string BillingCurrency { get; set; }
         /// <summary>
         /// The name of the billing profile.
@@ -172,76 +175,112 @@ namespace Azure.ResourceManager.Billing.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("billingProfileDisplayName")]
         public BinaryData BillingProfileDisplayName { get; set; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
+        [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; set; }
         /// <summary> The amount of Microsoft Azure Consumption Commitment(MACC) decrement through the transaction. </summary>
+        [WirePath("consumptionCommitmentDecremented")]
         public BillingAmount ConsumptionCommitmentDecremented { get; }
         /// <summary> The name of the customer. </summary>
+        [WirePath("customerDisplayName")]
         public string CustomerDisplayName { get; set; }
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
+        [WirePath("customerId")]
         public ResourceIdentifier CustomerId { get; set; }
         /// <summary> The credit type of the transaction. Applies only to credited transactions. </summary>
+        [WirePath("creditType")]
         public BillingTransactionCreditType? CreditType { get; set; }
         /// <summary> The date of transaction. </summary>
+        [WirePath("date")]
         public DateTimeOffset? On { get; set; }
         /// <summary> The percentage discount, if any, applied to this transaction. </summary>
+        [WirePath("discount")]
         public float? Discount { get; set; }
         /// <summary> The price of the product after applying any discounts. </summary>
+        [WirePath("effectivePrice")]
         public BillingAmount EffectivePrice { get; }
         /// <summary> The exchange rate used to convert charged amount to billing currency, if applicable. </summary>
+        [WirePath("exchangeRate")]
         public float? ExchangeRate { get; set; }
         /// <summary> Invoice name on which the transaction was billed or 'Pending' if the transaction is not billed. </summary>
+        [WirePath("invoice")]
         public string Invoice { get; set; }
         /// <summary> The fully qualified ID of the invoice on which the transaction was billed. This field is only applicable for transactions which are billed. </summary>
+        [WirePath("invoiceId")]
         public ResourceIdentifier InvoiceId { get; set; }
         /// <summary> The name of the invoice section. </summary>
+        [WirePath("invoiceSectionDisplayName")]
         public string InvoiceSectionDisplayName { get; set; }
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
+        [WirePath("invoiceSectionId")]
         public ResourceIdentifier InvoiceSectionId { get; set; }
         /// <summary> Whether or not the transaction is third party. </summary>
+        [WirePath("isThirdParty")]
         public bool? IsThirdParty { get; set; }
         /// <summary> Type of the transaction, billed or unbilled. </summary>
+        [WirePath("kind")]
         public BillingTransactionKind? Kind { get; set; }
         /// <summary> The retail price of the product. </summary>
+        [WirePath("marketPrice")]
         public BillingAmount MarketPrice { get; }
         /// <summary> The part number of the product for which the transaction took place. The field is only applicable for Enterprise Agreement invoices. </summary>
+        [WirePath("partNumber")]
         public string PartNumber { get; set; }
         /// <summary> The ISO 4217 code for the currency in which the product is priced. </summary>
+        [WirePath("pricingCurrency")]
         public string PricingCurrency { get; set; }
         /// <summary> The description of the product for which the transaction took place. </summary>
+        [WirePath("productDescription")]
         public string ProductDescription { get; set; }
         /// <summary> The family of the product for which the transaction took place. </summary>
+        [WirePath("productFamily")]
         public string ProductFamily { get; set; }
         /// <summary> The ID of the product type for which the transaction took place. </summary>
+        [WirePath("productTypeId")]
         public string ProductTypeId { get; set; }
         /// <summary> The type of the product for which the transaction took place. </summary>
+        [WirePath("productType")]
         public string ProductType { get; set; }
         /// <summary> The quantity purchased in the transaction. </summary>
+        [WirePath("quantity")]
         public int? Quantity { get; set; }
         /// <summary> There reason code for the transaction. </summary>
+        [WirePath("reasonCode")]
         public string ReasonCode { get; set; }
         /// <summary> The date of the purchase of the product, or the start date of the month in which usage started. </summary>
+        [WirePath("servicePeriodStartDate")]
         public DateTimeOffset? ServicePeriodStartOn { get; set; }
         /// <summary> The end date of the product term, or the end date of the month in which usage ended. </summary>
+        [WirePath("servicePeriodEndDate")]
         public DateTimeOffset? ServicePeriodEndOn { get; set; }
         /// <summary> The pre-tax charged amount for the transaction. </summary>
+        [WirePath("subTotal")]
         public BillingAmount SubTotal { get; }
         /// <summary> The tax amount applied to the transaction. </summary>
+        [WirePath("tax")]
         public BillingAmount Tax { get; }
         /// <summary> The charge associated with the transaction. </summary>
+        [WirePath("transactionAmount")]
         public BillingAmount TransactionAmount { get; }
         /// <summary> The type of transaction. </summary>
+        [WirePath("transactionType")]
         public string TransactionType { get; set; }
         /// <summary> The number of units used for a given product. </summary>
+        [WirePath("units")]
         public float? Units { get; set; }
         /// <summary> The unit of measure used to bill for the product. For example, compute services are billed per hour. </summary>
+        [WirePath("unitOfMeasure")]
         public string UnitOfMeasure { get; set; }
         /// <summary> The description for the unit of measure for a given product. </summary>
+        [WirePath("unitType")]
         public string UnitType { get; set; }
         /// <summary> Identifies the type of tax calculation used for the invoice. The field is applicable only to invoices with special tax calculation logic. </summary>
+        [WirePath("specialTaxationType")]
         public SpecialTaxationType? SpecialTaxationType { get; set; }
         /// <summary> The refund details of a transaction. </summary>
+        [WirePath("refundTransactionDetails")]
         public RefundTransactionDetails RefundTransactionDetails { get; set; }
     }
 }

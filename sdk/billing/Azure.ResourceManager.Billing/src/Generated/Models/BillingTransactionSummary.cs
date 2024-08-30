@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The total amount of any Azure credits applied. </summary>
+        [WirePath("azureCreditApplied")]
         public float? AzureCreditApplied { get; }
         /// <summary> The ISO 4217 code for the currency in which the transactions are billed. </summary>
+        [WirePath("billingCurrency")]
         public string BillingCurrency { get; }
         /// <summary> The total Microsoft Azure Consumption Commitment (MACC) decrement through the invoice. </summary>
+        [WirePath("consumptionCommitmentDecremented")]
         public float? ConsumptionCommitmentDecremented { get; }
         /// <summary> The total pre-tax charged amount. </summary>
+        [WirePath("subTotal")]
         public float? SubTotal { get; }
         /// <summary> The total tax amount applied. </summary>
+        [WirePath("tax")]
         public float? Tax { get; }
         /// <summary> The total charges. </summary>
+        [WirePath("total")]
         public float? Total { get; }
     }
 }

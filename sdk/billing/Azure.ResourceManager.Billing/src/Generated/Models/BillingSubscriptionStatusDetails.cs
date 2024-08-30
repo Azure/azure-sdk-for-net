@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The suspension effective date for a subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
+        [WirePath("effectiveDate")]
         public DateTimeOffset? EffectiveOn { get; }
         /// <summary> The suspension reason for a subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
+        [WirePath("reason")]
         public SubscriptionStatusReason? Reason { get; }
     }
 }

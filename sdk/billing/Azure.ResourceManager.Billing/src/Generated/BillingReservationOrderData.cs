@@ -112,46 +112,67 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Gets or sets the e tag. </summary>
+        [WirePath("etag")]
         public int? ETag { get; set; }
         /// <summary> Tags for this reservation. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Friendly name for user to easily identified the reservation order. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Enrollment id of the reservation order. </summary>
+        [WirePath("properties.enrollmentId")]
         public string EnrollmentId { get; set; }
         /// <summary> Fully-qualified identifier of the customerId where the benefit is applied. Present only for Enterprise Agreement PartnerLed customers. </summary>
+        [WirePath("properties.customerId")]
         public ResourceIdentifier CustomerId { get; set; }
         /// <summary> Billing profile Id associated to this reservation order. </summary>
+        [WirePath("properties.billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; set; }
         /// <summary> Billing account Id associated to this reservation order. </summary>
+        [WirePath("properties.billingAccountId")]
         public ResourceIdentifier BillingAccountId { get; set; }
         /// <summary> This is the DateTime when the reservation order was initially requested for purchase. </summary>
+        [WirePath("properties.requestDateTime")]
         public DateTimeOffset? RequestOn { get; set; }
         /// <summary> This is the DateTime when the reservation order was created. </summary>
+        [WirePath("properties.createdDateTime")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> This is the date when the reservation order will expire. </summary>
+        [WirePath("properties.expiryDate")]
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> This is the date-time when the reservation order will expire. </summary>
+        [WirePath("properties.expiryDateTime")]
         public DateTimeOffset? ReservationExpireOn { get; set; }
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
+        [WirePath("properties.benefitStartTime")]
         public DateTimeOffset? BenefitStartOn { get; set; }
         /// <summary> Total original quantity of the skus purchased in the reservation order. </summary>
+        [WirePath("properties.originalQuantity")]
         public int? OriginalQuantity { get; set; }
         /// <summary> The term of the reservation, e.g. P1Y. </summary>
+        [WirePath("properties.term")]
         public string Term { get; }
         /// <summary> The provisioning state of the reservation, e.g. Succeeded. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> Represent the billing plans. </summary>
+        [WirePath("properties.billingPlan")]
         public ReservationBillingPlan? BillingPlan { get; set; }
         /// <summary> Information describing the type of billing plan for this reservation order. </summary>
+        [WirePath("properties.planInformation")]
         public ReservationOrderBillingPlanInformation PlanInformation { get; set; }
         /// <summary> Gets the reservations. </summary>
+        [WirePath("properties.reservations")]
         public IList<BillingReservationData> Reservations { get; }
         /// <summary> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </summary>
+        [WirePath("properties.reviewDateTime")]
         public DateTimeOffset? ReviewedOn { get; set; }
         /// <summary> Extended status information for the reservation. </summary>
+        [WirePath("properties.extendedStatusInfo")]
         public ReservationExtendedStatusInfo ExtendedStatusInfo { get; set; }
         /// <summary> Represents UPN. </summary>
+        [WirePath("properties.productCode")]
         public string ProductCode { get; set; }
     }
 }

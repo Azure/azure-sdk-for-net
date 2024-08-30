@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The name of the department. </summary>
+        [WirePath("departmentDisplayName")]
         public string DepartmentDisplayName { get; set; }
         /// <summary> The ID that uniquely identifies the department. </summary>
+        [WirePath("departmentId")]
         public string DepartmentId { get; set; }
         /// <summary> The status of the enrollment account. </summary>
+        [WirePath("enrollmentAccountStatus")]
         public string EnrollmentAccountStatus { get; set; }
         /// <summary> The name of the enrollment account. </summary>
+        [WirePath("enrollmentAccountDisplayName")]
         public string EnrollmentAccountDisplayName { get; set; }
         /// <summary> The ID that uniquely identifies an enrollment account. </summary>
+        [WirePath("enrollmentAccountId")]
         public string EnrollmentAccountId { get; set; }
     }
 }

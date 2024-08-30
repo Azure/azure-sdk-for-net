@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The name of the policy. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The value of the policy. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> The type of the policy. </summary>
+        [WirePath("policyType")]
         public BillingPolicyType? PolicyType { get; set; }
         /// <summary> The scope at which the policy is defined. </summary>
+        [WirePath("scope")]
         public string Scope { get; set; }
     }
 }

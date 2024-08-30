@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -491,6 +493,488 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingRelationshipType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  billingRelationshipType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BillingRelationshipType))
+                {
+                    builder.Append("  billingRelationshipType: ");
+                    builder.AppendLine($"'{BillingRelationshipType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillTo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  billTo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BillTo))
+                {
+                    builder.Append("  billTo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BillTo, options, 2, false, "  billTo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Currency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  currency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Currency))
+                {
+                    builder.Append("  currency: ");
+                    if (Currency.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Currency}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Currency}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("  displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnabledAzurePlans), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabledAzurePlans: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EnabledAzurePlans))
+                {
+                    if (EnabledAzurePlans.Any())
+                    {
+                        builder.Append("  enabledAzurePlans: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EnabledAzurePlans)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  enabledAzurePlans: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasReadAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hasReadAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HasReadAccess))
+                {
+                    builder.Append("  hasReadAccess: ");
+                    var boolValue = HasReadAccess.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IndirectRelationshipInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  indirectRelationshipInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IndirectRelationshipInfo))
+                {
+                    builder.Append("  indirectRelationshipInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, IndirectRelationshipInfo, options, 2, false, "  indirectRelationshipInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InvoiceDay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  invoiceDay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InvoiceDay))
+                {
+                    builder.Append("  invoiceDay: ");
+                    builder.AppendLine($"{InvoiceDay.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInvoiceEmailOptIn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  invoiceEmailOptIn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsInvoiceEmailOptIn))
+                {
+                    builder.Append("  invoiceEmailOptIn: ");
+                    var boolValue = IsInvoiceEmailOptIn.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InvoiceRecipients), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  invoiceRecipients: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(InvoiceRecipients))
+                {
+                    if (InvoiceRecipients.Any())
+                    {
+                        builder.Append("  invoiceRecipients: ");
+                        builder.AppendLine("[");
+                        foreach (var item in InvoiceRecipients)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PoNumber), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  poNumber: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PoNumber))
+                {
+                    builder.Append("  poNumber: ");
+                    if (PoNumber.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PoNumber}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PoNumber}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShipTo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  shipTo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShipTo))
+                {
+                    builder.Append("  shipTo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ShipTo, options, 2, false, "  shipTo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SoldTo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  soldTo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SoldTo))
+                {
+                    builder.Append("  soldTo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SoldTo, options, 2, false, "  soldTo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpendingLimit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  spendingLimit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SpendingLimit))
+                {
+                    builder.Append("  spendingLimit: ");
+                    builder.AppendLine($"'{SpendingLimit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpendingLimitDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  spendingLimitDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SpendingLimitDetails))
+                {
+                    if (SpendingLimitDetails.Any())
+                    {
+                        builder.Append("  spendingLimitDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SpendingLimitDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  spendingLimitDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusReasonCode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  statusReasonCode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StatusReasonCode))
+                {
+                    builder.Append("  statusReasonCode: ");
+                    builder.AppendLine($"'{StatusReasonCode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemId))
+                {
+                    builder.Append("  systemId: ");
+                    if (SystemId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SystemId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SystemId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetClouds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetClouds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TargetClouds))
+                {
+                    if (TargetClouds.Any())
+                    {
+                        builder.Append("  targetClouds: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TargetClouds)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentPaymentTerm), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  currentPaymentTerm: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentPaymentTerm))
+                {
+                    builder.Append("  currentPaymentTerm: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CurrentPaymentTerm, options, 2, false, "  currentPaymentTerm: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OtherPaymentTerms), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  otherPaymentTerms: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(OtherPaymentTerms))
+                {
+                    if (OtherPaymentTerms.Any())
+                    {
+                        builder.Append("  otherPaymentTerms: ");
+                        builder.AppendLine("[");
+                        foreach (var item in OtherPaymentTerms)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  otherPaymentTerms: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<BillingProfileProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -499,6 +983,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BillingProfileProperties)} does not support writing '{options.Format}' format.");
             }

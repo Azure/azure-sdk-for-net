@@ -79,24 +79,34 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Date when the refund was requested. </summary>
+        [WirePath("requestedOn")]
         public DateTimeOffset? RequestedOn { get; }
         /// <summary> Date when the refund was approved. </summary>
+        [WirePath("approvedOn")]
         public DateTimeOffset? ApprovedOn { get; }
         /// <summary> Date when the refund was completed. </summary>
+        [WirePath("completedOn")]
         public DateTimeOffset? CompletedOn { get; }
         /// <summary> The amount of refund requested. </summary>
+        [WirePath("amountRequested")]
         public BillingAmount AmountRequested { get; }
         /// <summary> The amount refunded. </summary>
+        [WirePath("amountRefunded")]
         public BillingAmount AmountRefunded { get; }
         /// <summary> The invoice ID of the rebill invoice for a refund. </summary>
+        [WirePath("rebillInvoiceId")]
         public ResourceIdentifier RebillInvoiceId { get; }
         /// <summary> The number of transactions refunded. </summary>
+        [WirePath("transactionCount")]
         public int? TransactionCount { get; }
         /// <summary> The status of refund request. </summary>
+        [WirePath("refundStatus")]
         public RefundStatus? RefundStatus { get; }
         /// <summary> The ID of refund operation. </summary>
+        [WirePath("refundOperationId")]
         public string RefundOperationId { get; }
         /// <summary> The reason for refund. </summary>
+        [WirePath("refundReason")]
         public RefundReasonCode? RefundReason { get; }
     }
 }

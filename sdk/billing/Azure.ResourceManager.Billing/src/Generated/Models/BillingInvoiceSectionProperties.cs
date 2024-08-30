@@ -73,18 +73,25 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("provisioningState")]
         public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> The name of the invoice section. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Identifies the status of an invoice section. </summary>
+        [WirePath("state")]
         public InvoiceSectionState? State { get; set; }
         /// <summary> Reason for the specified invoice section status. </summary>
+        [WirePath("reasonCode")]
         public InvoiceSectionStateReasonCode? ReasonCode { get; set; }
         /// <summary> The system generated unique identifier for an invoice section. </summary>
+        [WirePath("systemId")]
         public string SystemId { get; }
         /// <summary> Identifies the cloud environments that are associated with an invoice section. This is a system managed optional field and gets updated as the invoice section gets associated with accounts in various clouds. </summary>
+        [WirePath("targetCloud")]
         public string TargetCloud { get; set; }
         /// <summary> Dictionary of metadata associated with the resource. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

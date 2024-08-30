@@ -9,7 +9,7 @@ csharp: true
 library-name: Billing
 namespace: Azure.ResourceManager.Billing
 require: https://github.com/Azure/azure-rest-api-specs/blob/7dc76b4edb665c8f9e0c7b7c0aaf2f34f8b25833/specification/billing/resource-manager/readme.md
-tag: package-2024-04
+#tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,6 +21,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -153,6 +154,7 @@ rename-mapping:
   ReservationOrder.properties.expiryDate: ExpireOn
   ReservationOrder.properties.expiryDateTime: ReservationExpireOn
   ReservationOrder.properties.reviewDateTime: ReviewedOn
+  ReservationPurchaseRequest.properties.renew: IsRenewed
   Payment: BillingInvoicePayment
   Payment.date: MadeOn
   PaymentDetail: BillingPlanPaymentDetail
@@ -161,6 +163,7 @@ rename-mapping:
   PaymentMethodProperties.id: PaymentMethodId|arm-id
   PaymentMethodProperties: PaymentMethodProjectionProperties
   PaymentOnAccount.invoiceId: -|arm-id
+  Patch.properties.renew: IsRenewed
   PurchaseRequest: BillingPurchaseProperties
   PurchaseRequest.properties.renew: IsRenewed
   RebillDetails.invoiceDocumentId: -|arm-id
@@ -170,7 +173,9 @@ rename-mapping:
   RenewPropertiesResponse: ReservationRenewProperties
   SavingsPlanModel: BillingSavingsPlanModel
   SavingsPlanModel.properties.renew: IsRenewed
+  SavingsPlanUpdateRequestProperties.renew: IsRenewed
   SavingsPlanValidateResponse: SavingsPlanValidateResult
+  SavingsPlanValidResponseProperty.valid: IsValid
   SupportLevel: BillingEnrollmentSupportLevel
   Transaction: BillingTransactionData
   TransactionProperties.invoiceId: -|arm-id

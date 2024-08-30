@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -118,6 +119,74 @@ namespace Azure.ResourceManager.Billing.Models
             return new RefundTransactionDetails(amountRequested, amountRefunded, refundOperationId, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AmountRequested), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  amountRequested: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AmountRequested))
+                {
+                    builder.Append("  amountRequested: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AmountRequested, options, 2, false, "  amountRequested: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AmountRefunded), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  amountRefunded: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AmountRefunded))
+                {
+                    builder.Append("  amountRefunded: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AmountRefunded, options, 2, false, "  amountRefunded: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefundOperationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  refundOperationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RefundOperationId))
+                {
+                    builder.Append("  refundOperationId: ");
+                    if (RefundOperationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RefundOperationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RefundOperationId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RefundTransactionDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RefundTransactionDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +195,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RefundTransactionDetails)} does not support writing '{options.Format}' format.");
             }

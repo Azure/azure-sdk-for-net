@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Status describing if billing profile is eligible to be deleted. </summary>
+        [WirePath("eligibilityStatus")]
         public DeleteBillingProfileEligibilityStatus? EligibilityStatus { get; }
         /// <summary> Validation details of delete billing profile eligibility. </summary>
+        [WirePath("eligibilityDetails")]
         public IReadOnlyList<DeleteBillingProfileEligibilityDetail> EligibilityDetails { get; }
     }
 }

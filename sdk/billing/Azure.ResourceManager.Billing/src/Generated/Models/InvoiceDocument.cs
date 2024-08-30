@@ -71,16 +71,22 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The document numbers for the invoice document. </summary>
+        [WirePath("documentNumbers")]
         public IReadOnlyList<string> DocumentNumbers { get; }
         /// <summary> The URL to download the invoice document if the source is external to Microsoft.Billing. </summary>
+        [WirePath("externalUrl")]
         public Uri ExternalUri { get; }
         /// <summary> The type of the document. </summary>
+        [WirePath("kind")]
         public InvoiceDocumentType? Kind { get; }
         /// <summary> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The URL to download the invoice document if the source is internal to Microsoft.Billing. </summary>
+        [WirePath("url")]
         public Uri Uri { get; }
         /// <summary> The source of the document. ENF for Brazil and DRS for rest of the world. </summary>
+        [WirePath("source")]
         public BillingDocumentSource? Source { get; }
     }
 }

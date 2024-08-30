@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Status code providing additional information. </summary>
+        [WirePath("statusCode")]
         public string StatusCode { get; }
         /// <summary> The message giving detailed information about the status code. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> The subscription that has failed credit line check. </summary>
+        [WirePath("properties.subscriptionId")]
         public string SubscriptionId { get; }
     }
 }

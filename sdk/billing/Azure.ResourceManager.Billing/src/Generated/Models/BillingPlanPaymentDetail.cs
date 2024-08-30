@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Date when the payment needs to be done. </summary>
+        [WirePath("dueDate")]
         public DateTimeOffset? DueOn { get; set; }
         /// <summary> Date when the transaction is completed. Null when it is scheduled. </summary>
+        [WirePath("paymentDate")]
         public DateTimeOffset? PaymentCompletedOn { get; set; }
         /// <summary> Amount in pricing currency. Tax not included. </summary>
+        [WirePath("pricingCurrencyTotal")]
         public BillingPrice PricingCurrencyTotal { get; set; }
         /// <summary> Amount charged in Billing currency. Tax not included. Is null for future payments. </summary>
+        [WirePath("billingCurrencyTotal")]
         public BillingPrice BillingCurrencyTotal { get; set; }
         /// <summary> Describes whether the payment is completed, failed, pending, cancelled or scheduled in the future. </summary>
+        [WirePath("status")]
         public BillingPaymentStatus? Status { get; set; }
         /// <summary> Extended status information. </summary>
+        [WirePath("extendedStatusInfo")]
         public ExtendedStatusInfo ExtendedStatusInfo { get; }
     }
 }

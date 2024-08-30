@@ -64,12 +64,15 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The status of the reservation. </summary>
+        [WirePath("statusCode")]
         public ReservationStatusCode? StatusCode { get; set; }
         /// <summary> The message giving detailed information about the status code. </summary>
+        [WirePath("message")]
         public string Message { get; set; }
         /// <summary> Properties for extended status information. </summary>
         internal ExtendedStatusDefinitionProperties Properties { get; set; }
         /// <summary> Subscription Id. </summary>
+        [WirePath("properties.subscriptionId")]
         public string ExtendedStatusDefinitionSubscriptionId
         {
             get => Properties is null ? default : Properties.SubscriptionId;

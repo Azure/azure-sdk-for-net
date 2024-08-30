@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -170,6 +171,119 @@ namespace Azure.ResourceManager.Billing.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureCreditApplied), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureCreditApplied: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureCreditApplied))
+                {
+                    builder.Append("  azureCreditApplied: ");
+                    builder.AppendLine($"'{AzureCreditApplied.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingCurrency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  billingCurrency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BillingCurrency))
+                {
+                    builder.Append("  billingCurrency: ");
+                    if (BillingCurrency.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BillingCurrency}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BillingCurrency}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConsumptionCommitmentDecremented), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  consumptionCommitmentDecremented: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConsumptionCommitmentDecremented))
+                {
+                    builder.Append("  consumptionCommitmentDecremented: ");
+                    builder.AppendLine($"'{ConsumptionCommitmentDecremented.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubTotal), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subTotal: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubTotal))
+                {
+                    builder.Append("  subTotal: ");
+                    builder.AppendLine($"'{SubTotal.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tax))
+                {
+                    builder.Append("  tax: ");
+                    builder.AppendLine($"'{Tax.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Total), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  total: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Total))
+                {
+                    builder.Append("  total: ");
+                    builder.AppendLine($"'{Total.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<BillingTransactionSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingTransactionSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -178,6 +292,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BillingTransactionSummary)} does not support writing '{options.Format}' format.");
             }

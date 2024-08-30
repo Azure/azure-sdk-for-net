@@ -71,16 +71,22 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The paid amount. </summary>
+        [WirePath("amount")]
         public BillingAmount Amount { get; }
         /// <summary> The date when the payment was made. </summary>
+        [WirePath("date")]
         public DateTimeOffset? MadeOn { get; }
         /// <summary> The ID that uniquely identifies the payment method used for the invoice. </summary>
+        [WirePath("paymentMethodId")]
         public ResourceIdentifier PaymentMethodId { get; }
         /// <summary> The family of payment method. </summary>
+        [WirePath("paymentMethodFamily")]
         public PaymentMethodFamily? PaymentMethodFamily { get; }
         /// <summary> The type of payment method. </summary>
+        [WirePath("paymentMethodType")]
         public string PaymentMethodType { get; }
         /// <summary> The type of payment. </summary>
+        [WirePath("paymentType")]
         public string PaymentType { get; }
     }
 }

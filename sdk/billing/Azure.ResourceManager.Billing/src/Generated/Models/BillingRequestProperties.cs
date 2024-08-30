@@ -125,68 +125,100 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("provisioningState")]
         public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> Additional information for the billing request. </summary>
+        [WirePath("additionalInformation")]
         public IDictionary<string, string> AdditionalInformation { get; }
         /// <summary> The principal of the request reviewer. Will only be set if request is approved. </summary>
+        [WirePath("reviewedBy")]
         public BillingPrincipal ReviewedBy { get; set; }
         /// <summary> The date and time when the request was reviewed. </summary>
+        [WirePath("reviewalDate")]
         public DateTimeOffset? ReviewalOn { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing account. </summary>
+        [WirePath("billingAccountId")]
         public ResourceIdentifier BillingAccountId { get; }
         /// <summary> The ID that uniquely identifies a billing account. </summary>
+        [WirePath("billingAccountName")]
         public string BillingAccountName { get; }
         /// <summary> The name of the billing account. </summary>
+        [WirePath("billingAccountDisplayName")]
         public string BillingAccountDisplayName { get; }
         /// <summary> The primary tenant ID of the billing account for which the billing request was submitted. </summary>
+        [WirePath("billingAccountPrimaryBillingTenantId")]
         public Guid? BillingAccountPrimaryBillingTenantId { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
+        [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The ID that uniquely identifies a billing profile. </summary>
+        [WirePath("billingProfileName")]
         public string BillingProfileName { get; }
         /// <summary> The name of the billing profile. </summary>
+        [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
         /// <summary> The principal of the entity who created the request. </summary>
+        [WirePath("createdBy")]
         public BillingPrincipal CreatedBy { get; set; }
         /// <summary> The date and time when the request was created. </summary>
+        [WirePath("creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The date and time when the request expires. </summary>
+        [WirePath("expirationDate")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> The reason to approve or decline the request. </summary>
+        [WirePath("decisionReason")]
         public string DecisionReason { get; set; }
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
+        [WirePath("invoiceSectionId")]
         public ResourceIdentifier InvoiceSectionId { get; }
         /// <summary> The ID that uniquely identifies an invoice section. </summary>
+        [WirePath("invoiceSectionName")]
         public string InvoiceSectionName { get; }
         /// <summary> The name of the invoice section. </summary>
+        [WirePath("invoiceSectionDisplayName")]
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
+        [WirePath("customerId")]
         public ResourceIdentifier CustomerId { get; }
         /// <summary> The ID that uniquely identifies a customer. </summary>
+        [WirePath("customerName")]
         public string CustomerName { get; }
         /// <summary> The name of the customer. </summary>
+        [WirePath("customerDisplayName")]
         public string CustomerDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing subscription. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
         /// <summary> The ID that uniquely identifies a billing subscription. </summary>
+        [WirePath("subscriptionName")]
         public string SubscriptionName { get; }
         /// <summary> The name of the billing subscription. </summary>
+        [WirePath("subscriptionDisplayName")]
         public string SubscriptionDisplayName { get; }
         /// <summary> Justification for submitting request. </summary>
+        [WirePath("justification")]
         public string Justification { get; set; }
         /// <summary> The recipients of the billing request. </summary>
+        [WirePath("recipients")]
         public IList<BillingPrincipal> Recipients { get; }
         /// <summary> The billing scope for which the request was submitted (ex. '/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}'). </summary>
+        [WirePath("requestScope")]
         public string RequestScope { get; set; }
         /// <summary> The billing scope for which the request will be applied. This is a read only property derived by the service. </summary>
+        [WirePath("billingScope")]
         public string BillingScope { get; }
         /// <summary> Status of billing request. </summary>
+        [WirePath("status")]
         public BillingRequestStatus? Status { get; set; }
         /// <summary> Type of billing request. </summary>
+        [WirePath("type")]
         public BillingRequestType? RequestType { get; set; }
         /// <summary> The principal of the entity who last updated the request. </summary>
+        [WirePath("lastUpdatedBy")]
         public BillingPrincipal LastUpdatedBy { get; set; }
         /// <summary> Date and time of last update. </summary>
+        [WirePath("lastUpdatedDate")]
         public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

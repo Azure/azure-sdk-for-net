@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The ID of the target product to which the subscription needs to be split into. This value is not same as the value returned in Get API call and can be retrieved from Catalog API to know the product id to split into. </summary>
+        [WirePath("targetProductTypeId")]
         public string TargetProductTypeId { get; set; }
         /// <summary> The ID of the target product to which the subscription needs to be split into. This value is not same as the value returned in Get API call and can be retrieved from Catalog API to know the sku id to split into. </summary>
+        [WirePath("targetSkuId")]
         public string TargetSkuId { get; set; }
         /// <summary> The quantity of the target product to which the subscription needs to be split into. </summary>
+        [WirePath("quantity")]
         public int? Quantity { get; set; }
         /// <summary> The term duration of the target in ISO8601 format product to which the subscription needs to be split into. Example: P1M, P1Y. </summary>
+        [WirePath("termDuration")]
         public TimeSpan? TermDuration { get; set; }
         /// <summary> The billing frequency of the target subscription in the ISO8601 format. Example: P1M, P3M, P1Y". </summary>
+        [WirePath("billingFrequency")]
         public string BillingFrequency { get; set; }
     }
 }

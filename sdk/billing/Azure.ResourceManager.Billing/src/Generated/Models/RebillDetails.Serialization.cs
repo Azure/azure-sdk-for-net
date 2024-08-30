@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -122,6 +123,66 @@ namespace Azure.ResourceManager.Billing.Models
             return new RebillDetails(invoiceDocumentId, creditNoteDocumentId, rebillDetails, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InvoiceDocumentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  invoiceDocumentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InvoiceDocumentId))
+                {
+                    builder.Append("  invoiceDocumentId: ");
+                    builder.AppendLine($"'{InvoiceDocumentId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreditNoteDocumentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  creditNoteDocumentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreditNoteDocumentId))
+                {
+                    builder.Append("  creditNoteDocumentId: ");
+                    builder.AppendLine($"'{CreditNoteDocumentId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RebillDetailsValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rebillDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RebillDetailsValue))
+                {
+                    builder.Append("  rebillDetails: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RebillDetailsValue, options, 2, false, "  rebillDetails: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RebillDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RebillDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +191,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RebillDetails)} does not support writing '{options.Format}' format.");
             }

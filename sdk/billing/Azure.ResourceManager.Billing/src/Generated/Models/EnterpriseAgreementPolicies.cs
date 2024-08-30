@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The state showing the enrollment auth level. </summary>
+        [WirePath("authenticationType")]
         public EnrollmentAuthLevelState? AuthenticationType { get; set; }
         /// <summary> The policy that controls whether account owner can view charges. </summary>
+        [WirePath("accountOwnerViewCharges")]
         public EnrollmentAccountOwnerViewCharge? AccountOwnerViewCharges { get; set; }
         /// <summary> The policy that controls whether department admin can view charges. </summary>
+        [WirePath("departmentAdminViewCharges")]
         public EnrollmentDepartmentAdminViewCharge? DepartmentAdminViewCharges { get; set; }
     }
 }

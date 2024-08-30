@@ -129,64 +129,94 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("provisioningState")]
         public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> The date the role assignment was created. </summary>
+        [WirePath("createdOn")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The tenant Id of the user who created the role assignment. </summary>
+        [WirePath("createdByPrincipalTenantId")]
         public Guid? CreatedByPrincipalTenantId { get; }
         /// <summary> The object ID of the user who created the role assignment. </summary>
+        [WirePath("createdByPrincipalId")]
         public string CreatedByPrincipalId { get; }
         /// <summary> The principal PUID of the user who created the role assignment. </summary>
+        [WirePath("createdByPrincipalPuid")]
         public string CreatedByPrincipalPuid { get; }
         /// <summary> The email address of the user who created the role assignment. This is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
+        [WirePath("createdByUserEmailAddress")]
         public string CreatedByUserEmailAddress { get; }
         /// <summary> The date the role assignment was modified. </summary>
+        [WirePath("modifiedOn")]
         public DateTimeOffset? ModifiedOn { get; }
         /// <summary> The principal PUID of the user who modified the role assignment. </summary>
+        [WirePath("modifiedByPrincipalPuid")]
         public string ModifiedByPrincipalPuid { get; }
         /// <summary> The email address of the user who modified the role assignment. This is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
+        [WirePath("modifiedByUserEmailAddress")]
         public string ModifiedByUserEmailAddress { get; }
         /// <summary> The principal PUID of the user who modified the role assignment. </summary>
+        [WirePath("modifiedByPrincipalId")]
         public string ModifiedByPrincipalId { get; }
         /// <summary> The tenant Id of the user who modified the role assignment. </summary>
+        [WirePath("modifiedByPrincipalTenantId")]
         public Guid? ModifiedByPrincipalTenantId { get; }
         /// <summary> The principal PUID of the user to whom the role was assigned. </summary>
+        [WirePath("principalPuid")]
         public string PrincipalPuid { get; set; }
         /// <summary> The object id of the user to whom the role was assigned. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; set; }
         /// <summary> The principal tenant id of the user to whom the role was assigned. </summary>
+        [WirePath("principalTenantId")]
         public Guid? PrincipalTenantId { get; set; }
         /// <summary> The ID of the role definition. </summary>
+        [WirePath("roleDefinitionId")]
         public ResourceIdentifier RoleDefinitionId { get; set; }
         /// <summary> The scope at which the role was assigned. </summary>
+        [WirePath("scope")]
         public string Scope { get; set; }
         /// <summary> The authentication type of the user, whether Organization or MSA, of the user to whom the role was assigned. This is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
+        [WirePath("userAuthenticationType")]
         public string UserAuthenticationType { get; set; }
         /// <summary> The email address of the user to whom the role was assigned. This is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
+        [WirePath("userEmailAddress")]
         public string UserEmailAddress { get; set; }
         /// <summary> The friendly name of the tenant of the user to whom the role was assigned. This will be 'Primary Tenant' for the primary tenant of the billing account. </summary>
+        [WirePath("principalTenantName")]
         public string PrincipalTenantName { get; }
         /// <summary> The display name of the principal to whom the role was assigned. </summary>
+        [WirePath("principalDisplayName")]
         public string PrincipalDisplayName { get; }
         /// <summary> The type of a role Assignment. </summary>
+        [WirePath("principalType")]
         public BillingPrincipalType? PrincipalType { get; }
         /// <summary> The ID of the billing request that was created for the role assignment. This is only applicable to cross tenant role assignments or role assignments created through the billing request. </summary>
+        [WirePath("billingRequestId")]
         public ResourceIdentifier BillingRequestId { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing account. </summary>
+        [WirePath("billingAccountId")]
         public ResourceIdentifier BillingAccountId { get; }
         /// <summary> The name of the billing account. </summary>
+        [WirePath("billingAccountDisplayName")]
         public string BillingAccountDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
+        [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
         /// <summary> The name of the billing profile. </summary>
+        [WirePath("billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
+        [WirePath("invoiceSectionId")]
         public ResourceIdentifier InvoiceSectionId { get; }
         /// <summary> The name of the invoice section. </summary>
+        [WirePath("invoiceSectionDisplayName")]
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
+        [WirePath("customerId")]
         public ResourceIdentifier CustomerId { get; }
         /// <summary> The name of the customer. </summary>
+        [WirePath("customerDisplayName")]
         public string CustomerDisplayName { get; }
     }
 }

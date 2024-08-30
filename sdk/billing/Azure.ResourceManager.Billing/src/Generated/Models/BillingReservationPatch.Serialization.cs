@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Renew))
+            if (Optional.IsDefined(IsRenewed))
             {
                 writer.WritePropertyName("renew"u8);
-                writer.WriteBooleanValue(Renew.Value);
+                writer.WriteBooleanValue(IsRenewed.Value);
             }
             if (Optional.IsDefined(ReviewOn))
             {

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Error code for the product transfer validation. </summary>
+        [WirePath("code")]
         public MoveValidationErrorCode? Code { get; }
         /// <summary> The error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> Error details of the transfer eligibility validation. </summary>
+        [WirePath("details")]
         public string Details { get; }
     }
 }

@@ -101,34 +101,49 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Address line 1. </summary>
+        [WirePath("addressLine1")]
         public string AddressLine1 { get; set; }
         /// <summary> Address line 2. </summary>
+        [WirePath("addressLine2")]
         public string AddressLine2 { get; set; }
         /// <summary> Address line 3. </summary>
+        [WirePath("addressLine3")]
         public string AddressLine3 { get; set; }
         /// <summary> Address city. </summary>
+        [WirePath("city")]
         public string City { get; set; }
         /// <summary> Company name. Optional for MCA Individual (Pay-as-you-go). </summary>
+        [WirePath("companyName")]
         public string CompanyName { get; set; }
         /// <summary> Country code uses ISO 3166-1 Alpha-2 format. </summary>
+        [WirePath("country")]
         public string Country { get; set; }
         /// <summary> Address district. </summary>
+        [WirePath("district")]
         public string District { get; set; }
         /// <summary> Email address. </summary>
+        [WirePath("email")]
         public string Email { get; set; }
         /// <summary> First name. Optional for MCA Enterprise. </summary>
+        [WirePath("firstName")]
         public string FirstName { get; set; }
         /// <summary> Last name. Optional for MCA Enterprise. </summary>
+        [WirePath("lastName")]
         public string LastName { get; set; }
         /// <summary> Middle name. </summary>
+        [WirePath("middleName")]
         public string MiddleName { get; set; }
         /// <summary> Phone number. </summary>
+        [WirePath("phoneNumber")]
         public string PhoneNumber { get; set; }
         /// <summary> Postal code. </summary>
+        [WirePath("postalCode")]
         public string PostalCode { get; set; }
         /// <summary> Address region. </summary>
+        [WirePath("region")]
         public string Region { get; set; }
         /// <summary> Indicates if the address is incomplete. </summary>
+        [WirePath("isValidAddress")]
         public bool? IsValidAddress { get; set; }
     }
 }

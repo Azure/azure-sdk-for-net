@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Error code of the transfer validation response. </summary>
+        [WirePath("code")]
         public SubscriptionTransferValidationErrorCode? Code { get; }
         /// <summary> The error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> Detailed error message explaining the error. </summary>
+        [WirePath("details")]
         public string Details { get; }
     }
 }

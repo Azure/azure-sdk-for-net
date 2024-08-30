@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The ID that uniquely identifies a product. </summary>
+        [WirePath("productId")]
         public string ProductId { get; set; }
         /// <summary> The ID that uniquely identifies a sku. </summary>
+        [WirePath("skuId")]
         public string SkuId { get; set; }
         /// <summary> The sku description. </summary>
+        [WirePath("skuDescription")]
         public string SkuDescription { get; set; }
     }
 }

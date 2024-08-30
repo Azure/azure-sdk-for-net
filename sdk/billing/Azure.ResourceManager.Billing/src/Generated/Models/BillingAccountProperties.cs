@@ -95,38 +95,55 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("provisioningState")]
         public BillingProvisioningState? ProvisioningState { get; }
         /// <summary> The current status of the billing account. </summary>
+        [WirePath("accountStatus")]
         public BillingAccountStatus? AccountStatus { get; }
         /// <summary> The type of customer. </summary>
+        [WirePath("accountType")]
         public BillingAccountType? AccountType { get; }
         /// <summary> The tier of the account. </summary>
+        [WirePath("accountSubType")]
         public BillingAccountSubType? AccountSubType { get; }
         /// <summary> Reason for the specified billing account status. </summary>
+        [WirePath("accountStatusReasonCode")]
         public BillingAccountStatusReasonCode? AccountStatusReasonCode { get; }
         /// <summary> The type of agreement. </summary>
+        [WirePath("agreementType")]
         public BillingAgreementType? AgreementType { get; }
         /// <summary> The billing account name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> The properties of an enrollment. </summary>
+        [WirePath("enrollmentDetails")]
         public BillingAccountEnrollmentDetails EnrollmentDetails { get; set; }
         /// <summary> Indicates whether user has read access to the billing account. </summary>
+        [WirePath("hasReadAccess")]
         public bool? HasReadAccess { get; set; }
         /// <summary> Indicates whether or not the billing account has any billing profiles. </summary>
+        [WirePath("hasNoBillingProfiles")]
         public bool? HasNoBillingProfiles { get; set; }
         /// <summary> Notification email address for legacy account. Available for agreement type Microsoft Online Services Program. </summary>
+        [WirePath("notificationEmailAddress")]
         public string NotificationEmailAddress { get; set; }
         /// <summary> The tenant that was used to set up the billing account. By default, only users from this tenant can get role assignments on the billing account and all purchases are provisioned in this tenant. </summary>
+        [WirePath("primaryBillingTenantId")]
         public Guid? PrimaryBillingTenantId { get; set; }
         /// <summary> The address of the individual or organization that is responsible for the billing account. </summary>
+        [WirePath("soldTo")]
         public BillingAddressDetails SoldTo { get; set; }
         /// <summary> Describes the registration number of the organization linked with the billing account. </summary>
+        [WirePath("registrationNumber")]
         public BillingRegistrationNumber RegistrationNumber { get; set; }
         /// <summary> Identifies the billing relationships represented by a billing account. The billing relationship may be between Microsoft, the customer, and/or a third-party. </summary>
+        [WirePath("billingRelationshipTypes")]
         public IReadOnlyList<BillingRelationshipType> BillingRelationshipTypes { get; }
         /// <summary> Qualifications for pricing on a billing account. Values may be Commercial, Education, Charity or Government. </summary>
+        [WirePath("qualifications")]
         public IReadOnlyList<string> Qualifications { get; }
         /// <summary> A list of tax identifiers for the billing account. </summary>
+        [WirePath("taxIds")]
         public IList<BillingTaxIdentifier> TaxIds { get; }
     }
 }

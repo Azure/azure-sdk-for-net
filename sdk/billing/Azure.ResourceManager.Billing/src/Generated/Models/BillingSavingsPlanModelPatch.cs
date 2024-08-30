@@ -65,10 +65,12 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Savings plan patch request. </summary>
+        [WirePath("properties")]
         public SavingsPlanUpdateRequestProperties Properties { get; set; }
         /// <summary> The SKU to be applied for this resource. </summary>
         internal BillingSku Sku { get; set; }
         /// <summary> Name of the SKU to be applied. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -81,6 +83,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Tags for this reservation. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

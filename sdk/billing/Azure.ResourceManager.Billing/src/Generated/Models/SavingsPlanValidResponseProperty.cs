@@ -51,23 +51,26 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanValidResponseProperty"/>. </summary>
-        /// <param name="valid"> Indicates if the provided input is valid. </param>
+        /// <param name="isValid"> Indicates if the provided input is valid. </param>
         /// <param name="reasonCode"> Failure reason code if the provided input is invalid. </param>
         /// <param name="reason"> Failure reason if the provided input is invalid. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanValidResponseProperty(bool? valid, string reasonCode, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SavingsPlanValidResponseProperty(bool? isValid, string reasonCode, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Valid = valid;
+            IsValid = isValid;
             ReasonCode = reasonCode;
             Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates if the provided input is valid. </summary>
-        public bool? Valid { get; }
+        [WirePath("valid")]
+        public bool? IsValid { get; }
         /// <summary> Failure reason code if the provided input is invalid. </summary>
+        [WirePath("reasonCode")]
         public string ReasonCode { get; }
         /// <summary> Failure reason if the provided input is invalid. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

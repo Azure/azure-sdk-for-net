@@ -1117,13 +1117,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanValidResponseProperty"/>. </summary>
-        /// <param name="valid"> Indicates if the provided input is valid. </param>
+        /// <param name="isValid"> Indicates if the provided input is valid. </param>
         /// <param name="reasonCode"> Failure reason code if the provided input is invalid. </param>
         /// <param name="reason"> Failure reason if the provided input is invalid. </param>
         /// <returns> A new <see cref="Models.SavingsPlanValidResponseProperty"/> instance for mocking. </returns>
-        public static SavingsPlanValidResponseProperty SavingsPlanValidResponseProperty(bool? valid = null, string reasonCode = null, string reason = null)
+        public static SavingsPlanValidResponseProperty SavingsPlanValidResponseProperty(bool? isValid = null, string reasonCode = null, string reason = null)
         {
-            return new SavingsPlanValidResponseProperty(valid, reasonCode, reason, serializedAdditionalRawData: null);
+            return new SavingsPlanValidResponseProperty(isValid, reasonCode, reason, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Billing.BillingSubscriptionData"/>. </summary>
@@ -2420,12 +2420,12 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="appliedScopes"> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
-        /// <param name="renew"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
+        /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="instanceFlexibilityPropertiesInstanceFlexibility"> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </param>
         /// <param name="reviewOn"> This is the date-time when the Azure hybrid benefit needs to be reviewed. </param>
         /// <param name="instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </param>
         /// <returns> A new <see cref="Models.ReservationPurchaseRequest"/> instance for mocking. </returns>
-        public static ReservationPurchaseRequest ReservationPurchaseRequest(string skuName = null, AzureLocation? location = null, string reservedResourceType = null, string billingScopeId = null, string term = null, ReservationBillingPlan? billingPlan = null, int? quantity = null, string displayName = null, BillingAppliedScopeType? appliedScopeType = null, IEnumerable<string> appliedScopes = null, ReservationAppliedScopeProperties appliedScopeProperties = null, bool? renew = null, InstanceFlexibility? instanceFlexibilityPropertiesInstanceFlexibility = null, DateTimeOffset? reviewOn = null, InstanceFlexibility? instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility = null)
+        public static ReservationPurchaseRequest ReservationPurchaseRequest(string skuName = null, AzureLocation? location = null, string reservedResourceType = null, string billingScopeId = null, string term = null, ReservationBillingPlan? billingPlan = null, int? quantity = null, string displayName = null, BillingAppliedScopeType? appliedScopeType = null, IEnumerable<string> appliedScopes = null, ReservationAppliedScopeProperties appliedScopeProperties = null, bool? isRenewed = null, InstanceFlexibility? instanceFlexibilityPropertiesInstanceFlexibility = null, DateTimeOffset? reviewOn = null, InstanceFlexibility? instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility = null)
         {
             appliedScopes ??= new List<string>();
 
@@ -2441,7 +2441,7 @@ namespace Azure.ResourceManager.Billing.Models
                 appliedScopeType,
                 appliedScopes?.ToList(),
                 appliedScopeProperties,
-                renew,
+                isRenewed,
                 instanceFlexibilityPropertiesInstanceFlexibility,
                 reviewOn,
                 instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility,
