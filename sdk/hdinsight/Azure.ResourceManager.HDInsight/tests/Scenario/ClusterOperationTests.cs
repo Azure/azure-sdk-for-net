@@ -574,5 +574,25 @@ namespace Azure.ResourceManager.HDInsight.Tests
             Assert.IsNotNull(cluster);
             Assert.IsTrue(cluster.Value.Data.Properties.StorageAccounts.FirstOrDefault().EnableSecureChannel);
         }
+
+        [RecordedTest]
+        public async Task TestCreateClusterWithPublicIPTag()
+        {
+            string clusterName = "hdi-iptag";
+            var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
+            properties.StorageAccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName);
+            properties.NetworkProperties = new HDInsightClusterNetworkProperties()
+            {
+                PublicIPTag = new IPTag("FirstPartyUsage","/HDInsight")
+            };
+
+            var data = new HDInsightClusterCreateOrUpdateContent()
+            {
+                Properties = properties,
+                Location = DefaultLocation,
+            };
+            var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
+            Assert.IsNotNull(cluster);
+        }
     }
 }
