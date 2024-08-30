@@ -1,6 +1,6 @@
 # Release History
 
-## 1.13.0 (2024-09-3)
+## 1.13.0 (2024-09-03)
 
 ### Features Added
 - Added `JsonModelWriteCore` to serialization file so that derived models could call it without doing the serialization of base properties themselves.
