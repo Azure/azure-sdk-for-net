@@ -41,7 +41,7 @@ public static partial class ModelReaderWriter
         }
         else
         {
-            return options.GetPersistableInterface(model).Write(options);
+            return options.GetProxy(model).Write(options);
         }
     }
 
@@ -88,7 +88,7 @@ public static partial class ModelReaderWriter
         }
         else
         {
-            return options.GetPersistableInterface(iModel).Write(options);
+            return options.GetProxy(iModel).Write(options);
         }
     }
 
@@ -116,11 +116,11 @@ public static partial class ModelReaderWriter
         if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
         {
             Utf8JsonReader reader = new Utf8JsonReader(data);
-            return options.GetJsonInterface(jsonModel).Create(ref reader, options);
+            return options.GetProxy(jsonModel).Create(ref reader, options);
         }
         else
         {
-            return options.GetPersistableInterface(model).Create(data, options);
+            return options.GetProxy(model).Create(data, options);
         }
     }
 
@@ -155,11 +155,11 @@ public static partial class ModelReaderWriter
         if (ShouldWriteAsJson(model, options, out IJsonModel<object>? jsonModel))
         {
             Utf8JsonReader reader = new Utf8JsonReader(data);
-            obj = options.GetJsonInterface(jsonModel).Create(ref reader, options);
+            obj = options.GetProxy(jsonModel).Create(ref reader, options);
         }
         else
         {
-            obj = options.GetPersistableInterface(model).Create(data, options);
+            obj = options.GetProxy(model).Create(data, options);
         }
         return obj is StructWrapper wrapper ? wrapper.Value : obj;
     }
@@ -237,7 +237,7 @@ public static partial class ModelReaderWriter
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
-        => options.Format == "J" || (options.Format == "W" && options.GetPersistableInterface(model).GetFormatFromOptions(options) == "J");
+        => options.Format == "J" || (options.Format == "W" && options.GetProxy(model).GetFormatFromOptions(options) == "J");
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested(IPersistableModel<object> model, ModelReaderWriterOptions options)

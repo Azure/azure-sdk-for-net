@@ -63,17 +63,6 @@ In this case you can implement your own class which implements the same `IPersis
 The example below shows how to write a persitable model using a proxy to `BinaryData`
 
 ```C# Snippet:Readme_Read_Proxy
-InputModel model = new InputModel();
-
-ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
-options.AddProxy(typeof(InputModel), new InputModelProxy());
-
-BinaryData data = ModelReaderWriter.Write(model, options);
-```
-
-The example below shows how to read JSON to create a strongly-typed model instance using a proxy.
-
-```C# Snippet:Readme_Write_Proxy
 string json = @"{
       ""x"": 1,
       ""y"": 2,
@@ -81,7 +70,18 @@ string json = @"{
     }";
 
 ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
-options.AddProxy(typeof(OutputModel), new OutputModelProxy());
+options.AddProxy(new OutputModelProxy());
 
 OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
+```
+
+The example below shows how to read JSON to create a strongly-typed model instance using a proxy.
+
+```C# Snippet:Readme_Write_Proxy
+InputModel model = new InputModel();
+
+ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+options.AddProxy(new InputModelProxy());
+
+BinaryData data = ModelReaderWriter.Write(model, options);
 ```

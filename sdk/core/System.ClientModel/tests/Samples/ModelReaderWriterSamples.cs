@@ -58,21 +58,21 @@ internal class ModelReaderWriterSamples
         #endregion
     }
 
-    public void Read_Proxy()
+    public void Write_Proxy()
     {
-        #region Snippet:Readme_Read_Proxy
+        #region Snippet:Readme_Write_Proxy
         InputModel model = new InputModel();
 
         ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
-        options.AddProxy(typeof(InputModel), new InputModelProxy());
+        options.AddProxy(new InputModelProxy());
 
         BinaryData data = ModelReaderWriter.Write(model, options);
         #endregion
     }
 
-    public void Write_Proxy()
+    public void Read_Proxy()
     {
-        #region Snippet:Readme_Write_Proxy
+        #region Snippet:Readme_Read_Proxy
         string json = @"{
               ""x"": 1,
               ""y"": 2,
@@ -80,7 +80,7 @@ internal class ModelReaderWriterSamples
             }";
 
         ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
-        options.AddProxy(typeof(OutputModel), new OutputModelProxy());
+        options.AddProxy(new OutputModelProxy());
 
         OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
         #endregion

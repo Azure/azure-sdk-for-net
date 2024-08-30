@@ -30,7 +30,7 @@ internal partial class ModelWriter<T>
     {
         using UnsafeBufferSequence sequenceWriter = new UnsafeBufferSequence();
         using var jsonWriter = new Utf8JsonWriter(sequenceWriter);
-        _options.GetJsonInterface(_model).Write(jsonWriter, _options);
+        _options.GetProxy(_model).Write(jsonWriter, _options);
         jsonWriter.Flush();
         return sequenceWriter.ExtractReader();
     }

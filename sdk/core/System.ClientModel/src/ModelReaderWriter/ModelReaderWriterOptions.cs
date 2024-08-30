@@ -42,14 +42,13 @@ public class ModelReaderWriterOptions
     /// <summary>
     /// Registers an <see cref="IPersistableModel{T}"/> proxy to be used when reading or writing a model.
     /// </summary>
-    /// <param name="type"> The <see cref="Type"/> that will be proxied when asked to be read or written. </param>
     /// <param name="proxy"> The <see cref="IPersistableModel{T}"/> proxy that will be used to read or write the model. </param>
-    public void AddProxy<T>(Type type, IPersistableModel<T> proxy)
+    public void AddProxy<T>(IPersistableModel<T> proxy)
     {
         if (_proxies is null)
             _proxies = new Dictionary<Type, object>();
 
-        _proxies.Add(type, proxy);
+        _proxies.Add(typeof(T), proxy);
     }
 
     /// <summary>
@@ -62,30 +61,104 @@ public class ModelReaderWriterOptions
     public object? ProxiedModel { get; private set; }
 
     /// <summary>
-    /// Gets the applicable <see cref="IPersistableModel{T}"/> interface that should be used for the given model.
+    /// Gets the <see cref="IPersistableModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
     /// </summary>
-    /// <param name="model"> The <see cref="IPersistableModel{T}"/> model to get the applicable interface for. </param>
-    /// <returns> A proxy <see cref="IPersistableModel{T}"/> interface if registered otherwise returns the <paramref name="model"/>. </returns>
-    public IPersistableModel<T> GetPersistableInterface<T>(IPersistableModel<T> model)
+    /// <param name="proxy"> The <see cref="IPersistableModel{T}"/> proxy if one exists. </param>
+    /// <returns> True if a proxy was found; otherwise, false. </returns>
+    public bool TryGetProxy<T>([NotNullWhen(true)] out IPersistableModel<T>? proxy)
     {
-        ProxiedModel = model;
-        if (_proxies is null)
-            return model;
+        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out object? result))
+        {
+            proxy = default;
+            return false;
+        }
 
-        return _proxies.TryGetValue(model.GetType(), out var proxy) && proxy is IPersistableModel<T> proxyAsT ? proxyAsT : model;
+        proxy = (IPersistableModel<T>)result;
+        return true;
     }
 
     /// <summary>
-    /// Gets the applicable <see cref="IJsonModel{T}"/> interface that should be used for the given model.
+    /// Gets the <see cref="IJsonModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
     /// </summary>
-    /// <param name="model"> The <see cref="IJsonModel{T}"/> model to get the applicable interface for. </param>
-    /// <returns> A proxy <see cref="IJsonModel{T}"/> interface if registered otherwise returns the <paramref name="model"/>. </returns>
-    public IJsonModel<T> GetJsonInterface<T>(IJsonModel<T> model)
+    /// <param name="proxy"> The <see cref="IJsonModel{T}"/> proxy if one exists. </param>
+    /// <returns> True if a proxy was found; otherwise, false. </returns>
+    public bool TryGetProxy<T>([NotNullWhen(true)] out IJsonModel<T>? proxy)
     {
-        ProxiedModel = model;
-        if (_proxies is null)
-            return model;
+        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out object? result) || result is not IJsonModel<T> jsonResult)
+        {
+            proxy = default;
+            return false;
+        }
 
-        return _proxies.TryGetValue(model.GetType(), out var proxy) && proxy is IJsonModel<T> proxyAsT ? proxyAsT : model;
+        proxy = jsonResult;
+        return true;
+    }
+
+    /// <summary>
+    /// Gets the <see cref="IPersistableModel{T}"/> proxy for the specified <paramref name="modelType"/>.
+    /// </summary>
+    /// <param name="modelType"> The model type that is proxied. </param>
+    /// <param name="proxy"> The <see cref="IPersistableModel{T}"/> proxy if one exists. </param>
+    /// <returns> True if a proxy was found; otherwise, false. </returns>
+    public bool TryGetProxy(Type modelType, [NotNullWhen(true)] out IPersistableModel<object>? proxy)
+    {
+        if (_proxies is null || !_proxies.TryGetValue(modelType, out object? result))
+        {
+            proxy = default;
+            return false;
+        }
+
+        proxy = (IPersistableModel<object>)result;
+        return true;
+    }
+
+    /// <summary>
+    /// Gets the <see cref="IJsonModel{T}"/> proxy for the specified <paramref name="modelType"/>.
+    /// </summary>
+    /// <param name="modelType"> The model type that is proxied. </param>
+    /// <param name="proxy"> The <see cref="IJsonModel{T}"/> proxy if one exists. </param>
+    /// <returns> True if a proxy was found; otherwise, false. </returns>
+    public bool TryGetProxy(Type modelType, [NotNullWhen(true)] out IJsonModel<object>? proxy)
+    {
+        if (_proxies is null || !_proxies.TryGetValue(modelType, out object? result) || result is not IJsonModel<object> jsonResult)
+        {
+            proxy = default;
+            return false;
+        }
+
+        proxy = jsonResult;
+        return true;
+    }
+
+    /// <summary>
+    /// Gets the <see cref="IPersistableModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
+    /// </summary>
+    /// <param name="proxiedModel"> The <see cref="IPersistableModel{T}"/> model to proxy. </param>
+    /// <returns> The <see cref="IPersistableModel{T}"/> proxy to use. </returns>
+    public IPersistableModel<T> GetProxy<T>(IPersistableModel<T> proxiedModel)
+    {
+        if (_proxies is null || !_proxies.TryGetValue(proxiedModel.GetType(), out object? result))
+        {
+            return proxiedModel;
+        }
+
+        ProxiedModel = proxiedModel;
+        return (IPersistableModel<T>)result;
+    }
+
+    /// <summary>
+    /// Gets the <see cref="IJsonModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
+    /// </summary>
+    /// <param name="proxiedModel"> The <see cref="IJsonModel{T}"/> model to proxy. </param>
+    /// <returns> The <see cref="IJsonModel{T}"/> proxy to use. </returns>
+    public IJsonModel<T> GetProxy<T>(IJsonModel<T> proxiedModel)
+    {
+        if (_proxies is null || !_proxies.TryGetValue(proxiedModel.GetType(), out object? result) || result is not IJsonModel<T> jsonResult)
+        {
+            return proxiedModel;
+        }
+
+        ProxiedModel = proxiedModel;
+        return jsonResult;
     }
 }

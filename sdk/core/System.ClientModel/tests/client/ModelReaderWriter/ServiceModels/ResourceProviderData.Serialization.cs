@@ -6,6 +6,7 @@
 using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
@@ -61,7 +62,15 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item, options));
+                        if (options.TryGetProxy<ProviderResourceType>(out IJsonModel<ProviderResourceType> proxy))
+                        {
+                            Utf8JsonReader reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(item.GetRawText()));
+                            array.Add(proxy.Create(ref reader, options));
+                        }
+                        else
+                        {
+                            array.Add(ProviderResourceType.DeserializeProviderResourceType(item, options));
+                        }
                     }
                     resourceTypes = array;
                     continue;
@@ -113,7 +122,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

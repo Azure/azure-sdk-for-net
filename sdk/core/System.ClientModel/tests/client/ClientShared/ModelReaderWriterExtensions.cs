@@ -185,7 +185,7 @@ internal static class ModelReaderWriterExtensions
                 break;
             case IJsonModel<object> writeable:
                 options ??= ModelReaderWriterHelper.WireOptions;
-                options.GetJsonInterface(writeable).Write(writer, options);
+                options.GetProxy(writeable).Write(writer, options);
                 break;
             case byte[] bytes:
                 writer.WriteBase64StringValue(bytes);
