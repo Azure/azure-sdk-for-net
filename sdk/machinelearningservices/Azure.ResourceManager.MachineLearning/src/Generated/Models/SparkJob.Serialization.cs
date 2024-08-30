@@ -89,6 +89,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentId");
                 }
             }
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            {
+                if (EnvironmentVariables != null)
+                {
+                    writer.WritePropertyName("environmentVariables"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in EnvironmentVariables)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("environmentVariables");
+                }
+            }
             if (Optional.IsCollectionDefined(Files))
             {
                 if (Files != null)
@@ -272,24 +290,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notificationSetting");
                 }
             }
-            if (Optional.IsCollectionDefined(SecretsConfiguration))
-            {
-                if (SecretsConfiguration != null)
-                {
-                    writer.WritePropertyName("secretsConfiguration"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in SecretsConfiguration)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("secretsConfiguration");
-                }
-            }
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
@@ -401,10 +401,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IList<string> archives = default;
             string args = default;
-            string codeId = default;
+            ResourceIdentifier codeId = default;
             IDictionary<string, string> conf = default;
             SparkJobEntry entry = default;
-            string environmentId = default;
+            ResourceIdentifier environmentId = default;
+            IDictionary<string, string> environmentVariables = default;
             IList<string> files = default;
             IDictionary<string, MachineLearningJobInput> inputs = default;
             IList<string> jars = default;
@@ -420,7 +421,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? isArchived = default;
             JobType jobType = default;
             NotificationSetting notificationSetting = default;
-            IDictionary<string, SecretConfiguration> secretsConfiguration = default;
             IDictionary<string, MachineLearningJobService> services = default;
             MachineLearningJobStatus? status = default;
             string description = default;
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("codeId"u8))
                 {
-                    codeId = property.Value.GetString();
+                    codeId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("conf"u8))
@@ -487,7 +487,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         environmentId = null;
                         continue;
                     }
-                    environmentId = property.Value.GetString();
+                    environmentId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("environmentVariables"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        environmentVariables = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    environmentVariables = dictionary;
                     continue;
                 }
                 if (property.NameEquals("files"u8))
@@ -654,21 +669,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("secretsConfiguration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        secretsConfiguration = null;
-                        continue;
-                    }
-                    Dictionary<string, SecretConfiguration> dictionary = new Dictionary<string, SecretConfiguration>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value, options));
-                    }
-                    secretsConfiguration = dictionary;
-                    continue;
-                }
                 if (property.NameEquals("services"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -752,7 +752,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 isArchived,
                 jobType,
                 notificationSetting,
-                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
                 archives ?? new ChangeTrackingList<string>(),
@@ -761,6 +760,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 conf ?? new ChangeTrackingDictionary<string, string>(),
                 entry,
                 environmentId,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                 files ?? new ChangeTrackingList<string>(),
                 inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
                 jars ?? new ChangeTrackingList<string>(),

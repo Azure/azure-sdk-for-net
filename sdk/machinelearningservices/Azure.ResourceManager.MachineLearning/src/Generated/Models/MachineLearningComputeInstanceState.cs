@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DeletingValue = "Deleting";
         private const string RunningValue = "Running";
         private const string RestartingValue = "Restarting";
+        private const string ResizingValue = "Resizing";
         private const string JobRunningValue = "JobRunning";
         private const string SettingUpValue = "SettingUp";
         private const string SetupFailedValue = "SetupFailed";
@@ -48,6 +49,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningComputeInstanceState Running { get; } = new MachineLearningComputeInstanceState(RunningValue);
         /// <summary> Restarting. </summary>
         public static MachineLearningComputeInstanceState Restarting { get; } = new MachineLearningComputeInstanceState(RestartingValue);
+        /// <summary> Resizing. </summary>
+        public static MachineLearningComputeInstanceState Resizing { get; } = new MachineLearningComputeInstanceState(ResizingValue);
         /// <summary> JobRunning. </summary>
         public static MachineLearningComputeInstanceState JobRunning { get; } = new MachineLearningComputeInstanceState(JobRunningValue);
         /// <summary> SettingUp. </summary>

@@ -55,23 +55,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="exitScore"> Exit score for the AutoML job. </param>
         /// <param name="maxConcurrentTrials"> Maximum Concurrent iterations. </param>
         /// <param name="maxCoresPerTrial"> Max cores per iteration. </param>
-        /// <param name="maxNodes"> Maximum nodes to use for the experiment. </param>
         /// <param name="maxTrials"> Number of iterations. </param>
-        /// <param name="sweepConcurrentTrials"> Number of concurrent sweeping runs that user wants to trigger. </param>
-        /// <param name="sweepTrials"> Number of sweeping runs that user wants to trigger. </param>
         /// <param name="timeout"> AutoML job timeout. </param>
         /// <param name="trialTimeout"> Iteration timeout. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TableVerticalLimitSettings(bool? enableEarlyTermination, double? exitScore, int? maxConcurrentTrials, int? maxCoresPerTrial, int? maxNodes, int? maxTrials, int? sweepConcurrentTrials, int? sweepTrials, TimeSpan? timeout, TimeSpan? trialTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TableVerticalLimitSettings(bool? enableEarlyTermination, double? exitScore, int? maxConcurrentTrials, int? maxCoresPerTrial, int? maxTrials, TimeSpan? timeout, TimeSpan? trialTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableEarlyTermination = enableEarlyTermination;
             ExitScore = exitScore;
             MaxConcurrentTrials = maxConcurrentTrials;
             MaxCoresPerTrial = maxCoresPerTrial;
-            MaxNodes = maxNodes;
             MaxTrials = maxTrials;
-            SweepConcurrentTrials = sweepConcurrentTrials;
-            SweepTrials = sweepTrials;
             Timeout = timeout;
             TrialTimeout = trialTimeout;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -85,14 +79,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public int? MaxConcurrentTrials { get; set; }
         /// <summary> Max cores per iteration. </summary>
         public int? MaxCoresPerTrial { get; set; }
-        /// <summary> Maximum nodes to use for the experiment. </summary>
-        public int? MaxNodes { get; set; }
         /// <summary> Number of iterations. </summary>
         public int? MaxTrials { get; set; }
-        /// <summary> Number of concurrent sweeping runs that user wants to trigger. </summary>
-        public int? SweepConcurrentTrials { get; set; }
-        /// <summary> Number of sweeping runs that user wants to trigger. </summary>
-        public int? SweepTrials { get; set; }
         /// <summary> AutoML job timeout. </summary>
         public TimeSpan? Timeout { get; set; }
         /// <summary> Iteration timeout. </summary>

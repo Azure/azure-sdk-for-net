@@ -15,7 +15,7 @@ class PackageProps
     [boolean]$IsNewSdk
     [string]$ArtifactName
     [string]$ReleaseStatus
-    [string[]]$DependentPackages
+    [string[]]$AdditionalValidationPackages
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {
@@ -113,7 +113,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $diff = Get-Content $InputDiffJson | ConvertFrom-Json
     $targetedFiles = $diff.ChangedFiles
 
-    $dependentPackagesForInclusion = @()
+    $additionalValidationPackages = @()
     $lookup = @{}
 
     foreach ($pkg in $allPackageProperties)
@@ -129,17 +129,24 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg
 
-                if ($pkg.DependentPackages) {
-                    $dependentPackagesForInclusion += $pkg.DependentPackages
+                if ($pkg.AdditionalValidationPackages) {
+                    $additionalValidationPackages += $pkg.AdditionalValidationPackages
                 }
             }
         }
     }
 
-    foreach ($addition in $dependentPackagesForInclusion) {
-        if ($lookup[$addition]) {
-            $packagesWithChanges += $lookup[$addition]
+    foreach ($addition in $additionalValidationPackages) {
+        $key = $addition.Replace($RepoRoot, "").SubString(1)
+
+        if ($lookup[$key]) {
+            $packagesWithChanges += $lookup[$key]
         }
+    }
+
+    if ($AdditionalValidationPackagesFromPackageSetFn -and (Test-Path "Function:$AdditionalValidationPackagesFromPackageSetFn"))
+    {
+        $packagesWithChanges += &$AdditionalValidationPackagesFromPackageSetFn $packagesWithChanges $diff
     }
 
     return $packagesWithChanges

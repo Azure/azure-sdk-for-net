@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class SparkJob : MachineLearningJobProperties
     {
         /// <summary> Initializes a new instance of <see cref="SparkJob"/>. </summary>
-        /// <param name="codeId"> [Required] ARM resource ID of the code asset. </param>
+        /// <param name="codeId"> [Required] arm-id of the code asset. </param>
         /// <param name="entry">
         /// [Required] The entry to execute on startup of the job.
         /// Please note <see cref="SparkJobEntry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SparkJobPythonEntry"/> and <see cref="SparkJobScalaEntry"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="codeId"/> or <paramref name="entry"/> is null. </exception>
-        public SparkJob(string codeId, SparkJobEntry entry)
+        public SparkJob(ResourceIdentifier codeId, SparkJobEntry entry)
         {
             Argument.AssertNotNull(codeId, nameof(codeId));
             Argument.AssertNotNull(entry, nameof(entry));
@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CodeId = codeId;
             Conf = new ChangeTrackingDictionary<string, string>();
             Entry = entry;
+            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             Files = new ChangeTrackingList<string>();
             Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
             Jars = new ChangeTrackingList<string>();
@@ -57,7 +58,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="notificationSetting"> Notification setting for the job. </param>
-        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="status"> Status of the job. </param>
         /// <param name="archives"> Archive files used in the job. </param>
         /// <param name="args"> Arguments for the job. </param>
-        /// <param name="codeId"> [Required] ARM resource ID of the code asset. </param>
+        /// <param name="codeId"> [Required] arm-id of the code asset. </param>
         /// <param name="conf"> Spark configured properties. </param>
         /// <param name="entry">
         /// [Required] The entry to execute on startup of the job.
@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="SparkJobPythonEntry"/> and <see cref="SparkJobScalaEntry"/>.
         /// </param>
         /// <param name="environmentId"> The ARM resource ID of the Environment specification for the job. </param>
+        /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="files"> Files used in the job. </param>
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="pyFiles"> Python files used in the job. </param>
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal SparkJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IList<string> archives, string args, string codeId, IDictionary<string, string> conf, SparkJobEntry entry, string environmentId, IList<string> files, IDictionary<string, MachineLearningJobInput> inputs, IList<string> jars, IDictionary<string, MachineLearningJobOutput> outputs, IList<string> pyFiles, JobQueueSettings queueSettings, SparkResourceConfiguration resources) : base(description, properties, tags, serializedAdditionalRawData, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
+        internal SparkJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IList<string> archives, string args, ResourceIdentifier codeId, IDictionary<string, string> conf, SparkJobEntry entry, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, IList<string> files, IDictionary<string, MachineLearningJobInput> inputs, IList<string> jars, IDictionary<string, MachineLearningJobOutput> outputs, IList<string> pyFiles, JobQueueSettings queueSettings, SparkResourceConfiguration resources) : base(description, properties, tags, serializedAdditionalRawData, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, services, status)
         {
             Archives = archives;
             Args = args;
@@ -96,6 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Conf = conf;
             Entry = entry;
             EnvironmentId = environmentId;
+            EnvironmentVariables = environmentVariables;
             Files = files;
             Inputs = inputs;
             Jars = jars;
@@ -115,8 +117,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IList<string> Archives { get; set; }
         /// <summary> Arguments for the job. </summary>
         public string Args { get; set; }
-        /// <summary> [Required] ARM resource ID of the code asset. </summary>
-        public string CodeId { get; set; }
+        /// <summary> [Required] arm-id of the code asset. </summary>
+        public ResourceIdentifier CodeId { get; set; }
         /// <summary> Spark configured properties. </summary>
         public IDictionary<string, string> Conf { get; set; }
         /// <summary>
@@ -126,7 +128,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public SparkJobEntry Entry { get; set; }
         /// <summary> The ARM resource ID of the Environment specification for the job. </summary>
-        public string EnvironmentId { get; set; }
+        public ResourceIdentifier EnvironmentId { get; set; }
+        /// <summary> Environment variables included in the job. </summary>
+        public IDictionary<string, string> EnvironmentVariables { get; set; }
         /// <summary> Files used in the job. </summary>
         public IList<string> Files { get; set; }
         /// <summary>
@@ -146,7 +150,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Python files used in the job. </summary>
         public IList<string> PyFiles { get; set; }
         /// <summary> Queue settings for the job. </summary>
-        public JobQueueSettings QueueSettings { get; set; }
+        internal JobQueueSettings QueueSettings { get; set; }
+        /// <summary> Controls the compute job tier. </summary>
+        public JobTier? QueueJobTier
+        {
+            get => QueueSettings is null ? default : QueueSettings.JobTier;
+            set
+            {
+                if (QueueSettings is null)
+                    QueueSettings = new JobQueueSettings();
+                QueueSettings.JobTier = value;
+            }
+        }
+
         /// <summary> Compute Resource configuration for the job. </summary>
         public SparkResourceConfiguration Resources { get; set; }
     }
