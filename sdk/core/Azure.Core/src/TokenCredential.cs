@@ -40,7 +40,7 @@ namespace Azure.Core
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Credential GetCredential(IReadOnlyDictionary<string, object> context, CancellationToken cancellationToken) =>
-            GetToken(TokenRequestContextFactory.FromDictionary(context), cancellationToken).ToCredential();
+            GetToken(TokenRequestContext.FromDictionary(context), cancellationToken).ToCredential();
 
         /// <summary>
         ///  Gets an <see cref="AccessToken"/> for the specified set of scopes.
@@ -49,6 +49,6 @@ namespace Azure.Core
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async ValueTask<Credential> GetCredentialAsync(IReadOnlyDictionary<string, object> context, CancellationToken cancellationToken) =>
-            (await GetTokenAsync(TokenRequestContextFactory.FromDictionary(context), cancellationToken).ConfigureAwait(false)).ToCredential();
+            (await GetTokenAsync(TokenRequestContext.FromDictionary(context), cancellationToken).ConfigureAwait(false)).ToCredential();
     }
 }
