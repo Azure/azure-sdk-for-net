@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
