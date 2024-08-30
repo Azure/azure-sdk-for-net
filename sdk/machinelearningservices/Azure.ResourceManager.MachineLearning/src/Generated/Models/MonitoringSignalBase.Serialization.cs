@@ -26,10 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Optional.IsCollectionDefined(NotificationTypes))
             {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                if (NotificationTypes != null)
+                {
+                    writer.WritePropertyName("notificationTypes"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NotificationTypes)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("notificationTypes");
+                }
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -97,9 +109,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "DataDrift": return DataDriftMonitoringSignal.DeserializeDataDriftMonitoringSignal(element, options);
                     case "DataQuality": return DataQualityMonitoringSignal.DeserializeDataQualityMonitoringSignal(element, options);
                     case "FeatureAttributionDrift": return FeatureAttributionDriftMonitoringSignal.DeserializeFeatureAttributionDriftMonitoringSignal(element, options);
-                    case "GenerationSafetyQuality": return GenerationSafetyQualityMonitoringSignal.DeserializeGenerationSafetyQualityMonitoringSignal(element, options);
-                    case "GenerationTokenStatistics": return GenerationTokenStatisticsSignal.DeserializeGenerationTokenStatisticsSignal(element, options);
-                    case "ModelPerformance": return ModelPerformanceSignal.DeserializeModelPerformanceSignal(element, options);
                     case "PredictionDrift": return PredictionDriftMonitoringSignal.DeserializePredictionDriftMonitoringSignal(element, options);
                 }
             }

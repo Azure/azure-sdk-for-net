@@ -129,7 +129,7 @@
     <PackageReference Update="Azure.Storage.Queues" Version="12.19.1" />
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.19.1" />
     <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0-beta.1" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.12.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.13.0" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.2" />
     <PackageReference Update="Azure.ResourceManager.ApplicationInsights" Version="1.0.0" />
     <PackageReference Update="Azure.ResourceManager.Authorization" Version="1.1.3" />
@@ -227,7 +227,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240827.3" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240828.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240813.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="All" />

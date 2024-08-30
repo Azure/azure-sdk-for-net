@@ -4,11 +4,8 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Add `UserId` parameter in `SocketIONegotiate` attribute to assign user id to sockets
+- Add `userId` binding parameter in `SocketIOTrigger` attribute to get user id of sockets.
 
 ## 1.0.0-beta.1 (2024-09-01)
 ### Features Added

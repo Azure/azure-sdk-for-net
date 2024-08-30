@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("privateEndpoint");
                 }
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(RegistryPrivateLinkServiceConnectionState))
             {
-                if (PrivateLinkServiceConnectionState != null)
+                if (RegistryPrivateLinkServiceConnectionState != null)
                 {
-                    writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                    writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                    writer.WritePropertyName("registryPrivateLinkServiceConnectionState"u8);
+                    writer.WriteObjectValue(RegistryPrivateLinkServiceConnectionState, options);
                 }
                 else
                 {
-                    writer.WriteNull("privateLinkServiceConnectionState");
+                    writer.WriteNull("registryPrivateLinkServiceConnectionState");
                 }
             }
             if (Optional.IsDefined(ProvisioningState))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             AzureLocation? location = default;
             IList<string> groupIds = default;
             RegistryPrivateEndpoint privateEndpoint = default;
-            RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -208,14 +208,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             privateEndpoint = RegistryPrivateEndpoint.DeserializeRegistryPrivateEndpoint(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
+                        if (property0.NameEquals("registryPrivateLinkServiceConnectionState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                privateLinkServiceConnectionState = null;
+                                registryPrivateLinkServiceConnectionState = null;
                                 continue;
                             }
-                            privateLinkServiceConnectionState = RegistryPrivateLinkServiceConnectionState.DeserializeRegistryPrivateLinkServiceConnectionState(property0.Value, options);
+                            registryPrivateLinkServiceConnectionState = RegistryPrivateLinkServiceConnectionState.DeserializeRegistryPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 location,
                 groupIds ?? new ChangeTrackingList<string>(),
                 privateEndpoint,
-                privateLinkServiceConnectionState,
+                registryPrivateLinkServiceConnectionState,
                 provisioningState,
                 serializedAdditionalRawData);
         }

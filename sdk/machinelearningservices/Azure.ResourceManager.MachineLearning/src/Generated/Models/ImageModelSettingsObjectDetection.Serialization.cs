@@ -62,16 +62,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("imageSize");
                 }
             }
-            if (Optional.IsDefined(LogTrainingMetrics))
-            {
-                writer.WritePropertyName("logTrainingMetrics"u8);
-                writer.WriteStringValue(LogTrainingMetrics.Value.ToString());
-            }
-            if (Optional.IsDefined(LogValidationLoss))
-            {
-                writer.WritePropertyName("logValidationLoss"u8);
-                writer.WriteStringValue(LogValidationLoss.Value.ToString());
-            }
             if (Optional.IsDefined(MaxSize))
             {
                 if (MaxSize != null)
@@ -589,8 +579,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             int? boxDetectionsPerImage = default;
             float? boxScoreThreshold = default;
             int? imageSize = default;
-            LogTrainingMetric? logTrainingMetrics = default;
-            LogValidationLoss? logValidationLoss = default;
             int? maxSize = default;
             int? minSize = default;
             MachineLearningModelSize? modelSize = default;
@@ -665,24 +653,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     imageSize = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("logTrainingMetrics"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    logTrainingMetrics = new LogTrainingMetric(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("logValidationLoss"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    logValidationLoss = new LogValidationLoss(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maxSize"u8))
@@ -1144,8 +1114,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 boxDetectionsPerImage,
                 boxScoreThreshold,
                 imageSize,
-                logTrainingMetrics,
-                logValidationLoss,
                 maxSize,
                 minSize,
                 modelSize,

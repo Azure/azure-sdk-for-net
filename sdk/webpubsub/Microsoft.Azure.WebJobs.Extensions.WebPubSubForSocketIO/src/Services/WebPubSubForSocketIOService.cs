@@ -41,12 +41,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 
         public WebPubSubServiceClient Client => _client;
 
-        internal SocketIONegotiationResult GetNegotiationResult()
+        internal SocketIONegotiationResult GetNegotiationResult(string userId)
         {
             if (_useConnectionStrings)
             {
                 var expireAfter = TimeSpan.FromHours(1);
-                var token = GenerateTokenFromAzureKeyCredential(DateTimeOffset.UtcNow.Add(expireAfter));
+                var token = GenerateTokenFromAzureKeyCredential(userId, DateTimeOffset.UtcNow.Add(expireAfter));
                 return new SocketIONegotiationResult(new Uri($"{_endpoint}clients/socketio/hubs/{_hub}?access_token={token}"));
             }
             else
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             }
         }
 
-        private string GenerateTokenFromAzureKeyCredential(DateTimeOffset expiresAt)
+        private string GenerateTokenFromAzureKeyCredential(string userId, DateTimeOffset expiresAt)
         {
             var keyBytes = Encoding.UTF8.GetBytes(_keyCredential.Key);
 
@@ -75,6 +75,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             jwt.AddClaim(JwtBuilder.Exp, expiresAt);
             jwt.AddClaim(JwtBuilder.Iat, now);
             jwt.AddClaim(JwtBuilder.Aud, audience);
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                jwt.AddClaim(JwtBuilder.Sub, userId);
+            }
 
             return jwt.BuildString();
         }
