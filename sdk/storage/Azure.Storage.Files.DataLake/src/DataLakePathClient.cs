@@ -3974,7 +3974,7 @@ namespace Azure.Storage.Files.DataLake
         /// must be omitted if it has been specified in an associated stored access policy.
         /// </param>
         /// <param name="userDelegationKey">
-        /// A <see cref="UserDelegationKey"/> returned from
+        /// Required. A <see cref="UserDelegationKey"/> returned from
         /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <returns>
@@ -4005,7 +4005,7 @@ namespace Azure.Storage.Files.DataLake
         /// must be omitted if it has been specified in an associated stored access policy.
         /// </param>
         /// <param name="userDelegationKey">
-        /// A <see cref="UserDelegationKey"/> returned from
+        /// Required. A <see cref="UserDelegationKey"/> returned from
         /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <param name="stringToSign">
@@ -4036,10 +4036,10 @@ namespace Azure.Storage.Files.DataLake
         /// Creating an user delegation SAS</see>.
         /// </summary>
         /// <param name="builder">
-        /// Used to generate a Shared Access Signature (SAS).
+        /// Required. Used to generate a Shared Access Signature (SAS).
         /// </param>
         /// <param name="userDelegationKey">
-        /// A <see cref="UserDelegationKey"/> returned from
+        /// Required. A <see cref="UserDelegationKey"/> returned from
         /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <returns>
@@ -4063,10 +4063,10 @@ namespace Azure.Storage.Files.DataLake
         /// Creating an user delegation SAS</see>.
         /// </summary>
         /// <param name="builder">
-        /// Used to generate a Shared Access Signature (SAS).
+        /// Required. Used to generate a Shared Access Signature (SAS).
         /// </param>
         /// <param name="userDelegationKey">
-        /// A <see cref="UserDelegationKey"/> returned from
+        /// Required. A <see cref="UserDelegationKey"/> returned from
         /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <param name="stringToSign">
