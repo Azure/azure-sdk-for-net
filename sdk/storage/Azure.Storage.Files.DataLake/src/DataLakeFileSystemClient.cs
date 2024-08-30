@@ -3300,9 +3300,8 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="GenerateUserDelegationSasUri(DataLakeFileSystemSasPermissions, DateTimeOffset, Models.UserDelegationKey)"/>
         /// returns a <see cref="Uri"/> that generates a DataLake FileSystem Service
-        /// Shared Access Signature (SAS) Uri based on the <see cref="BlobContainerClient"/>
-        /// properties and parameters passed. The SAS is signed by the user delegation key
-        /// passed in.
+        /// Shared Access Signature (SAS) Uri based on the Client properties and parameters passed.
+        /// The SAS is signed by the user delegation key passed in.
         ///
         /// For more information, see
         /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
@@ -3333,9 +3332,8 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="GenerateUserDelegationSasUri(DataLakeFileSystemSasPermissions, DateTimeOffset, Models.UserDelegationKey, out string)"/>
         /// returns a <see cref="Uri"/> that generates a DataLake FileSystem Service
-        /// Shared Access Signature (SAS) Uri based on the <see cref="BlobContainerClient"/>
-        /// properties and parameters passed. The SAS is signed by the user delegation key
-        /// passed in.
+        /// Shared Access Signature (SAS) Uri based on the Client properties and parameters passed.
+        /// The SAS is signed by the user delegation key passed in.
         ///
         /// For more information, see
         /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
