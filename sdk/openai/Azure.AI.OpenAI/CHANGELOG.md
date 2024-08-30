@@ -1,14 +1,13 @@
 # Release History
 
-## 2.0.0-beta.4 (Unreleased)
+## 2.0.0-beta.4 (2024-08-30)
 
-### Features Added
+This small release increments library compatibility to the latest `OpenAI 2.0.0-beta.10`. Prior to this update, interactions with the two breaking changes described below prevented full interoperability.
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- `AudioClient`'s `GenerateSpeechFromText()` method is renamed to `GenerateSpeech()`
+- `OpenAIFileInfo`'s `SizeInBytes` is now of type `int?` (previously `long?`)
 
 ## 2.0.0-beta.3 (2024-08-23)
 
