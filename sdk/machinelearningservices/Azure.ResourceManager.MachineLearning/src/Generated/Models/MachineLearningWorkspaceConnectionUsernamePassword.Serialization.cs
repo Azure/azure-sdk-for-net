@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (Optional.IsDefined(SecurityToken))
+            {
+                writer.WritePropertyName("securityToken"u8);
+                writer.WriteStringValue(SecurityToken);
+            }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
@@ -75,6 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string password = default;
+            string securityToken = default;
             string username = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -83,6 +89,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("securityToken"u8))
+                {
+                    securityToken = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("username"u8))
@@ -96,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningWorkspaceConnectionUsernamePassword(password, username, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceConnectionUsernamePassword(password, securityToken, username, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceConnectionUsernamePassword>.Write(ModelReaderWriterOptions options)

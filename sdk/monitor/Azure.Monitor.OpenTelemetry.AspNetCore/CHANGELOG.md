@@ -18,7 +18,13 @@
 * Fixed a bug where LiveMetrics displays "UNKNOWN_INSTANCE" and "UNKNOWN_NAME" for "server name" and "role name" respectively.
   ([#45433](https://github.com/Azure/azure-sdk-for-net/pull/45433))
 
+* Fixed a bug in LiveMetrics that counted all manually created Dependencies as failures.
+  ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
+
 ### Other Changes
+
+* Updated field mappings for telemetry sent to LiveMetrics.
+  ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
 
 * Updated log collection to default to Warning level and above for Azure SDKs
   via `Microsoft.Extensions.Logging`. For more information, refer to [Logging

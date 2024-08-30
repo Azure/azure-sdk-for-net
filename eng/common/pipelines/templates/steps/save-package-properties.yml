@@ -1,0 +1,46 @@
+parameters:
+  - name: ServiceDirectory
+    type: string
+    default: ""
+  - name: DiffDirectory
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/diff
+  - name: PackageInfoDirectory
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: TargetPath
+    type: string
+    default: $(Build.SourcesDirectory)
+  - name: ScriptDirectory
+    type: string
+    default: eng/common/scripts
+
+steps:
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - task: Powershell@2
+        displayName: Generate PR Diff
+        inputs:
+          filePath: ${{ parameters.ScriptDirectory }}/Generate-PR-Diff.ps1
+          arguments: >
+            -TargetPath '${{ parameters.TargetPath }}'
+            -ArtifactPath '${{ parameters.DiffDirectory }}'
+          pwsh: true
+
+      - task: Powershell@2
+        displayName: Save package properties filtered for PR
+        inputs:
+          filePath: ${{ parameters.ScriptDirectory }}/Save-Package-Properties.ps1
+          arguments: >
+            -PrDiff ${{ parameters.DiffDirectory }}/diff.json
+            -OutDirectory ${{ parameters.PackageInfoDirectory }}
+          pwsh: true
+  - ${{ else }}:
+      - task: Powershell@2
+        displayName: Save package properties
+        inputs:
+          filePath: ${{ parameters.ScriptDirectory }}/Save-Package-Properties.ps1
+          arguments: >
+            -ServiceDirectory ${{parameters.ServiceDirectory}}
+            -OutDirectory ${{ parameters.PackageInfoDirectory }}
+            -AddDevVersion:$${{ eq(variables['SetDevVersion'],'true') }}
+          pwsh: true

@@ -26,18 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoDeleteSetting))
-            {
-                if (AutoDeleteSetting != null)
-                {
-                    writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoDeleteSetting");
-                }
-            }
             if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
@@ -134,7 +122,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            AutoDeleteSetting autoDeleteSetting = default;
             bool? isAnonymous = default;
             bool? isArchived = default;
             string description = default;
@@ -144,16 +131,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("autoDeleteSetting"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        autoDeleteSetting = null;
-                        continue;
-                    }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("isAnonymous"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -223,7 +200,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                autoDeleteSetting,
                 isAnonymous,
                 isArchived);
         }

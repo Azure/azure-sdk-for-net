@@ -169,7 +169,7 @@ Console.WriteLine($"{completion.Role}: {completion.Content[0].Text}");
 
 ### Stream chat messages
 
-Streaming chat completions use the `CompleteChatStreaming` and `CompleteChatStreamingAsync` method, which return a `ResultCollection<StreamingChatCompletionUpdate>` or `AsyncResultCollection<StreamingChatCompletionUpdate>` instead of a `ClientResult<ChatCompletion>`. These result collections can be iterated over using `foreach` or `await foreach`, with each update arriving as new data is available from the streamed response.
+Streaming chat completions use the `CompleteChatStreaming` and `CompleteChatStreamingAsync` method, which return a `ResultCollection<StreamingChatCompletionUpdate>` or `AsyncCollectionResult<StreamingChatCompletionUpdate>` instead of a `ClientResult<ChatCompletion>`. These result collections can be iterated over using `foreach` or `await foreach`, with each update arriving as new data is available from the streamed response.
 
 ```C# Snippet:StreamChatMessages
 AzureOpenAIClient azureClient = new(
@@ -177,7 +177,7 @@ AzureOpenAIClient azureClient = new(
     new DefaultAzureCredential());
 ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
 
-ResultCollection<StreamingChatCompletionUpdate> completionUpdates = chatClient.CompleteChatStreaming(
+CollectionResult<StreamingChatCompletionUpdate> completionUpdates = chatClient.CompleteChatStreaming(
     [
         new SystemChatMessage("You are a helpful assistant that talks like a pirate."),
         new UserChatMessage("Hi, can you help me?"),

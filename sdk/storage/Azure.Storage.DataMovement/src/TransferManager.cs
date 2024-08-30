@@ -20,35 +20,31 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class TransferManager : IAsyncDisposable
     {
-        // Indicates whether the current thread is processing Jobs.
-        private static Task _currentTaskIsProcessingJob;
-
-        // Indicates whether the current thread is processing Jobs Parts.
-        private static Task _currentTaskIsProcessingJobPart;
-
-        // Indicates whether the current thread is processing Jobs Chunks.
-        private static Task _currentTaskIsProcessingJobChunk;
+        // Async channel reader tasks. These loop for the lifetime of the object.
+        private readonly Task _currentTaskIsProcessingJob;
+        private readonly Task _currentTaskIsProcessingJobPart;
+        private readonly Task _currentTaskIsProcessingJobChunk;
 
         /// <summary>
         /// Channel of Jobs waiting to divided into job parts/files.
         ///
         /// Limit 1 task to convert jobs to job parts.
         /// </summary>
-        private Channel<TransferJobInternal> _jobsToProcessChannel { get; set; }
+        private readonly Channel<TransferJobInternal> _jobsToProcessChannel;
 
         /// <summary>
         /// Channel of Job parts / files to be divided into chunks / requests
         ///
         /// Limit 64 tasks to convert job parts to chunks.
         /// </summary>
-        private Channel<JobPartInternal> _partsToProcessChannel { get; set; }
+        private readonly Channel<JobPartInternal> _partsToProcessChannel;
 
         /// <summary>
         /// Channel of Job chunks / requests to send to the service.
         ///
         /// Limit 4-300/Max amount of tasks allowed to process chunks.
         /// </summary>
-        private Channel<Func<Task>> _chunksToProcessChannel { get; set; }
+        private readonly Channel<Func<Task>> _chunksToProcessChannel;
 
         /// <summary>
         /// This value can fluctuate depending on if we've reached max capacity
@@ -67,7 +63,6 @@ namespace Azure.Storage.DataMovement
         /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
         /// </summary>
         internal TransferCheckpointer _checkpointer;
-        private TransferCheckpointStoreOptions _checkpointerOptions;
 
         internal readonly List<StorageResourceProvider> _resumeProviders;
 
@@ -85,11 +80,7 @@ namespace Azure.Storage.DataMovement
         private CancellationTokenSource _channelCancellationTokenSource;
         private CancellationToken _cancellationToken => _channelCancellationTokenSource.Token;
 
-        /// <summary>
-        /// Array pools for reading from streams to upload
-        /// </summary>
-        internal ArrayPool<byte> UploadArrayPool => _arrayPool;
-        private ArrayPool<byte> _arrayPool;
+        private readonly ArrayPool<byte> _arrayPool;
 
         internal ClientDiagnostics ClientDiagnostics { get; }
 
@@ -127,8 +118,8 @@ namespace Azure.Storage.DataMovement
             _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
             _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());
             _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
-            _checkpointerOptions = options?.CheckpointerOptions != default ? new TransferCheckpointStoreOptions(options.CheckpointerOptions) : default;
-            _checkpointer = _checkpointerOptions != default ? _checkpointerOptions.GetCheckpointer() : CreateDefaultCheckpointer();
+            TransferCheckpointStoreOptions checkpointerOptions = options?.CheckpointerOptions != default ? new TransferCheckpointStoreOptions(options.CheckpointerOptions) : default;
+            _checkpointer = checkpointerOptions != default ? checkpointerOptions.GetCheckpointer() : CreateDefaultCheckpointer();
             _resumeProviders = options?.ResumeProviders != null ? new(options.ResumeProviders) : new();
             _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
