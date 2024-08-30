@@ -3,7 +3,7 @@
 ## 1.13.0 (2024-09-10)
 
 ### Features Added
-- Added `JsonModelWriteCore` to serialization file so that derived models could call it without do the serialization of base properties itself.
+- Added `JsonModelWriteCore` to serialization file so that derived models could call it without doing the serialization of base properties themselves.
 
 ### Other Changes
 - Added to the sample code to authenticate with the azure in China in the README.md file.
