@@ -41,14 +41,14 @@ public class MqttConnectProperties
     /// </summary>
     [JsonPropertyName(ProtocolVersionProperty)]
     [DataMember(Name = ProtocolVersionProperty)]
-    public MqttProtocolVersion ProtocolVersion { get; protected set; }
+    public MqttProtocolVersion ProtocolVersion { get; }
 
     /// <summary>
     /// The username field in the MQTT CONNECT packet.
     /// </summary>
     [JsonPropertyName(UsernameProperty)]
     [DataMember(Name = UsernameProperty)]
-    public string? Username { get; protected set; }
+    public string? Username { get; }
 
     /// <summary>
     ///The password field in the MQTT CONNECT packet.
@@ -57,12 +57,12 @@ public class MqttConnectProperties
     /// </summary>
     [JsonPropertyName(PasswordProperty)]
     [DataMember(Name = PasswordProperty)]
-    public string? Password { get; protected set; }
+    public string? Password { get; }
 
     /// <summary>
     /// The user properties in the MQTT CONNECT packet.
     /// </summary>
     [JsonPropertyName(UserPropertiesProperty)]
     [DataMember(Name = UserPropertiesProperty)]
-    public IReadOnlyList<MqttUserProperty>? UserProperties { get; protected set; }
+    public IReadOnlyList<MqttUserProperty>? UserProperties { get; }
 }
