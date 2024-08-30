@@ -73,7 +73,8 @@ namespace Azure.Identity
             string idQueryParam = _managedIdentityId?._idType switch
             {
                 ManagedIdentityIdType.ClientId => Constants.ManagedIdentityClientId,
-                ManagedIdentityIdType.ResourceId => Constants.ManagedIdentityResourceId,
+                ManagedIdentityIdType.ResourceId => "msi-res-id",
+                ManagedIdentityIdType.ObjectId => "object_id",
                 _ => null
             };
 
