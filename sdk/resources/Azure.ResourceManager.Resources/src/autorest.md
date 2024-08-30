@@ -28,6 +28,9 @@ enable-bicep-serialization: true
 rename-mapping:
   DecompileOperationSuccessResponse: DecompileOperationSuccessResult
   FileDefinition: DecompiledFileDefinition
+  DataBoundary: DataBoundaryType
+  DataBoundaryDefinition: DataBoundary
+  DefaultName: DataBoundaryDefaultName
 
 patch-initializer-customization:
   ArmDeploymentContent:
@@ -63,14 +66,7 @@ request-path-to-scope-resource-types:
     - subscriptions
     - resourceGroups
     - managementGroups
-  /providers/Microsoft.Resources/dataBoundaries/{default}:
-    - subscriptions
-    - resourceGroups
-    - managementGroups
-  /{scope}/providers/Microsoft.Resources/dataBoundaries/{default}:
-    - subscriptions
-    - resourceGroups
-    - managementGroups
+
 override-operation-name:
   DeploymentOperations_ListAtScope: GetDeploymentOperations
   DeploymentOperations_GetAtScope: GetDeploymentOperation
@@ -195,6 +191,9 @@ directive:
   - remove-operation: DeploymentStacks_CreateOrUpdateAtManagementGroup
   - remove-operation: DeploymentStacks_GetAtManagementGroup
   - remove-operation: DeploymentStacks_DeleteAtManagementGroup
+  - remove-operation: Operations_List
+  - remove-operation: DataBoundaries_Put
+  - remove-operation: DataBoundaries_GetTenant
 
   - from: managedapplications.json
     where: $['x-ms-paths']
@@ -326,6 +325,10 @@ directive:
       $.TemplateLink['x-ms-client-name'] = 'ArmDeploymentTemplateLink';
       $.WhatIfChange.properties.changeType['x-ms-enum'].name = 'WhatIfChangeType';
       $.WhatIfPropertyChange.properties.propertyChangeType['x-ms-enum'].name = 'WhatIfPropertyChangeType';
+  - from: dataBoundaries.json
+    where: $.definitions
+    transform: >
+      $.DataBoundaryProperties.properties.provisioningState['x-ms-enum'].name = 'DataBoundaryProvisioningState';
   - from: resources.json
     where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
     transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
@@ -668,163 +671,6 @@ directive:
           }
         }
       };
-  
-  # Add scope operations
-  - from: databoundaries.json
-    where: $.paths
-    transform: >
-      $['/providers/Microsoft.Resources/dataBoundaries/{default}'] = {
-        "put": {
-          "tags": [
-            "DataBoundaries"
-          ],
-          "operationId": "DataBoundaries_Put",
-          "description": "Opt-in tenant to data boundary.",
-          "parameters": [
-            {
-              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
-            },
-            {
-              "name": "dataBoundaryDefinition",
-              "in": "body",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/DataBoundaryDefinition"
-              },
-              "description": "The data boundary to opt the tenant to."
-            },
-            {
-              "name": "default",
-              "in": "path",
-              "required": true,
-              "type": "string",
-              "description": "Default string modeled as parameter for auto generation to work correctly.",
-              "enum": [
-                "default"
-              ],
-              "x-ms-enum": {
-                "name": "defaultName",
-                "modelAsString": true
-              }
-            }
-          ],
-          "responses": {
-            "201": {
-              "description": "Created -- Data boundary created.",
-              "schema": {
-                "$ref": "#/definitions/DataBoundaryDefinition"
-              }
-            },
-            "200": {
-              "description": "OK - Returns the data boundary definition.",
-              "schema": {
-                "$ref": "#/definitions/DataBoundaryDefinition"
-              }
-            },
-            "default": {
-              "description": "Error response describing why the operation failed.",
-              "schema": {
-                "$ref": "../../../../../common-types/resource-management/v5/types.json#/definitions/ErrorResponse"
-              }
-            }
-          }
-        },
-        "get": {
-          "tags": [
-            "DataBoundaries"
-          ],
-          "operationId": "DataBoundaries_GetTenant",
-          "description": "Get data boundary of tenant.",
-          "parameters": [
-            {
-              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
-            },
-            {
-              "name": "default",
-              "in": "path",
-              "required": true,
-              "type": "string",
-              "description": "Default string modeled as parameter for auto generation to work correctly.",
-              "enum": [
-                "default"
-              ],
-              "x-ms-enum": {
-                "name": "defaultName",
-                "modelAsString": true
-              }
-            }
-          ],
-          "x-ms-examples": {
-            "Get data boundary for tenant": {
-              "$ref": "./examples/GetTenantDataBoundary.json"
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "OK - Returns the data boundary definition.",
-              "schema": {
-                "$ref": "#/definitions/DataBoundaryDefinition"
-              }
-            },
-            "default": {
-              "description": "Error response describing why the operation failed.",
-              "schema": {
-                "$ref": "../../../../../common-types/resource-management/v5/types.json#/definitions/ErrorResponse"
-              }
-            }
-          }
-        }
-      };
-      $['/{scope}/providers/Microsoft.Resources/dataBoundaries/{default}'] = {
-        "get": {
-          "tags": [
-            "DataBoundaries"
-          ],
-          "operationId": "DataBoundaries_GetScope",
-          "description": "Get data boundary at specified scope",
-          "parameters": [
-            {
-              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ScopeParameter"
-            },
-            {
-              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
-            },
-            {
-              "name": "default",
-              "in": "path",
-              "required": true,
-              "type": "string",
-              "description": "Default string modeled as parameter for auto generation to work correctly.",
-              "enum": [
-                "default"
-              ],
-              "x-ms-enum": {
-                "name": "defaultName",
-                "modelAsString": true
-              }
-            }
-          ],
-          "x-ms-examples": {
-            "Get data boundary at scope": {
-              "$ref": "./examples/GetScopedDataBoundary.json"
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "OK - Returns the data boundary definition.",
-              "schema": {
-                "$ref": "#/definitions/DataBoundaryDefinition"
-              }
-            },
-            "default": {
-              "description": "Error response describing why the operation failed.",
-              "schema": {
-                "$ref": "../../../../../common-types/resource-management/v5/types.json#/definitions/ErrorResponse"
-              }
-            }
-          }
-        }
-      };
 ```
 
 ### Tag: package-resources-2022-04
@@ -841,10 +687,4 @@ input-file:
     - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2023-11-01/bicepClient.json#
     - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/deploymentStacks.json
     - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-08-01/dataBoundaries.json
-```
-``` yaml
-directive:
-- from: dataBoundaries.json
-  where: $.paths
-  transform: delete $["/providers/Microsoft.Resources/operations"]
 ```

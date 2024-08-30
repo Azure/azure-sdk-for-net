@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Resources.Samples
             DataBoundaryCollection collection = client.GetDataBoundaries(scopeId);
 
             // invoke the operation
-            DefaultName @default = DefaultName.Default;
+            DataBoundaryDefaultName @default = DataBoundaryDefaultName.Default;
             DataBoundaryResource result = await collection.GetAsync(@default);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DataBoundaryDefinitionData resourceData = result.Data;
+            DataBoundaryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Samples
             DataBoundaryCollection collection = client.GetDataBoundaries(scopeId);
 
             // invoke the operation
-            DefaultName @default = DefaultName.Default;
+            DataBoundaryDefaultName @default = DataBoundaryDefaultName.Default;
             bool result = await collection.ExistsAsync(@default);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources.Samples
             DataBoundaryCollection collection = client.GetDataBoundaries(scopeId);
 
             // invoke the operation
-            DefaultName @default = DefaultName.Default;
+            DataBoundaryDefaultName @default = DataBoundaryDefaultName.Default;
             NullableResponse<DataBoundaryResource> response = await collection.GetIfExistsAsync(@default);
             DataBoundaryResource result = response.HasValue ? response.Value : null;
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DataBoundaryDefinitionData resourceData = result.Data;
+                DataBoundaryData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

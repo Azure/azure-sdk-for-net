@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataBoundaryResource>> GetAsync(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoundaryResource>> GetAsync(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.Get");
             scope.Start();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataBoundaryResource> Get(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoundaryResource> Get(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.Get");
             scope.Start();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.Exists");
             scope.Start();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.Exists");
             scope.Start();
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<DataBoundaryResource>> GetIfExistsAsync(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DataBoundaryResource>> GetIfExistsAsync(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.GetIfExists");
             scope.Start();
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<DataBoundaryResource> GetIfExists(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DataBoundaryResource> GetIfExists(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.GetIfExists");
             scope.Start();

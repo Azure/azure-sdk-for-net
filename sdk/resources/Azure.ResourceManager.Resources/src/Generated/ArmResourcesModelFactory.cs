@@ -973,16 +973,16 @@ namespace Azure.ResourceManager.Resources.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Resources.DataBoundaryDefinitionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.DataBoundaryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Data boundary properties. </param>
-        /// <returns> A new <see cref="Resources.DataBoundaryDefinitionData"/> instance for mocking. </returns>
-        public static DataBoundaryDefinitionData DataBoundaryDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataBoundaryProperties properties = null)
+        /// <returns> A new <see cref="Resources.DataBoundaryData"/> instance for mocking. </returns>
+        public static DataBoundaryData DataBoundaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataBoundaryProperties properties = null)
         {
-            return new DataBoundaryDefinitionData(
+            return new DataBoundaryData(
                 id,
                 name,
                 resourceType,
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="dataBoundary"> The data boundary definition. </param>
         /// <param name="provisioningState"> Denotes the state of provisioning. </param>
         /// <returns> A new <see cref="Models.DataBoundaryProperties"/> instance for mocking. </returns>
-        public static DataBoundaryProperties DataBoundaryProperties(DataBoundary? dataBoundary = null, ProvisioningState? provisioningState = null)
+        public static DataBoundaryProperties DataBoundaryProperties(DataBoundaryType? dataBoundary = null, DataBoundaryProvisioningState? provisioningState = null)
         {
             return new DataBoundaryProperties(dataBoundary, provisioningState, serializedAdditionalRawData: null);
         }

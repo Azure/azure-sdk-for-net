@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Generate the resource identifier of a <see cref="DataBoundaryResource"/> instance. </summary>
         /// <param name="scope"> The scope. </param>
         /// <param name="default"> The default. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, DefaultName @default)
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, DataBoundaryDefaultName @default)
         {
             var resourceId = $"{scope}/providers/Microsoft.Resources/dataBoundaries/{@default}";
             return new ResourceIdentifier(resourceId);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
 
         private readonly ClientDiagnostics _dataBoundaryClientDiagnostics;
         private readonly DataBoundariesRestOperations _dataBoundaryRestClient;
-        private readonly DataBoundaryDefinitionData _data;
+        private readonly DataBoundaryData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/dataBoundaries";
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref="DataBoundaryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataBoundaryResource(ArmClient client, DataBoundaryDefinitionData data) : this(client, data.Id)
+        internal DataBoundaryResource(ArmClient client, DataBoundaryData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DataBoundaryDefinitionData Data
+        public virtual DataBoundaryData Data
         {
             get
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataBoundaryResource>> GetAsync(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoundaryResource>> GetAsync(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryResource.Get");
             scope.Start();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataBoundaryResource> Get(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoundaryResource> Get(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryResource.Get");
             scope.Start();

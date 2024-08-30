@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class DataBoundaryResource : IJsonModel<DataBoundaryDefinitionData>
+    public partial class DataBoundaryResource : IJsonModel<DataBoundaryData>
     {
-        void IJsonModel<DataBoundaryDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoundaryDefinitionData>)Data).Write(writer, options);
+        void IJsonModel<DataBoundaryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoundaryData>)Data).Write(writer, options);
 
-        DataBoundaryDefinitionData IJsonModel<DataBoundaryDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoundaryDefinitionData>)Data).Create(ref reader, options);
+        DataBoundaryData IJsonModel<DataBoundaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoundaryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataBoundaryDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataBoundaryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataBoundaryDefinitionData IPersistableModel<DataBoundaryDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoundaryDefinitionData>(data, options);
+        DataBoundaryData IPersistableModel<DataBoundaryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoundaryData>(data, options);
 
-        string IPersistableModel<DataBoundaryDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoundaryDefinitionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataBoundaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoundaryData>)Data).GetFormatFromOptions(options);
     }
 }

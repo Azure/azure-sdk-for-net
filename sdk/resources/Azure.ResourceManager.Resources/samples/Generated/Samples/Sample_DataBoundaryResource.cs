@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Resources.Samples
             // this example assumes you already have this DataBoundaryResource created on azure
             // for more information of creating DataBoundaryResource, please refer to the document of DataBoundaryResource
             string scope = "subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/my-resource-group";
-            DefaultName @default = DefaultName.Default;
+            DataBoundaryDefaultName @default = DataBoundaryDefaultName.Default;
             ResourceIdentifier dataBoundaryResourceId = DataBoundaryResource.CreateResourceIdentifier(scope, @default);
             DataBoundaryResource dataBoundary = client.GetDataBoundaryResource(dataBoundaryResourceId);
 
             // invoke the operation
-            DefaultName default0 = DefaultName.Default;
+            DataBoundaryDefaultName default0 = DataBoundaryDefaultName.Default;
             DataBoundaryResource result = await dataBoundary.GetAsync(default0);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DataBoundaryDefinitionData resourceData = result.Data;
+            DataBoundaryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

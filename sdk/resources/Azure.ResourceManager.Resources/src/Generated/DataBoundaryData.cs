@@ -14,10 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing the DataBoundaryDefinition data model.
+    /// A class representing the DataBoundary data model.
     /// A data boundary definition.
     /// </summary>
-    public partial class DataBoundaryDefinitionData : ResourceData
+    public partial class DataBoundaryData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataBoundaryDefinitionData"/>. </summary>
-        public DataBoundaryDefinitionData()
+        /// <summary> Initializes a new instance of <see cref="DataBoundaryData"/>. </summary>
+        internal DataBoundaryData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoundaryDefinitionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoundaryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Data boundary properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoundaryDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoundaryProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataBoundaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoundaryProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Data boundary properties. </summary>
         [WirePath("properties")]
-        public DataBoundaryProperties Properties { get; set; }
+        public DataBoundaryProperties Properties { get; }
     }
 }

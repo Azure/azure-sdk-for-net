@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoundaryResource>> GetDataBoundaryAsync(ResourceIdentifier scope, DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoundaryResource>> GetDataBoundaryAsync(ResourceIdentifier scope, DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
         {
             return await GetDataBoundaries(scope).GetAsync(@default, cancellationToken).ConfigureAwait(false);
         }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<DataBoundaryResource> GetDataBoundary(ResourceIdentifier scope, DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoundaryResource> GetDataBoundary(ResourceIdentifier scope, DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
         {
             return GetDataBoundaries(scope).Get(@default, cancellationToken);
         }
@@ -211,18 +211,6 @@ namespace Azure.ResourceManager.Resources.Mocking
         {
             DeploymentStackResource.ValidateResourceId(id);
             return new DeploymentStackResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="TenantDataBoundaryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantDataBoundaryResource.CreateResourceIdentifier" /> to create a <see cref="TenantDataBoundaryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantDataBoundaryResource"/> object. </returns>
-        public virtual TenantDataBoundaryResource GetTenantDataBoundaryResource(ResourceIdentifier id)
-        {
-            TenantDataBoundaryResource.ValidateResourceId(id);
-            return new TenantDataBoundaryResource(Client, id);
         }
 
         /// <summary>

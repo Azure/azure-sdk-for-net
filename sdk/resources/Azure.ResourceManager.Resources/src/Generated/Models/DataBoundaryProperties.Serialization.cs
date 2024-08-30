@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            DataBoundary? dataBoundary = default;
-            ProvisioningState? provisioningState = default;
+            DataBoundaryType? dataBoundary = default;
+            DataBoundaryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    dataBoundary = new DataBoundary(property.Value.GetString());
+                    dataBoundary = new DataBoundaryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new DataBoundaryProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

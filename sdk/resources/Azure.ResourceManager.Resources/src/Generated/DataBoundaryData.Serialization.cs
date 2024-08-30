@@ -16,16 +16,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class DataBoundaryDefinitionData : IUtf8JsonSerializable, IJsonModel<DataBoundaryDefinitionData>
+    public partial class DataBoundaryData : IUtf8JsonSerializable, IJsonModel<DataBoundaryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoundaryDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoundaryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataBoundaryDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataBoundaryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoundaryDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoundaryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoundaryDefinitionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoundaryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Resources
             writer.WriteEndObject();
         }
 
-        DataBoundaryDefinitionData IJsonModel<DataBoundaryDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataBoundaryData IJsonModel<DataBoundaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoundaryDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoundaryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoundaryDefinitionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoundaryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataBoundaryDefinitionData(document.RootElement, options);
+            return DeserializeDataBoundaryData(document.RootElement, options);
         }
 
-        internal static DataBoundaryDefinitionData DeserializeDataBoundaryDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DataBoundaryData DeserializeDataBoundaryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataBoundaryDefinitionData(
+            return new DataBoundaryData(
                 id,
                 name,
                 type,
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.Resources
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<DataBoundaryDefinitionData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataBoundaryData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoundaryDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoundaryData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -243,26 +243,26 @@ namespace Azure.ResourceManager.Resources
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoundaryDefinitionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoundaryData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataBoundaryDefinitionData IPersistableModel<DataBoundaryDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataBoundaryData IPersistableModel<DataBoundaryData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoundaryDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoundaryData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDataBoundaryDefinitionData(document.RootElement, options);
+                        return DeserializeDataBoundaryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoundaryDefinitionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoundaryData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataBoundaryDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataBoundaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
