@@ -110,33 +110,61 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
             if (Optional.IsCollectionDefined(ApplicationGroupReferences))
             {
-                writer.WritePropertyName("applicationGroupReferences"u8);
-                writer.WriteStartArray();
-                foreach (var item in ApplicationGroupReferences)
+                if (ApplicationGroupReferences != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("applicationGroupReferences"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ApplicationGroupReferences)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("applicationGroupReferences");
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(IsCloudPCResource))
             {
-                writer.WritePropertyName("cloudPcResource"u8);
-                writer.WriteBooleanValue(IsCloudPCResource.Value);
+                if (IsCloudPCResource != null)
+                {
+                    writer.WritePropertyName("cloudPcResource"u8);
+                    writer.WriteBooleanValue(IsCloudPCResource.Value);
+                }
+                else
+                {
+                    writer.WriteNull("cloudPcResource");
+                }
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                if (PublicNetworkAccess != null)
+                {
+                    writer.WritePropertyName("publicNetworkAccess"u8);
+                    writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("publicNetworkAccess");
+                }
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
+                if (PrivateEndpointConnections != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("privateEndpointConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("privateEndpointConnections");
+                }
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -321,6 +349,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                applicationGroupReferences = null;
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -335,6 +364,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                cloudPCResource = null;
                                 continue;
                             }
                             cloudPCResource = property0.Value.GetBoolean();
@@ -344,6 +374,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                publicNetworkAccess = null;
                                 continue;
                             }
                             publicNetworkAccess = new DesktopVirtualizationPublicNetworkAccess(property0.Value.GetString());
@@ -353,6 +384,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                privateEndpointConnections = null;
                                 continue;
                             }
                             List<DesktopVirtualizationPrivateEndpointConnection> array = new List<DesktopVirtualizationPrivateEndpointConnection>();

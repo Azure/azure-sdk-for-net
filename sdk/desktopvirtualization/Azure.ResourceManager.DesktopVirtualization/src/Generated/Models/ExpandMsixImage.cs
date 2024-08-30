@@ -69,11 +69,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isRegularRegistration"> Specifies how to register Package in feed. </param>
         /// <param name="isActive"> Make this version of the package the active one across the hostpool. </param>
         /// <param name="packageDependencies"> List of package dependencies. </param>
-        /// <param name="version"> Package Version found in the appxmanifest.xml. </param>
+        /// <param name="version"> Package version found in the appxmanifest.xml. </param>
         /// <param name="lastUpdatedOn"> Date Package was last updated, found in the appxmanifest.xml. </param>
         /// <param name="packageApplications"> List of package applications. </param>
+        /// <param name="certificateName"> Certificate name found in the appxmanifest.xml. </param>
+        /// <param name="certificateExpiry"> Date certificate expires, found in the appxmanifest.xml. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpandMsixImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdatedOn, IList<MsixPackageApplications> packageApplications, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ExpandMsixImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdatedOn, IList<MsixPackageApplications> packageApplications, string certificateName, DateTimeOffset? certificateExpiry, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PackageAlias = packageAlias;
             ImagePath = imagePath;
@@ -88,6 +90,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Version = version;
             LastUpdatedOn = lastUpdatedOn;
             PackageApplications = packageApplications;
+            CertificateName = certificateName;
+            CertificateExpiry = certificateExpiry;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -111,11 +115,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public bool? IsActive { get; set; }
         /// <summary> List of package dependencies. </summary>
         public IList<MsixPackageDependencies> PackageDependencies { get; set; }
-        /// <summary> Package Version found in the appxmanifest.xml. </summary>
+        /// <summary> Package version found in the appxmanifest.xml. </summary>
         public string Version { get; set; }
         /// <summary> Date Package was last updated, found in the appxmanifest.xml. </summary>
         public DateTimeOffset? LastUpdatedOn { get; set; }
         /// <summary> List of package applications. </summary>
         public IList<MsixPackageApplications> PackageApplications { get; }
+        /// <summary> Certificate name found in the appxmanifest.xml. </summary>
+        public string CertificateName { get; set; }
+        /// <summary> Date certificate expires, found in the appxmanifest.xml. </summary>
+        public DateTimeOffset? CertificateExpiry { get; set; }
     }
 }

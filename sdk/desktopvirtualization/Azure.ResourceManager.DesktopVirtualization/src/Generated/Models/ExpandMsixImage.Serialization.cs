@@ -138,6 +138,30 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(CertificateName))
+            {
+                if (CertificateName != null)
+                {
+                    writer.WritePropertyName("certificateName"u8);
+                    writer.WriteStringValue(CertificateName);
+                }
+                else
+                {
+                    writer.WriteNull("certificateName");
+                }
+            }
+            if (Optional.IsDefined(CertificateExpiry))
+            {
+                if (CertificateExpiry != null)
+                {
+                    writer.WritePropertyName("certificateExpiry"u8);
+                    writer.WriteStringValue(CertificateExpiry.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("certificateExpiry");
+                }
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -194,6 +218,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string version = default;
             DateTimeOffset? lastUpdated = default;
             IList<MsixPackageApplications> packageApplications = default;
+            string certificateName = default;
+            DateTimeOffset? certificateExpiry = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -332,6 +358,26 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             packageApplications = array;
                             continue;
                         }
+                        if (property0.NameEquals("certificateName"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                certificateName = null;
+                                continue;
+                            }
+                            certificateName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("certificateExpiry"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                certificateExpiry = null;
+                                continue;
+                            }
+                            certificateExpiry = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -359,6 +405,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 version,
                 lastUpdated,
                 packageApplications ?? new ChangeTrackingList<MsixPackageApplications>(),
+                certificateName,
+                certificateExpiry,
                 serializedAdditionalRawData);
         }
 

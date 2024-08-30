@@ -43,13 +43,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (Optional.IsCollectionDefined(MaintenanceWindows))
             {
-                writer.WritePropertyName("maintenanceWindows"u8);
-                writer.WriteStartArray();
-                foreach (var item in MaintenanceWindows)
+                if (MaintenanceWindows != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("maintenanceWindows"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in MaintenanceWindows)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("maintenanceWindows");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,6 +131,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        maintenanceWindows = null;
                         continue;
                     }
                     List<MaintenanceWindowPatchProperties> array = new List<MaintenanceWindowPatchProperties>();

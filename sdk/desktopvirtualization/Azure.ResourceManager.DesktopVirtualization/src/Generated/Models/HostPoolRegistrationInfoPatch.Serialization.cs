@@ -28,8 +28,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                if (ExpireOn != null)
+                {
+                    writer.WritePropertyName("expirationTime"u8);
+                    writer.WriteStringValue(ExpireOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("expirationTime");
+                }
             }
             if (Optional.IsDefined(RegistrationTokenOperation))
             {
@@ -84,6 +91,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        expirationTime = null;
                         continue;
                     }
                     expirationTime = property.Value.GetDateTimeOffset("O");

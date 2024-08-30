@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; set; }
         /// <summary> Description of Workspace. </summary>
         public string Description { get; set; }
         /// <summary> Friendly name of Workspace. </summary>
         public string FriendlyName { get; set; }
         /// <summary> List of applicationGroup links. </summary>
-        public IList<string> ApplicationGroupReferences { get; }
+        public IList<string> ApplicationGroupReferences { get; set; }
         /// <summary> Enabled to allow this resource to be access from the public network. </summary>
         public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }

@@ -50,6 +50,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
+            {
+                writer.WritePropertyName("groupIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
@@ -108,6 +118,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            IReadOnlyList<string> groupIds = default;
             SubResource privateEndpoint = default;
             DesktopVirtualizationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default;
@@ -148,6 +159,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("groupIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            groupIds = array;
+                            continue;
+                        }
                         if (property0.NameEquals("privateEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -189,6 +214,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 name,
                 type,
                 systemData,
+                groupIds ?? new ChangeTrackingList<string>(),
                 privateEndpoint,
                 privateLinkServiceConnectionState,
                 provisioningState,

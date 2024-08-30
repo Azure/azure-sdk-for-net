@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; set; }
         /// <summary> Description of Application. </summary>
         public string Description { get; set; }
         /// <summary> Friendly name of Application. </summary>

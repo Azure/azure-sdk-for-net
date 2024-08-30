@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Time zone for maintenance as defined in https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.findsystemtimezonebyid?view=net-5.0. Must be set if useLocalTime is true. </summary>
         public string MaintenanceWindowTimeZone { get; set; }
         /// <summary> List of maintenance windows. Maintenance windows are 2 hours long. </summary>
-        public IList<MaintenanceWindowPatchProperties> MaintenanceWindows { get; }
+        public IList<MaintenanceWindowPatchProperties> MaintenanceWindows { get; set; }
     }
 }

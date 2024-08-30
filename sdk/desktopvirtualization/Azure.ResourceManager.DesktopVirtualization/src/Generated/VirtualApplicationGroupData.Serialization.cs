@@ -126,8 +126,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WriteStringValue(ApplicationGroupType.ToString());
             if (options.Format != "W" && Optional.IsDefined(IsCloudPCResource))
             {
-                writer.WritePropertyName("cloudPcResource"u8);
-                writer.WriteBooleanValue(IsCloudPCResource.Value);
+                if (IsCloudPCResource != null)
+                {
+                    writer.WritePropertyName("cloudPcResource"u8);
+                    writer.WriteBooleanValue(IsCloudPCResource.Value);
+                }
+                else
+                {
+                    writer.WriteNull("cloudPcResource");
+                }
             }
             if (Optional.IsDefined(ShowInFeed))
             {
@@ -338,6 +345,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                cloudPCResource = null;
                                 continue;
                             }
                             cloudPCResource = property0.Value.GetBoolean();
