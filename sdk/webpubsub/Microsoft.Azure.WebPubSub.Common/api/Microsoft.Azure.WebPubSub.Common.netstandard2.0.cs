@@ -149,16 +149,16 @@ namespace Microsoft.Azure.WebPubSub.Common
         internal MqttConnectProperties() { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="password")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("password")]
-        public string? Password { get { throw null; } protected set { } }
+        public string? Password { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="protocolVersion")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("protocolVersion")]
-        public Microsoft.Azure.WebPubSub.Common.MqttProtocolVersion ProtocolVersion { get { throw null; } protected set { } }
+        public Microsoft.Azure.WebPubSub.Common.MqttProtocolVersion ProtocolVersion { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="username")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("username")]
-        public string? Username { get { throw null; } protected set { } }
+        public string? Username { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="userProperties")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("userProperties")]
-        public System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? UserProperties { get { throw null; } protected set { } }
+        public System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? UserProperties { get { throw null; } }
     }
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttDisconnectedEventRequest : Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest
