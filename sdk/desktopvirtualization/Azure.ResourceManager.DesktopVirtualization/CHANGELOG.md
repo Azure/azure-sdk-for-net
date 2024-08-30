@@ -1,5 +1,19 @@
 # Release History
 
+## 1.4.0 (2024-09-01)
+
+### Features Added
+
+- App Attach Package Support
+
+### Breaking Changes
+
+- Updated commonTypes versioning from v2 to v5.
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
