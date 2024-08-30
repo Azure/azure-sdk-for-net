@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (Unreleased)
+## 1.3.0 (2024-09-04)
 
 ### Features Added
 - Support MQTT event handlers.

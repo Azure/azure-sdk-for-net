@@ -1,10 +1,8 @@
 # Release History
 
-## 1.8.0 (Unreleased)
+## 1.8.0 (2024-09-04)
 ### Features Added
 - Added MQTT client events support.
-
-### Other Changes
 
 ## 1.7.0 (2023-08-28)
 
