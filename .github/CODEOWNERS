@@ -1046,6 +1046,12 @@
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
 
+# PRLabel: %Compute - Fleet
+/sdk/computefleet/                                                 @sahilarora92 @dhruvil009
+
+# ServiceLabel: %Compute - Fleet
+# ServiceOwners:                                                   @sahilarora92 @dhruvil009
+
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng
