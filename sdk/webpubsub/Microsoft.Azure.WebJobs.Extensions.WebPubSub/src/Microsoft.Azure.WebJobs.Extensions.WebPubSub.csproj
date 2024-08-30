@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -7,7 +7,6 @@
     <Description>Azure Functions extension for the WebPubSub service</Description>
     <Version>1.8.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.7.0</ApiCompatVersion>
     <NoWarn>$(NoWarn);CS8632;CA1056;CA2227</NoWarn>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
