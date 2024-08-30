@@ -46,13 +46,13 @@ namespace Azure.AI.Inference.Telemetry
             }
         }
 
-        private List<Dictionary<string, string>> getFuncArgs()
+        private List<Dictionary<string, object>> getFuncArgs()
         {
-            List<Dictionary<string, string>> listArgs = new();
+            List<Dictionary<string, object>> listArgs = new();
             foreach (StringBuilder sb in m_hshFunctionArgs.Values)
             {
                 if (sb.Length > 0)
-                    listArgs.Add(JsonSerializer.Deserialize<Dictionary<string, string>>(sb.ToString()));
+                    listArgs.Add(JsonSerializer.Deserialize<Dictionary<string, object>>(sb.ToString()));
             }
             return listArgs;
         }

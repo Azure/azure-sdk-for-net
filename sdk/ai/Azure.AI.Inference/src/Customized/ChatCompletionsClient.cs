@@ -49,7 +49,7 @@ namespace Azure.AI.Inference
             using RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             using OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
-            Response response;
+            Response response = null;
             try
             {
                 response = await CompleteAsync(content, extraParams?.ToString(), context).ConfigureAwait(false);
@@ -93,7 +93,7 @@ namespace Azure.AI.Inference
             using RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             using OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
-            Response response;
+            Response response = null;
             try
             {
                 response = Complete(content, extraParams?.ToString(), context);

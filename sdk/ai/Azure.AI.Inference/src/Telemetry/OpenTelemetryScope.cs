@@ -97,7 +97,7 @@ namespace Azure.AI.Inference.Telemetry
         public OpenTelemetryScope(ChatCompletionsOptions requestOptions, Uri endpoint)
         {
             m_recordedStreamingResponse = new();
-            Activity m_activity = getActivityMaybe($"Complete_{requestOptions.Model}");
+            m_activity = getActivityMaybe($"Complete_{requestOptions.Model}");
             if (m_activity == null)
                 return;
             m_activity.Start();
