@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Azure.Core.GeoJson;
 
-namespace Azure.Maps.Search.Models.Queries
+namespace Azure.Maps.Search.Models
 {
     /// <summary> Options. </summary>
     public class ReverseGeocodingQuery

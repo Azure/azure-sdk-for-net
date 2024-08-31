@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,8 +13,6 @@ using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
 using Azure.Maps.Search.Models;
-using Azure.Maps.Search.Models.Options;
-using Azure.Maps.Search.Models.Queries;
 
 namespace Azure.Maps.Search
 {

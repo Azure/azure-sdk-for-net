@@ -3,7 +3,7 @@
 
 using Azure.Core.GeoJson;
 
-namespace Azure.Maps.Search.Models.Options
+namespace Azure.Maps.Search.Models
 {
     /// <summary> Options. </summary>
     public class BaseOptions
