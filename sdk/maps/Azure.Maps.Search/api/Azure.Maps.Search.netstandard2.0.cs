@@ -347,6 +347,11 @@ namespace Azure.Maps.Search.Models
     {
         internal GeoJsonGeometry() { }
     }
+    public partial class GeoJsonGeometryCollection : Azure.Maps.Search.Models.GeoJsonGeometry
+    {
+        internal GeoJsonGeometryCollection() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.GeoJsonGeometry> Geometries { get { throw null; } }
+    }
     public abstract partial class GeoJsonObject
     {
         protected GeoJsonObject() { }
@@ -356,6 +361,11 @@ namespace Azure.Maps.Search.Models
     {
         internal GeoJsonPoint() { }
         public System.Collections.Generic.IReadOnlyList<double> Coordinates { get { throw null; } }
+    }
+    public partial class GeoJsonPolygon : Azure.Maps.Search.Models.GeoJsonGeometry
+    {
+        internal GeoJsonPolygon() { }
+        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
     }
     public partial class GeometryCopyright
     {

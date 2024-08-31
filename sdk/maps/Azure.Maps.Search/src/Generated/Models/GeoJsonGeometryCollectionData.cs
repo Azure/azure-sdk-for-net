@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="geometries">
         /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeoJsonPoint"/>.
+        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometries"/> is null. </exception>
         internal GeoJsonGeometryCollectionData(IEnumerable<GeoJsonGeometry> geometries)
@@ -33,7 +33,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="geometries">
         /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeoJsonPoint"/>.
+        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </param>
         internal GeoJsonGeometryCollectionData(IReadOnlyList<GeoJsonGeometry> geometries)
         {
@@ -43,7 +43,7 @@ namespace Azure.Maps.Search.Models
         /// <summary>
         /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeoJsonPoint"/>.
+        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </summary>
         public IReadOnlyList<GeoJsonGeometry> Geometries { get; }
     }

@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonPolygon
+    public partial class GeoJsonPolygon
     {
         internal static GeoJsonPolygon DeserializeGeoJsonPolygon(JsonElement element)
         {

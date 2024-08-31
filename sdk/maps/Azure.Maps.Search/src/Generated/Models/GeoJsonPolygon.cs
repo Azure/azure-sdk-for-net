@@ -13,7 +13,7 @@ using Azure.Maps.Common;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> A valid `GeoJSON Polygon` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.6) for details. </summary>
-    internal partial class GeoJsonPolygon : GeoJsonGeometry
+    public partial class GeoJsonPolygon : GeoJsonGeometry
     {
         /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
