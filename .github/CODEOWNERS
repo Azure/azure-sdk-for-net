@@ -732,10 +732,10 @@
 # ServiceLabel: %Image Analysis
 # ServiceOwners:                                                   @rhurey @dargilco
 
-# PRLabel: %Playwright
+# PRLabel: %Microsoft Playwright Testing
 /sdk/playwrighttesting/                                            @Sid200026 @puagarwa @ShreyaAnand
 
-# ServiceLabel: %Playwright
+# ServiceLabel: %Microsoft Playwright Testing
 # ServiceOwners:                                                   @shreyaanand @mjmadhu
 
 # ServiceLabel: %Policy
