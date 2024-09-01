@@ -11,6 +11,7 @@
 			service
 		</Description>
 		<Version>1.0.0-beta.1</Version>
+		<PackageVersion>1.0.0-beta.1</PackageVersion>
 		<IsClientLibrary>true</IsClientLibrary>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 		<Nullable>enable</Nullable>

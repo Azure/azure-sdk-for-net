@@ -21,7 +21,6 @@ using System.Text.Json;
 using PlaywrightConstants = Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility.Constants;
 using Azure.Core;
 using Azure.Core.Serialization;
-using Azure.Core.Pipeline;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
@@ -73,12 +72,15 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
     internal TestRunShardDto? TestRunShard { get; set; }
 
     internal bool EnableGithubSummary { get; set; } = true;
+    internal bool EnableResultPublish { get; set; } = true;
 
     internal List<TestResults> TestResults = new();
 
     internal ConcurrentDictionary<string, RawTestResult?> RawTestResultsMap = new();
 
     internal PlaywrightService? playwrightService;
+    private List<string> informationalMessages = new();
+    private List<string> processedErrorMessageKeys = new();
 
     public void Initialize(TestLoggerEvents events, Dictionary<string, string?> parameters)
     {
@@ -105,6 +107,10 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
     {
         InitializePlaywrightReporter(e.TestRunCriteria.TestRunSettings!);
         LogMessage("Test Run start Handler");
+        if (!EnableResultPublish)
+        {
+            return;
+        }
         if (!IsInitialized || _reportingTestResultsClient == null || _reportingTestRunsClient == null)
         {
             LogErrorMessage("Test Run setup issue exiting handler");
@@ -234,12 +240,16 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
     internal void TestResultHandler(object? sender, TestResultEventArgs e)
     {
         LogMessage("Test Result Handler");
+        TestResults? testResult = GetTestCaseResultData(e.Result);
+        if (!EnableResultPublish)
+        {
+            return;
+        }
         if (!IsInitialized || _reportingTestResultsClient == null || _reportingTestRunsClient == null)
         {
             LogErrorMessage("Test Run setup issue exiting handler");
             return;
         }
-        TestResults? testResult = GetTestCaseResultData(e.Result);
         // Set various counts (passed tests, failed tests, total tests)
         if (testResult != null)
         {
@@ -266,9 +276,16 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
     internal void TestRunCompleteHandler(object? sender, TestRunCompleteEventArgs e)
     {
         LogMessage("Test Run End Handler");
+        if (!EnableResultPublish)
+        {
+            UpdateTestRun(e); // will not publish results, but will print informational messages
+            return;
+        }
         if (!IsInitialized || _reportingTestResultsClient == null || _reportingTestRunsClient == null || TestRun == null)
         {
             LogErrorMessage("Test Run setup issue exiting handler");
+            EnableResultPublish = false;
+            UpdateTestRun(e); // will not publish results, but will print informational messages
             return;
         }
         // Upload TestResults
@@ -327,57 +344,73 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
 
     private bool UpdateTestRun(TestRunCompleteEventArgs e)
     {
-        if (!IsInitialized || _reportingTestResultsClient == null || _reportingTestRunsClient == null || TestRun == null || TestRunShard == null)
-            return false;
-        DateTime testRunStartedOn = DateTime.MinValue;
-        DateTime testRunEndedOn = DateTime.UtcNow;
-        long durationInMs = 0;
-
-        var result = FailedTestCount > 0 ? "failed" : "passed";
-
-        if (e.ElapsedTimeInRunningTests != null)
+        if (EnableResultPublish)
         {
-            testRunEndedOn = TestRunStartTime.Add(e.ElapsedTimeInRunningTests);
-            durationInMs = (long)e.ElapsedTimeInRunningTests.TotalMilliseconds;
+            if (!IsInitialized || _reportingTestResultsClient == null || _reportingTestRunsClient == null || TestRun == null || TestRunShard == null)
+            {
+                // no-op
+            }
+            else
+            {
+                DateTime testRunStartedOn = DateTime.MinValue;
+                DateTime testRunEndedOn = DateTime.UtcNow;
+                long durationInMs = 0;
+
+                var result = FailedTestCount > 0 ? "failed" : "passed";
+
+                if (e.ElapsedTimeInRunningTests != null)
+                {
+                    testRunEndedOn = TestRunStartTime.Add(e.ElapsedTimeInRunningTests);
+                    durationInMs = (long)e.ElapsedTimeInRunningTests.TotalMilliseconds;
+                }
+
+                // Update Shard End
+                if (TestRunShard.Summary == null)
+                    TestRunShard.Summary = new TestRunShardSummary();
+                TestRunShard.Summary.Status = "CLIENT_COMPLETE";
+                TestRunShard.Summary.StartTime = TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                TestRunShard.Summary.EndTime = testRunEndedOn.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                TestRunShard.Summary.TotalTime = durationInMs;
+                TestRunShard.Summary.UploadMetadata = new UploadMetadata() { NumTestResults = TotalTestCount, NumTotalAttachments = 0, SizeTotalAttachments = 0 };
+                LogMessage("duration:" + durationInMs);
+                LogMessage("StartTime:" + TestRunShard.Summary.StartTime);
+                LogMessage("EndTime:" + TestRunShard.Summary.EndTime);
+                TestRunShard.ResultsSummary = new TestRunResultsSummary
+                {
+                    NumTotalTests = TotalTestCount,
+                    NumPassedTests = PassedTestCount,
+                    NumFailedTests = FailedTestCount,
+                    NumSkippedTests = SkippedTestCount,
+                    NumFlakyTests = 0, // TODO: Implement flaky tests
+                    Status = result
+                };
+                TestRunShard.UploadCompleted = "true";
+                var token = "Bearer " + AccessToken;
+                var corelationId = Guid.NewGuid().ToString();
+                try
+                {
+                    _reportingTestRunsClient.PatchTestRunShardInfo(WorkspaceId, RunId, "1", RequestContent.Create(TestRunShard), "application/json", token, corelationId);
+                }
+                catch (Exception ex)
+                {
+                    LogErrorMessage("Test Run shard failed: " + ex.ToString());
+                    throw;
+                }
+
+                LogMessage("TestRun Shard updated");
+                playwrightService?.Cleanup();
+                Console.WriteLine("Visit MPT Portal for Debugging: " + Uri.EscapeUriString(PortalUrl!));
+                if (EnableGithubSummary)
+                    GenerateMarkdownSummary();
+            }
         }
-
-        // Update Shard End
-        if (TestRunShard.Summary == null)
-            TestRunShard.Summary = new TestRunShardSummary();
-        TestRunShard.Summary.Status = "CLIENT_COMPLETE";
-        TestRunShard.Summary.StartTime = TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
-        TestRunShard.Summary.EndTime = testRunEndedOn.ToString("yyyy-MM-ddTHH:mm:ssZ");
-        TestRunShard.Summary.TotalTime = durationInMs;
-        TestRunShard.Summary.UploadMetadata = new UploadMetadata() { NumTestResults = TotalTestCount, NumTotalAttachments = 0, SizeTotalAttachments = 0 };
-        LogMessage("duration:" + durationInMs);
-        LogMessage("StartTime:" + TestRunShard.Summary.StartTime);
-        LogMessage("EndTime:" + TestRunShard.Summary.EndTime);
-        TestRunShard.ResultsSummary = new TestRunResultsSummary
+        if (informationalMessages.Count > 0)
+            Console.WriteLine();
+        int index = 1;
+        foreach (string message in informationalMessages)
         {
-            NumTotalTests = TotalTestCount,
-            NumPassedTests = PassedTestCount,
-            NumFailedTests = FailedTestCount,
-            NumSkippedTests = SkippedTestCount,
-            NumFlakyTests = 0, // TODO: Implement flaky tests
-            Status = result
-        };
-        TestRunShard.UploadCompleted = "true";
-        var token = "Bearer " + AccessToken;
-        var corelationId = Guid.NewGuid().ToString();
-        try
-        {
-            _reportingTestRunsClient.PatchTestRunShardInfo(WorkspaceId, RunId, "1", RequestContent.Create(TestRunShard), "application/json", token, corelationId);
+            Console.WriteLine($"{index}) {message}");
         }
-        catch (Exception ex)
-        {
-            LogErrorMessage("Test Run shard failed: " + ex.ToString());
-            throw;
-        }
-
-        LogMessage("TestRun Shard updated");
-        playwrightService?.Cleanup();
-        Console.WriteLine("Visit MPT Portal for Debugging: " + Uri.EscapeUriString(PortalUrl!));
-        if (EnableGithubSummary) GenerateMarkdownSummary();
         return true;
     }
 
@@ -447,15 +480,35 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
 
         if (!string.IsNullOrEmpty(testResultSource.ErrorMessage))
         {
+            ProcessTestResultMessage(testResultSource.ErrorMessage);
             // TODO send it in blob
         }
         if (!string.IsNullOrEmpty(testResultSource.ErrorStackTrace))
         {
+            ProcessTestResultMessage(testResultSource.ErrorStackTrace);
             // TODO send it in blob
         }
 
         // TODO ArtifactsPaths
         return testCaseResultData;
+    }
+
+    private void ProcessTestResultMessage(string? message)
+    {
+        if (string.IsNullOrEmpty(message))
+        {
+            return;
+        }
+        foreach (TestResultError testResultErrorObj in TestResultErrorConstants.ErrorConstants)
+        {
+            if (processedErrorMessageKeys.Contains(testResultErrorObj.Key!))
+                continue;
+            if (testResultErrorObj.Pattern.IsMatch(message))
+            {
+                AddInformationalMessage(testResultErrorObj.Message!);
+                processedErrorMessageKeys.Add(testResultErrorObj.Key!);
+            }
+        }
     }
 
     private TokenDetails ParseWorkspaceIdFromAccessToken(string accessToken)
@@ -609,9 +662,13 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         runParameters.TryGetValue(RunSettingKey.AZURE_TOKEN_CREDENTIAL_TYPE, out var azureTokenCredential);
         runParameters.TryGetValue(RunSettingKey.MANAGED_IDENTITY_CLIENT_ID, out var managedIdentityClientId);
         runParameters.TryGetValue(RunSettingKey.ENABLE_GITHUB_SUMMARY, out var enableGithubSummary);
+        runParameters.TryGetValue(RunSettingKey.ENABLE_RESULT_PUBLISH, out var enableResultPublish);
         string? enableGithubSummaryString = enableGithubSummary?.ToString();
+        string? enableResultPublishString = enableResultPublish?.ToString();
 
         EnableGithubSummary = string.IsNullOrEmpty(enableGithubSummaryString) || bool.Parse(enableGithubSummaryString!);
+        EnableResultPublish = string.IsNullOrEmpty(enableResultPublishString) || bool.Parse(enableResultPublishString!);
+
         PlaywrightServiceSettings? playwrightServiceSettings = null;
         try
         {
@@ -666,7 +723,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         LogMessage("Playwright Service Reporter Intialized");
     }
 
-    public void GenerateMarkdownSummary()
+    internal void GenerateMarkdownSummary()
     {
         if (CiInfoProvider.GetCIProvider() == PlaywrightConstants.GITHUB_ACTIONS)
         {
@@ -694,5 +751,10 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
                 LogErrorMessage($"Error writing Markdown summary: {ex}");
             }
         }
+    }
+
+    private void AddInformationalMessage(string message)
+    {
+        informationalMessages.Add(message);
     }
 }

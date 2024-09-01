@@ -171,6 +171,11 @@ public class RunSettingKey
     /// Enable GitHub summary setting key.
     /// </summary>
     public static readonly string ENABLE_GITHUB_SUMMARY = "EnableGitHubSummary";
+
+    /// <summary>
+    /// Enable Result publish.
+    /// </summary>
+    public static readonly string ENABLE_RESULT_PUBLISH = "EnableResultPublish";
 }
 
 internal class Constants
