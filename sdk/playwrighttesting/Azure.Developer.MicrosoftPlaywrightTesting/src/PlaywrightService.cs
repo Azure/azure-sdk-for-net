@@ -7,7 +7,6 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;

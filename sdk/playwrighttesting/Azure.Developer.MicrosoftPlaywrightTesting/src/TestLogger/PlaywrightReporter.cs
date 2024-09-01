@@ -21,6 +21,7 @@ using System.Text.Json;
 using PlaywrightConstants = Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility.Constants;
 using Azure.Core;
 using Azure.Core.Serialization;
+using Azure.Core.Pipeline;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
@@ -113,7 +114,8 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         var startTime = TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
         LogMessage("Test Run start time: " + startTime);
         var corelationId = Guid.NewGuid().ToString();
-        var runName = Guid.NewGuid().ToString(); // TODO discuss approach
+        var gitBasedRunName = ReporterUtils.GetRunName(CiInfoProvider.GetCIInfo());
+        var runName = string.IsNullOrEmpty(gitBasedRunName) ? Guid.NewGuid().ToString() : gitBasedRunName;
         var run = new TestRunDtoV2
         {
             TestRunId = RunId!,
@@ -560,8 +562,13 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
 
     private static string GetCurrentOS()
     {
-        // we could return simplified name like "windows", "linux", "macos"
-        return Environment.OSVersion.Platform.ToString();
+        PlatformID platform = Environment.OSVersion.Platform;
+        if (platform == PlatformID.Unix)
+            return "Linux";
+        else if (platform == PlatformID.MacOSX)
+            return "MacOS";
+        else
+            return "Windows";
     }
 
     private void LogMessage(string message)
