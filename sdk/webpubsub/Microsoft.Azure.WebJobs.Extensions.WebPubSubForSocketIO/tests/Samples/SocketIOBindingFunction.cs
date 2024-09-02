@@ -4,11 +4,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests.Samples
 {
@@ -18,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests.Samples
         [FunctionName("SocketIOInputBinding")]
         public static IActionResult SocketInputBinding(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req,
-            [SocketIONegotiation(Hub = "hub")] SocketIONegotiationResult result)
+            [SocketIONegotiation(Hub = "hub", UserId = "uid")] SocketIONegotiationResult result)
         {
             return new OkObjectResult(result);
         }

@@ -11,8 +11,6 @@ trigger:
     - sdk/batch/ci.data.yml
     - sdk/batch/service.projects
     - sdk/batch/Microsoft.Azure.Batch
-    - sdk/batch/MicrosoftAzureBatchFileStaging
-    - sdk/batch/Microsoft.Azure.Batch.Conventions.Files
     exclude:
     - sdk/batch/Azure.ResourceManager.Batch/
 
@@ -28,8 +26,6 @@ pr:
     - sdk/batch/ci.data.yml
     - sdk/batch/service.projects
     - sdk/batch/Microsoft.Azure.Batch
-    - sdk/batch/MicrosoftAzureBatchFileStaging
-    - sdk/batch/Microsoft.Azure.Batch.Conventions.Files
     exclude:
     - sdk/batch/Azure.ResourceManager.Batch/
 
@@ -43,7 +39,3 @@ extends:
     Artifacts:
     - name: Microsoft.Azure.Batch
       safeName: MicrosoftAzureBatch
-    - name: Microsoft.Azure.Batch.FileStaging
-      safeName: MicrosoftAzureBatchFileStaging
-    - name: Microsoft.Azure.Batch.Conventions.Files
-      safeName: MicrosoftAzureBatchConventionsFiles
