@@ -53,23 +53,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerlessEndpointProperties"/>. </summary>
-        /// <param name="authMode"> [Required] Specifies the authentication mode for the Serverless endpoint. </param>
-        /// <param name="contentSafety"> Specifies the content safety options. If omitted, the default content safety settings will be configured. </param>
-        /// <param name="endpointState"> The current state of the ServerlessEndpoint. </param>
-        /// <param name="inferenceEndpoint"> The inference uri to target when making requests against the serverless endpoint. </param>
-        /// <param name="marketplaceSubscriptionId"> The MarketplaceSubscription Azure ID associated to this ServerlessEndpoint. </param>
         /// <param name="modelSettings"> The model settings (model id) for the model being serviced on the ServerlessEndpoint. </param>
+        /// <param name="authMode"> [Required] Specifies the authentication mode for the Serverless endpoint. </param>
+        /// <param name="inferenceEndpoint"> The inference uri to target when making requests against the serverless endpoint. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
+        /// <param name="endpointState"> The current state of the ServerlessEndpoint. </param>
+        /// <param name="marketplaceSubscriptionId"> The MarketplaceSubscription Azure ID associated to this ServerlessEndpoint. </param>
+        /// <param name="contentSafety"> Specifies the content safety options. If omitted, the default content safety settings will be configured. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessEndpointProperties(ServerlessInferenceEndpointAuthMode authMode, ContentSafety contentSafety, ServerlessEndpointState? endpointState, ServerlessInferenceEndpoint inferenceEndpoint, string marketplaceSubscriptionId, ModelSettings modelSettings, MachineLearningEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerlessEndpointProperties(ModelSettings modelSettings, ServerlessInferenceEndpointAuthMode authMode, ServerlessInferenceEndpoint inferenceEndpoint, MachineLearningEndpointProvisioningState? provisioningState, ServerlessEndpointState? endpointState, string marketplaceSubscriptionId, ContentSafety contentSafety, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AuthMode = authMode;
-            ContentSafety = contentSafety;
-            EndpointState = endpointState;
-            InferenceEndpoint = inferenceEndpoint;
-            MarketplaceSubscriptionId = marketplaceSubscriptionId;
             ModelSettings = modelSettings;
+            AuthMode = authMode;
+            InferenceEndpoint = inferenceEndpoint;
             ProvisioningState = provisioningState;
+            EndpointState = endpointState;
+            MarketplaceSubscriptionId = marketplaceSubscriptionId;
+            ContentSafety = contentSafety;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,26 +78,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> [Required] Specifies the authentication mode for the Serverless endpoint. </summary>
-        public ServerlessInferenceEndpointAuthMode AuthMode { get; set; }
-        /// <summary> Specifies the content safety options. If omitted, the default content safety settings will be configured. </summary>
-        internal ContentSafety ContentSafety { get; set; }
-        /// <summary> [Required] Specifies the status of content safety. </summary>
-        public ContentSafetyStatus? ContentSafetyStatus
-        {
-            get => ContentSafety is null ? default(ContentSafetyStatus?) : ContentSafety.ContentSafetyStatus;
-            set
-            {
-                ContentSafety = value.HasValue ? new ContentSafety(value.Value) : null;
-            }
-        }
-
-        /// <summary> The current state of the ServerlessEndpoint. </summary>
-        public ServerlessEndpointState? EndpointState { get; }
-        /// <summary> The inference uri to target when making requests against the serverless endpoint. </summary>
-        public ServerlessInferenceEndpoint InferenceEndpoint { get; }
-        /// <summary> The MarketplaceSubscription Azure ID associated to this ServerlessEndpoint. </summary>
-        public string MarketplaceSubscriptionId { get; }
         /// <summary> The model settings (model id) for the model being serviced on the ServerlessEndpoint. </summary>
         internal ModelSettings ModelSettings { get; set; }
         /// <summary> The unique model identifier that this ServerlessEndpoint should provision. </summary>
@@ -112,7 +92,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
+        /// <summary> [Required] Specifies the authentication mode for the Serverless endpoint. </summary>
+        public ServerlessInferenceEndpointAuthMode AuthMode { get; set; }
+        /// <summary> The inference uri to target when making requests against the serverless endpoint. </summary>
+        public ServerlessInferenceEndpoint InferenceEndpoint { get; }
         /// <summary> Provisioning state for the endpoint. </summary>
         public MachineLearningEndpointProvisioningState? ProvisioningState { get; }
+        /// <summary> The current state of the ServerlessEndpoint. </summary>
+        public ServerlessEndpointState? EndpointState { get; }
+        /// <summary> The MarketplaceSubscription Azure ID associated to this ServerlessEndpoint. </summary>
+        public string MarketplaceSubscriptionId { get; }
+        /// <summary> Specifies the content safety options. If omitted, the default content safety settings will be configured. </summary>
+        internal ContentSafety ContentSafety { get; set; }
+        /// <summary> [Required] Specifies the status of content safety. </summary>
+        public ContentSafetyStatus? ContentSafetyStatus
+        {
+            get => ContentSafety is null ? default(ContentSafetyStatus?) : ContentSafety.ContentSafetyStatus;
+            set
+            {
+                ContentSafety = value.HasValue ? new ContentSafety(value.Value) : null;
+            }
+        }
     }
 }

@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DelayEvaluation))
-            {
-                writer.WritePropertyName("delayEvaluation"u8);
-                writer.WriteNumberValue(DelayEvaluation.Value);
-            }
+            writer.WritePropertyName("policyType"u8);
+            writer.WriteStringValue(PolicyType.ToString());
             if (Optional.IsDefined(EvaluationInterval))
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
             }
-            writer.WritePropertyName("policyType"u8);
-            writer.WriteStringValue(PolicyType.ToString());
+            if (Optional.IsDefined(DelayEvaluation))
+            {
+                writer.WritePropertyName("delayEvaluation"u8);
+                writer.WriteNumberValue(DelayEvaluation.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

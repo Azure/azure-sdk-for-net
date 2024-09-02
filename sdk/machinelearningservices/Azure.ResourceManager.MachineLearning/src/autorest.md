@@ -8,7 +8,7 @@ azure-arm: true
 library-name: MachineLearning
 namespace: Azure.ResourceManager.MachineLearning
 require: https://github.com/Azure/azure-rest-api-specs/blob/edb7904bfead536c7aa9716d44dba15bdabd0b00/specification/machinelearningservices/resource-manager/readme.md
-#tag: package-preview-2023-06
+tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -191,8 +191,8 @@ rename-mapping:
   QuotaUpdateParameters: MachineLearningQuotaUpdateContent
   EncryptionProperty: MachineLearningEncryptionSetting
   EncryptionStatus: MachineLearningEncryptionStatus
-  KeyVaultProperties: MachineLearningEncryptionKeyVaultProperties
-  KeyVaultProperties.keyVaultArmId: -|arm-id
+  EncryptionKeyVaultProperties: MachineLearningEncryptionKeyVaultProperties
+  EncryptionKeyVaultProperties.keyVaultArmId: -|arm-id
   IdentityForCmk: MachineLearningCmkIdentity
   IdentityForCmk.userAssignedIdentity: -|arm-id
   NotebookResourceInfo: MachineLearningNotebookResourceInfo
@@ -205,8 +205,8 @@ rename-mapping:
   DiagnoseRequestProperties: MachineLearningWorkspaceDiagnoseProperties
   NotebookAccessTokenResult: MachineLearningWorkspaceNotebookAccessTokenResult
   ListNotebookKeysResult: MachineLearningWorkspaceGetNotebookKeysResult
-  FqdnEndpointsPropertyBag: MachineLearningFqdnEndpoints
-  FqdnEndpoints: MachineLearningFqdnEndpointsProperties
+  FqdnEndpoints: MachineLearningFqdnEndpoints
+  FqdnEndpointsProperties: MachineLearningFqdnEndpointsProperties
   ListStorageAccountKeysResult: MachineLearningWorkspaceGetStorageAccountKeysResult
   AmlUserFeature: MachineLearningUserFeature
   DatastoreCredentials: MachineLearningDatastoreCredentials
@@ -387,9 +387,6 @@ rename-mapping:
   OrderString: MachineLearningOrderString
   OsType: MachineLearningOSType
   PipelineJob: MachineLearningPipelineJob
-  WorkspacePrivateEndpointResource: MachineLearningPrivateEndpoint
-  WorkspacePrivateEndpointResource.id: -|arm-id
-  WorkspacePrivateEndpointResource.subnetArmId: -|arm-id
   ProbeSettings: MachineLearningProbeSettings
   PublicNetworkAccessType: MachineLearningPublicNetworkAccessType
   QuotaBaseProperties: MachineLearningQuotaProperties
@@ -470,7 +467,7 @@ rename-mapping:
   UserCreatedStorageAccount.armResourceId: ArmResourceIdentifier|arm-id
   Cron: ComputeStartStopCronSchedule
   Recurrence: ComputeStartStopRecurrenceSchedule
-  EndpointServiceConnectionStatus: MachineLearningPrivateEndpointServiceConnectionStatus
+  PrivateEndpointServiceConnectionStatus: MachineLearningPrivateEndpointServiceConnectionStatus
   ArmResourceId.resourceId: -|arm-id
   Workspace.properties.hubResourceId: -|arm-id
   OutboundRuleBasicResource: MachineLearningOutboundRuleBasic
@@ -520,7 +517,8 @@ rename-mapping:
   ProtectionLevel: IntellectualProtectionLevel
   OsPatchingStatus.latestPatchTime: -|date-time
   OsPatchingStatus.scheduledRebootTime: -|date-time
-  ServerlessComputeSettings.serverlessComputeNoPublicIP : HasNoPublicIP
+  ServerlessComputeSettings.serverlessComputeNoPublicIP: HasNoPublicIP
+  PrivateEndpointConnection.properties.privateEndpoint: SubResource
 
 suppress-abstract-base-class:
 - MachineLearningJobProperties

@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("componentId"u8);
-            writer.WriteStringValue(ComponentId);
             if (Optional.IsCollectionDefined(InputAssets))
             {
                 if (InputAssets != null)
@@ -64,6 +62,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
+            writer.WritePropertyName("componentId"u8);
+            writer.WriteStringValue(ComponentId);
             writer.WritePropertyName("metricThresholds"u8);
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
@@ -71,6 +71,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("signalType"u8);
+            writer.WriteStringValue(SignalType.ToString());
             if (Optional.IsCollectionDefined(NotificationTypes))
             {
                 if (NotificationTypes != null)
@@ -106,8 +108,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            writer.WritePropertyName("signalType"u8);
-            writer.WriteStringValue(SignalType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -146,22 +146,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string componentId = default;
             IDictionary<string, MonitoringInputDataBase> inputAssets = default;
             IDictionary<string, MachineLearningJobInput> inputs = default;
+            string componentId = default;
             IList<CustomMetricThreshold> metricThresholds = default;
+            MonitoringSignalType signalType = default;
             IList<MonitoringNotificationType> notificationTypes = default;
             IDictionary<string, string> properties = default;
-            MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("componentId"u8))
-                {
-                    componentId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("inputAssets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -192,6 +187,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     inputs = dictionary;
                     continue;
                 }
+                if (property.NameEquals("componentId"u8))
+                {
+                    componentId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("metricThresholds"u8))
                 {
                     List<CustomMetricThreshold> array = new List<CustomMetricThreshold>();
@@ -200,6 +200,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         array.Add(CustomMetricThreshold.DeserializeCustomMetricThreshold(item, options));
                     }
                     metricThresholds = array;
+                    continue;
+                }
+                if (property.NameEquals("signalType"u8))
+                {
+                    signalType = new MonitoringSignalType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("notificationTypes"u8))
@@ -232,11 +237,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("signalType"u8))
-                {
-                    signalType = new MonitoringSignalType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -244,13 +244,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CustomMonitoringSignal(
+                signalType,
                 notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                signalType,
                 serializedAdditionalRawData,
-                componentId,
                 inputAssets ?? new ChangeTrackingDictionary<string, MonitoringInputDataBase>(),
                 inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                componentId,
                 metricThresholds);
         }
 

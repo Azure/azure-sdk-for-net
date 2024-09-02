@@ -26,11 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxConcurrentRequestsPerInstance))
-            {
-                writer.WritePropertyName("maxConcurrentRequestsPerInstance"u8);
-                writer.WriteNumberValue(MaxConcurrentRequestsPerInstance.Value);
-            }
             if (Optional.IsDefined(MaxQueueWait))
             {
                 writer.WritePropertyName("maxQueueWait"u8);
@@ -40,6 +35,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteStringValue(RequestTimeout.Value, "P");
+            }
+            if (Optional.IsDefined(MaxConcurrentRequestsPerInstance))
+            {
+                writer.WritePropertyName("maxConcurrentRequestsPerInstance"u8);
+                writer.WriteNumberValue(MaxConcurrentRequestsPerInstance.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,22 +79,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            int? maxConcurrentRequestsPerInstance = default;
             TimeSpan? maxQueueWait = default;
             TimeSpan? requestTimeout = default;
+            int? maxConcurrentRequestsPerInstance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxConcurrentRequestsPerInstance"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentRequestsPerInstance = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("maxQueueWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -113,13 +104,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     requestTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("maxConcurrentRequestsPerInstance"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxConcurrentRequestsPerInstance = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningOnlineRequestSettings(maxConcurrentRequestsPerInstance, maxQueueWait, requestTimeout, serializedAdditionalRawData);
+            return new MachineLearningOnlineRequestSettings(maxQueueWait, requestTimeout, maxConcurrentRequestsPerInstance, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningOnlineRequestSettings>.Write(ModelReaderWriterOptions options)

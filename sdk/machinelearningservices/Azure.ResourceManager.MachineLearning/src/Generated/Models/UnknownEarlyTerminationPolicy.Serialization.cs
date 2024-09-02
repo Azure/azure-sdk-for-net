@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DelayEvaluation))
-            {
-                writer.WritePropertyName("delayEvaluation"u8);
-                writer.WriteNumberValue(DelayEvaluation.Value);
-            }
+            writer.WritePropertyName("policyType"u8);
+            writer.WriteStringValue(PolicyType.ToString());
             if (Optional.IsDefined(EvaluationInterval))
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
             }
-            writer.WritePropertyName("policyType"u8);
-            writer.WriteStringValue(PolicyType.ToString());
+            if (Optional.IsDefined(DelayEvaluation))
+            {
+                writer.WritePropertyName("delayEvaluation"u8);
+                writer.WriteNumberValue(DelayEvaluation.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,20 +76,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            int? delayEvaluation = default;
-            int? evaluationInterval = default;
             EarlyTerminationPolicyType policyType = "Unknown";
+            int? evaluationInterval = default;
+            int? delayEvaluation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("delayEvaluation"u8))
+                if (property.NameEquals("policyType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    delayEvaluation = property.Value.GetInt32();
+                    policyType = new EarlyTerminationPolicyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("evaluationInterval"u8))
@@ -101,9 +97,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     evaluationInterval = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("policyType"u8))
+                if (property.NameEquals("delayEvaluation"u8))
                 {
-                    policyType = new EarlyTerminationPolicyType(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delayEvaluation = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownEarlyTerminationPolicy(delayEvaluation, evaluationInterval, policyType, serializedAdditionalRawData);
+            return new UnknownEarlyTerminationPolicy(policyType, evaluationInterval, delayEvaluation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningEarlyTerminationPolicy>.Write(ModelReaderWriterOptions options)

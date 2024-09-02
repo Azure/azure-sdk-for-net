@@ -26,93 +26,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppInsightsEnabled))
-            {
-                writer.WritePropertyName("appInsightsEnabled"u8);
-                writer.WriteBooleanValue(AppInsightsEnabled.Value);
-            }
-            if (Optional.IsDefined(DataCollector))
-            {
-                if (DataCollector != null)
-                {
-                    writer.WritePropertyName("dataCollector"u8);
-                    writer.WriteObjectValue(DataCollector, options);
-                }
-                else
-                {
-                    writer.WriteNull("dataCollector");
-                }
-            }
-            if (Optional.IsDefined(EgressPublicNetworkAccess))
-            {
-                writer.WritePropertyName("egressPublicNetworkAccess"u8);
-                writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToString());
-            }
             writer.WritePropertyName("endpointComputeType"u8);
             writer.WriteStringValue(EndpointComputeType.ToString());
-            if (Optional.IsDefined(InstanceType))
+            if (Optional.IsDefined(ScaleSettings))
             {
-                if (InstanceType != null)
+                if (ScaleSettings != null)
                 {
-                    writer.WritePropertyName("instanceType"u8);
-                    writer.WriteStringValue(InstanceType);
+                    writer.WritePropertyName("scaleSettings"u8);
+                    writer.WriteObjectValue(ScaleSettings, options);
                 }
                 else
                 {
-                    writer.WriteNull("instanceType");
-                }
-            }
-            if (Optional.IsDefined(LivenessProbe))
-            {
-                if (LivenessProbe != null)
-                {
-                    writer.WritePropertyName("livenessProbe"u8);
-                    writer.WriteObjectValue(LivenessProbe, options);
-                }
-                else
-                {
-                    writer.WriteNull("livenessProbe");
-                }
-            }
-            if (Optional.IsDefined(Model))
-            {
-                if (Model != null)
-                {
-                    writer.WritePropertyName("model"u8);
-                    writer.WriteStringValue(Model);
-                }
-                else
-                {
-                    writer.WriteNull("model");
-                }
-            }
-            if (Optional.IsDefined(ModelMountPath))
-            {
-                if (ModelMountPath != null)
-                {
-                    writer.WritePropertyName("modelMountPath"u8);
-                    writer.WriteStringValue(ModelMountPath);
-                }
-                else
-                {
-                    writer.WriteNull("modelMountPath");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(ReadinessProbe))
-            {
-                if (ReadinessProbe != null)
-                {
-                    writer.WritePropertyName("readinessProbe"u8);
-                    writer.WriteObjectValue(ReadinessProbe, options);
-                }
-                else
-                {
-                    writer.WriteNull("readinessProbe");
+                    writer.WriteNull("scaleSettings");
                 }
             }
             if (Optional.IsDefined(RequestSettings))
@@ -127,28 +52,91 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("requestSettings");
                 }
             }
-            if (Optional.IsDefined(ScaleSettings))
+            if (Optional.IsDefined(ModelMountPath))
             {
-                if (ScaleSettings != null)
+                if (ModelMountPath != null)
                 {
-                    writer.WritePropertyName("scaleSettings"u8);
-                    writer.WriteObjectValue(ScaleSettings, options);
+                    writer.WritePropertyName("modelMountPath"u8);
+                    writer.WriteStringValue(ModelMountPath);
                 }
                 else
                 {
-                    writer.WriteNull("scaleSettings");
+                    writer.WriteNull("modelMountPath");
                 }
             }
-            if (Optional.IsDefined(CodeConfiguration))
+            if (Optional.IsDefined(AppInsightsEnabled))
             {
-                if (CodeConfiguration != null)
+                writer.WritePropertyName("appInsightsEnabled"u8);
+                writer.WriteBooleanValue(AppInsightsEnabled.Value);
+            }
+            if (Optional.IsDefined(LivenessProbe))
+            {
+                if (LivenessProbe != null)
                 {
-                    writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration, options);
+                    writer.WritePropertyName("livenessProbe"u8);
+                    writer.WriteObjectValue(LivenessProbe, options);
                 }
                 else
                 {
-                    writer.WriteNull("codeConfiguration");
+                    writer.WriteNull("livenessProbe");
+                }
+            }
+            if (Optional.IsDefined(ReadinessProbe))
+            {
+                if (ReadinessProbe != null)
+                {
+                    writer.WritePropertyName("readinessProbe"u8);
+                    writer.WriteObjectValue(ReadinessProbe, options);
+                }
+                else
+                {
+                    writer.WriteNull("readinessProbe");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(InstanceType))
+            {
+                if (InstanceType != null)
+                {
+                    writer.WritePropertyName("instanceType"u8);
+                    writer.WriteStringValue(InstanceType);
+                }
+                else
+                {
+                    writer.WriteNull("instanceType");
+                }
+            }
+            if (Optional.IsDefined(Model))
+            {
+                if (Model != null)
+                {
+                    writer.WritePropertyName("model"u8);
+                    writer.WriteStringValue(Model);
+                }
+                else
+                {
+                    writer.WriteNull("model");
+                }
+            }
+            if (Optional.IsDefined(EgressPublicNetworkAccess))
+            {
+                writer.WritePropertyName("egressPublicNetworkAccess"u8);
+                writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(DataCollector))
+            {
+                if (DataCollector != null)
+                {
+                    writer.WritePropertyName("dataCollector"u8);
+                    writer.WriteObjectValue(DataCollector, options);
+                }
+                else
+                {
+                    writer.WriteNull("dataCollector");
                 }
             }
             if (Optional.IsDefined(Description))
@@ -161,6 +149,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("description");
+                }
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                if (Properties != null)
+                {
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("properties");
+                }
+            }
+            if (Optional.IsDefined(CodeConfiguration))
+            {
+                if (CodeConfiguration != null)
+                {
+                    writer.WritePropertyName("codeConfiguration"u8);
+                    writer.WriteObjectValue(CodeConfiguration, options);
+                }
+                else
+                {
+                    writer.WriteNull("codeConfiguration");
                 }
             }
             if (Optional.IsDefined(EnvironmentId))
@@ -191,24 +209,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("environmentVariables");
-                }
-            }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("properties");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -249,127 +249,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            bool? appInsightsEnabled = default;
-            DataCollector dataCollector = default;
-            MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default;
             MachineLearningEndpointComputeType endpointComputeType = default;
-            string instanceType = default;
-            MachineLearningProbeSettings livenessProbe = default;
-            string model = default;
-            string modelMountPath = default;
-            MachineLearningDeploymentProvisioningState? provisioningState = default;
-            MachineLearningProbeSettings readinessProbe = default;
-            MachineLearningOnlineRequestSettings requestSettings = default;
             MachineLearningOnlineScaleSettings scaleSettings = default;
-            MachineLearningCodeConfiguration codeConfiguration = default;
+            MachineLearningOnlineRequestSettings requestSettings = default;
+            string modelMountPath = default;
+            bool? appInsightsEnabled = default;
+            MachineLearningProbeSettings livenessProbe = default;
+            MachineLearningProbeSettings readinessProbe = default;
+            MachineLearningDeploymentProvisioningState? provisioningState = default;
+            string instanceType = default;
+            string model = default;
+            MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default;
+            DataCollector dataCollector = default;
             string description = default;
+            IDictionary<string, string> properties = default;
+            MachineLearningCodeConfiguration codeConfiguration = default;
             string environmentId = default;
             IDictionary<string, string> environmentVariables = default;
-            IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("appInsightsEnabled"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    appInsightsEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("dataCollector"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        dataCollector = null;
-                        continue;
-                    }
-                    dataCollector = DataCollector.DeserializeDataCollector(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("egressPublicNetworkAccess"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    egressPublicNetworkAccess = new MachineLearningEgressPublicNetworkAccessType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("endpointComputeType"u8))
                 {
                     endpointComputeType = new MachineLearningEndpointComputeType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        instanceType = null;
-                        continue;
-                    }
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("livenessProbe"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        livenessProbe = null;
-                        continue;
-                    }
-                    livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("model"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        model = null;
-                        continue;
-                    }
-                    model = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("modelMountPath"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        modelMountPath = null;
-                        continue;
-                    }
-                    modelMountPath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new MachineLearningDeploymentProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("readinessProbe"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        readinessProbe = null;
-                        continue;
-                    }
-                    readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("requestSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        requestSettings = null;
-                        continue;
-                    }
-                    requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleSettings"u8))
@@ -382,14 +285,101 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     scaleSettings = MachineLearningOnlineScaleSettings.DeserializeMachineLearningOnlineScaleSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("codeConfiguration"u8))
+                if (property.NameEquals("requestSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        codeConfiguration = null;
+                        requestSettings = null;
                         continue;
                     }
-                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
+                    requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("modelMountPath"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        modelMountPath = null;
+                        continue;
+                    }
+                    modelMountPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("appInsightsEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appInsightsEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("livenessProbe"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        livenessProbe = null;
+                        continue;
+                    }
+                    livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("readinessProbe"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        readinessProbe = null;
+                        continue;
+                    }
+                    readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new MachineLearningDeploymentProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        instanceType = null;
+                        continue;
+                    }
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("model"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        model = null;
+                        continue;
+                    }
+                    model = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("egressPublicNetworkAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    egressPublicNetworkAccess = new MachineLearningEgressPublicNetworkAccessType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataCollector"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dataCollector = null;
+                        continue;
+                    }
+                    dataCollector = DataCollector.DeserializeDataCollector(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -400,6 +390,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        properties = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("codeConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        codeConfiguration = null;
+                        continue;
+                    }
+                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentId"u8))
@@ -427,21 +442,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     environmentVariables = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        properties = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -449,24 +449,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningManagedOnlineDeployment(
-                codeConfiguration,
                 description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                codeConfiguration,
                 environmentId,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                appInsightsEnabled,
-                dataCollector,
-                egressPublicNetworkAccess,
                 endpointComputeType,
-                instanceType,
-                livenessProbe,
-                model,
-                modelMountPath,
-                provisioningState,
-                readinessProbe,
+                scaleSettings,
                 requestSettings,
-                scaleSettings);
+                modelMountPath,
+                appInsightsEnabled,
+                livenessProbe,
+                readinessProbe,
+                provisioningState,
+                instanceType,
+                model,
+                egressPublicNetworkAccess,
+                dataCollector);
         }
 
         BinaryData IPersistableModel<MachineLearningManagedOnlineDeployment>.Write(ModelReaderWriterOptions options)

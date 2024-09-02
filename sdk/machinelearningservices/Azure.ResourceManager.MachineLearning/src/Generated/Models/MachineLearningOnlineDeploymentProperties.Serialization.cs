@@ -25,93 +25,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppInsightsEnabled))
-            {
-                writer.WritePropertyName("appInsightsEnabled"u8);
-                writer.WriteBooleanValue(AppInsightsEnabled.Value);
-            }
-            if (Optional.IsDefined(DataCollector))
-            {
-                if (DataCollector != null)
-                {
-                    writer.WritePropertyName("dataCollector"u8);
-                    writer.WriteObjectValue(DataCollector, options);
-                }
-                else
-                {
-                    writer.WriteNull("dataCollector");
-                }
-            }
-            if (Optional.IsDefined(EgressPublicNetworkAccess))
-            {
-                writer.WritePropertyName("egressPublicNetworkAccess"u8);
-                writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToString());
-            }
             writer.WritePropertyName("endpointComputeType"u8);
             writer.WriteStringValue(EndpointComputeType.ToString());
-            if (Optional.IsDefined(InstanceType))
+            if (Optional.IsDefined(ScaleSettings))
             {
-                if (InstanceType != null)
+                if (ScaleSettings != null)
                 {
-                    writer.WritePropertyName("instanceType"u8);
-                    writer.WriteStringValue(InstanceType);
+                    writer.WritePropertyName("scaleSettings"u8);
+                    writer.WriteObjectValue(ScaleSettings, options);
                 }
                 else
                 {
-                    writer.WriteNull("instanceType");
-                }
-            }
-            if (Optional.IsDefined(LivenessProbe))
-            {
-                if (LivenessProbe != null)
-                {
-                    writer.WritePropertyName("livenessProbe"u8);
-                    writer.WriteObjectValue(LivenessProbe, options);
-                }
-                else
-                {
-                    writer.WriteNull("livenessProbe");
-                }
-            }
-            if (Optional.IsDefined(Model))
-            {
-                if (Model != null)
-                {
-                    writer.WritePropertyName("model"u8);
-                    writer.WriteStringValue(Model);
-                }
-                else
-                {
-                    writer.WriteNull("model");
-                }
-            }
-            if (Optional.IsDefined(ModelMountPath))
-            {
-                if (ModelMountPath != null)
-                {
-                    writer.WritePropertyName("modelMountPath"u8);
-                    writer.WriteStringValue(ModelMountPath);
-                }
-                else
-                {
-                    writer.WriteNull("modelMountPath");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(ReadinessProbe))
-            {
-                if (ReadinessProbe != null)
-                {
-                    writer.WritePropertyName("readinessProbe"u8);
-                    writer.WriteObjectValue(ReadinessProbe, options);
-                }
-                else
-                {
-                    writer.WriteNull("readinessProbe");
+                    writer.WriteNull("scaleSettings");
                 }
             }
             if (Optional.IsDefined(RequestSettings))
@@ -126,28 +51,91 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("requestSettings");
                 }
             }
-            if (Optional.IsDefined(ScaleSettings))
+            if (Optional.IsDefined(ModelMountPath))
             {
-                if (ScaleSettings != null)
+                if (ModelMountPath != null)
                 {
-                    writer.WritePropertyName("scaleSettings"u8);
-                    writer.WriteObjectValue(ScaleSettings, options);
+                    writer.WritePropertyName("modelMountPath"u8);
+                    writer.WriteStringValue(ModelMountPath);
                 }
                 else
                 {
-                    writer.WriteNull("scaleSettings");
+                    writer.WriteNull("modelMountPath");
                 }
             }
-            if (Optional.IsDefined(CodeConfiguration))
+            if (Optional.IsDefined(AppInsightsEnabled))
             {
-                if (CodeConfiguration != null)
+                writer.WritePropertyName("appInsightsEnabled"u8);
+                writer.WriteBooleanValue(AppInsightsEnabled.Value);
+            }
+            if (Optional.IsDefined(LivenessProbe))
+            {
+                if (LivenessProbe != null)
                 {
-                    writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration, options);
+                    writer.WritePropertyName("livenessProbe"u8);
+                    writer.WriteObjectValue(LivenessProbe, options);
                 }
                 else
                 {
-                    writer.WriteNull("codeConfiguration");
+                    writer.WriteNull("livenessProbe");
+                }
+            }
+            if (Optional.IsDefined(ReadinessProbe))
+            {
+                if (ReadinessProbe != null)
+                {
+                    writer.WritePropertyName("readinessProbe"u8);
+                    writer.WriteObjectValue(ReadinessProbe, options);
+                }
+                else
+                {
+                    writer.WriteNull("readinessProbe");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(InstanceType))
+            {
+                if (InstanceType != null)
+                {
+                    writer.WritePropertyName("instanceType"u8);
+                    writer.WriteStringValue(InstanceType);
+                }
+                else
+                {
+                    writer.WriteNull("instanceType");
+                }
+            }
+            if (Optional.IsDefined(Model))
+            {
+                if (Model != null)
+                {
+                    writer.WritePropertyName("model"u8);
+                    writer.WriteStringValue(Model);
+                }
+                else
+                {
+                    writer.WriteNull("model");
+                }
+            }
+            if (Optional.IsDefined(EgressPublicNetworkAccess))
+            {
+                writer.WritePropertyName("egressPublicNetworkAccess"u8);
+                writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(DataCollector))
+            {
+                if (DataCollector != null)
+                {
+                    writer.WritePropertyName("dataCollector"u8);
+                    writer.WriteObjectValue(DataCollector, options);
+                }
+                else
+                {
+                    writer.WriteNull("dataCollector");
                 }
             }
             if (Optional.IsDefined(Description))
@@ -160,6 +148,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("description");
+                }
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                if (Properties != null)
+                {
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("properties");
+                }
+            }
+            if (Optional.IsDefined(CodeConfiguration))
+            {
+                if (CodeConfiguration != null)
+                {
+                    writer.WritePropertyName("codeConfiguration"u8);
+                    writer.WriteObjectValue(CodeConfiguration, options);
+                }
+                else
+                {
+                    writer.WriteNull("codeConfiguration");
                 }
             }
             if (Optional.IsDefined(EnvironmentId))
@@ -190,24 +208,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("environmentVariables");
-                }
-            }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("properties");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)

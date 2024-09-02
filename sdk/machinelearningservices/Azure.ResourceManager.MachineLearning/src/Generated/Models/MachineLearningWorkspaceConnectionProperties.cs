@@ -60,32 +60,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"></param>
         /// <param name="expiryOn"></param>
         /// <param name="group"> Group based on connection category. </param>
         /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"></param>
-        /// <param name="peStatus"></param>
-        /// <param name="sharedUserList"></param>
         /// <param name="target"></param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, ConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, ConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthType = authType;
             Category = category;
             CreatedByWorkspaceArmId = createdByWorkspaceArmId;
-            Error = error;
             ExpiryOn = expiryOn;
             Group = group;
             IsSharedToAll = isSharedToAll;
-            Metadata = metadata;
-            PeRequirement = peRequirement;
-            PeStatus = peStatus;
-            SharedUserList = sharedUserList;
             Target = target;
-            UseWorkspaceManagedIdentity = useWorkspaceManagedIdentity;
+            Metadata = metadata;
+            SharedUserList = sharedUserList;
+            Value = value;
+            ValueFormat = valueFormat;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -95,25 +91,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningConnectionCategory? Category { get; set; }
         /// <summary> Gets the created by workspace arm id. </summary>
         public ResourceIdentifier CreatedByWorkspaceArmId { get; }
-        /// <summary> Gets or sets the error. </summary>
-        public string Error { get; set; }
         /// <summary> Gets or sets the expiry on. </summary>
         public DateTimeOffset? ExpiryOn { get; set; }
         /// <summary> Group based on connection category. </summary>
         public ConnectionGroup? Group { get; }
         /// <summary> Gets or sets the is shared to all. </summary>
         public bool? IsSharedToAll { get; set; }
-        /// <summary> Store user metadata for this connection. </summary>
-        public IDictionary<string, string> Metadata { get; }
-        /// <summary> Gets or sets the pe requirement. </summary>
-        public ManagedPERequirement? PeRequirement { get; set; }
-        /// <summary> Gets or sets the pe status. </summary>
-        public ManagedPEStatus? PeStatus { get; set; }
-        /// <summary> Gets the shared user list. </summary>
-        public IList<string> SharedUserList { get; }
         /// <summary> Gets or sets the target. </summary>
         public string Target { get; set; }
-        /// <summary> Gets or sets the use workspace managed identity. </summary>
-        public bool? UseWorkspaceManagedIdentity { get; set; }
+        /// <summary> Store user metadata for this connection. </summary>
+        public IDictionary<string, string> Metadata { get; }
+        /// <summary> Gets the shared user list. </summary>
+        public IList<string> SharedUserList { get; }
     }
 }

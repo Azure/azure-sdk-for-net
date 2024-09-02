@@ -26,25 +26,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("authMode"u8);
-            writer.WriteStringValue(AuthMode.ToString());
-            if (Optional.IsDefined(ContentSafety))
+            if (Optional.IsDefined(ModelSettings))
             {
-                if (ContentSafety != null)
+                if (ModelSettings != null)
                 {
-                    writer.WritePropertyName("contentSafety"u8);
-                    writer.WriteObjectValue(ContentSafety, options);
+                    writer.WritePropertyName("modelSettings"u8);
+                    writer.WriteObjectValue(ModelSettings, options);
                 }
                 else
                 {
-                    writer.WriteNull("contentSafety");
+                    writer.WriteNull("modelSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(EndpointState))
-            {
-                writer.WritePropertyName("endpointState"u8);
-                writer.WriteStringValue(EndpointState.Value.ToString());
-            }
+            writer.WritePropertyName("authMode"u8);
+            writer.WriteStringValue(AuthMode.ToString());
             if (options.Format != "W" && Optional.IsDefined(InferenceEndpoint))
             {
                 if (InferenceEndpoint != null)
@@ -56,6 +51,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("inferenceEndpoint");
                 }
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndpointState))
+            {
+                writer.WritePropertyName("endpointState"u8);
+                writer.WriteStringValue(EndpointState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionId))
             {
@@ -69,22 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("marketplaceSubscriptionId");
                 }
             }
-            if (Optional.IsDefined(ModelSettings))
+            if (Optional.IsDefined(ContentSafety))
             {
-                if (ModelSettings != null)
+                if (ContentSafety != null)
                 {
-                    writer.WritePropertyName("modelSettings"u8);
-                    writer.WriteObjectValue(ModelSettings, options);
+                    writer.WritePropertyName("contentSafety"u8);
+                    writer.WriteObjectValue(ContentSafety, options);
                 }
                 else
                 {
-                    writer.WriteNull("modelSettings");
+                    writer.WriteNull("contentSafety");
                 }
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,39 +124,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            ServerlessInferenceEndpointAuthMode authMode = default;
-            ContentSafety contentSafety = default;
-            ServerlessEndpointState? endpointState = default;
-            ServerlessInferenceEndpoint inferenceEndpoint = default;
-            string marketplaceSubscriptionId = default;
             ModelSettings modelSettings = default;
+            ServerlessInferenceEndpointAuthMode authMode = default;
+            ServerlessInferenceEndpoint inferenceEndpoint = default;
             MachineLearningEndpointProvisioningState? provisioningState = default;
+            ServerlessEndpointState? endpointState = default;
+            string marketplaceSubscriptionId = default;
+            ContentSafety contentSafety = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("modelSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        modelSettings = null;
+                        continue;
+                    }
+                    modelSettings = ModelSettings.DeserializeModelSettings(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("authMode"u8))
                 {
                     authMode = new ServerlessInferenceEndpointAuthMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("contentSafety"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        contentSafety = null;
-                        continue;
-                    }
-                    contentSafety = ContentSafety.DeserializeContentSafety(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("endpointState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    endpointState = new ServerlessEndpointState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("inferenceEndpoint"u8))
@@ -169,6 +160,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     inferenceEndpoint = ServerlessInferenceEndpoint.DeserializeServerlessInferenceEndpoint(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new MachineLearningEndpointProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("endpointState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpointState = new ServerlessEndpointState(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("marketplaceSubscriptionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -179,23 +188,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     marketplaceSubscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelSettings"u8))
+                if (property.NameEquals("contentSafety"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        modelSettings = null;
+                        contentSafety = null;
                         continue;
                     }
-                    modelSettings = ModelSettings.DeserializeModelSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new MachineLearningEndpointProvisioningState(property.Value.GetString());
+                    contentSafety = ContentSafety.DeserializeContentSafety(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -205,13 +205,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ServerlessEndpointProperties(
-                authMode,
-                contentSafety,
-                endpointState,
-                inferenceEndpoint,
-                marketplaceSubscriptionId,
                 modelSettings,
+                authMode,
+                inferenceEndpoint,
                 provisioningState,
+                endpointState,
+                marketplaceSubscriptionId,
+                contentSafety,
                 serializedAdditionalRawData);
         }
 

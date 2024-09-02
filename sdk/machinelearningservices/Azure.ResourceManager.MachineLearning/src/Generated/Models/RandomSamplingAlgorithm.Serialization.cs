@@ -26,11 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Rule))
-            {
-                writer.WritePropertyName("rule"u8);
-                writer.WriteStringValue(Rule.Value.ToString());
-            }
             if (Optional.IsDefined(Seed))
             {
                 if (Seed != null)
@@ -42,6 +37,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("seed");
                 }
+            }
+            if (Optional.IsDefined(Rule))
+            {
+                writer.WritePropertyName("rule"u8);
+                writer.WriteStringValue(Rule.Value.ToString());
             }
             writer.WritePropertyName("samplingAlgorithmType"u8);
             writer.WriteStringValue(SamplingAlgorithmType.ToString());
@@ -83,22 +83,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            RandomSamplingAlgorithmRule? rule = default;
             int? seed = default;
+            RandomSamplingAlgorithmRule? rule = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rule"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rule = new RandomSamplingAlgorithmRule(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("seed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -107,6 +98,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     seed = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("rule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rule = new RandomSamplingAlgorithmRule(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("samplingAlgorithmType"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, rule, seed);
+            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, seed, rule);
         }
 
         BinaryData IPersistableModel<RandomSamplingAlgorithm>.Write(ModelReaderWriterOptions options)

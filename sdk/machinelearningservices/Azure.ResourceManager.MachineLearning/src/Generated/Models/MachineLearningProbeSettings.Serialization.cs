@@ -31,6 +31,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
+            if (Optional.IsDefined(SuccessThreshold))
+            {
+                writer.WritePropertyName("successThreshold"u8);
+                writer.WriteNumberValue(SuccessThreshold.Value);
+            }
+            if (Optional.IsDefined(Timeout))
+            {
+                writer.WritePropertyName("timeout"u8);
+                writer.WriteStringValue(Timeout.Value, "P");
+            }
+            if (Optional.IsDefined(Period))
+            {
+                writer.WritePropertyName("period"u8);
+                writer.WriteStringValue(Period.Value, "P");
+            }
             if (Optional.IsDefined(InitialDelay))
             {
                 if (InitialDelay != null)
@@ -42,21 +57,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("initialDelay");
                 }
-            }
-            if (Optional.IsDefined(Period))
-            {
-                writer.WritePropertyName("period"u8);
-                writer.WriteStringValue(Period.Value, "P");
-            }
-            if (Optional.IsDefined(SuccessThreshold))
-            {
-                writer.WritePropertyName("successThreshold"u8);
-                writer.WriteNumberValue(SuccessThreshold.Value);
-            }
-            if (Optional.IsDefined(Timeout))
-            {
-                writer.WritePropertyName("timeout"u8);
-                writer.WriteStringValue(Timeout.Value, "P");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             int? failureThreshold = default;
-            TimeSpan? initialDelay = default;
-            TimeSpan? period = default;
             int? successThreshold = default;
             TimeSpan? timeout = default;
+            TimeSpan? period = default;
+            TimeSpan? initialDelay = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,25 +112,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     failureThreshold = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("initialDelay"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        initialDelay = null;
-                        continue;
-                    }
-                    initialDelay = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("period"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    period = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("successThreshold"u8))
@@ -151,6 +132,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("period"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    period = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("initialDelay"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        initialDelay = null;
+                        continue;
+                    }
+                    initialDelay = property.Value.GetTimeSpan("P");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningProbeSettings(
                 failureThreshold,
-                initialDelay,
-                period,
                 successThreshold,
                 timeout,
+                period,
+                initialDelay,
                 serializedAdditionalRawData);
         }
 

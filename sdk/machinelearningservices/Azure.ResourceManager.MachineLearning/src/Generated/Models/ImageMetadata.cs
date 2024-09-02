@@ -54,14 +54,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="currentImageVersion"> Specifies the current operating system image version this compute instance is running on. </param>
         /// <param name="latestImageVersion"> Specifies the latest available operating system image version. </param>
         /// <param name="isLatestOSImageVersion"> Specifies whether this compute instance is running on the latest operating system image. </param>
-        /// <param name="osPatchingStatus"> Metadata about the os patching. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageMetadata(string currentImageVersion, string latestImageVersion, bool? isLatestOSImageVersion, OSPatchingStatus osPatchingStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImageMetadata(string currentImageVersion, string latestImageVersion, bool? isLatestOSImageVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrentImageVersion = currentImageVersion;
             LatestImageVersion = latestImageVersion;
             IsLatestOSImageVersion = isLatestOSImageVersion;
-            OSPatchingStatus = osPatchingStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,7 +69,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string LatestImageVersion { get; }
         /// <summary> Specifies whether this compute instance is running on the latest operating system image. </summary>
         public bool? IsLatestOSImageVersion { get; }
-        /// <summary> Metadata about the os patching. </summary>
-        public OSPatchingStatus OSPatchingStatus { get; }
     }
 }

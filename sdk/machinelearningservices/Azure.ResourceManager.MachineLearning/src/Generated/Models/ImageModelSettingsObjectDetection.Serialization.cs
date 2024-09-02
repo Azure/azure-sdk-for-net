@@ -168,18 +168,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("validationMetricType"u8);
                 writer.WriteStringValue(ValidationMetricType.Value.ToString());
             }
-            if (Optional.IsDefined(AdvancedSettings))
-            {
-                if (AdvancedSettings != null)
-                {
-                    writer.WritePropertyName("advancedSettings"u8);
-                    writer.WriteStringValue(AdvancedSettings);
-                }
-                else
-                {
-                    writer.WriteNull("advancedSettings");
-                }
-            }
             if (Optional.IsDefined(AmsGradient))
             {
                 if (AmsGradient != null)
@@ -190,6 +178,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("amsGradient");
+                }
+            }
+            if (Optional.IsDefined(AdvancedSettings))
+            {
+                if (AdvancedSettings != null)
+                {
+                    writer.WritePropertyName("advancedSettings"u8);
+                    writer.WriteStringValue(AdvancedSettings);
+                }
+                else
+                {
+                    writer.WriteNull("advancedSettings");
                 }
             }
             if (Optional.IsDefined(Augmentations))
@@ -240,18 +240,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("checkpointFrequency");
                 }
             }
-            if (Optional.IsDefined(CheckpointModel))
-            {
-                if (CheckpointModel != null)
-                {
-                    writer.WritePropertyName("checkpointModel"u8);
-                    writer.WriteObjectValue(CheckpointModel, options);
-                }
-                else
-                {
-                    writer.WriteNull("checkpointModel");
-                }
-            }
             if (Optional.IsDefined(CheckpointRunId))
             {
                 if (CheckpointRunId != null)
@@ -262,6 +250,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("checkpointRunId");
+                }
+            }
+            if (Optional.IsDefined(CheckpointModel))
+            {
+                if (CheckpointModel != null)
+                {
+                    writer.WritePropertyName("checkpointModel"u8);
+                    writer.WriteObjectValue(CheckpointModel, options);
+                }
+                else
+                {
+                    writer.WriteNull("checkpointModel");
                 }
             }
             if (Optional.IsDefined(Distributed))
@@ -312,18 +312,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyStoppingPatience");
                 }
             }
-            if (Optional.IsDefined(EnableOnnxNormalization))
-            {
-                if (EnableOnnxNormalization != null)
-                {
-                    writer.WritePropertyName("enableOnnxNormalization"u8);
-                    writer.WriteBooleanValue(EnableOnnxNormalization.Value);
-                }
-                else
-                {
-                    writer.WriteNull("enableOnnxNormalization");
-                }
-            }
             if (Optional.IsDefined(EvaluationFrequency))
             {
                 if (EvaluationFrequency != null)
@@ -334,6 +322,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("evaluationFrequency");
+                }
+            }
+            if (Optional.IsDefined(EnableOnnxNormalization))
+            {
+                if (EnableOnnxNormalization != null)
+                {
+                    writer.WritePropertyName("enableOnnxNormalization"u8);
+                    writer.WriteBooleanValue(EnableOnnxNormalization.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableOnnxNormalization");
                 }
             }
             if (Optional.IsDefined(GradientAccumulationStep))
@@ -589,20 +589,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             float? tilePredictionsNmsThreshold = default;
             float? validationIouThreshold = default;
             ValidationMetricType? validationMetricType = default;
-            string advancedSettings = default;
             bool? amsGradient = default;
+            string advancedSettings = default;
             string augmentations = default;
             float? beta1 = default;
             float? beta2 = default;
             int? checkpointFrequency = default;
-            MachineLearningFlowModelJobInput checkpointModel = default;
             string checkpointRunId = default;
+            MachineLearningFlowModelJobInput checkpointModel = default;
             bool? distributed = default;
             bool? earlyStopping = default;
             int? earlyStoppingDelay = default;
             int? earlyStoppingPatience = default;
-            bool? enableOnnxNormalization = default;
             int? evaluationFrequency = default;
+            bool? enableOnnxNormalization = default;
             int? gradientAccumulationStep = default;
             int? layersToFreeze = default;
             float? learningRate = default;
@@ -753,16 +753,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     validationMetricType = new ValidationMetricType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("advancedSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        advancedSettings = null;
-                        continue;
-                    }
-                    advancedSettings = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("amsGradient"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -771,6 +761,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     amsGradient = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("advancedSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        advancedSettings = null;
+                        continue;
+                    }
+                    advancedSettings = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("augmentations"u8))
@@ -813,16 +813,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     checkpointFrequency = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("checkpointModel"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        checkpointModel = null;
-                        continue;
-                    }
-                    checkpointModel = MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("checkpointRunId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -831,6 +821,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     checkpointRunId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("checkpointModel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        checkpointModel = null;
+                        continue;
+                    }
+                    checkpointModel = MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("distributed"u8))
@@ -873,16 +873,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     earlyStoppingPatience = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enableOnnxNormalization"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        enableOnnxNormalization = null;
-                        continue;
-                    }
-                    enableOnnxNormalization = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("evaluationFrequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -891,6 +881,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     evaluationFrequency = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("enableOnnxNormalization"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enableOnnxNormalization = null;
+                        continue;
+                    }
+                    enableOnnxNormalization = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("gradientAccumulationStep"u8))
@@ -1078,20 +1078,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ImageModelSettingsObjectDetection(
-                advancedSettings,
                 amsGradient,
+                advancedSettings,
                 augmentations,
                 beta1,
                 beta2,
                 checkpointFrequency,
-                checkpointModel,
                 checkpointRunId,
+                checkpointModel,
                 distributed,
                 earlyStopping,
                 earlyStoppingDelay,
                 earlyStoppingPatience,
-                enableOnnxNormalization,
                 evaluationFrequency,
+                enableOnnxNormalization,
                 gradientAccumulationStep,
                 layersToFreeze,
                 learningRate,

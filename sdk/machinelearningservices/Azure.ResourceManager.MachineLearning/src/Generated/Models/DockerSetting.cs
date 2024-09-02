@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The DockerSetting. </summary>
+    /// <summary> Docker container configuration. </summary>
     public partial class DockerSetting
     {
         /// <summary> Initializes a new instance of <see cref="DockerSetting"/>. </summary>

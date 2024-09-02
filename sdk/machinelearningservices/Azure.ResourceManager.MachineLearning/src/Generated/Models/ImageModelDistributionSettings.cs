@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Minimum number of epochs or validation evaluations with no primary metric improvement before
         /// the run is stopped. Must be a positive integer.
         /// </param>
-        /// <param name="enableOnnxNormalization"> Enable normalization when exporting ONNX model. </param>
         /// <param name="evaluationFrequency"> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </param>
+        /// <param name="enableOnnxNormalization"> Enable normalization when exporting ONNX model. </param>
         /// <param name="gradientAccumulationStep">
         /// Gradient accumulation means running a configured number of "GradAccumulationStep" steps without
         /// updating the model weights while accumulating the gradients of those steps, and then using
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="warmupCosineLRWarmupEpochs"> Value of warmup epochs when learning rate scheduler is 'warmup_cosine'. Must be a positive integer. </param>
         /// <param name="weightDecay"> Value of weight decay when optimizer is 'sgd', 'adam', or 'adamw'. Must be a float in the range[0, 1]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageModelDistributionSettings(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImageModelDistributionSettings(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string evaluationFrequency, string enableOnnxNormalization, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AmsGradient = amsGradient;
             Augmentations = augmentations;
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EarlyStopping = earlyStopping;
             EarlyStoppingDelay = earlyStoppingDelay;
             EarlyStoppingPatience = earlyStoppingPatience;
-            EnableOnnxNormalization = enableOnnxNormalization;
             EvaluationFrequency = evaluationFrequency;
+            EnableOnnxNormalization = enableOnnxNormalization;
             GradientAccumulationStep = gradientAccumulationStep;
             LayersToFreeze = layersToFreeze;
             LearningRate = learningRate;
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// the run is stopped. Must be a positive integer.
         /// </summary>
         public string EarlyStoppingPatience { get; set; }
-        /// <summary> Enable normalization when exporting ONNX model. </summary>
-        public string EnableOnnxNormalization { get; set; }
         /// <summary> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </summary>
         public string EvaluationFrequency { get; set; }
+        /// <summary> Enable normalization when exporting ONNX model. </summary>
+        public string EnableOnnxNormalization { get; set; }
         /// <summary>
         /// Gradient accumulation means running a configured number of "GradAccumulationStep" steps without
         /// updating the model weights while accumulating the gradients of those steps, and then using

@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
+            writer.WritePropertyName("jobInputType"u8);
+            writer.WriteStringValue(JobInputType.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -40,8 +42,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            writer.WritePropertyName("jobInputType"u8);
-            writer.WriteStringValue(JobInputType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string value = default;
-            string description = default;
             JobInputType jobInputType = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("jobInputType"u8))
+                {
+                    jobInputType = new JobInputType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -102,18 +107,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobInputType"u8))
-                {
-                    jobInputType = new JobInputType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningLiteralJobInput(description, jobInputType, serializedAdditionalRawData, value);
+            return new MachineLearningLiteralJobInput(jobInputType, description, serializedAdditionalRawData, value);
         }
 
         BinaryData IPersistableModel<MachineLearningLiteralJobInput>.Write(ModelReaderWriterOptions options)

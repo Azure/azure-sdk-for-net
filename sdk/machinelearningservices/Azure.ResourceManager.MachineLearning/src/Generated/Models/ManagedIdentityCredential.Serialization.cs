@@ -38,6 +38,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("managedIdentityType");
                 }
             }
+            if (Optional.IsDefined(UserManagedIdentityResourceId))
+            {
+                if (UserManagedIdentityResourceId != null)
+                {
+                    writer.WritePropertyName("userManagedIdentityResourceId"u8);
+                    writer.WriteStringValue(UserManagedIdentityResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("userManagedIdentityResourceId");
+                }
+            }
             if (Optional.IsDefined(UserManagedIdentityClientId))
             {
                 if (UserManagedIdentityClientId != null)
@@ -60,18 +72,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("userManagedIdentityPrincipalId");
-                }
-            }
-            if (Optional.IsDefined(UserManagedIdentityResourceId))
-            {
-                if (UserManagedIdentityResourceId != null)
-                {
-                    writer.WritePropertyName("userManagedIdentityResourceId"u8);
-                    writer.WriteStringValue(UserManagedIdentityResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("userManagedIdentityResourceId");
                 }
             }
             if (Optional.IsDefined(UserManagedIdentityTenantId))
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string managedIdentityType = default;
+            string userManagedIdentityResourceId = default;
             string userManagedIdentityClientId = default;
             string userManagedIdentityPrincipalId = default;
-            string userManagedIdentityResourceId = default;
             string userManagedIdentityTenantId = default;
             DataReferenceCredentialType credentialType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,6 +144,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     managedIdentityType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("userManagedIdentityResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        userManagedIdentityResourceId = null;
+                        continue;
+                    }
+                    userManagedIdentityResourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("userManagedIdentityClientId"u8))
@@ -164,16 +174,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     userManagedIdentityPrincipalId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("userManagedIdentityResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        userManagedIdentityResourceId = null;
-                        continue;
-                    }
-                    userManagedIdentityResourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("userManagedIdentityTenantId"u8))
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 credentialType,
                 serializedAdditionalRawData,
                 managedIdentityType,
+                userManagedIdentityResourceId,
                 userManagedIdentityClientId,
                 userManagedIdentityPrincipalId,
-                userManagedIdentityResourceId,
                 userManagedIdentityTenantId);
         }
 

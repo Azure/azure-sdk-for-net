@@ -26,23 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EmailOn))
-            {
-                if (EmailOn != null)
-                {
-                    writer.WritePropertyName("emailOn"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in EmailOn)
-                    {
-                        writer.WriteStringValue(item.ToString());
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("emailOn");
-                }
-            }
             if (Optional.IsCollectionDefined(Emails))
             {
                 if (Emails != null)
@@ -58,6 +41,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("emails");
+                }
+            }
+            if (Optional.IsCollectionDefined(EmailOn))
+            {
+                if (EmailOn != null)
+                {
+                    writer.WritePropertyName("emailOn"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in EmailOn)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("emailOn");
                 }
             }
             if (Optional.IsCollectionDefined(Webhooks))
@@ -116,28 +116,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<EmailNotificationEnableType> emailOn = default;
             IList<string> emails = default;
+            IList<EmailNotificationEnableType> emailOn = default;
             IDictionary<string, MachineLearningWebhook> webhooks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("emailOn"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        emailOn = null;
-                        continue;
-                    }
-                    List<EmailNotificationEnableType> array = new List<EmailNotificationEnableType>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new EmailNotificationEnableType(item.GetString()));
-                    }
-                    emailOn = array;
-                    continue;
-                }
                 if (property.NameEquals("emails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -151,6 +136,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         array.Add(item.GetString());
                     }
                     emails = array;
+                    continue;
+                }
+                if (property.NameEquals("emailOn"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        emailOn = null;
+                        continue;
+                    }
+                    List<EmailNotificationEnableType> array = new List<EmailNotificationEnableType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new EmailNotificationEnableType(item.GetString()));
+                    }
+                    emailOn = array;
                     continue;
                 }
                 if (property.NameEquals("webhooks"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NotificationSetting(emailOn ?? new ChangeTrackingList<EmailNotificationEnableType>(), emails ?? new ChangeTrackingList<string>(), webhooks ?? new ChangeTrackingDictionary<string, MachineLearningWebhook>(), serializedAdditionalRawData);
+            return new NotificationSetting(emails ?? new ChangeTrackingList<string>(), emailOn ?? new ChangeTrackingList<EmailNotificationEnableType>(), webhooks ?? new ChangeTrackingDictionary<string, MachineLearningWebhook>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationSetting>.Write(ModelReaderWriterOptions options)

@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("goal"u8);
-            writer.WriteStringValue(Goal.ToString());
             writer.WritePropertyName("primaryMetric"u8);
             writer.WriteStringValue(PrimaryMetric);
+            writer.WritePropertyName("goal"u8);
+            writer.WriteStringValue(Goal.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -68,20 +68,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningGoal goal = default;
             string primaryMetric = default;
+            MachineLearningGoal goal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("goal"u8))
-                {
-                    goal = new MachineLearningGoal(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("primaryMetric"u8))
                 {
                     primaryMetric = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("goal"u8))
+                {
+                    goal = new MachineLearningGoal(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningObjective(goal, primaryMetric, serializedAdditionalRawData);
+            return new MachineLearningObjective(primaryMetric, goal, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningObjective>.Write(ModelReaderWriterOptions options)

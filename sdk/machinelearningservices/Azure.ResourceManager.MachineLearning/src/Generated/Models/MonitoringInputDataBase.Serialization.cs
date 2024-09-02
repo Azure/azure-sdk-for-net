@@ -26,6 +26,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("inputDataType"u8);
+            writer.WriteStringValue(InputDataType.ToString());
+            if (Optional.IsDefined(DataContext))
+            {
+                if (DataContext != null)
+                {
+                    writer.WritePropertyName("dataContext"u8);
+                    writer.WriteStringValue(DataContext);
+                }
+                else
+                {
+                    writer.WriteNull("dataContext");
+                }
+            }
+            writer.WritePropertyName("jobInputType"u8);
+            writer.WriteStringValue(JobInputType.ToString());
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsCollectionDefined(Columns))
             {
                 if (Columns != null)
@@ -44,24 +62,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (Optional.IsDefined(DataContext))
-            {
-                if (DataContext != null)
-                {
-                    writer.WritePropertyName("dataContext"u8);
-                    writer.WriteStringValue(DataContext);
-                }
-                else
-                {
-                    writer.WriteNull("dataContext");
-                }
-            }
-            writer.WritePropertyName("inputDataType"u8);
-            writer.WriteStringValue(InputDataType.ToString());
-            writer.WritePropertyName("jobInputType"u8);
-            writer.WriteStringValue(JobInputType.ToString());
-            writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

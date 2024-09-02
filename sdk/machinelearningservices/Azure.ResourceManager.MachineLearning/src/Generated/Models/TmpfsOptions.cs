@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The TmpfsOptions. </summary>
+    /// <summary> Describes the tmpfs options for the container. </summary>
     internal partial class TmpfsOptions
     {
         /// <summary>

@@ -38,8 +38,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("authorityUrl");
                 }
             }
-            writer.WritePropertyName("clientId"u8);
-            writer.WriteStringValue(ClientId);
             if (Optional.IsDefined(ResourceUri))
             {
                 if (ResourceUri != null)
@@ -52,12 +50,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceUrl");
                 }
             }
-            writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets, options);
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
+            writer.WritePropertyName("clientId"u8);
+            writer.WriteStringValue(ClientId);
             writer.WritePropertyName("thumbprint"u8);
             writer.WriteStringValue(Thumbprint);
+            writer.WritePropertyName("secrets"u8);
+            writer.WriteObjectValue(Secrets, options);
             writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Uri authorityUrl = default;
-            Guid clientId = default;
             Uri resourceUrl = default;
-            MachineLearningCertificateDatastoreSecrets secrets = default;
             Guid tenantId = default;
+            Guid clientId = default;
             string thumbprint = default;
+            MachineLearningCertificateDatastoreSecrets secrets = default;
             CredentialsType credentialsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -119,11 +119,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     authorityUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clientId"u8))
-                {
-                    clientId = property.Value.GetGuid();
-                    continue;
-                }
                 if (property.NameEquals("resourceUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -134,19 +129,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     resourceUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secrets"u8))
-                {
-                    secrets = MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("tenantId"u8))
                 {
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (property.NameEquals("clientId"u8))
+                {
+                    clientId = property.Value.GetGuid();
+                    continue;
+                }
                 if (property.NameEquals("thumbprint"u8))
                 {
                     thumbprint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("secrets"u8))
+                {
+                    secrets = MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("credentialsType"u8))
@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 credentialsType,
                 serializedAdditionalRawData,
                 authorityUrl,
-                clientId,
                 resourceUrl,
-                secrets,
                 tenantId,
-                thumbprint);
+                clientId,
+                thumbprint,
+                secrets);
         }
 
         BinaryData IPersistableModel<MachineLearningCertificateDatastoreCredentials>.Write(ModelReaderWriterOptions options)

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Property bag for FQDN endpoints result. </summary>
+    /// <summary> The MachineLearningFqdnEndpoints. </summary>
     public partial class MachineLearningFqdnEndpoints
     {
         /// <summary>

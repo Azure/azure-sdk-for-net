@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MountBindOptions. </summary>
+    /// <summary> Describes the bind options for the container. </summary>
     public partial class MountBindOptions
     {
         /// <summary>

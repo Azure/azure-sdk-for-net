@@ -31,30 +31,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination, options);
             }
-            if (Optional.IsCollectionDefined(Fqdns))
-            {
-                writer.WritePropertyName("fqdns"u8);
-                writer.WriteStartArray();
-                foreach (var item in Fqdns)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ParentRuleNames))
-            {
-                writer.WritePropertyName("parentRuleNames"u8);
-                writer.WriteStartArray();
-                foreach (var item in ParentRuleNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Status))
             {
@@ -102,9 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             PrivateEndpointDestination destination = default;
-            IList<string> fqdns = default;
             OutboundRuleCategory? category = default;
-            IReadOnlyList<string> parentRuleNames = default;
             OutboundRuleStatus? status = default;
             OutboundRuleType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -120,20 +98,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     destination = PrivateEndpointDestination.DeserializePrivateEndpointDestination(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("fqdns"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    fqdns = array;
-                    continue;
-                }
                 if (property.NameEquals("category"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -141,20 +105,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     category = new OutboundRuleCategory(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("parentRuleNames"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    parentRuleNames = array;
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -177,14 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PrivateEndpointOutboundRule(
-                category,
-                parentRuleNames ?? new ChangeTrackingList<string>(),
-                status,
-                type,
-                serializedAdditionalRawData,
-                destination,
-                fqdns ?? new ChangeTrackingList<string>());
+            return new PrivateEndpointOutboundRule(category, status, type, serializedAdditionalRawData, destination);
         }
 
         BinaryData IPersistableModel<PrivateEndpointOutboundRule>.Write(ModelReaderWriterOptions options)

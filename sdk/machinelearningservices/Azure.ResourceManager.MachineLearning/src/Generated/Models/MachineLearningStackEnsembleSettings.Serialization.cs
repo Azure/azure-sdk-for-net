@@ -26,6 +26,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(StackMetaLearnerType))
+            {
+                writer.WritePropertyName("stackMetaLearnerType"u8);
+                writer.WriteStringValue(StackMetaLearnerType.Value.ToString());
+            }
+            if (Optional.IsDefined(StackMetaLearnerTrainPercentage))
+            {
+                writer.WritePropertyName("stackMetaLearnerTrainPercentage"u8);
+                writer.WriteNumberValue(StackMetaLearnerTrainPercentage.Value);
+            }
             if (Optional.IsDefined(StackMetaLearnerKWargs))
             {
                 if (StackMetaLearnerKWargs != null)
@@ -44,16 +54,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("stackMetaLearnerKWargs");
                 }
-            }
-            if (Optional.IsDefined(StackMetaLearnerTrainPercentage))
-            {
-                writer.WritePropertyName("stackMetaLearnerTrainPercentage"u8);
-                writer.WriteNumberValue(StackMetaLearnerTrainPercentage.Value);
-            }
-            if (Optional.IsDefined(StackMetaLearnerType))
-            {
-                writer.WritePropertyName("stackMetaLearnerType"u8);
-                writer.WriteStringValue(StackMetaLearnerType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,21 +93,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            BinaryData stackMetaLearnerKWargs = default;
-            double? stackMetaLearnerTrainPercentage = default;
             MachineLearningStackMetaLearnerType? stackMetaLearnerType = default;
+            double? stackMetaLearnerTrainPercentage = default;
+            BinaryData stackMetaLearnerKWargs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stackMetaLearnerKWargs"u8))
+                if (property.NameEquals("stackMetaLearnerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        stackMetaLearnerKWargs = null;
                         continue;
                     }
-                    stackMetaLearnerKWargs = BinaryData.FromString(property.Value.GetRawText());
+                    stackMetaLearnerType = new MachineLearningStackMetaLearnerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stackMetaLearnerTrainPercentage"u8))
@@ -119,13 +118,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     stackMetaLearnerTrainPercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("stackMetaLearnerType"u8))
+                if (property.NameEquals("stackMetaLearnerKWargs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        stackMetaLearnerKWargs = null;
                         continue;
                     }
-                    stackMetaLearnerType = new MachineLearningStackMetaLearnerType(property.Value.GetString());
+                    stackMetaLearnerKWargs = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningStackEnsembleSettings(stackMetaLearnerKWargs, stackMetaLearnerTrainPercentage, stackMetaLearnerType, serializedAdditionalRawData);
+            return new MachineLearningStackEnsembleSettings(stackMetaLearnerType, stackMetaLearnerTrainPercentage, stackMetaLearnerKWargs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningStackEnsembleSettings>.Write(ModelReaderWriterOptions options)

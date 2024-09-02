@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The VolumeDefinition. </summary>
+    /// <summary> Describes the volume configuration for the container. </summary>
     public partial class VolumeDefinition
     {
         /// <summary>

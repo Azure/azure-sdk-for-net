@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(BlockedTransformers))
             {
                 if (BlockedTransformers != null)
@@ -61,16 +66,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columnNameAndTypes");
                 }
             }
-            if (Optional.IsDefined(EnableDnnFeaturization))
-            {
-                writer.WritePropertyName("enableDnnFeaturization"u8);
-                writer.WriteBooleanValue(EnableDnnFeaturization.Value);
-            }
-            if (Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
             if (Optional.IsCollectionDefined(TransformerParams))
             {
                 if (TransformerParams != null)
@@ -98,6 +93,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("transformerParams");
                 }
+            }
+            if (Optional.IsDefined(EnableDnnFeaturization))
+            {
+                writer.WritePropertyName("enableDnnFeaturization"u8);
+                writer.WriteBooleanValue(EnableDnnFeaturization.Value);
             }
             if (Optional.IsDefined(DatasetLanguage))
             {
@@ -149,16 +149,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            MachineLearningFeaturizationMode? mode = default;
             IList<BlockedTransformer> blockedTransformers = default;
             IDictionary<string, string> columnNameAndTypes = default;
-            bool? enableDnnFeaturization = default;
-            MachineLearningFeaturizationMode? mode = default;
             IDictionary<string, IList<ColumnTransformer>> transformerParams = default;
+            bool? enableDnnFeaturization = default;
             string datasetLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("mode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mode = new MachineLearningFeaturizationMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("blockedTransformers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -189,24 +198,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     columnNameAndTypes = dictionary;
                     continue;
                 }
-                if (property.NameEquals("enableDnnFeaturization"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableDnnFeaturization = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("mode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mode = new MachineLearningFeaturizationMode(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("transformerParams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -234,6 +225,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     transformerParams = dictionary;
                     continue;
                 }
+                if (property.NameEquals("enableDnnFeaturization"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableDnnFeaturization = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("datasetLanguage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new TableVerticalFeaturizationSettings(
                 datasetLanguage,
                 serializedAdditionalRawData,
+                mode,
                 blockedTransformers ?? new ChangeTrackingList<BlockedTransformer>(),
                 columnNameAndTypes ?? new ChangeTrackingDictionary<string, string>(),
-                enableDnnFeaturization,
-                mode,
-                transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>());
+                transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>(),
+                enableDnnFeaturization);
         }
 
         BinaryData IPersistableModel<TableVerticalFeaturizationSettings>.Write(ModelReaderWriterOptions options)

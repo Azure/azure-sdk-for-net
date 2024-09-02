@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTriggerBase"/>. </summary>
+        /// <param name="triggerType"> [Required]. </param>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"
@@ -64,17 +65,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
-        /// <param name="triggerType"> [Required]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningTriggerBase(string endTime, string startTime, string timeZone, TriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningTriggerBase(TriggerType triggerType, string endTime, string startTime, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            TriggerType = triggerType;
             EndTime = endTime;
             StartTime = startTime;
             TimeZone = timeZone;
-            TriggerType = triggerType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> [Required]. </summary>
+        internal TriggerType TriggerType { get; set; }
         /// <summary>
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"
@@ -88,7 +90,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </summary>
         public string TimeZone { get; set; }
-        /// <summary> [Required]. </summary>
-        internal TriggerType TriggerType { get; set; }
     }
 }

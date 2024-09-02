@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The EnvironmentVariable. </summary>
+    /// <summary> Environment Variables for the container. </summary>
     public partial class EnvironmentVariable
     {
         /// <summary> Initializes a new instance of <see cref="EnvironmentVariable"/>. </summary>

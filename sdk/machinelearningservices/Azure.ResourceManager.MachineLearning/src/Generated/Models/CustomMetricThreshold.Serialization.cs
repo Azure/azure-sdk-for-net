@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("metric"u8);
-            writer.WriteStringValue(Metric);
             if (Optional.IsDefined(Threshold))
             {
                 if (Threshold != null)
@@ -40,6 +38,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("threshold");
                 }
             }
+            writer.WritePropertyName("metric"u8);
+            writer.WriteStringValue(Metric);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -78,17 +78,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string metric = default;
             MonitoringThreshold threshold = default;
+            string metric = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metric"u8))
-                {
-                    metric = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("threshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -99,13 +94,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("metric"u8))
+                {
+                    metric = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomMetricThreshold(metric, threshold, serializedAdditionalRawData);
+            return new CustomMetricThreshold(threshold, metric, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomMetricThreshold>.Write(ModelReaderWriterOptions options)

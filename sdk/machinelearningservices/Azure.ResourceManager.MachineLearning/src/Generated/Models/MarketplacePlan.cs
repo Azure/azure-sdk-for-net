@@ -51,23 +51,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MarketplacePlan"/>. </summary>
+        /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
         /// <param name="offerId"> The identifying name of the Offer of the Marketplace Plan. </param>
         /// <param name="planId"> The identifying name of the Plan of the Marketplace Plan. </param>
-        /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplacePlan(string offerId, string planId, string publisherId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplacePlan(string publisherId, string offerId, string planId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            PublisherId = publisherId;
             OfferId = offerId;
             PlanId = planId;
-            PublisherId = publisherId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The identifying name of the Publisher of the Marketplace Plan. </summary>
+        public string PublisherId { get; }
         /// <summary> The identifying name of the Offer of the Marketplace Plan. </summary>
         public string OfferId { get; }
         /// <summary> The identifying name of the Plan of the Marketplace Plan. </summary>
         public string PlanId { get; }
-        /// <summary> The identifying name of the Publisher of the Marketplace Plan. </summary>
-        public string PublisherId { get; }
     }
 }

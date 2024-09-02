@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(ShmSize))
+            {
+                writer.WritePropertyName("shmSize"u8);
+                writer.WriteStringValue(ShmSize);
+            }
             if (Optional.IsDefined(DockerArgs))
             {
                 if (DockerArgs != null)
@@ -37,11 +42,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("dockerArgs");
                 }
-            }
-            if (Optional.IsDefined(ShmSize))
-            {
-                writer.WritePropertyName("shmSize"u8);
-                writer.WriteStringValue(ShmSize);
             }
             if (Optional.IsDefined(InstanceCount))
             {
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string dockerArgs = default;
             string shmSize = default;
+            string dockerArgs = default;
             int? instanceCount = default;
             string instanceType = default;
             IDictionary<string, BinaryData> properties = default;
@@ -137,6 +137,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("shmSize"u8))
+                {
+                    shmSize = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("dockerArgs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -145,11 +150,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     dockerArgs = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("shmSize"u8))
-                {
-                    shmSize = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("instanceCount"u8))
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 instanceType,
                 properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 serializedAdditionalRawData,
-                dockerArgs,
-                shmSize);
+                shmSize,
+                dockerArgs);
         }
 
         BinaryData IPersistableModel<MachineLearningJobResourceConfiguration>.Write(ModelReaderWriterOptions options)

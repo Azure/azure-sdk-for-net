@@ -25,30 +25,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComponentId))
-            {
-                if (ComponentId != null)
-                {
-                    writer.WritePropertyName("componentId"u8);
-                    writer.WriteStringValue(ComponentId);
-                }
-                else
-                {
-                    writer.WriteNull("componentId");
-                }
-            }
-            if (Optional.IsDefined(ComputeId))
-            {
-                if (ComputeId != null)
-                {
-                    writer.WritePropertyName("computeId"u8);
-                    writer.WriteStringValue(ComputeId);
-                }
-                else
-                {
-                    writer.WriteNull("computeId");
-                }
-            }
+            writer.WritePropertyName("jobType"u8);
+            writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
@@ -61,41 +39,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity, options);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
-            }
-            if (Optional.IsDefined(IsArchived))
-            {
-                writer.WritePropertyName("isArchived"u8);
-                writer.WriteBooleanValue(IsArchived.Value);
-            }
-            writer.WritePropertyName("jobType"u8);
-            writer.WriteStringValue(JobType.ToString());
-            if (Optional.IsDefined(NotificationSetting))
-            {
-                if (NotificationSetting != null)
-                {
-                    writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("notificationSetting");
-                }
             }
             if (Optional.IsCollectionDefined(Services))
             {
@@ -115,10 +67,58 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("services");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (Optional.IsDefined(ComputeId))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                if (ComputeId != null)
+                {
+                    writer.WritePropertyName("computeId"u8);
+                    writer.WriteStringValue(ComputeId);
+                }
+                else
+                {
+                    writer.WriteNull("computeId");
+                }
+            }
+            if (Optional.IsDefined(IsArchived))
+            {
+                writer.WritePropertyName("isArchived"u8);
+                writer.WriteBooleanValue(IsArchived.Value);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity");
+                }
+            }
+            if (Optional.IsDefined(ComponentId))
+            {
+                if (ComponentId != null)
+                {
+                    writer.WritePropertyName("componentId"u8);
+                    writer.WriteStringValue(ComponentId);
+                }
+                else
+                {
+                    writer.WriteNull("componentId");
+                }
+            }
+            if (Optional.IsDefined(NotificationSetting))
+            {
+                if (NotificationSetting != null)
+                {
+                    writer.WritePropertyName("notificationSetting"u8);
+                    writer.WriteObjectValue(NotificationSetting, options);
+                }
+                else
+                {
+                    writer.WriteNull("notificationSetting");
+                }
             }
             if (Optional.IsDefined(Description))
             {
@@ -130,24 +130,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("description");
-                }
-            }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("properties");
                 }
             }
             if (Optional.IsCollectionDefined(Tags))
@@ -166,6 +148,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("tags");
+                }
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                if (Properties != null)
+                {
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("properties");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -212,7 +212,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element, options);
                     case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element, options);
-                    case "FineTuning": return FineTuningJob.DeserializeFineTuningJob(element, options);
                     case "Pipeline": return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element, options);
                     case "Spark": return SparkJob.DeserializeSparkJob(element, options);
                     case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element, options);

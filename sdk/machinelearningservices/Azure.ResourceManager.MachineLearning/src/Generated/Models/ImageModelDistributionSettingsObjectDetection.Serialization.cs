@@ -278,18 +278,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyStoppingPatience");
                 }
             }
-            if (Optional.IsDefined(EnableOnnxNormalization))
-            {
-                if (EnableOnnxNormalization != null)
-                {
-                    writer.WritePropertyName("enableOnnxNormalization"u8);
-                    writer.WriteStringValue(EnableOnnxNormalization);
-                }
-                else
-                {
-                    writer.WriteNull("enableOnnxNormalization");
-                }
-            }
             if (Optional.IsDefined(EvaluationFrequency))
             {
                 if (EvaluationFrequency != null)
@@ -300,6 +288,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("evaluationFrequency");
+                }
+            }
+            if (Optional.IsDefined(EnableOnnxNormalization))
+            {
+                if (EnableOnnxNormalization != null)
+                {
+                    writer.WritePropertyName("enableOnnxNormalization"u8);
+                    writer.WriteStringValue(EnableOnnxNormalization);
+                }
+                else
+                {
+                    writer.WriteNull("enableOnnxNormalization");
                 }
             }
             if (Optional.IsDefined(GradientAccumulationStep))
@@ -577,8 +577,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string earlyStopping = default;
             string earlyStoppingDelay = default;
             string earlyStoppingPatience = default;
-            string enableOnnxNormalization = default;
             string evaluationFrequency = default;
+            string enableOnnxNormalization = default;
             string gradientAccumulationStep = default;
             string layersToFreeze = default;
             string learningRate = default;
@@ -811,16 +811,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     earlyStoppingPatience = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enableOnnxNormalization"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        enableOnnxNormalization = null;
-                        continue;
-                    }
-                    enableOnnxNormalization = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("evaluationFrequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -829,6 +819,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     evaluationFrequency = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enableOnnxNormalization"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enableOnnxNormalization = null;
+                        continue;
+                    }
+                    enableOnnxNormalization = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("gradientAccumulationStep"u8))
@@ -1026,8 +1026,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 earlyStopping,
                 earlyStoppingDelay,
                 earlyStoppingPatience,
-                enableOnnxNormalization,
                 evaluationFrequency,
+                enableOnnxNormalization,
                 gradientAccumulationStep,
                 layersToFreeze,
                 learningRate,

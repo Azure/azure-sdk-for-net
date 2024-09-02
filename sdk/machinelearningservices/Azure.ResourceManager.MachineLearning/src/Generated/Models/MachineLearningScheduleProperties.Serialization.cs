@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
             if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
@@ -45,13 +43,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            writer.WritePropertyName("trigger"u8);
+            writer.WriteObjectValue(Trigger, options);
+            writer.WritePropertyName("action"u8);
+            writer.WriteObjectValue(Action, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger, options);
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -62,24 +62,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("description");
-                }
-            }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("properties");
                 }
             }
             if (Optional.IsCollectionDefined(Tags))
@@ -98,6 +80,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("tags");
+                }
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                if (Properties != null)
+                {
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("properties");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -138,23 +138,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningScheduleAction action = default;
             string displayName = default;
             bool? isEnabled = default;
-            MachineLearningScheduleProvisioningStatus? provisioningState = default;
             MachineLearningTriggerBase trigger = default;
+            MachineLearningScheduleAction action = default;
+            MachineLearningScheduleProvisioningStatus? provisioningState = default;
             string description = default;
-            IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("action"u8))
-                {
-                    action = MachineLearningScheduleAction.DeserializeMachineLearningScheduleAction(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("displayName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -174,6 +169,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("trigger"u8))
+                {
+                    trigger = MachineLearningTriggerBase.DeserializeMachineLearningTriggerBase(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("action"u8))
+                {
+                    action = MachineLearningScheduleAction.DeserializeMachineLearningScheduleAction(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -181,11 +186,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     provisioningState = new MachineLearningScheduleProvisioningStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("trigger"u8))
-                {
-                    trigger = MachineLearningTriggerBase.DeserializeMachineLearningTriggerBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -196,21 +196,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        properties = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -228,6 +213,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        properties = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -236,14 +236,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningScheduleProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                action,
                 displayName,
                 isEnabled,
-                provisioningState,
-                trigger);
+                trigger,
+                action,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<MachineLearningScheduleProperties>.Write(ModelReaderWriterOptions options)

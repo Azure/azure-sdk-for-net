@@ -21,20 +21,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ForecastingTrainingSettings"/>. </summary>
-        /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
-        /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
         /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>
+        /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
         /// <param name="isStackEnsembleEnabled"> Enable stack ensemble run. </param>
         /// <param name="isVoteEnsembleEnabled"> Enable voting ensemble run. </param>
         /// <param name="ensembleModelDownloadTimeout">
         /// During VotingEnsemble and StackEnsemble model generation, multiple fitted models from the previous child runs are downloaded.
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
         /// </param>
-        /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
+        /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
+        /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="allowedTrainingAlgorithms"> Allowed models for forecasting task. </param>
         /// <param name="blockedTrainingAlgorithms"> Blocked models for forecasting task. </param>
-        internal ForecastingTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ForecastingModel> allowedTrainingAlgorithms, IList<ForecastingModel> blockedTrainingAlgorithms) : base(isDnnTrainingEnabled, isModelExplainabilityEnabled, isOnnxCompatibleModelsEnabled, isStackEnsembleEnabled, isVoteEnsembleEnabled, ensembleModelDownloadTimeout, stackEnsembleSettings, serializedAdditionalRawData)
+        internal ForecastingTrainingSettings(bool? isOnnxCompatibleModelsEnabled, MachineLearningStackEnsembleSettings stackEnsembleSettings, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, bool? isModelExplainabilityEnabled, bool? isDnnTrainingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ForecastingModel> allowedTrainingAlgorithms, IList<ForecastingModel> blockedTrainingAlgorithms) : base(isOnnxCompatibleModelsEnabled, stackEnsembleSettings, isStackEnsembleEnabled, isVoteEnsembleEnabled, ensembleModelDownloadTimeout, isModelExplainabilityEnabled, isDnnTrainingEnabled, serializedAdditionalRawData)
         {
             AllowedTrainingAlgorithms = allowedTrainingAlgorithms;
             BlockedTrainingAlgorithms = blockedTrainingAlgorithms;

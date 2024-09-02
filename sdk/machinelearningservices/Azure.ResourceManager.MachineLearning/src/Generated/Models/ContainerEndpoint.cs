@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ContainerEndpoint. </summary>
+    /// <summary> Describes the endpoint configuration for the container. </summary>
     public partial class ContainerEndpoint
     {
         /// <summary>

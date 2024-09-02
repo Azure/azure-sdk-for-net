@@ -26,6 +26,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("inputDataType"u8);
+            writer.WriteStringValue(InputDataType.ToString());
+            if (Optional.IsDefined(DataContext))
+            {
+                if (DataContext != null)
+                {
+                    writer.WritePropertyName("dataContext"u8);
+                    writer.WriteStringValue(DataContext);
+                }
+                else
+                {
+                    writer.WriteNull("dataContext");
+                }
+            }
+            writer.WritePropertyName("jobInputType"u8);
+            writer.WriteStringValue(JobInputType.ToString());
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsCollectionDefined(Columns))
             {
                 if (Columns != null)
@@ -44,24 +62,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (Optional.IsDefined(DataContext))
-            {
-                if (DataContext != null)
-                {
-                    writer.WritePropertyName("dataContext"u8);
-                    writer.WriteStringValue(DataContext);
-                }
-                else
-                {
-                    writer.WriteNull("dataContext");
-                }
-            }
-            writer.WritePropertyName("inputDataType"u8);
-            writer.WriteStringValue(InputDataType.ToString());
-            writer.WritePropertyName("jobInputType"u8);
-            writer.WriteStringValue(JobInputType.ToString());
-            writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -100,15 +100,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IDictionary<string, string> columns = default;
-            string dataContext = default;
             MonitoringInputDataType inputDataType = default;
+            string dataContext = default;
             JobInputType jobInputType = default;
             Uri uri = default;
+            IDictionary<string, string> columns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("inputDataType"u8))
+                {
+                    inputDataType = new MonitoringInputDataType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataContext"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dataContext = null;
+                        continue;
+                    }
+                    dataContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("jobInputType"u8))
+                {
+                    jobInputType = new JobInputType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("uri"u8))
+                {
+                    uri = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("columns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -124,31 +149,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     columns = dictionary;
                     continue;
                 }
-                if (property.NameEquals("dataContext"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        dataContext = null;
-                        continue;
-                    }
-                    dataContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputDataType"u8))
-                {
-                    inputDataType = new MonitoringInputDataType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("jobInputType"u8))
-                {
-                    jobInputType = new JobInputType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("uri"u8))
-                {
-                    uri = new Uri(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new FixedInputData(
-                columns ?? new ChangeTrackingDictionary<string, string>(),
-                dataContext,
                 inputDataType,
+                dataContext,
                 jobInputType,
                 uri,
+                columns ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

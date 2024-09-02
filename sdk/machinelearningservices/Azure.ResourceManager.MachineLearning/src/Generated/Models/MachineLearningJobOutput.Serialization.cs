@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("jobOutputType"u8);
+            writer.WriteStringValue(JobOutputType.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -38,8 +40,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            writer.WritePropertyName("jobOutputType"u8);
-            writer.WriteStringValue(JobOutputType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

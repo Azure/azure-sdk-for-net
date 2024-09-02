@@ -26,18 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Capacity))
-            {
-                if (Capacity != null)
-                {
-                    writer.WritePropertyName("capacity"u8);
-                    writer.WriteObjectValue(Capacity, options);
-                }
-                else
-                {
-                    writer.WriteNull("capacity");
-                }
-            }
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 if (ResourceType != null)
@@ -60,6 +48,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("sku");
+                }
+            }
+            if (Optional.IsDefined(Capacity))
+            {
+                if (Capacity != null)
+                {
+                    writer.WritePropertyName("capacity"u8);
+                    writer.WriteObjectValue(Capacity, options);
+                }
+                else
+                {
+                    writer.WriteNull("capacity");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -100,23 +100,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningSkuCapacity capacity = default;
             string resourceType = default;
             MachineLearningSkuSetting sku = default;
+            MachineLearningSkuCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("capacity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        capacity = null;
-                        continue;
-                    }
-                    capacity = MachineLearningSkuCapacity.DeserializeMachineLearningSkuCapacity(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -137,13 +127,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     sku = MachineLearningSkuSetting.DeserializeMachineLearningSkuSetting(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("capacity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        capacity = null;
+                        continue;
+                    }
+                    capacity = MachineLearningSkuCapacity.DeserializeMachineLearningSkuCapacity(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningSkuDetail(capacity, resourceType, sku, serializedAdditionalRawData);
+            return new MachineLearningSkuDetail(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSkuDetail>.Write(ModelReaderWriterOptions options)

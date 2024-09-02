@@ -56,23 +56,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitoringSignalBase"/>. </summary>
+        /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="notificationTypes"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringSignalBase(IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoringSignalBase(MonitoringSignalType signalType, IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            SignalType = signalType;
             NotificationTypes = notificationTypes;
             Properties = properties;
-            SignalType = signalType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> [Required] Specifies the type of signal to monitor. </summary>
+        internal MonitoringSignalType SignalType { get; set; }
         /// <summary> The current notification mode for this signal. </summary>
         public IList<MonitoringNotificationType> NotificationTypes { get; set; }
         /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
         public IDictionary<string, string> Properties { get; set; }
-        /// <summary> [Required] Specifies the type of signal to monitor. </summary>
-        internal MonitoringSignalType SignalType { get; set; }
     }
 }

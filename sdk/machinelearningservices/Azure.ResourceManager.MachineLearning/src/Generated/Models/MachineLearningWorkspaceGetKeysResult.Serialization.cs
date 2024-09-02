@@ -26,30 +26,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(UserStorageKey))
+            {
+                writer.WritePropertyName("userStorageKey"u8);
+                writer.WriteStringValue(UserStorageKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UserStorageResourceId))
+            {
+                writer.WritePropertyName("userStorageResourceId"u8);
+                writer.WriteStringValue(UserStorageResourceId);
+            }
             if (options.Format != "W" && Optional.IsDefined(AppInsightsInstrumentationKey))
             {
                 writer.WritePropertyName("appInsightsInstrumentationKey"u8);
                 writer.WriteStringValue(AppInsightsInstrumentationKey);
             }
-            if (Optional.IsDefined(ContainerRegistryCredentials))
+            if (options.Format != "W" && Optional.IsDefined(ContainerRegistryCredentials))
             {
                 writer.WritePropertyName("containerRegistryCredentials"u8);
                 writer.WriteObjectValue(ContainerRegistryCredentials, options);
             }
-            if (Optional.IsDefined(NotebookAccessKeys))
+            if (options.Format != "W" && Optional.IsDefined(NotebookAccessKeys))
             {
                 writer.WritePropertyName("notebookAccessKeys"u8);
                 writer.WriteObjectValue(NotebookAccessKeys, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(UserStorageResourceId))
-            {
-                writer.WritePropertyName("userStorageArmId"u8);
-                writer.WriteStringValue(UserStorageResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(UserStorageKey))
-            {
-                writer.WritePropertyName("userStorageKey"u8);
-                writer.WriteStringValue(UserStorageKey);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,15 +89,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            string userStorageKey = default;
+            string userStorageResourceId = default;
             string appInsightsInstrumentationKey = default;
             MachineLearningContainerRegistryCredentials containerRegistryCredentials = default;
             MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = default;
-            string userStorageArmId = default;
-            string userStorageKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("userStorageKey"u8))
+                {
+                    userStorageKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("userStorageResourceId"u8))
+                {
+                    userStorageResourceId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("appInsightsInstrumentationKey"u8))
                 {
                     appInsightsInstrumentationKey = property.Value.GetString();
@@ -121,16 +131,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     notebookAccessKeys = MachineLearningWorkspaceGetNotebookKeysResult.DeserializeMachineLearningWorkspaceGetNotebookKeysResult(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("userStorageArmId"u8))
-                {
-                    userStorageArmId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("userStorageKey"u8))
-                {
-                    userStorageKey = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningWorkspaceGetKeysResult(
+                userStorageKey,
+                userStorageResourceId,
                 appInsightsInstrumentationKey,
                 containerRegistryCredentials,
                 notebookAccessKeys,
-                userStorageArmId,
-                userStorageKey,
                 serializedAdditionalRawData);
         }
 
