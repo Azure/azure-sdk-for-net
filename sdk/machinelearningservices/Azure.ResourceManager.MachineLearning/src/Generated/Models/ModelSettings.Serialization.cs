@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearning.Models
+namespace Azure.ResourceManager.Compute.Models
 {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ModelSettings.Serialization.cs
     internal partial class ModelSettings : IUtf8JsonSerializable, IJsonModel<ModelSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -37,6 +38,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("modelId");
                 }
+========
+    public partial class ComputeSkuProfileVmSize : IUtf8JsonSerializable, IJsonModel<ComputeSkuProfileVmSize>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSkuProfileVmSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ComputeSkuProfileVmSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComputeSkuProfileVmSize)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/ComputeSkuProfileVmSize.Serialization.cs
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,6 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ModelSettings.Serialization.cs
         ModelSettings IJsonModel<ModelSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ModelSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -69,6 +90,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         internal static ModelSettings DeserializeModelSettings(JsonElement element, ModelReaderWriterOptions options = null)
+========
+        ComputeSkuProfileVmSize IJsonModel<ComputeSkuProfileVmSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComputeSkuProfileVmSize)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeSkuProfileVmSize(document.RootElement, options);
+        }
+
+        internal static ComputeSkuProfileVmSize DeserializeComputeSkuProfileVmSize(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/ComputeSkuProfileVmSize.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,11 +112,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ModelSettings.Serialization.cs
             string modelId = default;
+========
+            string name = default;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/ComputeSkuProfileVmSize.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ModelSettings.Serialization.cs
                 if (property.NameEquals("modelId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -89,6 +130,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     modelId = property.Value.GetString();
+========
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/ComputeSkuProfileVmSize.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,18 +143,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ModelSettings.Serialization.cs
             return new ModelSettings(modelId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ModelSettings>)this).GetFormatFromOptions(options) : options.Format;
+========
+            return new ComputeSkuProfileVmSize(name, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ComputeSkuProfileVmSize>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/ComputeSkuProfileVmSize.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ModelSettings.Serialization.cs
                     throw new FormatException($"The model {nameof(ModelSettings)} does not support writing '{options.Format}' format.");
             }
         }
@@ -116,12 +172,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         ModelSettings IPersistableModel<ModelSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ModelSettings>)this).GetFormatFromOptions(options) : options.Format;
+========
+                    throw new FormatException($"The model {nameof(ComputeSkuProfileVmSize)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ComputeSkuProfileVmSize IPersistableModel<ComputeSkuProfileVmSize>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/ComputeSkuProfileVmSize.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ModelSettings.Serialization.cs
                         return DeserializeModelSettings(document.RootElement, options);
                     }
                 default:
@@ -130,5 +196,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         string IPersistableModel<ModelSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+========
+                        return DeserializeComputeSkuProfileVmSize(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeSkuProfileVmSize)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComputeSkuProfileVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/compute/Azure.ResourceManager.Compute/src/Generated/Models/ComputeSkuProfileVmSize.Serialization.cs
     }
 }

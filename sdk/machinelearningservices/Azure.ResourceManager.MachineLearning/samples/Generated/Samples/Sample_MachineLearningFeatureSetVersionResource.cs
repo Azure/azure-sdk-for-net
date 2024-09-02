@@ -20,7 +20,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteWorkspaceFeaturesetVersion()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/delete.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/FeaturesetVersion/delete.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "FeaturesetVersions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +53,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetWorkspaceFeaturesetVersion()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/get.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/FeaturesetVersion/get.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "FeaturesetVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +90,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateWorkspaceFeaturesetVersion()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/createOrUpdate.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/FeaturesetVersion/createOrUpdate.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "FeaturesetVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,7 +191,11 @@ EmailNotificationEnableType.JobFailed
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Backfill_BackfillWorkspaceFeaturesetVersion()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/backfill.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/FeaturesetVersion/backfill.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "FeaturesetVersions_Backfill" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -200,6 +216,14 @@ EmailNotificationEnableType.JobFailed
             // invoke the operation
             FeatureSetVersionBackfillContent content = new FeatureSetVersionBackfillContent()
             {
+<<<<<<< HEAD
+=======
+                DataAvailabilityStatus =
+{
+DataAvailabilityStatus.None
+},
+                Description = "string",
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 DisplayName = "string",
                 Description = "string",
                 FeatureWindow = new FeatureWindow()
@@ -207,6 +231,7 @@ EmailNotificationEnableType.JobFailed
                     FeatureWindowStart = DateTimeOffset.Parse("2020-01-01T12:34:56.999+00:51"),
                     FeatureWindowEnd = DateTimeOffset.Parse("2020-01-01T12:34:56.999+00:51"),
                 },
+<<<<<<< HEAD
                 DataAvailabilityStatus =
 {
 DataAvailabilityStatus.None
@@ -216,6 +241,9 @@ DataAvailabilityStatus.None
 {
 ["string"] = "string",
 },
+=======
+                JobId = "string",
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 ResourceInstanceType = "string",
                 SparkConfiguration =
 {

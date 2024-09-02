@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
 
             writer.WriteStartObject();
+<<<<<<< HEAD
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
             if (Optional.IsDefined(Kind))
@@ -35,12 +36,24 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
+<<<<<<< HEAD
+=======
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -117,9 +130,15 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
+<<<<<<< HEAD
             ServerlessEndpointProperties properties = default;
             string kind = default;
             ManagedServiceIdentity identity = default;
+=======
+            ManagedServiceIdentity identity = default;
+            string kind = default;
+            ServerlessEndpointProperties properties = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MachineLearningSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -131,6 +150,7 @@ namespace Azure.ResourceManager.MachineLearning
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<< HEAD
                 if (property.NameEquals("properties"u8))
                 {
                     properties = ServerlessEndpointProperties.DeserializeServerlessEndpointProperties(property.Value, options);
@@ -141,6 +161,8 @@ namespace Azure.ResourceManager.MachineLearning
                     kind = property.Value.GetString();
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -151,6 +173,19 @@ namespace Azure.ResourceManager.MachineLearning
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
+<<<<<<< HEAD
+=======
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = ServerlessEndpointProperties.DeserializeServerlessEndpointProperties(property.Value, options);
+                    continue;
+                }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -216,9 +251,15 @@ namespace Azure.ResourceManager.MachineLearning
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+<<<<<<< HEAD
                 properties,
                 kind,
                 identity,
+=======
+                identity,
+                kind,
+                properties,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 sku,
                 serializedAdditionalRawData);
         }

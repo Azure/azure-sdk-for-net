@@ -202,8 +202,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 datastoreType,
+<<<<<<< HEAD
                 isDefault,
                 credentials);
+=======
+                isDefault);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<MachineLearningDatastoreProperties>.Write(ModelReaderWriterOptions options)

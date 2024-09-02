@@ -51,18 +51,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionUsernamePassword"/>. </summary>
+<<<<<<< HEAD
+=======
+        /// <param name="password"></param>
+        /// <param name="securityToken"> Optional, required by connections like SalesForce for extra security in addition to UsernamePassword. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <param name="securityToken"> Optional, required by connections like SalesForce for extra security in addition to UsernamePassword. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<< HEAD
         internal MachineLearningWorkspaceConnectionUsernamePassword(string username, string password, string securityToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+=======
+        internal MachineLearningWorkspaceConnectionUsernamePassword(string password, string securityToken, string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Password = password;
+            SecurityToken = securityToken;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             Username = username;
             Password = password;
             SecurityToken = securityToken;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+<<<<<<< HEAD
+=======
+        /// <summary> Gets or sets the password. </summary>
+        public string Password { get; set; }
+        /// <summary> Optional, required by connections like SalesForce for extra security in addition to UsernamePassword. </summary>
+        public string SecurityToken { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> Gets or sets the username. </summary>
         public string Username { get; set; }
         /// <summary> Gets or sets the password. </summary>

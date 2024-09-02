@@ -26,6 +26,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+<<<<<<< HEAD
+=======
+            if (Optional.IsDefined(AlertNotificationSettings))
+            {
+                if (AlertNotificationSettings != null)
+                {
+                    writer.WritePropertyName("alertNotificationSettings"u8);
+                    writer.WriteObjectValue(AlertNotificationSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("alertNotificationSettings");
+                }
+            }
+            writer.WritePropertyName("computeConfiguration"u8);
+            writer.WriteObjectValue(ComputeConfiguration, options);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(MonitoringTarget))
             {
                 if (MonitoringTarget != null)
@@ -98,6 +115,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
+=======
+            MonitorNotificationSettings alertNotificationSettings = default;
+            MonitorComputeConfigurationBase computeConfiguration = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MonitoringTarget monitoringTarget = default;
             IDictionary<string, MonitoringSignalBase> signals = default;
             MonitorComputeConfigurationBase computeConfiguration = default;
@@ -106,6 +128,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<< HEAD
+=======
+                if (property.NameEquals("alertNotificationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        alertNotificationSettings = null;
+                        continue;
+                    }
+                    alertNotificationSettings = MonitorNotificationSettings.DeserializeMonitorNotificationSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("computeConfiguration"u8))
+                {
+                    computeConfiguration = MonitorComputeConfigurationBase.DeserializeMonitorComputeConfigurationBase(property.Value, options);
+                    continue;
+                }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("monitoringTarget"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -147,7 +187,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
             return new MonitorDefinition(monitoringTarget, signals, computeConfiguration, alertNotificationSettings, serializedAdditionalRawData);
+=======
+            return new MonitorDefinition(alertNotificationSettings, computeConfiguration, monitoringTarget, signals, serializedAdditionalRawData);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<MonitorDefinition>.Write(ModelReaderWriterOptions options)

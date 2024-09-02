@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearning.Models
+namespace Azure.ResourceManager.ComputeFleet.Models
 {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessComputeSettings.Serialization.cs
     public partial class ServerlessComputeSettings : IUtf8JsonSerializable, IJsonModel<ServerlessComputeSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerlessComputeSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -35,6 +36,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("serverlessComputeNoPublicIP"u8);
                 writer.WriteBooleanValue(HasNoPublicIP.Value);
+========
+    public partial class ComputeFleetVmSizeProfile : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmSizeProfile>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmSizeProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ComputeFleetVmSizeProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmSizeProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComputeFleetVmSizeProfile)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Rank))
+            {
+                writer.WritePropertyName("rank"u8);
+                writer.WriteNumberValue(Rank.Value);
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/ComputeFleetVmSizeProfile.Serialization.cs
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,6 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessComputeSettings.Serialization.cs
         ServerlessComputeSettings IJsonModel<ServerlessComputeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessComputeSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -67,6 +90,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         internal static ServerlessComputeSettings DeserializeServerlessComputeSettings(JsonElement element, ModelReaderWriterOptions options = null)
+========
+        ComputeFleetVmSizeProfile IJsonModel<ComputeFleetVmSizeProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmSizeProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComputeFleetVmSizeProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeFleetVmSizeProfile(document.RootElement, options);
+        }
+
+        internal static ComputeFleetVmSizeProfile DeserializeComputeFleetVmSizeProfile(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/ComputeFleetVmSizeProfile.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -74,18 +112,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessComputeSettings.Serialization.cs
             ResourceIdentifier serverlessComputeCustomSubnet = default;
             bool? serverlessComputeNoPublicIP = default;
+========
+            string name = default;
+            int? rank = default;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/ComputeFleetVmSizeProfile.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessComputeSettings.Serialization.cs
                 if (property.NameEquals("serverlessComputeCustomSubnet"u8))
+========
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("rank"u8))
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/ComputeFleetVmSizeProfile.Serialization.cs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessComputeSettings.Serialization.cs
                     serverlessComputeCustomSubnet = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
@@ -96,6 +149,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     serverlessComputeNoPublicIP = property.Value.GetBoolean();
+========
+                    rank = property.Value.GetInt32();
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/ComputeFleetVmSizeProfile.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,18 +160,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessComputeSettings.Serialization.cs
             return new ServerlessComputeSettings(serverlessComputeCustomSubnet, serverlessComputeNoPublicIP, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerlessComputeSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessComputeSettings>)this).GetFormatFromOptions(options) : options.Format;
+========
+            return new ComputeFleetVmSizeProfile(name, rank, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ComputeFleetVmSizeProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmSizeProfile>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/ComputeFleetVmSizeProfile.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessComputeSettings.Serialization.cs
                     throw new FormatException($"The model {nameof(ServerlessComputeSettings)} does not support writing '{options.Format}' format.");
             }
         }
@@ -123,12 +189,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         ServerlessComputeSettings IPersistableModel<ServerlessComputeSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessComputeSettings>)this).GetFormatFromOptions(options) : options.Format;
+========
+                    throw new FormatException($"The model {nameof(ComputeFleetVmSizeProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ComputeFleetVmSizeProfile IPersistableModel<ComputeFleetVmSizeProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmSizeProfile>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/ComputeFleetVmSizeProfile.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessComputeSettings.Serialization.cs
                         return DeserializeServerlessComputeSettings(document.RootElement, options);
                     }
                 default:
@@ -137,5 +213,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         string IPersistableModel<ServerlessComputeSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+========
+                        return DeserializeComputeFleetVmSizeProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetVmSizeProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComputeFleetVmSizeProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/ComputeFleetVmSizeProfile.Serialization.cs
     }
 }

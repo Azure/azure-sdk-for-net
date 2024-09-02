@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blobUri");
                 }
             }
+<<<<<<< HEAD
             if (Optional.IsDefined(StorageAccountArmId))
             {
                 if (StorageAccountArmId != null)
@@ -50,6 +51,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storageAccountArmId");
                 }
             }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(Credential))
             {
                 if (Credential != null)
@@ -62,6 +65,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("credential");
                 }
             }
+<<<<<<< HEAD
+=======
+            if (Optional.IsDefined(StorageAccountArmId))
+            {
+                if (StorageAccountArmId != null)
+                {
+                    writer.WritePropertyName("storageAccountArmId"u8);
+                    writer.WriteStringValue(StorageAccountArmId);
+                }
+                else
+                {
+                    writer.WriteNull("storageAccountArmId");
+                }
+            }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -101,8 +119,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Uri blobUri = default;
+<<<<<<< HEAD
             string storageAccountArmId = default;
             DataReferenceCredential credential = default;
+=======
+            DataReferenceCredential credential = default;
+            string storageAccountArmId = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,6 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     blobUri = new Uri(property.Value.GetString());
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("storageAccountArmId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -127,6 +151,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     storageAccountArmId = property.Value.GetString();
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("credential"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -137,13 +163,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     credential = DataReferenceCredential.DeserializeDataReferenceCredential(property.Value, options);
                     continue;
                 }
+<<<<<<< HEAD
+=======
+                if (property.NameEquals("storageAccountArmId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        storageAccountArmId = null;
+                        continue;
+                    }
+                    storageAccountArmId = property.Value.GetString();
+                    continue;
+                }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
             return new GetBlobReferenceForConsumptionDto(blobUri, storageAccountArmId, credential, serializedAdditionalRawData);
+=======
+            return new GetBlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, serializedAdditionalRawData);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<GetBlobReferenceForConsumptionDto>.Write(ModelReaderWriterOptions options)

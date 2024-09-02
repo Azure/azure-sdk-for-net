@@ -26,6 +26,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+<<<<<<< HEAD
+=======
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
+            }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
@@ -95,6 +103,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
+=======
+            MachineLearningOutputDeliveryMode? mode = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             Uri uri = default;
             MachineLearningOutputDeliveryMode? mode = default;
             JobOutputType jobOutputType = default;
@@ -103,6 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<< HEAD
                 if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -113,6 +126,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -143,7 +158,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
             return new MachineLearningUriFolderJobOutput(jobOutputType, description, serializedAdditionalRawData, uri, mode);
+=======
+            return new MachineLearningUriFolderJobOutput(description, jobOutputType, serializedAdditionalRawData, mode, uri);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<MachineLearningUriFolderJobOutput>.Write(ModelReaderWriterOptions options)

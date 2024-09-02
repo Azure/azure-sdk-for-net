@@ -8,7 +8,11 @@ azure-arm: true
 library-name: MachineLearning
 namespace: Azure.ResourceManager.MachineLearning
 require: https://github.com/Azure/azure-rest-api-specs/blob/edb7904bfead536c7aa9716d44dba15bdabd0b00/specification/machinelearningservices/resource-manager/readme.md
+<<<<<<< HEAD
 tag: package-2024-04
+=======
+#tag: package-preview-2023-06
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -517,8 +521,12 @@ rename-mapping:
   ProtectionLevel: IntellectualProtectionLevel
   OsPatchingStatus.latestPatchTime: -|date-time
   OsPatchingStatus.scheduledRebootTime: -|date-time
+<<<<<<< HEAD
   ServerlessComputeSettings.serverlessComputeNoPublicIP: HasNoPublicIP
   PrivateEndpointConnection.properties.privateEndpoint: SubResource
+=======
+  ServerlessComputeSettings.serverlessComputeNoPublicIP : HasNoPublicIP
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
 
 suppress-abstract-base-class:
 - MachineLearningJobProperties

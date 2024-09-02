@@ -22,7 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteJob()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/delete.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/delete.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "Jobs_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +54,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAutoMLJob()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/AutoMLJob/get.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/AutoMLJob/get.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +90,43 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCommandJob()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/CommandJob/get.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/CommandJob/get.json
+            // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningJobResource created on azure
+            // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string workspaceName = "my-aml-workspace";
+            string id = "string";
+            ResourceIdentifier machineLearningJobResourceId = MachineLearningJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, id);
+            MachineLearningJobResource machineLearningJob = client.GetMachineLearningJobResource(machineLearningJobResourceId);
+
+            // invoke the operation
+            MachineLearningJobResource result = await machineLearningJob.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MachineLearningJobData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get FineTuning Job.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetFineTuningJob()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/FineTuningJob/get.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +158,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPipelineJob()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/PipelineJob/get.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/PipelineJob/get.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,7 +194,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetSweepJob()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/SweepJob/get.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/SweepJob/get.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +230,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateAutoMLJob()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/AutoMLJob/createOrUpdate.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/AutoMLJob/createOrUpdate.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "Jobs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -215,6 +271,7 @@ ValidationCropSize = "choice(2, 360)",
                 TargetColumnName = "string",
             })
             {
+<<<<<<< HEAD
                 Resources = new MachineLearningJobResourceConfiguration()
                 {
                     InstanceCount = 1,
@@ -226,6 +283,8 @@ ValidationCropSize = "choice(2, 360)",
 ["9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad"] = null}),
 },
                 },
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 EnvironmentId = "string",
                 EnvironmentVariables =
 {
@@ -235,6 +294,7 @@ ValidationCropSize = "choice(2, 360)",
 {
 ["string"] = new MachineLearningUriFileJobOutput()
 {
+<<<<<<< HEAD
 Uri = new Uri("string"),
 Mode = MachineLearningOutputDeliveryMode.ReadWriteMount,
 Description = "string",
@@ -242,19 +302,49 @@ Description = "string",
 },
                 DisplayName = "string",
                 ExperimentName = "string",
+=======
+Mode = MachineLearningOutputDeliveryMode.ReadWriteMount,
+Uri = new Uri("string"),
+Description = "string",
+},
+},
+                Resources = new MachineLearningJobResourceConfiguration()
+                {
+                    InstanceCount = 1,
+                    InstanceType = "string",
+                    Properties =
+{
+["string"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+{
+["9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad"] = null}),
+},
+                },
+                ComputeId = new ResourceIdentifier("string"),
+                DisplayName = "string",
+                ExperimentName = "string",
+                Identity = new AmlToken(),
+                IsArchived = false,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 Services =
 {
 ["string"] = new MachineLearningJobService()
 {
+<<<<<<< HEAD
 JobServiceType = "string",
 Port = 1,
 Endpoint = "string",
+=======
+Endpoint = "string",
+JobServiceType = "string",
+Port = 1,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
 Properties =
 {
 ["string"] = "string",
 },
 },
 },
+<<<<<<< HEAD
                 ComputeId = new ResourceIdentifier("string"),
                 IsArchived = false,
                 Identity = new AmlToken(),
@@ -263,12 +353,24 @@ Properties =
 {
 ["string"] = "string",
 },
+=======
+                Description = "string",
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 Properties =
 {
 ["string"] = "string",
 },
+<<<<<<< HEAD
             });
             ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data, default);
+=======
+                Tags =
+{
+["string"] = "string",
+},
+            });
+            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MachineLearningJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -283,7 +385,11 @@ Properties =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateCommandJob()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/CommandJob/createOrUpdate.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/CommandJob/createOrUpdate.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "Jobs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -303,6 +409,39 @@ Properties =
             // invoke the operation
             MachineLearningJobData data = new MachineLearningJobData(new MachineLearningCommandJob("string", new ResourceIdentifier("string"))
             {
+<<<<<<< HEAD
+=======
+                CodeId = new ResourceIdentifier("string"),
+                Distribution = new TensorFlowDistributionConfiguration()
+                {
+                    ParameterServerCount = 1,
+                    WorkerCount = 1,
+                },
+                EnvironmentVariables =
+{
+["string"] = "string",
+},
+                Inputs =
+{
+["string"] = new MachineLearningLiteralJobInput("string")
+{
+Description = "string",
+},
+},
+                Limits = new MachineLearningCommandJobLimits()
+                {
+                    Timeout = XmlConvert.ToTimeSpan("PT5M"),
+                },
+                Outputs =
+{
+["string"] = new MachineLearningUriFileJobOutput()
+{
+Mode = MachineLearningOutputDeliveryMode.ReadWriteMount,
+Uri = new Uri("string"),
+Description = "string",
+},
+},
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 Resources = new MachineLearningJobResourceConfiguration()
                 {
                     InstanceCount = 1,
@@ -314,6 +453,7 @@ Properties =
 ["e6b6493e-7d5e-4db3-be1e-306ec641327e"] = null}),
 },
                 },
+<<<<<<< HEAD
                 CodeId = new ResourceIdentifier("string"),
                 Inputs =
 {
@@ -346,19 +486,32 @@ Description = "string",
 },
                 DisplayName = "string",
                 ExperimentName = "string",
+=======
+                ComputeId = new ResourceIdentifier("string"),
+                DisplayName = "string",
+                ExperimentName = "string",
+                Identity = new AmlToken(),
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 Services =
 {
 ["string"] = new MachineLearningJobService()
 {
+<<<<<<< HEAD
 JobServiceType = "string",
 Port = 1,
 Endpoint = "string",
+=======
+Endpoint = "string",
+JobServiceType = "string",
+Port = 1,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
 Properties =
 {
 ["string"] = "string",
 },
 },
 },
+<<<<<<< HEAD
                 ComputeId = new ResourceIdentifier("string"),
                 Identity = new AmlToken(),
                 Description = "string",
@@ -366,12 +519,77 @@ Properties =
 {
 ["string"] = "string",
 },
+=======
+                Description = "string",
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 Properties =
 {
 ["string"] = "string",
 },
+<<<<<<< HEAD
             });
             ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data, default);
+=======
+                Tags =
+{
+["string"] = "string",
+},
+            });
+            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
+            MachineLearningJobResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MachineLearningJobData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // CreateOrUpdate FineTuning Job.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_CreateOrUpdateFineTuningJob()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/FineTuningJob/createOrUpdate.json
+            // this example is just showing the usage of "Jobs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningJobResource created on azure
+            // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string workspaceName = "my-aml-workspace";
+            string id = "string";
+            ResourceIdentifier machineLearningJobResourceId = MachineLearningJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, id);
+            MachineLearningJobResource machineLearningJob = client.GetMachineLearningJobResource(machineLearningJobResourceId);
+
+            // invoke the operation
+            MachineLearningJobData data = new MachineLearningJobData(new FineTuningJob(new CustomModelFineTuning(FineTuningTaskType.TextCompletion, new MachineLearningUriFileJobInput(new Uri("azureml://registries/azureml-meta/models/Llama-2-7b/versions/11"))
+            {
+                Mode = MachineLearningInputDeliveryMode.ReadOnlyMount,
+                Description = null,
+            }, new MachineLearningFlowModelJobInput(new Uri("azureml://registries/azureml-meta/models/Llama-2-7b/versions/11"))
+            {
+                Mode = MachineLearningInputDeliveryMode.ReadOnlyMount,
+                Description = null,
+            }), new Dictionary<string, MachineLearningJobOutput>()
+            {
+                ["string"] = new MachineLearningFlowModelJobOutput()
+                {
+                    Mode = MachineLearningOutputDeliveryMode.ReadWriteMount,
+                    Uri = new Uri("string"),
+                    Description = "string",
+                },
+            })
+            {
+                ExperimentName = "llm-finetuning",
+            });
+            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MachineLearningJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -386,7 +604,11 @@ Properties =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdatePipelineJob()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/PipelineJob/createOrUpdate.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/PipelineJob/createOrUpdate.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "Jobs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -406,9 +628,12 @@ Properties =
             // invoke the operation
             MachineLearningJobData data = new MachineLearningJobData(new MachineLearningPipelineJob()
             {
+<<<<<<< HEAD
                 Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                 }),
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 Inputs =
 {
 ["string"] = new MachineLearningLiteralJobInput("string")
@@ -420,38 +645,69 @@ Description = "string",
 {
 ["string"] = new MachineLearningUriFileJobOutput()
 {
+<<<<<<< HEAD
 Uri = new Uri("string"),
 Mode = MachineLearningOutputDeliveryMode.Upload,
 Description = "string",
 },
 },
+=======
+Mode = MachineLearningOutputDeliveryMode.Upload,
+Uri = new Uri("string"),
+Description = "string",
+},
+},
+                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                {
+                }),
+                ComputeId = new ResourceIdentifier("string"),
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 DisplayName = "string",
                 ExperimentName = "string",
                 Services =
 {
 ["string"] = new MachineLearningJobService()
 {
+<<<<<<< HEAD
 JobServiceType = "string",
 Port = 1,
 Endpoint = "string",
+=======
+Endpoint = "string",
+JobServiceType = "string",
+Port = 1,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
 Properties =
 {
 ["string"] = "string",
 },
 },
 },
+<<<<<<< HEAD
                 ComputeId = new ResourceIdentifier("string"),
                 Description = "string",
                 Tags =
 {
 ["string"] = "string",
 },
+=======
+                Description = "string",
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 Properties =
 {
 ["string"] = "string",
 },
+<<<<<<< HEAD
             });
             ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data, default);
+=======
+                Tags =
+{
+["string"] = "string",
+},
+            });
+            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MachineLearningJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -466,7 +722,11 @@ Properties =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateSweepJob()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/SweepJob/createOrUpdate.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/SweepJob/createOrUpdate.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "Jobs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -484,11 +744,16 @@ Properties =
             MachineLearningJobResource machineLearningJob = client.GetMachineLearningJobResource(machineLearningJobResourceId);
 
             // invoke the operation
+<<<<<<< HEAD
             MachineLearningJobData data = new MachineLearningJobData(new MachineLearningSweepJob(BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+=======
+            MachineLearningJobData data = new MachineLearningJobData(new MachineLearningSweepJob(new MachineLearningObjective(MachineLearningGoal.Minimize, "string"), new GridSamplingAlgorithm(), BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             {
                 ["string"] = new Dictionary<string, object>()
                 {
                 }
+<<<<<<< HEAD
             }), new GridSamplingAlgorithm(), new MachineLearningObjective("string", MachineLearningGoal.Minimize), new MachineLearningTrialComponent("string", new ResourceIdentifier("string"))
             {
                 CodeId = new ResourceIdentifier("string"),
@@ -496,10 +761,22 @@ Properties =
 {
 ["string"] = "string",
 },
+=======
+            }), new MachineLearningTrialComponent("string", new ResourceIdentifier("string"))
+            {
+                CodeId = new ResourceIdentifier("string"),
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 Distribution = new MpiDistributionConfiguration()
                 {
                     ProcessCountPerInstance = 1,
                 },
+<<<<<<< HEAD
+=======
+                EnvironmentVariables =
+{
+["string"] = "string",
+},
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 Resources = new MachineLearningJobResourceConfiguration()
                 {
                     InstanceCount = 1,
@@ -513,6 +790,7 @@ Properties =
                 },
             })
             {
+<<<<<<< HEAD
                 Limits = new MachineLearningSweepJobLimits()
                 {
                     MaxTotalTrials = 1,
@@ -524,33 +802,66 @@ Properties =
                     EvaluationInterval = 1,
                     DelayEvaluation = 1,
                 },
+=======
+                EarlyTermination = new MedianStoppingPolicy()
+                {
+                    DelayEvaluation = 1,
+                    EvaluationInterval = 1,
+                },
+                Limits = new MachineLearningSweepJobLimits()
+                {
+                    MaxConcurrentTrials = 1,
+                    MaxTotalTrials = 1,
+                    TrialTimeout = XmlConvert.ToTimeSpan("PT1S"),
+                },
+                ComputeId = new ResourceIdentifier("string"),
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 DisplayName = "string",
                 ExperimentName = "string",
                 Services =
 {
 ["string"] = new MachineLearningJobService()
 {
+<<<<<<< HEAD
 JobServiceType = "string",
 Port = 1,
 Endpoint = "string",
+=======
+Endpoint = "string",
+JobServiceType = "string",
+Port = 1,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
 Properties =
 {
 ["string"] = "string",
 },
 },
 },
+<<<<<<< HEAD
                 ComputeId = new ResourceIdentifier("string"),
                 Description = "string",
                 Tags =
 {
 ["string"] = "string",
 },
+=======
+                Description = "string",
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 Properties =
 {
 ["string"] = "string",
 },
+<<<<<<< HEAD
             });
             ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data, default);
+=======
+                Tags =
+{
+["string"] = "string",
+},
+            });
+            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MachineLearningJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -565,7 +876,11 @@ Properties =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Cancel_CancelJob()
         {
+<<<<<<< HEAD
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/cancel.json
+=======
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Job/cancel.json
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             // this example is just showing the usage of "Jobs_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

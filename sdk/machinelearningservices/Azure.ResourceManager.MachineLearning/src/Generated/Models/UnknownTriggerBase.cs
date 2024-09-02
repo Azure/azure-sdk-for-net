@@ -26,7 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<< HEAD
         internal UnknownTriggerBase(TriggerType triggerType, string endTime, string startTime, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(triggerType, endTime, startTime, timeZone, serializedAdditionalRawData)
+=======
+        internal UnknownTriggerBase(string endTime, string startTime, string timeZone, TriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             TriggerType = triggerType;
         }

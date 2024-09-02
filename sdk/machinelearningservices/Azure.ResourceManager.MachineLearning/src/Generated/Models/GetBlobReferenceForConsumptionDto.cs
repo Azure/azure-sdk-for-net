@@ -52,30 +52,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="GetBlobReferenceForConsumptionDto"/>. </summary>
         /// <param name="blobUri"> Blob uri, example: https://blob.windows.core.net/Container/Path. </param>
+<<<<<<< HEAD
         /// <param name="storageAccountArmId"> The ARM id of the storage account. </param>
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="credential">
         /// Credential info to access storage account
         /// Please note <see cref="DataReferenceCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DockerCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="AnonymousAccessCredential"/> and <see cref="SasCredential"/>.
         /// </param>
+<<<<<<< HEAD
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GetBlobReferenceForConsumptionDto(Uri blobUri, string storageAccountArmId, DataReferenceCredential credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlobUri = blobUri;
             StorageAccountArmId = storageAccountArmId;
             Credential = credential;
+=======
+        /// <param name="storageAccountArmId"> The ARM id of the storage account. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetBlobReferenceForConsumptionDto(Uri blobUri, DataReferenceCredential credential, string storageAccountArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            BlobUri = blobUri;
+            Credential = credential;
+            StorageAccountArmId = storageAccountArmId;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Blob uri, example: https://blob.windows.core.net/Container/Path. </summary>
         public Uri BlobUri { get; }
+<<<<<<< HEAD
         /// <summary> The ARM id of the storage account. </summary>
         public string StorageAccountArmId { get; }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary>
         /// Credential info to access storage account
         /// Please note <see cref="DataReferenceCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DockerCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="AnonymousAccessCredential"/> and <see cref="SasCredential"/>.
         /// </summary>
         public DataReferenceCredential Credential { get; }
+<<<<<<< HEAD
+=======
+        /// <summary> The ARM id of the storage account. </summary>
+        public string StorageAccountArmId { get; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

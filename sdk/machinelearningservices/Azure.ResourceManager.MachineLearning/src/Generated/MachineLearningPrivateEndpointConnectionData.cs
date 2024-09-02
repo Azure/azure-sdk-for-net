@@ -100,7 +100,12 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public MachineLearningPrivateLinkServiceConnectionState ConnectionState { get; set; }
+<<<<<<< HEAD
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public MachineLearningPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+=======
+        /// <summary> The current provisioning state. </summary>
+        public MachineLearningPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

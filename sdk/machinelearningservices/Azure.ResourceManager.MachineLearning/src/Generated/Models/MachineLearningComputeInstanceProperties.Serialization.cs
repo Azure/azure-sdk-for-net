@@ -129,6 +129,54 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeInstanceAuthorizationType");
                 }
             }
+            if (Optional.IsDefined(EnableOSPatching))
+            {
+                if (EnableOSPatching != null)
+                {
+                    writer.WritePropertyName("enableOSPatching"u8);
+                    writer.WriteBooleanValue(EnableOSPatching.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableOSPatching");
+                }
+            }
+            if (Optional.IsDefined(EnableRootAccess))
+            {
+                if (EnableRootAccess != null)
+                {
+                    writer.WritePropertyName("enableRootAccess"u8);
+                    writer.WriteBooleanValue(EnableRootAccess.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableRootAccess");
+                }
+            }
+            if (Optional.IsDefined(EnableSso))
+            {
+                if (EnableSso != null)
+                {
+                    writer.WritePropertyName("enableSSO"u8);
+                    writer.WriteBooleanValue(EnableSso.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableSSO");
+                }
+            }
+            if (Optional.IsDefined(ReleaseQuotaOnStop))
+            {
+                if (ReleaseQuotaOnStop != null)
+                {
+                    writer.WritePropertyName("releaseQuotaOnStop"u8);
+                    writer.WriteBooleanValue(ReleaseQuotaOnStop.Value);
+                }
+                else
+                {
+                    writer.WriteNull("releaseQuotaOnStop");
+                }
+            }
             if (Optional.IsDefined(PersonalComputeInstanceSettings))
             {
                 if (PersonalComputeInstanceSettings != null)
@@ -288,6 +336,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IReadOnlyList<MachineLearningError> errors = default;
             MachineLearningComputeInstanceState? state = default;
             MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType = default;
+            bool? enableOSPatching = default;
+            bool? enableRootAccess = default;
+            bool? enableSso = default;
+            bool? releaseQuotaOnStop = default;
             PersonalComputeInstanceSettings personalComputeInstanceSettings = default;
             SetupScripts setupScripts = default;
             MachineLearningComputeInstanceLastOperation lastOperation = default;
@@ -424,6 +476,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     computeInstanceAuthorizationType = new MachineLearningComputeInstanceAuthorizationType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("enableOSPatching"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enableOSPatching = null;
+                        continue;
+                    }
+                    enableOSPatching = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("enableRootAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enableRootAccess = null;
+                        continue;
+                    }
+                    enableRootAccess = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("enableSSO"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enableSso = null;
+                        continue;
+                    }
+                    enableSso = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("releaseQuotaOnStop"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        releaseQuotaOnStop = null;
+                        continue;
+                    }
+                    releaseQuotaOnStop = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("personalComputeInstanceSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -546,6 +638,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 errors ?? new ChangeTrackingList<MachineLearningError>(),
                 state,
                 computeInstanceAuthorizationType,
+                enableOSPatching,
+                enableRootAccess,
+                enableSso,
+                releaseQuotaOnStop,
                 personalComputeInstanceSettings,
                 setupScripts,
                 lastOperation,

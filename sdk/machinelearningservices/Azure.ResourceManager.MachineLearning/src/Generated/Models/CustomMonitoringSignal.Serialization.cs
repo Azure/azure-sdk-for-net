@@ -71,8 +71,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+<<<<<<< HEAD
             writer.WritePropertyName("signalType"u8);
             writer.WriteStringValue(SignalType.ToString());
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsCollectionDefined(NotificationTypes))
             {
                 if (NotificationTypes != null)
@@ -150,6 +153,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, MachineLearningJobInput> inputs = default;
             string componentId = default;
             IList<CustomMetricThreshold> metricThresholds = default;
+<<<<<<< HEAD
+=======
+            IList<MonitoringNotificationType> notificationTypes = default;
+            IDictionary<string, string> properties = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MonitoringSignalType signalType = default;
             IList<MonitoringNotificationType> notificationTypes = default;
             IDictionary<string, string> properties = default;
@@ -202,11 +210,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     metricThresholds = array;
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("signalType"u8))
                 {
                     signalType = new MonitoringSignalType(property.Value.GetString());
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("notificationTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -244,13 +255,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CustomMonitoringSignal(
+<<<<<<< HEAD
+=======
+                notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 signalType,
                 notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 inputAssets ?? new ChangeTrackingDictionary<string, MonitoringInputDataBase>(),
                 inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+<<<<<<< HEAD
                 componentId,
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 metricThresholds);
         }
 

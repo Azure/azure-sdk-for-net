@@ -64,7 +64,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<< HEAD
         /// <description>2024-04-01</description>
+=======
+        /// <description>2024-07-01-preview</description>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,7 +117,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<< HEAD
         /// <description>2024-04-01</description>
+=======
+        /// <description>2024-07-01-preview</description>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -162,7 +170,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<< HEAD
         /// <description>2024-04-01</description>
+=======
+        /// <description>2024-07-01-preview</description>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -207,7 +219,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<< HEAD
         /// <description>2024-04-01</description>
+=======
+        /// <description>2024-07-01-preview</description>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,7 +268,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<< HEAD
         /// <description>2024-04-01</description>
+=======
+        /// <description>2024-07-01-preview</description>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,7 +302,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<< HEAD
         /// <description>2024-04-01</description>
+=======
+        /// <description>2024-07-01-preview</description>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -312,7 +336,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<< HEAD
         /// <description>2024-04-01</description>
+=======
+        /// <description>2024-07-01-preview</description>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,7 +383,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<< HEAD
         /// <description>2024-04-01</description>
+=======
+        /// <description>2024-07-01-preview</description>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +430,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<< HEAD
         /// <description>2024-04-01</description>
+=======
+        /// <description>2024-07-01-preview</description>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -443,7 +479,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<< HEAD
         /// <description>2024-04-01</description>
+=======
+        /// <description>2024-07-01-preview</description>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </item>
         /// <item>
         /// <term>Resource</term>

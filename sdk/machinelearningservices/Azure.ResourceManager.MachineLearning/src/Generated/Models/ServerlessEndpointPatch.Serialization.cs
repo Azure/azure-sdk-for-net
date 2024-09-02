@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+<<<<<<< HEAD
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -35,6 +36,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
+=======
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -85,29 +97,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
             MachineLearningSkuPatch sku = default;
             MachineLearningPartialManagedServiceIdentity identity = default;
+=======
+            MachineLearningPartialManagedServiceIdentity identity = default;
+            MachineLearningSkuPatch sku = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<< HEAD
                 if (property.NameEquals("sku"u8))
+=======
+                if (property.NameEquals("identity"u8))
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
+<<<<<<< HEAD
                     sku = MachineLearningSkuPatch.DeserializeMachineLearningSkuPatch(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
+=======
+                    identity = MachineLearningPartialManagedServiceIdentity.DeserializeMachineLearningPartialManagedServiceIdentity(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
+<<<<<<< HEAD
                     identity = MachineLearningPartialManagedServiceIdentity.DeserializeMachineLearningPartialManagedServiceIdentity(property.Value, options);
+=======
+                    sku = MachineLearningSkuPatch.DeserializeMachineLearningSkuPatch(property.Value, options);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -130,7 +162,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
             return new ServerlessEndpointPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, sku, identity);
+=======
+            return new ServerlessEndpointPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity, sku);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<ServerlessEndpointPatch>.Write(ModelReaderWriterOptions options)

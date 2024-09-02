@@ -10,8 +10,18 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessInferenceEndpoint.cs
     /// <summary> The ServerlessInferenceEndpoint. </summary>
     public partial class ServerlessInferenceEndpoint
+========
+    /// <summary> The ServerlessOffer. </summary>
+    public partial class ServerlessOffer
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessOffer.cs
+=======
+    /// <summary> The ServerlessInferenceEndpoint. </summary>
+    public partial class ServerlessInferenceEndpoint
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,6 +55,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessInferenceEndpoint.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> Initializes a new instance of <see cref="ServerlessInferenceEndpoint"/>. </summary>
         /// <param name="uri"> [Required] The inference uri to target when making requests against the Serverless Endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
@@ -52,6 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
+<<<<<<< HEAD
             Uri = uri;
             Headers = new ChangeTrackingDictionary<string, string>();
         }
@@ -64,6 +79,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Uri = uri;
             Headers = headers;
+=======
+            Headers = new ChangeTrackingDictionary<string, string>();
+            Uri = uri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServerlessInferenceEndpoint"/>. </summary>
+        /// <param name="headers"> Specifies any required headers to target this serverless endpoint. </param>
+        /// <param name="uri"> [Required] The inference uri to target when making requests against the Serverless Endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerlessInferenceEndpoint(IReadOnlyDictionary<string, string> headers, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Headers = headers;
+            Uri = uri;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,9 +101,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+<<<<<<< HEAD
         /// <summary> [Required] The inference uri to target when making requests against the Serverless Endpoint. </summary>
         public Uri Uri { get; }
         /// <summary> Specifies any required headers to target this serverless endpoint. </summary>
         public IReadOnlyDictionary<string, string> Headers { get; }
+========
+        /// <summary> Initializes a new instance of <see cref="ServerlessOffer"/>. </summary>
+        /// <param name="offerName"></param>
+        /// <param name="publisher"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> or <paramref name="publisher"/> is null. </exception>
+        public ServerlessOffer(string offerName, string publisher)
+        {
+            Argument.AssertNotNull(offerName, nameof(offerName));
+            Argument.AssertNotNull(publisher, nameof(publisher));
+
+            OfferName = offerName;
+            Publisher = publisher;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServerlessOffer"/>. </summary>
+        /// <param name="offerName"></param>
+        /// <param name="publisher"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerlessOffer(string offerName, string publisher, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            OfferName = offerName;
+            Publisher = publisher;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServerlessOffer"/> for deserialization. </summary>
+        internal ServerlessOffer()
+        {
+        }
+
+        /// <summary> Gets or sets the offer name. </summary>
+        public string OfferName { get; set; }
+        /// <summary> Gets or sets the publisher. </summary>
+        public string Publisher { get; set; }
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessOffer.cs
+=======
+        /// <summary> Specifies any required headers to target this serverless endpoint. </summary>
+        public IReadOnlyDictionary<string, string> Headers { get; }
+        /// <summary> [Required] The inference uri to target when making requests against the Serverless Endpoint. </summary>
+        public Uri Uri { get; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

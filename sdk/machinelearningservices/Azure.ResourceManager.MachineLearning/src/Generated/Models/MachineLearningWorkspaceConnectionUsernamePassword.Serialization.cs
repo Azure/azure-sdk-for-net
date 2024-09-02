@@ -37,6 +37,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(SecurityToken))
+<<<<<<< HEAD
+=======
+            {
+                writer.WritePropertyName("securityToken"u8);
+                writer.WriteStringValue(SecurityToken);
+            }
+            if (Optional.IsDefined(Username))
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             {
                 writer.WritePropertyName("securityToken"u8);
                 writer.WriteStringValue(SecurityToken);
@@ -79,6 +87,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
+=======
+            string password = default;
+            string securityToken = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             string username = default;
             string password = default;
             string securityToken = default;
@@ -97,6 +110,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
                 if (property.NameEquals("securityToken"u8))
+<<<<<<< HEAD
+=======
+                {
+                    securityToken = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("username"u8))
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 {
                     securityToken = property.Value.GetString();
                     continue;
@@ -107,7 +128,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
             return new MachineLearningWorkspaceConnectionUsernamePassword(username, password, securityToken, serializedAdditionalRawData);
+=======
+            return new MachineLearningWorkspaceConnectionUsernamePassword(password, securityToken, username, serializedAdditionalRawData);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceConnectionUsernamePassword>.Write(ModelReaderWriterOptions options)

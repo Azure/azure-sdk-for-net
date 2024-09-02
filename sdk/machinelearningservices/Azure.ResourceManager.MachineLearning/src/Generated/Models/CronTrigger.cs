@@ -44,7 +44,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </param>
+<<<<<<< HEAD
         internal CronTrigger(TriggerType triggerType, string endTime, string startTime, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData, string expression) : base(triggerType, endTime, startTime, timeZone, serializedAdditionalRawData)
+=======
+        internal CronTrigger(string endTime, string startTime, string timeZone, TriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData, string expression) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             Expression = expression;
             TriggerType = triggerType;

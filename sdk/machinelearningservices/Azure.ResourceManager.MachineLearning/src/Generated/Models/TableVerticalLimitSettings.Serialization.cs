@@ -65,8 +65,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(EnableEarlyTermination))
             {
+<<<<<<< HEAD
                 writer.WritePropertyName("enableEarlyTermination"u8);
                 writer.WriteBooleanValue(EnableEarlyTermination.Value);
+=======
+                writer.WritePropertyName("maxConcurrentTrials"u8);
+                writer.WriteNumberValue(MaxConcurrentTrials.Value);
+            }
+            if (Optional.IsDefined(MaxCoresPerTrial))
+            {
+                writer.WritePropertyName("maxCoresPerTrial"u8);
+                writer.WriteNumberValue(MaxCoresPerTrial.Value);
+            }
+            if (Optional.IsDefined(MaxTrials))
+            {
+                writer.WritePropertyName("maxTrials"u8);
+                writer.WriteNumberValue(MaxTrials.Value);
+            }
+            if (Optional.IsDefined(Timeout))
+            {
+                writer.WritePropertyName("timeout"u8);
+                writer.WriteStringValue(Timeout.Value, "P");
+            }
+            if (Optional.IsDefined(TrialTimeout))
+            {
+                writer.WritePropertyName("trialTimeout"u8);
+                writer.WriteStringValue(TrialTimeout.Value, "P");
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,8 +136,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TimeSpan? timeout = default;
             int? maxConcurrentTrials = default;
             int? maxCoresPerTrial = default;
+<<<<<<< HEAD
             double? exitScore = default;
             bool? enableEarlyTermination = default;
+=======
+            int? maxTrials = default;
+            TimeSpan? timeout = default;
+            TimeSpan? trialTimeout = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,6 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     maxCoresPerTrial = property.Value.GetInt32();
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("exitScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -173,12 +205,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
                 if (property.NameEquals("enableEarlyTermination"u8))
+=======
+                if (property.NameEquals("maxTrials"u8))
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
+<<<<<<< HEAD
                     enableEarlyTermination = property.Value.GetBoolean();
+=======
+                    maxTrials = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("timeout"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeout = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("trialTimeout"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    trialTimeout = property.Value.GetTimeSpan("P");
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     continue;
                 }
                 if (options.Format != "W")
@@ -193,8 +250,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 timeout,
                 maxConcurrentTrials,
                 maxCoresPerTrial,
+<<<<<<< HEAD
                 exitScore,
                 enableEarlyTermination,
+=======
+                maxTrials,
+                timeout,
+                trialTimeout,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 serializedAdditionalRawData);
         }
 

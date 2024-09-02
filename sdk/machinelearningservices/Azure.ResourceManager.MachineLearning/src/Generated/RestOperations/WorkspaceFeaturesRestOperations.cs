@@ -32,7 +32,11 @@ namespace Azure.ResourceManager.MachineLearning
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
+<<<<<<< HEAD
             _apiVersion = apiVersion ?? "2024-04-01";
+=======
+            _apiVersion = apiVersion ?? "2024-07-01-preview";
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

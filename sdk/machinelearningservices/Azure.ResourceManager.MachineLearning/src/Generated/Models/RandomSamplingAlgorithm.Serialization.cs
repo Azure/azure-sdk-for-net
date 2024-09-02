@@ -26,6 +26,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+<<<<<<< HEAD
+=======
+            if (Optional.IsDefined(Rule))
+            {
+                writer.WritePropertyName("rule"u8);
+                writer.WriteStringValue(Rule.Value.ToString());
+            }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(Seed))
             {
                 if (Seed != null)
@@ -83,6 +91,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
+=======
+            RandomSamplingAlgorithmRule? rule = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             int? seed = default;
             RandomSamplingAlgorithmRule? rule = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
@@ -90,6 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<< HEAD
                 if (property.NameEquals("seed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -100,6 +113,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     seed = property.Value.GetInt32();
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("rule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -120,7 +135,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
             return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, seed, rule);
+=======
+            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, rule, seed);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<RandomSamplingAlgorithm>.Write(ModelReaderWriterOptions options)

@@ -130,6 +130,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
+<<<<<<< HEAD
+=======
+            if (Optional.IsDefined(Identity))
+            {
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity");
+                }
+            }
+            if (Optional.IsDefined(IsArchived))
+            {
+                writer.WritePropertyName("isArchived"u8);
+                writer.WriteBooleanValue(IsArchived.Value);
+            }
+            writer.WritePropertyName("jobType"u8);
+            writer.WriteStringValue(JobType.ToString());
+            if (Optional.IsDefined(NotificationSetting))
+            {
+                if (NotificationSetting != null)
+                {
+                    writer.WritePropertyName("notificationSetting"u8);
+                    writer.WriteObjectValue(NotificationSetting, options);
+                }
+                else
+                {
+                    writer.WriteNull("notificationSetting");
+                }
+            }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
@@ -297,7 +331,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, MachineLearningJobOutput> outputs = default;
             JobQueueSettings queueSettings = default;
             JobType jobType = default;
+<<<<<<< HEAD
             string displayName = default;
+=======
+            NotificationSetting notificationSetting = default;
+            IDictionary<string, MachineLearningJobService> services = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MachineLearningJobStatus? status = default;
             string experimentName = default;
             IDictionary<string, MachineLearningJobService> services = default;
@@ -421,6 +460,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     experimentName = property.Value.GetString();
                     continue;
                 }
+<<<<<<< HEAD
+=======
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        identity = null;
+                        continue;
+                    }
+                    identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("isArchived"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isArchived = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("jobType"u8))
+                {
+                    jobType = new JobType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("notificationSetting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        notificationSetting = null;
+                        continue;
+                    }
+                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
+                    continue;
+                }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("services"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -537,7 +613,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 jobType,
+<<<<<<< HEAD
                 displayName,
+=======
+                notificationSetting,
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 status,
                 experimentName,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),

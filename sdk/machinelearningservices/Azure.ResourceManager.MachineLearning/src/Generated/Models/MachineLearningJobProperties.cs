@@ -14,7 +14,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// Base definition for a job.
     /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+<<<<<<< HEAD
     /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/> and <see cref="MachineLearningSweepJob"/>.
+=======
+    /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="FineTuningJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/> and <see cref="MachineLearningSweepJob"/>.
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     /// </summary>
     public partial class MachineLearningJobProperties : MachineLearningResourceBase
     {
@@ -47,10 +51,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="notificationSetting"> Notification setting for the job. </param>
+<<<<<<< HEAD
         internal MachineLearningJobProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, JobType jobType, string displayName, MachineLearningJobStatus? status, string experimentName, IDictionary<string, MachineLearningJobService> services, ResourceIdentifier computeId, bool? isArchived, MachineLearningIdentityConfiguration identity, ResourceIdentifier componentId, NotificationSetting notificationSetting) : base(description, tags, properties, serializedAdditionalRawData)
+=======
+        /// <param name="services">
+        /// List of JobEndpoints.
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// </param>
+        /// <param name="status"> Status of the job. </param>
+        internal MachineLearningJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status) : base(description, properties, tags, serializedAdditionalRawData)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             JobType = jobType;
+<<<<<<< HEAD
             DisplayName = displayName;
+=======
+            NotificationSetting = notificationSetting;
+            Services = services;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             Status = status;
             ExperimentName = experimentName;
             Services = services;
@@ -89,5 +107,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public ResourceIdentifier ComponentId { get; set; }
         /// <summary> Notification setting for the job. </summary>
         public NotificationSetting NotificationSetting { get; set; }
+<<<<<<< HEAD
+=======
+        /// <summary>
+        /// List of JobEndpoints.
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// </summary>
+        public IDictionary<string, MachineLearningJobService> Services { get; set; }
+        /// <summary> Status of the job. </summary>
+        public MachineLearningJobStatus? Status { get; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

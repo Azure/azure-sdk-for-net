@@ -31,18 +31,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (Optional.IsDefined(LimitSettings))
-            {
-                if (LimitSettings != null)
-                {
-                    writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("limitSettings");
-                }
-            }
+<<<<<<< HEAD
+=======
             if (Optional.IsDefined(FeaturizationSettings))
             {
                 if (FeaturizationSettings != null)
@@ -55,6 +45,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
+            if (Optional.IsDefined(LimitSettings))
+            {
+                if (LimitSettings != null)
+                {
+                    writer.WritePropertyName("limitSettings"u8);
+                    writer.WriteObjectValue(LimitSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("limitSettings");
+                }
+            }
+<<<<<<< HEAD
+            if (Optional.IsDefined(FeaturizationSettings))
+            {
+                if (FeaturizationSettings != null)
+                {
+                    writer.WritePropertyName("featurizationSettings"u8);
+                    writer.WriteObjectValue(FeaturizationSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("featurizationSettings");
+                }
+            }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(ValidationData))
             {
                 if (ValidationData != null)
@@ -127,8 +145,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             ClassificationPrimaryMetric? primaryMetric = default;
+<<<<<<< HEAD
             NlpVerticalLimitSettings limitSettings = default;
             NlpVerticalFeaturizationSettings featurizationSettings = default;
+=======
+            NlpVerticalFeaturizationSettings featurizationSettings = default;
+            NlpVerticalLimitSettings limitSettings = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MachineLearningTableJobInput validationData = default;
             TaskType taskType = default;
             MachineLearningLogVerbosity? logVerbosity = default;
@@ -147,16 +170,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     primaryMetric = new ClassificationPrimaryMetric(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("limitSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        limitSettings = null;
-                        continue;
-                    }
-                    limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value, options);
-                    continue;
-                }
+<<<<<<< HEAD
+=======
                 if (property.NameEquals("featurizationSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -167,6 +182,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value, options);
                     continue;
                 }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
+                if (property.NameEquals("limitSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        limitSettings = null;
+                        continue;
+                    }
+                    limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value, options);
+                    continue;
+                }
+<<<<<<< HEAD
+                if (property.NameEquals("featurizationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        featurizationSettings = null;
+                        continue;
+                    }
+                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value, options);
+                    continue;
+                }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("validationData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -219,8 +258,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 targetColumnName,
                 serializedAdditionalRawData,
                 primaryMetric,
+<<<<<<< HEAD
                 limitSettings,
                 featurizationSettings,
+=======
+                featurizationSettings,
+                limitSettings,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 validationData);
         }
 

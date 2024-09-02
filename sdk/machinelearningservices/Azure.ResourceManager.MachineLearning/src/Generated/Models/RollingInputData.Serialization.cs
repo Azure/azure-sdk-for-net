@@ -195,6 +195,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new RollingInputData(
+<<<<<<< HEAD
+=======
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 inputDataType,
                 dataContext,
                 jobInputType,

@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearning.Models
+namespace Azure.ResourceManager.ComputeFleet.Models
 {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.Serialization.cs
     internal partial class MonitorNotificationSettings : IUtf8JsonSerializable, IJsonModel<MonitorNotificationSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorNotificationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -36,7 +37,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("emailNotificationSettings");
+========
+    internal partial class WinRMConfiguration : IUtf8JsonSerializable, IJsonModel<WinRMConfiguration>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WinRMConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<WinRMConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WinRMConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Listeners))
+            {
+                writer.WritePropertyName("listeners"u8);
+                writer.WriteStartArray();
+                foreach (var item in Listeners)
+                {
+                    writer.WriteObjectValue(item, options);
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/WinRMConfiguration.Serialization.cs
                 }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,6 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.Serialization.cs
         MonitorNotificationSettings IJsonModel<MonitorNotificationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -69,6 +94,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         internal static MonitorNotificationSettings DeserializeMonitorNotificationSettings(JsonElement element, ModelReaderWriterOptions options = null)
+========
+        WinRMConfiguration IJsonModel<WinRMConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WinRMConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWinRMConfiguration(document.RootElement, options);
+        }
+
+        internal static WinRMConfiguration DeserializeWinRMConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/WinRMConfiguration.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,19 +116,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.Serialization.cs
             MonitorEmailNotificationSettings emailNotificationSettings = default;
+========
+            IList<ComputeFleetWinRMListener> listeners = default;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/WinRMConfiguration.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.Serialization.cs
                 if (property.NameEquals("emailNotificationSettings"u8))
+========
+                if (property.NameEquals("listeners"u8))
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/WinRMConfiguration.Serialization.cs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         emailNotificationSettings = null;
                         continue;
                     }
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.Serialization.cs
                     emailNotificationSettings = MonitorEmailNotificationSettings.DeserializeMonitorEmailNotificationSettings(property.Value, options);
+========
+                    List<ComputeFleetWinRMListener> array = new List<ComputeFleetWinRMListener>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ComputeFleetWinRMListener.DeserializeComputeFleetWinRMListener(item, options));
+                    }
+                    listeners = array;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/WinRMConfiguration.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,18 +154,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.Serialization.cs
             return new MonitorNotificationSettings(emailNotificationSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorNotificationSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+========
+            return new WinRMConfiguration(listeners ?? new ChangeTrackingList<ComputeFleetWinRMListener>(), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<WinRMConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WinRMConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/WinRMConfiguration.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.Serialization.cs
                     throw new FormatException($"The model {nameof(MonitorNotificationSettings)} does not support writing '{options.Format}' format.");
             }
         }
@@ -116,12 +183,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         MonitorNotificationSettings IPersistableModel<MonitorNotificationSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+========
+                    throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WinRMConfiguration IPersistableModel<WinRMConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WinRMConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/WinRMConfiguration.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.Serialization.cs
                         return DeserializeMonitorNotificationSettings(document.RootElement, options);
                     }
                 default:
@@ -130,5 +207,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         string IPersistableModel<MonitorNotificationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+========
+                        return DeserializeWinRMConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WinRMConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/WinRMConfiguration.Serialization.cs
     }
 }

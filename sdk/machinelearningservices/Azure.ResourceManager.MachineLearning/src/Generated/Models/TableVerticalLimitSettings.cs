@@ -56,18 +56,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="timeout"> AutoML job timeout. </param>
         /// <param name="maxConcurrentTrials"> Maximum Concurrent iterations. </param>
         /// <param name="maxCoresPerTrial"> Max cores per iteration. </param>
+<<<<<<< HEAD
         /// <param name="exitScore"> Exit score for the AutoML job. </param>
         /// <param name="enableEarlyTermination"> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TableVerticalLimitSettings(int? maxTrials, TimeSpan? trialTimeout, TimeSpan? timeout, int? maxConcurrentTrials, int? maxCoresPerTrial, double? exitScore, bool? enableEarlyTermination, IDictionary<string, BinaryData> serializedAdditionalRawData)
+=======
+        /// <param name="maxTrials"> Number of iterations. </param>
+        /// <param name="timeout"> AutoML job timeout. </param>
+        /// <param name="trialTimeout"> Iteration timeout. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableVerticalLimitSettings(bool? enableEarlyTermination, double? exitScore, int? maxConcurrentTrials, int? maxCoresPerTrial, int? maxTrials, TimeSpan? timeout, TimeSpan? trialTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             MaxTrials = maxTrials;
             TrialTimeout = trialTimeout;
             Timeout = timeout;
             MaxConcurrentTrials = maxConcurrentTrials;
             MaxCoresPerTrial = maxCoresPerTrial;
+<<<<<<< HEAD
             ExitScore = exitScore;
             EnableEarlyTermination = enableEarlyTermination;
+=======
+            MaxTrials = maxTrials;
+            Timeout = timeout;
+            TrialTimeout = trialTimeout;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,9 +95,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public int? MaxConcurrentTrials { get; set; }
         /// <summary> Max cores per iteration. </summary>
         public int? MaxCoresPerTrial { get; set; }
+<<<<<<< HEAD
         /// <summary> Exit score for the AutoML job. </summary>
         public double? ExitScore { get; set; }
         /// <summary> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </summary>
         public bool? EnableEarlyTermination { get; set; }
+=======
+        /// <summary> Number of iterations. </summary>
+        public int? MaxTrials { get; set; }
+        /// <summary> AutoML job timeout. </summary>
+        public TimeSpan? Timeout { get; set; }
+        /// <summary> Iteration timeout. </summary>
+        public TimeSpan? TrialTimeout { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

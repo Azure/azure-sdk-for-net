@@ -38,12 +38,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("createdByWorkspaceArmId"u8);
                 writer.WriteStringValue(CreatedByWorkspaceArmId);
             }
+<<<<<<< HEAD
+=======
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteStringValue(Error);
+            }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(ExpiryOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiryOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Group))
+<<<<<<< HEAD
+            {
+                writer.WritePropertyName("group"u8);
+                writer.WriteStringValue(Group.Value.ToString());
+            }
+            if (Optional.IsDefined(IsSharedToAll))
+            {
+                writer.WritePropertyName("isSharedToAll"u8);
+                writer.WriteBooleanValue(IsSharedToAll.Value);
+=======
             {
                 writer.WritePropertyName("group"u8);
                 writer.WriteStringValue(Group.Value.ToString());
@@ -53,11 +71,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("isSharedToAll"u8);
                 writer.WriteBooleanValue(IsSharedToAll.Value);
             }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(PeRequirement))
+            {
+                writer.WritePropertyName("peRequirement"u8);
+                writer.WriteStringValue(PeRequirement.Value.ToString());
+            }
+            if (Optional.IsDefined(PeStatus))
+            {
+                writer.WritePropertyName("peStatus"u8);
+                writer.WriteStringValue(PeStatus.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(SharedUserList))
+            {
+                writer.WritePropertyName("sharedUserList"u8);
+                writer.WriteStartArray();
+                foreach (var item in SharedUserList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
+            }
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
+<<<<<<< HEAD
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -88,6 +139,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("valueFormat"u8);
                 writer.WriteStringValue(ValueFormat.Value.ToString());
+=======
+            if (Optional.IsDefined(UseWorkspaceManagedIdentity))
+            {
+                writer.WritePropertyName("useWorkspaceManagedIdentity"u8);
+                writer.WriteBooleanValue(UseWorkspaceManagedIdentity.Value);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

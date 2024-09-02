@@ -13,6 +13,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     public partial class MarketplacePlan : IUtf8JsonSerializable, IJsonModel<MarketplacePlan>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplacePlan>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -26,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+<<<<<<< HEAD
             if (options.Format != "W" && Optional.IsDefined(PublisherId))
             {
                 if (PublisherId != null)
@@ -38,6 +43,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("publisherId");
                 }
             }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (options.Format != "W" && Optional.IsDefined(OfferId))
             {
                 if (OfferId != null)
@@ -60,8 +67,58 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("planId");
+<<<<<<< HEAD
+========
+    public partial class ServerlessInferenceEndpoint : IUtf8JsonSerializable, IJsonModel<ServerlessInferenceEndpoint>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerlessInferenceEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServerlessInferenceEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerlessInferenceEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServerlessInferenceEndpoint)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Headers))
+            {
+                if (Headers != null)
+                {
+                    writer.WritePropertyName("headers"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Headers)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("headers");
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessInferenceEndpoint.Serialization.cs
                 }
             }
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
+=======
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(PublisherId))
+            {
+                if (PublisherId != null)
+                {
+                    writer.WritePropertyName("publisherId"u8);
+                    writer.WriteStringValue(PublisherId);
+                }
+                else
+                {
+                    writer.WriteNull("publisherId");
+                }
+            }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,6 +137,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         MarketplacePlan IJsonModel<MarketplacePlan>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MarketplacePlan>)this).GetFormatFromOptions(options) : options.Format;
@@ -93,6 +154,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         internal static MarketplacePlan DeserializeMarketplacePlan(JsonElement element, ModelReaderWriterOptions options = null)
+<<<<<<< HEAD
+========
+        ServerlessInferenceEndpoint IJsonModel<ServerlessInferenceEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerlessInferenceEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServerlessInferenceEndpoint)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerlessInferenceEndpoint(document.RootElement, options);
+        }
+
+        internal static ServerlessInferenceEndpoint DeserializeServerlessInferenceEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessInferenceEndpoint.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -100,13 +179,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.Serialization.cs
             string publisherId = default;
             string offerId = default;
             string planId = default;
+========
+            IReadOnlyDictionary<string, string> headers = default;
+            Uri uri = default;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessInferenceEndpoint.Serialization.cs
+=======
+            string offerId = default;
+            string planId = default;
+            string publisherId = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.Serialization.cs
                 if (property.NameEquals("publisherId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -117,6 +209,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     publisherId = property.Value.GetString();
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("offerId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -135,6 +229,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     planId = property.Value.GetString();
+<<<<<<< HEAD
+========
+                if (property.NameEquals("headers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        headers = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    headers = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("uri"u8))
+                {
+                    uri = new Uri(property.Value.GetString());
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessInferenceEndpoint.Serialization.cs
+=======
+                    continue;
+                }
+                if (property.NameEquals("publisherId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        publisherId = null;
+                        continue;
+                    }
+                    publisherId = property.Value.GetString();
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,18 +270,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.Serialization.cs
             return new MarketplacePlan(publisherId, offerId, planId, serializedAdditionalRawData);
+=======
+            return new MarketplacePlan(offerId, planId, publisherId, serializedAdditionalRawData);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<MarketplacePlan>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MarketplacePlan>)this).GetFormatFromOptions(options) : options.Format;
+<<<<<<< HEAD
+========
+            return new ServerlessInferenceEndpoint(headers ?? new ChangeTrackingDictionary<string, string>(), uri, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ServerlessInferenceEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerlessInferenceEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessInferenceEndpoint.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     throw new FormatException($"The model {nameof(MarketplacePlan)} does not support writing '{options.Format}' format.");
             }
         }
@@ -162,12 +309,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         MarketplacePlan IPersistableModel<MarketplacePlan>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MarketplacePlan>)this).GetFormatFromOptions(options) : options.Format;
+<<<<<<< HEAD
+========
+                    throw new FormatException($"The model {nameof(ServerlessInferenceEndpoint)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServerlessInferenceEndpoint IPersistableModel<ServerlessInferenceEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerlessInferenceEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessInferenceEndpoint.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                         return DeserializeMarketplacePlan(document.RootElement, options);
                     }
                 default:
@@ -176,5 +339,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         string IPersistableModel<MarketplacePlan>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+<<<<<<< HEAD
+========
+                        return DeserializeServerlessInferenceEndpoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServerlessInferenceEndpoint)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServerlessInferenceEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessInferenceEndpoint.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

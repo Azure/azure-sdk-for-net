@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryMetric"> Primary metric for regression task. </param>
         /// <param name="trainingSettings"> Inputs for training phase for an AutoML Job. </param>
+<<<<<<< HEAD
+=======
+        /// <param name="cvSplitColumnNames"> Columns to use for CVSplit data. </param>
+        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="nCrossValidations">
         /// Number of cross validation folds to be applied on training dataset
@@ -42,8 +47,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="Models.NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
         /// </param>
+<<<<<<< HEAD
         /// <param name="cvSplitColumnNames"> Columns to use for CVSplit data. </param>
         /// <param name="weightColumnName"> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </param>
+=======
+        /// <param name="testData"> Test data input. </param>
+        /// <param name="testDataSize">
+        /// The fraction of test dataset that needs to be set aside for validation purpose.
+        /// Values between (0.0 , 1.0)
+        /// Applied when validation dataset is not provided.
+        /// </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="validationData"> Validation data inputs. </param>
         /// <param name="testData"> Test data input. </param>
         /// <param name="validationDataSize">
@@ -51,6 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </param>
+<<<<<<< HEAD
         /// <param name="testDataSize">
         /// The fraction of test dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
@@ -64,6 +79,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             LimitSettings = limitSettings;
             NCrossValidations = nCrossValidations;
             CvSplitColumnNames = cvSplitColumnNames;
+=======
+        /// <param name="weightColumnName"> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </param>
+        internal AutoMLVerticalRegression(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData, AutoMLVerticalRegressionPrimaryMetric? primaryMetric, RegressionTrainingSettings trainingSettings, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, MachineLearningTableJobInput testData, double? testDataSize, MachineLearningTableJobInput validationData, double? validationDataSize, string weightColumnName) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
+        {
+            PrimaryMetric = primaryMetric;
+            TrainingSettings = trainingSettings;
+            CvSplitColumnNames = cvSplitColumnNames;
+            FeaturizationSettings = featurizationSettings;
+            LimitSettings = limitSettings;
+            NCrossValidations = nCrossValidations;
+            TestData = testData;
+            TestDataSize = testDataSize;
+            ValidationData = validationData;
+            ValidationDataSize = validationDataSize;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             WeightColumnName = weightColumnName;
             ValidationData = validationData;
             TestData = testData;
@@ -82,6 +112,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public AutoMLVerticalRegressionPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Inputs for training phase for an AutoML Job. </summary>
         public RegressionTrainingSettings TrainingSettings { get; set; }
+<<<<<<< HEAD
+=======
+        /// <summary> Columns to use for CVSplit data. </summary>
+        public IList<string> CvSplitColumnNames { get; set; }
+        /// <summary> Featurization inputs needed for AutoML job. </summary>
+        public TableVerticalFeaturizationSettings FeaturizationSettings { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> Execution constraints for AutoMLJob. </summary>
         public TableVerticalLimitSettings LimitSettings { get; set; }
         /// <summary>
@@ -91,10 +128,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
         /// </summary>
         public NCrossValidations NCrossValidations { get; set; }
+<<<<<<< HEAD
         /// <summary> Columns to use for CVSplit data. </summary>
         public IList<string> CvSplitColumnNames { get; set; }
         /// <summary> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </summary>
         public string WeightColumnName { get; set; }
+=======
+        /// <summary> Test data input. </summary>
+        public MachineLearningTableJobInput TestData { get; set; }
+        /// <summary>
+        /// The fraction of test dataset that needs to be set aside for validation purpose.
+        /// Values between (0.0 , 1.0)
+        /// Applied when validation dataset is not provided.
+        /// </summary>
+        public double? TestDataSize { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> Validation data inputs. </summary>
         public MachineLearningTableJobInput ValidationData { get; set; }
         /// <summary> Test data input. </summary>

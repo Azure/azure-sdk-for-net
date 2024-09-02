@@ -8,10 +8,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearning.Models
+namespace Azure.ResourceManager.ComputeFleet.Models
 {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ModelSettings.cs
     /// <summary> The ModelSettings. </summary>
     internal partial class ModelSettings
+========
+    /// <summary> Describes the uri of a disk. </summary>
+    internal partial class ComputeFleetVirtualHardDisk
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/ComputeFleetVirtualHardDisk.cs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,6 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ModelSettings.cs
         /// <summary> Initializes a new instance of <see cref="ModelSettings"/>. </summary>
         public ModelSettings()
         {
@@ -54,12 +60,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="modelId"> The unique model identifier that this ServerlessEndpoint should provision. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ModelSettings(string modelId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+========
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVirtualHardDisk"/>. </summary>
+        public ComputeFleetVirtualHardDisk()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVirtualHardDisk"/>. </summary>
+        /// <param name="uri"> Specifies the virtual hard disk's uri. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVirtualHardDisk(Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/ComputeFleetVirtualHardDisk.cs
         {
             ModelId = modelId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ModelSettings.cs
         /// <summary> The unique model identifier that this ServerlessEndpoint should provision. </summary>
         public string ModelId { get; set; }
+========
+        /// <summary> Specifies the virtual hard disk's uri. </summary>
+        public Uri Uri { get; set; }
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/ComputeFleetVirtualHardDisk.cs
     }
 }

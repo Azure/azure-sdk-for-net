@@ -26,6 +26,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
+            {
+                if (FeatureDataTypeOverride != null)
+                {
+                    writer.WritePropertyName("featureDataTypeOverride"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in FeatureDataTypeOverride)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value.ToString());
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("featureDataTypeOverride");
+                }
+            }
             writer.WritePropertyName("metricThresholds"u8);
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
@@ -37,6 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(ProductionData, options);
             writer.WritePropertyName("referenceData"u8);
             writer.WriteObjectValue(ReferenceData, options);
+<<<<<<< HEAD
             if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
             {
                 if (FeatureDataTypeOverride != null)
@@ -59,6 +78,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(SignalType.ToString());
             if (Optional.IsCollectionDefined(NotificationTypes))
             {
+=======
+            if (Optional.IsCollectionDefined(NotificationTypes))
+            {
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (NotificationTypes != null)
                 {
                     writer.WritePropertyName("notificationTypes"u8);
@@ -130,10 +153,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
             IList<PredictionDriftMetricThresholdBase> metricThresholds = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
+<<<<<<< HEAD
             IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
+=======
+            IList<MonitoringNotificationType> notificationTypes = default;
+            IDictionary<string, string> properties = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MonitoringSignalType signalType = default;
             IList<MonitoringNotificationType> notificationTypes = default;
             IDictionary<string, string> properties = default;
@@ -141,6 +170,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("featureDataTypeOverride"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        featureDataTypeOverride = null;
+                        continue;
+                    }
+                    Dictionary<string, MonitoringFeatureDataType> dictionary = new Dictionary<string, MonitoringFeatureDataType>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, new MonitoringFeatureDataType(property0.Value.GetString()));
+                    }
+                    featureDataTypeOverride = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("metricThresholds"u8))
                 {
                     List<PredictionDriftMetricThresholdBase> array = new List<PredictionDriftMetricThresholdBase>();
@@ -161,6 +205,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("featureDataTypeOverride"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -188,6 +233,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notificationTypes = null;
                         continue;
                     }
+=======
+                if (property.NameEquals("notificationTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        notificationTypes = null;
+                        continue;
+                    }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     List<MonitoringNotificationType> array = new List<MonitoringNotificationType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -218,10 +272,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new PredictionDriftMonitoringSignal(
+<<<<<<< HEAD
+=======
+                notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 signalType,
                 notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+                featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
                 metricThresholds,
                 productionData,
                 referenceData,

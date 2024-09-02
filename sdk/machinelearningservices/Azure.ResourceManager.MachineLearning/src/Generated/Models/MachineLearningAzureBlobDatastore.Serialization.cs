@@ -91,6 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("subscriptionId");
                 }
             }
+<<<<<<< HEAD
             if (Optional.IsDefined(ResourceGroup))
             {
                 if (ResourceGroup != null)
@@ -103,6 +104,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceGroup");
                 }
             }
+=======
+            writer.WritePropertyName("credentials"u8);
+            writer.WriteObjectValue(Credentials, options);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (options.Format != "W" && Optional.IsDefined(IsDefault))

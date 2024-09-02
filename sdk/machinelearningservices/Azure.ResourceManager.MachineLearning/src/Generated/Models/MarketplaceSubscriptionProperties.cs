@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionProperties"/>. </summary>
+<<<<<<< HEAD
         /// <param name="modelId"> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </param>
         /// <param name="marketplacePlan"> Marketplace Plan associated with the Marketplace Subscription. </param>
         /// <param name="marketplaceSubscriptionStatus"> Current status of the Marketplace Subscription. </param>
@@ -66,6 +67,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ModelId = modelId;
             MarketplacePlan = marketplacePlan;
             MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
+=======
+        /// <param name="marketplacePlan"> Marketplace Plan associated with the Marketplace Subscription. </param>
+        /// <param name="marketplaceSubscriptionStatus"> Current status of the Marketplace Subscription. </param>
+        /// <param name="modelId"> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </param>
+        /// <param name="provisioningState"> Provisioning State of the Marketplace Subscription. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceSubscriptionProperties(MarketplacePlan marketplacePlan, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string modelId, MarketplaceSubscriptionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MarketplacePlan = marketplacePlan;
+            MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
+            ModelId = modelId;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -75,12 +88,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+<<<<<<< HEAD
         /// <summary> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </summary>
         public string ModelId { get; set; }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> Marketplace Plan associated with the Marketplace Subscription. </summary>
         public MarketplacePlan MarketplacePlan { get; }
         /// <summary> Current status of the Marketplace Subscription. </summary>
         public MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
+<<<<<<< HEAD
+=======
+        /// <summary> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </summary>
+        public string ModelId { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> Provisioning State of the Marketplace Subscription. </summary>
         public MarketplaceSubscriptionProvisioningState? ProvisioningState { get; }
     }

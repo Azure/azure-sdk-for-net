@@ -26,8 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+<<<<<<< HEAD
             writer.WritePropertyName("signalType"u8);
             writer.WriteStringValue(SignalType.ToString());
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsCollectionDefined(NotificationTypes))
             {
                 if (NotificationTypes != null)
@@ -101,6 +104,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
+=======
+            IList<MonitoringNotificationType> notificationTypes = default;
+            IDictionary<string, string> properties = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MonitoringSignalType signalType = "Unknown";
             IList<MonitoringNotificationType> notificationTypes = default;
             IDictionary<string, string> properties = default;
@@ -108,11 +116,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<< HEAD
                 if (property.NameEquals("signalType"u8))
                 {
                     signalType = new MonitoringSignalType(property.Value.GetString());
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("notificationTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -149,7 +160,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
             return new UnknownMonitoringSignalBase(signalType, notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(), properties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+=======
+            return new UnknownMonitoringSignalBase(notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<MonitoringSignalBase>.Write(ModelReaderWriterOptions options)

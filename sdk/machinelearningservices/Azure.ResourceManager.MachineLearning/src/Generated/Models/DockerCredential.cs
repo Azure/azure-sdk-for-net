@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="DockerCredential"/>. </summary>
         /// <param name="credentialType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<< HEAD
         /// <param name="userName"> DockerCredential user name. </param>
         /// <param name="password"> DockerCredential user password. </param>
         internal DockerCredential(DataReferenceCredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData, string userName, string password) : base(credentialType, serializedAdditionalRawData)
@@ -35,5 +36,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string UserName { get; }
         /// <summary> DockerCredential user password. </summary>
         public string Password { get; }
+=======
+        /// <param name="password"> DockerCredential user password. </param>
+        /// <param name="userName"> DockerCredential user name. </param>
+        internal DockerCredential(DataReferenceCredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData, string password, string userName) : base(credentialType, serializedAdditionalRawData)
+        {
+            Password = password;
+            UserName = userName;
+            CredentialType = credentialType;
+        }
+
+        /// <summary> DockerCredential user password. </summary>
+        public string Password { get; }
+        /// <summary> DockerCredential user name. </summary>
+        public string UserName { get; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

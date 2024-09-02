@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+<<<<<<< HEAD
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
@@ -76,6 +77,18 @@ namespace Azure.ResourceManager.MachineLearning
             Properties = properties;
             Kind = kind;
             Identity = identity;
+=======
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerlessEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, ServerlessEndpointProperties properties, MachineLearningSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        {
+            Identity = identity;
+            Kind = kind;
+            Properties = properties;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -85,12 +98,21 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
+<<<<<<< HEAD
         /// <summary> [Required] Additional attributes of the entity. </summary>
         public ServerlessEndpointProperties Properties { get; set; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
         public string Kind { get; set; }
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         public ManagedServiceIdentity Identity { get; set; }
+=======
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
+        public string Kind { get; set; }
+        /// <summary> [Required] Additional attributes of the entity. </summary>
+        public ServerlessEndpointProperties Properties { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
         public MachineLearningSku Sku { get; set; }
     }

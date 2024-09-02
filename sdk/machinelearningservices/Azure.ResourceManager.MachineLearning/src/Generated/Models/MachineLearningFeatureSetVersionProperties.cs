@@ -24,14 +24,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<< HEAD
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+=======
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="entities"> Specifies list of entities. </param>
+        /// <param name="materializationSettings"> Specifies the materialization settings. </param>
+        /// <param name="provisioningState"> Provisioning state for the featureset version container. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="specification"> Specifies the feature spec details. </param>
         /// <param name="materializationSettings"> Specifies the materialization settings. </param>
         /// <param name="stage"> Specifies the asset stage. </param>
+<<<<<<< HEAD
         /// <param name="entities"> Specifies list of entities. </param>
         /// <param name="provisioningState"> Provisioning state for the featureset version container. </param>
         internal MachineLearningFeatureSetVersionProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, bool? isAnonymous, FeaturesetSpecification specification, MaterializationSettings materializationSettings, string stage, IList<string> entities, RegistryAssetProvisioningState? provisioningState) : base(description, tags, properties, serializedAdditionalRawData, isArchived, isAnonymous)
+=======
+        internal MachineLearningFeatureSetVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isAnonymous, bool? isArchived, IList<string> entities, MaterializationSettings materializationSettings, RegistryAssetProvisioningState? provisioningState, FeaturesetSpecification specification, string stage) : base(description, properties, tags, serializedAdditionalRawData, isAnonymous, isArchived)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             Specification = specification;
             MaterializationSettings = materializationSettings;

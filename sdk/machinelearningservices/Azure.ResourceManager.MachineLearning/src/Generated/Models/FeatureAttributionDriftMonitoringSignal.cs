@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class FeatureAttributionDriftMonitoringSignal : MonitoringSignalBase
     {
         /// <summary> Initializes a new instance of <see cref="FeatureAttributionDriftMonitoringSignal"/>. </summary>
+        /// <param name="featureImportanceSettings"> [Required] The settings for computing feature importance. </param>
         /// <param name="metricThreshold"> [Required] A list of metrics to calculate and their associated thresholds. </param>
         /// <param name="featureImportanceSettings"> [Required] The settings for computing feature importance. </param>
         /// <param name="productionData">
@@ -27,14 +28,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </param>
+<<<<<<< HEAD
         /// <exception cref="ArgumentNullException"> <paramref name="metricThreshold"/>, <paramref name="featureImportanceSettings"/>, <paramref name="productionData"/> or <paramref name="referenceData"/> is null. </exception>
         public FeatureAttributionDriftMonitoringSignal(FeatureAttributionMetricThreshold metricThreshold, FeatureImportanceSettings featureImportanceSettings, IEnumerable<MonitoringInputDataBase> productionData, MonitoringInputDataBase referenceData)
+=======
+        /// <exception cref="ArgumentNullException"> <paramref name="featureImportanceSettings"/>, <paramref name="metricThreshold"/>, <paramref name="productionData"/> or <paramref name="referenceData"/> is null. </exception>
+        public FeatureAttributionDriftMonitoringSignal(FeatureImportanceSettings featureImportanceSettings, FeatureAttributionMetricThreshold metricThreshold, IEnumerable<MonitoringInputDataBase> productionData, MonitoringInputDataBase referenceData)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
+            Argument.AssertNotNull(featureImportanceSettings, nameof(featureImportanceSettings));
             Argument.AssertNotNull(metricThreshold, nameof(metricThreshold));
             Argument.AssertNotNull(featureImportanceSettings, nameof(featureImportanceSettings));
             Argument.AssertNotNull(productionData, nameof(productionData));
             Argument.AssertNotNull(referenceData, nameof(referenceData));
 
+            FeatureDataTypeOverride = new ChangeTrackingDictionary<string, MonitoringFeatureDataType>();
+            FeatureImportanceSettings = featureImportanceSettings;
             MetricThreshold = metricThreshold;
             FeatureImportanceSettings = featureImportanceSettings;
             ProductionData = productionData.ToList();
@@ -44,10 +53,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FeatureAttributionDriftMonitoringSignal"/>. </summary>
+<<<<<<< HEAD
+=======
+        /// <param name="notificationTypes"> The current notification mode for this signal. </param>
+        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="notificationTypes"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="featureDataTypeOverride"> A dictionary that maps feature names to their respective data types. </param>
+        /// <param name="featureImportanceSettings"> [Required] The settings for computing feature importance. </param>
         /// <param name="metricThreshold"> [Required] A list of metrics to calculate and their associated thresholds. </param>
         /// <param name="featureImportanceSettings"> [Required] The settings for computing feature importance. </param>
         /// <param name="productionData">
@@ -60,9 +76,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </param>
+<<<<<<< HEAD
         /// <param name="featureDataTypeOverride"> A dictionary that maps feature names to their respective data types. </param>
         internal FeatureAttributionDriftMonitoringSignal(MonitoringSignalType signalType, IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, FeatureAttributionMetricThreshold metricThreshold, FeatureImportanceSettings featureImportanceSettings, IList<MonitoringInputDataBase> productionData, MonitoringInputDataBase referenceData, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride) : base(signalType, notificationTypes, properties, serializedAdditionalRawData)
+=======
+        internal FeatureAttributionDriftMonitoringSignal(IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride, FeatureImportanceSettings featureImportanceSettings, FeatureAttributionMetricThreshold metricThreshold, IList<MonitoringInputDataBase> productionData, MonitoringInputDataBase referenceData) : base(notificationTypes, properties, signalType, serializedAdditionalRawData)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
+            FeatureDataTypeOverride = featureDataTypeOverride;
+            FeatureImportanceSettings = featureImportanceSettings;
             MetricThreshold = metricThreshold;
             FeatureImportanceSettings = featureImportanceSettings;
             ProductionData = productionData;
@@ -76,6 +98,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> A dictionary that maps feature names to their respective data types. </summary>
+        public IDictionary<string, MonitoringFeatureDataType> FeatureDataTypeOverride { get; set; }
+        /// <summary> [Required] The settings for computing feature importance. </summary>
+        public FeatureImportanceSettings FeatureImportanceSettings { get; set; }
         /// <summary> [Required] A list of metrics to calculate and their associated thresholds. </summary>
         public FeatureAttributionMetricThreshold MetricThreshold { get; set; }
         /// <summary> [Required] The settings for computing feature importance. </summary>

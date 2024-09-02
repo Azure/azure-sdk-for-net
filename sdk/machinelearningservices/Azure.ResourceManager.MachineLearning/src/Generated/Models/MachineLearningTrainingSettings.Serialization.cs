@@ -63,11 +63,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("enableModelExplainability"u8);
                 writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
             }
+<<<<<<< HEAD
             if (Optional.IsDefined(IsDnnTrainingEnabled))
             {
                 writer.WritePropertyName("enableDnnTraining"u8);
                 writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
             }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -111,8 +114,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? enableStackEnsemble = default;
             bool? enableVoteEnsemble = default;
             TimeSpan? ensembleModelDownloadTimeout = default;
+<<<<<<< HEAD
             bool? enableModelExplainability = default;
             bool? enableDnnTraining = default;
+=======
+            MachineLearningStackEnsembleSettings stackEnsembleSettings = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,6 +179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableModelExplainability = property.Value.GetBoolean();
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("enableDnnTraining"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -181,6 +189,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableDnnTraining = property.Value.GetBoolean();
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -193,8 +203,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 enableStackEnsemble,
                 enableVoteEnsemble,
                 ensembleModelDownloadTimeout,
+<<<<<<< HEAD
                 enableModelExplainability,
                 enableDnnTraining,
+=======
+                stackEnsembleSettings,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 serializedAdditionalRawData);
         }
 

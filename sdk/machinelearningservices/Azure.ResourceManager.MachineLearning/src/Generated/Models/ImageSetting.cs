@@ -20,20 +20,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageSetting"/>. </summary>
+<<<<<<< HEAD
         /// <param name="imageType"> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </param>
         /// <param name="reference"> Image reference. </param>
+=======
+        /// <param name="imageType"> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML Environment images (custom and curated). </param>
+        /// <param name="reference"> Image reference URL if type is docker. Environment name if type is azureml. </param>
+        /// <param name="version"> Version of image being used. If latest then skip this field. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ImageSetting(ImageType? imageType, string reference, IDictionary<string, BinaryData> additionalProperties)
+        internal ImageSetting(ImageType? imageType, string reference, string version, IDictionary<string, BinaryData> additionalProperties)
         {
             ImageType = imageType;
             Reference = reference;
+            Version = version;
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </summary>
+        /// <summary> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML Environment images (custom and curated). </summary>
         public ImageType? ImageType { get; set; }
+<<<<<<< HEAD
         /// <summary> Image reference. </summary>
+=======
+        /// <summary> Image reference URL if type is docker. Environment name if type is azureml. </summary>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         public string Reference { get; set; }
+        /// <summary> Version of image being used. If latest then skip this field. </summary>
+        public string Version { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>

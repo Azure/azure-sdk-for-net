@@ -86,8 +86,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(IsArchived))
             {
+<<<<<<< HEAD
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
+=======
+                if (Specification != null)
+                {
+                    writer.WritePropertyName("specification"u8);
+                    writer.WriteObjectValue(Specification, options);
+                }
+                else
+                {
+                    writer.WriteNull("specification");
+                }
+            }
+            if (Optional.IsDefined(Stage))
+            {
+                if (Stage != null)
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage);
+                }
+                else
+                {
+                    writer.WriteNull("stage");
+                }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             }
             if (Optional.IsDefined(IsAnonymous))
             {
@@ -183,8 +207,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             FeaturesetSpecification specification = default;
             MaterializationSettings materializationSettings = default;
             string stage = default;
+<<<<<<< HEAD
             IList<string> entities = default;
             RegistryAssetProvisioningState? provisioningState = default;
+=======
+            bool? isAnonymous = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             bool? isArchived = default;
             bool? isAnonymous = default;
             string description = default;
@@ -248,6 +276,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
                     continue;
                 }
+<<<<<<< HEAD
+=======
+                if (property.NameEquals("specification"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        specification = null;
+                        continue;
+                    }
+                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("stage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        stage = null;
+                        continue;
+                    }
+                    stage = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isAnonymous"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAnonymous = property.Value.GetBoolean();
+                    continue;
+                }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("isArchived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -317,6 +377,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+<<<<<<< HEAD
+=======
+                isAnonymous,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 isArchived,
                 isAnonymous,
                 specification,

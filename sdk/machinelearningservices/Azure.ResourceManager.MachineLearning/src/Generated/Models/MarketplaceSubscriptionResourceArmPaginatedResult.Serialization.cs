@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IReadOnlyList<MarketplaceSubscriptionData> value = default;
             string nextLink = default;
+<<<<<<< HEAD
+=======
+            IReadOnlyList<MarketplaceSubscriptionData> value = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +114,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
             return new MarketplaceSubscriptionResourceArmPaginatedResult(value ?? new ChangeTrackingList<MarketplaceSubscriptionData>(), nextLink, serializedAdditionalRawData);
+=======
+            return new MarketplaceSubscriptionResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<MarketplaceSubscriptionData>(), serializedAdditionalRawData);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<MarketplaceSubscriptionResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

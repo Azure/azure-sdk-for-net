@@ -22,15 +22,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="RandomSamplingAlgorithm"/>. </summary>
         /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<< HEAD
         /// <param name="seed"> An optional integer to use as the seed for random number generation. </param>
         /// <param name="rule"> The specific type of random algorithm. </param>
         internal RandomSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? seed, RandomSamplingAlgorithmRule? rule) : base(samplingAlgorithmType, serializedAdditionalRawData)
         {
+=======
+        /// <param name="rule"> The specific type of random algorithm. </param>
+        /// <param name="seed"> An optional integer to use as the seed for random number generation. </param>
+        internal RandomSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, IDictionary<string, BinaryData> serializedAdditionalRawData, RandomSamplingAlgorithmRule? rule, int? seed) : base(samplingAlgorithmType, serializedAdditionalRawData)
+        {
+            Rule = rule;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             Seed = seed;
             Rule = rule;
             SamplingAlgorithmType = samplingAlgorithmType;
         }
 
+<<<<<<< HEAD
+=======
+        /// <summary> The specific type of random algorithm. </summary>
+        public RandomSamplingAlgorithmRule? Rule { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> An optional integer to use as the seed for random number generation. </summary>
         public int? Seed { get; set; }
         /// <summary> The specific type of random algorithm. </summary>

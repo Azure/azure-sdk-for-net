@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearning.Models
+namespace Azure.ResourceManager.ComputeFleet.Models
 {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/FeaturesetVersionBackfillResponse.Serialization.cs
     public partial class FeaturesetVersionBackfillResponse : IUtf8JsonSerializable, IJsonModel<FeaturesetVersionBackfillResponse>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeaturesetVersionBackfillResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -42,6 +43,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("jobIds");
                 }
+========
+    internal partial class FleetListResult : IUtf8JsonSerializable, IJsonModel<FleetListResult>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FleetListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FleetListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FleetListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FleetListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/FleetListResult.Serialization.cs
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,6 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/FeaturesetVersionBackfillResponse.Serialization.cs
         FeaturesetVersionBackfillResponse IJsonModel<FeaturesetVersionBackfillResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FeaturesetVersionBackfillResponse>)this).GetFormatFromOptions(options) : options.Format;
@@ -74,6 +102,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         internal static FeaturesetVersionBackfillResponse DeserializeFeaturesetVersionBackfillResponse(JsonElement element, ModelReaderWriterOptions options = null)
+========
+        FleetListResult IJsonModel<FleetListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FleetListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FleetListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFleetListResult(document.RootElement, options);
+        }
+
+        internal static FleetListResult DeserializeFleetListResult(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/FleetListResult.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,11 +124,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/FeaturesetVersionBackfillResponse.Serialization.cs
             IReadOnlyList<string> jobIds = default;
+========
+            IReadOnlyList<ComputeFleetData> value = default;
+            Uri nextLink = default;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/FleetListResult.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/FeaturesetVersionBackfillResponse.Serialization.cs
                 if (property.NameEquals("jobIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -99,6 +148,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         array.Add(item.GetString());
                     }
                     jobIds = array;
+========
+                if (property.NameEquals("value"u8))
+                {
+                    List<ComputeFleetData> array = new List<ComputeFleetData>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ComputeFleetData.DeserializeComputeFleetData(item, options));
+                    }
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/FleetListResult.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,18 +175,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/FeaturesetVersionBackfillResponse.Serialization.cs
             return new FeaturesetVersionBackfillResponse(jobIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeaturesetVersionBackfillResponse>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FeaturesetVersionBackfillResponse>)this).GetFormatFromOptions(options) : options.Format;
+========
+            return new FleetListResult(value, nextLink, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<FleetListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FleetListResult>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/FleetListResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/FeaturesetVersionBackfillResponse.Serialization.cs
                     throw new FormatException($"The model {nameof(FeaturesetVersionBackfillResponse)} does not support writing '{options.Format}' format.");
             }
         }
@@ -126,12 +204,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         FeaturesetVersionBackfillResponse IPersistableModel<FeaturesetVersionBackfillResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FeaturesetVersionBackfillResponse>)this).GetFormatFromOptions(options) : options.Format;
+========
+                    throw new FormatException($"The model {nameof(FleetListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FleetListResult IPersistableModel<FleetListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FleetListResult>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/FleetListResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/FeaturesetVersionBackfillResponse.Serialization.cs
                         return DeserializeFeaturesetVersionBackfillResponse(document.RootElement, options);
                     }
                 default:
@@ -140,5 +228,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         string IPersistableModel<FeaturesetVersionBackfillResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+========
+                        return DeserializeFleetListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FleetListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FleetListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/computefleet/Azure.ResourceManager.ComputeFleet/src/Generated/Models/FleetListResult.Serialization.cs
     }
 }

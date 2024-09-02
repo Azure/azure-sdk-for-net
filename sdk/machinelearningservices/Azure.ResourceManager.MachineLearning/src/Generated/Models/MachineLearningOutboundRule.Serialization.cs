@@ -31,6 +31,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ParentRuleNames))
+            {
+                writer.WritePropertyName("parentRuleNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in ParentRuleNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);

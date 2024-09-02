@@ -50,6 +50,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("timeColumnName");
                 }
             }
+<<<<<<< HEAD
+=======
+            if (Optional.IsDefined(FeatureLags))
+            {
+                writer.WritePropertyName("featureLags"u8);
+                writer.WriteStringValue(FeatureLags.Value.ToString());
+            }
+            if (Optional.IsDefined(ForecastHorizon))
+            {
+                writer.WritePropertyName("forecastHorizon"u8);
+                writer.WriteObjectValue(ForecastHorizon, options);
+            }
+            if (Optional.IsDefined(Frequency))
+            {
+                if (Frequency != null)
+                {
+                    writer.WritePropertyName("frequency"u8);
+                    writer.WriteStringValue(Frequency);
+                }
+                else
+                {
+                    writer.WriteNull("frequency");
+                }
+            }
+            if (Optional.IsDefined(Seasonality))
+            {
+                writer.WritePropertyName("seasonality"u8);
+                writer.WriteObjectValue(Seasonality, options);
+            }
+            if (Optional.IsDefined(ShortSeriesHandlingConfig))
+            {
+                writer.WritePropertyName("shortSeriesHandlingConfig"u8);
+                writer.WriteStringValue(ShortSeriesHandlingConfig.Value.ToString());
+            }
+            if (Optional.IsDefined(TargetAggregateFunction))
+            {
+                writer.WritePropertyName("targetAggregateFunction"u8);
+                writer.WriteStringValue(TargetAggregateFunction.Value.ToString());
+            }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(TargetLags))
             {
                 if (TargetLags != null)
@@ -184,7 +224,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string countryOrRegionForHolidays = default;
+<<<<<<< HEAD
             string timeColumnName = default;
+=======
+            int? cvStepSize = default;
+            MachineLearningFeatureLag? featureLags = default;
+            ForecastHorizon forecastHorizon = default;
+            string frequency = default;
+            ForecastingSeasonality seasonality = default;
+            MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig = default;
+            TargetAggregationFunction? targetAggregateFunction = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             TargetLags targetLags = default;
             TargetRollingWindowSize targetRollingWindowSize = default;
             ForecastHorizon forecastHorizon = default;
@@ -217,7 +267,66 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         timeColumnName = null;
                         continue;
                     }
+<<<<<<< HEAD
                     timeColumnName = property.Value.GetString();
+=======
+                    cvStepSize = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("featureLags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    featureLags = new MachineLearningFeatureLag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("forecastHorizon"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    forecastHorizon = ForecastHorizon.DeserializeForecastHorizon(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("frequency"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        frequency = null;
+                        continue;
+                    }
+                    frequency = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("seasonality"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    seasonality = ForecastingSeasonality.DeserializeForecastingSeasonality(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("shortSeriesHandlingConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    shortSeriesHandlingConfig = new MachineLearningShortSeriesHandlingConfiguration(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetAggregateFunction"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAggregateFunction = new TargetAggregationFunction(property.Value.GetString());
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     continue;
                 }
                 if (property.NameEquals("targetLags"u8))
@@ -337,7 +446,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ForecastingSettings(
                 countryOrRegionForHolidays,
+<<<<<<< HEAD
                 timeColumnName,
+=======
+                cvStepSize,
+                featureLags,
+                forecastHorizon,
+                frequency,
+                seasonality,
+                shortSeriesHandlingConfig,
+                targetAggregateFunction,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 targetLags,
                 targetRollingWindowSize,
                 forecastHorizon,

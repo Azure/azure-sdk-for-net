@@ -17,7 +17,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="jobDefinition">
         /// [Required] Defines Schedule action definition details.
         /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+<<<<<<< HEAD
         /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/> and <see cref="MachineLearningSweepJob"/>.
+=======
+        /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="FineTuningJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/> and <see cref="MachineLearningSweepJob"/>.
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinition"/> is null. </exception>
         public MachineLearningJobScheduleAction(MachineLearningJobProperties jobDefinition)
@@ -34,7 +38,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="jobDefinition">
         /// [Required] Defines Schedule action definition details.
         /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+<<<<<<< HEAD
         /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/> and <see cref="MachineLearningSweepJob"/>.
+=======
+        /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="FineTuningJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/> and <see cref="MachineLearningSweepJob"/>.
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </param>
         internal MachineLearningJobScheduleAction(ScheduleActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningJobProperties jobDefinition) : base(actionType, serializedAdditionalRawData)
         {
@@ -50,7 +58,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// [Required] Defines Schedule action definition details.
         /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+<<<<<<< HEAD
         /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/> and <see cref="MachineLearningSweepJob"/>.
+=======
+        /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="FineTuningJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/> and <see cref="MachineLearningSweepJob"/>.
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// </summary>
         public MachineLearningJobProperties JobDefinition { get; set; }
     }

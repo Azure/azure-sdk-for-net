@@ -52,19 +52,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerlessEndpointTrackedResourceArmPaginatedResult"/>. </summary>
+<<<<<<< HEAD
         /// <param name="value"> An array of objects of type ServerlessEndpoint. </param>
         /// <param name="nextLink"> The link to the next page of ServerlessEndpoint objects. If null, there are no additional pages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServerlessEndpointTrackedResourceArmPaginatedResult(IReadOnlyList<ServerlessEndpointData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+=======
+        /// <param name="nextLink"> The link to the next page of ServerlessEndpoint objects. If null, there are no additional pages. </param>
+        /// <param name="value"> An array of objects of type ServerlessEndpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerlessEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<ServerlessEndpointData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+<<<<<<< HEAD
         /// <summary> An array of objects of type ServerlessEndpoint. </summary>
         public IReadOnlyList<ServerlessEndpointData> Value { get; }
         /// <summary> The link to the next page of ServerlessEndpoint objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
+=======
+        /// <summary> The link to the next page of ServerlessEndpoint objects. If null, there are no additional pages. </summary>
+        public string NextLink { get; }
+        /// <summary> An array of objects of type ServerlessEndpoint. </summary>
+        public IReadOnlyList<ServerlessEndpointData> Value { get; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

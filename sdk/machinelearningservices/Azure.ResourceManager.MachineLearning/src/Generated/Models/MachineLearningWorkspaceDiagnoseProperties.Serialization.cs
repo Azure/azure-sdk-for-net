@@ -95,7 +95,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
+<<<<<<< HEAD
             if (Optional.IsCollectionDefined(DnsResolution))
+=======
+            if (Optional.IsCollectionDefined(RequiredResourceProviders))
+            {
+                writer.WritePropertyName("requiredResourceProviders"u8);
+                writer.WriteStartObject();
+                foreach (var item in RequiredResourceProviders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(ResourceLock))
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             {
                 writer.WritePropertyName("dnsResolution"u8);
                 writer.WriteStartObject();
@@ -271,6 +298,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
+=======
+            IDictionary<string, BinaryData> applicationInsights = default;
+            IDictionary<string, BinaryData> containerRegistry = default;
+            IDictionary<string, BinaryData> dnsResolution = default;
+            IDictionary<string, BinaryData> keyVault = default;
+            IDictionary<string, BinaryData> nsg = default;
+            IDictionary<string, BinaryData> others = default;
+            IDictionary<string, BinaryData> requiredResourceProviders = default;
+            IDictionary<string, BinaryData> resourceLock = default;
+            IDictionary<string, BinaryData> storageAccount = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, BinaryData> udr = default;
             IDictionary<string, BinaryData> nsg = default;
             IDictionary<string, BinaryData> resourceLock = default;
@@ -326,6 +365,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     nsg = dictionary;
                     continue;
                 }
+<<<<<<< HEAD
+=======
+                if (property.NameEquals("others"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    others = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("requiredResourceProviders"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    requiredResourceProviders = dictionary;
+                    continue;
+                }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("resourceLock"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -480,6 +564,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningWorkspaceDiagnoseProperties(
+<<<<<<< HEAD
+=======
+                applicationInsights ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                containerRegistry ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                dnsResolution ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                keyVault ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                nsg ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                others ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                requiredResourceProviders ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                resourceLock ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                storageAccount ?? new ChangeTrackingDictionary<string, BinaryData>(),
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 udr ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 nsg ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 resourceLock ?? new ChangeTrackingDictionary<string, BinaryData>(),

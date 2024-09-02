@@ -43,11 +43,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+<<<<<<< HEAD
             if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
@@ -141,6 +144,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Uri codeUri = default;
             RegistryAssetProvisioningState? provisioningState = default;
+<<<<<<< HEAD
+=======
+            bool? isAnonymous = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             bool? isArchived = default;
             bool? isAnonymous = default;
             string description = default;
@@ -169,6 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("isArchived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -178,6 +186,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isArchived = property.Value.GetBoolean();
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("isAnonymous"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -238,6 +248,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+<<<<<<< HEAD
+=======
+                isAnonymous,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 isArchived,
                 isAnonymous,
                 codeUri,

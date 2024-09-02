@@ -24,8 +24,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties"> Additional properties bag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="shmSize"> Size of the docker container's shared memory block. This should be in the format of (number)(unit) where number as to be greater than 0 and the unit can be one of b(bytes), k(kilobytes), m(megabytes), or g(gigabytes). </param>
+<<<<<<< HEAD
         /// <param name="dockerArgs"> Extra arguments to pass to the Docker run command. This would override any parameters that have already been set by the system, or in this section. This parameter is only supported for Azure ML compute types. </param>
         internal MachineLearningJobResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, string shmSize, string dockerArgs) : base(instanceCount, instanceType, properties, serializedAdditionalRawData)
+=======
+        internal MachineLearningJobResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, string dockerArgs, string shmSize) : base(instanceCount, instanceType, properties, serializedAdditionalRawData)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             ShmSize = shmSize;
             DockerArgs = dockerArgs;

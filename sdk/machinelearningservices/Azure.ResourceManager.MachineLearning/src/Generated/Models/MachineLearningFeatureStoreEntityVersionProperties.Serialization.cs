@@ -55,10 +55,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stage");
                 }
             }
+<<<<<<< HEAD
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+=======
+            if (Optional.IsDefined(IsAnonymous))
+            {
+                writer.WritePropertyName("isAnonymous"u8);
+                writer.WriteBooleanValue(IsAnonymous.Value);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             }
             if (Optional.IsDefined(IsArchived))
             {
@@ -158,7 +165,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IList<IndexColumn> indexColumns = default;
             string stage = default;
+<<<<<<< HEAD
             RegistryAssetProvisioningState? provisioningState = default;
+=======
+            bool? isAnonymous = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             bool? isArchived = default;
             bool? isAnonymous = default;
             string description = default;
@@ -193,7 +204,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     stage = property.Value.GetString();
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("provisioningState"u8))
+=======
+                if (property.NameEquals("isAnonymous"u8))
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -271,6 +286,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+<<<<<<< HEAD
+=======
+                isAnonymous,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 isArchived,
                 isAnonymous,
                 indexColumns ?? new ChangeTrackingList<IndexColumn>(),

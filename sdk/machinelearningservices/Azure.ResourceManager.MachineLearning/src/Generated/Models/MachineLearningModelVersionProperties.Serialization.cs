@@ -44,6 +44,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("flavors");
                 }
             }
+<<<<<<< HEAD
+=======
+            if (Optional.IsDefined(JobName))
+            {
+                if (JobName != null)
+                {
+                    writer.WritePropertyName("jobName"u8);
+                    writer.WriteStringValue(JobName);
+                }
+                else
+                {
+                    writer.WriteNull("jobName");
+                }
+            }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(ModelType))
             {
                 if (ModelType != null)
@@ -97,11 +112,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stage");
                 }
             }
+<<<<<<< HEAD
             if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
@@ -194,11 +212,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IDictionary<string, MachineLearningFlavorData> flavors = default;
+<<<<<<< HEAD
+=======
+            string jobName = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             string modelType = default;
             Uri modelUri = default;
             string jobName = default;
             RegistryAssetProvisioningState? provisioningState = default;
             string stage = default;
+<<<<<<< HEAD
+=======
+            bool? isAnonymous = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             bool? isArchived = default;
             bool? isAnonymous = default;
             string description = default;
@@ -223,6 +249,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     flavors = dictionary;
                     continue;
                 }
+<<<<<<< HEAD
+=======
+                if (property.NameEquals("jobName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        jobName = null;
+                        continue;
+                    }
+                    jobName = property.Value.GetString();
+                    continue;
+                }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("modelType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -272,6 +311,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     stage = property.Value.GetString();
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("isArchived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -281,6 +321,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isArchived = property.Value.GetBoolean();
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("isAnonymous"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -341,9 +383,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+<<<<<<< HEAD
+=======
+                isAnonymous,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 isArchived,
                 isAnonymous,
                 flavors ?? new ChangeTrackingDictionary<string, MachineLearningFlavorData>(),
+<<<<<<< HEAD
+=======
+                jobName,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 modelType,
                 modelUri,
                 jobName,

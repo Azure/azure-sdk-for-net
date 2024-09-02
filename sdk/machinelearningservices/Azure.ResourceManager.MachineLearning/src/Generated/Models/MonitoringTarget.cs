@@ -53,8 +53,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitoringTarget"/>. </summary>
+<<<<<<< HEAD
         /// <param name="modelId"> Reference to the model asset targeted by this monitor. </param>
         /// <param name="deploymentId"> Reference to the deployment asset targeted by this monitor. </param>
+=======
+        /// <param name="deploymentId"> Reference to the deployment asset targeted by this monitor. </param>
+        /// <param name="modelId"> Reference to the model asset targeted by this monitor. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="taskType"> [Required] The machine learning task type of the monitored model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MonitoringTarget(string modelId, string deploymentId, ModelTaskType taskType, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -70,10 +75,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+<<<<<<< HEAD
         /// <summary> Reference to the model asset targeted by this monitor. </summary>
         public string ModelId { get; set; }
         /// <summary> Reference to the deployment asset targeted by this monitor. </summary>
         public string DeploymentId { get; set; }
+=======
+        /// <summary> Reference to the deployment asset targeted by this monitor. </summary>
+        public string DeploymentId { get; set; }
+        /// <summary> Reference to the model asset targeted by this monitor. </summary>
+        public string ModelId { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> [Required] The machine learning task type of the monitored model. </summary>
         public ModelTaskType TaskType { get; set; }
     }

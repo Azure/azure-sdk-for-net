@@ -56,8 +56,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MonitorComputeConfigurationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MonitorServerlessSparkCompute"/>.
         /// </param>
+<<<<<<< HEAD
         /// <exception cref="ArgumentNullException"> <paramref name="signals"/> or <paramref name="computeConfiguration"/> is null. </exception>
         public MonitorDefinition(IDictionary<string, MonitoringSignalBase> signals, MonitorComputeConfigurationBase computeConfiguration)
+=======
+        /// <param name="signals">
+        /// [Required] The signals to monitor.
+        /// Please note <see cref="MonitoringSignalBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/> and <see cref="PredictionDriftMonitoringSignal"/>.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="computeConfiguration"/> or <paramref name="signals"/> is null. </exception>
+        public MonitorDefinition(MonitorComputeConfigurationBase computeConfiguration, IDictionary<string, MonitoringSignalBase> signals)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             Argument.AssertNotNull(signals, nameof(signals));
             Argument.AssertNotNull(computeConfiguration, nameof(computeConfiguration));
@@ -67,21 +77,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorDefinition"/>. </summary>
+<<<<<<< HEAD
         /// <param name="monitoringTarget"> The entities targeted by the monitor. </param>
         /// <param name="signals">
         /// [Required] The signals to monitor.
         /// Please note <see cref="MonitoringSignalBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/> and <see cref="PredictionDriftMonitoringSignal"/>.
         /// </param>
+=======
+        /// <param name="alertNotificationSettings"> The monitor's notification settings. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="computeConfiguration">
         /// [Required] The ARM resource ID of the compute resource to run the monitoring job on.
         /// Please note <see cref="MonitorComputeConfigurationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MonitorServerlessSparkCompute"/>.
         /// </param>
+<<<<<<< HEAD
         /// <param name="alertNotificationSettings"> The monitor's notification settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MonitorDefinition(MonitoringTarget monitoringTarget, IDictionary<string, MonitoringSignalBase> signals, MonitorComputeConfigurationBase computeConfiguration, MonitorNotificationSettings alertNotificationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+=======
+        /// <param name="monitoringTarget"> The entities targeted by the monitor. </param>
+        /// <param name="signals">
+        /// [Required] The signals to monitor.
+        /// Please note <see cref="MonitoringSignalBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/> and <see cref="PredictionDriftMonitoringSignal"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorDefinition(MonitorNotificationSettings alertNotificationSettings, MonitorComputeConfigurationBase computeConfiguration, MonitoringTarget monitoringTarget, IDictionary<string, MonitoringSignalBase> signals, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AlertNotificationSettings = alertNotificationSettings;
+            ComputeConfiguration = computeConfiguration;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MonitoringTarget = monitoringTarget;
             Signals = signals;
             ComputeConfiguration = computeConfiguration;
@@ -94,6 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+<<<<<<< HEAD
         /// <summary> The entities targeted by the monitor. </summary>
         public MonitoringTarget MonitoringTarget { get; set; }
         /// <summary>
@@ -102,12 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/> and <see cref="PredictionDriftMonitoringSignal"/>.
         /// </summary>
         public IDictionary<string, MonitoringSignalBase> Signals { get; }
-        /// <summary>
-        /// [Required] The ARM resource ID of the compute resource to run the monitoring job on.
-        /// Please note <see cref="MonitorComputeConfigurationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MonitorServerlessSparkCompute"/>.
-        /// </summary>
-        public MonitorComputeConfigurationBase ComputeConfiguration { get; set; }
+=======
         /// <summary> The monitor's notification settings. </summary>
         internal MonitorNotificationSettings AlertNotificationSettings { get; set; }
         /// <summary> The email recipient list which has a limitation of 499 characters in total. </summary>
@@ -121,5 +145,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 AlertNotificationSettings.Emails = value;
             }
         }
+
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
+        /// <summary>
+        /// [Required] The ARM resource ID of the compute resource to run the monitoring job on.
+        /// Please note <see cref="MonitorComputeConfigurationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MonitorServerlessSparkCompute"/>.
+        /// </summary>
+        public MonitorComputeConfigurationBase ComputeConfiguration { get; set; }
+<<<<<<< HEAD
+        /// <summary> The monitor's notification settings. </summary>
+        internal MonitorNotificationSettings AlertNotificationSettings { get; set; }
+        /// <summary> The email recipient list which has a limitation of 499 characters in total. </summary>
+        public IList<string> Emails
+        {
+            get => AlertNotificationSettings is null ? default : AlertNotificationSettings.Emails;
+            set
+            {
+                if (AlertNotificationSettings is null)
+                    AlertNotificationSettings = new MonitorNotificationSettings();
+                AlertNotificationSettings.Emails = value;
+            }
+        }
+=======
+        /// <summary> The entities targeted by the monitor. </summary>
+        public MonitoringTarget MonitoringTarget { get; set; }
+        /// <summary>
+        /// [Required] The signals to monitor.
+        /// Please note <see cref="MonitoringSignalBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/> and <see cref="PredictionDriftMonitoringSignal"/>.
+        /// </summary>
+        public IDictionary<string, MonitoringSignalBase> Signals { get; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

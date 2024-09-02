@@ -92,6 +92,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public ResourceIdentifier CodeId { get; set; }
         /// <summary> [Required] The command to execute on startup of the job. eg. "python train.py". </summary>
         public string Command { get; set; }
+<<<<<<< HEAD
+=======
+        /// <summary>
+        /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
+        /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
+        /// </summary>
+        public MachineLearningDistributionConfiguration Distribution { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
         public ResourceIdentifier EnvironmentId { get; set; }
         /// <summary> Environment variables included in the job. </summary>

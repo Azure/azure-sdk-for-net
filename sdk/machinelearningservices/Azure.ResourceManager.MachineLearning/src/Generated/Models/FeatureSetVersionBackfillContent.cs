@@ -49,48 +49,84 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public FeatureSetVersionBackfillContent()
         {
             DataAvailabilityStatus = new ChangeTrackingList<DataAvailabilityStatus>();
+<<<<<<< HEAD
+=======
+            Properties = new ChangeTrackingDictionary<string, string>();
+            SparkConfiguration = new ChangeTrackingDictionary<string, string>();
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             Tags = new ChangeTrackingDictionary<string, string>();
             SparkConfiguration = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FeatureSetVersionBackfillContent"/>. </summary>
+<<<<<<< HEAD
+=======
+        /// <param name="dataAvailabilityStatus"> Specified the data availability status that you want to backfill. </param>
+        /// <param name="description"> Specifies description. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="displayName"> Specifies description. </param>
         /// <param name="description"> Specifies description. </param>
         /// <param name="featureWindow"> Specifies the backfill feature window to be materialized. </param>
+<<<<<<< HEAD
         /// <param name="dataAvailabilityStatus"> Specified the data availability status that you want to backfill. </param>
         /// <param name="jobId"> Specify the jobId to retry the failed materialization. </param>
         /// <param name="tags"> Specifies the tags. </param>
+=======
+        /// <param name="jobId"> Specify the jobId to retry the failed materialization. </param>
+        /// <param name="properties"> Specifies the properties. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="resource"> Specifies the compute resource settings. </param>
         /// <param name="sparkConfiguration"> Specifies the spark compute settings. </param>
         /// <param name="properties"> Specifies the properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<< HEAD
         internal FeatureSetVersionBackfillContent(string displayName, string description, FeatureWindow featureWindow, IList<DataAvailabilityStatus> dataAvailabilityStatus, string jobId, IDictionary<string, string> tags, MaterializationComputeResource resource, IDictionary<string, string> sparkConfiguration, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+=======
+        internal FeatureSetVersionBackfillContent(IList<DataAvailabilityStatus> dataAvailabilityStatus, string description, string displayName, FeatureWindow featureWindow, string jobId, IDictionary<string, string> properties, MaterializationComputeResource resource, IDictionary<string, string> sparkConfiguration, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DataAvailabilityStatus = dataAvailabilityStatus;
+            Description = description;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             DisplayName = displayName;
             Description = description;
             FeatureWindow = featureWindow;
+<<<<<<< HEAD
             DataAvailabilityStatus = dataAvailabilityStatus;
             JobId = jobId;
             Tags = tags;
+=======
+            JobId = jobId;
+            Properties = properties;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             Resource = resource;
             SparkConfiguration = sparkConfiguration;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Specified the data availability status that you want to backfill. </summary>
+        public IList<DataAvailabilityStatus> DataAvailabilityStatus { get; }
         /// <summary> Specifies description. </summary>
         public string DisplayName { get; set; }
         /// <summary> Specifies description. </summary>
         public string Description { get; set; }
         /// <summary> Specifies the backfill feature window to be materialized. </summary>
         public FeatureWindow FeatureWindow { get; set; }
+<<<<<<< HEAD
         /// <summary> Specified the data availability status that you want to backfill. </summary>
         public IList<DataAvailabilityStatus> DataAvailabilityStatus { get; }
         /// <summary> Specify the jobId to retry the failed materialization. </summary>
         public string JobId { get; set; }
         /// <summary> Specifies the tags. </summary>
         public IDictionary<string, string> Tags { get; }
+=======
+        /// <summary> Specify the jobId to retry the failed materialization. </summary>
+        public string JobId { get; set; }
+        /// <summary> Specifies the properties. </summary>
+        public IDictionary<string, string> Properties { get; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> Specifies the compute resource settings. </summary>
         internal MaterializationComputeResource Resource { get; set; }
         /// <summary> Specifies the instance type. </summary>

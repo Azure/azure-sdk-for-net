@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearning.Models
+namespace Azure.ResourceManager.Monitor.Models
 {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorEmailNotificationSettings.Serialization.cs
     internal partial class MonitorEmailNotificationSettings : IUtf8JsonSerializable, IJsonModel<MonitorEmailNotificationSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorEmailNotificationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -42,6 +43,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("emails");
                 }
+========
+    public partial class PipelineGroupExporter : IUtf8JsonSerializable, IJsonModel<PipelineGroupExporter>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineGroupExporter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PipelineGroupExporter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupExporter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PipelineGroupExporter)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ExporterType.ToString());
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(AzureMonitorWorkspaceLogs))
+            {
+                writer.WritePropertyName("azureMonitorWorkspaceLogs"u8);
+                writer.WriteObjectValue(AzureMonitorWorkspaceLogs, options);
+            }
+            if (Optional.IsDefined(Tcp))
+            {
+                writer.WritePropertyName("tcp"u8);
+                writer.WriteObjectValue(Tcp, options);
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupExporter.Serialization.cs
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,6 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorEmailNotificationSettings.Serialization.cs
         MonitorEmailNotificationSettings IJsonModel<MonitorEmailNotificationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorEmailNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -74,6 +104,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         internal static MonitorEmailNotificationSettings DeserializeMonitorEmailNotificationSettings(JsonElement element, ModelReaderWriterOptions options = null)
+========
+        PipelineGroupExporter IJsonModel<PipelineGroupExporter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupExporter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PipelineGroupExporter)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineGroupExporter(document.RootElement, options);
+        }
+
+        internal static PipelineGroupExporter DeserializePipelineGroupExporter(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupExporter.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,24 +126,56 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorEmailNotificationSettings.Serialization.cs
             IList<string> emails = default;
+========
+            PipelineGroupExporterType type = default;
+            string name = default;
+            MonitorWorkspaceLogsExporter azureMonitorWorkspaceLogs = default;
+            TcpExporter tcp = default;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupExporter.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorEmailNotificationSettings.Serialization.cs
                 if (property.NameEquals("emails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         emails = null;
+========
+                if (property.NameEquals("type"u8))
+                {
+                    type = new PipelineGroupExporterType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("azureMonitorWorkspaceLogs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupExporter.Serialization.cs
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    azureMonitorWorkspaceLogs = MonitorWorkspaceLogsExporter.DeserializeMonitorWorkspaceLogsExporter(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("tcp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(item.GetString());
+                        continue;
                     }
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorEmailNotificationSettings.Serialization.cs
                     emails = array;
+========
+                    tcp = TcpExporter.DeserializeTcpExporter(property.Value, options);
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupExporter.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,18 +184,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorEmailNotificationSettings.Serialization.cs
             return new MonitorEmailNotificationSettings(emails ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorEmailNotificationSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorEmailNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+========
+            return new PipelineGroupExporter(type, name, azureMonitorWorkspaceLogs, tcp, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<PipelineGroupExporter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupExporter>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupExporter.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorEmailNotificationSettings.Serialization.cs
                     throw new FormatException($"The model {nameof(MonitorEmailNotificationSettings)} does not support writing '{options.Format}' format.");
             }
         }
@@ -126,12 +213,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         MonitorEmailNotificationSettings IPersistableModel<MonitorEmailNotificationSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorEmailNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+========
+                    throw new FormatException($"The model {nameof(PipelineGroupExporter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PipelineGroupExporter IPersistableModel<PipelineGroupExporter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupExporter>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupExporter.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorEmailNotificationSettings.Serialization.cs
                         return DeserializeMonitorEmailNotificationSettings(document.RootElement, options);
                     }
                 default:
@@ -140,5 +237,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         string IPersistableModel<MonitorEmailNotificationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+========
+                        return DeserializePipelineGroupExporter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PipelineGroupExporter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PipelineGroupExporter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/monitor/Azure.ResourceManager.Monitor/src/Generated/Models/PipelineGroupExporter.Serialization.cs
     }
 }

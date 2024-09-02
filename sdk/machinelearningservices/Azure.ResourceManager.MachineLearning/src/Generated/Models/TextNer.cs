@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Primary metric for Text-NER task.
         /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
         /// </param>
+<<<<<<< HEAD
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="validationData"> Validation data inputs. </param>
@@ -48,6 +49,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             PrimaryMetric = primaryMetric;
             LimitSettings = limitSettings;
             FeaturizationSettings = featurizationSettings;
+=======
+        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
+        /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
+        /// <param name="validationData"> Validation data inputs. </param>
+        internal TextNer(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
+        {
+            PrimaryMetric = primaryMetric;
+            FeaturizationSettings = featurizationSettings;
+            LimitSettings = limitSettings;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             ValidationData = validationData;
             TaskType = taskType;
         }
@@ -78,6 +89,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
+<<<<<<< HEAD
+=======
+        /// <summary> Execution constraints for AutoMLJob. </summary>
+        public NlpVerticalLimitSettings LimitSettings { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> Validation data inputs. </summary>
         public MachineLearningTableJobInput ValidationData { get; set; }
     }

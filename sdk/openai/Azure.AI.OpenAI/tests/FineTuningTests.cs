@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -14,10 +12,11 @@ using Azure.AI.OpenAI.FineTuning;
 using Azure.AI.OpenAI.Tests.Models;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using Azure.Core.TestFramework;
 using OpenAI.Chat;
 using OpenAI.Files;
 using OpenAI.FineTuning;
+using OpenAI.TestFramework;
+using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -254,7 +253,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.That(job!.Status, Is.EqualTo("succeeded"));
 
         // Deploy the model and wait for the deployment to finish
-        deploymentName = "azure-ai-openai-test-" + Recording.Random.NewGuid().ToString();
+        deploymentName = "azure-ai-openai-test-" + Recording?.Random.NewGuid().ToString();
         AzureDeployedModel deployment = await deploymentClient.CreateDeploymentAsync(deploymentName, fineTunedModel);
         Assert.That(deployment, Is.Not.Null);
         Assert.That(deployment.ID, !(Is.Null.Or.Empty));
@@ -393,7 +392,9 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             ErrorOptions = ClientErrorBehaviors.NoThrow
         };
 
-        var rawClient = GetOriginal(client);
+        // Since the DeleteJob and DeleteJobAsync are extensions methods, we need to call them on the unwrapped type,
+        // instead of the dynamically wrapped type.
+        var rawClient = UnWrap(client);
 
         bool success = false;
         while (DateTimeOffset.Now < stopTime)

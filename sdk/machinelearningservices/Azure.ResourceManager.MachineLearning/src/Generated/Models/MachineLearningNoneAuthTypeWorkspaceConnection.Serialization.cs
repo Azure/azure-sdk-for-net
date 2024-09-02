@@ -38,12 +38,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("createdByWorkspaceArmId"u8);
                 writer.WriteStringValue(CreatedByWorkspaceArmId);
             }
+<<<<<<< HEAD
+=======
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteStringValue(Error);
+            }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(ExpiryOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiryOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Group))
+<<<<<<< HEAD
+            {
+                writer.WritePropertyName("group"u8);
+                writer.WriteStringValue(Group.Value.ToString());
+            }
+            if (Optional.IsDefined(IsSharedToAll))
+            {
+                writer.WritePropertyName("isSharedToAll"u8);
+                writer.WriteBooleanValue(IsSharedToAll.Value);
+=======
             {
                 writer.WritePropertyName("group"u8);
                 writer.WriteStringValue(Group.Value.ToString());
@@ -53,11 +71,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("isSharedToAll"u8);
                 writer.WriteBooleanValue(IsSharedToAll.Value);
             }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(PeRequirement))
+            {
+                writer.WritePropertyName("peRequirement"u8);
+                writer.WriteStringValue(PeRequirement.Value.ToString());
+            }
+            if (Optional.IsDefined(PeStatus))
+            {
+                writer.WritePropertyName("peStatus"u8);
+                writer.WriteStringValue(PeStatus.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(SharedUserList))
+            {
+                writer.WritePropertyName("sharedUserList"u8);
+                writer.WriteStartArray();
+                foreach (var item in SharedUserList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
+            }
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
+<<<<<<< HEAD
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -88,6 +139,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("valueFormat"u8);
                 writer.WriteStringValue(ValueFormat.Value.ToString());
+=======
+            if (Optional.IsDefined(UseWorkspaceManagedIdentity))
+            {
+                writer.WritePropertyName("useWorkspaceManagedIdentity"u8);
+                writer.WriteBooleanValue(UseWorkspaceManagedIdentity.Value);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -130,6 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningConnectionAuthType authType = default;
             MachineLearningConnectionCategory? category = default;
             ResourceIdentifier createdByWorkspaceArmId = default;
+<<<<<<< HEAD
             DateTimeOffset? expiryTime = default;
             ConnectionGroup? group = default;
             bool? isSharedToAll = default;
@@ -138,6 +196,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IList<string> sharedUserList = default;
             string value = default;
             MachineLearningValueFormat? valueFormat = default;
+=======
+            string error = default;
+            DateTimeOffset? expiryTime = default;
+            ConnectionGroup? group = default;
+            bool? isSharedToAll = default;
+            IDictionary<string, string> metadata = default;
+            ManagedPERequirement? peRequirement = default;
+            ManagedPEStatus? peStatus = default;
+            IList<string> sharedUserList = default;
+            string target = default;
+            bool? useWorkspaceManagedIdentity = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,6 +235,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     createdByWorkspaceArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+<<<<<<< HEAD
+=======
+                if (property.NameEquals("error"u8))
+                {
+                    error = property.Value.GetString();
+                    continue;
+                }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("expiryTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -192,11 +270,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isSharedToAll = property.Value.GetBoolean();
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -209,6 +290,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     metadata = dictionary;
+<<<<<<< HEAD
+=======
+                    continue;
+                }
+                if (property.NameEquals("peRequirement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    peRequirement = new ManagedPERequirement(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("peStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    peStatus = new ManagedPEStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sharedUserList"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    sharedUserList = array;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     continue;
                 }
                 if (property.NameEquals("sharedUserList"u8))
@@ -239,6 +355,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     valueFormat = new MachineLearningValueFormat(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("useWorkspaceManagedIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    useWorkspaceManagedIdentity = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -249,6 +374,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 authType,
                 category,
                 createdByWorkspaceArmId,
+<<<<<<< HEAD
                 expiryTime,
                 group,
                 isSharedToAll,
@@ -257,6 +383,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 sharedUserList ?? new ChangeTrackingList<string>(),
                 value,
                 valueFormat,
+=======
+                error,
+                expiryTime,
+                group,
+                isSharedToAll,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                peRequirement,
+                peStatus,
+                sharedUserList ?? new ChangeTrackingList<string>(),
+                target,
+                useWorkspaceManagedIdentity,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 serializedAdditionalRawData);
         }
 

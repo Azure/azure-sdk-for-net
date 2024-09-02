@@ -10,8 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.cs
     /// <summary> The MonitorNotificationSettings. </summary>
     internal partial class MonitorNotificationSettings
+========
+    /// <summary> The MarketplacePlan. </summary>
+    public partial class MarketplacePlan
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.cs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,6 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.cs
         /// <summary> Initializes a new instance of <see cref="MonitorNotificationSettings"/>. </summary>
         public MonitorNotificationSettings()
         {
@@ -72,5 +78,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 EmailNotificationSettings.Emails = value;
             }
         }
+========
+        /// <summary> Initializes a new instance of <see cref="MarketplacePlan"/>. </summary>
+        internal MarketplacePlan()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MarketplacePlan"/>. </summary>
+        /// <param name="offerId"> The identifying name of the Offer of the Marketplace Plan. </param>
+        /// <param name="planId"> The identifying name of the Plan of the Marketplace Plan. </param>
+        /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplacePlan(string offerId, string planId, string publisherId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            OfferId = offerId;
+            PlanId = planId;
+            PublisherId = publisherId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> The identifying name of the Offer of the Marketplace Plan. </summary>
+        public string OfferId { get; }
+        /// <summary> The identifying name of the Plan of the Marketplace Plan. </summary>
+        public string PlanId { get; }
+        /// <summary> The identifying name of the Publisher of the Marketplace Plan. </summary>
+        public string PublisherId { get; }
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.cs
     }
 }

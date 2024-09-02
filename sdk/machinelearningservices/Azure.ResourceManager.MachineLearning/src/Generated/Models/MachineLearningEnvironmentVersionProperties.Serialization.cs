@@ -41,11 +41,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("condaFile"u8);
                 writer.WriteStringValue(CondaFile);
             }
+<<<<<<< HEAD
             if (Optional.IsDefined(Build))
             {
                 writer.WritePropertyName("build"u8);
                 writer.WriteObjectValue(Build, options);
             }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
@@ -78,11 +81,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stage");
                 }
             }
+<<<<<<< HEAD
             if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
@@ -176,13 +182,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             MachineLearningEnvironmentType? environmentType = default;
             string image = default;
+<<<<<<< HEAD
             string condaFile = default;
             MachineLearningBuildContext build = default;
+=======
+            MachineLearningInferenceContainerProperties inferenceConfig = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             MachineLearningOperatingSystemType? osType = default;
             MachineLearningInferenceContainerProperties inferenceConfig = default;
             AutoRebuildSetting? autoRebuild = default;
             RegistryAssetProvisioningState? provisioningState = default;
             string stage = default;
+<<<<<<< HEAD
+=======
+            bool? isAnonymous = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             bool? isArchived = default;
             bool? isAnonymous = default;
             string description = default;
@@ -211,6 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     condaFile = property.Value.GetString();
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("build"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -220,6 +235,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     build = MachineLearningBuildContext.DeserializeMachineLearningBuildContext(property.Value, options);
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("osType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -266,6 +283,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     stage = property.Value.GetString();
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("isArchived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -275,6 +293,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isArchived = property.Value.GetBoolean();
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("isAnonymous"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -335,12 +355,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+<<<<<<< HEAD
+=======
+                isAnonymous,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 isArchived,
                 isAnonymous,
                 environmentType,
                 image,
+<<<<<<< HEAD
                 condaFile,
                 build,
+=======
+                inferenceConfig,
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 osType,
                 inferenceConfig,
                 autoRebuild,

@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+<<<<<<< HEAD
             if (Optional.IsDefined(UserName))
             {
                 if (UserName != null)
@@ -48,6 +49,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("password");
+=======
+            if (Optional.IsDefined(Password))
+            {
+                if (Password != null)
+                {
+                    writer.WritePropertyName("password"u8);
+                    writer.WriteStringValue(Password);
+                }
+                else
+                {
+                    writer.WriteNull("password");
+                }
+            }
+            if (Optional.IsDefined(UserName))
+            {
+                if (UserName != null)
+                {
+                    writer.WritePropertyName("userName"u8);
+                    writer.WriteStringValue(UserName);
+                }
+                else
+                {
+                    writer.WriteNull("userName");
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 }
             }
             writer.WritePropertyName("credentialType"u8);
@@ -90,13 +115,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
             string userName = default;
             string password = default;
+=======
+            string password = default;
+            string userName = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             DataReferenceCredentialType credentialType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<< HEAD
                 if (property.NameEquals("userName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,6 +146,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     password = property.Value.GetString();
+=======
+                if (property.NameEquals("password"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        password = null;
+                        continue;
+                    }
+                    password = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("userName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        userName = null;
+                        continue;
+                    }
+                    userName = property.Value.GetString();
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     continue;
                 }
                 if (property.NameEquals("credentialType"u8))
@@ -128,7 +179,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
             return new DockerCredential(credentialType, serializedAdditionalRawData, userName, password);
+=======
+            return new DockerCredential(credentialType, serializedAdditionalRawData, password, userName);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<DockerCredential>.Write(ModelReaderWriterOptions options)

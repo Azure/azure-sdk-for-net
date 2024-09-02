@@ -10,8 +10,23 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.cs
     /// <summary> The MarketplacePlan. </summary>
     public partial class MarketplacePlan
+========
+    /// <summary> Managed resource group settings. </summary>
+    internal partial class ManagedResourceGroupSettings
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ManagedResourceGroupSettings.cs
+=======
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.cs
+    /// <summary> The MonitorNotificationSettings. </summary>
+    internal partial class MonitorNotificationSettings
+========
+    /// <summary> The MarketplacePlan. </summary>
+    public partial class MarketplacePlan
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.cs
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +60,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.cs
+=======
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MonitorNotificationSettings.cs
+        /// <summary> Initializes a new instance of <see cref="MonitorNotificationSettings"/>. </summary>
+        public MonitorNotificationSettings()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorNotificationSettings"/>. </summary>
+        /// <param name="emailNotificationSettings"> The AML notification email settings. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorNotificationSettings(MonitorEmailNotificationSettings emailNotificationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            EmailNotificationSettings = emailNotificationSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> The AML notification email settings. </summary>
+        internal MonitorEmailNotificationSettings EmailNotificationSettings { get; set; }
+        /// <summary> The email recipient list which has a limitation of 499 characters in total. </summary>
+        public IList<string> Emails
+        {
+            get => EmailNotificationSettings is null ? default : EmailNotificationSettings.Emails;
+            set
+            {
+                if (EmailNotificationSettings is null)
+                    EmailNotificationSettings = new MonitorEmailNotificationSettings();
+                EmailNotificationSettings.Emails = value;
+            }
+        }
+========
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> Initializes a new instance of <see cref="MarketplacePlan"/>. </summary>
         internal MarketplacePlan()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="MarketplacePlan"/>. </summary>
+<<<<<<< HEAD
         /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
         /// <param name="offerId"> The identifying name of the Offer of the Marketplace Plan. </param>
         /// <param name="planId"> The identifying name of the Plan of the Marketplace Plan. </param>
@@ -65,9 +114,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The identifying name of the Publisher of the Marketplace Plan. </summary>
         public string PublisherId { get; }
+=======
+        /// <param name="offerId"> The identifying name of the Offer of the Marketplace Plan. </param>
+        /// <param name="planId"> The identifying name of the Plan of the Marketplace Plan. </param>
+        /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplacePlan(string offerId, string planId, string publisherId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            OfferId = offerId;
+            PlanId = planId;
+            PublisherId = publisherId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> The identifying name of the Offer of the Marketplace Plan. </summary>
         public string OfferId { get; }
         /// <summary> The identifying name of the Plan of the Marketplace Plan. </summary>
         public string PlanId { get; }
+<<<<<<< HEAD
+========
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupSettings"/>. </summary>
+        public ManagedResourceGroupSettings()
+        {
+            AssignedIdentities = new ChangeTrackingList<ManagedResourceGroupAssignedIdentities>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupSettings"/>. </summary>
+        /// <param name="assignedIdentities"> List of assigned identities for the managed resource group. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedResourceGroupSettings(IList<ManagedResourceGroupAssignedIdentities> assignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AssignedIdentities = assignedIdentities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> List of assigned identities for the managed resource group. </summary>
+        public IList<ManagedResourceGroupAssignedIdentities> AssignedIdentities { get; set; }
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ManagedResourceGroupSettings.cs
+=======
+        /// <summary> The identifying name of the Publisher of the Marketplace Plan. </summary>
+        public string PublisherId { get; }
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/MarketplacePlan.cs
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

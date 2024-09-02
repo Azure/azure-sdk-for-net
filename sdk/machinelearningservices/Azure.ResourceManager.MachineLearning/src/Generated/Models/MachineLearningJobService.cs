@@ -64,6 +64,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </param>
+<<<<<<< HEAD
+=======
+        /// <param name="port"> Port for endpoint. </param>
+        /// <param name="properties"> Additional properties to set on the endpoint. </param>
+        /// <param name="status"> Status of endpoint. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningJobService(string jobServiceType, int? port, string endpoint, string status, string errorMessage, IDictionary<string, string> properties, JobNodes nodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -96,5 +102,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </summary>
         public JobNodes Nodes { get; set; }
+<<<<<<< HEAD
+=======
+        /// <summary> Port for endpoint. </summary>
+        public int? Port { get; set; }
+        /// <summary> Additional properties to set on the endpoint. </summary>
+        public IDictionary<string, string> Properties { get; set; }
+        /// <summary> Status of endpoint. </summary>
+        public string Status { get; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

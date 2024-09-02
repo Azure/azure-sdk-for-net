@@ -23,8 +23,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<< HEAD
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+=======
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="autoRebuild"> Defines if image needs to be rebuilt based on base image changes. </param>
+        /// <param name="build"> Configuration settings for Docker build context. </param>
+        /// <param name="condaFile">
+        /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
+        /// &lt;see href="https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment" /&gt;
+        /// </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="environmentType">
         /// Environment type is either user managed or curated by the Azure ML service
         /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments" /&gt;
@@ -33,22 +44,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Name of the image that will be used for the environment.
         /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
         /// </param>
+<<<<<<< HEAD
         /// <param name="condaFile">
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
         /// &lt;see href="https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment" /&gt;
         /// </param>
         /// <param name="build"> Configuration settings for Docker build context. </param>
+=======
+        /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="osType"> The OS type of the environment. </param>
         /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
         /// <param name="autoRebuild"> Defines if image needs to be rebuilt based on base image changes. </param>
         /// <param name="provisioningState"> Provisioning state for the environment version. </param>
         /// <param name="stage"> Stage in the environment lifecycle assigned to this environment. </param>
+<<<<<<< HEAD
         internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, bool? isAnonymous, MachineLearningEnvironmentType? environmentType, string image, string condaFile, MachineLearningBuildContext build, MachineLearningOperatingSystemType? osType, MachineLearningInferenceContainerProperties inferenceConfig, AutoRebuildSetting? autoRebuild, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, tags, properties, serializedAdditionalRawData, isArchived, isAnonymous)
+=======
+        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, MachineLearningOperatingSystemType? osType, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, serializedAdditionalRawData, isAnonymous, isArchived)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             EnvironmentType = environmentType;
             Image = image;
+<<<<<<< HEAD
             CondaFile = condaFile;
             Build = build;
+=======
+            InferenceConfig = inferenceConfig;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             OSType = osType;
             InferenceConfig = inferenceConfig;
             AutoRebuild = autoRebuild;
@@ -66,6 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
         /// </summary>
         public string Image { get; set; }
+<<<<<<< HEAD
         /// <summary>
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
         /// &lt;see href="https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment" /&gt;
@@ -73,6 +97,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string CondaFile { get; set; }
         /// <summary> Configuration settings for Docker build context. </summary>
         public MachineLearningBuildContext Build { get; set; }
+=======
+        /// <summary> Defines configuration specific to inference. </summary>
+        public MachineLearningInferenceContainerProperties InferenceConfig { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> The OS type of the environment. </summary>
         public MachineLearningOperatingSystemType? OSType { get; set; }
         /// <summary> Defines configuration specific to inference. </summary>

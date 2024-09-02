@@ -59,18 +59,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// During VotingEnsemble and StackEnsemble model generation, multiple fitted models from the previous child runs are downloaded.
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
         /// </param>
+<<<<<<< HEAD
         /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
         /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningTrainingSettings(bool? isOnnxCompatibleModelsEnabled, MachineLearningStackEnsembleSettings stackEnsembleSettings, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, bool? isModelExplainabilityEnabled, bool? isDnnTrainingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+=======
+        /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             IsOnnxCompatibleModelsEnabled = isOnnxCompatibleModelsEnabled;
             StackEnsembleSettings = stackEnsembleSettings;
             IsStackEnsembleEnabled = isStackEnsembleEnabled;
             IsVoteEnsembleEnabled = isVoteEnsembleEnabled;
             EnsembleModelDownloadTimeout = ensembleModelDownloadTimeout;
+<<<<<<< HEAD
             IsModelExplainabilityEnabled = isModelExplainabilityEnabled;
             IsDnnTrainingEnabled = isDnnTrainingEnabled;
+=======
+            StackEnsembleSettings = stackEnsembleSettings;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,9 +97,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
         /// </summary>
         public TimeSpan? EnsembleModelDownloadTimeout { get; set; }
+<<<<<<< HEAD
         /// <summary> Flag to turn on explainability on best model. </summary>
         public bool? IsModelExplainabilityEnabled { get; set; }
         /// <summary> Enable recommendation of DNN models. </summary>
         public bool? IsDnnTrainingEnabled { get; set; }
+=======
+        /// <summary> Stack ensemble settings for stack ensemble run. </summary>
+        public MachineLearningStackEnsembleSettings StackEnsembleSettings { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

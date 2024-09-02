@@ -49,6 +49,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
+<<<<<<< HEAD
+=======
+            if (Optional.IsDefined(Identity))
+            {
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity");
+                }
+            }
+            if (Optional.IsDefined(IsArchived))
+            {
+                writer.WritePropertyName("isArchived"u8);
+                writer.WriteBooleanValue(IsArchived.Value);
+            }
+            writer.WritePropertyName("jobType"u8);
+            writer.WriteStringValue(JobType.ToString());
+            if (Optional.IsDefined(NotificationSetting))
+            {
+                if (NotificationSetting != null)
+                {
+                    writer.WritePropertyName("notificationSetting"u8);
+                    writer.WriteObjectValue(NotificationSetting, options);
+                }
+                else
+                {
+                    writer.WriteNull("notificationSetting");
+                }
+            }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
@@ -212,6 +246,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element, options);
                     case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element, options);
+<<<<<<< HEAD
+=======
+                    case "FineTuning": return FineTuningJob.DeserializeFineTuningJob(element, options);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     case "Pipeline": return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element, options);
                     case "Spark": return SparkJob.DeserializeSparkJob(element, options);
                     case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element, options);

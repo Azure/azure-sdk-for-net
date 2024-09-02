@@ -124,7 +124,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 #region Snippet:SimpleDirectoryUpload_Shares
                 DataTransfer folderTransfer = await transferManager.StartTransferAsync(
-                    sourceResource: files.FromFile(sourceLocalDirectory),
+                    sourceResource: files.FromDirectory(sourceLocalDirectory),
                     destinationResource: shares.FromDirectory(destinationFolderUri));
                 await folderTransfer.WaitForCompletionAsync();
                 #endregion

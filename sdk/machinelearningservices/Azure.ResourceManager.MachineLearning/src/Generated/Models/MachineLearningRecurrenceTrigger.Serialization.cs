@@ -118,6 +118,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string endTime = default;
             string startTime = default;
             string timeZone = default;
+<<<<<<< HEAD
+=======
+            TriggerType triggerType = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,6 +176,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     timeZone = property.Value.GetString();
                     continue;
                 }
+<<<<<<< HEAD
+=======
+                if (property.NameEquals("triggerType"u8))
+                {
+                    triggerType = new TriggerType(property.Value.GetString());
+                    continue;
+                }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

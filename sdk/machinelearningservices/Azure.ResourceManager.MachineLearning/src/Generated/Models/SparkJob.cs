@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             CodeId = codeId;
             Entry = entry;
+<<<<<<< HEAD
+=======
+            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
+            Files = new ChangeTrackingList<string>();
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
             Outputs = new ChangeTrackingDictionary<string, MachineLearningJobOutput>();
             PyFiles = new ChangeTrackingList<string>();
@@ -63,15 +68,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="notificationSetting"> Notification setting for the job. </param>
+<<<<<<< HEAD
         /// <param name="resources"> Compute Resource configuration for the job. </param>
         /// <param name="args"> Arguments for the job. </param>
         /// <param name="codeId"> [Required] arm-id of the code asset. </param>
+=======
+        /// <param name="services">
+        /// List of JobEndpoints.
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="archives"> Archive files used in the job. </param>
+        /// <param name="args"> Arguments for the job. </param>
+        /// <param name="codeId"> [Required] arm-id of the code asset. </param>
+        /// <param name="conf"> Spark configured properties. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="entry">
         /// [Required] The entry to execute on startup of the job.
         /// Please note <see cref="SparkJobEntry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SparkJobPythonEntry"/> and <see cref="SparkJobScalaEntry"/>.
         /// </param>
         /// <param name="environmentId"> The ARM resource ID of the Environment specification for the job. </param>
+<<<<<<< HEAD
+=======
+        /// <param name="environmentVariables"> Environment variables included in the job. </param>
+        /// <param name="files"> Files used in the job. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -88,14 +110,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="archives"> Archive files used in the job. </param>
         /// <param name="conf"> Spark configured properties. </param>
         /// <param name="queueSettings"> Queue settings for the job. </param>
+<<<<<<< HEAD
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
         internal SparkJob(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, JobType jobType, string displayName, MachineLearningJobStatus? status, string experimentName, IDictionary<string, MachineLearningJobService> services, ResourceIdentifier computeId, bool? isArchived, MachineLearningIdentityConfiguration identity, ResourceIdentifier componentId, NotificationSetting notificationSetting, SparkResourceConfiguration resources, string args, ResourceIdentifier codeId, SparkJobEntry entry, ResourceIdentifier environmentId, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, MachineLearningJobOutput> outputs, IList<string> pyFiles, IList<string> jars, IList<string> files, IList<string> archives, IDictionary<string, string> conf, JobQueueSettings queueSettings, IDictionary<string, string> environmentVariables) : base(description, tags, properties, serializedAdditionalRawData, jobType, displayName, status, experimentName, services, computeId, isArchived, identity, componentId, notificationSetting)
+=======
+        /// <param name="resources"> Compute Resource configuration for the job. </param>
+        internal SparkJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IList<string> archives, string args, ResourceIdentifier codeId, IDictionary<string, string> conf, SparkJobEntry entry, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, IList<string> files, IDictionary<string, MachineLearningJobInput> inputs, IList<string> jars, IDictionary<string, MachineLearningJobOutput> outputs, IList<string> pyFiles, JobQueueSettings queueSettings, SparkResourceConfiguration resources) : base(description, properties, tags, serializedAdditionalRawData, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, services, status)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             Resources = resources;
             Args = args;
             CodeId = codeId;
             Entry = entry;
             EnvironmentId = environmentId;
+<<<<<<< HEAD
+=======
+            EnvironmentVariables = environmentVariables;
+            Files = files;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             Inputs = inputs;
             Outputs = outputs;
             PyFiles = pyFiles;
@@ -119,6 +151,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string Args { get; set; }
         /// <summary> [Required] arm-id of the code asset. </summary>
         public ResourceIdentifier CodeId { get; set; }
+<<<<<<< HEAD
+=======
+        /// <summary> Spark configured properties. </summary>
+        public IDictionary<string, string> Conf { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary>
         /// [Required] The entry to execute on startup of the job.
         /// Please note <see cref="SparkJobEntry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -127,6 +164,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public SparkJobEntry Entry { get; set; }
         /// <summary> The ARM resource ID of the Environment specification for the job. </summary>
         public ResourceIdentifier EnvironmentId { get; set; }
+<<<<<<< HEAD
+=======
+        /// <summary> Environment variables included in the job. </summary>
+        public IDictionary<string, string> EnvironmentVariables { get; set; }
+        /// <summary> Files used in the job. </summary>
+        public IList<string> Files { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary>
         /// Mapping of input data bindings used in the job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -163,7 +207,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
+<<<<<<< HEAD
         /// <summary> Environment variables included in the job. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; set; }
+=======
+        /// <summary> Compute Resource configuration for the job. </summary>
+        public SparkResourceConfiguration Resources { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

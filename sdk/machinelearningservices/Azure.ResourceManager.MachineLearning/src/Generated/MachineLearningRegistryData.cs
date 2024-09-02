@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="discoveryUri"> Discovery URL for the Registry. </param>
         /// <param name="intellectualPropertyPublisher"> IntellectualPropertyPublisher for the registry. </param>
         /// <param name="managedResourceGroup"> ResourceId of the managed RG if the registry has system created resources. </param>
+        /// <param name="managedResourceGroupSettings"> Managed resource group specific settings. </param>
         /// <param name="mlFlowRegistryUri"> MLFlow Registry URI for the Registry. </param>
         /// <param name="registryPrivateEndpointConnections"> Private endpoint connections info used for pending connections in private link portal. </param>
         /// <param name="publicNetworkAccess">
@@ -77,7 +78,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// </param>
         /// <param name="regionDetails"> Details of each region the registry is in. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<< HEAD
         internal MachineLearningRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, Uri discoveryUri, string intellectualPropertyPublisher, ArmResourceId managedResourceGroup, Uri mlFlowRegistryUri, IList<RegistryPrivateEndpointConnection> registryPrivateEndpointConnections, string publicNetworkAccess, IList<RegistryRegionArmDetails> regionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+=======
+        internal MachineLearningRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, Uri discoveryUri, string intellectualPropertyPublisher, ArmResourceId managedResourceGroup, ManagedResourceGroupSettings managedResourceGroupSettings, Uri mlFlowRegistryUri, IList<RegistryPrivateEndpointConnection> registryPrivateEndpointConnections, string publicNetworkAccess, IList<RegistryRegionArmDetails> regionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             Identity = identity;
             Kind = kind;
@@ -85,6 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
             DiscoveryUri = discoveryUri;
             IntellectualPropertyPublisher = intellectualPropertyPublisher;
             ManagedResourceGroup = managedResourceGroup;
+            ManagedResourceGroupSettings = managedResourceGroupSettings;
             MlFlowRegistryUri = mlFlowRegistryUri;
             RegistryPrivateEndpointConnections = registryPrivateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
@@ -121,6 +127,20 @@ namespace Azure.ResourceManager.MachineLearning
                 if (ManagedResourceGroup is null)
                     ManagedResourceGroup = new ArmResourceId();
                 ManagedResourceGroup.ResourceId = value;
+            }
+        }
+
+        /// <summary> Managed resource group specific settings. </summary>
+        internal ManagedResourceGroupSettings ManagedResourceGroupSettings { get; set; }
+        /// <summary> List of assigned identities for the managed resource group. </summary>
+        public IList<ManagedResourceGroupAssignedIdentities> ManagedResourceGroupAssignedIdentities
+        {
+            get => ManagedResourceGroupSettings is null ? default : ManagedResourceGroupSettings.AssignedIdentities;
+            set
+            {
+                if (ManagedResourceGroupSettings is null)
+                    ManagedResourceGroupSettings = new ManagedResourceGroupSettings();
+                ManagedResourceGroupSettings.AssignedIdentities = value;
             }
         }
 

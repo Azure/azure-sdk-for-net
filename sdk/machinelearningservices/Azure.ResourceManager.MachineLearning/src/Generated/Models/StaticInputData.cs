@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <param name="columns"> Mapping of column names to special uses. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<< HEAD
+=======
+        /// <param name="preprocessingComponentId"> Reference to the component asset used to preprocess the data. </param>
+        /// <param name="windowEnd"> [Required] The end date of the data window. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="windowStart"> [Required] The start date of the data window. </param>
         /// <param name="windowEnd"> [Required] The end date of the data window. </param>
         /// <param name="preprocessingComponentId"> Reference to the component asset used to preprocess the data. </param>
@@ -51,6 +56,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+<<<<<<< HEAD
+=======
+        /// <summary> Reference to the component asset used to preprocess the data. </summary>
+        public string PreprocessingComponentId { get; set; }
+        /// <summary> [Required] The end date of the data window. </summary>
+        public DateTimeOffset WindowEnd { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary> [Required] The start date of the data window. </summary>
         public DateTimeOffset WindowStart { get; set; }
         /// <summary> [Required] The end date of the data window. </summary>

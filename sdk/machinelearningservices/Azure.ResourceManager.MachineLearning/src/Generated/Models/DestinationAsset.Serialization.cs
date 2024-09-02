@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+<<<<<<< HEAD
             if (Optional.IsDefined(RegistryName))
             {
                 if (RegistryName != null)
@@ -60,6 +61,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("destinationVersion");
+=======
+            if (Optional.IsDefined(DestinationName))
+            {
+                if (DestinationName != null)
+                {
+                    writer.WritePropertyName("destinationName"u8);
+                    writer.WriteStringValue(DestinationName);
+                }
+                else
+                {
+                    writer.WriteNull("destinationName");
+                }
+            }
+            if (Optional.IsDefined(DestinationVersion))
+            {
+                if (DestinationVersion != null)
+                {
+                    writer.WritePropertyName("destinationVersion"u8);
+                    writer.WriteStringValue(DestinationVersion);
+                }
+                else
+                {
+                    writer.WriteNull("destinationVersion");
+                }
+            }
+            if (Optional.IsDefined(RegistryName))
+            {
+                if (RegistryName != null)
+                {
+                    writer.WritePropertyName("registryName"u8);
+                    writer.WriteStringValue(RegistryName);
+                }
+                else
+                {
+                    writer.WriteNull("registryName");
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -100,13 +137,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
             string registryName = default;
             string destinationName = default;
             string destinationVersion = default;
+=======
+            string destinationName = default;
+            string destinationVersion = default;
+            string registryName = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<< HEAD
                 if (property.NameEquals("registryName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -135,6 +179,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     destinationVersion = property.Value.GetString();
+=======
+                if (property.NameEquals("destinationName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        destinationName = null;
+                        continue;
+                    }
+                    destinationName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("destinationVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        destinationVersion = null;
+                        continue;
+                    }
+                    destinationVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("registryName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        registryName = null;
+                        continue;
+                    }
+                    registryName = property.Value.GetString();
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +217,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
             return new DestinationAsset(registryName, destinationName, destinationVersion, serializedAdditionalRawData);
+=======
+            return new DestinationAsset(destinationName, destinationVersion, registryName, serializedAdditionalRawData);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<DestinationAsset>.Write(ModelReaderWriterOptions options)

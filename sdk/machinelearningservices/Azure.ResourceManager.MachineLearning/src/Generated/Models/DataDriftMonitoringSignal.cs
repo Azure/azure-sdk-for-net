@@ -45,10 +45,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataDriftMonitoringSignal"/>. </summary>
+<<<<<<< HEAD
+=======
+        /// <param name="notificationTypes"> The current notification mode for this signal. </param>
+        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="notificationTypes"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<< HEAD
+=======
+        /// <param name="featureDataTypeOverride"> A dictionary that maps feature names to their respective data types. </param>
+        /// <param name="featureImportanceSettings"> The settings for computing feature importance. </param>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <param name="features">
         /// The feature filter which identifies which feature to calculate drift over.
         /// Please note <see cref="MonitoringFeatureFilterBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -70,9 +80,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </param>
+<<<<<<< HEAD
         /// <param name="featureDataTypeOverride"> A dictionary that maps feature names to their respective data types. </param>
         internal DataDriftMonitoringSignal(MonitoringSignalType signalType, IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, MonitoringFeatureFilterBase features, FeatureImportanceSettings featureImportanceSettings, IList<DataDriftMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride) : base(signalType, notificationTypes, properties, serializedAdditionalRawData)
         {
+=======
+        internal DataDriftMonitoringSignal(IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride, FeatureImportanceSettings featureImportanceSettings, MonitoringFeatureFilterBase features, IList<DataDriftMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData) : base(notificationTypes, properties, signalType, serializedAdditionalRawData)
+        {
+            FeatureDataTypeOverride = featureDataTypeOverride;
+            FeatureImportanceSettings = featureImportanceSettings;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             Features = features;
             FeatureImportanceSettings = featureImportanceSettings;
             MetricThresholds = metricThresholds;
@@ -87,6 +104,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+<<<<<<< HEAD
+=======
+        /// <summary> A dictionary that maps feature names to their respective data types. </summary>
+        public IDictionary<string, MonitoringFeatureDataType> FeatureDataTypeOverride { get; set; }
+        /// <summary> The settings for computing feature importance. </summary>
+        public FeatureImportanceSettings FeatureImportanceSettings { get; set; }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         /// <summary>
         /// The feature filter which identifies which feature to calculate drift over.
         /// Please note <see cref="MonitoringFeatureFilterBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -13,6 +13,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessEndpointTrackedResourceArmPaginatedResult.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     internal partial class ServerlessEndpointTrackedResourceArmPaginatedResult : IUtf8JsonSerializable, IJsonModel<ServerlessEndpointTrackedResourceArmPaginatedResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerlessEndpointTrackedResourceArmPaginatedResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -23,9 +27,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerlessEndpointTrackedResourceArmPaginatedResult)} does not support writing '{format}' format.");
+<<<<<<< HEAD
+========
+    internal partial class EndpointModels : IUtf8JsonSerializable, IJsonModel<EndpointModels>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EndpointModels>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EndpointModels>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointModels>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EndpointModels)} does not support writing '{format}' format.");
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/EndpointModels.Serialization.cs
             }
 
             writer.WriteStartObject();
+=======
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -36,11 +63,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
+<<<<<<< HEAD
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -59,6 +89,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessEndpointTrackedResourceArmPaginatedResult.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         ServerlessEndpointTrackedResourceArmPaginatedResult IJsonModel<ServerlessEndpointTrackedResourceArmPaginatedResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessEndpointTrackedResourceArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -72,6 +106,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         internal static ServerlessEndpointTrackedResourceArmPaginatedResult DeserializeServerlessEndpointTrackedResourceArmPaginatedResult(JsonElement element, ModelReaderWriterOptions options = null)
+<<<<<<< HEAD
+========
+        EndpointModels IJsonModel<EndpointModels>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointModels>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EndpointModels)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEndpointModels(document.RootElement, options);
+        }
+
+        internal static EndpointModels DeserializeEndpointModels(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/EndpointModels.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,49 +131,102 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
             IReadOnlyList<ServerlessEndpointData> value = default;
             string nextLink = default;
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessEndpointTrackedResourceArmPaginatedResult.Serialization.cs
+========
+            IReadOnlyList<EndpointModelProperties> value = default;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/EndpointModels.Serialization.cs
+=======
+            string nextLink = default;
+            IReadOnlyList<ServerlessEndpointData> value = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<< HEAD
+=======
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessEndpointTrackedResourceArmPaginatedResult.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     List<ServerlessEndpointData> array = new List<ServerlessEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ServerlessEndpointData.DeserializeServerlessEndpointData(item, options));
+<<<<<<< HEAD
+========
+                    List<EndpointModelProperties> array = new List<EndpointModelProperties>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EndpointModelProperties.DeserializeEndpointModelProperties(item, options));
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/EndpointModels.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     }
                     value = array;
                     continue;
                 }
+<<<<<<< HEAD
                 if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessEndpointTrackedResourceArmPaginatedResult.Serialization.cs
             return new ServerlessEndpointTrackedResourceArmPaginatedResult(value ?? new ChangeTrackingList<ServerlessEndpointData>(), nextLink, serializedAdditionalRawData);
+=======
+            return new ServerlessEndpointTrackedResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<ServerlessEndpointData>(), serializedAdditionalRawData);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<ServerlessEndpointTrackedResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessEndpointTrackedResourceArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
+<<<<<<< HEAD
+========
+            return new EndpointModels(nextLink, value ?? new ChangeTrackingList<EndpointModelProperties>(), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<EndpointModels>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointModels>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/EndpointModels.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessEndpointTrackedResourceArmPaginatedResult.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     throw new FormatException($"The model {nameof(ServerlessEndpointTrackedResourceArmPaginatedResult)} does not support writing '{options.Format}' format.");
             }
         }
@@ -129,12 +234,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         ServerlessEndpointTrackedResourceArmPaginatedResult IPersistableModel<ServerlessEndpointTrackedResourceArmPaginatedResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessEndpointTrackedResourceArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
+<<<<<<< HEAD
+========
+                    throw new FormatException($"The model {nameof(EndpointModels)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EndpointModels IPersistableModel<EndpointModels>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointModels>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/EndpointModels.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<< HEAD
+<<<<<<<< HEAD:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/ServerlessEndpointTrackedResourceArmPaginatedResult.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                         return DeserializeServerlessEndpointTrackedResourceArmPaginatedResult(document.RootElement, options);
                     }
                 default:
@@ -143,5 +264,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         string IPersistableModel<ServerlessEndpointTrackedResourceArmPaginatedResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+<<<<<<< HEAD
+========
+                        return DeserializeEndpointModels(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EndpointModels)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EndpointModels>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7:sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/src/Generated/Models/EndpointModels.Serialization.cs
+=======
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     }
 }

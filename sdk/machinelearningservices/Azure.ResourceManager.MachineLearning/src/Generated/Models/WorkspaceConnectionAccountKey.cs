@@ -10,7 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+<<<<<<< HEAD
     /// <summary> The WorkspaceConnectionAccountKey. </summary>
+=======
+    /// <summary> Account key object for workspace connection credential. </summary>
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
     internal partial class WorkspaceConnectionAccountKey
     {
         /// <summary>

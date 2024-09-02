@@ -28,8 +28,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Timeout))
             {
+<<<<<<< HEAD
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
+=======
+                writer.WritePropertyName("maxConcurrentTrials"u8);
+                writer.WriteNumberValue(MaxConcurrentTrials.Value);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             }
             if (Optional.IsDefined(MaxTrials))
             {
@@ -38,8 +43,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(MaxConcurrentTrials))
             {
+<<<<<<< HEAD
                 writer.WritePropertyName("maxConcurrentTrials"u8);
                 writer.WriteNumberValue(MaxConcurrentTrials.Value);
+=======
+                writer.WritePropertyName("timeout"u8);
+                writer.WriteStringValue(Timeout.Value, "P");
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,9 +89,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+<<<<<<< HEAD
             TimeSpan? timeout = default;
             int? maxTrials = default;
             int? maxConcurrentTrials = default;
+=======
+            int? maxConcurrentTrials = default;
+            int? maxTrials = default;
+            TimeSpan? timeout = default;
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +108,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
+<<<<<<< HEAD
                     timeout = property.Value.GetTimeSpan("P");
+=======
+                    maxConcurrentTrials = property.Value.GetInt32();
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     continue;
                 }
                 if (property.NameEquals("maxTrials"u8))
@@ -110,7 +130,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
+<<<<<<< HEAD
                     maxConcurrentTrials = property.Value.GetInt32();
+=======
+                    timeout = property.Value.GetTimeSpan("P");
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +143,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<< HEAD
             return new NlpVerticalLimitSettings(timeout, maxTrials, maxConcurrentTrials, serializedAdditionalRawData);
+=======
+            return new NlpVerticalLimitSettings(maxConcurrentTrials, maxTrials, timeout, serializedAdditionalRawData);
+>>>>>>> 3f8cf30a3ebe61cfdd08f1bbe8fa5494eda0e9f7
         }
 
         BinaryData IPersistableModel<NlpVerticalLimitSettings>.Write(ModelReaderWriterOptions options)
