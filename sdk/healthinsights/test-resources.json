@@ -99,7 +99,8 @@
             "apiVersion": "[variables('authorizationApiVersion')]",
             "name": "[guid(concat(variables('cognitiveServiceUserRoleId'), variables('textAnalyticsBaseName')))]",
             "properties": {
-                "roleDefinitionId": "[variables('cognitiveServiceUserRoleId')]"
+                "roleDefinitionId": "[variables('cognitiveServiceUserRoleId')]",
+                "principalId": "[parameters('testApplicationOid')]"
             },
             "dependsOn": [
                  "[variables('textAnalyticsBaseName')]"
@@ -110,7 +111,8 @@
               "apiVersion": "[variables('authorizationApiVersion')]",
               "name": "[guid(concat(variables('cognitiveServiceUserRoleId'), variables('healthInsightsName')))]",
               "properties": {
-                  "roleDefinitionId": "[variables('cognitiveServiceUserRoleId')]"
+                  "roleDefinitionId": "[variables('cognitiveServiceUserRoleId')]",
+                  "principalId": "[parameters('testApplicationOid')]"
               },
               "dependsOn": [
                    "[variables('healthInsightsName')]"
