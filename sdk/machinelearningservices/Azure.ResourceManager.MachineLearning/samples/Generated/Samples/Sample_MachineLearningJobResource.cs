@@ -268,7 +268,7 @@ Properties =
 ["string"] = "string",
 },
             });
-            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data, default);
+            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
             MachineLearningJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -371,7 +371,7 @@ Properties =
 ["string"] = "string",
 },
             });
-            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data, default);
+            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
             MachineLearningJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -451,7 +451,7 @@ Properties =
 ["string"] = "string",
 },
             });
-            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data, default);
+            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
             MachineLearningJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -550,7 +550,7 @@ Properties =
 ["string"] = "string",
 },
             });
-            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data, default);
+            ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
             MachineLearningJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

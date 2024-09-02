@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MachineLearningWorkspaceResource item in subscriptionResource.GetMachineLearningWorkspacesAsync(string.Empty, default))
+            await foreach (MachineLearningWorkspaceResource item in subscriptionResource.GetMachineLearningWorkspacesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
