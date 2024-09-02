@@ -40,18 +40,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (Optional.IsDefined(Distribution))
-            {
-                if (Distribution != null)
-                {
-                    writer.WritePropertyName("distribution"u8);
-                    writer.WriteObjectValue(Distribution, options);
-                }
-                else
-                {
-                    writer.WriteNull("distribution");
-                }
-            }
             writer.WritePropertyName("environmentId"u8);
             writer.WriteStringValue(EnvironmentId);
             if (Optional.IsCollectionDefined(EnvironmentVariables))
@@ -70,6 +58,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("environmentVariables");
+                }
+            }
+            if (Optional.IsDefined(Distribution))
+            {
+                if (Distribution != null)
+                {
+                    writer.WritePropertyName("distribution"u8);
+                    writer.WriteObjectValue(Distribution, options);
+                }
+                else
+                {
+                    writer.WriteNull("distribution");
                 }
             }
             if (Optional.IsDefined(Resources))
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             ResourceIdentifier codeId = default;
             string command = default;
-            MachineLearningDistributionConfiguration distribution = default;
             ResourceIdentifier environmentId = default;
             IDictionary<string, string> environmentVariables = default;
+            MachineLearningDistributionConfiguration distribution = default;
             MachineLearningJobResourceConfiguration resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -138,16 +138,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("command"u8))
                 {
                     command = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("distribution"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        distribution = null;
-                        continue;
-                    }
-                    distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentId"u8))
@@ -170,6 +160,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     environmentVariables = dictionary;
                     continue;
                 }
+                if (property.NameEquals("distribution"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        distribution = null;
+                        continue;
+                    }
+                    distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("resources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningTrialComponent(
                 codeId,
                 command,
-                distribution,
                 environmentId,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                distribution,
                 resources,
                 serializedAdditionalRawData);
         }

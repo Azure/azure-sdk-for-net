@@ -48,18 +48,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("applicationSharingPolicy"u8);
                 writer.WriteStringValue(ApplicationSharingPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(AutologgerSettings))
-            {
-                if (AutologgerSettings != null)
-                {
-                    writer.WritePropertyName("autologgerSettings"u8);
-                    writer.WriteObjectValue(AutologgerSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("autologgerSettings");
-                }
-            }
             if (Optional.IsDefined(SshSettings))
             {
                 if (SshSettings != null)
@@ -141,54 +129,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeInstanceAuthorizationType");
                 }
             }
-            if (Optional.IsDefined(EnableOSPatching))
-            {
-                if (EnableOSPatching != null)
-                {
-                    writer.WritePropertyName("enableOSPatching"u8);
-                    writer.WriteBooleanValue(EnableOSPatching.Value);
-                }
-                else
-                {
-                    writer.WriteNull("enableOSPatching");
-                }
-            }
-            if (Optional.IsDefined(EnableRootAccess))
-            {
-                if (EnableRootAccess != null)
-                {
-                    writer.WritePropertyName("enableRootAccess"u8);
-                    writer.WriteBooleanValue(EnableRootAccess.Value);
-                }
-                else
-                {
-                    writer.WriteNull("enableRootAccess");
-                }
-            }
-            if (Optional.IsDefined(EnableSso))
-            {
-                if (EnableSso != null)
-                {
-                    writer.WritePropertyName("enableSSO"u8);
-                    writer.WriteBooleanValue(EnableSso.Value);
-                }
-                else
-                {
-                    writer.WriteNull("enableSSO");
-                }
-            }
-            if (Optional.IsDefined(ReleaseQuotaOnStop))
-            {
-                if (ReleaseQuotaOnStop != null)
-                {
-                    writer.WritePropertyName("releaseQuotaOnStop"u8);
-                    writer.WriteBooleanValue(ReleaseQuotaOnStop.Value);
-                }
-                else
-                {
-                    writer.WriteNull("releaseQuotaOnStop");
-                }
-            }
             if (Optional.IsDefined(PersonalComputeInstanceSettings))
             {
                 if (PersonalComputeInstanceSettings != null)
@@ -237,22 +177,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("schedules");
                 }
             }
-            if (Optional.IsDefined(IdleTimeBeforeShutdown))
-            {
-                writer.WritePropertyName("idleTimeBeforeShutdown"u8);
-                writer.WriteStringValue(IdleTimeBeforeShutdown);
-            }
             if (Optional.IsDefined(EnableNodePublicIP))
             {
-                if (EnableNodePublicIP != null)
-                {
-                    writer.WritePropertyName("enableNodePublicIp"u8);
-                    writer.WriteBooleanValue(EnableNodePublicIP.Value);
-                }
-                else
-                {
-                    writer.WriteNull("enableNodePublicIp");
-                }
+                writer.WritePropertyName("enableNodePublicIp"u8);
+                writer.WriteBooleanValue(EnableNodePublicIP.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Containers))
             {
@@ -351,7 +279,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string vmSize = default;
             ResourceId subnet = default;
             MachineLearningApplicationSharingPolicy? applicationSharingPolicy = default;
-            ComputeInstanceAutologgerSettings autologgerSettings = default;
             MachineLearningComputeInstanceSshSettings sshSettings = default;
             IList<CustomService> customServices = default;
             ImageMetadata osImageMetadata = default;
@@ -361,15 +288,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IReadOnlyList<MachineLearningError> errors = default;
             MachineLearningComputeInstanceState? state = default;
             MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType = default;
-            bool? enableOSPatching = default;
-            bool? enableRootAccess = default;
-            bool? enableSso = default;
-            bool? releaseQuotaOnStop = default;
             PersonalComputeInstanceSettings personalComputeInstanceSettings = default;
             SetupScripts setupScripts = default;
             MachineLearningComputeInstanceLastOperation lastOperation = default;
             ComputeSchedules schedules = default;
-            string idleTimeBeforeShutdown = default;
             bool? enableNodePublicIP = default;
             IReadOnlyList<MachineLearningComputeInstanceContainer> containers = default;
             IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks = default;
@@ -401,16 +323,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     applicationSharingPolicy = new MachineLearningApplicationSharingPolicy(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("autologgerSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        autologgerSettings = null;
-                        continue;
-                    }
-                    autologgerSettings = ComputeInstanceAutologgerSettings.DeserializeComputeInstanceAutologgerSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sshSettings"u8))
@@ -512,46 +424,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     computeInstanceAuthorizationType = new MachineLearningComputeInstanceAuthorizationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enableOSPatching"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        enableOSPatching = null;
-                        continue;
-                    }
-                    enableOSPatching = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("enableRootAccess"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        enableRootAccess = null;
-                        continue;
-                    }
-                    enableRootAccess = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("enableSSO"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        enableSso = null;
-                        continue;
-                    }
-                    enableSso = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("releaseQuotaOnStop"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        releaseQuotaOnStop = null;
-                        continue;
-                    }
-                    releaseQuotaOnStop = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("personalComputeInstanceSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -592,16 +464,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     schedules = ComputeSchedules.DeserializeComputeSchedules(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("idleTimeBeforeShutdown"u8))
-                {
-                    idleTimeBeforeShutdown = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("enableNodePublicIp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        enableNodePublicIP = null;
                         continue;
                     }
                     enableNodePublicIP = property.Value.GetBoolean();
@@ -671,7 +537,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 vmSize,
                 subnet,
                 applicationSharingPolicy,
-                autologgerSettings,
                 sshSettings,
                 customServices ?? new ChangeTrackingList<CustomService>(),
                 osImageMetadata,
@@ -681,15 +546,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 errors ?? new ChangeTrackingList<MachineLearningError>(),
                 state,
                 computeInstanceAuthorizationType,
-                enableOSPatching,
-                enableRootAccess,
-                enableSso,
-                releaseQuotaOnStop,
                 personalComputeInstanceSettings,
                 setupScripts,
                 lastOperation,
                 schedules,
-                idleTimeBeforeShutdown,
                 enableNodePublicIP,
                 containers ?? new ChangeTrackingList<MachineLearningComputeInstanceContainer>(),
                 dataDisks ?? new ChangeTrackingList<MachineLearningComputeInstanceDataDisk>(),

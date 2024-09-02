@@ -26,11 +26,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("taskType"u8);
+            writer.WriteStringValue(TaskType.ToString());
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
+            writer.WritePropertyName("trainingData"u8);
+            writer.WriteObjectValue(TrainingData, options);
             if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
@@ -43,10 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetColumnName");
                 }
             }
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
-            writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -85,14 +85,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningLogVerbosity? logVerbosity = default;
-            string targetColumnName = default;
             TaskType taskType = "Unknown";
+            MachineLearningLogVerbosity? logVerbosity = default;
             MachineLearningTableJobInput trainingData = default;
+            string targetColumnName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("taskType"u8))
+                {
+                    taskType = new TaskType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("logVerbosity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -100,6 +105,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("trainingData"u8))
+                {
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetColumnName"u8))
@@ -112,23 +122,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     targetColumnName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("taskType"u8))
-                {
-                    taskType = new TaskType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("trainingData"u8))
-                {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownAutoMLVertical(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData);
+            return new UnknownAutoMLVertical(taskType, logVerbosity, trainingData, targetColumnName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoMLVertical>.Write(ModelReaderWriterOptions options)

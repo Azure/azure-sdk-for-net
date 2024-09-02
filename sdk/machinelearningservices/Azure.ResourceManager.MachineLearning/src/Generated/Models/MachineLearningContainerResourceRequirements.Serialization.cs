@@ -26,18 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerResourceLimits))
-            {
-                if (ContainerResourceLimits != null)
-                {
-                    writer.WritePropertyName("containerResourceLimits"u8);
-                    writer.WriteObjectValue(ContainerResourceLimits, options);
-                }
-                else
-                {
-                    writer.WriteNull("containerResourceLimits");
-                }
-            }
             if (Optional.IsDefined(ContainerResourceRequests))
             {
                 if (ContainerResourceRequests != null)
@@ -48,6 +36,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("containerResourceRequests");
+                }
+            }
+            if (Optional.IsDefined(ContainerResourceLimits))
+            {
+                if (ContainerResourceLimits != null)
+                {
+                    writer.WritePropertyName("containerResourceLimits"u8);
+                    writer.WriteObjectValue(ContainerResourceLimits, options);
+                }
+                else
+                {
+                    writer.WriteNull("containerResourceLimits");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,22 +88,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningContainerResourceSettings containerResourceLimits = default;
             MachineLearningContainerResourceSettings containerResourceRequests = default;
+            MachineLearningContainerResourceSettings containerResourceLimits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("containerResourceLimits"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        containerResourceLimits = null;
-                        continue;
-                    }
-                    containerResourceLimits = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("containerResourceRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -114,13 +104,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     containerResourceRequests = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("containerResourceLimits"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        containerResourceLimits = null;
+                        continue;
+                    }
+                    containerResourceLimits = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningContainerResourceRequirements(containerResourceLimits, containerResourceRequests, serializedAdditionalRawData);
+            return new MachineLearningContainerResourceRequirements(containerResourceRequests, containerResourceLimits, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningContainerResourceRequirements>.Write(ModelReaderWriterOptions options)

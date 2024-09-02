@@ -43,11 +43,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("indexColumns");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             if (Optional.IsDefined(Stage))
             {
                 if (Stage != null)
@@ -60,15 +55,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stage");
                 }
             }
-            if (Optional.IsDefined(IsAnonymous))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("isAnonymous"u8);
-                writer.WriteBooleanValue(IsAnonymous.Value);
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
+            }
+            if (Optional.IsDefined(IsAnonymous))
+            {
+                writer.WritePropertyName("isAnonymous"u8);
+                writer.WriteBooleanValue(IsAnonymous.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -80,24 +80,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("description");
-                }
-            }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("properties");
                 }
             }
             if (Optional.IsCollectionDefined(Tags))
@@ -116,6 +98,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("tags");
+                }
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                if (Properties != null)
+                {
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("properties");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -157,13 +157,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<IndexColumn> indexColumns = default;
-            RegistryAssetProvisioningState? provisioningState = default;
             string stage = default;
-            bool? isAnonymous = default;
+            RegistryAssetProvisioningState? provisioningState = default;
             bool? isArchived = default;
+            bool? isAnonymous = default;
             string description = default;
-            IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,15 +183,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     indexColumns = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("stage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -202,13 +193,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     stage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isAnonymous"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isAnonymous = property.Value.GetBoolean();
+                    provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isArchived"u8))
@@ -220,6 +211,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isArchived = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("isAnonymous"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAnonymous = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -228,21 +228,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        properties = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -260,6 +245,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        properties = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -268,14 +268,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningFeatureStoreEntityVersionProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                isAnonymous,
                 isArchived,
+                isAnonymous,
                 indexColumns ?? new ChangeTrackingList<IndexColumn>(),
-                provisioningState,
-                stage);
+                stage,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureStoreEntityVersionProperties>.Write(ModelReaderWriterOptions options)

@@ -26,11 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -40,6 +35,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,17 +79,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string nextLink = default;
             IReadOnlyList<MachineLearningDataVersionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -104,13 +99,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataVersionBaseResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<MachineLearningDataVersionData>(), serializedAdditionalRawData);
+            return new DataVersionBaseResourceArmPaginatedResult(value ?? new ChangeTrackingList<MachineLearningDataVersionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataVersionBaseResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

@@ -115,18 +115,6 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("managedResourceGroup");
                 }
             }
-            if (Optional.IsDefined(ManagedResourceGroupSettings))
-            {
-                if (ManagedResourceGroupSettings != null)
-                {
-                    writer.WritePropertyName("managedResourceGroupSettings"u8);
-                    writer.WriteObjectValue(ManagedResourceGroupSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("managedResourceGroupSettings");
-                }
-            }
             if (Optional.IsDefined(MlFlowRegistryUri))
             {
                 if (MlFlowRegistryUri != null)
@@ -236,7 +224,6 @@ namespace Azure.ResourceManager.MachineLearning
             Uri discoveryUrl = default;
             string intellectualPropertyPublisher = default;
             ArmResourceId managedResourceGroup = default;
-            ManagedResourceGroupSettings managedResourceGroupSettings = default;
             Uri mlFlowRegistryUri = default;
             IList<RegistryPrivateEndpointConnection> registryPrivateEndpointConnections = default;
             string publicNetworkAccess = default;
@@ -351,16 +338,6 @@ namespace Azure.ResourceManager.MachineLearning
                             managedResourceGroup = ArmResourceId.DeserializeArmResourceId(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("managedResourceGroupSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                managedResourceGroupSettings = null;
-                                continue;
-                            }
-                            managedResourceGroupSettings = ManagedResourceGroupSettings.DeserializeManagedResourceGroupSettings(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("mlFlowRegistryUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -433,7 +410,6 @@ namespace Azure.ResourceManager.MachineLearning
                 discoveryUrl,
                 intellectualPropertyPublisher,
                 managedResourceGroup,
-                managedResourceGroupSettings,
                 mlFlowRegistryUri,
                 registryPrivateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>(),
                 publicNetworkAccess,

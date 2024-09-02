@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("keyVaultArmId"u8);
+            writer.WriteStringValue(KeyVaultArmId);
+            writer.WritePropertyName("keyIdentifier"u8);
+            writer.WriteStringValue(KeyIdentifier);
             if (Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
             }
-            writer.WritePropertyName("keyIdentifier"u8);
-            writer.WriteStringValue(KeyIdentifier);
-            writer.WritePropertyName("keyVaultArmId"u8);
-            writer.WriteStringValue(KeyVaultArmId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string identityClientId = default;
-            string keyIdentifier = default;
             ResourceIdentifier keyVaultArmId = default;
+            string keyIdentifier = default;
+            string identityClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identityClientId"u8))
+                if (property.NameEquals("keyVaultArmId"u8))
                 {
-                    identityClientId = property.Value.GetString();
+                    keyVaultArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyIdentifier"u8))
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     keyIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultArmId"u8))
+                if (property.NameEquals("identityClientId"u8))
                 {
-                    keyVaultArmId = new ResourceIdentifier(property.Value.GetString());
+                    identityClientId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningEncryptionKeyVaultProperties(identityClientId, keyIdentifier, keyVaultArmId, serializedAdditionalRawData);
+            return new MachineLearningEncryptionKeyVaultProperties(keyVaultArmId, keyIdentifier, identityClientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningEncryptionKeyVaultProperties>.Write(ModelReaderWriterOptions options)

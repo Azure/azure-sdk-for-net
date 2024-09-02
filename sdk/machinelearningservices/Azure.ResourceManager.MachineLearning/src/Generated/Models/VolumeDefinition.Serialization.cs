@@ -55,51 +55,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Consistency))
             {
-                if (Consistency != null)
-                {
-                    writer.WritePropertyName("consistency"u8);
-                    writer.WriteStringValue(Consistency);
-                }
-                else
-                {
-                    writer.WriteNull("consistency");
-                }
+                writer.WritePropertyName("consistency"u8);
+                writer.WriteStringValue(Consistency);
             }
             if (Optional.IsDefined(Bind))
             {
-                if (Bind != null)
-                {
-                    writer.WritePropertyName("bind"u8);
-                    writer.WriteObjectValue(Bind, options);
-                }
-                else
-                {
-                    writer.WriteNull("bind");
-                }
+                writer.WritePropertyName("bind"u8);
+                writer.WriteObjectValue(Bind, options);
             }
             if (Optional.IsDefined(Volume))
             {
-                if (Volume != null)
-                {
-                    writer.WritePropertyName("volume"u8);
-                    writer.WriteObjectValue(Volume, options);
-                }
-                else
-                {
-                    writer.WriteNull("volume");
-                }
+                writer.WritePropertyName("volume"u8);
+                writer.WriteObjectValue(Volume, options);
             }
             if (Optional.IsDefined(Tmpfs))
             {
-                if (Tmpfs != null)
-                {
-                    writer.WritePropertyName("tmpfs"u8);
-                    writer.WriteObjectValue(Tmpfs, options);
-                }
-                else
-                {
-                    writer.WriteNull("tmpfs");
-                }
+                writer.WritePropertyName("tmpfs"u8);
+                writer.WriteObjectValue(Tmpfs, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -182,11 +154,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("consistency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        consistency = null;
-                        continue;
-                    }
                     consistency = property.Value.GetString();
                     continue;
                 }
@@ -194,7 +161,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        bind = null;
                         continue;
                     }
                     bind = MountBindOptions.DeserializeMountBindOptions(property.Value, options);
@@ -204,7 +170,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        volume = null;
                         continue;
                     }
                     volume = VolumeOptions.DeserializeVolumeOptions(property.Value, options);
@@ -214,7 +179,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        tmpfs = null;
                         continue;
                     }
                     tmpfs = TmpfsOptions.DeserializeTmpfsOptions(property.Value, options);

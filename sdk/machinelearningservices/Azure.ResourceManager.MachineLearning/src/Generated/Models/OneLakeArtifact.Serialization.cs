@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("artifactName"u8);
-            writer.WriteStringValue(ArtifactName);
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
+            writer.WritePropertyName("artifactName"u8);
+            writer.WriteStringValue(ArtifactName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

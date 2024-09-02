@@ -26,6 +26,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(PublisherId))
+            {
+                if (PublisherId != null)
+                {
+                    writer.WritePropertyName("publisherId"u8);
+                    writer.WriteStringValue(PublisherId);
+                }
+                else
+                {
+                    writer.WriteNull("publisherId");
+                }
+            }
             if (options.Format != "W" && Optional.IsDefined(OfferId))
             {
                 if (OfferId != null)
@@ -48,18 +60,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("planId");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(PublisherId))
-            {
-                if (PublisherId != null)
-                {
-                    writer.WritePropertyName("publisherId"u8);
-                    writer.WriteStringValue(PublisherId);
-                }
-                else
-                {
-                    writer.WriteNull("publisherId");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -100,13 +100,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            string publisherId = default;
             string offerId = default;
             string planId = default;
-            string publisherId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("publisherId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        publisherId = null;
+                        continue;
+                    }
+                    publisherId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("offerId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -127,23 +137,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     planId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisherId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        publisherId = null;
-                        continue;
-                    }
-                    publisherId = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MarketplacePlan(offerId, planId, publisherId, serializedAdditionalRawData);
+            return new MarketplacePlan(publisherId, offerId, planId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplacePlan>.Write(ModelReaderWriterOptions options)

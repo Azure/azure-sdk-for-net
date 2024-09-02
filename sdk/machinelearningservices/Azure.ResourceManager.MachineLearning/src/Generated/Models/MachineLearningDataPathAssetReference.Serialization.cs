@@ -26,18 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatastoreId))
-            {
-                if (DatastoreId != null)
-                {
-                    writer.WritePropertyName("datastoreId"u8);
-                    writer.WriteStringValue(DatastoreId);
-                }
-                else
-                {
-                    writer.WriteNull("datastoreId");
-                }
-            }
             if (Optional.IsDefined(Path))
             {
                 if (Path != null)
@@ -48,6 +36,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("path");
+                }
+            }
+            if (Optional.IsDefined(DatastoreId))
+            {
+                if (DatastoreId != null)
+                {
+                    writer.WritePropertyName("datastoreId"u8);
+                    writer.WriteStringValue(DatastoreId);
+                }
+                else
+                {
+                    writer.WriteNull("datastoreId");
                 }
             }
             writer.WritePropertyName("referenceType"u8);
@@ -90,23 +90,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string datastoreId = default;
             string path = default;
+            string datastoreId = default;
             ReferenceType referenceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("datastoreId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        datastoreId = null;
-                        continue;
-                    }
-                    datastoreId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("path"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,6 +105,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     path = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("datastoreId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        datastoreId = null;
+                        continue;
+                    }
+                    datastoreId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("referenceType"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningDataPathAssetReference(referenceType, serializedAdditionalRawData, datastoreId, path);
+            return new MachineLearningDataPathAssetReference(referenceType, serializedAdditionalRawData, path, datastoreId);
         }
 
         BinaryData IPersistableModel<MachineLearningDataPathAssetReference>.Write(ModelReaderWriterOptions options)

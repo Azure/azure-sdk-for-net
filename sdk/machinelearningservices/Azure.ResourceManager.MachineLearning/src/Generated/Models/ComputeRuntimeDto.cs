@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ComputeRuntimeDto. </summary>
+    /// <summary> Compute runtime config for feature store type workspace. </summary>
     internal partial class ComputeRuntimeDto
     {
         /// <summary>

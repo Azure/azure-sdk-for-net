@@ -26,30 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
-            {
-                if (Endpoint != null)
-                {
-                    writer.WritePropertyName("endpoint"u8);
-                    writer.WriteStringValue(Endpoint);
-                }
-                else
-                {
-                    writer.WriteNull("endpoint");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
-            {
-                if (ErrorMessage != null)
-                {
-                    writer.WritePropertyName("errorMessage"u8);
-                    writer.WriteStringValue(ErrorMessage);
-                }
-                else
-                {
-                    writer.WriteNull("errorMessage");
-                }
-            }
             if (Optional.IsDefined(JobServiceType))
             {
                 if (JobServiceType != null)
@@ -62,18 +38,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobServiceType");
                 }
             }
-            if (Optional.IsDefined(Nodes))
-            {
-                if (Nodes != null)
-                {
-                    writer.WritePropertyName("nodes"u8);
-                    writer.WriteObjectValue(Nodes, options);
-                }
-                else
-                {
-                    writer.WriteNull("nodes");
-                }
-            }
             if (Optional.IsDefined(Port))
             {
                 if (Port != null)
@@ -84,6 +48,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("port");
+                }
+            }
+            if (Optional.IsDefined(Endpoint))
+            {
+                if (Endpoint != null)
+                {
+                    writer.WritePropertyName("endpoint"u8);
+                    writer.WriteStringValue(Endpoint);
+                }
+                else
+                {
+                    writer.WriteNull("endpoint");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                if (Status != null)
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+                else
+                {
+                    writer.WriteNull("status");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            {
+                if (ErrorMessage != null)
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+                else
+                {
+                    writer.WriteNull("errorMessage");
                 }
             }
             if (Optional.IsCollectionDefined(Properties))
@@ -104,16 +104,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (Optional.IsDefined(Nodes))
             {
-                if (Status != null)
+                if (Nodes != null)
                 {
-                    writer.WritePropertyName("status"u8);
-                    writer.WriteStringValue(Status);
+                    writer.WritePropertyName("nodes"u8);
+                    writer.WriteObjectValue(Nodes, options);
                 }
                 else
                 {
-                    writer.WriteNull("status");
+                    writer.WriteNull("nodes");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -154,37 +154,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string endpoint = default;
-            string errorMessage = default;
             string jobServiceType = default;
-            JobNodes nodes = default;
             int? port = default;
-            IDictionary<string, string> properties = default;
+            string endpoint = default;
             string status = default;
+            string errorMessage = default;
+            IDictionary<string, string> properties = default;
+            JobNodes nodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoint"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endpoint = null;
-                        continue;
-                    }
-                    endpoint = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("errorMessage"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        errorMessage = null;
-                        continue;
-                    }
-                    errorMessage = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("jobServiceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -195,16 +175,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     jobServiceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nodes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        nodes = null;
-                        continue;
-                    }
-                    nodes = JobNodes.DeserializeJobNodes(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -213,6 +183,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     port = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("endpoint"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        endpoint = null;
+                        continue;
+                    }
+                    endpoint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        status = null;
+                        continue;
+                    }
+                    status = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("errorMessage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        errorMessage = null;
+                        continue;
+                    }
+                    errorMessage = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (property.NameEquals("nodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        status = null;
+                        nodes = null;
                         continue;
                     }
-                    status = property.Value.GetString();
+                    nodes = JobNodes.DeserializeJobNodes(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -247,13 +247,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningJobService(
-                endpoint,
-                errorMessage,
                 jobServiceType,
-                nodes,
                 port,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                endpoint,
                 status,
+                errorMessage,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                nodes,
                 serializedAdditionalRawData);
         }
 

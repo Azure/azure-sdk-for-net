@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("modelId"u8);
+            writer.WriteStringValue(ModelId);
             if (options.Format != "W" && Optional.IsDefined(MarketplacePlan))
             {
                 if (MarketplacePlan != null)
@@ -43,8 +45,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
-            writer.WritePropertyName("modelId"u8);
-            writer.WriteStringValue(ModelId);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -88,14 +88,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            string modelId = default;
             MarketplacePlan marketplacePlan = default;
             MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
-            string modelId = default;
             MarketplaceSubscriptionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("modelId"u8))
+                {
+                    modelId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("marketplacePlan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,11 +120,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("modelId"u8))
-                {
-                    modelId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MarketplaceSubscriptionProperties(marketplacePlan, marketplaceSubscriptionStatus, modelId, provisioningState, serializedAdditionalRawData);
+            return new MarketplaceSubscriptionProperties(modelId, marketplacePlan, marketplaceSubscriptionStatus, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceSubscriptionProperties>.Write(ModelReaderWriterOptions options)

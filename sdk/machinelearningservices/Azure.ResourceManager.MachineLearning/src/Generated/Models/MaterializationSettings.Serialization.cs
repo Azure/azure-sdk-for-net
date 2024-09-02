@@ -26,6 +26,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(StoreType))
+            {
+                writer.WritePropertyName("storeType"u8);
+                writer.WriteStringValue(StoreType.Value.ToString());
+            }
+            if (Optional.IsDefined(Schedule))
+            {
+                if (Schedule != null)
+                {
+                    writer.WritePropertyName("schedule"u8);
+                    writer.WriteObjectValue(Schedule, options);
+                }
+                else
+                {
+                    writer.WriteNull("schedule");
+                }
+            }
             if (Optional.IsDefined(Notification))
             {
                 if (Notification != null)
@@ -50,18 +67,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resource");
                 }
             }
-            if (Optional.IsDefined(Schedule))
-            {
-                if (Schedule != null)
-                {
-                    writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule, options);
-                }
-                else
-                {
-                    writer.WriteNull("schedule");
-                }
-            }
             if (Optional.IsCollectionDefined(SparkConfiguration))
             {
                 if (SparkConfiguration != null)
@@ -79,11 +84,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("sparkConfiguration");
                 }
-            }
-            if (Optional.IsDefined(StoreType))
-            {
-                writer.WritePropertyName("storeType"u8);
-                writer.WriteStringValue(StoreType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -123,15 +123,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            MaterializationStoreType? storeType = default;
+            MachineLearningRecurrenceTrigger schedule = default;
             NotificationSetting notification = default;
             MaterializationComputeResource resource = default;
-            MachineLearningRecurrenceTrigger schedule = default;
             IDictionary<string, string> sparkConfiguration = default;
-            MaterializationStoreType? storeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("storeType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storeType = new MaterializationStoreType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("schedule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        schedule = null;
+                        continue;
+                    }
+                    schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("notification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -152,16 +171,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("schedule"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        schedule = null;
-                        continue;
-                    }
-                    schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("sparkConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -177,15 +186,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     sparkConfiguration = dictionary;
                     continue;
                 }
-                if (property.NameEquals("storeType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storeType = new MaterializationStoreType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new MaterializationSettings(
+                storeType,
+                schedule,
                 notification,
                 resource,
-                schedule,
                 sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
-                storeType,
                 serializedAdditionalRawData);
         }
 

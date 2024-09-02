@@ -40,23 +40,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(MonthDays))
-            {
-                if (MonthDays != null)
-                {
-                    writer.WritePropertyName("monthDays"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in MonthDays)
-                    {
-                        writer.WriteNumberValue(item);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("monthDays");
-                }
-            }
             if (Optional.IsCollectionDefined(WeekDays))
             {
                 if (WeekDays != null)
@@ -72,6 +55,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("weekDays");
+                }
+            }
+            if (Optional.IsCollectionDefined(MonthDays))
+            {
+                if (MonthDays != null)
+                {
+                    writer.WritePropertyName("monthDays"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in MonthDays)
+                    {
+                        writer.WriteNumberValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("monthDays");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IList<int> hours = default;
             IList<int> minutes = default;
-            IList<int> monthDays = default;
             IList<MachineLearningDayOfWeek> weekDays = default;
+            IList<int> monthDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,21 +140,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     minutes = array;
                     continue;
                 }
-                if (property.NameEquals("monthDays"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        monthDays = null;
-                        continue;
-                    }
-                    List<int> array = new List<int>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetInt32());
-                    }
-                    monthDays = array;
-                    continue;
-                }
                 if (property.NameEquals("weekDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -170,13 +155,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     weekDays = array;
                     continue;
                 }
+                if (property.NameEquals("monthDays"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        monthDays = null;
+                        continue;
+                    }
+                    List<int> array = new List<int>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    monthDays = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningRecurrenceSchedule(hours, minutes, monthDays ?? new ChangeTrackingList<int>(), weekDays ?? new ChangeTrackingList<MachineLearningDayOfWeek>(), serializedAdditionalRawData);
+            return new MachineLearningRecurrenceSchedule(hours, minutes, weekDays ?? new ChangeTrackingList<MachineLearningDayOfWeek>(), monthDays ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningRecurrenceSchedule>.Write(ModelReaderWriterOptions options)

@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("triggerType"u8);
+            writer.WriteStringValue(TriggerType.ToString());
             if (Optional.IsDefined(EndTime))
             {
                 if (EndTime != null)
@@ -55,8 +57,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            writer.WritePropertyName("triggerType"u8);
-            writer.WriteStringValue(TriggerType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -38,11 +38,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("createdByWorkspaceArmId"u8);
                 writer.WriteStringValue(CreatedByWorkspaceArmId);
             }
-            if (Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                writer.WriteStringValue(Error);
-            }
             if (Optional.IsDefined(ExpiryOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
@@ -58,6 +53,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("isSharedToAll"u8);
                 writer.WriteBooleanValue(IsSharedToAll.Value);
             }
+            if (Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target"u8);
+                writer.WriteStringValue(Target);
+            }
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -69,16 +69,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(PeRequirement))
-            {
-                writer.WritePropertyName("peRequirement"u8);
-                writer.WriteStringValue(PeRequirement.Value.ToString());
-            }
-            if (Optional.IsDefined(PeStatus))
-            {
-                writer.WritePropertyName("peStatus"u8);
-                writer.WriteStringValue(PeStatus.Value.ToString());
-            }
             if (Optional.IsCollectionDefined(SharedUserList))
             {
                 writer.WritePropertyName("sharedUserList"u8);
@@ -89,15 +79,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Target))
+            if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("target"u8);
-                writer.WriteStringValue(Target);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(UseWorkspaceManagedIdentity))
+            if (Optional.IsDefined(ValueFormat))
             {
-                writer.WritePropertyName("useWorkspaceManagedIdentity"u8);
-                writer.WriteBooleanValue(UseWorkspaceManagedIdentity.Value);
+                writer.WritePropertyName("valueFormat"u8);
+                writer.WriteStringValue(ValueFormat.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("signalType"u8);
+            writer.WriteStringValue(SignalType.ToString());
             if (Optional.IsCollectionDefined(NotificationTypes))
             {
                 if (NotificationTypes != null)
@@ -61,8 +63,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            writer.WritePropertyName("signalType"u8);
-            writer.WriteStringValue(SignalType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -26,11 +26,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("taskType"u8);
+            writer.WriteStringValue(TaskType.ToString());
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
+            writer.WritePropertyName("trainingData"u8);
+            writer.WriteObjectValue(TrainingData, options);
             if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
@@ -43,10 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetColumnName");
                 }
             }
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
-            writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

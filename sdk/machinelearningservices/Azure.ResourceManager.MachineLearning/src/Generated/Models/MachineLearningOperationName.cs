@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string StartValue = "Start";
         private const string StopValue = "Stop";
         private const string RestartValue = "Restart";
-        private const string ResizeValue = "Resize";
         private const string ReimageValue = "Reimage";
         private const string DeleteValue = "Delete";
 
@@ -38,8 +37,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningOperationName Stop { get; } = new MachineLearningOperationName(StopValue);
         /// <summary> Restart. </summary>
         public static MachineLearningOperationName Restart { get; } = new MachineLearningOperationName(RestartValue);
-        /// <summary> Resize. </summary>
-        public static MachineLearningOperationName Resize { get; } = new MachineLearningOperationName(ResizeValue);
         /// <summary> Reimage. </summary>
         public static MachineLearningOperationName Reimage { get; } = new MachineLearningOperationName(ReimageValue);
         /// <summary> Delete. </summary>

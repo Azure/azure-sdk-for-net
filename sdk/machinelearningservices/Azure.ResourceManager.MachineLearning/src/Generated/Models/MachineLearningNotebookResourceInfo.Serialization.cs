@@ -31,20 +31,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(IsPrivateLinkEnabled))
-            {
-                writer.WritePropertyName("isPrivateLinkEnabled"u8);
-                writer.WriteBooleanValue(IsPrivateLinkEnabled.Value);
-            }
-            if (Optional.IsDefined(NotebookPreparationError))
-            {
-                writer.WritePropertyName("notebookPreparationError"u8);
-                writer.WriteObjectValue(NotebookPreparationError, options);
-            }
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(NotebookPreparationError))
+            {
+                if (NotebookPreparationError != null)
+                {
+                    writer.WritePropertyName("notebookPreparationError"u8);
+                    writer.WriteObjectValue(NotebookPreparationError, options);
+                }
+                else
+                {
+                    writer.WriteNull("notebookPreparationError");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -85,9 +87,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string fqdn = default;
-            bool? isPrivateLinkEnabled = default;
-            MachineLearningNotebookPreparationError notebookPreparationError = default;
             string resourceId = default;
+            MachineLearningNotebookPreparationError notebookPreparationError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,27 +98,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPrivateLinkEnabled"u8))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isPrivateLinkEnabled = property.Value.GetBoolean();
+                    resourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("notebookPreparationError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        notebookPreparationError = null;
                         continue;
                     }
                     notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("resourceId"u8))
-                {
-                    resourceId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningNotebookResourceInfo(fqdn, isPrivateLinkEnabled, notebookPreparationError, resourceId, serializedAdditionalRawData);
+            return new MachineLearningNotebookResourceInfo(fqdn, resourceId, notebookPreparationError, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningNotebookResourceInfo>.Write(ModelReaderWriterOptions options)

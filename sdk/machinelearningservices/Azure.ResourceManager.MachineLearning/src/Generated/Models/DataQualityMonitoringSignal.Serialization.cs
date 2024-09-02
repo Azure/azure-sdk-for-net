@@ -26,6 +26,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Features))
+            {
+                if (Features != null)
+                {
+                    writer.WritePropertyName("features"u8);
+                    writer.WriteObjectValue(Features, options);
+                }
+                else
+                {
+                    writer.WriteNull("features");
+                }
+            }
+            if (Optional.IsDefined(FeatureImportanceSettings))
+            {
+                if (FeatureImportanceSettings != null)
+                {
+                    writer.WritePropertyName("featureImportanceSettings"u8);
+                    writer.WriteObjectValue(FeatureImportanceSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("featureImportanceSettings");
+                }
+            }
+            writer.WritePropertyName("metricThresholds"u8);
+            writer.WriteStartArray();
+            foreach (var item in MetricThresholds)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("productionData"u8);
+            writer.WriteObjectValue(ProductionData, options);
+            writer.WritePropertyName("referenceData"u8);
+            writer.WriteObjectValue(ReferenceData, options);
             if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
             {
                 if (FeatureDataTypeOverride != null)
@@ -44,41 +79,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureDataTypeOverride");
                 }
             }
-            if (Optional.IsDefined(FeatureImportanceSettings))
-            {
-                if (FeatureImportanceSettings != null)
-                {
-                    writer.WritePropertyName("featureImportanceSettings"u8);
-                    writer.WriteObjectValue(FeatureImportanceSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("featureImportanceSettings");
-                }
-            }
-            if (Optional.IsDefined(Features))
-            {
-                if (Features != null)
-                {
-                    writer.WritePropertyName("features"u8);
-                    writer.WriteObjectValue(Features, options);
-                }
-                else
-                {
-                    writer.WriteNull("features");
-                }
-            }
-            writer.WritePropertyName("metricThresholds"u8);
-            writer.WriteStartArray();
-            foreach (var item in MetricThresholds)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue(ProductionData, options);
-            writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData, options);
+            writer.WritePropertyName("signalType"u8);
+            writer.WriteStringValue(SignalType.ToString());
             if (Optional.IsCollectionDefined(NotificationTypes))
             {
                 if (NotificationTypes != null)
@@ -114,8 +116,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            writer.WritePropertyName("signalType"u8);
-            writer.WriteStringValue(SignalType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -154,32 +154,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
-            FeatureImportanceSettings featureImportanceSettings = default;
             MonitoringFeatureFilterBase features = default;
+            FeatureImportanceSettings featureImportanceSettings = default;
             IList<DataQualityMetricThresholdBase> metricThresholds = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
+            IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
+            MonitoringSignalType signalType = default;
             IList<MonitoringNotificationType> notificationTypes = default;
             IDictionary<string, string> properties = default;
-            MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("featureDataTypeOverride"u8))
+                if (property.NameEquals("features"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        featureDataTypeOverride = null;
+                        features = null;
                         continue;
                     }
-                    Dictionary<string, MonitoringFeatureDataType> dictionary = new Dictionary<string, MonitoringFeatureDataType>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, new MonitoringFeatureDataType(property0.Value.GetString()));
-                    }
-                    featureDataTypeOverride = dictionary;
+                    features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("featureImportanceSettings"u8))
@@ -190,16 +185,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     featureImportanceSettings = FeatureImportanceSettings.DeserializeFeatureImportanceSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("features"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        features = null;
-                        continue;
-                    }
-                    features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricThresholds"u8))
@@ -220,6 +205,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("referenceData"u8))
                 {
                     referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("featureDataTypeOverride"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        featureDataTypeOverride = null;
+                        continue;
+                    }
+                    Dictionary<string, MonitoringFeatureDataType> dictionary = new Dictionary<string, MonitoringFeatureDataType>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, new MonitoringFeatureDataType(property0.Value.GetString()));
+                    }
+                    featureDataTypeOverride = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("signalType"u8))
+                {
+                    signalType = new MonitoringSignalType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("notificationTypes"u8))
@@ -252,11 +257,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("signalType"u8))
-                {
-                    signalType = new MonitoringSignalType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -264,16 +264,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DataQualityMonitoringSignal(
+                signalType,
                 notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                signalType,
                 serializedAdditionalRawData,
-                featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
-                featureImportanceSettings,
                 features,
+                featureImportanceSettings,
                 metricThresholds,
                 productionData,
-                referenceData);
+                referenceData,
+                featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>());
         }
 
         BinaryData IPersistableModel<DataQualityMonitoringSignal>.Write(ModelReaderWriterOptions options)

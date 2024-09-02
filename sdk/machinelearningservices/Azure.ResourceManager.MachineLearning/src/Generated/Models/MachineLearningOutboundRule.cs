@@ -52,19 +52,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningOutboundRule"/>. </summary>
         protected MachineLearningOutboundRule()
         {
-            ParentRuleNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningOutboundRule"/>. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="parentRuleNames"></param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningOutboundRule(OutboundRuleCategory? category, IReadOnlyList<string> parentRuleNames, OutboundRuleStatus? status, OutboundRuleType outboundRuleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, OutboundRuleType outboundRuleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
-            ParentRuleNames = parentRuleNames;
             Status = status;
             OutboundRuleType = outboundRuleType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -72,8 +69,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Category of a managed network Outbound Rule of a machine learning workspace. </summary>
         public OutboundRuleCategory? Category { get; set; }
-        /// <summary> Gets the parent rule names. </summary>
-        public IReadOnlyList<string> ParentRuleNames { get; }
         /// <summary> Type of a managed network Outbound Rule of a machine learning workspace. </summary>
         public OutboundRuleStatus? Status { get; set; }
         /// <summary> Type of a managed network Outbound Rule of a machine learning workspace. </summary>

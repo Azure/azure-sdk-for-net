@@ -51,23 +51,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NlpVerticalLimitSettings"/>. </summary>
-        /// <param name="maxConcurrentTrials"> Maximum Concurrent AutoML iterations. </param>
-        /// <param name="maxTrials"> Number of AutoML iterations. </param>
         /// <param name="timeout"> AutoML job timeout. </param>
+        /// <param name="maxTrials"> Number of AutoML iterations. </param>
+        /// <param name="maxConcurrentTrials"> Maximum Concurrent AutoML iterations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NlpVerticalLimitSettings(int? maxConcurrentTrials, int? maxTrials, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NlpVerticalLimitSettings(TimeSpan? timeout, int? maxTrials, int? maxConcurrentTrials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MaxConcurrentTrials = maxConcurrentTrials;
-            MaxTrials = maxTrials;
             Timeout = timeout;
+            MaxTrials = maxTrials;
+            MaxConcurrentTrials = maxConcurrentTrials;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Maximum Concurrent AutoML iterations. </summary>
-        public int? MaxConcurrentTrials { get; set; }
-        /// <summary> Number of AutoML iterations. </summary>
-        public int? MaxTrials { get; set; }
         /// <summary> AutoML job timeout. </summary>
         public TimeSpan? Timeout { get; set; }
+        /// <summary> Number of AutoML iterations. </summary>
+        public int? MaxTrials { get; set; }
+        /// <summary> Maximum Concurrent AutoML iterations. </summary>
+        public int? MaxConcurrentTrials { get; set; }
     }
 }

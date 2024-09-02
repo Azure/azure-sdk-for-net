@@ -38,18 +38,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cpu");
                 }
             }
-            if (Optional.IsDefined(Gpu))
-            {
-                if (Gpu != null)
-                {
-                    writer.WritePropertyName("gpu"u8);
-                    writer.WriteStringValue(Gpu);
-                }
-                else
-                {
-                    writer.WriteNull("gpu");
-                }
-            }
             if (Optional.IsDefined(Memory))
             {
                 if (Memory != null)
@@ -60,6 +48,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("memory");
+                }
+            }
+            if (Optional.IsDefined(Gpu))
+            {
+                if (Gpu != null)
+                {
+                    writer.WritePropertyName("gpu"u8);
+                    writer.WriteStringValue(Gpu);
+                }
+                else
+                {
+                    writer.WriteNull("gpu");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string cpu = default;
-            string gpu = default;
             string memory = default;
+            string gpu = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,16 +117,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     cpu = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("gpu"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        gpu = null;
-                        continue;
-                    }
-                    gpu = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("memory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -137,13 +127,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     memory = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("gpu"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        gpu = null;
+                        continue;
+                    }
+                    gpu = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningContainerResourceSettings(cpu, gpu, memory, serializedAdditionalRawData);
+            return new MachineLearningContainerResourceSettings(cpu, memory, gpu, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningContainerResourceSettings>.Write(ModelReaderWriterOptions options)

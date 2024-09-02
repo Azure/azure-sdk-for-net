@@ -26,18 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentId))
-            {
-                if (DeploymentId != null)
-                {
-                    writer.WritePropertyName("deploymentId"u8);
-                    writer.WriteStringValue(DeploymentId);
-                }
-                else
-                {
-                    writer.WriteNull("deploymentId");
-                }
-            }
             if (Optional.IsDefined(ModelId))
             {
                 if (ModelId != null)
@@ -48,6 +36,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("modelId");
+                }
+            }
+            if (Optional.IsDefined(DeploymentId))
+            {
+                if (DeploymentId != null)
+                {
+                    writer.WritePropertyName("deploymentId"u8);
+                    writer.WriteStringValue(DeploymentId);
+                }
+                else
+                {
+                    writer.WriteNull("deploymentId");
                 }
             }
             writer.WritePropertyName("taskType"u8);
@@ -90,23 +90,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string deploymentId = default;
             string modelId = default;
+            string deploymentId = default;
             ModelTaskType taskType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deploymentId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        deploymentId = null;
-                        continue;
-                    }
-                    deploymentId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("modelId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,6 +105,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     modelId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("deploymentId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        deploymentId = null;
+                        continue;
+                    }
+                    deploymentId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("taskType"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MonitoringTarget(deploymentId, modelId, taskType, serializedAdditionalRawData);
+            return new MonitoringTarget(modelId, deploymentId, taskType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringTarget>.Write(ModelReaderWriterOptions options)

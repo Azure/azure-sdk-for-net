@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FeatureAttributionMetricThreshold"/>. </summary>
-        /// <param name="metric"> [Required] The feature attribution metric to calculate. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
+        /// <param name="metric"> [Required] The feature attribution metric to calculate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureAttributionMetricThreshold(FeatureAttributionMetric metric, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FeatureAttributionMetricThreshold(MonitoringThreshold threshold, FeatureAttributionMetric metric, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Metric = metric;
             Threshold = threshold;
+            Metric = metric;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,8 +68,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> [Required] The feature attribution metric to calculate. </summary>
-        public FeatureAttributionMetric Metric { get; set; }
         /// <summary> The threshold value. If null, a default value will be set depending on the selected metric. </summary>
         internal MonitoringThreshold Threshold { get; set; }
         /// <summary> The threshold value. If null, the set default is dependent on the metric type. </summary>
@@ -83,5 +81,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 Threshold.Value = value;
             }
         }
+
+        /// <summary> [Required] The feature attribution metric to calculate. </summary>
+        public FeatureAttributionMetric Metric { get; set; }
     }
 }

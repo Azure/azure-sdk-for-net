@@ -26,18 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobId))
-            {
-                if (JobId != null)
-                {
-                    writer.WritePropertyName("jobId"u8);
-                    writer.WriteStringValue(JobId);
-                }
-                else
-                {
-                    writer.WriteNull("jobId");
-                }
-            }
             if (Optional.IsDefined(Path))
             {
                 if (Path != null)
@@ -48,6 +36,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("path");
+                }
+            }
+            if (Optional.IsDefined(JobId))
+            {
+                if (JobId != null)
+                {
+                    writer.WritePropertyName("jobId"u8);
+                    writer.WriteStringValue(JobId);
+                }
+                else
+                {
+                    writer.WriteNull("jobId");
                 }
             }
             writer.WritePropertyName("referenceType"u8);
@@ -90,23 +90,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            ResourceIdentifier jobId = default;
             string path = default;
+            ResourceIdentifier jobId = default;
             ReferenceType referenceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        jobId = null;
-                        continue;
-                    }
-                    jobId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("path"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,6 +105,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     path = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("jobId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        jobId = null;
+                        continue;
+                    }
+                    jobId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("referenceType"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningOutputPathAssetReference(referenceType, serializedAdditionalRawData, jobId, path);
+            return new MachineLearningOutputPathAssetReference(referenceType, serializedAdditionalRawData, path, jobId);
         }
 
         BinaryData IPersistableModel<MachineLearningOutputPathAssetReference>.Write(ModelReaderWriterOptions options)

@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceTrigger"/>. </summary>
+        /// <param name="triggerType"> [Required]. </param>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"
@@ -34,12 +35,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
-        /// <param name="triggerType"> [Required]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="frequency"> [Required] The frequency to trigger schedule. </param>
         /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
-        internal MachineLearningRecurrenceTrigger(string endTime, string startTime, string timeZone, TriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningRecurrenceFrequency frequency, int interval, MachineLearningRecurrenceSchedule schedule) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
+        internal MachineLearningRecurrenceTrigger(TriggerType triggerType, string endTime, string startTime, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningRecurrenceFrequency frequency, int interval, MachineLearningRecurrenceSchedule schedule) : base(triggerType, endTime, startTime, timeZone, serializedAdditionalRawData)
         {
             Frequency = frequency;
             Interval = interval;

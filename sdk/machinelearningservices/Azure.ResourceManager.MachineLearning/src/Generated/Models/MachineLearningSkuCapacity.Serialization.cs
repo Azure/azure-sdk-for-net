@@ -26,20 +26,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Default))
+            if (Optional.IsDefined(Minimum))
             {
-                writer.WritePropertyName("default"u8);
-                writer.WriteNumberValue(Default.Value);
+                writer.WritePropertyName("minimum"u8);
+                writer.WriteNumberValue(Minimum.Value);
             }
             if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Optional.IsDefined(Minimum))
+            if (Optional.IsDefined(Default))
             {
-                writer.WritePropertyName("minimum"u8);
-                writer.WriteNumberValue(Minimum.Value);
+                writer.WritePropertyName("default"u8);
+                writer.WriteNumberValue(Default.Value);
             }
             if (Optional.IsDefined(ScaleType))
             {
@@ -84,21 +84,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            int? @default = default;
-            int? maximum = default;
             int? minimum = default;
+            int? maximum = default;
+            int? @default = default;
             MachineLearningSkuScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("default"u8))
+                if (property.NameEquals("minimum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @default = property.Value.GetInt32();
+                    minimum = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maximum"u8))
@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     maximum = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minimum"u8))
+                if (property.NameEquals("default"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minimum = property.Value.GetInt32();
+                    @default = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("scaleType"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningSkuCapacity(@default, maximum, minimum, scaleType, serializedAdditionalRawData);
+            return new MachineLearningSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSkuCapacity>.Write(ModelReaderWriterOptions options)

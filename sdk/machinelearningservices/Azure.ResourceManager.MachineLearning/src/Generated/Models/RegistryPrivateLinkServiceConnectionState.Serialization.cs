@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             string actionsRequired = default;
             string description = default;
-            MachineLearningPrivateEndpointServiceConnectionStatus? status = default;
+            EndpointServiceConnectionStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    status = new MachineLearningPrivateEndpointServiceConnectionStatus(property.Value.GetString());
+                    status = new EndpointServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -52,30 +52,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningProbeSettings"/>. </summary>
         /// <param name="failureThreshold"> The number of failures to allow before returning an unhealthy status. </param>
-        /// <param name="initialDelay"> The delay before the first probe in ISO 8601 format. </param>
-        /// <param name="period"> The length of time between probes in ISO 8601 format. </param>
         /// <param name="successThreshold"> The number of successful probes before returning a healthy status. </param>
         /// <param name="timeout"> The probe timeout in ISO 8601 format. </param>
+        /// <param name="period"> The length of time between probes in ISO 8601 format. </param>
+        /// <param name="initialDelay"> The delay before the first probe in ISO 8601 format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningProbeSettings(int? failureThreshold, TimeSpan? initialDelay, TimeSpan? period, int? successThreshold, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningProbeSettings(int? failureThreshold, int? successThreshold, TimeSpan? timeout, TimeSpan? period, TimeSpan? initialDelay, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FailureThreshold = failureThreshold;
-            InitialDelay = initialDelay;
-            Period = period;
             SuccessThreshold = successThreshold;
             Timeout = timeout;
+            Period = period;
+            InitialDelay = initialDelay;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of failures to allow before returning an unhealthy status. </summary>
         public int? FailureThreshold { get; set; }
-        /// <summary> The delay before the first probe in ISO 8601 format. </summary>
-        public TimeSpan? InitialDelay { get; set; }
-        /// <summary> The length of time between probes in ISO 8601 format. </summary>
-        public TimeSpan? Period { get; set; }
         /// <summary> The number of successful probes before returning a healthy status. </summary>
         public int? SuccessThreshold { get; set; }
         /// <summary> The probe timeout in ISO 8601 format. </summary>
         public TimeSpan? Timeout { get; set; }
+        /// <summary> The length of time between probes in ISO 8601 format. </summary>
+        public TimeSpan? Period { get; set; }
+        /// <summary> The delay before the first probe in ISO 8601 format. </summary>
+        public TimeSpan? InitialDelay { get; set; }
     }
 }

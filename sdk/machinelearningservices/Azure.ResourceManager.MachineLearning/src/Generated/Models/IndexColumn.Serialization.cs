@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(DataType))
+            {
+                writer.WritePropertyName("dataType"u8);
+                writer.WriteStringValue(DataType.Value.ToString());
+            }
             if (Optional.IsDefined(ColumnName))
             {
                 if (ColumnName != null)
@@ -37,11 +42,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("columnName");
                 }
-            }
-            if (Optional.IsDefined(DataType))
-            {
-                writer.WritePropertyName("dataType"u8);
-                writer.WriteStringValue(DataType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,12 +81,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string columnName = default;
             FeatureDataType? dataType = default;
+            string columnName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("dataType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataType = new FeatureDataType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("columnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -97,22 +106,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     columnName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataType = new FeatureDataType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IndexColumn(columnName, dataType, serializedAdditionalRawData);
+            return new IndexColumn(dataType, columnName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IndexColumn>.Write(ModelReaderWriterOptions options)

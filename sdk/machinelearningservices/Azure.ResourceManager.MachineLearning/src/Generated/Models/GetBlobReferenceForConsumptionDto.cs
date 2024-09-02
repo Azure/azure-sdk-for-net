@@ -52,30 +52,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="GetBlobReferenceForConsumptionDto"/>. </summary>
         /// <param name="blobUri"> Blob uri, example: https://blob.windows.core.net/Container/Path. </param>
+        /// <param name="storageAccountArmId"> The ARM id of the storage account. </param>
         /// <param name="credential">
         /// Credential info to access storage account
         /// Please note <see cref="DataReferenceCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DockerCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="AnonymousAccessCredential"/> and <see cref="SasCredential"/>.
         /// </param>
-        /// <param name="storageAccountArmId"> The ARM id of the storage account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetBlobReferenceForConsumptionDto(Uri blobUri, DataReferenceCredential credential, string storageAccountArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetBlobReferenceForConsumptionDto(Uri blobUri, string storageAccountArmId, DataReferenceCredential credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlobUri = blobUri;
-            Credential = credential;
             StorageAccountArmId = storageAccountArmId;
+            Credential = credential;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Blob uri, example: https://blob.windows.core.net/Container/Path. </summary>
         public Uri BlobUri { get; }
+        /// <summary> The ARM id of the storage account. </summary>
+        public string StorageAccountArmId { get; }
         /// <summary>
         /// Credential info to access storage account
         /// Please note <see cref="DataReferenceCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DockerCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="AnonymousAccessCredential"/> and <see cref="SasCredential"/>.
         /// </summary>
         public DataReferenceCredential Credential { get; }
-        /// <summary> The ARM id of the storage account. </summary>
-        public string StorageAccountArmId { get; }
     }
 }

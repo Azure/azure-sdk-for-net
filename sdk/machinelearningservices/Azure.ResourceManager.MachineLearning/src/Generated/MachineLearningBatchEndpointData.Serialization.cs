@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.MachineLearning
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind);
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
-            string kind = default;
             MachineLearningBatchEndpointProperties properties = default;
+            string kind = default;
+            ManagedServiceIdentity identity = default;
             MachineLearningSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -131,6 +131,16 @@ namespace Azure.ResourceManager.MachineLearning
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = MachineLearningBatchEndpointProperties.DeserializeMachineLearningBatchEndpointProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -139,16 +149,6 @@ namespace Azure.ResourceManager.MachineLearning
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    properties = MachineLearningBatchEndpointProperties.DeserializeMachineLearningBatchEndpointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.MachineLearning
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
-                kind,
                 properties,
+                kind,
+                identity,
                 sku,
                 serializedAdditionalRawData);
         }

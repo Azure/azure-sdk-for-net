@@ -29,9 +29,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="docker"> Describes the docker settings for the image. </param>
         /// <param name="endpoints"> Configuring the endpoints for the container. </param>
         /// <param name="volumes"> Configuring the volumes for the container. </param>
-        /// <param name="kernel"> Describes the jupyter kernel settings for the image if its a custom environment. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal CustomService(string name, ImageSetting image, IDictionary<string, EnvironmentVariable> environmentVariables, DockerSetting docker, IList<ContainerEndpoint> endpoints, IList<VolumeDefinition> volumes, JupyterKernelConfig kernel, IDictionary<string, BinaryData> additionalProperties)
+        internal CustomService(string name, ImageSetting image, IDictionary<string, EnvironmentVariable> environmentVariables, DockerSetting docker, IList<ContainerEndpoint> endpoints, IList<VolumeDefinition> volumes, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
             Image = image;
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Docker = docker;
             Endpoints = endpoints;
             Volumes = volumes;
-            Kernel = kernel;
             AdditionalProperties = additionalProperties;
         }
 
@@ -55,8 +53,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IList<ContainerEndpoint> Endpoints { get; }
         /// <summary> Configuring the volumes for the container. </summary>
         public IList<VolumeDefinition> Volumes { get; }
-        /// <summary> Describes the jupyter kernel settings for the image if its a custom environment. </summary>
-        public JupyterKernelConfig Kernel { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>

@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (options.Format != "W" && Optional.IsCollectionDefined(Headers))
             {
                 if (Headers != null)
@@ -44,8 +46,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("headers");
                 }
             }
-            writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -84,12 +84,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IReadOnlyDictionary<string, string> headers = default;
             Uri uri = default;
+            IReadOnlyDictionary<string, string> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("uri"u8))
+                {
+                    uri = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -105,18 +110,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     headers = dictionary;
                     continue;
                 }
-                if (property.NameEquals("uri"u8))
-                {
-                    uri = new Uri(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServerlessInferenceEndpoint(headers ?? new ChangeTrackingDictionary<string, string>(), uri, serializedAdditionalRawData);
+            return new ServerlessInferenceEndpoint(uri, headers ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerlessInferenceEndpoint>.Write(ModelReaderWriterOptions options)

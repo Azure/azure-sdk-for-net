@@ -56,16 +56,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionProperties"/>. </summary>
+        /// <param name="modelId"> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </param>
         /// <param name="marketplacePlan"> Marketplace Plan associated with the Marketplace Subscription. </param>
         /// <param name="marketplaceSubscriptionStatus"> Current status of the Marketplace Subscription. </param>
-        /// <param name="modelId"> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </param>
         /// <param name="provisioningState"> Provisioning State of the Marketplace Subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSubscriptionProperties(MarketplacePlan marketplacePlan, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string modelId, MarketplaceSubscriptionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplaceSubscriptionProperties(string modelId, MarketplacePlan marketplacePlan, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, MarketplaceSubscriptionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ModelId = modelId;
             MarketplacePlan = marketplacePlan;
             MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
-            ModelId = modelId;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </summary>
+        public string ModelId { get; set; }
         /// <summary> Marketplace Plan associated with the Marketplace Subscription. </summary>
         public MarketplacePlan MarketplacePlan { get; }
         /// <summary> Current status of the Marketplace Subscription. </summary>
         public MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
-        /// <summary> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </summary>
-        public string ModelId { get; set; }
         /// <summary> Provisioning State of the Marketplace Subscription. </summary>
         public MarketplaceSubscriptionProvisioningState? ProvisioningState { get; }
     }

@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageModelSettings"/>. </summary>
-        /// <param name="advancedSettings"> Settings for advanced scenarios. </param>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
+        /// <param name="advancedSettings"> Settings for advanced scenarios. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
         /// <param name="beta1"> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </param>
         /// <param name="beta2"> Value of 'beta2' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </param>
         /// <param name="checkpointFrequency"> Frequency to store model checkpoints. Must be a positive integer. </param>
-        /// <param name="checkpointModel"> The pretrained checkpoint model for incremental training. </param>
         /// <param name="checkpointRunId"> The id of a previous run that has a pretrained checkpoint for incremental training. </param>
+        /// <param name="checkpointModel"> The pretrained checkpoint model for incremental training. </param>
         /// <param name="distributed"> Whether to use distributed training. </param>
         /// <param name="earlyStopping"> Enable early stopping logic during training. </param>
         /// <param name="earlyStoppingDelay">
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Minimum number of epochs or validation evaluations with no primary metric improvement before
         /// the run is stopped. Must be a positive integer.
         /// </param>
-        /// <param name="enableOnnxNormalization"> Enable normalization when exporting ONNX model. </param>
         /// <param name="evaluationFrequency"> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </param>
+        /// <param name="enableOnnxNormalization"> Enable normalization when exporting ONNX model. </param>
         /// <param name="gradientAccumulationStep">
         /// Gradient accumulation means running a configured number of "GradAccumulationStep" steps without
         /// updating the model weights while accumulating the gradients of those steps, and then using
@@ -107,22 +107,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="warmupCosineLRWarmupEpochs"> Value of warmup epochs when learning rate scheduler is 'warmup_cosine'. Must be a positive integer. </param>
         /// <param name="weightDecay"> Value of weight decay when optimizer is 'sgd', 'adam', or 'adamw'. Must be a float in the range[0, 1]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageModelSettings(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImageModelSettings(bool? amsGradient, string advancedSettings, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, string checkpointRunId, MachineLearningFlowModelJobInput checkpointModel, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, int? evaluationFrequency, bool? enableOnnxNormalization, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AdvancedSettings = advancedSettings;
             AmsGradient = amsGradient;
+            AdvancedSettings = advancedSettings;
             Augmentations = augmentations;
             Beta1 = beta1;
             Beta2 = beta2;
             CheckpointFrequency = checkpointFrequency;
-            CheckpointModel = checkpointModel;
             CheckpointRunId = checkpointRunId;
+            CheckpointModel = checkpointModel;
             Distributed = distributed;
             EarlyStopping = earlyStopping;
             EarlyStoppingDelay = earlyStoppingDelay;
             EarlyStoppingPatience = earlyStoppingPatience;
-            EnableOnnxNormalization = enableOnnxNormalization;
             EvaluationFrequency = evaluationFrequency;
+            EnableOnnxNormalization = enableOnnxNormalization;
             GradientAccumulationStep = gradientAccumulationStep;
             LayersToFreeze = layersToFreeze;
             LearningRate = learningRate;
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Settings for advanced scenarios. </summary>
-        public string AdvancedSettings { get; set; }
         /// <summary> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </summary>
         public bool? AmsGradient { get; set; }
+        /// <summary> Settings for advanced scenarios. </summary>
+        public string AdvancedSettings { get; set; }
         /// <summary> Settings for using Augmentations. </summary>
         public string Augmentations { get; set; }
         /// <summary> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </summary>
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public float? Beta2 { get; set; }
         /// <summary> Frequency to store model checkpoints. Must be a positive integer. </summary>
         public int? CheckpointFrequency { get; set; }
-        /// <summary> The pretrained checkpoint model for incremental training. </summary>
-        public MachineLearningFlowModelJobInput CheckpointModel { get; set; }
         /// <summary> The id of a previous run that has a pretrained checkpoint for incremental training. </summary>
         public string CheckpointRunId { get; set; }
+        /// <summary> The pretrained checkpoint model for incremental training. </summary>
+        public MachineLearningFlowModelJobInput CheckpointModel { get; set; }
         /// <summary> Whether to use distributed training. </summary>
         public bool? Distributed { get; set; }
         /// <summary> Enable early stopping logic during training. </summary>
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// the run is stopped. Must be a positive integer.
         /// </summary>
         public int? EarlyStoppingPatience { get; set; }
-        /// <summary> Enable normalization when exporting ONNX model. </summary>
-        public bool? EnableOnnxNormalization { get; set; }
         /// <summary> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </summary>
         public int? EvaluationFrequency { get; set; }
+        /// <summary> Enable normalization when exporting ONNX model. </summary>
+        public bool? EnableOnnxNormalization { get; set; }
         /// <summary>
         /// Gradient accumulation means running a configured number of "GradAccumulationStep" steps without
         /// updating the model weights while accumulating the gradients of those steps, and then using

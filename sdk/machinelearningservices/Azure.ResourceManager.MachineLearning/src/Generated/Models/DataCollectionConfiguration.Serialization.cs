@@ -26,17 +26,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(SamplingRate))
             {
-                if (ClientId != null)
-                {
-                    writer.WritePropertyName("clientId"u8);
-                    writer.WriteStringValue(ClientId);
-                }
-                else
-                {
-                    writer.WriteNull("clientId");
-                }
+                writer.WritePropertyName("samplingRate"u8);
+                writer.WriteNumberValue(SamplingRate.Value);
             }
             if (Optional.IsDefined(DataCollectionMode))
             {
@@ -55,10 +48,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataId");
                 }
             }
-            if (Optional.IsDefined(SamplingRate))
+            if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("samplingRate"u8);
-                writer.WriteNumberValue(SamplingRate.Value);
+                if (ClientId != null)
+                {
+                    writer.WritePropertyName("clientId"u8);
+                    writer.WriteStringValue(ClientId);
+                }
+                else
+                {
+                    writer.WriteNull("clientId");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,22 +98,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string clientId = default;
+            double? samplingRate = default;
             DataCollectionMode? dataCollectionMode = default;
             string dataId = default;
-            double? samplingRate = default;
+            string clientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"u8))
+                if (property.NameEquals("samplingRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        clientId = null;
                         continue;
                     }
-                    clientId = property.Value.GetString();
+                    samplingRate = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("dataCollectionMode"u8))
@@ -135,13 +134,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     dataId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("samplingRate"u8))
+                if (property.NameEquals("clientId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        clientId = null;
                         continue;
                     }
-                    samplingRate = property.Value.GetDouble();
+                    clientId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataCollectionConfiguration(clientId, dataCollectionMode, dataId, samplingRate, serializedAdditionalRawData);
+            return new DataCollectionConfiguration(samplingRate, dataCollectionMode, dataId, clientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username"u8);
+                writer.WriteStringValue(Username);
+            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
@@ -35,11 +40,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("securityToken"u8);
                 writer.WriteStringValue(SecurityToken);
-            }
-            if (Optional.IsDefined(Username))
-            {
-                writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,13 +79,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            string username = default;
             string password = default;
             string securityToken = default;
-            string username = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("username"u8))
+                {
+                    username = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
@@ -96,18 +101,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     securityToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("username"u8))
-                {
-                    username = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningWorkspaceConnectionUsernamePassword(password, securityToken, username, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceConnectionUsernamePassword(username, password, securityToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceConnectionUsernamePassword>.Write(ModelReaderWriterOptions options)

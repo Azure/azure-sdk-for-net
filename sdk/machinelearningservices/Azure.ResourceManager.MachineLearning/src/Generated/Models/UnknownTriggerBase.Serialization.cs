@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("triggerType"u8);
+            writer.WriteStringValue(TriggerType.ToString());
             if (Optional.IsDefined(EndTime))
             {
                 if (EndTime != null)
@@ -55,8 +57,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            writer.WritePropertyName("triggerType"u8);
-            writer.WriteStringValue(TriggerType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -95,14 +95,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            TriggerType triggerType = "Unknown";
             string endTime = default;
             string startTime = default;
             string timeZone = default;
-            TriggerType triggerType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("triggerType"u8))
+                {
+                    triggerType = new TriggerType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -128,18 +133,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     timeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerType"u8))
-                {
-                    triggerType = new TriggerType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownTriggerBase(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData);
+            return new UnknownTriggerBase(triggerType, endTime, startTime, timeZone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningTriggerBase>.Write(ModelReaderWriterOptions options)

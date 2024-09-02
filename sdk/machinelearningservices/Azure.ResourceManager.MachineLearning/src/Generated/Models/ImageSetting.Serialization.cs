@@ -36,11 +36,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("reference"u8);
                 writer.WriteStringValue(Reference);
             }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -78,7 +73,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             ImageType? type = default;
             string reference = default;
-            string version = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,15 +91,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     reference = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
-                {
-                    version = property.Value.GetString();
-                    continue;
-                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ImageSetting(type, reference, version, additionalProperties);
+            return new ImageSetting(type, reference, additionalProperties);
         }
 
         BinaryData IPersistableModel<ImageSetting>.Write(ModelReaderWriterOptions options)

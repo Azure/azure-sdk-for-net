@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("artifactName"u8);
-            writer.WriteStringValue(ArtifactName);
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
+            writer.WritePropertyName("artifactName"u8);
+            writer.WriteStringValue(ArtifactName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -68,20 +68,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string artifactName = default;
             OneLakeArtifactType artifactType = default;
+            string artifactName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("artifactName"u8))
-                {
-                    artifactName = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("artifactType"u8))
                 {
                     artifactType = new OneLakeArtifactType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("artifactName"u8))
+                {
+                    artifactName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LakeHouseArtifact(artifactName, artifactType, serializedAdditionalRawData);
+            return new LakeHouseArtifact(artifactType, artifactName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LakeHouseArtifact>.Write(ModelReaderWriterOptions options)

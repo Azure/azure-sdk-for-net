@@ -98,11 +98,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationDataSize");
                 }
             }
+            writer.WritePropertyName("taskType"u8);
+            writer.WriteStringValue(TaskType.ToString());
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
+            writer.WritePropertyName("trainingData"u8);
+            writer.WriteObjectValue(TrainingData, options);
             if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
@@ -115,10 +119,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetColumnName");
                 }
             }
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
-            writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ImageSweepSettings sweepSettings = default;
             MachineLearningTableJobInput validationData = default;
             double? validationDataSize = default;
-            MachineLearningLogVerbosity? logVerbosity = default;
-            string targetColumnName = default;
             TaskType taskType = default;
+            MachineLearningLogVerbosity? logVerbosity = default;
             MachineLearningTableJobInput trainingData = default;
+            string targetColumnName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,6 +241,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     validationDataSize = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("taskType"u8))
+                {
+                    taskType = new TaskType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("logVerbosity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -248,6 +253,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("trainingData"u8))
+                {
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetColumnName"u8))
@@ -260,16 +270,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     targetColumnName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("taskType"u8))
-                {
-                    taskType = new TaskType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("trainingData"u8))
-                {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -277,10 +277,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ImageClassificationMultilabel(
-                logVerbosity,
-                targetColumnName,
                 taskType,
+                logVerbosity,
                 trainingData,
+                targetColumnName,
                 serializedAdditionalRawData,
                 primaryMetric,
                 modelSettings,

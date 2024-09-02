@@ -57,25 +57,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
-            Columns = new ChangeTrackingDictionary<string, string>();
             JobInputType = jobInputType;
             Uri = uri;
+            Columns = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitoringInputDataBase"/>. </summary>
-        /// <param name="columns"> Mapping of column names to special uses. </param>
-        /// <param name="dataContext"> The context metadata of the data source. </param>
         /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="dataContext"> The context metadata of the data source. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
+        /// <param name="columns"> Mapping of column names to special uses. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringInputDataBase(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoringInputDataBase(MonitoringInputDataType inputDataType, string dataContext, JobInputType jobInputType, Uri uri, IDictionary<string, string> columns, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Columns = columns;
-            DataContext = dataContext;
             InputDataType = inputDataType;
+            DataContext = dataContext;
             JobInputType = jobInputType;
             Uri = uri;
+            Columns = columns;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> Mapping of column names to special uses. </summary>
-        public IDictionary<string, string> Columns { get; set; }
-        /// <summary> The context metadata of the data source. </summary>
-        public string DataContext { get; set; }
         /// <summary> [Required] Specifies the type of signal to monitor. </summary>
         internal MonitoringInputDataType InputDataType { get; set; }
+        /// <summary> The context metadata of the data source. </summary>
+        public string DataContext { get; set; }
         /// <summary> [Required] Specifies the type of job. </summary>
         public JobInputType JobInputType { get; set; }
         /// <summary> [Required] Input Asset URI. </summary>
         public Uri Uri { get; set; }
+        /// <summary> Mapping of column names to special uses. </summary>
+        public IDictionary<string, string> Columns { get; set; }
     }
 }

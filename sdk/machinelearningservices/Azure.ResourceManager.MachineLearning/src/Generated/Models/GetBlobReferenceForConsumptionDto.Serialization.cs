@@ -38,18 +38,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blobUri");
                 }
             }
-            if (Optional.IsDefined(Credential))
-            {
-                if (Credential != null)
-                {
-                    writer.WritePropertyName("credential"u8);
-                    writer.WriteObjectValue(Credential, options);
-                }
-                else
-                {
-                    writer.WriteNull("credential");
-                }
-            }
             if (Optional.IsDefined(StorageAccountArmId))
             {
                 if (StorageAccountArmId != null)
@@ -60,6 +48,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("storageAccountArmId");
+                }
+            }
+            if (Optional.IsDefined(Credential))
+            {
+                if (Credential != null)
+                {
+                    writer.WritePropertyName("credential"u8);
+                    writer.WriteObjectValue(Credential, options);
+                }
+                else
+                {
+                    writer.WriteNull("credential");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Uri blobUri = default;
-            DataReferenceCredential credential = default;
             string storageAccountArmId = default;
+            DataReferenceCredential credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,16 +117,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     blobUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("credential"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        credential = null;
-                        continue;
-                    }
-                    credential = DataReferenceCredential.DeserializeDataReferenceCredential(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("storageAccountArmId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -137,13 +127,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     storageAccountArmId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("credential"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        credential = null;
+                        continue;
+                    }
+                    credential = DataReferenceCredential.DeserializeDataReferenceCredential(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GetBlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, serializedAdditionalRawData);
+            return new GetBlobReferenceForConsumptionDto(blobUri, storageAccountArmId, credential, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetBlobReferenceForConsumptionDto>.Write(ModelReaderWriterOptions options)
