@@ -390,9 +390,6 @@
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
 
-# ServiceLabel: %Container Orchestrator Runtime
-/sdk/containerorchestratorruntime/                                 @HE-Xinyu @ddadaal
-
 # ServiceLabel: %Cosmos
 /sdk/cosmosdb/                                                     @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar
 
@@ -963,6 +960,9 @@
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
+
+# ServiceLabel: %Container Orchestrator Runtime
+/sdk/containerorchestratorruntime/                                 @HE-Xinyu @ddadaal
 
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
