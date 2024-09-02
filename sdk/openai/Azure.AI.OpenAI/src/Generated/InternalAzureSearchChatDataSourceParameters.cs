@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="InternalAzureSearchChatDataSourceParameters"/>. </summary>
         /// <param name="endpoint"> The absolute endpoint path for the Azure Search resource to use. </param>
         /// <param name="indexName"> The name of the index to use, as specified in the Azure Search resource. </param>
@@ -119,7 +118,7 @@ namespace Azure.AI.OpenAI.Chat
             SemanticConfiguration = semanticConfiguration;
             Filter = filter;
             VectorizationSource = vectorizationSource;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalAzureSearchChatDataSourceParameters"/> for deserialization. </summary>

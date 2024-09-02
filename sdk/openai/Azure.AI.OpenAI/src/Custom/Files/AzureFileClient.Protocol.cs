@@ -4,7 +4,6 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
-using OpenAI.Files;
 
 namespace Azure.AI.OpenAI.Files;
 

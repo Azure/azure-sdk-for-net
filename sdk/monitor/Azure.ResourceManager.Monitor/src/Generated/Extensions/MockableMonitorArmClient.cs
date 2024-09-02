@@ -740,5 +740,17 @@ namespace Azure.ResourceManager.Monitor.Mocking
             MonitorWorkspaceResource.ValidateResourceId(id);
             return new MonitorWorkspaceResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PipelineGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PipelineGroupResource.CreateResourceIdentifier" /> to create a <see cref="PipelineGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PipelineGroupResource"/> object. </returns>
+        public virtual PipelineGroupResource GetPipelineGroupResource(ResourceIdentifier id)
+        {
+            PipelineGroupResource.ValidateResourceId(id);
+            return new PipelineGroupResource(Client, id);
+        }
     }
 }

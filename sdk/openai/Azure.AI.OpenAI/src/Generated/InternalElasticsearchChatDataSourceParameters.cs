@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="InternalElasticsearchChatDataSourceParameters"/>. </summary>
         /// <param name="endpoint"></param>
         /// <param name="indexName"></param>
@@ -111,7 +110,7 @@ namespace Azure.AI.OpenAI.Chat
             FieldMappings = fieldMappings;
             QueryType = queryType;
             VectorizationSource = vectorizationSource;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalElasticsearchChatDataSourceParameters"/> for deserialization. </summary>
