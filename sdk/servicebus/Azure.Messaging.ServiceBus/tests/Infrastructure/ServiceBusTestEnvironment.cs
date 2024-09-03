@@ -63,7 +63,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <value>The name will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
         ///
-        public string ServiceBusNamespace => ParseServiceBusNamespace(ServiceBusConnectionString).Name;
+        public string ServiceBusNamespace => ParseServiceBusNamespace(FullyQualifiedNamespace).Name;
 
         /// <summary>
         ///   The name of the Service Bus namespace to be used for Live tests.
@@ -71,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <value>The name will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
         ///
-        public string ServiceBusSecondaryNamespace => ParseServiceBusNamespace(ServiceBusSecondaryNamespaceConnectionString).Name;
+        public string ServiceBusSecondaryNamespace => ParseServiceBusNamespace(SecondaryFullyQualifiedNamespace).Name;
 
         /// <summary>
         ///   The fully qualified namespace for the Service Bus namespace represented by this scope.
@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <value>The fully qualified namespace, as contained within the associated connection string.</value>
         ///
-        public string FullyQualifiedNamespace => ParsedConnectionString.Endpoint.Host;
+        public string FullyQualifiedNamespace => GetRecordedVariable("SERVICEBUS_FULLY_QUALIFIED_NAMESPACE");
 
         /// <summary>
         ///   The secondary fully qualified namespace for the Service Bus namespace represented by this scope.
@@ -87,7 +87,15 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <value>The secondary fully qualified namespace, as contained within the associated connection string.</value>
         ///
-        public string SecondaryFullyQualifiedNamespace => ServiceBusConnectionStringProperties.Parse(ServiceBusSecondaryNamespaceConnectionString).Endpoint.Host;
+        public string SecondaryFullyQualifiedNamespace => GetRecordedVariable("SERVICEBUS_SECONDARY_FULLY_QUALIFIED_NAMESPACE");
+
+        /// <summary>
+        ///   The premium fully qualified namespace for the Service Bus namespace represented by this scope.
+        /// </summary>
+        ///
+        /// <value>The premium fully qualified namespace, as contained within the associated connection string.</value>
+        ///
+        public string PremiumFullyQualifiedNamespace => GetRecordedVariable("SERVICEBUS_PREMIUM_FULLY_QUALIFIED_NAMESPACE");
 
         /// <summary>
         ///   The shared access key name for the Service Bus namespace represented by this scope.
@@ -123,7 +131,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         public new string ResourceManagerUrl => base.ResourceManagerUrl ?? "https://management.azure.com/";
 
-        public string StorageClaimCheckConnectionString => GetRecordedVariable("STORAGE_CLAIM_CHECK_CONNECTION_STRING");
+        public Uri StorageClaimCheckAccountUri => new($"https://{GetRecordedVariable("STORAGE_CLAIM_CHECK_ACCOUNT_NAME")}.blob.core.windows.net/");
 
         /// <summary>
         ///   Builds a connection string for a specific Service Bus entity instance under the namespace used for
@@ -156,23 +164,14 @@ namespace Azure.Messaging.ServiceBus.Tests
             return $"Endpoint={ParsedConnectionString.Endpoint};EntityPath={entityName};SharedAccessSignature={signature.Value}";
         }
 
-        /// <summary>
-        ///   Ensures that a Service Bus namespace is available.  If the <see cref="ServiceBusConnectionString"/> override was set for the environment,
-        ///   that namespace will be respected.  Otherwise, a new Service Bus namespace will be created on Azure for this test run.
-        /// </summary>
-        ///
         /// <returns>The active Service Bus namespace for this test run.</returns>
         ///
-        private NamespaceProperties ParseServiceBusNamespace(string serviceBusConnectionString)
+        private NamespaceProperties ParseServiceBusNamespace(string fullyQualifiedNamespace)
         {
-            var parsed = ServiceBusConnectionStringProperties.Parse(serviceBusConnectionString);
+            int ending = ".servicebus.windows.net".Length;
+            string nameSpace = fullyQualifiedNamespace.Substring(0, fullyQualifiedNamespace.Length - ending);
 
-            return new NamespaceProperties
-            (
-                parsed.Endpoint.Host.Substring(0, parsed.Endpoint.Host.IndexOf('.')),
-                serviceBusConnectionString.Replace($";EntityPath={parsed.EntityPath}", string.Empty),
-                false
-            );
+            return new NamespaceProperties(nameSpace, fullyQualifiedNamespace, false);
         }
 
         /// <summary>
@@ -185,8 +184,8 @@ namespace Azure.Messaging.ServiceBus.Tests
             /// <summary>The name of the namespace.</summary>
             public readonly string Name;
 
-            /// <summary>The connection string to use for accessing the dynamically created namespace.</summary>
-            public readonly string ConnectionString;
+            /// <summary>The fully qualified namespace.</summary>
+            public readonly string FullyQualifiedNamespace;
 
             /// <summary>A flag indicating if the namespace was dynamically created by the test environment.</summary>
             public readonly bool ShouldRemoveAtCompletion;
@@ -196,15 +195,15 @@ namespace Azure.Messaging.ServiceBus.Tests
             /// </summary>
             ///
             /// <param name="name">The name of the namespace.</param>
-            /// <param name="connectionString">The connection string to use for accessing the namespace.</param>
+            /// <param name="fullyQualifiedNamespace">The fully qualified namespace.</param>
             /// <param name="shouldRemoveAtCompletion">A flag indicating if the namespace should be removed when the test run has completed.</param>
             ///
             public NamespaceProperties(string name,
-                string connectionString,
-                bool shouldRemoveAtCompletion)
+                                       string fullyQualifiedNamespace,
+                                       bool shouldRemoveAtCompletion)
             {
                 Name = name;
-                ConnectionString = connectionString;
+                FullyQualifiedNamespace = fullyQualifiedNamespace;
                 ShouldRemoveAtCompletion = shouldRemoveAtCompletion;
             }
         }

@@ -53,27 +53,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             _serviceVersion = serviceVersion;
         }
 
-        private string GetConnectionString(bool premium = false) => premium ? TestEnvironment.ServiceBusPremiumNamespaceConnectionString : TestEnvironment.ServiceBusConnectionString;
+        private string GetNamespace(bool premium = false) => premium ? TestEnvironment.PremiumFullyQualifiedNamespace : TestEnvironment.FullyQualifiedNamespace;
 
         private ServiceBusAdministrationClientOptions CreateOptions() =>
             InstrumentClientOptions(new ServiceBusAdministrationClientOptions(_serviceVersion));
 
         private ServiceBusAdministrationClient CreateClient(bool premium = false) =>
-            InstrumentClient(
-                new ServiceBusAdministrationClient(
-                    GetConnectionString(premium),
-                    CreateOptions()));
+            InstrumentClient(new ServiceBusAdministrationClient(GetNamespace(premium), TestEnvironment.Credential, CreateOptions()));
 
-        private ServiceBusAdministrationClient CreateAADClient() =>
+        private ServiceBusAdministrationClient CreateConnectionStringClient() =>
             InstrumentClient(
                 new ServiceBusAdministrationClient(
-                    TestEnvironment.FullyQualifiedNamespace,
-                    GetTokenCredential(),
+                    TestEnvironment.ServiceBusConnectionString,
                     CreateOptions()));
 
         private ServiceBusAdministrationClient CreateSharedKeyTokenClient()
         {
-            var properties = ServiceBusConnectionStringProperties.Parse(GetConnectionString());
+            var properties = ServiceBusConnectionStringProperties.Parse(TestEnvironment.ServiceBusConnectionString);
             var credential = new AzureNamedKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
 
             return InstrumentClient(
@@ -85,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
         private ServiceBusAdministrationClient CreateSasTokenClient()
         {
-            var properties = ServiceBusConnectionStringProperties.Parse(GetConnectionString());
+            var properties = ServiceBusConnectionStringProperties.Parse(TestEnvironment.ServiceBusConnectionString);
             var resource = ServiceBusAdministrationClient.BuildAudienceResource(TestEnvironment.FullyQualifiedNamespace);
             var signature = new SharedAccessSignature(resource, properties.SharedAccessKeyName, properties.SharedAccessKey);
             var credential = new AzureSasCredential(signature.Value);
@@ -929,11 +925,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [RecordedTest]
-        public async Task AuthenticateWithAAD()
+        public async Task AuthenticateWithConnectionString()
         {
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = CreateAADClient();
+            var client = CreateConnectionStringClient();
 
             var queueOptions = new CreateQueueOptions(queueName);
             QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);

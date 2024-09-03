@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
@@ -16,12 +17,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
+                Uri accountUri = TestEnvironment.StorageClaimCheckAccountUri;
                 #region Snippet:CreateBlobContainer
-#if SNIPPET
-                var containerClient = new BlobContainerClient("<storage connection string>", "claim-checks");
-#else
-                var containerClient = new BlobContainerClient(TestEnvironment.StorageClaimCheckConnectionString, "claim-checks");
-#endif
+                var containerClient = new BlobContainerClient(accountUri, new DefaultAzureCredential());
                 await containerClient.CreateIfNotExistsAsync();
                 #endregion
 
@@ -60,14 +58,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                     if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
                     {
-#if SNIPPET
-                        var blobClient = new BlobClient("<storage connection string>", "claim-checks", (string) blobNameReceived);
-#else
-                        var blobClient = new BlobClient(
-                            TestEnvironment.StorageClaimCheckConnectionString,
-                            "claim-checks",
-                            (string)blobNameReceived);
-#endif
+                        var blobClient = new BlobClient(accountUri, new DefaultAzureCredential());
+
                         BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
                         BinaryData messageBody = downloadResult.Content;
 

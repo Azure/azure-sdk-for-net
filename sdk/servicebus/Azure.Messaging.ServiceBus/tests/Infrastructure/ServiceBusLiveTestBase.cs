@@ -5,6 +5,7 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
 
@@ -30,9 +31,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                         MaxRetries = maxRetries
                     }
                 };
-            return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
-                options);
+            return new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
         }
 
         protected static async Task SendMessagesAsync(

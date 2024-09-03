@@ -204,7 +204,7 @@
   "outputs": {
     "SERVICEBUS_FULLY_QUALIFIED_NAMESPACE": {
       "type": "string",
-      "value": "[variables('serviceBusNamespace')]"
+      "value": "[concat(variables('serviceBusNamespace'), '.servicebus.windows.net')]"
     },
     "SERVICEBUS_CONNECTION_STRING": {
       "type": "string",
@@ -212,7 +212,7 @@
     },
     "SERVICEBUS_SECONDARY_FULLY_QUALIFIED_NAMESPACE": {
       "type": "string",
-      "value": "[variables('serviceBusSecondaryNamespace')]"
+      "value": "[concat(variables('serviceBusSecondaryNamespace'), '.servicebus.windows.net')]"
     },
     "SERVICEBUS_SECONDARY_NAMESPACE_CONNECTION_STRING": {
       "type": "string",
@@ -220,18 +220,11 @@
     },
     "SERVICEBUS_PREMIUM_FULLY_QUALIFIED_NAMESPACE": {
       "type": "string",
-      "value": "[variables('serviceBusPremiumNamespace')]"
+      "value": "[concat(variables('serviceBusPremiumNamespace'), '.servicebus.windows.net')]"
     },
     "SERVICEBUS_PREMIUM_NAMESPACE_CONNECTION_STRING": {
       "type": "string",
       "value": "[listkeys(variables('authRulePremiumResourceId'), variables('sbVersion')).primaryConnectionString]"
-    },
-    "STORAGE_CLAIM_CHECK_CONNECTION_STRING": {
-      "type": "string",
-      "value": "[connectionString.create(
-        variables('storageAccount'),
-        listKeys(variables('storageAccountId'), variables('storageMgmtApiVersion')).keys[0].value,
-        reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount')), variables('storageMgmtApiVersion')).primaryEndpoints.blob)]"
     },
     "STORAGE_CLAIM_CHECK_ACCOUNT_NAME": {
       "type": "string",
