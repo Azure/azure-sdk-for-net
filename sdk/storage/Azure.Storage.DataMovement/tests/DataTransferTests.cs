@@ -28,7 +28,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
-            Assert.AreEqual(transferManager, transfer.TransferManager);
             Assert.IsFalse(transfer.HasCompleted);
         }
 
@@ -54,7 +53,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
-            Assert.AreEqual(transferManager, transfer.TransferManager);
             Assert.IsFalse(transfer.HasCompleted);
         }
 
@@ -80,7 +78,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
-            Assert.AreEqual(transferManager, transfer.TransferManager);
             Assert.IsTrue(transfer.HasCompleted);
         }
 
@@ -101,7 +98,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
-            Assert.AreEqual(transferManager, transfer.TransferManager);
             Assert.IsTrue(transfer.HasCompleted);
         }
 
@@ -140,7 +136,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
-            Assert.AreEqual(transferManager, transfer.TransferManager);
             Assert.IsTrue(transfer.HasCompleted);
         }
 

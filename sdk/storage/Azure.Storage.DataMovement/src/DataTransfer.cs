@@ -30,11 +30,6 @@ namespace Azure.Storage.DataMovement
         public string Id => _state.Id;
 
         /// <summary>
-        /// The <see cref="TransferManager"/> responsible for this transfer.
-        /// </summary>
-        public TransferManager TransferManager { get; }
-
-        /// <summary>
         /// Defines the current state of the transfer.
         /// </summary>
         internal DataTransferInternalState _state;
@@ -61,7 +56,6 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(transferManager, nameof(transferManager));
             status ??= new DataTransferStatus();
             _state = new DataTransferInternalState(id, status);
-            TransferManager = transferManager;
         }
 
         /// <summary>
