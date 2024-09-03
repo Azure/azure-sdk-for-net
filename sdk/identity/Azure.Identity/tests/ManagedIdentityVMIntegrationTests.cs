@@ -25,9 +25,9 @@ namespace Azure.Identity.Tests
         {
             ManagedIdentityCredentialOptions options = idType switch
             {
-                ManagedIdentityIdType.ClientId => new ManagedIdentityCredentialOptions(ManagedIdentityId.FromUserAssignedClientId(TestEnvironment.VMUserAssignedManagedIdentityClientId)),
-                ManagedIdentityIdType.ObjectId => new ManagedIdentityCredentialOptions(ManagedIdentityId.FromUserAssignedObjectId(TestEnvironment.VMUserAssignedManagedIdentityObjectId)),
-                _ => new ManagedIdentityCredentialOptions(ManagedIdentityId.SystemAssigned)
+                ManagedIdentityIdType.ClientId => new ManagedIdentityCredentialOptions() { ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(TestEnvironment.VMUserAssignedManagedIdentityClientId) },
+                ManagedIdentityIdType.ObjectId => new ManagedIdentityCredentialOptions() { ManagedIdentityId = ManagedIdentityId.FromUserAssignedObjectId(TestEnvironment.VMUserAssignedManagedIdentityObjectId) },
+                _ => new ManagedIdentityCredentialOptions() { ManagedIdentityId = ManagedIdentityId.SystemAssigned }
             };
             var cred = new ManagedIdentityCredential(options);
             var token = await cred.GetTokenAsync(new(CredentialTestHelpers.DefaultScope));

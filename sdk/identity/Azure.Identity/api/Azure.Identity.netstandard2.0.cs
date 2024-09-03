@@ -324,7 +324,7 @@ namespace Azure.Identity
     }
     public partial class ManagedIdentityCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
-        public ManagedIdentityCredentialOptions(Azure.Identity.ManagedIdentityId managedIdentityId) { }
+        public ManagedIdentityCredentialOptions() { }
         public Azure.Identity.ManagedIdentityId ManagedIdentityId { get { throw null; } set { } }
     }
     public partial class ManagedIdentityId
