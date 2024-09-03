@@ -53,6 +53,7 @@
         "resourceGroupName":"[toLower(concat('rg-',parameters('endpointPrefix'),'-',parameters('baseName')))]",
         "textAnalyticsResourceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName') , '/providers/Microsoft.CognitiveServices/accounts/', variables('textAnalyticsBaseName'))]",
         "healthInsightsName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
+         "healthInsightsResourceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName') , '/providers/Microsoft.CognitiveServices/accounts/', variables('healthInsightsName'))]",
         "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('cognitiveServicesEndpointSuffix'))]",
         "systemAndUserIdentities": {
             "type": "SystemAssigned, UserAssigned",
@@ -116,7 +117,7 @@
         "properties": {
           "principalId": "[parameters('testApplicationOid')]",
           "roleDefinitionId": "[variables('cognitiveServiceUserRoleId')]",
-          "scope": "[variables('textAnalyticsResourceId')]"
+          "scope": "[variables('healthInsightsResourceId')]"
         }
       }
     ],
