@@ -196,7 +196,13 @@ function UpdateSubscriptionConfigurationWithFiles([object]$baseSubConfig, [strin
 # Helper function for processing stringified json sub configs from pipeline parameter data
 function BuildAndSetSubscriptionConfig([string]$baseSubConfigJson, [string]$additionalSubConfigsJson, [string]$subConfigFilesJson) {
   $finalConfig = @{}
+
   if ($baseSubConfigJson) {
+    # When variable groups are not added to the pipeline, secret references like
+    # $(<my secret>) are passed as a string literal instead of being replaced by the keyvault secret value
+    if ($baseSubConfig -like '$(*') {
+      throw "Expected a json dictionary object but found '$baseSubConfig'. This probably means a subscription config secret was not downloaded. The pipeline is likely missing a variable group."
+    }
     $baseSubConfig = $baseSubConfigJson | ConvertFrom-Json -AsHashtable
 
     Write-Host "Setting base sub config"
@@ -207,6 +213,9 @@ function BuildAndSetSubscriptionConfig([string]$baseSubConfigJson, [string]$addi
     $subConfigs = $additionalSubConfigsJson | ConvertFrom-Json -AsHashtable
 
     foreach ($subConfig in $subConfigs) {
+      if ($subConfig -isnot [hashtable]) {
+        throw "Expected a json dictionary object but found '$subConfig'. This probably means a subscription config secret was not downloaded. The pipeline is likely missing a variable group."
+      }
       Write-Host "Merging sub config from list"
       $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
     }

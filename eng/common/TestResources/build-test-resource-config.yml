@@ -49,13 +49,5 @@ steps:
         ${{ convertToJson(parameters.SubscriptionConfigurationFilePaths) }}
       '@.Trim()
 
-      # When variable groups are not added to the pipeline, secret references like
-      # $(<my secret>) are passed as a string literal instead of being replaced by the keyvault secret value
-      $obj = @($additionalSubConfigsJson | ConvertFrom-Json -AsHashtable)
-      if ($baseSubConfigJson -like '$(*' `
-          -or @($obj | Where-Object { $_ -like '$(*' }).Count) {
-        throw 'A subscription config secret was not downloaded. The pipeline is likely missing a variable group.'
-      }
-
       BuildAndSetSubscriptionConfig $baseSubConfigJson $additionalSubConfigsJson $subConfigFilesJson
     displayName: Merge subscription configurations
