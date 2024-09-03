@@ -7,73 +7,78 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Storage.Common;
+using static Azure.Storage.DataMovement.ChannelProcessing;
 
 namespace Azure.Storage.DataMovement;
 
 internal interface IProcessor<TItem> : IDisposable
 {
     ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default);
+    ProcessAsync<TItem> Process { get; set; }
 }
 
 internal static class ChannelProcessing
 {
     public delegate Task ProcessAsync<T>(T item, CancellationToken cancellationToken);
 
-    public static IProcessor<T> NewProcessor<T>(ProcessAsync<T> process, int parallelism)
+    public static IProcessor<T> NewProcessor<T>(int parallelism)
     {
         Argument.AssertInRange(parallelism, 1, int.MaxValue, nameof(parallelism));
         return parallelism == 1
-            ? new SequentialChannelProcessor<T, T>(
+            ? new SequentialChannelProcessor<T>(
                 Channel.CreateUnbounded<T>(new UnboundedChannelOptions()
                 {
                     AllowSynchronousContinuations = true,
                     SingleReader = true,
-                }),
-                process)
-            : new ParallelChannelProcessor<T, T>(
+                }))
+            : new ParallelChannelProcessor<T>(
                 Channel.CreateUnbounded<T>(new UnboundedChannelOptions()
                 {
                     AllowSynchronousContinuations = true,
                 }),
-                process,
                 parallelism);
     }
 
-    private abstract class ChannelProcessor<TChannelWrite, TChannelRead> : IProcessor<TChannelWrite>, IDisposable
+    private abstract class ChannelProcessor<TItem> : IProcessor<TItem>, IDisposable
     {
         /// <summary>
         /// Async channel reader task. Loops for lifetime of object.
         /// </summary>
-        private readonly Task _processorTask;
+        private Task _processorTask;
 
         /// <summary>
-        /// Channel of Jobs waiting to divided into job parts/files.
-        ///
-        /// Limit 1 task to convert jobs to job parts.
+        /// Channel of items to process.
         /// </summary>
-        protected readonly Channel<TChannelWrite, TChannelRead> _channel;
+        protected readonly Channel<TItem, TItem> _channel;
 
         /// <summary>
-        /// Cancels the channels operations when disposing.
+        /// Cancellation token for disposal.
         /// </summary>
         private CancellationTokenSource _cancellationTokenSource;
         protected CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
-        protected readonly ProcessAsync<TChannelRead> _process;
-
-        protected ChannelProcessor(
-            Channel<TChannelWrite, TChannelRead> channel,
-            ProcessAsync<TChannelRead> processFromChannel)
+        private ProcessAsync<TItem> _process;
+        public ProcessAsync<TItem> Process
         {
-            Argument.AssertNotNull(channel, nameof(channel));
-            Argument.AssertNotNull(processFromChannel, nameof(processFromChannel));
-            _channel = channel;
-            _process = processFromChannel;
-            _cancellationTokenSource = new();
-            _processorTask = Task.Run(NotifyOfPendingItemProcessing);
+            get => _process;
+            set
+            {
+                ProcessAsync<TItem> prev = Interlocked.Exchange(ref _process, value);
+                if (prev == default)
+                {
+                    _processorTask = Task.Run(NotifyOfPendingItemProcessing);
+                }
+            }
         }
 
-        public async ValueTask QueueAsync(TChannelWrite item, CancellationToken cancellationToken = default)
+        protected ChannelProcessor(Channel<TItem, TItem> channel)
+        {
+            Argument.AssertNotNull(channel, nameof(channel));
+            _channel = channel;
+            _cancellationTokenSource = new();
+        }
+
+        public async ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default)
         {
             await _channel.Writer.WriteAsync(item, cancellationToken).ConfigureAwait(false);
         }
@@ -90,12 +95,10 @@ internal static class ChannelProcessing
         }
     }
 
-    private class SequentialChannelProcessor<TChannelWrite, TChannelRead> : ChannelProcessor<TChannelWrite, TChannelRead>
+    private class SequentialChannelProcessor<TItem> : ChannelProcessor<TItem>
     {
-        public SequentialChannelProcessor(
-            Channel<TChannelWrite, TChannelRead> channel,
-            ProcessAsync<TChannelRead> processFromChannel)
-            : base(channel, processFromChannel)
+        public SequentialChannelProcessor(Channel<TItem, TItem> channel)
+            : base(channel)
         { }
 
         protected override async ValueTask NotifyOfPendingItemProcessing()
@@ -103,21 +106,20 @@ internal static class ChannelProcessing
             // Process all available items in the queue.
             while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
             {
-                TChannelRead item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                await _process(item, _cancellationToken).ConfigureAwait(false);
+                TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+                await Process(item, _cancellationToken).ConfigureAwait(false);
             }
         }
     }
 
-    private class ParallelChannelProcessor<TChannelWrite, TChannelRead> : ChannelProcessor<TChannelWrite, TChannelRead>
+    private class ParallelChannelProcessor<TItem> : ChannelProcessor<TItem>
     {
         private readonly int _maxConcurrentProcessing;
 
         public ParallelChannelProcessor(
-            Channel<TChannelWrite, TChannelRead> channel,
-            ProcessAsync<TChannelRead> processFromChannel,
+            Channel<TItem, TItem> channel,
             int maxConcurrentProcessing)
-            : base(channel, processFromChannel)
+            : base(channel)
         {
             Argument.AssertInRange(maxConcurrentProcessing, 2, int.MaxValue, nameof(maxConcurrentProcessing));
             _maxConcurrentProcessing = maxConcurrentProcessing;
@@ -128,7 +130,7 @@ internal static class ChannelProcessing
             List<Task> chunkRunners = new List<Task>(DataMovementConstants.MaxJobPartReaders);
             while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
             {
-                TChannelRead item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+                TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
                 if (chunkRunners.Count >= DataMovementConstants.MaxJobPartReaders)
                 {
                     // Clear any completed blocks from the task list
@@ -141,7 +143,7 @@ internal static class ChannelProcessing
                         chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
                     }
                 }
-                chunkRunners.Add(Task.Run(async () => await _process(item, _cancellationToken).ConfigureAwait(false)));
+                chunkRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
             }
         }
     }

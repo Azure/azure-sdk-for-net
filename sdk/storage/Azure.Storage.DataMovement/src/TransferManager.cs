@@ -27,7 +27,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Ongoing transfers indexed at the transfer id.
         /// </summary>
-        internal IDictionary<string, DataTransfer> _dataTransfers;
+        internal readonly Dictionary<string, DataTransfer> _dataTransfers = new();
 
         /// <summary>
         /// Designated checkpointer for the respective transfer manager.
@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Cancels the channels operations when disposing.
         /// </summary>
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _cancellationTokenSource = new();
         private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
         private readonly ArrayPool<byte> _arrayPool;
@@ -68,17 +68,49 @@ namespace Azure.Storage.DataMovement
         /// <param name="options">Options that will apply to all transfers started by this TransferManager.</param>
         public TransferManager(TransferManagerOptions options = default)
         {
-            _cancellationTokenSource = new();
-            _jobsProcessor = ChannelProcessing.NewProcessor<TransferJobInternal>(ProcessJobAsync, parallelism: 1);
-            _partsProcessor = ChannelProcessing.NewProcessor<JobPartInternal>(ProcessPartAsync, DataMovementConstants.MaxJobPartReaders);
-            _chunksProcessor = ChannelProcessing.NewProcessor<Func<Task>>(Task.Run, options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks);
+            _jobsProcessor = ChannelProcessing.NewProcessor<TransferJobInternal>(parallelism: 1);
+            _partsProcessor = ChannelProcessing.NewProcessor<JobPartInternal>(DataMovementConstants.MaxJobPartReaders);
+            _chunksProcessor = ChannelProcessing.NewProcessor<Func<Task>>(options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks);
             TransferCheckpointStoreOptions checkpointerOptions = options?.CheckpointerOptions != default ? new TransferCheckpointStoreOptions(options.CheckpointerOptions) : default;
             _checkpointer = checkpointerOptions != default ? checkpointerOptions.GetCheckpointer() : CreateDefaultCheckpointer();
             _resumeProviders = options?.ResumeProviders != null ? new(options.ResumeProviders) : new();
-            _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
             _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : DataTransferErrorMode.StopOnAnyFailure;
             ClientDiagnostics = new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default);
+
+            ConfigureProcessorCallbacks();
+        }
+
+        /// <summary>
+        /// Dependency injection constructor.
+        /// </summary>
+        internal TransferManager(
+            IProcessor<TransferJobInternal> jobsProcessor,
+            IProcessor<JobPartInternal> partsProcessor,
+            IProcessor<Func<Task>> chunksProcessor,
+            TransferCheckpointer checkpointer,
+            ICollection<StorageResourceProvider> resumeProviders,
+            ArrayPool<byte> arrayPool,
+            DataTransferErrorMode errorhandling,
+            ClientDiagnostics clientDiagnostics)
+        {
+            _jobsProcessor = jobsProcessor;
+            _partsProcessor = partsProcessor;
+            _chunksProcessor = chunksProcessor;
+            _checkpointer = checkpointer;
+            _resumeProviders = new(resumeProviders);
+            _arrayPool = arrayPool;
+            _errorHandling = errorhandling;
+            ClientDiagnostics = clientDiagnostics;
+
+            ConfigureProcessorCallbacks();
+        }
+
+        private void ConfigureProcessorCallbacks()
+        {
+            _jobsProcessor.Process = ProcessJobAsync;
+            _partsProcessor.Process = ProcessPartAsync;
+            _chunksProcessor.Process = Task.Run;
         }
 
         private async Task ProcessJobAsync(TransferJobInternal job, CancellationToken _)
