@@ -276,6 +276,14 @@
       ]
     },
     {
+      "filename": "**/sdk/computefleet/**/*.cs",
+      "words": [
+        "mbps",
+        "unattend",
+        "nvme"
+      ]
+    },
+    {
       "filename": "**/sdk/confidentialledger/**/*.cs",
       "words": [
         "cbor",
