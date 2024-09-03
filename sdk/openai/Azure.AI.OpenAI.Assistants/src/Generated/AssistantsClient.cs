@@ -1192,7 +1192,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AssistantThread>> UpdateThreadAsync(string threadId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AssistantThread>> UpdateThreadAsync(string threadId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
@@ -1208,7 +1208,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AssistantThread> UpdateThread(string threadId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<AssistantThread> UpdateThread(string threadId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
@@ -1405,12 +1405,12 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, string content, IEnumerable<string> fileIds = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, string content, IEnumerable<string> fileIds = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateMessageAsync(threadId, createMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadMessage.FromResponse(response), response);
@@ -1425,12 +1425,12 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadMessage> CreateMessage(string threadId, MessageRole role, string content, IEnumerable<string> fileIds = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadMessage> CreateMessage(string threadId, MessageRole role, string content, IEnumerable<string> fileIds = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateMessage(threadId, createMessageRequest.ToRequestContent(), context);
             return Response.FromValue(ThreadMessage.FromResponse(response), response);
@@ -1741,7 +1741,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
@@ -1759,7 +1759,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadMessage> UpdateMessage(string threadId, string messageId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadMessage> UpdateMessage(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
@@ -2427,7 +2427,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadRun>> UpdateRunAsync(string threadId, string runId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> UpdateRunAsync(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -2445,7 +2445,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadRun> UpdateRun(string threadId, string runId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> UpdateRun(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));

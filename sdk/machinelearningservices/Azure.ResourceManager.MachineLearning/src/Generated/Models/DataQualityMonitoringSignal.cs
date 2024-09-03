@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="productionData">
         /// [Required] The data produced by the production service which drift will be calculated for.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </param>
         /// <param name="referenceData">
         /// [Required] The data to calculate drift against.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricThresholds"/>, <paramref name="productionData"/> or <paramref name="referenceData"/> is null. </exception>
         public DataQualityMonitoringSignal(IEnumerable<DataQualityMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData)
@@ -45,11 +45,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataQualityMonitoringSignal"/>. </summary>
-        /// <param name="mode"> The current notification mode for this signal. </param>
+        /// <param name="notificationTypes"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="featureDataTypeOverride"> A dictionary that maps feature names to their respective data types. </param>
+        /// <param name="featureImportanceSettings"> The settings for computing feature importance. </param>
         /// <param name="features">
         /// The features to calculate drift over.
         /// Please note <see cref="MonitoringFeatureFilterBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -63,16 +64,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="productionData">
         /// [Required] The data produced by the production service which drift will be calculated for.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </param>
         /// <param name="referenceData">
         /// [Required] The data to calculate drift against.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </param>
-        internal DataQualityMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride, MonitoringFeatureFilterBase features, IList<DataQualityMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData) : base(mode, properties, signalType, serializedAdditionalRawData)
+        internal DataQualityMonitoringSignal(IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride, FeatureImportanceSettings featureImportanceSettings, MonitoringFeatureFilterBase features, IList<DataQualityMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData) : base(notificationTypes, properties, signalType, serializedAdditionalRawData)
         {
             FeatureDataTypeOverride = featureDataTypeOverride;
+            FeatureImportanceSettings = featureImportanceSettings;
             Features = features;
             MetricThresholds = metricThresholds;
             ProductionData = productionData;
@@ -87,6 +89,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> A dictionary that maps feature names to their respective data types. </summary>
         public IDictionary<string, MonitoringFeatureDataType> FeatureDataTypeOverride { get; set; }
+        /// <summary> The settings for computing feature importance. </summary>
+        public FeatureImportanceSettings FeatureImportanceSettings { get; set; }
         /// <summary>
         /// The features to calculate drift over.
         /// Please note <see cref="MonitoringFeatureFilterBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -102,13 +106,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// [Required] The data produced by the production service which drift will be calculated for.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </summary>
         public MonitoringInputDataBase ProductionData { get; set; }
         /// <summary>
         /// [Required] The data to calculate drift against.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </summary>
         public MonitoringInputDataBase ReferenceData { get; set; }
     }

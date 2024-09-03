@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Threads))
+            if (Optional.IsCollectionDefined(ProcessThreads))
             {
                 writer.WritePropertyName("threads"u8);
                 writer.WriteStartArray();
-                foreach (var item in Threads)
+                foreach (var item in ProcessThreads)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppService
             double? iisProfileTimeoutInSeconds = default;
             string parent = default;
             IList<string> children = default;
-            IList<ProcessThreadInfo> threads = default;
+            IList<WebAppProcessThreadProperties> threads = default;
             IList<string> openFileHandles = default;
             IList<ProcessModuleInfoData> modules = default;
             string fileName = default;
@@ -461,10 +461,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<ProcessThreadInfo> array = new List<ProcessThreadInfo>();
+                            List<WebAppProcessThreadProperties> array = new List<WebAppProcessThreadProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item, options));
+                                array.Add(WebAppProcessThreadProperties.DeserializeWebAppProcessThreadProperties(item, options));
                             }
                             threads = array;
                             continue;
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.AppService
                 iisProfileTimeoutInSeconds,
                 parent,
                 children ?? new ChangeTrackingList<string>(),
-                threads ?? new ChangeTrackingList<ProcessThreadInfo>(),
+                threads ?? new ChangeTrackingList<WebAppProcessThreadProperties>(),
                 openFileHandles ?? new ChangeTrackingList<string>(),
                 modules ?? new ChangeTrackingList<ProcessModuleInfoData>(),
                 fileName,
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Threads), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProcessThreads), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    threads: ");
@@ -1031,13 +1031,13 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsCollectionDefined(Threads))
+                if (Optional.IsCollectionDefined(ProcessThreads))
                 {
-                    if (Threads.Any())
+                    if (ProcessThreads.Any())
                     {
                         builder.Append("    threads: ");
                         builder.AppendLine("[");
-                        foreach (var item in Threads)
+                        foreach (var item in ProcessThreads)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    threads: ");
                         }

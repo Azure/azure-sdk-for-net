@@ -26,6 +26,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
     internal class DefaultPlatform : IPlatform
 #endif
     {
+        internal static readonly IPlatform Instance
+#if ASP_NET_CORE_DISTRO
+            = new DefaultPlatformDistro();
+#else
+            = new DefaultPlatform();
+#endif
+
         private readonly IDictionary _environmentVariables;
 
 #if ASP_NET_CORE_DISTRO
@@ -36,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         {
             try
             {
-                _environmentVariables = Environment.GetEnvironmentVariables();
+                _environmentVariables = LoadEnvironmentVariables();
             }
             catch (Exception ex)
             {
@@ -49,6 +56,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 #endif
                 _environmentVariables = new Dictionary<string, object>();
             }
+        }
+
+        private static IDictionary LoadEnvironmentVariables()
+        {
+            var variables = new Dictionary<string, string?>();
+            foreach (var key in EnvironmentVariableConstants.HashSetDefinedEnvironmentVariables)
+            {
+                variables.Add(key, Environment.GetEnvironmentVariable(key));
+            }
+            return variables;
         }
 
         public string? GetEnvironmentVariable(string name) => _environmentVariables[name]?.ToString();

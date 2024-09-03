@@ -272,6 +272,8 @@ namespace Azure.Identity
         /// <inheriteddoc/>
         public bool DisableInstanceDiscovery { get; set; }
 
+        internal bool IsForceRefreshEnabled { get; set; }
+
         internal override T Clone<T>()
         {
             var clone = base.Clone<T>();
@@ -299,6 +301,7 @@ namespace Azure.Identity
                 dacClone.ExcludeVisualStudioCredential = ExcludeVisualStudioCredential;
                 dacClone.ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential;
                 dacClone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
+                dacClone.IsForceRefreshEnabled = IsForceRefreshEnabled;
             }
 
             return clone;

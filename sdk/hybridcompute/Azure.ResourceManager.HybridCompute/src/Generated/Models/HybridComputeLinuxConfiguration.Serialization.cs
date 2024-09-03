@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -37,6 +38,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
+            }
+            if (Optional.IsDefined(IsHotpatchingEnabled))
+            {
+                writer.WritePropertyName("enableHotpatching"u8);
+                writer.WriteBooleanValue(IsHotpatchingEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -79,6 +90,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             AssessmentModeType? assessmentMode = default;
             PatchModeType? patchMode = default;
+            bool? enableHotpatching = default;
+            HybridComputePatchSettingsStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,6 +123,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             patchMode = new PatchModeType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("enableHotpatching"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableHotpatching = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = HybridComputePatchSettingsStatus.DeserializeHybridComputePatchSettingsStatus(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -119,7 +150,86 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HybridComputeLinuxConfiguration(assessmentMode, patchMode, serializedAdditionalRawData);
+            return new HybridComputeLinuxConfiguration(assessmentMode, patchMode, enableHotpatching, status, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            builder.Append("  patchSettings:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssessmentMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    assessmentMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssessmentMode))
+                {
+                    builder.Append("    assessmentMode: ");
+                    builder.AppendLine($"'{AssessmentMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PatchMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    patchMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PatchMode))
+                {
+                    builder.Append("    patchMode: ");
+                    builder.AppendLine($"'{PatchMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHotpatchingEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableHotpatching: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsHotpatchingEnabled))
+                {
+                    builder.Append("    enableHotpatching: ");
+                    var boolValue = IsHotpatchingEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("    status: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Status, options, 4, false, "    status: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<HybridComputeLinuxConfiguration>.Write(ModelReaderWriterOptions options)
@@ -130,6 +240,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HybridComputeLinuxConfiguration)} does not support writing '{options.Format}' format.");
             }

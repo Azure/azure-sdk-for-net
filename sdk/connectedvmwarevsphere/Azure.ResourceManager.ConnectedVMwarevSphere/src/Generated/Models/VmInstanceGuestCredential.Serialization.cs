@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (Optional.IsDefined(PrivateKey))
+            {
+                writer.WritePropertyName("privateKey"u8);
+                writer.WriteStringValue(PrivateKey);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
             string username = default;
             string password = default;
+            string privateKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,13 +96,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     password = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("privateKey"u8))
+                {
+                    privateKey = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VmInstanceGuestCredential(username, password, serializedAdditionalRawData);
+            return new VmInstanceGuestCredential(username, password, privateKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInstanceGuestCredential>.Write(ModelReaderWriterOptions options)

@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Kernel))
+            {
+                writer.WritePropertyName("kernel"u8);
+                writer.WriteObjectValue(Kernel, options);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -120,6 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DockerSetting docker = default;
             IList<ContainerEndpoint> endpoints = default;
             IList<VolumeDefinition> volumes = default;
+            JupyterKernelConfig kernel = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,6 +196,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     volumes = array;
                     continue;
                 }
+                if (property.NameEquals("kernel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kernel = JupyterKernelConfig.DeserializeJupyterKernelConfig(property.Value, options);
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
@@ -200,6 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 docker,
                 endpoints ?? new ChangeTrackingList<ContainerEndpoint>(),
                 volumes ?? new ChangeTrackingList<VolumeDefinition>(),
+                kernel,
                 additionalProperties);
         }
 

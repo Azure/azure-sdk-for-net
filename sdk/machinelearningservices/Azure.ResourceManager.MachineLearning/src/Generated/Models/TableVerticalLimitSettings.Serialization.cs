@@ -53,25 +53,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("maxCoresPerTrial"u8);
                 writer.WriteNumberValue(MaxCoresPerTrial.Value);
             }
-            if (Optional.IsDefined(MaxNodes))
-            {
-                writer.WritePropertyName("maxNodes"u8);
-                writer.WriteNumberValue(MaxNodes.Value);
-            }
             if (Optional.IsDefined(MaxTrials))
             {
                 writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
-            }
-            if (Optional.IsDefined(SweepConcurrentTrials))
-            {
-                writer.WritePropertyName("sweepConcurrentTrials"u8);
-                writer.WriteNumberValue(SweepConcurrentTrials.Value);
-            }
-            if (Optional.IsDefined(SweepTrials))
-            {
-                writer.WritePropertyName("sweepTrials"u8);
-                writer.WriteNumberValue(SweepTrials.Value);
             }
             if (Optional.IsDefined(Timeout))
             {
@@ -125,10 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             double? exitScore = default;
             int? maxConcurrentTrials = default;
             int? maxCoresPerTrial = default;
-            int? maxNodes = default;
             int? maxTrials = default;
-            int? sweepConcurrentTrials = default;
-            int? sweepTrials = default;
             TimeSpan? timeout = default;
             TimeSpan? trialTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,15 +154,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     maxCoresPerTrial = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxNodes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxNodes = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("maxTrials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -188,24 +161,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     maxTrials = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("sweepConcurrentTrials"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sweepConcurrentTrials = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("sweepTrials"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sweepTrials = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("timeout"u8))
@@ -237,10 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 exitScore,
                 maxConcurrentTrials,
                 maxCoresPerTrial,
-                maxNodes,
                 maxTrials,
-                sweepConcurrentTrials,
-                sweepTrials,
                 timeout,
                 trialTimeout,
                 serializedAdditionalRawData);

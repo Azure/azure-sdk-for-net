@@ -103,7 +103,7 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
       - script: >-
-          dotnet pack eng/service.proj
+          dotnet pack eng/service.proj -warnaserror
           /p:ValidateRunApiCompat=true
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
@@ -239,7 +239,7 @@ jobs:
           LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog
 
       - script: >-
-          dotnet build eng/service.proj
+          dotnet build eng/service.proj -warnaserror
           /t:rebuild
           /p:DebugType=none
           /p:SDKType=${{ parameters.SDKType }}
@@ -342,4 +342,3 @@ jobs:
             TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
             # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
             ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
-

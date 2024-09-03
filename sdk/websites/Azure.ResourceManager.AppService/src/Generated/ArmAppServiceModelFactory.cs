@@ -5517,7 +5517,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="iisProfileTimeoutInSeconds"> IIS Profile timeout (seconds). </param>
         /// <param name="parent"> Parent process. </param>
         /// <param name="children"> Child process list. </param>
-        /// <param name="threads"> Thread list. </param>
+        /// <param name="processThreads"> Thread list. </param>
         /// <param name="openFileHandles"> List of open files. </param>
         /// <param name="modules"> List of modules. </param>
         /// <param name="fileName"> File name of this process. </param>
@@ -5546,10 +5546,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="description"> Description of process. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.ProcessInfoData"/> instance for mocking. </returns>
-        public static ProcessInfoData ProcessInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? identifier = null, string deploymentName = null, string href = null, string minidump = null, bool? isProfileRunning = null, bool? isIisProfileRunning = null, double? iisProfileTimeoutInSeconds = null, string parent = null, IEnumerable<string> children = null, IEnumerable<ProcessThreadInfo> threads = null, IEnumerable<string> openFileHandles = null, IEnumerable<ProcessModuleInfoData> modules = null, string fileName = null, string commandLine = null, string userName = null, int? handleCount = null, int? moduleCount = null, int? threadCount = null, DateTimeOffset? startOn = null, string totalCpuTime = null, string userCpuTime = null, string privilegedCpuTime = null, long? workingSet = null, long? peakWorkingSet = null, long? privateMemory = null, long? virtualMemory = null, long? peakVirtualMemory = null, long? pagedSystemMemory = null, long? nonPagedSystemMemory = null, long? pagedMemory = null, long? peakPagedMemory = null, DateTimeOffset? timeStamp = null, IDictionary<string, string> environmentVariables = null, bool? isScmSite = null, bool? isWebjob = null, string description = null, string kind = null)
+        public static ProcessInfoData ProcessInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? identifier = null, string deploymentName = null, string href = null, string minidump = null, bool? isProfileRunning = null, bool? isIisProfileRunning = null, double? iisProfileTimeoutInSeconds = null, string parent = null, IEnumerable<string> children = null, IEnumerable<WebAppProcessThreadProperties> processThreads = null, IEnumerable<string> openFileHandles = null, IEnumerable<ProcessModuleInfoData> modules = null, string fileName = null, string commandLine = null, string userName = null, int? handleCount = null, int? moduleCount = null, int? threadCount = null, DateTimeOffset? startOn = null, string totalCpuTime = null, string userCpuTime = null, string privilegedCpuTime = null, long? workingSet = null, long? peakWorkingSet = null, long? privateMemory = null, long? virtualMemory = null, long? peakVirtualMemory = null, long? pagedSystemMemory = null, long? nonPagedSystemMemory = null, long? pagedMemory = null, long? peakPagedMemory = null, DateTimeOffset? timeStamp = null, IDictionary<string, string> environmentVariables = null, bool? isScmSite = null, bool? isWebjob = null, string description = null, string kind = null)
         {
             children ??= new List<string>();
-            threads ??= new List<ProcessThreadInfo>();
+            processThreads ??= new List<WebAppProcessThreadProperties>();
             openFileHandles ??= new List<string>();
             modules ??= new List<ProcessModuleInfoData>();
             environmentVariables ??= new Dictionary<string, string>();
@@ -5568,7 +5568,7 @@ namespace Azure.ResourceManager.AppService.Models
                 iisProfileTimeoutInSeconds,
                 parent,
                 children?.ToList(),
-                threads?.ToList(),
+                processThreads?.ToList(),
                 openFileHandles?.ToList(),
                 modules?.ToList(),
                 fileName,
@@ -5599,46 +5599,14 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProcessThreadInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identifier"> Site extension ID. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppProcessThreadProperties"/>. </summary>
+        /// <param name="id"> Thread ID. </param>
         /// <param name="href"> HRef URI. </param>
-        /// <param name="process"> Process URI. </param>
-        /// <param name="startAddress"> Start address. </param>
-        /// <param name="currentPriority"> Current thread priority. </param>
-        /// <param name="priorityLevel"> Thread priority level. </param>
-        /// <param name="basePriority"> Base priority. </param>
-        /// <param name="startOn"> Start time. </param>
-        /// <param name="totalProcessorTime"> Total processor time. </param>
-        /// <param name="userProcessorTime"> User processor time. </param>
         /// <param name="state"> Thread state. </param>
-        /// <param name="waitReason"> Wait reason. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="Models.ProcessThreadInfo"/> instance for mocking. </returns>
-        public static ProcessThreadInfo ProcessThreadInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? identifier = null, string href = null, string process = null, string startAddress = null, int? currentPriority = null, string priorityLevel = null, int? basePriority = null, DateTimeOffset? startOn = null, string totalProcessorTime = null, string userProcessorTime = null, string state = null, string waitReason = null, string kind = null)
+        /// <returns> A new <see cref="Models.WebAppProcessThreadProperties"/> instance for mocking. </returns>
+        public static WebAppProcessThreadProperties WebAppProcessThreadProperties(int? id = null, Uri href = null, string state = null)
         {
-            return new ProcessThreadInfo(
-                id,
-                name,
-                resourceType,
-                systemData,
-                identifier,
-                href,
-                process,
-                startAddress,
-                currentPriority,
-                priorityLevel,
-                basePriority,
-                startOn,
-                totalProcessorTime,
-                userProcessorTime,
-                state,
-                waitReason,
-                kind,
-                serializedAdditionalRawData: null);
+            return new WebAppProcessThreadProperties(id, href, state, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.ProcessModuleInfoData"/>. </summary>
@@ -5677,6 +5645,26 @@ namespace Azure.ResourceManager.AppService.Models
                 productVersion,
                 isDebug,
                 language,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppProcessThreadInfo"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> ProcessThreadInfo resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="Models.WebAppProcessThreadInfo"/> instance for mocking. </returns>
+        public static WebAppProcessThreadInfo WebAppProcessThreadInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WebAppProcessThreadProperties properties = null, string kind = null)
+        {
+            return new WebAppProcessThreadInfo(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 kind,
                 serializedAdditionalRawData: null);
         }

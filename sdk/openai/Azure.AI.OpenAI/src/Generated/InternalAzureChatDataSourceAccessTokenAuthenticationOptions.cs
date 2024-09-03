@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI.Chat
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceAccessTokenAuthenticationOptions"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> Discriminator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accessToken"></param>
         internal InternalAzureChatDataSourceAccessTokenAuthenticationOptions(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string accessToken) : base(type, serializedAdditionalRawData)

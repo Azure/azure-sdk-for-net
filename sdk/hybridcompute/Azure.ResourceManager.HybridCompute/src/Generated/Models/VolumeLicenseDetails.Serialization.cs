@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -103,6 +104,59 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new VolumeLicenseDetails(programYear, invoiceId, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProgramYear), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  programYear: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProgramYear))
+                {
+                    builder.Append("  programYear: ");
+                    builder.AppendLine($"'{ProgramYear.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InvoiceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  invoiceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InvoiceId))
+                {
+                    builder.Append("  invoiceId: ");
+                    if (InvoiceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InvoiceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InvoiceId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<VolumeLicenseDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VolumeLicenseDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +165,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VolumeLicenseDetails)} does not support writing '{options.Format}' format.");
             }

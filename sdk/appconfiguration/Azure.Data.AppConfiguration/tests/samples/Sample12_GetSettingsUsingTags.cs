@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -41,6 +40,8 @@ namespace Azure.Data.AppConfiguration.Samples
             }
 
             #endregion
+
+            await client.DeleteConfigurationSettingAsync(betaEndpoint.Key, betaEndpoint.Label);
         }
     }
 }

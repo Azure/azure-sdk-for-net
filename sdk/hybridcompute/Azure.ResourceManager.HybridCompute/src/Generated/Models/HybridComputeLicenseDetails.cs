@@ -75,20 +75,28 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the state of the license. </summary>
+        [WirePath("state")]
         public HybridComputeLicenseState? State { get; set; }
         /// <summary> Describes the license target server. </summary>
+        [WirePath("target")]
         public HybridComputeLicenseTarget? Target { get; set; }
         /// <summary> Describes the edition of the license. The values are either Standard or Datacenter. </summary>
+        [WirePath("edition")]
         public HybridComputeLicenseEdition? Edition { get; set; }
         /// <summary> Describes the license core type (pCore or vCore). </summary>
+        [WirePath("type")]
         public LicenseCoreType? LicenseCoreType { get; set; }
         /// <summary> Describes the number of processors. </summary>
+        [WirePath("processors")]
         public int? Processors { get; set; }
         /// <summary> Describes the number of assigned licenses. </summary>
+        [WirePath("assignedLicenses")]
         public int? AssignedLicenses { get; }
         /// <summary> Describes the immutable id. </summary>
+        [WirePath("immutableId")]
         public string ImmutableId { get; }
         /// <summary> A list of volume license details. </summary>
+        [WirePath("volumeLicenseDetails")]
         public IList<VolumeLicenseDetails> VolumeLicenseDetails { get; }
     }
 }
