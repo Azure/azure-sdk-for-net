@@ -153,17 +153,6 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
                 }
             };
         }
-
-        private static void AddSkus(ComputeFleetData computeFleetData, List<string> skuNames)
-        {
-            foreach (var skuName in skuNames)
-            {
-                computeFleetData.Properties.VmSizesProfile.Add(new ComputeFleetVmSizeProfile
-                {
-                    Name = skuName
-                });
-            }
-        }
         #endregion
     }
 }
