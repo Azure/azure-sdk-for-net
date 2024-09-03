@@ -166,19 +166,18 @@ The following example demonstrates authenticating with a user-assigned managed i
 
 ```C# Snippet:AuthenticatingWithManagedIdentityCredentialUserAssigned
 string userAssignedClientId = "some client ID";
-var options = new ManagedIdentityCredentialOptions() { ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(userAssignedClientId) };
 
-var credential = new ManagedIdentityCredential(options);
+var credential = new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(userAssignedClientId));
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
 The following example demonstrates authenticating with a user-assigned managed identity using its resource ID:
 
 ```C# Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedResourceId
-ResourceIdentifier userAssignedResourceId = new ResourceIdentifier("/subscriptions/<some subscriptionID>/resourcegroups/<some resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<some mi name>");
-var options = new ManagedIdentityCredentialOptions() { ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(userAssignedResourceId) };
+ResourceIdentifier userAssignedResourceId = new ResourceIdentifier(
+    "/subscriptions/<subscriptionID>/resourcegroups/<resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<MI name>");
 
-var credential = new ManagedIdentityCredential(options);
+var credential = new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedResourceId(userAssignedResourceId));
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
@@ -186,16 +185,16 @@ The following example demonstrates authenticating with a user-assigned managed i
 
 ```C# Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedObjectId
 string userAssignedObjectId = "some object ID";
-var options = new ManagedIdentityCredentialOptions() { ManagedIdentityId = ManagedIdentityId.FromUserAssignedObjectId(userAssignedObjectId) };
 
-var credential = new ManagedIdentityCredential(options);
+var credential = new ManagedIdentityCredential(
+    ManagedIdentityId.FromUserAssignedObjectId(userAssignedObjectId));
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
 #### Authenticate with a system-assigned managed identity
 
 ```C# Snippet:AuthenticatingWithManagedIdentityCredentialSystemAssigned
-var credential = new ManagedIdentityCredential(new ManagedIdentityCredentialOptions() { ManagedIdentityId = ManagedIdentityId.SystemAssigned });
+var credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
