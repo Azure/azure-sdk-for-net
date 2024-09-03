@@ -1,6 +1,6 @@
 # Release History
 
-## 12.20.0-beta.1 (Unreleased)
+## 12.20.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.20.0-beta.1 (2024-08-06)
+
+### Features Added
+- Added support for service version 2024-11-04.
+- Added support for token-based authentication for all APIs.
+- Added support for paid bursting on premium file share accounts.
+- Added support for binary format for file permissions.
+- Added ability to retrieve SAS string to sign for debugging purposes.
+
+## 12.19.1 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
 
 ## 12.19.0 (2024-07-16)
 

@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Quota.Mocking;
 using Azure.ResourceManager.Quota.Models;
 using Azure.ResourceManager.Resources;
@@ -21,6 +22,11 @@ namespace Azure.ResourceManager.Quota
         private static MockableQuotaArmClient GetMockableQuotaArmClient(ArmClient client)
         {
             return client.GetCachedClient(client0 => new MockableQuotaArmClient(client0));
+        }
+
+        private static MockableQuotaManagementGroupResource GetMockableQuotaManagementGroupResource(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new MockableQuotaManagementGroupResource(client, resource.Id));
         }
 
         private static MockableQuotaTenantResource GetMockableQuotaTenantResource(ArmResource resource)
@@ -59,7 +65,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -103,7 +109,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -209,7 +215,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -271,7 +277,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -310,7 +316,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -334,6 +340,158 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableQuotaArmClient(client).GetQuotaRequestDetail(scope, id, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GroupQuotaEntityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaEntityResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GroupQuotaEntityResource"/> object. </returns>
+        public static GroupQuotaEntityResource GetGroupQuotaEntityResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetGroupQuotaEntityResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GroupQuotaSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GroupQuotaSubscriptionResource"/> object. </returns>
+        public static GroupQuotaSubscriptionResource GetGroupQuotaSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetGroupQuotaSubscriptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GroupQuotaSubscriptionRequestStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaSubscriptionRequestStatusResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaSubscriptionRequestStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaSubscriptionRequestStatusResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> object. </returns>
+        public static GroupQuotaSubscriptionRequestStatusResource GetGroupQuotaSubscriptionRequestStatusResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetGroupQuotaSubscriptionRequestStatusResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GroupQuotaLimitResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaLimitResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaLimitResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaLimitResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GroupQuotaLimitResource"/> object. </returns>
+        public static GroupQuotaLimitResource GetGroupQuotaLimitResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetGroupQuotaLimitResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GroupQuotaRequestStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaRequestStatusResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaRequestStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaRequestStatusResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GroupQuotaRequestStatusResource"/> object. </returns>
+        public static GroupQuotaRequestStatusResource GetGroupQuotaRequestStatusResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetGroupQuotaRequestStatusResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionQuotaAllocationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionQuotaAllocationResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionQuotaAllocationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetSubscriptionQuotaAllocationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionQuotaAllocationResource"/> object. </returns>
+        public static SubscriptionQuotaAllocationResource GetSubscriptionQuotaAllocationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetSubscriptionQuotaAllocationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="QuotaAllocationRequestStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QuotaAllocationRequestStatusResource.CreateResourceIdentifier" /> to create a <see cref="QuotaAllocationRequestStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaAllocationRequestStatusResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="QuotaAllocationRequestStatusResource"/> object. </returns>
+        public static QuotaAllocationRequestStatusResource GetQuotaAllocationRequestStatusResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetQuotaAllocationRequestStatusResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GroupQuotaEnforcementResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaEnforcementResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaEnforcementResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaEnforcementResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GroupQuotaEnforcementResource"/> object. </returns>
+        public static GroupQuotaEnforcementResource GetGroupQuotaEnforcementResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetGroupQuotaEnforcementResource(id);
         }
 
         /// <summary>
@@ -394,6 +552,572 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
+        /// Gets a collection of GroupQuotaEntityResources in the ManagementGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetGroupQuotaEntities()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of GroupQuotaEntityResources and their operations over a GroupQuotaEntityResource. </returns>
+        public static GroupQuotaEntityCollection GetGroupQuotaEntities(this ManagementGroupResource managementGroupResource)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetGroupQuotaEntities();
+        }
+
+        /// <summary>
+        /// Gets the GroupQuotas for the name passed. It will return the GroupQuotas properties only. The details on group quota can be access from the group quota APIs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetGroupQuotaEntityAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> or <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<GroupQuotaEntityResource>> GetGroupQuotaEntityAsync(this ManagementGroupResource managementGroupResource, string groupQuotaName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableQuotaManagementGroupResource(managementGroupResource).GetGroupQuotaEntityAsync(groupQuotaName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the GroupQuotas for the name passed. It will return the GroupQuotas properties only. The details on group quota can be access from the group quota APIs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetGroupQuotaEntity(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> or <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<GroupQuotaEntityResource> GetGroupQuotaEntity(this ManagementGroupResource managementGroupResource, string groupQuotaName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetGroupQuotaEntity(groupQuotaName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SubscriptionQuotaAllocationResources in the ManagementGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetSubscriptionQuotaAllocations(string,string)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/>, <paramref name="subscriptionId"/> or <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of SubscriptionQuotaAllocationResources and their operations over a SubscriptionQuotaAllocationResource. </returns>
+        public static SubscriptionQuotaAllocationCollection GetSubscriptionQuotaAllocations(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocations(subscriptionId, groupQuotaName);
+        }
+
+        /// <summary>
+        /// Gets Quota allocated to a subscription for the specific Resource Provider, Location, ResourceName. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocations/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaSubscriptionAllocation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionQuotaAllocationResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetSubscriptionQuotaAllocationAsync(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceName"> Resource name. </param>
+        /// <param name="filter">
+        /// | Field | Supported operators
+        /// |---------------------|------------------------
+        ///
+        ///  location eq {location}
+        ///  Example: $filter=location eq eastus
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceName"/> or <paramref name="filter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionQuotaAllocationResource>> GetSubscriptionQuotaAllocationAsync(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceName, string filter, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableQuotaManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocationAsync(subscriptionId, groupQuotaName, resourceName, filter, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets Quota allocated to a subscription for the specific Resource Provider, Location, ResourceName. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocations/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaSubscriptionAllocation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionQuotaAllocationResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetSubscriptionQuotaAllocation(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceName"> Resource name. </param>
+        /// <param name="filter">
+        /// | Field | Supported operators
+        /// |---------------------|------------------------
+        ///
+        ///  location eq {location}
+        ///  Example: $filter=location eq eastus
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceName"/> or <paramref name="filter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionQuotaAllocationResource> GetSubscriptionQuotaAllocation(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceName, string filter, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocation(subscriptionId, groupQuotaName, resourceName, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of QuotaAllocationRequestStatusResources in the ManagementGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetQuotaAllocationRequestStatuses()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of QuotaAllocationRequestStatusResources and their operations over a QuotaAllocationRequestStatusResource. </returns>
+        public static QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(this ManagementGroupResource managementGroupResource)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetQuotaAllocationRequestStatuses();
+        }
+
+        /// <summary>
+        /// Get the quota allocation request status for the subscriptionId by allocationId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocationRequests/{allocationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaSubscriptionAllocationRequest_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetQuotaAllocationRequestStatusAsync(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="allocationId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string allocationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableQuotaManagementGroupResource(managementGroupResource).GetQuotaAllocationRequestStatusAsync(subscriptionId, groupQuotaName, allocationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the quota allocation request status for the subscriptionId by allocationId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocationRequests/{allocationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaSubscriptionAllocationRequest_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetQuotaAllocationRequestStatus(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="allocationId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string allocationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetQuotaAllocationRequestStatus(subscriptionId, groupQuotaName, allocationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaSubscriptionAllocationRequest_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetQuotaAllocationRequestStatusesByResourceProvider(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="filter">
+        /// | Field | Supported operators
+        /// |---------------------|------------------------
+        ///
+        ///  location eq {location}
+        ///  Example: $filter=location eq eastus
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="filter"/> is null. </exception>
+        /// <returns> An async collection of <see cref="QuotaAllocationRequestStatusResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatusesByResourceProviderAsync(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName, string filter, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetQuotaAllocationRequestStatusesByResourceProviderAsync(subscriptionId, groupQuotaName, resourceProviderName, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaSubscriptionAllocationRequest_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetQuotaAllocationRequestStatusesByResourceProvider(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="filter">
+        /// | Field | Supported operators
+        /// |---------------------|------------------------
+        ///
+        ///  location eq {location}
+        ///  Example: $filter=location eq eastus
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="filter"/> is null. </exception>
+        /// <returns> A collection of <see cref="QuotaAllocationRequestStatusResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatusesByResourceProvider(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName, string filter, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetQuotaAllocationRequestStatusesByResourceProvider(subscriptionId, groupQuotaName, resourceProviderName, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Request to assign quota from group quota to a specific Subscription. The assign GroupQuota to subscriptions or reduce the quota allocated to subscription to give back the unused quota ( quota &gt;= usages) to the groupQuota. So, this API can be used to assign Quota to subscriptions and assign back unused quota to group quota, which can be assigned to another subscriptions in the GroupQuota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaSubscriptionAllocationRequest_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.CreateOrUpdateGroupQuotaSubscriptionAllocationRequest(WaitUntil,string,string,string,string,QuotaAllocationRequestStatusData,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="resourceName"> Resource name. </param>
+        /// <param name="data"> Quota requests payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        public static async Task<ArmOperation<QuotaAllocationRequestStatusResource>> CreateOrUpdateGroupQuotaSubscriptionAllocationRequestAsync(this ManagementGroupResource managementGroupResource, WaitUntil waitUntil, string subscriptionId, string groupQuotaName, string resourceProviderName, string resourceName, QuotaAllocationRequestStatusData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableQuotaManagementGroupResource(managementGroupResource).CreateOrUpdateGroupQuotaSubscriptionAllocationRequestAsync(waitUntil, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Request to assign quota from group quota to a specific Subscription. The assign GroupQuota to subscriptions or reduce the quota allocated to subscription to give back the unused quota ( quota &gt;= usages) to the groupQuota. So, this API can be used to assign Quota to subscriptions and assign back unused quota to group quota, which can be assigned to another subscriptions in the GroupQuota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaSubscriptionAllocationRequest_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.CreateOrUpdateGroupQuotaSubscriptionAllocationRequest(WaitUntil,string,string,string,string,QuotaAllocationRequestStatusData,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="resourceName"> Resource name. </param>
+        /// <param name="data"> Quota requests payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        public static ArmOperation<QuotaAllocationRequestStatusResource> CreateOrUpdateGroupQuotaSubscriptionAllocationRequest(this ManagementGroupResource managementGroupResource, WaitUntil waitUntil, string subscriptionId, string groupQuotaName, string resourceProviderName, string resourceName, QuotaAllocationRequestStatusData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).CreateOrUpdateGroupQuotaSubscriptionAllocationRequest(waitUntil, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data, cancellationToken);
+        }
+
+        /// <summary>
+        /// Request to assign quota from group quota to a specific Subscription. The assign GroupQuota to subscriptions or reduce the quota allocated to subscription to give back the unused quota ( quota &gt;= usages) to the groupQuota. So, this API can be used to assign Quota to subscriptions and assign back unused quota to group quota, which can be assigned to another subscriptions in the GroupQuota. User can collect unused quotas from multiple subscriptions within the groupQuota and assign the groupQuota to the subscription, where it's needed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaSubscriptionAllocationRequest_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.UpdateGroupQuotaSubscriptionAllocationRequest(WaitUntil,string,string,string,string,QuotaAllocationRequestStatusData,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="resourceName"> Resource name. </param>
+        /// <param name="data"> Quota requests payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        public static async Task<ArmOperation<QuotaAllocationRequestStatusResource>> UpdateGroupQuotaSubscriptionAllocationRequestAsync(this ManagementGroupResource managementGroupResource, WaitUntil waitUntil, string subscriptionId, string groupQuotaName, string resourceProviderName, string resourceName, QuotaAllocationRequestStatusData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableQuotaManagementGroupResource(managementGroupResource).UpdateGroupQuotaSubscriptionAllocationRequestAsync(waitUntil, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Request to assign quota from group quota to a specific Subscription. The assign GroupQuota to subscriptions or reduce the quota allocated to subscription to give back the unused quota ( quota &gt;= usages) to the groupQuota. So, this API can be used to assign Quota to subscriptions and assign back unused quota to group quota, which can be assigned to another subscriptions in the GroupQuota. User can collect unused quotas from multiple subscriptions within the groupQuota and assign the groupQuota to the subscription, where it's needed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaSubscriptionAllocationRequest_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.UpdateGroupQuotaSubscriptionAllocationRequest(WaitUntil,string,string,string,string,QuotaAllocationRequestStatusData,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="resourceName"> Resource name. </param>
+        /// <param name="data"> Quota requests payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        public static ArmOperation<QuotaAllocationRequestStatusResource> UpdateGroupQuotaSubscriptionAllocationRequest(this ManagementGroupResource managementGroupResource, WaitUntil waitUntil, string subscriptionId, string groupQuotaName, string resourceProviderName, string resourceName, QuotaAllocationRequestStatusData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).UpdateGroupQuotaSubscriptionAllocationRequest(waitUntil, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data, cancellationToken);
+        }
+
+        /// <summary>
         /// List all the operations supported by the Microsoft.Quota resource provider.
         /// <list type="bullet">
         /// <item>
@@ -406,7 +1130,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -438,7 +1162,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// </list>
         /// <item>

@@ -3,9 +3,12 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -28,5 +31,11 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Volume name. </summary>
         public string VolumeName { get; }
+
+        /// <summary> ResourceId used to identify the backup policy. </summary>
+        public string BackupPolicyResourceId
+        {
+            get { return BackupPolicyArmResourceId?.ToString();}
+        }
     }
 }

@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("allowPublicAccessWhenBehindVnet"u8);
                 writer.WriteBooleanValue(AllowPublicAccessWhenBehindVnet.Value);
             }
+            if (Optional.IsDefined(AllowRoleAssignmentOnRG))
+            {
+                writer.WritePropertyName("allowRoleAssignmentOnRG"u8);
+                writer.WriteBooleanValue(AllowRoleAssignmentOnRG.Value);
+            }
             if (Optional.IsDefined(ApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
@@ -129,6 +134,21 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("enableDataIsolation"u8);
                 writer.WriteBooleanValue(EnableDataIsolation.Value);
             }
+            if (Optional.IsDefined(EnableServiceSideCMKEncryption))
+            {
+                writer.WritePropertyName("enableServiceSideCMKEncryption"u8);
+                writer.WriteBooleanValue(EnableServiceSideCMKEncryption.Value);
+            }
+            if (Optional.IsDefined(EnableSimplifiedCmk))
+            {
+                writer.WritePropertyName("enableSimplifiedCmk"u8);
+                writer.WriteBooleanValue(EnableSimplifiedCmk.Value);
+            }
+            if (Optional.IsDefined(EnableSoftwareBillOfMaterials))
+            {
+                writer.WritePropertyName("enableSoftwareBillOfMaterials"u8);
+                writer.WriteBooleanValue(EnableSoftwareBillOfMaterials.Value);
+            }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
@@ -168,6 +188,16 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 writer.WritePropertyName("imageBuildCompute"u8);
                 writer.WriteStringValue(ImageBuildCompute);
+            }
+            if (Optional.IsCollectionDefined(IPAllowlist))
+            {
+                writer.WritePropertyName("ipAllowlist"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPAllowlist)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(KeyVault))
             {
@@ -228,6 +258,11 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccessType.Value.ToString());
+            }
+            if (Optional.IsDefined(ServerlessComputeSettings))
+            {
+                writer.WritePropertyName("serverlessComputeSettings"u8);
+                writer.WriteObjectValue(ServerlessComputeSettings, options);
             }
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
@@ -348,6 +383,7 @@ namespace Azure.ResourceManager.MachineLearning
             ResourceType type = default;
             SystemData systemData = default;
             bool? allowPublicAccessWhenBehindVnet = default;
+            bool? allowRoleAssignmentOnRG = default;
             string applicationInsights = default;
             IList<string> associatedWorkspaces = default;
             IList<string> containerRegistries = default;
@@ -355,6 +391,9 @@ namespace Azure.ResourceManager.MachineLearning
             string description = default;
             Uri discoveryUrl = default;
             bool? enableDataIsolation = default;
+            bool? enableServiceSideCMKEncryption = default;
+            bool? enableSimplifiedCmk = default;
+            bool? enableSoftwareBillOfMaterials = default;
             MachineLearningEncryptionSetting encryption = default;
             IList<string> existingWorkspaces = default;
             FeatureStoreSettings featureStoreSettings = default;
@@ -362,6 +401,7 @@ namespace Azure.ResourceManager.MachineLearning
             bool? hbiWorkspace = default;
             ResourceIdentifier hubResourceId = default;
             string imageBuildCompute = default;
+            IList<string> ipAllowlist = default;
             string keyVault = default;
             IList<string> keyVaults = default;
             ManagedNetworkSettings managedNetwork = default;
@@ -372,6 +412,7 @@ namespace Azure.ResourceManager.MachineLearning
             int? privateLinkCount = default;
             MachineLearningProvisioningState? provisioningState = default;
             MachineLearningPublicNetworkAccessType? publicNetworkAccess = default;
+            ServerlessComputeSettings serverlessComputeSettings = default;
             ServiceManagedResourcesSettings serviceManagedResourcesSettings = default;
             string serviceProvisionedResourceGroup = default;
             IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = default;
@@ -473,6 +514,15 @@ namespace Azure.ResourceManager.MachineLearning
                             allowPublicAccessWhenBehindVnet = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("allowRoleAssignmentOnRG"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowRoleAssignmentOnRG = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("applicationInsights"u8))
                         {
                             applicationInsights = property0.Value.GetString();
@@ -534,6 +584,33 @@ namespace Azure.ResourceManager.MachineLearning
                             enableDataIsolation = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("enableServiceSideCMKEncryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableServiceSideCMKEncryption = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableSimplifiedCmk"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableSimplifiedCmk = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableSoftwareBillOfMaterials"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableSoftwareBillOfMaterials = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("encryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -592,6 +669,20 @@ namespace Azure.ResourceManager.MachineLearning
                         if (property0.NameEquals("imageBuildCompute"u8))
                         {
                             imageBuildCompute = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("ipAllowlist"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            ipAllowlist = array;
                             continue;
                         }
                         if (property0.NameEquals("keyVault"u8))
@@ -684,6 +775,15 @@ namespace Azure.ResourceManager.MachineLearning
                                 continue;
                             }
                             publicNetworkAccess = new MachineLearningPublicNetworkAccessType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("serverlessComputeSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serverlessComputeSettings = ServerlessComputeSettings.DeserializeServerlessComputeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceManagedResourcesSettings"u8))
@@ -808,6 +908,7 @@ namespace Azure.ResourceManager.MachineLearning
                 kind,
                 sku,
                 allowPublicAccessWhenBehindVnet,
+                allowRoleAssignmentOnRG,
                 applicationInsights,
                 associatedWorkspaces ?? new ChangeTrackingList<string>(),
                 containerRegistries ?? new ChangeTrackingList<string>(),
@@ -815,6 +916,9 @@ namespace Azure.ResourceManager.MachineLearning
                 description,
                 discoveryUrl,
                 enableDataIsolation,
+                enableServiceSideCMKEncryption,
+                enableSimplifiedCmk,
+                enableSoftwareBillOfMaterials,
                 encryption,
                 existingWorkspaces ?? new ChangeTrackingList<string>(),
                 featureStoreSettings,
@@ -822,6 +926,7 @@ namespace Azure.ResourceManager.MachineLearning
                 hbiWorkspace,
                 hubResourceId,
                 imageBuildCompute,
+                ipAllowlist ?? new ChangeTrackingList<string>(),
                 keyVault,
                 keyVaults ?? new ChangeTrackingList<string>(),
                 managedNetwork,
@@ -832,6 +937,7 @@ namespace Azure.ResourceManager.MachineLearning
                 privateLinkCount,
                 provisioningState,
                 publicNetworkAccess,
+                serverlessComputeSettings,
                 serviceManagedResourcesSettings,
                 serviceProvisionedResourceGroup,
                 sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>(),

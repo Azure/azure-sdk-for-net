@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.ProgrammableConnectivity
 {
     // Data plane generated client.
-    /// <summary> The ProgrammableConnectivity service client. </summary>
+    /// <summary> Azure Programmable Connectivity (APC) provides a unified interface to the Network APIs of multiple Telecom Operators. Note that Operators may deprecate a Network API with less advance notice than the Azure standard, in which case APC will also deprecate that Network API. </summary>
     public partial class ProgrammableConnectivityClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com//.default" };

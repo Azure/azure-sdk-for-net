@@ -164,6 +164,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(RequiredResourceProviders))
+            {
+                writer.WritePropertyName("requiredResourceProviders"u8);
+                writer.WriteStartObject();
+                foreach (var item in RequiredResourceProviders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsCollectionDefined(ResourceLock))
             {
                 writer.WritePropertyName("resourceLock"u8);
@@ -277,6 +300,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, BinaryData> keyVault = default;
             IDictionary<string, BinaryData> nsg = default;
             IDictionary<string, BinaryData> others = default;
+            IDictionary<string, BinaryData> requiredResourceProviders = default;
             IDictionary<string, BinaryData> resourceLock = default;
             IDictionary<string, BinaryData> storageAccount = default;
             IDictionary<string, BinaryData> udr = default;
@@ -410,6 +434,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     others = dictionary;
                     continue;
                 }
+                if (property.NameEquals("requiredResourceProviders"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    requiredResourceProviders = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("resourceLock"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -486,6 +531,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 keyVault ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 nsg ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 others ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                requiredResourceProviders ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 resourceLock ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 storageAccount ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 udr ?? new ChangeTrackingDictionary<string, BinaryData>(),

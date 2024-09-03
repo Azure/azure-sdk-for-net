@@ -36,14 +36,17 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("buildMode"u8);
                 writer.WriteStringValue(BuildMode.Value.ToString());
             }
-            writer.WritePropertyName("fieldSchema"u8);
-            writer.WriteStartObject();
-            foreach (var item in FieldSchema)
+            if (Optional.IsCollectionDefined(FieldSchema))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                writer.WritePropertyName("fieldSchema"u8);
+                writer.WriteStartObject();
+                foreach (var item in FieldSchema)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             if (Optional.IsCollectionDefined(FieldConfidence))
             {
                 writer.WritePropertyName("fieldConfidence"u8);
@@ -54,6 +57,41 @@ namespace Azure.AI.DocumentIntelligence
                     writer.WriteNumberValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ModelId))
+            {
+                writer.WritePropertyName("modelId"u8);
+                writer.WriteStringValue(ModelId);
+            }
+            if (Optional.IsDefined(ConfidenceThreshold))
+            {
+                writer.WritePropertyName("confidenceThreshold"u8);
+                writer.WriteNumberValue(ConfidenceThreshold.Value);
+            }
+            if (Optional.IsCollectionDefined(Features))
+            {
+                writer.WritePropertyName("features"u8);
+                writer.WriteStartArray();
+                foreach (var item in Features)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(QueryFields))
+            {
+                writer.WritePropertyName("queryFields"u8);
+                writer.WriteStartArray();
+                foreach (var item in QueryFields)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MaxDocumentsToAnalyze))
+            {
+                writer.WritePropertyName("maxDocumentsToAnalyze"u8);
+                writer.WriteNumberValue(MaxDocumentsToAnalyze.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,8 +133,13 @@ namespace Azure.AI.DocumentIntelligence
             }
             string description = default;
             DocumentBuildMode? buildMode = default;
-            IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = default;
-            IReadOnlyDictionary<string, float> fieldConfidence = default;
+            IDictionary<string, DocumentFieldSchema> fieldSchema = default;
+            IDictionary<string, float> fieldConfidence = default;
+            string modelId = default;
+            float? confidenceThreshold = default;
+            IList<DocumentAnalysisFeature> features = default;
+            IList<string> queryFields = default;
+            int? maxDocumentsToAnalyze = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,6 +160,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("fieldSchema"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, DocumentFieldSchema> dictionary = new Dictionary<string, DocumentFieldSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -139,13 +186,74 @@ namespace Azure.AI.DocumentIntelligence
                     fieldConfidence = dictionary;
                     continue;
                 }
+                if (property.NameEquals("modelId"u8))
+                {
+                    modelId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("confidenceThreshold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    confidenceThreshold = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("features"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentAnalysisFeature> array = new List<DocumentAnalysisFeature>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new DocumentAnalysisFeature(item.GetString()));
+                    }
+                    features = array;
+                    continue;
+                }
+                if (property.NameEquals("queryFields"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    queryFields = array;
+                    continue;
+                }
+                if (property.NameEquals("maxDocumentsToAnalyze"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxDocumentsToAnalyze = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence ?? new ChangeTrackingDictionary<string, float>(), serializedAdditionalRawData);
+            return new DocumentTypeDetails(
+                description,
+                buildMode,
+                fieldSchema ?? new ChangeTrackingDictionary<string, DocumentFieldSchema>(),
+                fieldConfidence ?? new ChangeTrackingDictionary<string, float>(),
+                modelId,
+                confidenceThreshold,
+                features ?? new ChangeTrackingList<DocumentAnalysisFeature>(),
+                queryFields ?? new ChangeTrackingList<string>(),
+                maxDocumentsToAnalyze,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentTypeDetails>.Write(ModelReaderWriterOptions options)

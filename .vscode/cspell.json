@@ -47,7 +47,6 @@
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
-    "sdk/monitor/Microsoft.Azure.Management.Monitor/**/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
@@ -211,7 +210,11 @@
       "words": [
         "cref",
         "imds",
-        "IMDS"
+        "IMDS",
+        "Wdac",
+        "Adou",
+        "Drtm",
+        "Hvci"
       ]
     },
     {
@@ -265,6 +268,14 @@
       ]
     },
     {
+      "filename": "**/sdk/computefleet/**/*.cs",
+      "words": [
+        "mbps",
+        "unattend",
+        "nvme"
+      ]
+    },
+    {
       "filename": "**/sdk/confidentialledger/**/*.cs",
       "words": [
         "cbor",
@@ -277,10 +288,35 @@
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
+        "armn",
+        "bangla",
+        "dbauth",
+        "ethi",
+        "gebr",
+        "geor",
+        "grek",
+        "gujr",
+        "gurmukhi",
+        "hebr",
+        "inclusivity",
+        "jpan",
+        "khmr",
+        "knda",
+        "laoo",
+        "mlym",
+        "mymr",
         "nigiri",
-        "qnas",
+        "odia",
+        "orya",
         "petabit",
-        "Picometer"
+        "picometer",
+        "qnas",
+        "regon",
+        "taml",
+        "telu",
+        "thaa",
+        "thaana",
+        "tibt"
       ]
     },
     {
@@ -380,6 +416,13 @@
       "filename": "**/sdk/datadog/**/*.cs",
       "words": [
         "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/devopsinfrastructure/**/*.cs",
+      "words": [
+        "Reimage",
+        "Reimaging"
       ]
     },
     {
@@ -571,6 +614,17 @@
         "SSDZRS",
         "HDDLRS",
         "trino"
+      ]
+    },
+    {
+      "filename": "**/sdk/hdinsightcontainers/**/*.cs",
+      "words": [
+        "trino",
+        "flink",
+        "llap",
+        "SSDLRS",
+        "SSDZRS",
+        "HDDLRS"
       ]
     },
     {
@@ -799,6 +853,14 @@
         "mbps",
         "gshut",
         "dscp"
+      ]
+    },
+    {
+      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
+      "words": [
+        "Posix",
+        "posix",
+        "POSIX"
       ]
     },
     {
@@ -1219,7 +1281,9 @@
         "Rehydrated",
         "Undelete",
         "Aadkerb",
-        "Nfsv"
+        "Mibps",
+        "Nfsv",
+        "Sddl"
       ]
     },
     {
@@ -1434,6 +1498,16 @@
         "nfvi",
         "NFVIs",
         "nfvis"
+      ]
+    },
+    {
+      "filename": "**/sdk/healthdataaiservices/**/*",
+      "words": [
+        "Deidentification",
+        "Deidentify",
+        "Deidentified",
+        "Deid",
+        "HEALTHDATAAISERVICES"
       ]
     },
     {

@@ -26,10 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Optional.IsCollectionDefined(NotificationTypes))
             {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                if (NotificationTypes != null)
+                {
+                    writer.WritePropertyName("notificationTypes"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NotificationTypes)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("notificationTypes");
+                }
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -89,20 +101,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MonitoringNotificationMode? mode = default;
+            IList<MonitoringNotificationType> notificationTypes = default;
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"u8))
+                if (property.NameEquals("notificationTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        notificationTypes = null;
                         continue;
                     }
-                    mode = new MonitoringNotificationMode(property.Value.GetString());
+                    List<MonitoringNotificationType> array = new List<MonitoringNotificationType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new MonitoringNotificationType(item.GetString()));
+                    }
+                    notificationTypes = array;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -131,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownMonitoringSignalBase(mode, properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData);
+            return new UnknownMonitoringSignalBase(notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringSignalBase>.Write(ModelReaderWriterOptions options)

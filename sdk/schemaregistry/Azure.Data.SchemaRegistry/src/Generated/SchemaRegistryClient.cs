@@ -32,31 +32,35 @@ namespace Azure.Data.SchemaRegistry
 
         /// <summary> Get a registered schema by its unique ID reference. </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
+        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accept"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </remarks>
-        internal virtual async Task<Response<BinaryData>> GetSchemaByIdAsync(string id, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<BinaryData>> GetSchemaByIdAsync(string id, string accept, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(accept, nameof(accept));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSchemaByIdAsync(id, context).ConfigureAwait(false);
+            Response response = await GetSchemaByIdAsync(id, accept, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
 
         /// <summary> Get a registered schema by its unique ID reference. </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
+        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accept"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </remarks>
-        internal virtual Response<BinaryData> GetSchemaById(string id, CancellationToken cancellationToken = default)
+        internal virtual Response<BinaryData> GetSchemaById(string id, string accept, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(accept, nameof(accept));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSchemaById(id, context);
+            Response response = GetSchemaById(id, accept, context);
             return Response.FromValue(response.Content, response);
         }
 
@@ -70,26 +74,28 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSchemaByIdAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSchemaByIdAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
+        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accept"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSchemaByIdAsync(string id, RequestContext context)
+        internal virtual async Task<Response> GetSchemaByIdAsync(string id, string accept, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(accept, nameof(accept));
 
             using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaByIdRequest(id, context);
+                using HttpMessage message = CreateGetSchemaByIdRequest(id, accept, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -109,26 +115,28 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSchemaById(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSchemaById(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
+        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accept"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSchemaById(string id, RequestContext context)
+        internal virtual Response GetSchemaById(string id, string accept, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(accept, nameof(accept));
 
             using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaByIdRequest(id, context);
+                using HttpMessage message = CreateGetSchemaByIdRequest(id, accept, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -142,17 +150,19 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="schemaVersion"> Version number of specific schema. </param>
+        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="accept"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Gets one specific version of one schema. </remarks>
-        internal virtual async Task<Response<BinaryData>> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<BinaryData>> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, string accept, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNull(accept, nameof(accept));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSchemaByVersionAsync(groupName, schemaName, schemaVersion, context).ConfigureAwait(false);
+            Response response = await GetSchemaByVersionAsync(groupName, schemaName, schemaVersion, accept, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
 
@@ -160,17 +170,19 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="schemaVersion"> Version number of specific schema. </param>
+        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="accept"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Gets one specific version of one schema. </remarks>
-        internal virtual Response<BinaryData> GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        internal virtual Response<BinaryData> GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, string accept, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNull(accept, nameof(accept));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSchemaByVersion(groupName, schemaName, schemaVersion, context);
+            Response response = GetSchemaByVersion(groupName, schemaName, schemaVersion, accept, context);
             return Response.FromValue(response.Content, response);
         }
 
@@ -184,7 +196,7 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSchemaByVersionAsync(string,string,int,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSchemaByVersionAsync(string,string,int,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -192,21 +204,23 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="schemaVersion"> Version number of specific schema. </param>
+        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="accept"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, RequestContext context)
+        internal virtual async Task<Response> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, string accept, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNull(accept, nameof(accept));
 
             using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaByVersion");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, context);
+                using HttpMessage message = CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, accept, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -226,7 +240,7 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSchemaByVersion(string,string,int,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSchemaByVersion(string,string,int,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -234,21 +248,23 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="schemaVersion"> Version number of specific schema. </param>
+        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="accept"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, RequestContext context)
+        internal virtual Response GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, string accept, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNull(accept, nameof(accept));
 
             using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaByVersion");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, context);
+                using HttpMessage message = CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, accept, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -724,7 +740,7 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        internal HttpMessage CreateGetSchemaByIdRequest(string id, RequestContext context)
+        internal HttpMessage CreateGetSchemaByIdRequest(string id, string accept, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -736,11 +752,11 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; serialization=Avro");
+            request.Headers.Add("Accept", accept);
             return message;
         }
 
-        internal HttpMessage CreateGetSchemaByVersionRequest(string groupName, string schemaName, int schemaVersion, RequestContext context)
+        internal HttpMessage CreateGetSchemaByVersionRequest(string groupName, string schemaName, int schemaVersion, string accept, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -756,7 +772,7 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendPath(schemaVersion, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; serialization=Avro");
+            request.Headers.Add("Accept", accept);
             return message;
         }
 

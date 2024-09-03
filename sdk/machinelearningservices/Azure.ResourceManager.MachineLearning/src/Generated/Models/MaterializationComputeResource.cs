@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Dto object representing compute resource. </summary>
+    /// <summary> DTO object representing compute resource. </summary>
     internal partial class MaterializationComputeResource
     {
         /// <summary>

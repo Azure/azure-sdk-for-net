@@ -108,12 +108,12 @@ namespace Azure.Storage.Files.Shares.Tests
             switch (mode)
             {
                 case ModifyDataMode.Replace:
-                    await client.SetHttpHeadersAsync(newSize: data.Length);
+                    await client.SetHttpHeadersAsync(new ShareFileSetHttpHeadersOptions() { NewSize = data.Length});
                     await client.UploadAsync(data);
                     break;
                 case ModifyDataMode.Append:
                     long currentBlobLength = (await client.GetPropertiesAsync()).Value.ContentLength;
-                    await client.SetHttpHeadersAsync(newSize: currentBlobLength + data.Length);
+                    await client.SetHttpHeadersAsync(new ShareFileSetHttpHeadersOptions() { NewSize = currentBlobLength + data.Length });
                     await client.UploadRangeAsync(new HttpRange(currentBlobLength, data.Length),  data);
                     break;
                 default:

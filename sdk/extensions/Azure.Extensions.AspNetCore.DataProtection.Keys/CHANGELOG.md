@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.2.4 (2024-08-16)
+
+### Other Changes
+
+- Updated reference to `Azure.Security.KeyVault.Keys` v4.6.0 to mitigate a reported SSRF vulnerability.
+
 ## 1.2.3 (2024-02-12)
 
 ### Bugs Fixed

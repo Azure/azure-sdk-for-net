@@ -1,18 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseShares;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Models;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Tests;
-using BenchmarkDotNet.Toolchains.Roslyn;
 using Moq;
 using NUnit.Framework;
 
