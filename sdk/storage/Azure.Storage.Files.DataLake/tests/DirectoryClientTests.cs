@@ -6470,7 +6470,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             TestHelper.AssertExpectedException(
                 () => directoryClient.GenerateSasUri(sasBuilder),
-                new InvalidOperationException("SAS Uri cannot be generated. Expected builder.IsDirectory to be set to true to generatethe respective SAS for the client, GetType"));
+                new InvalidOperationException("SAS Uri cannot be generated. Expected builder.IsDirectory to be set to true to generate the respective SAS for the client, GetType"));
         }
         #endregion
 
@@ -6887,7 +6887,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             TestHelper.AssertExpectedException(
                 () => directoryClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey),
-                new InvalidOperationException("SAS Uri cannot be generated. Expected builder.IsDirectory to be set to true to generatethe respective SAS for the client, GetType"));
+                new InvalidOperationException("SAS Uri cannot be generated. Expected builder.IsDirectory to be set to true to generate the respective SAS for the client, GetType"));
         }
         #endregion
 
