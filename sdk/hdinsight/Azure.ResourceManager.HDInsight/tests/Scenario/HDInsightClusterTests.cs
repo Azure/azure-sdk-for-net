@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.HDInsight.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using NUnit.Framework;
@@ -115,6 +117,38 @@ namespace Azure.ResourceManager.HDInsight.Tests
             Assert.AreEqual("addtagvalue", tag.Value);
         }
 
+        [RecordedTest]
+        public async Task UpdateManagedIdentity()
+        {
+            ResourceIdentifier resourceIdentifier = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/yuchen-devrp/providers/microsoft.managedidentity/userassignedidentities/hdiwasbmsi");
+            ResourceIdentifier resourceIdentifier2 = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/yuchen-ps-test/providers/microsoft.managedidentity/userassignedidentities/hdi-msi");
+
+            var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _clusterName, _storageAccountName, _containerName, _accessKey);
+
+            HDInsightClusterPatch patch = new HDInsightClusterPatch();
+            //patch.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
+            //await cluster.UpdateAsync(patch);
+
+            //cluster = await _clusterCollection.GetAsync(_clusterName);
+            //Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, cluster.Data.Identity.ManagedServiceIdentityType);
+
+            //patch.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
+            //patch.Identity.UserAssignedIdentities.Add(new ResourceIdentifier(resourceIdentifier), new UserAssignedIdentity());
+            //await cluster.UpdateAsync(patch);
+
+            //cluster = await _clusterCollection.GetAsync(_clusterName);
+            //Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, cluster.Data.Identity.ManagedServiceIdentityType);
+            //Assert.AreEqual(resourceIdentifier, cluster.Data.Identity.UserAssignedIdentities.First().Key);
+
+            patch.Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned");
+            patch.Identity.UserAssignedIdentities.Add(new ResourceIdentifier(resourceIdentifier), new UserAssignedIdentity());
+            patch.Identity.UserAssignedIdentities.Add(new ResourceIdentifier(resourceIdentifier2), new UserAssignedIdentity());
+            await cluster.UpdateAsync(patch);
+
+            cluster = await _clusterCollection.GetAsync(_clusterName);
+            Assert.AreEqual("SystemAssigned,UserAssigned", cluster.Data.Identity.ManagedServiceIdentityType.ToString());
+            Assert.AreEqual(2, cluster.Data.Identity.UserAssignedIdentities.Count);
+        }
         private void ValidateCluster(HDInsightClusterResource cluster)
         {
             Assert.IsNotNull(cluster);
