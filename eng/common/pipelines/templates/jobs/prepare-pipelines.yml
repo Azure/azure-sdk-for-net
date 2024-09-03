@@ -2,8 +2,10 @@ parameters:
   - name: Repository
     type: string
     default: $(Build.Repository.Name)
+## TODO Remove these convention options once all language repos are updated to remove the usages
   - name: Prefix
     type: string
+    default: ''
   - name: CIConventionOptions
     type: string
     default: ''
@@ -17,14 +19,59 @@ parameters:
     type: boolean
     default: false
 
+# Standard variable group ids for the Azure SDK repositories
+# AzureSDK_Maven_Release_Pipeline_Secrets: 1
+# AzureSDK_Nuget_Release_Pipeline_Secrets: 13
+# AzureSDK_CocoaPods_Release_Pipeline_Secrets: 98
+# NPM_Registry_Authentication: 24
+# Release_Secrets_for_GitHub: 58
+# Secrets_for_Resource_Provisioner: 64
+# APIReview_AutoCreate_Configurations: 93
+
 jobs:
-- job: PreparePipelines
+- job:
+  displayName: 'Prepare pipelines for ${{ parameters.Repository }}'
   pool:
-    name: azsdk-pool-mms-ubuntu-2204-general
-    vmImage: ubuntu-22.04
+    name: $(LINUXPOOL)
+    vmImage: $(LINUXVMIMAGE)
+
+  variables:
+    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-java') }}:
+      Prefix: java
+      InternalVariableGroups: '1 58 93'
+      TestVariableGroups: 64
+    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-android') }}:
+      Prefix: android
+      InternalVariableGroups: '1 58 93'
+    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-js') }}:
+      Prefix: js
+      InternalVariableGroups: '24 58 93'
+      TestVariableGroups: 64
+    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-python') }}:
+      Prefix: python
+      InternalVariableGroups: '58 93'
+      TestVariableGroups: 64
+    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-net') }}:
+      Prefix: net
+      InternalVariableGroups: '13 58 93'
+      TestVariableGroups: 64
+    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-cpp') }}:
+      Prefix: cpp
+      InternalVariableGroups: '58 93 64'
+    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-ios') }}:
+      Prefix: ios
+      InternalVariableGroups: '58 93 64 98'
+    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-go') }}:
+      Prefix: go
+      InternalVariableGroups: '58 93 64'
+      GenerateUnifiedWeekly: true
+
   steps:
     - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
       parameters:
+        Repositories:
+          - Name: ${{ parameters.Repository }}
+            WorkingDirectory: $(System.DefaultWorkingDirectory)
         Paths:
           - 'sdk/**/*.yml'
           - '!sdk/**/test-recordings/*'
@@ -33,183 +80,110 @@ jobs:
           - '!sdk/**/session-records/*'
     - template: /eng/common/pipelines/templates/steps/install-pipeline-generation.yml
     - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
-    # This covers our public repos.
-    - ${{ if not(endsWith(parameters.Repository, '-pr'))}}:
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'opensource-api-connection'
-          scriptType: pscore
-          scriptLocation: inlineScript
-          inlineScript: >
-            $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
-            --organization azure-sdk
-            --project public
-            --prefix ${{parameters.Prefix}}
-            --devopspath "\${{parameters.Prefix}}"
-            --path $(System.DefaultWorkingDirectory)/sdk
-            --endpoint Azure
-            --repository ${{parameters.Repository}}
-            --convention ci
-            --agentpool Hosted
-            --branch refs/heads/$(DefaultBranch)
-            --set-managed-variables
-            --debug
-            ${{parameters.CIConventionOptions}}
-        displayName: Create CI Pipelines for Public Repository
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'opensource-api-connection'
-          scriptType: pscore
-          scriptLocation: inlineScript
-          inlineScript: >
-            $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
-            --organization azure-sdk
-            --project internal
-            --prefix ${{parameters.Prefix}}
-            --devopspath "\${{parameters.Prefix}}"
-            --path $(System.DefaultWorkingDirectory)/sdk
-            --endpoint Azure
-            --repository ${{parameters.Repository}}
-            --convention up
-            --agentpool Hosted
-            --branch refs/heads/$(DefaultBranch)
-            --set-managed-variables
-            --debug
-            ${{parameters.UPConventionOptions}}
-        displayName: Create UP Pipelines for Public Repository
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'opensource-api-connection'
-          scriptType: pscore
-          scriptLocation: inlineScript
-          inlineScript: >
-            $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
-            --organization azure-sdk
-            --project internal
-            --prefix ${{parameters.Prefix}}
-            --devopspath "\${{parameters.Prefix}}"
-            --path $(System.DefaultWorkingDirectory)/sdk
-            --endpoint Azure
-            --repository ${{parameters.Repository}}
-            --convention tests
-            --agentpool Hosted
-            --branch refs/heads/$(DefaultBranch)
-            --set-managed-variables
-            --debug
-            ${{parameters.TestsConventionOptions}}
-        displayName: Create Live Test Pipelines for Public Repository
-        condition: and(succeeded(), ne('${{parameters.TestsConventionOptions}}',''))
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'opensource-api-connection'
-          scriptType: pscore
-          scriptLocation: inlineScript
-          inlineScript: >
-            $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
-            --organization azure-sdk
-            --project internal
-            --prefix ${{parameters.Prefix}}
-            --devopspath "\${{parameters.Prefix}}"
-            --path $(System.DefaultWorkingDirectory)/sdk
-            --endpoint Azure
-            --repository ${{parameters.Repository}}
-            --convention testsweekly
-            --agentpool Hosted
-            --branch refs/heads/$(DefaultBranch)
-            --set-managed-variables
-            --debug
-            ${{parameters.TestsConventionOptions}}
-        displayName: Create Weekly (Multi-Cloud) Live Test Pipelines for Public Repository
-        condition: and(succeeded(), ne('${{parameters.TestsConventionOptions}}',''))
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'opensource-api-connection'
-          scriptType: pscore
-          scriptLocation: inlineScript
-          inlineScript: >
-            $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
-            --organization azure-sdk
-            --project internal
-            --prefix ${{parameters.Prefix}}
-            --devopspath "\${{parameters.Prefix}}"
-            --path $(System.DefaultWorkingDirectory)/sdk
-            --endpoint Azure
-            --repository ${{parameters.Repository}}
-            --convention upweekly
-            --agentpool Hosted
-            --branch refs/heads/$(DefaultBranch)
-            --set-managed-variables
-            --debug
-            ${{parameters.UPConventionOptions}}
-        displayName: Create Weekly (Multi-Cloud) Unified Test Pipelines for Public Repository
-        condition: and(succeeded(), eq(${{parameters.GenerateUnifiedWeekly}},true))
-
-    # This covers our -pr repositories.
-    - ${{ if endsWith(parameters.Repository, '-pr')}}:
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'opensource-api-connection'
-          scriptType: pscore
-          scriptLocation: inlineScript
-          inlineScript: >
-            $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
-            --organization azure-sdk
-            --project internal
-            --prefix ${{parameters.Prefix}}-pr
-            --devopspath "\${{parameters.Prefix}}\pr"
-            --path $(System.DefaultWorkingDirectory)/sdk
-            --endpoint Azure
-            --repository ${{parameters.Repository}}
-            --convention ci
-            --agentpool Hosted
-            --branch refs/heads/$(DefaultBranch)
-            --set-managed-variables
-            --debug
-            --no-schedule
-            ${{parameters.CIConventionOptions}}
-        displayName: Create CI Pipelines for Private Repository
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'opensource-api-connection'
-          scriptType: pscore
-          scriptLocation: inlineScript
-          inlineScript: >
-            $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
-            --organization azure-sdk
-            --project internal
-            --prefix ${{parameters.Prefix}}-pr
-            --devopspath "\${{parameters.Prefix}}\pr"
-            --path $(System.DefaultWorkingDirectory)/sdk
-            --endpoint Azure
-            --repository ${{parameters.Repository}}
-            --convention up
-            --agentpool Hosted
-            --branch refs/heads/$(DefaultBranch)
-            --set-managed-variables
-            --debug
-            --no-schedule
-            ${{parameters.UPConventionOptions}}
-        displayName: Create UP Pipelines for Private Repository
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'opensource-api-connection'
-          scriptType: pscore
-          scriptLocation: inlineScript
-          inlineScript: >
-            $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
-            --organization azure-sdk
-            --project internal
-            --prefix ${{parameters.Prefix}}-pr
-            --devopspath "\${{parameters.Prefix}}\pr"
-            --path $(System.DefaultWorkingDirectory)/sdk
-            --endpoint Azure
-            --repository ${{parameters.Repository}}
-            --convention tests
-            --agentpool Hosted
-            --branch refs/heads/$(DefaultBranch)
-            --set-managed-variables
-            --debug
-            --no-schedule
-            ${{parameters.TestsConventionOptions}}
-        displayName: Create Live Test Pipelines for Private Repository
-        condition: and(succeeded(), ne('${{parameters.TestsConventionOptions}}',''))
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'opensource-api-connection'
+        scriptType: pscore
+        scriptLocation: inlineScript
+        inlineScript: >
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
+          --project public
+          --prefix $(Prefix)
+          --devopspath "\$(Prefix)"
+          --path $(System.DefaultWorkingDirectory)/sdk
+          --endpoint Azure
+          --repository ${{ parameters.Repository }}
+          --convention ci
+          --agentpool Hosted
+          --branch refs/heads/$(DefaultBranch)
+          --set-managed-variables
+          --debug
+      displayName: 'Generate public pipelines for: ${{ parameters.Repository }}'
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'opensource-api-connection'
+        scriptType: pscore
+        scriptLocation: inlineScript
+        inlineScript: >
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
+          --project internal
+          --prefix $(Prefix)
+          --devopspath "\$(Prefix)"
+          --path $(System.DefaultWorkingDirectory)/sdk
+          --endpoint Azure
+          --repository ${{ parameters.Repository }}
+          --convention up
+          --agentpool Hosted
+          --branch refs/heads/$(DefaultBranch)
+          --set-managed-variables
+          --debug
+          --variablegroups $(InternalVariableGroups) $(TestVariableGroups)
+      displayName: 'Generate internal pipelines for: ${{ parameters.Repository }}'
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'opensource-api-connection'
+        scriptType: pscore
+        scriptLocation: inlineScript
+        inlineScript: >
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
+          --project internal
+          --prefix $(Prefix)
+          --devopspath "\$(Prefix)"
+          --path $(System.DefaultWorkingDirectory)/sdk
+          --endpoint Azure
+          --repository ${{ parameters.Repository }}
+          --convention tests
+          --agentpool Hosted
+          --branch refs/heads/$(DefaultBranch)
+          --set-managed-variables
+          --debug
+          --variablegroups $(TestVariableGroups)
+      displayName: 'Generate test pipelines for: ${{ parameters.Repository }}'
+      condition: and(succeeded(), ne(variables['TestVariableGroups'],''))
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'opensource-api-connection'
+        scriptType: pscore
+        scriptLocation: inlineScript
+        inlineScript: >
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
+          --project internal
+          --prefix $(Prefix)
+          --devopspath "\$(Prefix)"
+          --path $(System.DefaultWorkingDirectory)/sdk
+          --endpoint Azure
+          --repository ${{ parameters.Repository }}
+          --convention testsweekly
+          --agentpool Hosted
+          --branch refs/heads/$(DefaultBranch)
+          --set-managed-variables
+          --debug
+          --variablegroups $(TestVariableGroups)
+      displayName: 'Generate weekly test pipelines (multi-cloud) for: ${{ parameters.Repository }}'
+      condition: and(succeeded(), ne(variables['TestVariableGroups'],''))
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'opensource-api-connection'
+        scriptType: pscore
+        scriptLocation: inlineScript
+        inlineScript: >
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
+          --project internal
+          --prefix $(Prefix)
+          --devopspath "\$(Prefix)"
+          --path $(System.DefaultWorkingDirectory)/sdk
+          --endpoint Azure
+          --repository ${{ parameters.Repository }}
+          --convention upweekly
+          --agentpool Hosted
+          --branch refs/heads/$(DefaultBranch)
+          --set-managed-variables
+          --debug
+          --variablegroups $(InternalVariableGroups) $(TestVariableGroups)
+      displayName: 'Generate weekly unified test pipelines (multi-cloud) for: ${{ parameters.Repository }}'
+      condition: and(succeeded(), ne(variables['GenerateUnifiedWeekly'],''))
