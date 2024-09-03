@@ -100,8 +100,8 @@
             "apiVersion": "[variables('authorizationApiVersion')]",
             "name": "[guid(concat(variables('cognitiveServiceUserRoleId'), variables('textAnalyticsBaseName')))]",
             "properties": {
-                "roleDefinitionId": "[variables('cognitiveServiceUserRoleId')]",
-                "principalId": "[parameters('testApplicationOid')]"
+              "principalId": "[parameters('testApplicationOid')]",
+              "roleDefinitionId": "[variables('cognitiveServiceUserRoleId')]"
             },
             "dependsOn": [
               "[variables('textAnalyticsBaseName')]"
@@ -110,14 +110,13 @@
         {
         "type": "Microsoft.CognitiveServices/accounts/providers/roleAssignments",
         "apiVersion": "[variables('authorizationApiVersion')]",
-        "name": "[format('{0}/Microsoft.Authorization/{1}', variables('healthInsightsName'), guid(variables('healthInsightsName')))]",
+        "name": "[format('{0}/Microsoft.Authorization/{1}', variables('textAnalyticsBaseName'), guid(variables('textAnalyticsBaseName')))]",
         "dependsOn": [
-          "[resourceId('Microsoft.CognitiveServices/accounts', variables('healthInsightsName'))]"
+          "[resourceId('Microsoft.CognitiveServices/accounts', variables('textAnalyticsBaseName'))]"
         ],
         "properties": {
           "principalId": "[parameters('testApplicationOid')]",
-          "roleDefinitionId": "[variables('cognitiveServiceUserRoleId')]",
-          "scope": "[variables('healthInsightsResourceId')]"
+          "roleDefinitionId": "[variables('cognitiveServiceUserRoleId')]"
         }
       }
     ],
