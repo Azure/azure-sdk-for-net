@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // invoke the operation and iterate over the result
             BillingAccountCollectionGetAllOptions options = new BillingAccountCollectionGetAllOptions() { };
-            await foreach (BillingAccountResource item in collection.GetAll(options))
+            await foreach (BillingAccountResource item in collection.GetAllAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // invoke the operation and iterate over the result
             BillingAccountCollectionGetAllOptions options = new BillingAccountCollectionGetAllOptions() { };
-            await foreach (BillingAccountResource item in collection.GetAll(options))
+            await foreach (BillingAccountResource item in collection.GetAllAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // invoke the operation and iterate over the result
             BillingAccountCollectionGetAllOptions options = new BillingAccountCollectionGetAllOptions() { Expand = "soldTo,enrollmentDetails/poNumber" };
-            await foreach (BillingAccountResource item in collection.GetAll(options))
+            await foreach (BillingAccountResource item in collection.GetAllAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
