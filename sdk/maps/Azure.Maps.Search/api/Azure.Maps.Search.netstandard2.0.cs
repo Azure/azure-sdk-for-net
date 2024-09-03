@@ -114,12 +114,6 @@ namespace Azure.Maps.Search.Models
         public string Iso { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    public partial class BaseOptions
-    {
-        public BaseOptions() { }
-        public Azure.Core.GeoJson.GeoPosition? Coordinates { get { throw null; } set { } }
-        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
-    }
     public partial class Boundary : Azure.Maps.Search.Models.GeoJsonFeature
     {
         internal Boundary() { }
@@ -313,7 +307,7 @@ namespace Azure.Maps.Search.Models
         public int? SuccessfulRequests { get { throw null; } }
         public int? TotalRequests { get { throw null; } }
     }
-    public partial class GeocodingQuery : Azure.Maps.Search.Models.BaseOptions
+    public partial class GeocodingQuery
     {
         public GeocodingQuery() { }
         public string AddressLine { get { throw null; } set { } }
@@ -321,8 +315,10 @@ namespace Azure.Maps.Search.Models
         public string AdminDistrict2 { get { throw null; } set { } }
         public string AdminDistrict3 { get { throw null; } set { } }
         public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoPosition? Coordinates { get { throw null; } set { } }
         public string CountryRegion { get { throw null; } set { } }
         public string Locality { get { throw null; } set { } }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
         public string OptionalId { get { throw null; } set { } }
         public string PostalCode { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
@@ -373,9 +369,11 @@ namespace Azure.Maps.Search.Models
         public string Copyright { get { throw null; } }
         public string SourceName { get { throw null; } }
     }
-    public partial class GetPolygonOptions : Azure.Maps.Search.Models.BaseOptions
+    public partial class GetPolygonOptions
     {
         public GetPolygonOptions() { }
+        public Azure.Core.GeoJson.GeoPosition? Coordinates { get { throw null; } set { } }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
         public Azure.Maps.Search.Models.ResolutionEnum? Resolution { get { throw null; } set { } }
         public Azure.Maps.Search.Models.BoundaryResultTypeEnum? ResultType { get { throw null; } set { } }
     }
