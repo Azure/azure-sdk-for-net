@@ -23,14 +23,20 @@ namespace Azure.Identity.Tests
         // It validates that ManagedIdentityCredential can acquire a token in an actual Azure Web App environment
         public async Task GetManagedIdentityToken(ManagedIdentityIdType idType)
         {
-            ManagedIdentityCredentialOptions options = idType switch
+            ManagedIdentityId managedIdentityId = idType switch
             {
-                ManagedIdentityIdType.ClientId => new ManagedIdentityCredentialOptions() { ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(TestEnvironment.VMUserAssignedManagedIdentityClientId) },
-                ManagedIdentityIdType.ObjectId => new ManagedIdentityCredentialOptions() { ManagedIdentityId = ManagedIdentityId.FromUserAssignedObjectId(TestEnvironment.VMUserAssignedManagedIdentityObjectId) },
-                _ => new ManagedIdentityCredentialOptions() { ManagedIdentityId = ManagedIdentityId.SystemAssigned }
+                ManagedIdentityIdType.ClientId => ManagedIdentityId.FromUserAssignedClientId(TestEnvironment.VMUserAssignedManagedIdentityClientId),
+                ManagedIdentityIdType.ObjectId => ManagedIdentityId.FromUserAssignedObjectId(TestEnvironment.VMUserAssignedManagedIdentityObjectId),
+                _ => ManagedIdentityId.SystemAssigned
             };
+            ManagedIdentityCredentialOptions options = new ManagedIdentityCredentialOptions() { ManagedIdentityId = managedIdentityId };
+
             var cred = new ManagedIdentityCredential(options);
             var token = await cred.GetTokenAsync(new(CredentialTestHelpers.DefaultScope));
+            Assert.NotNull(token.Token);
+
+            var cred2 = new ManagedIdentityCredential(managedIdentityId);
+            token = await cred2.GetTokenAsync(new(CredentialTestHelpers.DefaultScope));
             Assert.NotNull(token.Token);
         }
 

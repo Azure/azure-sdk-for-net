@@ -11,6 +11,6 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies the configuration for the managed identity.
         /// </summary>
-        public ManagedIdentityId ManagedIdentityId { get; set; } = ManagedIdentityId.SystemAssigned;
+        public ManagedIdentityId ManagedIdentityId { get; set; }
     }
 }
