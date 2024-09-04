@@ -2,11 +2,11 @@
 
 This extension provides functionality for receiving Web PubSub for Socket.IO webhook calls in Azure Functions, allowing you to easily write functions that respond to any event published to Web PubSub for Socket.IO in serverless mode.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src) |
-[Package](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSub) |
-[API reference documentation](https://docs.microsoft.com/dotnet/api/microsoft.azure.webjobs.extensions.webpubsub) |
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO) |
+[Package](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO) |
+[API reference documentation](https://learn.microsoft.com/dotnet/api/microsoft.azure.webjobs.extensions.webpubsubforsocketio) |
 [Product documentation](https://learn.microsoft.com/azure/azure-web-pubsub/socketio-overview) |
-[Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/samples)
+[Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO/samples)
 
 ## Getting started
 
@@ -87,7 +87,7 @@ public static class SocketIOBindingFunction
     [FunctionName("SocketIOInputBinding")]
     public static IActionResult SocketInputBinding(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req,
-        [SocketIONegotiation(Hub = "hub")] SocketIONegotiationResult result)
+        [SocketIONegotiation(Hub = "hub", UserId = "uid")] SocketIONegotiationResult result)
     {
         return new OkObjectResult(result);
     }
@@ -106,8 +106,7 @@ public static class SocketIOOutputBindingFunction
         ILogger log)
     {
         string userName = Guid.NewGuid().ToString();
-        await operation.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "new message", new[] { new { username = userName,
-            message = "Hello" } }));
+        await operation.AddAsync(SocketIOAction.CreateSendToNamespaceAction("new message", new[] { new { username = userName, message = "Hello" } }));
         log.LogInformation("Send to namespace finished.");
         return new OkObjectResult("ok");
     }
@@ -153,7 +152,7 @@ public static class SocketIOTriggerFunction
         ILogger log)
     {
         log.LogInformation("Running trigger for: new message");
-        await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "new message", new[] { new { message = request.Parameters } }, new[] { request.SocketId }));
+        await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("new message", new[] { new { message = request.Parameters } }, new[] { request.SocketId }));
     }
 }
 ```
@@ -170,7 +169,7 @@ public static class SocketIOTriggerReturnValueFunction
         ILogger log)
     {
         log.LogInformation("Running trigger for: new message");
-        await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "new message", new[] { new { message = request.Parameters } }, new[] { request.SocketId }));
+        await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("new message", new[] { new { message = request.Parameters } }, new[] { request.SocketId }));
         return new SocketIOMessageResponse(new[] {"ackValue"});
     }
 }
@@ -202,9 +201,9 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.WebJobs.Extensions.WebPubSub%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src
-[package]: https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSub/
-[docs]: https://docs.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.WebPubSub
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO/src
+[package]: https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO/
+[docs]: https://docs.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 [nuget]: https://www.nuget.org/
 
 [contrib]: https://github.com/Azure/azure-sdk-for-net/tree/main/CONTRIBUTING.md

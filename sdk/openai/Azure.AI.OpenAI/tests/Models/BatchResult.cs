@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,7 +29,7 @@ public class BatchResult<T>
                 break;
             }
 
-            var entry = JsonSerializer.Deserialize<BatchResult<T>>(line, JsonHelpers.OpenAIJsonOptions);
+            var entry = JsonSerializer.Deserialize<BatchResult<T>>(line, JsonOptions.OpenAIJsonOptions);
             if (entry != null)
             {
                 list.Add(entry);

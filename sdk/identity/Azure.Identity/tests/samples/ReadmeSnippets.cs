@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Producer;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
@@ -19,19 +18,6 @@ namespace Azure.Identity.Samples
 
             // Create a secret client using the DefaultAzureCredential
             var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), new DefaultAzureCredential());
-
-            #endregion
-        }
-
-        [Test]
-        public void EnableInteractiveAuthentication()
-        {
-            #region Snippet:EnableInteractiveAuthentication
-
-            // the includeInteractiveCredentials constructor parameter can be used to enable interactive authentication
-            var credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
-
-            var eventHubClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
 
             #endregion
         }
@@ -77,20 +63,6 @@ namespace Azure.Identity.Samples
         }
 
         [Test]
-        public void CustomChainedTokenCredential()
-        {
-            #region Snippet:CustomChainedTokenCredential
-
-            // Authenticate using managed identity if it is available; otherwise use the Azure CLI to authenticate.
-
-            var credential = new ChainedTokenCredential(new ManagedIdentityCredential(), new AzureCliCredential());
-
-            var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
-
-            #endregion
-        }
-
-        [Test]
         public void AuthenticatingWithAuthorityHost()
         {
             #region Snippet:AuthenticatingWithAuthorityHost
@@ -103,11 +75,38 @@ namespace Azure.Identity.Samples
         [Test]
         public void AuthenticatingWithManagedIdentityCredentialUserAssigned()
         {
-            string userAssignedClientId = "";
-
             #region Snippet:AuthenticatingWithManagedIdentityCredentialUserAssigned
+            string userAssignedClientId = "some client ID";
 
-            var credential = new ManagedIdentityCredential(clientId: userAssignedClientId);
+            var credential = new ManagedIdentityCredential(
+                ManagedIdentityId.FromUserAssignedClientId(userAssignedClientId));
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+
+            #endregion
+        }
+
+        [Test]
+        public void AuthenticatingWithManagedIdentityCredentialUserAssignedResourceId()
+        {
+            #region Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedResourceId
+            ResourceIdentifier userAssignedResourceId = new ResourceIdentifier(
+                "/subscriptions/<subscriptionID>/resourcegroups/<resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<MI name>");
+
+            var credential = new ManagedIdentityCredential(
+                ManagedIdentityId.FromUserAssignedResourceId(userAssignedResourceId));
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+
+            #endregion
+        }
+
+        [Test]
+        public void AuthenticatingWithManagedIdentityCredentialUserAssignedObjectId()
+        {
+            #region Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedObjectId
+            string userAssignedObjectId = "some object ID";
+
+            var credential = new ManagedIdentityCredential(
+                ManagedIdentityId.FromUserAssignedObjectId(userAssignedObjectId));
             var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 
             #endregion
@@ -118,7 +117,7 @@ namespace Azure.Identity.Samples
         {
             #region Snippet:AuthenticatingWithManagedIdentityCredentialSystemAssigned
 
-            var credential = new ManagedIdentityCredential();
+            var credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
             var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 
             #endregion

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_MonitorWorkspaceResourceCollection
     {
-        // List monitor workspaces by resource group
+        // List Azure Monitor Workspaces by resource group
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListMonitorWorkspacesByResourceGroup()
+        public async Task GetAll_ListAzureMonitorWorkspacesByResourceGroup()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/examples/AzureMonitorWorkspacesListByResourceGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/AzureMonitorWorkspacesListByResourceGroup.json
             // this example is just showing the usage of "AzureMonitorWorkspaces_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Get workspace
+        // Retrieves an Azure Monitor Workspace
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetWorkspace()
+        public async Task Get_RetrievesAnAzureMonitorWorkspace()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/examples/AzureMonitorWorkspacesGet.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/AzureMonitorWorkspaceGet.json
             // this example is just showing the usage of "AzureMonitorWorkspaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get workspace
+        // Retrieves an Azure Monitor Workspace
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetWorkspace()
+        public async Task Exists_RetrievesAnAzureMonitorWorkspace()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/examples/AzureMonitorWorkspacesGet.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/AzureMonitorWorkspaceGet.json
             // this example is just showing the usage of "AzureMonitorWorkspaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get workspace
+        // Retrieves an Azure Monitor Workspace
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetWorkspace()
+        public async Task GetIfExists_RetrievesAnAzureMonitorWorkspace()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/examples/AzureMonitorWorkspacesGet.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/AzureMonitorWorkspaceGet.json
             // this example is just showing the usage of "AzureMonitorWorkspaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,13 +157,13 @@ namespace Azure.ResourceManager.Monitor.Samples
             }
         }
 
-        // Create or update workspace
+        // Creates an Azure Monitor Workspace
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateWorkspace()
+        public async Task CreateOrUpdate_CreatesAnAzureMonitorWorkspace()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/examples/AzureMonitorWorkspacesCreate.json
-            // this example is just showing the usage of "AzureMonitorWorkspaces_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/AzureMonitorWorkspaceCreate.json
+            // this example is just showing the usage of "AzureMonitorWorkspaces_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "703362b3-f278-4e4b-9179-c76eaf41ffc2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

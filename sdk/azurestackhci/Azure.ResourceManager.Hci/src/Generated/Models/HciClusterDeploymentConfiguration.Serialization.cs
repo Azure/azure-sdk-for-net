@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string version = default;
-            IList<HciClusterScaleUnits> scaleUnits = default;
+            IList<DeploymentSettingScaleUnits> scaleUnits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (property.NameEquals("scaleUnits"u8))
                 {
-                    List<HciClusterScaleUnits> array = new List<HciClusterScaleUnits>();
+                    List<DeploymentSettingScaleUnits> array = new List<DeploymentSettingScaleUnits>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HciClusterScaleUnits.DeserializeHciClusterScaleUnits(item, options));
+                        array.Add(DeploymentSettingScaleUnits.DeserializeDeploymentSettingScaleUnits(item, options));
                     }
                     scaleUnits = array;
                     continue;

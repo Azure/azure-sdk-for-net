@@ -13,6 +13,7 @@ using System.Threading;
 using System.Linq;
 using System.ComponentModel;
 using Azure.Core.Pipeline;
+using System.Text.Json.Serialization;
 
 namespace Azure.Security.Attestation
 {
@@ -658,7 +659,7 @@ namespace Azure.Security.Attestation
             };
             var serializationOptions = new JsonSerializerOptions
             {
-                IgnoreNullValues = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
             byte[] jwtHeader = JsonSerializer.SerializeToUtf8Bytes<JsonWebTokenHeader>(header, serializationOptions);
             string encodedHeader = Base64Url.Encode(jwtHeader);

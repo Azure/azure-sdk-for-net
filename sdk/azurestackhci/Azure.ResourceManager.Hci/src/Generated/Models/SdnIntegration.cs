@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="SdnIntegration"/>. </summary>
         /// <param name="networkController"> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SdnIntegration(HciClusterNetworkController networkController, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SdnIntegration(DeploymentSettingNetworkController networkController, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkController = networkController;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
         [WirePath("networkController")]
-        public HciClusterNetworkController NetworkController { get; set; }
+        public DeploymentSettingNetworkController NetworkController { get; set; }
     }
 }

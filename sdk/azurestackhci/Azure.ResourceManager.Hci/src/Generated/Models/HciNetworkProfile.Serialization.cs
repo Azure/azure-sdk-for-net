@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             IReadOnlyList<HciNicDetail> nicDetails = default;
             IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails = default;
-            HciClusterHostNetwork hostNetwork = default;
+            HciEdgeDeviceHostNetwork hostNetwork = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    hostNetwork = HciClusterHostNetwork.DeserializeHciClusterHostNetwork(property.Value, options);
+                    hostNetwork = HciEdgeDeviceHostNetwork.DeserializeHciEdgeDeviceHostNetwork(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

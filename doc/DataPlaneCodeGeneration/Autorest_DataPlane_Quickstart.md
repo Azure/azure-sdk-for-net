@@ -34,17 +34,17 @@ This tutorial has following sections:
 - Install Visual Studio 2022 (Community or higher) and make sure you have the [latest updates](https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
   - Install the **.NET Core cross-platform development** workloads in Visual Studio
-- Install **.NET 6.0 SDK** for your specific platform. (or a higher version)
+- Install **.NET 8.0 SDK** for your specific platform. (or a higher version)
 - Install the latest version of [git](https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.
-- Install [NodeJS](https://nodejs.org/) (14.x.x).
+- Install [NodeJS](https://nodejs.org/) (18.x.x).
 
 ## Setup your repository
 
 - Fork and clone an [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. Follow the instructions in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/issues/12903) to fork and clone the `azure-sdk-for-net` repo.
 - Create a branch to work in.
 
-## Create starter package  
+## Create starter package
 
 For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. The started project will be under `sdk\<servie name>\<package name>` directory of `azure-sdk-for-net` repo. The package will contain several folders and files (see following). Please refer to [sdk-directory-layout](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md#sdk-directory-layout) for detail information.
 
@@ -59,7 +59,7 @@ sdk\<service name>\<package name>\CHANGELOG.md
 
 - `<service name>` - Should be the short name for the azure service. e.g. deviceupdate
 - `<package name>` -  Should be the name of the shipping package, or an abbreviation that distinguishes the given shipping artifact for the given service. It will be `Azure.<group>.<service>`, e.g. Azure.IoT.DeviceUpdate
-  
+
 We will use dotnet project template [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) to automatically create the project.
 
 You can run `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:

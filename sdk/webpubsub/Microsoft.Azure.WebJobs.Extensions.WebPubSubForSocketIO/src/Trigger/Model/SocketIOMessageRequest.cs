@@ -14,6 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Trigger.Model
     public class SocketIOMessageRequest : SocketIOEventHandlerRequest
     {
         internal const string PayloadProperty = "payload";
+        internal const string EventNameProperty = "eventName";
         internal const string ParametersProperty = "parameters";
 
         /// <summary>
@@ -22,6 +23,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Trigger.Model
         [DataMember(Name = PayloadProperty)]
         [JsonPropertyName(PayloadProperty)]
         public string Payload { get; }
+
+        /// <summary>
+        /// The event name of the message.
+        /// </summary>
+        [DataMember(Name = EventNameProperty)]
+        [JsonPropertyName(EventNameProperty)]
+        public string EventName { get; }
 
         /// <summary>
         /// The parameters of message
@@ -33,9 +41,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Trigger.Model
         /// <summary>
         /// The disconnected event request
         /// </summary>
-        public SocketIOMessageRequest(string @namespace, string socketId, string payload, IList<object> arguments) : base(@namespace, socketId)
+        public SocketIOMessageRequest(string @namespace, string socketId, string payload, string eventName, IList<object> arguments) : base(@namespace, socketId)
         {
             Payload = payload;
+            EventName = eventName;
             Parameters = arguments;
         }
     }

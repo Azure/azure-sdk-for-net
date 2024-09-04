@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Dto object representing feature. </summary>
+    /// <summary> DTO object representing feature. </summary>
     public partial class MachineLearningFeatureProperties : MachineLearningResourceBase
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureProperties"/>. </summary>
