@@ -93,21 +93,28 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> The immutable Id of the corresponding partner registration. </summary>
+        [WirePath("properties.partnerRegistrationImmutableId")]
         public Guid? PartnerRegistrationImmutableId { get; set; }
         /// <summary> Endpoint context associated with this partner destination. </summary>
+        [WirePath("properties.endpointServiceContext")]
         public string EndpointServiceContext { get; set; }
         /// <summary>
         /// Expiration time of the partner destination. If this timer expires and the partner destination was never activated,
         /// the partner destination and corresponding channel are deleted.
         /// </summary>
+        [WirePath("properties.expirationTimeIfNotActivatedUtc")]
         public DateTimeOffset? ExpirationTimeIfNotActivatedUtc { get; set; }
         /// <summary> Provisioning state of the partner destination. </summary>
+        [WirePath("properties.provisioningState")]
         public PartnerDestinationProvisioningState? ProvisioningState { get; }
         /// <summary> Activation state of the partner destination. </summary>
+        [WirePath("properties.activationState")]
         public PartnerDestinationActivationState? ActivationState { get; set; }
         /// <summary> Endpoint Base URL of the partner destination. </summary>
+        [WirePath("properties.endpointBaseUrl")]
         public Uri EndpointBaseUri { get; set; }
         /// <summary> Context or helpful message that can be used during the approval process. </summary>
+        [WirePath("properties.messageForActivation")]
         public string MessageForActivation { get; set; }
     }
 }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -147,6 +149,89 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppDiagnosticsProperties(metadata, dataset ?? new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>(), status, dataProviderMetadata, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  metadata: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Metadata))
+                {
+                    builder.Append("  metadata: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Metadata, options, 2, false, "  metadata: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dataset), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataset: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Dataset))
+                {
+                    if (Dataset.Any())
+                    {
+                        builder.Append("  dataset: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Dataset)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dataset: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Status, options, 2, false, "  status: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataProviderMetadata), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataProviderMetadata: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataProviderMetadata))
+                {
+                    builder.Append("  dataProviderMetadata: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DataProviderMetadata, options, 2, false, "  dataProviderMetadata: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppDiagnosticsProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticsProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -155,6 +240,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppDiagnosticsProperties)} does not support writing '{options.Format}' format.");
             }

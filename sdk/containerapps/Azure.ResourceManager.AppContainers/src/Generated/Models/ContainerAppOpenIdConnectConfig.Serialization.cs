@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -142,6 +143,128 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authorizationEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthorizationEndpoint))
+                {
+                    builder.Append("  authorizationEndpoint: ");
+                    if (AuthorizationEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AuthorizationEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AuthorizationEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tokenEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenEndpoint))
+                {
+                    builder.Append("  tokenEndpoint: ");
+                    if (TokenEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TokenEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TokenEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issuer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  issuer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Issuer))
+                {
+                    builder.Append("  issuer: ");
+                    if (Issuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Issuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Issuer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificationUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certificationUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertificationUri))
+                {
+                    builder.Append("  certificationUri: ");
+                    builder.AppendLine($"'{CertificationUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WellKnownOpenIdConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  wellKnownOpenIdConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WellKnownOpenIdConfiguration))
+                {
+                    builder.Append("  wellKnownOpenIdConfiguration: ");
+                    if (WellKnownOpenIdConfiguration.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WellKnownOpenIdConfiguration}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WellKnownOpenIdConfiguration}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppOpenIdConnectConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppOpenIdConnectConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -150,6 +273,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppOpenIdConnectConfig)} does not support writing '{options.Format}' format.");
             }

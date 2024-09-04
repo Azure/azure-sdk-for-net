@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -122,6 +123,70 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppHttpSettings(requireHttps, routes, forwardProxy, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequireHttps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requireHttps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequireHttps))
+                {
+                    builder.Append("  requireHttps: ");
+                    var boolValue = RequireHttps.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RoutesApiPrefix", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routes: ");
+                builder.AppendLine("{");
+                builder.Append("    apiPrefix: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Routes))
+                {
+                    builder.Append("  routes: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Routes, options, 2, false, "  routes: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForwardProxy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  forwardProxy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ForwardProxy))
+                {
+                    builder.Append("  forwardProxy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ForwardProxy, options, 2, false, "  forwardProxy: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppHttpSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +195,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppHttpSettings)} does not support writing '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -113,6 +115,67 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new CustomJwtAuthenticationSettings(tokenIssuer, issuerCertificates ?? new ChangeTrackingList<IssuerCertificateInfo>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenIssuer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tokenIssuer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenIssuer))
+                {
+                    builder.Append("  tokenIssuer: ");
+                    if (TokenIssuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TokenIssuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TokenIssuer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IssuerCertificates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  issuerCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IssuerCertificates))
+                {
+                    if (IssuerCertificates.Any())
+                    {
+                        builder.Append("  issuerCertificates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in IssuerCertificates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  issuerCertificates: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CustomJwtAuthenticationSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomJwtAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -121,6 +184,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CustomJwtAuthenticationSettings)} does not support writing '{options.Format}' format.");
             }

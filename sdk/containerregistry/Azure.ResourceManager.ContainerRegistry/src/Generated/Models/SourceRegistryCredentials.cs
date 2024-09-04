@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// will be generated using the given scope. These credentials will be used to login to
         /// the source registry during the run.
         /// </summary>
+        [WirePath("loginMode")]
         public SourceRegistryLoginMode? LoginMode { get; set; }
     }
 }

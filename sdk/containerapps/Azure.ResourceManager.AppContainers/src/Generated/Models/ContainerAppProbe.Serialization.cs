@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -222,6 +223,156 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailureThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failureThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailureThreshold))
+                {
+                    builder.Append("  failureThreshold: ");
+                    builder.AppendLine($"{FailureThreshold.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpGet), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  httpGet: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpGet))
+                {
+                    builder.Append("  httpGet: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HttpGet, options, 2, false, "  httpGet: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitialDelaySeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  initialDelaySeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InitialDelaySeconds))
+                {
+                    builder.Append("  initialDelaySeconds: ");
+                    builder.AppendLine($"{InitialDelaySeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeriodSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  periodSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeriodSeconds))
+                {
+                    builder.Append("  periodSeconds: ");
+                    builder.AppendLine($"{PeriodSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  successThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SuccessThreshold))
+                {
+                    builder.Append("  successThreshold: ");
+                    builder.AppendLine($"{SuccessThreshold.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TcpSocket), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tcpSocket: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TcpSocket))
+                {
+                    builder.Append("  tcpSocket: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TcpSocket, options, 2, false, "  tcpSocket: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TerminationGracePeriodSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  terminationGracePeriodSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TerminationGracePeriodSeconds))
+                {
+                    builder.Append("  terminationGracePeriodSeconds: ");
+                    builder.AppendLine($"'{TerminationGracePeriodSeconds.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeoutSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeoutSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeoutSeconds))
+                {
+                    builder.Append("  timeoutSeconds: ");
+                    builder.AppendLine($"{TimeoutSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProbeType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProbeType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{ProbeType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppProbe>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppProbe>)this).GetFormatFromOptions(options) : options.Format;
@@ -230,6 +381,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support writing '{options.Format}' format.");
             }
