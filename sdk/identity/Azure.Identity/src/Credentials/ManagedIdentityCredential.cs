@@ -6,6 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using System.Linq;
 
 namespace Azure.Identity
 {
@@ -67,7 +68,7 @@ namespace Azure.Identity
         }
 
         internal ManagedIdentityCredential(ResourceIdentifier resourceId, CredentialPipeline pipeline, TokenCredentialOptions options, bool preserveTransport = false)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions{Pipeline = pipeline, ResourceIdentifier = resourceId, PreserveTransport = preserveTransport, Options = options }))
+            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ResourceIdentifier = resourceId, PreserveTransport = preserveTransport, Options = options }))
         {
             _clientId = resourceId.ToString();
         }
@@ -86,6 +87,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/> if no managed identity is available.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
@@ -99,6 +101,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/> if no managed identity is available.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -120,6 +123,11 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
+                // This exception pattern indicates that the MI endpoint is not available after exhausting all retries.
+                if (e.InnerException is AggregateException ae && ae.InnerExceptions.All(inner => inner is RequestFailedException))
+                {
+                    throw scope.FailWrapAndThrow(new CredentialUnavailableException(ImdsManagedIdentityProbeSource.AggregateError, e), Troubleshooting);
+                }
                 throw scope.FailWrapAndThrow(e, Troubleshooting);
             }
         }

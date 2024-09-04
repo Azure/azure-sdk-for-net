@@ -102,6 +102,26 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(LinkedBackends))
+            {
+                writer.WritePropertyName("linkedBackends"u8);
+                writer.WriteStartArray();
+                foreach (var item in LinkedBackends)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DatabaseConnections))
+            {
+                writer.WritePropertyName("databaseConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in DatabaseConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -154,6 +174,8 @@ namespace Azure.ResourceManager.AppService
             DateTimeOffset? lastUpdatedOn = default;
             StaticSiteBuildStatus? status = default;
             IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
+            IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends = default;
+            IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,6 +279,34 @@ namespace Azure.ResourceManager.AppService
                             userProvidedFunctionApps = array;
                             continue;
                         }
+                        if (property0.NameEquals("linkedBackends"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<StaticSiteLinkedBackendInfo> array = new List<StaticSiteLinkedBackendInfo>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(StaticSiteLinkedBackendInfo.DeserializeStaticSiteLinkedBackendInfo(item, options));
+                            }
+                            linkedBackends = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("databaseConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<StaticSiteDatabaseConnectionOverview> array = new List<StaticSiteDatabaseConnectionOverview>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(StaticSiteDatabaseConnectionOverview.DeserializeStaticSiteDatabaseConnectionOverview(item, options));
+                            }
+                            databaseConnections = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -279,6 +329,8 @@ namespace Azure.ResourceManager.AppService
                 lastUpdatedOn,
                 status,
                 userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
+                linkedBackends ?? new ChangeTrackingList<StaticSiteLinkedBackendInfo>(),
+                databaseConnections ?? new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>(),
                 kind,
                 serializedAdditionalRawData);
         }
@@ -528,6 +580,52 @@ namespace Azure.ResourceManager.AppService
                         foreach (var item in UserProvidedFunctionApps)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    userProvidedFunctionApps: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedBackends), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    linkedBackends: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LinkedBackends))
+                {
+                    if (LinkedBackends.Any())
+                    {
+                        builder.Append("    linkedBackends: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LinkedBackends)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    linkedBackends: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    databaseConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DatabaseConnections))
+                {
+                    if (DatabaseConnections.Any())
+                    {
+                        builder.Append("    databaseConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DatabaseConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    databaseConnections: ");
                         }
                         builder.AppendLine("    ]");
                     }

@@ -251,7 +251,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_CustomAudience()
         {
             // Arrange
@@ -280,7 +279,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
@@ -6171,8 +6169,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = directoryClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = directoryClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
@@ -6189,6 +6189,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -6217,8 +6218,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IsDirectory = true,
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = directoryClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = directoryClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(serviceUri)
@@ -6234,6 +6237,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]

@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
+            if (Optional.IsDefined(LinkedServiceVersion))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(LinkedServiceVersion);
+            }
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
@@ -98,6 +103,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("authenticationType"u8);
             JsonSerializer.Serialize(writer, AuthenticationType);
+            if (Optional.IsDefined(Domain))
+            {
+                writer.WritePropertyName("domain"u8);
+                JsonSerializer.Serialize(writer, Domain);
+            }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
@@ -170,6 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
+            string version = default;
             IntegrationRuntimeReference connectVia = default;
             string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
@@ -180,6 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> serviceUri = default;
             DataFactoryElement<string> organizationName = default;
             DataFactoryElement<string> authenticationType = default;
+            DataFactoryElement<string> domain = default;
             DataFactoryElement<string> username = default;
             DataFactorySecret password = default;
             DataFactoryElement<string> servicePrincipalId = default;
@@ -194,6 +206,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectVia"u8))
@@ -300,6 +317,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             authenticationType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("domain"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            domain = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("username"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -367,6 +393,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DynamicsCrmLinkedService(
                 type,
+                version,
                 connectVia,
                 description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
@@ -378,6 +405,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 serviceUri,
                 organizationName,
                 authenticationType,
+                domain,
                 username,
                 password,
                 servicePrincipalId,

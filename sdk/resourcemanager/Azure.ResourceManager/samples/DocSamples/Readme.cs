@@ -24,6 +24,26 @@ namespace Azure.ResourceManager.Tests.Samples
             ArmClient client = new ArmClient(new DefaultAzureCredential());
             #endregion Snippet:Readme_AuthClient
         }
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void ClientAuthChina()
+        {
+            #region Snippet:Readme_AuthClientChina
+            // Please replace the following placeholders with your Azure information
+            string tenantId = "your-tenant-id";
+            string clientId = "your-client-id";
+            string clientSecret = "your-client-secret";
+            string subscriptionId = "your-subscription-id";
+            //ArmClientOptions to set the Azure China environment
+            ArmClientOptions armOptions = new ArmClientOptions { Environment = ArmEnvironment.AzureChina };
+            // AzureAuthorityHosts to set the Azure China environment
+            Uri authorityHost = AzureAuthorityHosts.AzureChina;
+            // Create ClientSecretCredential for authentication
+            TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions { AuthorityHost = authorityHost });
+            // Create the Azure Resource Manager client
+            ArmClient client = new ArmClient(credential, subscriptionId, armOptions);
+            #endregion Snippet:Readme_AuthClientChina
+        }
 
         [Test]
         [Ignore("Only verifying that the sample builds")]

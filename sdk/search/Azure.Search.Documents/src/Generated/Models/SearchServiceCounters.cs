@@ -13,7 +13,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchServiceCounters
     {
         /// <summary> Initializes a new instance of <see cref="SearchServiceCounters"/>. </summary>
-        /// <param name="aliasCounter"> Total number of aliases. </param>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
         /// <param name="indexCounter"> Total number of indexes. </param>
         /// <param name="indexerCounter"> Total number of indexers. </param>
@@ -22,10 +21,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
         /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliasCounter"/>, <paramref name="documentCounter"/>, <paramref name="indexCounter"/>, <paramref name="indexerCounter"/>, <paramref name="dataSourceCounter"/>, <paramref name="storageSizeCounter"/>, <paramref name="synonymMapCounter"/>, <paramref name="skillsetCounter"/> or <paramref name="vectorIndexSizeCounter"/> is null. </exception>
-        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter)
+        /// <exception cref="ArgumentNullException"> <paramref name="documentCounter"/>, <paramref name="indexCounter"/>, <paramref name="indexerCounter"/>, <paramref name="dataSourceCounter"/>, <paramref name="storageSizeCounter"/>, <paramref name="synonymMapCounter"/>, <paramref name="skillsetCounter"/> or <paramref name="vectorIndexSizeCounter"/> is null. </exception>
+        internal SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter)
         {
-            Argument.AssertNotNull(aliasCounter, nameof(aliasCounter));
             Argument.AssertNotNull(documentCounter, nameof(documentCounter));
             Argument.AssertNotNull(indexCounter, nameof(indexCounter));
             Argument.AssertNotNull(indexerCounter, nameof(indexerCounter));
@@ -35,7 +33,6 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(skillsetCounter, nameof(skillsetCounter));
             Argument.AssertNotNull(vectorIndexSizeCounter, nameof(vectorIndexSizeCounter));
 
-            AliasCounter = aliasCounter;
             DocumentCounter = documentCounter;
             IndexCounter = indexCounter;
             IndexerCounter = indexerCounter;
@@ -46,8 +43,6 @@ namespace Azure.Search.Documents.Indexes.Models
             VectorIndexSizeCounter = vectorIndexSizeCounter;
         }
 
-        /// <summary> Total number of aliases. </summary>
-        public SearchResourceCounter AliasCounter { get; }
         /// <summary> Total number of documents across all indexes in the service. </summary>
         public SearchResourceCounter DocumentCounter { get; }
         /// <summary> Total number of indexes. </summary>

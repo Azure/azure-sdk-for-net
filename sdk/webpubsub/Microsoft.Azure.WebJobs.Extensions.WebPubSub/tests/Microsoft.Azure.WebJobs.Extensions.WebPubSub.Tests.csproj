@@ -19,6 +19,7 @@
   <!-- Reference the Client Library -->
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.WebPubSub.csproj" />
+    <ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -41,6 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             { "service.version", TestServiceVersion }
         };
 
+        private const string TestLogCategoryName = "CustomCategoryName";
         private const string TestLogMessage = "Message via ILogger";
 
         // DEVELOPER TIP: Can pass RecordedTestMode.Live into the base ctor to run this test with a live resource. This is recommended for local development.
@@ -65,9 +66,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 .ConfigureResource(x => x.AddAttributes(_testResourceAttributes));
 
             using var app = builder.Build();
-            app.MapGet("/", () =>
+            app.MapGet("/", (ILoggerFactory loggerFactory) =>
             {
-                app.Logger.LogInformation(TestLogMessage);
+                var logger = loggerFactory.CreateLogger(TestLogCategoryName);
+                logger.LogInformation(TestLogMessage);
 
                 return "Response from Test Server";
             });
@@ -146,9 +148,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 .ConfigureResource(x => x.AddAttributes(_testResourceAttributes));
 
             using var app = builder.Build();
-            app.MapGet("/", () =>
+            app.MapGet("/", (ILoggerFactory loggerFactory) =>
             {
-                app.Logger.LogInformation(TestLogMessage);
+                var logger = loggerFactory.CreateLogger(TestLogCategoryName);
+                logger.LogInformation(TestLogMessage);
 
                 return "Response from Test Server";
             });
@@ -206,9 +209,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 .ConfigureResource(x => x.AddAttributes(_testResourceAttributes));
 
             using var app = builder.Build();
-            app.MapGet("/", () =>
+            app.MapGet("/", (ILoggerFactory loggerFactory) =>
             {
-                app.Logger.LogInformation(TestLogMessage);
+                var logger = loggerFactory.CreateLogger(TestLogCategoryName);
+                logger.LogInformation(TestLogMessage);
 
                 return "Response from Test Server";
             });
@@ -363,6 +367,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     ClientIP = "0.0.0.0",
                     Type = "AppTraces",
                     AppRoleInstance = TestServiceInstance,
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("CategoryName", TestLogCategoryName),
+                    }
                 });
         }
 

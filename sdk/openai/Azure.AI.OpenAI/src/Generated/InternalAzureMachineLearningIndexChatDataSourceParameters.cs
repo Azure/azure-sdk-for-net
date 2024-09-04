@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="InternalAzureMachineLearningIndexChatDataSourceParameters"/>. </summary>
         /// <param name="authentication">
         /// Please note <see cref="DataSourceAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
@@ -110,7 +109,7 @@ namespace Azure.AI.OpenAI.Chat
             Name = name;
             Version = version;
             Filter = filter;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalAzureMachineLearningIndexChatDataSourceParameters"/> for deserialization. </summary>

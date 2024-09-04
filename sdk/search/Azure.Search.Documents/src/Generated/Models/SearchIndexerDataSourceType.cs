@@ -28,7 +28,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string AzureTableValue = "azuretable";
         private const string MySqlValue = "mysql";
         private const string AdlsGen2Value = "adlsgen2";
-        private const string OneLakeValue = "onelake";
 
         /// <summary> Indicates an Azure SQL datasource. </summary>
         public static SearchIndexerDataSourceType AzureSql { get; } = new SearchIndexerDataSourceType(AzureSqlValue);
@@ -42,8 +41,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public static SearchIndexerDataSourceType MySql { get; } = new SearchIndexerDataSourceType(MySqlValue);
         /// <summary> Indicates an ADLS Gen2 datasource. </summary>
         public static SearchIndexerDataSourceType AdlsGen2 { get; } = new SearchIndexerDataSourceType(AdlsGen2Value);
-        /// <summary> Indicates a Microsoft Fabric OneLake datasource. </summary>
-        public static SearchIndexerDataSourceType OneLake { get; } = new SearchIndexerDataSourceType(OneLakeValue);
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are the same. </summary>
         public static bool operator ==(SearchIndexerDataSourceType left, SearchIndexerDataSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are not the same. </summary>

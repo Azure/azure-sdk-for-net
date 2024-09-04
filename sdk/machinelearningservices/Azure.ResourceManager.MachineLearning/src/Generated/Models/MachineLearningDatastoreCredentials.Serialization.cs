@@ -72,8 +72,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "AccountKey": return MachineLearningAccountKeyDatastoreCredentials.DeserializeMachineLearningAccountKeyDatastoreCredentials(element, options);
                     case "Certificate": return MachineLearningCertificateDatastoreCredentials.DeserializeMachineLearningCertificateDatastoreCredentials(element, options);
-                    case "KerberosKeytab": return KerberosKeytabCredentials.DeserializeKerberosKeytabCredentials(element, options);
-                    case "KerberosPassword": return KerberosPasswordCredentials.DeserializeKerberosPasswordCredentials(element, options);
                     case "None": return MachineLearningNoneDatastoreCredentials.DeserializeMachineLearningNoneDatastoreCredentials(element, options);
                     case "Sas": return MachineLearningSasDatastoreCredentials.DeserializeMachineLearningSasDatastoreCredentials(element, options);
                     case "ServicePrincipal": return MachineLearningServicePrincipalDatastoreCredentials.DeserializeMachineLearningServicePrincipalDatastoreCredentials(element, options);

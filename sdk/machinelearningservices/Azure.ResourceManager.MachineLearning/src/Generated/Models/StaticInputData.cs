@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="preprocessingComponentId"> The ARM resource ID of the component resource used to preprocess the data. </param>
+        /// <param name="preprocessingComponentId"> Reference to the component asset used to preprocess the data. </param>
         /// <param name="windowEnd"> [Required] The end date of the data window. </param>
         /// <param name="windowStart"> [Required] The start date of the data window. </param>
         internal StaticInputData(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData, string preprocessingComponentId, DateTimeOffset windowEnd, DateTimeOffset windowStart) : base(columns, dataContext, inputDataType, jobInputType, uri, serializedAdditionalRawData)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> The ARM resource ID of the component resource used to preprocess the data. </summary>
+        /// <summary> Reference to the component asset used to preprocess the data. </summary>
         public string PreprocessingComponentId { get; set; }
         /// <summary> [Required] The end date of the data window. </summary>
         public DateTimeOffset WindowEnd { get; set; }

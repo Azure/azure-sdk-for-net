@@ -691,7 +691,7 @@ namespace Azure.Messaging.ServiceBus
         /// and throw the exception that was encountered.  It is recommended to evaluate this exception and determine which messages may not have been deleted.
         /// </remarks>
         /// <returns>The number of messages that were deleted.</returns>
-        public virtual async Task<int> PurgeMessagesAsync(
+        internal virtual async Task<int> PurgeMessagesAsync(
             DateTimeOffset? beforeEnqueueTime = null,
             CancellationToken cancellationToken = default)
         {
@@ -753,7 +753,7 @@ namespace Azure.Messaging.ServiceBus
         /// Occurs when the <paramref name="messageCount"/> is less than 1 or exceeds the maximum allowed, as determined by the Service Bus service.
         /// For more information on service limits, see <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
         /// </exception>
-        public virtual async Task<int> DeleteMessagesAsync(
+        internal virtual async Task<int> DeleteMessagesAsync(
             int messageCount,
             DateTimeOffset? beforeEnqueueTime = null,
             CancellationToken cancellationToken = default)

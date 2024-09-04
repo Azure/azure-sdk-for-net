@@ -6,6 +6,7 @@
     <!-- We don't care about XML doc comments on test types and members -->
     <NoWarn>$(NoWarn);CS1591;CS8002;SA1402;SA1507;SA1508;SA1633;SA1028;SA1505;OPENAI001;AOAI001</NoWarn>
     <LangVersion>preview</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,13 +15,20 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="Azure.ResourceManager" />
-    <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.AI.OpenAI.csproj" />
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\tools\TestFramework\src\OpenAI.TestFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Condition="'$(ExternalOpenAILibrary)' != ''"
+               Include="$([System.IO.Path]::GetFileName('$(ExternalOpenAILibrary)'))"
+               HintPath="$(ExternalOpenAILibrary)" />
+    <Reference Condition="'$(ExternalAzureCoreLibrary)' != ''"
+               Include="$([System.IO.Path]::GetFileName('$(ExternalAzureCoreLibrary)'))"
+               HintPath="$(ExternalAzureCoreLibrary)" />
   </ItemGroup>
 
   <ItemGroup>

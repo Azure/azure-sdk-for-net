@@ -70,14 +70,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Name of the resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Access rules version number. </summary>
+        [WirePath("accessRulesVersion")]
         public int? AccessRulesVersion { get; }
         /// <summary> Collection of access rules for the profile. </summary>
+        [WirePath("accessRules")]
         public IReadOnlyList<HybridComputeAccessRule> AccessRules { get; }
         /// <summary> Diagnostic settings version number. </summary>
+        [WirePath("diagnosticSettingsVersion")]
         public int? DiagnosticSettingsVersion { get; }
         /// <summary> Collection of enabled log categories for the profile. </summary>
+        [WirePath("enabledLogCategories")]
         public IReadOnlyList<string> EnabledLogCategories { get; }
     }
 }

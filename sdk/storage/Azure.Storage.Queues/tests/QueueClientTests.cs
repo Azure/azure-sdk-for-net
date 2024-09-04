@@ -17,6 +17,8 @@ using Azure.Storage.Queues.Specialized;
 using Moq.Protected;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using NUnit.Framework.Internal;
+using BenchmarkDotNet.Disassemblers;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -190,7 +192,6 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_CustomAudience()
         {
             // Arrange
@@ -215,7 +216,6 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
@@ -1792,8 +1792,10 @@ namespace Azure.Storage.Queues.Test
                     constants.Sas.SharedKeyCredential,
                     GetOptions()));
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
@@ -1806,6 +1808,7 @@ namespace Azure.Storage.Queues.Test
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -1832,8 +1835,10 @@ namespace Azure.Storage.Queues.Test
                 QueueName = queueName
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = queueClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = queueClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             QueueSasBuilder sasBuilder2 = new QueueSasBuilder(permissions, expiresOn)
@@ -1846,6 +1851,7 @@ namespace Azure.Storage.Queues.Test
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -1978,6 +1984,44 @@ namespace Azure.Storage.Queues.Test
             mock = new Mock<QueueClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), mockTokenCredential, new QueueClientOptions()).Object;
+        }
+
+        [RecordedTest]
+        [TestCase("", null)]
+        [TestCase("u", QueueAccessPolicyPermissions.Update)]
+        [TestCase("au", QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Update)]
+        [TestCase("rap", QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process)]
+        [TestCase("raup", QueueAccessPolicyPermissions.All)]
+        public async Task QueueClientPolicyPermissions_CheckIfSetCorrectly(string expectedPermissionsStr, QueueAccessPolicyPermissions? expectedPermissionsEnum)
+        {
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            QueueSignedIdentifier[] signedIdentifiers = new[]
+            {
+                new QueueSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    AccessPolicy =
+                        new QueueAccessPolicy
+                        {
+                            StartsOn =  Recording.UtcNow.AddHours(-1),
+                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            Permissions = expectedPermissionsStr
+                        }
+                }
+            };
+            await test.Queue.SetAccessPolicyAsync(signedIdentifiers);
+
+            Response<IEnumerable<Models.QueueSignedIdentifier>> getResult = await test.Queue.GetAccessPolicyAsync();
+            Models.QueueSignedIdentifier acl = getResult.Value.First();
+
+            string actualPermissionsStr = acl.AccessPolicy.Permissions;
+            QueueAccessPolicyPermissions? actualPermissionsEnum = acl.AccessPolicy.QueueAccessPolicyPermissions;
+
+            if (string.IsNullOrEmpty(expectedPermissionsStr)) expectedPermissionsStr = null;
+
+            Assert.AreEqual(expectedPermissionsStr, actualPermissionsStr);
+            Assert.AreEqual(expectedPermissionsEnum.ToPermissionsString(), actualPermissionsEnum.ToPermissionsString());
         }
     }
 }

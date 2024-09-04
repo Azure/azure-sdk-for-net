@@ -34,6 +34,9 @@ namespace Azure.Storage.Files.Shares.Models
             string enabledProtocols = default;
             ShareRootSquash? rootSquash = default;
             bool? enableSnapshotVirtualDirectoryAccess = default;
+            bool? paidBurstingEnabled = default;
+            long? paidBurstingMaxIops = default;
+            long? paidBurstingMaxBandwidthMibps = default;
             if (element.Element("Last-Modified") is XElement lastModifiedElement)
             {
                 lastModified = lastModifiedElement.GetDateTimeOffsetValue("R");
@@ -110,6 +113,18 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 enableSnapshotVirtualDirectoryAccess = (bool?)enableSnapshotVirtualDirectoryAccessElement;
             }
+            if (element.Element("PaidBurstingEnabled") is XElement paidBurstingEnabledElement)
+            {
+                paidBurstingEnabled = (bool?)paidBurstingEnabledElement;
+            }
+            if (element.Element("PaidBurstingMaxIops") is XElement paidBurstingMaxIopsElement)
+            {
+                paidBurstingMaxIops = (long?)paidBurstingMaxIopsElement;
+            }
+            if (element.Element("PaidBurstingMaxBandwidthMibps") is XElement paidBurstingMaxBandwidthMibpsElement)
+            {
+                paidBurstingMaxBandwidthMibps = (long?)paidBurstingMaxBandwidthMibpsElement;
+            }
             return new SharePropertiesInternal(
                 lastModified,
                 etag,
@@ -129,7 +144,10 @@ namespace Azure.Storage.Files.Shares.Models
                 leaseDuration,
                 enabledProtocols,
                 rootSquash,
-                enableSnapshotVirtualDirectoryAccess);
+                enableSnapshotVirtualDirectoryAccess,
+                paidBurstingEnabled,
+                paidBurstingMaxIops,
+                paidBurstingMaxBandwidthMibps);
         }
     }
 }

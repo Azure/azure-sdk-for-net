@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Events;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -501,6 +502,86 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(expectedScopeValue, actualScopeValue);
             Assert.True(properties.TryGetValue("attributeKey", out string actualAttributeValue));
             Assert.Equal(expectedAttributeValue, actualAttributeValue);
+        }
+
+        [Fact]
+        public void DuplicateKeysInLogRecordAttributesAndLogScope2()
+        {
+            // Arrange.
+            var logRecords = new List<LogRecord>(1);
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.IncludeScopes = true;
+                    options.AddInMemoryExporter(logRecords);
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger("Some category");
+
+            const string expectedScopeKey = "Some scope key";
+            const string expectedScopeValue = "Some scope value";
+            const string duplicateScopeValue = "Some duplicate scope value";
+            const string duplicateScopeValue2 = "Another duplicate scope value";
+
+            // Act.
+            using (logger.BeginScope(new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>(expectedScopeKey, expectedScopeValue),
+                new KeyValuePair<string, object>(expectedScopeKey, duplicateScopeValue),
+            }))
+            {
+                logger.LogInformation($"Some log information message. {{{expectedScopeKey}}}.", duplicateScopeValue2);
+            }
+
+            // Assert.
+            var logRecord = logRecords.Single();
+            var properties = new ChangeTrackingDictionary<string, string>();
+            LogsHelper.GetMessageAndSetProperties(logRecords[0], properties);
+
+            Assert.Equal(2, properties.Count);
+            Assert.True(properties.TryGetValue(expectedScopeKey, out string actualScopeValue));
+            Assert.Equal(duplicateScopeValue2, actualScopeValue);
+        }
+
+        [Fact]
+        public void ValidateCustomEvent()
+        {
+            // Arrange.
+            var logRecords = new List<LogRecord>(1);
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddInMemoryExporter(logRecords);
+                });
+            });
+
+            var eventLogger = new ApplicationInsightsEventLogger(loggerFactory);
+
+            var attributesList = new List<KeyValuePair<string, object?>>
+            {
+                new KeyValuePair<string, object?>("customEventKey", "customEventValue")
+            };
+
+            eventLogger.TrackEvent("MyCustomEvent", attributesList);
+
+            // Assert.
+            var logRecord = logRecords.Single();
+            var logRecodBatch = new Batch<LogRecord>(new[] { logRecord } , 1);
+            var properties = new ChangeTrackingDictionary<string, string>();
+            var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(logRecodBatch, null, "Ikey");
+
+            var telemetryItem = telemetryItems.FirstOrDefault();
+            var telemetryEventData = telemetryItem?.Data.BaseData as TelemetryEventData;
+
+            Assert.NotNull(telemetryEventData);
+            Assert.Equal("MyCustomEvent", telemetryEventData.Name);
+            Assert.Single(telemetryEventData.Properties);
+            var property = telemetryEventData.Properties.Single();
+            Assert.Equal("customEventKey", property.Key);
+            Assert.Equal("customEventValue", property.Value);
         }
 
         private class CustomObject

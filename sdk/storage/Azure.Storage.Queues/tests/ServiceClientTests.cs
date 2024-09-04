@@ -124,7 +124,6 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_CustomAudience()
         {
             // Arrange
@@ -144,7 +143,6 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
@@ -543,11 +541,14 @@ namespace Azure.Storage.Queues.Test
                     constants.Sas.SharedKeyCredential,
                     GetOptions()));
 
+            string stringToSign = null;
+
             // Act
             Uri sasUri = serviceClient.GenerateAccountSasUri(
                 permissions: permissions,
                 expiresOn: expiresOn,
-                resourceTypes: resourceTypes);
+                resourceTypes: resourceTypes,
+                out stringToSign);
 
             // Assert
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, AccountSasServices.Queues, resourceTypes);
@@ -556,6 +557,7 @@ namespace Azure.Storage.Queues.Test
                 Query = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString()
             };
             Assert.AreEqual(expectedUri.Uri, sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -578,14 +580,17 @@ namespace Azure.Storage.Queues.Test
             // Add more properties on the builder
             sasBuilder.SetPermissions(permissions);
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder, out stringToSign);
 
             // Assert
             AccountSasBuilder sasBuilder2 = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
             UriBuilder expectedUri = new UriBuilder(serviceUri);
             expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
             Assert.AreEqual(expectedUri.Uri, sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]

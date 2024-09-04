@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Optional.IsDefined(CustomDomainVerificationFailureInfo))
                 {
                     builder.Append("    customDomainVerificationFailureInfo: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CustomDomainVerificationFailureInfo, options, 4, false, "    customDomainVerificationFailureInfo: ");
+                    builder.AppendLine($"'{CustomDomainVerificationFailureInfo.ToString()}'");
                 }
             }
 

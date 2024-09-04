@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIDalleErrorResponse"/>. </summary>
         internal AzureOpenAIDalleErrorResponse()
         {
@@ -53,7 +52,7 @@ namespace Azure.AI.OpenAI
         internal AzureOpenAIDalleErrorResponse(AzureOpenAIDalleError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the error. </summary>

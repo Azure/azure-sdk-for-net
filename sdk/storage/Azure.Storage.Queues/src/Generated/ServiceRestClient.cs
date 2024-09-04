@@ -40,7 +40,7 @@ namespace Azure.Storage.Queues
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(QueueServiceProperties storageServiceProperties, int? timeout)
+        internal HttpMessage CreateSetPropertiesRequest(QueueServiceProperties queueServiceProperties, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,24 +59,24 @@ namespace Azure.Storage.Queues
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
             var content = new XmlWriterContent();
-            content.XmlWriter.WriteObjectValue(storageServiceProperties, "StorageServiceProperties");
+            content.XmlWriter.WriteObjectValue(queueServiceProperties, "StorageServiceProperties");
             request.Content = content;
             return message;
         }
 
         /// <summary> Sets properties for a storage account's Queue service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="storageServiceProperties"> The StorageService properties. </param>
+        /// <param name="queueServiceProperties"> The StorageService properties. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(QueueServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceProperties"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(QueueServiceProperties queueServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (storageServiceProperties == null)
+            if (queueServiceProperties == null)
             {
-                throw new ArgumentNullException(nameof(storageServiceProperties));
+                throw new ArgumentNullException(nameof(queueServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(storageServiceProperties, timeout);
+            using var message = CreateSetPropertiesRequest(queueServiceProperties, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -89,18 +89,18 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> Sets properties for a storage account's Queue service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="storageServiceProperties"> The StorageService properties. </param>
+        /// <param name="queueServiceProperties"> The StorageService properties. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(QueueServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceProperties"/> is null. </exception>
+        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(QueueServiceProperties queueServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (storageServiceProperties == null)
+            if (queueServiceProperties == null)
             {
-                throw new ArgumentNullException(nameof(storageServiceProperties));
+                throw new ArgumentNullException(nameof(queueServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(storageServiceProperties, timeout);
+            using var message = CreateSetPropertiesRequest(queueServiceProperties, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
