@@ -205,7 +205,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, new ServiceBusClientOptions
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, new ServiceBusClientOptions
                 {
                     RetryOptions =
                     {
@@ -1113,7 +1113,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         MaxRetries = 0
                     }
                 };
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
                 await using var sender = client.CreateSender(scope.QueueName);
 
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));

@@ -187,17 +187,9 @@
       "type": "string",
       "value": "[concat(variables('serviceBusSecondaryNamespace'), '.servicebus.windows.net')]"
     },
-    "SERVICEBUS_SECONDARY_NAMESPACE_CONNECTION_STRING": {
-      "type": "string",
-      "value": "[listkeys(variables('authRuleSecondaryResourceId'), variables('sbVersion')).primaryConnectionString]"
-    },
     "SERVICEBUS_PREMIUM_FULLY_QUALIFIED_NAMESPACE": {
       "type": "string",
       "value": "[concat(variables('serviceBusPremiumNamespace'), '.servicebus.windows.net')]"
-    },
-    "SERVICEBUS_PREMIUM_NAMESPACE_CONNECTION_STRING": {
-      "type": "string",
-      "value": "[listkeys(variables('authRulePremiumResourceId'), variables('sbVersion')).primaryConnectionString]"
     },
     "STORAGE_CLAIM_CHECK_ACCOUNT_NAME": {
       "type": "string",

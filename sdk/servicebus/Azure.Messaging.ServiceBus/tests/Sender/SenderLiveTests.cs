@@ -440,12 +440,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         [Test]
-        public async Task CreateBatchThrowsIftheEntityDoesNotExist()
+        public async Task CreateBatchThrowsIfTheEntityDoesNotExist()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEntity("FakeEntity");
-                await using var client = new ServiceBusClient(connectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
 
                 ServiceBusSender sender = client.CreateSender("FakeEntity");
                 Assert.That(async () => await sender.CreateMessageBatchAsync(), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));

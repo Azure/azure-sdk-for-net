@@ -505,7 +505,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             var queueName = nameof(GetQueueRuntimeInfo).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var mgmtClient = CreateClient();
-            await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            await using var sbClient = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
 
             QueueProperties queue = await mgmtClient.CreateQueueAsync(queueName);
             queue = await mgmtClient.GetQueueAsync(queueName);
@@ -565,7 +565,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var topicName = nameof(GetSubscriptionRuntimeInfoTest).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var client = CreateClient();
-            await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            await using var sbClient = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
 
             await client.CreateTopicAsync(topicName);
 
@@ -830,7 +830,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                     ForwardTo = destinationName
                 });
 
-            await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            await using var sbClient = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
             ServiceBusSender sender = sbClient.CreateSender(queueName);
             await sender.SendMessageAsync(new ServiceBusMessage() { MessageId = "mid" });
 

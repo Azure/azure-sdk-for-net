@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope =
                 await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 await using var receiverWithPrefetch = client.CreateReceiver(scope.QueueName,
                     options: new ServiceBusReceiverOptions { PrefetchCount = 10 });
 

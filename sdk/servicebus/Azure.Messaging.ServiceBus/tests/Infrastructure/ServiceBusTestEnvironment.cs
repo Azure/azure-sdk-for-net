@@ -36,42 +36,12 @@ namespace Azure.Messaging.ServiceBus.Tests
             options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
 
         /// <summary>
-        ///   The connection string for the premium Service Bus namespace instance to be used for
-        ///   Live tests.
-        /// </summary>
-        ///
-        /// <value>The connection string will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
-        ///
-        public string ServiceBusPremiumNamespaceConnectionString => GetRecordedVariable(
-            "SERVICEBUS_PREMIUM_NAMESPACE_CONNECTION_STRING",
-            options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
-
-        /// <summary>
-        ///   The connection string for the secondary Service Bus namespace instance to be used for
-        ///   Live tests.
-        /// </summary>
-        ///
-        /// <value>The connection string will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
-        ///
-        public string ServiceBusSecondaryNamespaceConnectionString => GetRecordedVariable(
-            "SERVICEBUS_SECONDARY_NAMESPACE_CONNECTION_STRING",
-            options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
-
-        /// <summary>
         ///   The name of the Service Bus namespace to be used for Live tests.
         /// </summary>
         ///
         /// <value>The name will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
         ///
         public string ServiceBusNamespace => ParseServiceBusNamespace(FullyQualifiedNamespace).Name;
-
-        /// <summary>
-        ///   The name of the Service Bus namespace to be used for Live tests.
-        /// </summary>
-        ///
-        /// <value>The name will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
-        ///
-        public string ServiceBusSecondaryNamespace => ParseServiceBusNamespace(SecondaryFullyQualifiedNamespace).Name;
 
         /// <summary>
         ///   The fully qualified namespace for the Service Bus namespace represented by this scope.
