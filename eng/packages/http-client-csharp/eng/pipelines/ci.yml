@@ -58,7 +58,7 @@ extends:
               - script: |
                   npm run build
                 displayName: 'Build Azure csharp client emitter and generator'
-                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/http-client-csharp
+                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/
               - pwsh: ./eng/packages/http-client-csharp/eng/scripts/CodeGenerationCheck.ps1
                 displayName: "Check if generated code is up-to-date"
                 env:
