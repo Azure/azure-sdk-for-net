@@ -28,7 +28,7 @@ enable-bicep-serialization: true
 rename-mapping:
   DecompileOperationSuccessResponse: DecompileOperationSuccessResult
   FileDefinition: DecompiledFileDefinition
-  DataBoundary: DataBoundaryType
+  DataBoundary: DataBoundaryRegion
   DataBoundaryDefinition: DataBoundary
   DefaultName: DataBoundaryDefaultName
 
