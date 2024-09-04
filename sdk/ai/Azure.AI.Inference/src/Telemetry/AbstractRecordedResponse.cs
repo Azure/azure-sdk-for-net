@@ -7,11 +7,12 @@ namespace Azure.AI.Inference.Telemetry
 {
     internal abstract class AbstractRecordedResponse
     {
+        public const int NOT_SET = -1;
         public string Model { get; protected set; } = "";
         public string Id { get; protected set; } = "";
         public string FinishReason { get; protected set; } = "";
-        public int CompletionTokens { get; protected set; } = 0;
-        public int PromptTokens { get; protected set; } = 0;
+        public int CompletionTokens { get; protected set; } = NOT_SET;
+        public int PromptTokens { get; protected set; } = NOT_SET;
 
         /// <summary>
         /// Return the JSON serialized completion for event logging.

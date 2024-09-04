@@ -3,12 +3,9 @@
 
 using NUnit.Framework;
 using Azure.AI.Inference.Telemetry;
-using System.Data;
-using System.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Linq;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -61,9 +58,10 @@ namespace Azure.AI.Inference.Tests
 
             Assert.AreEqual(resp.FinishReason, CompletionsFinishReason.Stopped.ToString());
             Assert.AreEqual(resp.Model, "gpt-100o");
+            Assert.AreEqual(resp.Id, withUsage?"4":"3");
 
-            Assert.AreEqual(resp.CompletionTokens, withUsage ? 7 : 0);
-            Assert.AreEqual(resp.PromptTokens, withUsage ? 3 : 0);
+            Assert.AreEqual(resp.CompletionTokens, withUsage ? 7 : StreamingRecordedResponse.NOT_SET);
+            Assert.AreEqual(resp.PromptTokens, withUsage ? 3 : StreamingRecordedResponse.NOT_SET);
 
             string[] strSerialized = resp.getSerializedCompletions();
             Assert.AreEqual(strSerialized.Length, 1);
@@ -87,6 +85,7 @@ namespace Azure.AI.Inference.Tests
             resp.Update(getFuncPart(" second", "func2", "{\"arg1\": 42,"));
             resp.Update(getFuncPart(" third", "func2", "\"arg2\": 43}"));
 
+            Assert.AreEqual(resp.Id, "1");
             Assert.AreEqual(resp.FinishReason, CompletionsFinishReason.ToolCalls.ToString());
             Assert.AreEqual(resp.Model, "gpt-100o");
 

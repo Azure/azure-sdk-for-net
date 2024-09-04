@@ -42,17 +42,18 @@ namespace Azure.AI.Inference.Tests
             }
 
             var completions = new ChatCompletions(
-                id: "0",
+                id: "4567",
                 created: DateTimeOffset.Now,
                 model: "Phi2000",
                 usage: usage,
                 choices: choices,
                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
             var response = new SingleRecordedResponse(completions);
-            Assert.AreEqual(response.FinishReason, CompletionsFinishReason.Stopped.ToString());
-            Assert.AreEqual(response.Model, "Phi2000");
-            Assert.AreEqual(response.CompletionTokens, 15);
-            Assert.AreEqual(response.PromptTokens, 10);
+            Assert.AreEqual("4567", response.Id);
+            Assert.AreEqual(CompletionsFinishReason.Stopped.ToString(), response.FinishReason);
+            Assert.AreEqual("Phi2000", response.Model);
+            Assert.AreEqual(15, response.CompletionTokens);
+            Assert.AreEqual(10, response.PromptTokens);
             //Check the content
             var strSerializedString = response.getSerializedCompletions();
             Assert.AreEqual(strSerializedString.Length, 3);
@@ -127,17 +128,18 @@ namespace Azure.AI.Inference.Tests
                     serializedAdditionalRawData: new Dictionary<string, BinaryData>()));
             }
             var completions = new ChatCompletions(
-                id: "0",
+                id: "12",
                 created: DateTimeOffset.Now,
                 model: "Phi2001",
                 usage: usage,
                 choices: choices,
                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
             var response = new SingleRecordedResponse(completions);
-            Assert.AreEqual(response.FinishReason, CompletionsFinishReason.ContentFiltered.ToString());
-            Assert.AreEqual(response.Model, "Phi2001");
-            Assert.AreEqual(response.CompletionTokens, 15);
-            Assert.AreEqual(response.PromptTokens, 10);
+            Assert.AreEqual("12", response.Id);
+            Assert.AreEqual(CompletionsFinishReason.ContentFiltered.ToString(), response.FinishReason);
+            Assert.AreEqual("Phi2001", response.Model);
+            Assert.AreEqual(15, response.CompletionTokens);
+            Assert.AreEqual(10, response.PromptTokens);
             var strSerializedString = response.getSerializedCompletions();
             for (int i = 0; i < strSerializedString.Length; i++)
             {

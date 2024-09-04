@@ -17,8 +17,8 @@ namespace Azure.AI.Inference.Telemetry
         /// <summary>
         /// The Activity name to be used for creation of actions.
         /// </summary>
-        private const string ACTIVITY_NAME = "Azure.AI.Inference.ChatCompletionsClient";
-        private const string ENABLE_ENV = "AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED";
+        public const string ACTIVITY_NAME = "Azure.AI.Inference.ChatCompletionsClient";
+        public const string ENABLE_ENV = "AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED";
 
         /// <summary>
         /// Activity source is used to save events and log the tags.
@@ -48,7 +48,7 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="message"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        private string getContent(ChatRequestMessage message)
+        public static string getContent(ChatRequestMessage message)
         {
             if (message.GetType() == typeof(ChatRequestAssistantMessage))
                 return ((ChatRequestAssistantMessage)message).Content;
@@ -87,6 +87,16 @@ namespace Azure.AI.Inference.Telemetry
             if (value.HasValue && m_activity != null)
                 m_activity.SetTag(name, value.Value);
         }
+
+        /// <summary>
+        /// Return true if the activity for OpenTelemetry exists.
+        /// </summary>
+        public bool IsEnabled { get => m_activity != null; }
+
+        /// <summary>
+        /// Return true if the metrics are enabled.
+        /// </summary>
+        public bool AreMetricsOn { get => s_duration.Enabled && s_tokens.Enabled; }
 
         /// <summary>
         /// Create the instance of OpenTelemetryScope. This constructor logs request
@@ -186,13 +196,21 @@ namespace Azure.AI.Inference.Telemetry
             var tags = m_commonTags;
             tags.Add(GenAiResponseModelKey, recordedResponse.Model);
             // Record input tokens
-            var input_tags = tags;
-            input_tags.Add(GenAiUsageInputTokensKey, "input");
-            s_tokens.Record(recordedResponse.PromptTokens, input_tags);
+            if (recordedResponse.PromptTokens != AbstractRecordedResponse.NOT_SET)
+            {
+                var input_tags = tags;
+                input_tags.Add(GenAiUsageInputTokensKey, "input");
+                s_tokens.Record(recordedResponse.PromptTokens, input_tags);
+                m_activity.SetTag(GenAiUsageInputTokensKey, recordedResponse.PromptTokens);
+            }
             // Record output tokens
-            var output_tags = tags;
-            output_tags.Add(GenAiUsageOutputTokensKey, "output");
-            s_tokens.Record(recordedResponse.CompletionTokens, output_tags);
+            if (recordedResponse.CompletionTokens != AbstractRecordedResponse.NOT_SET)
+            {
+                var output_tags = tags;
+                output_tags.Add(GenAiUsageOutputTokensKey, "output");
+                s_tokens.Record(recordedResponse.CompletionTokens, output_tags);
+                m_activity.SetTag(GenAiUsageOutputTokensKey, recordedResponse.CompletionTokens);
+            }
 
             // Record the event for each response
             string[] choices = recordedResponse.getSerializedCompletions(); 
@@ -209,6 +227,13 @@ namespace Azure.AI.Inference.Telemetry
                         new ActivityTagsCollection(completionTags)
                 ));
             }
+            // Set activity tags
+            if (!string.IsNullOrEmpty(recordedResponse.FinishReason))
+            {
+                m_activity.SetTag(GenAiResponseFinishReasonKey, recordedResponse.FinishReason);
+            }
+            m_activity.SetTag(GenAiResponseIdKey, recordedResponse.Id);
+            m_activity.SetStatus(ActivityStatusCode.Ok);
         }
 
         public void Dispose()

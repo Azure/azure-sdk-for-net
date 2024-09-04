@@ -16,6 +16,7 @@ namespace Azure.AI.Inference.Telemetry
         /// </summary>
         /// <param name="response"></param>
         public SingleRecordedResponse(ChatCompletions response) {
+            Id = response.Id;
             Model = response.Model;
             PromptTokens = response.Usage.PromptTokens;
             CompletionTokens = response.Usage.CompletionTokens;
