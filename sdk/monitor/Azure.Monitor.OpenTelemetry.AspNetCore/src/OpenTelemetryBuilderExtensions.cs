@@ -6,6 +6,7 @@ using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.Events;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     public static class OpenTelemetryBuilderExtensions
     {
         private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
+        private const string EventLoggerName = "Azure.Monitor.OpenTelemetry.CustomEvents";
 
         /// <summary>
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
@@ -211,6 +213,34 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         options.ConnectionString = config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
                     }
                 });
+
+            // Enable custom events and set filter to enable collection.
+            builder.Services.TryAddSingleton<IApplicationInsightsEventLogger, ApplicationInsightsEventLogger>();
+
+            // The default behavior is to always capture logs for custom events.
+            // This can achieved with this code level filter -> loggingBuilder.AddFilter<OpenTelemetry.Logs.ApplicationInsightsLoggerProvider>("",LogLevel.Information);
+            // However, this may run into issues when users try to override this behavior from Configuration like below using appsettings.json:
+            // {
+            //   "Logging": {
+            //     "OpenTelemetry": {
+            //       "LogLevel": {
+            //         "Azure.Monitor.OpenTelemetry.CustomEvents": "None"
+            //       }
+            //     }
+            //   },
+            //   ...
+            // }
+            // The reason is as both rules will match the filter, the last one added wins.
+            // To ensure that the default filter is in the beginning of filter rules, so that user override from Configuration will always win,
+            // we add code filter rule to the 0th position as below.
+            builder.Services.Configure<LoggerFilterOptions>(
+                options => options.Rules.Insert(
+                    0,
+                    new LoggerFilterRule(
+                        "OpenTelemetry",
+                        EventLoggerName,
+                        LogLevel.Information,
+                        null)));
 
             return builder;
         }

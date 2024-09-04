@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string serviceResourceId = default;
+            ResourceIdentifier serviceResourceId = default;
             bool? sparkEnabled = default;
             OutboundRuleStatus? sparkStatus = default;
             string subresourceTarget = default;
@@ -94,7 +94,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("serviceResourceId"u8))
                 {
-                    serviceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sparkEnabled"u8))

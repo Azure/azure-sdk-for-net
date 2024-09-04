@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 switch (discriminator.GetString())
                 {
                     case "Fixed": return FixedInputData.DeserializeFixedInputData(element, options);
+                    case "Rolling": return RollingInputData.DeserializeRollingInputData(element, options);
                     case "Static": return StaticInputData.DeserializeStaticInputData(element, options);
-                    case "Trailing": return TrailingInputData.DeserializeTrailingInputData(element, options);
                 }
             }
             return UnknownMonitoringInputDataBase.DeserializeUnknownMonitoringInputDataBase(element, options);

@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyVault = new ChangeTrackingDictionary<string, BinaryData>();
             Nsg = new ChangeTrackingDictionary<string, BinaryData>();
             Others = new ChangeTrackingDictionary<string, BinaryData>();
+            RequiredResourceProviders = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceLock = new ChangeTrackingDictionary<string, BinaryData>();
             StorageAccount = new ChangeTrackingDictionary<string, BinaryData>();
             Udr = new ChangeTrackingDictionary<string, BinaryData>();
@@ -66,11 +67,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="keyVault"> Setting for diagnosing dependent key vault. </param>
         /// <param name="nsg"> Setting for diagnosing network security group. </param>
         /// <param name="others"> Setting for diagnosing unclassified category of problems. </param>
+        /// <param name="requiredResourceProviders"> Setting for diagnosing the presence of required resource providers in the workspace. </param>
         /// <param name="resourceLock"> Setting for diagnosing resource lock. </param>
         /// <param name="storageAccount"> Setting for diagnosing dependent storage account. </param>
         /// <param name="udr"> Setting for diagnosing user defined routing. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspaceDiagnoseProperties(IDictionary<string, BinaryData> applicationInsights, IDictionary<string, BinaryData> containerRegistry, IDictionary<string, BinaryData> dnsResolution, IDictionary<string, BinaryData> keyVault, IDictionary<string, BinaryData> nsg, IDictionary<string, BinaryData> others, IDictionary<string, BinaryData> resourceLock, IDictionary<string, BinaryData> storageAccount, IDictionary<string, BinaryData> udr, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningWorkspaceDiagnoseProperties(IDictionary<string, BinaryData> applicationInsights, IDictionary<string, BinaryData> containerRegistry, IDictionary<string, BinaryData> dnsResolution, IDictionary<string, BinaryData> keyVault, IDictionary<string, BinaryData> nsg, IDictionary<string, BinaryData> others, IDictionary<string, BinaryData> requiredResourceProviders, IDictionary<string, BinaryData> resourceLock, IDictionary<string, BinaryData> storageAccount, IDictionary<string, BinaryData> udr, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplicationInsights = applicationInsights;
             ContainerRegistry = containerRegistry;
@@ -78,6 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyVault = keyVault;
             Nsg = nsg;
             Others = others;
+            RequiredResourceProviders = requiredResourceProviders;
             ResourceLock = resourceLock;
             StorageAccount = storageAccount;
             Udr = udr;
@@ -270,6 +273,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Others { get; }
+        /// <summary>
+        /// Setting for diagnosing the presence of required resource providers in the workspace.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> RequiredResourceProviders { get; }
         /// <summary>
         /// Setting for diagnosing resource lock
         /// <para>

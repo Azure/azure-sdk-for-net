@@ -21,9 +21,12 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("filtered"u8);
-            writer.WriteBooleanValue(Filtered);
-            if (Optional.IsCollectionDefined(InternalDetails))
+            if (SerializedAdditionalRawData?.ContainsKey("filtered") != true)
+            {
+                writer.WritePropertyName("filtered"u8);
+                writer.WriteBooleanValue(Filtered);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("details") != true && Optional.IsCollectionDefined(InternalDetails))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -33,10 +36,14 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (SerializedAdditionalRawData != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in SerializedAdditionalRawData)
                 {
+                    if (ModelSerializationExtensions.IsSentinelValue(item.Value))
+                    {
+                        continue;
+                    }
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
@@ -98,6 +105,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
+                    rawDataDictionary ??= new Dictionary<string, BinaryData>();
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
