@@ -127,6 +127,7 @@ namespace Azure.Storage.DataMovement
         /// </returns>
         public virtual async Task PauseTransferIfRunningAsync(string transferId, CancellationToken cancellationToken = default)
         {
+            cancellationToken = LinkCancellation(cancellationToken);
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
             if (!_dataTransfers.TryGetValue(transferId, out DataTransfer transfer))
             {
@@ -205,6 +206,7 @@ namespace Azure.Storage.DataMovement
             DataTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
+            cancellationToken = LinkCancellation(cancellationToken);
             List<DataTransfer> transfers = new();
             await foreach (DataTransferProperties properties in GetResumableTransfersAsync().ConfigureAwait(false))
             {
@@ -228,6 +230,7 @@ namespace Azure.Storage.DataMovement
             DataTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
+            cancellationToken = LinkCancellation(cancellationToken);
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Argument.AssertNotNullOrWhiteSpace(transferId, nameof(transferId));
 
@@ -247,6 +250,7 @@ namespace Azure.Storage.DataMovement
             DataTransferOptions transferOptions,
             CancellationToken cancellationToken)
         {
+            cancellationToken = LinkCancellation(cancellationToken);
             bool TryGetStorageResourceProvider(DataTransferProperties properties, bool getSource, out StorageResourceProvider resourceProvider)
             {
                 foreach (StorageResourceProvider provider in _resumeProviders)
@@ -297,6 +301,7 @@ namespace Azure.Storage.DataMovement
         /// <exception cref="NotImplementedException"></exception>
         internal virtual async Task PauseAllRunningTransfersAsync(CancellationToken cancellationToken = default)
         {
+            cancellationToken = LinkCancellation(cancellationToken);
             await Task.WhenAll(_dataTransfers.Values
                 .Where(transfer => transfer.CanPause())
                 .Select(transfer => transfer.PauseAsync(cancellationToken)))
@@ -333,6 +338,7 @@ namespace Azure.Storage.DataMovement
             DataTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
+            cancellationToken = LinkCancellation(cancellationToken);
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Argument.AssertNotNull(sourceResource, nameof(sourceResource));
             Argument.AssertNotNull(destinationResource, nameof(destinationResource));
@@ -344,7 +350,7 @@ namespace Azure.Storage.DataMovement
                 transferId,
                 sourceResource,
                 destinationResource,
-                _cancellationToken).ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
 
             DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
                 sourceResource,
@@ -354,7 +360,6 @@ namespace Azure.Storage.DataMovement
                 false,
                 cancellationToken).ConfigureAwait(false);
 
-            dataTransfer.TransferManager = this;
             return dataTransfer;
         }
 
@@ -366,6 +371,7 @@ namespace Azure.Storage.DataMovement
             bool resumeJob,
             CancellationToken cancellationToken)
         {
+            cancellationToken = LinkCancellation(cancellationToken);
             (DataTransfer transfer, TransferJobInternal transferJobInternal) = await _jobBuilder.BuildJobAsync(
                 sourceResource,
                 destinationResource,
@@ -376,8 +382,9 @@ namespace Azure.Storage.DataMovement
                 cancellationToken)
                 .ConfigureAwait(false);
 
+            transfer.TransferManager = this;
             _dataTransfers.Add(transfer.Id, transfer);
-            await _jobsProcessor.QueueAsync(transferJobInternal, _cancellationToken).ConfigureAwait(false);
+            await _jobsProcessor.QueueAsync(transferJobInternal, cancellationToken).ConfigureAwait(false);
 
             return transfer;
         }
@@ -415,6 +422,9 @@ namespace Azure.Storage.DataMovement
                 });
             }
         }
+
+        private CancellationToken LinkCancellation(CancellationToken cancellationToken)
+            => CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationToken).Token;
 
         /// <summary>
         /// Disposes.
