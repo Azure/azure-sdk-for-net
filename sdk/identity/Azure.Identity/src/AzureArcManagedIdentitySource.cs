@@ -15,7 +15,7 @@ namespace Azure.Identity
         private const string IdentityEndpointInvalidUriError = "The environment variable IDENTITY_ENDPOINT contains an invalid Uri.";
         private const string NoChallengeErrorMessage = "Did not receive expected WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint.";
         private const string InvalidChallangeErrorMessage = "The WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint did not match the expected format.";
-        private const string UserAssignedNotSupportedErrorMessage = "User assigned identity is not supported by the Azure Arc Managed Identity Endpoint. To authenticate with the system assigned identity omit the client id when constructing the ManagedIdentityCredential, or if authenticating with the DefaultAzureCredential ensure the AZURE_CLIENT_ID environment variable is not set.";
+        private const string UserAssignedNotSupportedErrorMessage = "User-assigned managed identity is not supported by the Azure Arc Managed Identity Endpoint. To authenticate with the system-assigned managed identity, omit the client ID when constructing the ManagedIdentityCredential, or if authenticating with DefaultAzureCredential, ensure the AZURE_CLIENT_ID environment variable is not set.";
         private const string ArcApiVersion = "2019-11-01";
 
         private readonly ManagedIdentityId _managedIdentityId;
