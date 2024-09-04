@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Parameters for a redis enterprise active geo-replication force unlink operation. </summary>
-    public partial class ForceUnlinkRedisEnterpriseDatabaseContent
+    /// <summary> The response of a list-all operation. </summary>
+    internal partial class AccessPolicyAssignmentList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,31 +45,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ForceUnlinkRedisEnterpriseDatabaseContent"/>. </summary>
-        /// <param name="ids"> The resource IDs of the database resources to be unlinked. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ids"/> is null. </exception>
-        public ForceUnlinkRedisEnterpriseDatabaseContent(IEnumerable<ResourceIdentifier> ids)
+        /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentList"/>. </summary>
+        internal AccessPolicyAssignmentList()
         {
-            Argument.AssertNotNull(ids, nameof(ids));
-
-            Ids = ids.ToList();
+            Value = new ChangeTrackingList<AccessPolicyAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ForceUnlinkRedisEnterpriseDatabaseContent"/>. </summary>
-        /// <param name="ids"> The resource IDs of the database resources to be unlinked. </param>
+        /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentList"/>. </summary>
+        /// <param name="value"> List of access policy assignments. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ForceUnlinkRedisEnterpriseDatabaseContent(IList<ResourceIdentifier> ids, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessPolicyAssignmentList(IReadOnlyList<AccessPolicyAssignmentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Ids = ids;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ForceUnlinkRedisEnterpriseDatabaseContent"/> for deserialization. </summary>
-        internal ForceUnlinkRedisEnterpriseDatabaseContent()
-        {
-        }
-
-        /// <summary> The resource IDs of the database resources to be unlinked. </summary>
-        public IList<ResourceIdentifier> Ids { get; }
+        /// <summary> List of access policy assignments. </summary>
+        public IReadOnlyList<AccessPolicyAssignmentData> Value { get; }
+        /// <summary> The URI to fetch the next page of results. </summary>
+        public string NextLink { get; }
     }
 }

@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Parameters for a redis enterprise active geo-replication force unlink operation. </summary>
-    public partial class ForceUnlinkRedisEnterpriseDatabaseContent
+    /// <summary> The user associated with the access policy. </summary>
+    internal partial class AccessPolicyAssignmentPropertiesUser
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,31 +45,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ForceUnlinkRedisEnterpriseDatabaseContent"/>. </summary>
-        /// <param name="ids"> The resource IDs of the database resources to be unlinked. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ids"/> is null. </exception>
-        public ForceUnlinkRedisEnterpriseDatabaseContent(IEnumerable<ResourceIdentifier> ids)
+        /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentPropertiesUser"/>. </summary>
+        public AccessPolicyAssignmentPropertiesUser()
         {
-            Argument.AssertNotNull(ids, nameof(ids));
-
-            Ids = ids.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ForceUnlinkRedisEnterpriseDatabaseContent"/>. </summary>
-        /// <param name="ids"> The resource IDs of the database resources to be unlinked. </param>
+        /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentPropertiesUser"/>. </summary>
+        /// <param name="objectId"> The object ID of the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ForceUnlinkRedisEnterpriseDatabaseContent(IList<ResourceIdentifier> ids, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessPolicyAssignmentPropertiesUser(string objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Ids = ids;
+            ObjectId = objectId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ForceUnlinkRedisEnterpriseDatabaseContent"/> for deserialization. </summary>
-        internal ForceUnlinkRedisEnterpriseDatabaseContent()
-        {
-        }
-
-        /// <summary> The resource IDs of the database resources to be unlinked. </summary>
-        public IList<ResourceIdentifier> Ids { get; }
+        /// <summary> The object ID of the user. </summary>
+        public string ObjectId { get; set; }
     }
 }
