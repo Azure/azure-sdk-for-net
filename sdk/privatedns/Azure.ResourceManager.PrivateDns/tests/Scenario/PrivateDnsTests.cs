@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         private ResourceGroupResource _resourceGroup;
         private PrivateDnsZoneCollection _privateZoneResource;
 
-        public PrivateDnsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public PrivateDnsTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -28,6 +28,22 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         {
             _resourceGroup = await CreateResourceGroup();
             _privateZoneResource = _resourceGroup.GetPrivateDnsZones();
+        }
+
+        [TearDown]
+        public async Task TearDown()
+        {
+            var list = await _privateZoneResource.GetAllAsync().ToEnumerableAsync();
+            foreach (var item in list)
+            {
+                var vnetLinks = await item.GetVirtualNetworkLinks().GetAllAsync().ToEnumerableAsync();
+                foreach (var vnetLink in vnetLinks)
+                {
+                    await vnetLink.DeleteAsync(WaitUntil.Completed);
+                }
+
+                await item.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [RecordedTest]
