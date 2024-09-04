@@ -131,7 +131,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         public new string ResourceManagerUrl => base.ResourceManagerUrl ?? "https://management.azure.com/";
 
-        public Uri StorageClaimCheckAccountUri => new($"https://{GetRecordedVariable("STORAGE_CLAIM_CHECK_ACCOUNT_NAME")}.blob.core.windows.net/");
+        public string StorageClaimCheckAccountName => GetRecordedVariable("STORAGE_CLAIM_CHECK_ACCOUNT_NAME");
 
         /// <summary>
         ///   Builds a connection string for a specific Service Bus entity instance under the namespace used for

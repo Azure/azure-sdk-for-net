@@ -43,7 +43,8 @@ ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
 {
-    var blobClient = new BlobClient(accountUri, new DefaultAzureCredential());
+    Uri blobUri = new($"https://<storage account name>.blob.core.windows.net/claim-checks/{(string)blobNameReceived}");
+    var blobClient = new BlobClient(blobUri, new DefaultAzureCredential());
 
     BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
     BinaryData messageBody = downloadResult.Content;

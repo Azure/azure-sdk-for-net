@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                Uri accountUri = TestEnvironment.StorageClaimCheckAccountUri;
+                Uri accountUri = new($"https://{TestEnvironment.StorageClaimCheckAccountName}.blob.core.windows.net/claim-checks");
                 #region Snippet:CreateBlobContainer
                 var containerClient = new BlobContainerClient(accountUri, new DefaultAzureCredential());
                 await containerClient.CreateIfNotExistsAsync();
@@ -58,7 +58,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                     if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
                     {
-                        var blobClient = new BlobClient(accountUri, new DefaultAzureCredential());
+#if SNIPPET
+                        Uri blobUri = new($"https://<storage account name>.blob.core.windows.net/claim-checks/{(string)blobNameReceived}");
+#else
+                        Uri blobUri = new($"https://{TestEnvironment.StorageClaimCheckAccountName}.blob.core.windows.net/claim-checks/{(string)blobNameReceived}");
+#endif
+                        var blobClient = new BlobClient(blobUri, new DefaultAzureCredential());
 
                         BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
                         BinaryData messageBody = downloadResult.Content;

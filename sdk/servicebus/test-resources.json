@@ -174,33 +174,6 @@
       }
     }
   ],
-  "functions": [
-    {
-      "namespace": "connectionString",
-      "members": {
-        "create": {
-          "parameters": [
-            {
-              "name": "accountName",
-              "type": "string"
-            },
-            {
-              "name": "accountKey",
-              "type": "string"
-            },
-            {
-              "name": "blobEndpoint",
-              "type": "string"
-            }
-          ],
-          "output": {
-            "type": "string",
-            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('accountName'), ';AccountKey=', parameters('accountKey'), ';BlobEndpoint=', parameters('blobEndpoint'))]"
-          }
-        }
-      }
-    }
-  ],
   "outputs": {
     "SERVICEBUS_FULLY_QUALIFIED_NAMESPACE": {
       "type": "string",
