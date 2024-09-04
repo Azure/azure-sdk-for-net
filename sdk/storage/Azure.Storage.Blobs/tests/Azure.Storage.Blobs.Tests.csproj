@@ -30,5 +30,6 @@
     <Content Include="Resources\**"> 
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
     </Content>
+    <None Update="Azure.Storage.Blobs.Tests.dll.config" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
