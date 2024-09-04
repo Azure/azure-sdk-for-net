@@ -55,9 +55,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var mockCredential = new Mock<TokenCredential>();
-            var credential = mockCredential.Object;
-            var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
+            var client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>());
             var receiver = new ServiceBusSessionReceiver(client.Connection, "fake", default, CancellationToken.None);
             await receiver.CloseAsync();
             Assert.IsTrue(receiver.IsClosed);

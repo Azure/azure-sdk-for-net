@@ -135,9 +135,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var mockCredential = new Mock<TokenCredential>();
-            var credential = mockCredential.Object;
-            var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
+            var client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>());
             var identifier = "MyProcessor";
             var options = new ServiceBusSessionProcessorOptions
             {

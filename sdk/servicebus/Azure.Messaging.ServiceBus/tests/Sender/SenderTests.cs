@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;

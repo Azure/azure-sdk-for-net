@@ -15,21 +15,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         public void ServiceVersionValidated()
         {
             var fakeNamespace = "not-real.servicebus.windows.net";
-            var fakeCredentialMock = new Mock<TokenCredential>();
+            var fakeCredential = Mock.Of<TokenCredential>();
 
             // default enum of 0 should throw
             // https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-versioning
             Assert.That(
-                () => new ServiceBusAdministrationClient(fakeNamespace, fakeCredentialMock.Object, new ServiceBusAdministrationClientOptions(default)),
+                () => new ServiceBusAdministrationClient(fakeNamespace, fakeCredential, new ServiceBusAdministrationClientOptions(default)),
                 Throws.InstanceOf<ArgumentException>());
 
             // doesn't throw
-            var client = new ServiceBusAdministrationClient(fakeNamespace, fakeCredentialMock.Object, new ServiceBusAdministrationClientOptions());
+            var client = new ServiceBusAdministrationClient(fakeNamespace, fakeCredential, new ServiceBusAdministrationClientOptions());
 
             // doesn't throw
             client = new ServiceBusAdministrationClient(
                 fakeNamespace,
-                fakeCredentialMock.Object,
+                fakeCredential,
                 new ServiceBusAdministrationClientOptions(ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04));
         }
     }
