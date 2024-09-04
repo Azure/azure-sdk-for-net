@@ -160,14 +160,15 @@ These examples demonstrate authenticating `SecretClient` from the [Azure.Securit
 
 #### Authenticate with a user-assigned managed identity
 
-To authenticate with a user-assigned managed identity, you must specify the ID of the managed identity.
+To authenticate with a user-assigned managed identity, you must specify an ID for the managed identity.
 
 The following example demonstrates authenticating with a user-assigned managed identity using the client ID:
 
 ```C# Snippet:AuthenticatingWithManagedIdentityCredentialUserAssigned
 string userAssignedClientId = "some client ID";
 
-var credential = new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(userAssignedClientId));
+var credential = new ManagedIdentityCredential(
+    ManagedIdentityId.FromUserAssignedClientId(userAssignedClientId));
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
@@ -177,7 +178,8 @@ The following example demonstrates authenticating with a user-assigned managed i
 ResourceIdentifier userAssignedResourceId = new ResourceIdentifier(
     "/subscriptions/<subscriptionID>/resourcegroups/<resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<MI name>");
 
-var credential = new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedResourceId(userAssignedResourceId));
+var credential = new ManagedIdentityCredential(
+    ManagedIdentityId.FromUserAssignedResourceId(userAssignedResourceId));
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
