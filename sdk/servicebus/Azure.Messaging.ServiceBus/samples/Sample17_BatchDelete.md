@@ -11,11 +11,11 @@ Because multiple service requests may be made, it is possible to experience part
 It is also important to be aware that if there is a receiver reading the entity when `PurgeAllMessgesAsync` is called, any locked messages will not be deleted.
 
 ```C# Snippet:ServiceBusPurgeMessages
-string connectionString = "<connection_string>";
+string fullQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 
-await using var client = new ServiceBusClient(connectionString);
-await using var receiver = client.CreateReceiver(queueName);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // Delete all messages in the queue.
 int numberOfMessagesDeleted = await receiver.PurgeMessagesAsync();
@@ -26,11 +26,11 @@ int numberOfMessagesDeleted = await receiver.PurgeMessagesAsync();
 For scenarios where you would like to delete all messages enqueued before a given date, `PurgeMessagesAsync` accepts an optional parameter to specify the cut-off point.
 
 ```C# Snippet:ServiceBusPurgeMessagesByDate
-string connectionString = "<connection_string>";
+string fullQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 
-await using var client = new ServiceBusClient(connectionString);
-await using var receiver = client.CreateReceiver(queueName);
+await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // Delete all messages in the queue that were enqueued more than a year ago.
 DateTimeOffset deleteBefore = DateTimeOffset.UtcNow.AddYears(-1);
@@ -44,11 +44,11 @@ When you wish to only delete some number of messages from the entity, rather tha
 Note that the service may delete fewer messages than were requested, but will never delete more. It is also important to be aware that if there is a receiver reading the entity when `DeleteMessages` is called, any locked messages will not be deleted.
 
 ```C# Snippet:ServiceBusDeleteMessages
-string connectionString = "<connection_string>";
+string fullQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 
-await using var client = new ServiceBusClient(connectionString);
-await using var receiver = client.CreateReceiver(queueName);
+await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // Delete the oldest 50 messages in the queue.
 int maxBatchSize = 50;
@@ -60,11 +60,11 @@ int numberOfMessagesDeleted = await receiver.DeleteMessagesAsync(maxBatchSize);
 When you wish to delete the oldest messages in the entity but restrict it to only those enqueued before a given date, `DeleteMessagesAsync` accepts an optional parameter to specify the cut-off point.
 
 ```C# Snippet:ServiceBusDeleteMessagesByDate
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 
-await using var client = new ServiceBusClient(connectionString);
-await using var receiver = client.CreateReceiver(queueName);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // Delete the oldest 50 messages in the queue which were enqueued
 // more than a month ago.

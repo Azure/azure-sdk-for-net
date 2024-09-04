@@ -17,14 +17,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusProcessMessages
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
-                await using var client = CreateClient();
+                await using ServiceBusClient client = CreateClient();
 #endif
 
                 // create the sender
@@ -33,8 +32,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // create a set of messages that we can send
                 ServiceBusMessage[] messages = new ServiceBusMessage[]
                 {
-                    new ServiceBusMessage("First"),
-                    new ServiceBusMessage("Second")
+                    new("First"),
+                    new("Second")
                 };
 
                 // send the message batch
@@ -42,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 #region Snippet:ServiceBusConfigureProcessor
                 // create the options to use for configuring the processor
-                var options = new ServiceBusProcessorOptions
+                ServiceBusProcessorOptions options = new()
                 {
                     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
                     // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.

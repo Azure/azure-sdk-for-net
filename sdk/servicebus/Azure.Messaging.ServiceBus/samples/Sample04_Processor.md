@@ -5,10 +5,10 @@ This sample demonstrates how to use the processor. The processor offers automati
 ## Processing messages
 
 ```C# Snippet:ServiceBusProcessMessages
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
@@ -16,15 +16,15 @@ ServiceBusSender sender = client.CreateSender(queueName);
 // create a set of messages that we can send
 ServiceBusMessage[] messages = new ServiceBusMessage[]
 {
-    new ServiceBusMessage("First"),
-    new ServiceBusMessage("Second")
+    new("First"),
+    new("Second")
 };
 
 // send the message batch
 await sender.SendMessagesAsync(messages);
 
 // create the options to use for configuring the processor
-var options = new ServiceBusProcessorOptions
+ServiceBusProcessorOptions options = new()
 {
     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
     // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.

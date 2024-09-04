@@ -106,7 +106,7 @@ Authenticate with Active Directory:
 ```C# Snippet:ServiceBusAuthAAD
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 Authenticate with connection string:
@@ -114,7 +114,7 @@ Authenticate with connection string:
 ```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(connectionString);
 ```
 
 #### Administration client
@@ -126,7 +126,7 @@ Authenticate with Active Directory:
 ```C# Snippet:ServiceBusAdministrationClientAAD
 // Create a ServiceBusAdministrationClient that will authenticate using default credentials
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+ServiceBusAdministrationClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 Authenticate with connection string:
@@ -134,7 +134,7 @@ Authenticate with connection string:
 ```C# Snippet:ServiceBusAdministrationClientConnectionString
 // Create a ServiceBusAdministrationClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(connectionString);
+ServiceBusAdministrationClient client = new(connectionString);
 ```
 
 ### Sending messages
@@ -167,7 +167,7 @@ While we continue to support this feature, it had the potential to fail unexpect
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 // add the messages that we plan to send to a local queue
-Queue<ServiceBusMessage> messages = new Queue<ServiceBusMessage>();
+Queue<ServiceBusMessage> messages = new();
 messages.Enqueue(new ServiceBusMessage("First message"));
 messages.Enqueue(new ServiceBusMessage("Second message"));
 messages.Enqueue(new ServiceBusMessage("Third message"));
@@ -238,7 +238,7 @@ Another notable difference from `WindowsAzure.ServiceBus` when it comes to recei
 
 ```C# Snippet:ServiceBusConfigureProcessor
 // create the options to use for configuring the processor
-var options = new ServiceBusProcessorOptions
+ServiceBusProcessorOptions options = new()
 {
     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
     // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
@@ -451,9 +451,9 @@ In `Azure.Messaging.ServiceBus`, the `EnableCrossEntityTransactions` property on
 The below code snippet shows you how to perform cross-entity transactions.
 
 ```C# Snippet:ServiceBusCrossEntityTransaction
-string connectionString = "<connection_string>";
-var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
-await using var client = new ServiceBusClient(connectionString, options);
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+ServiceBusClientOptions options = new(){ EnableCrossEntityTransactions = true };
+await using ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential(), options);
 
 ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
 ServiceBusSender senderB = client.CreateSender("queueB");

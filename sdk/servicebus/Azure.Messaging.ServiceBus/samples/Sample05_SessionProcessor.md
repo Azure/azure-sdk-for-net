@@ -7,10 +7,10 @@ This sample demonstrates how to use the session processor. The session processor
 Processing session messages is performed with a `ServiceBusSessionProcessor`. This type derives from `ServiceBusProcessor` and exposes session-related functionality.
 
 ```C# Snippet:ServiceBusProcessSessionMessages
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);

@@ -9,8 +9,8 @@ By default, the Service Bus client library communicates with the service using t
 In the example shown below, the transport is configured to use web sockets and a proxy is specified. You can also use websockets without specifying a proxy, but the proxy should only be used when using websockets.
 
 ```C# Snippet:ServiceBusConfigureTransport
-string connectionString = "<connection_string>";
-var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential(), new ServiceBusClientOptions
 {
     TransportType = ServiceBusTransportType.AmqpWebSockets,
     WebProxy = new WebProxy("https://myproxyserver:80")
@@ -23,7 +23,7 @@ If an alternative host name is needed to establish the connection to the service
 
 ```C# Snippet:ServiceBusCustomEndpoint
 // Connect to the service using a custom endpoint
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string customEndpoint = "<custom_endpoint>";
 
 var options = new ServiceBusClientOptions
@@ -31,7 +31,7 @@ var options = new ServiceBusClientOptions
     CustomEndpointAddress = new Uri(customEndpoint)
 };
 
-ServiceBusClient client = new ServiceBusClient(connectionString, options);
+ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential(), options);
 ```
 
 ## Customizing the retry options
@@ -39,8 +39,8 @@ ServiceBusClient client = new ServiceBusClient(connectionString, options);
 The retry options are used to configure the retry policy for all operations when communicating with the service. The default values are shown below, but they can be customized to fit your scenario.
 
 ```C# Snippet:ServiceBusConfigureRetryOptions
-string connectionString = "<connection_string>";
-var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential(), new ServiceBusClientOptions
 {
     RetryOptions = new ServiceBusRetryOptions
     {
@@ -56,8 +56,8 @@ var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
 The [prefetch feature](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-prefetch?tabs=dotnet) allows the receiver and processor to request messages in the background before an actual receive operation is initiated. This can potentially increase the throughput of your application, but it comes with several large drawbacks that are outlined in this [document](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-prefetch?tabs=dotnet#why-is-prefetch-not-the-default-option). If you determine that prefetch makes sense for your application, here is how you would enable it:
 
 ```C# Snippet:ServiceBusConfigurePrefetchReceiver
-string connectionString = "<connection_string>";
-var client = new ServiceBusClient(connectionString);
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 ServiceBusReceiver receiver = client.CreateReceiver("<queue-name>", new ServiceBusReceiverOptions
 {
     PrefetchCount = 10
@@ -67,8 +67,8 @@ ServiceBusReceiver receiver = client.CreateReceiver("<queue-name>", new ServiceB
 And when using the processor:
 
 ```C# Snippet:ServiceBusConfigurePrefetchProcessor
-string connectionString = "<connection_string>";
-var client = new ServiceBusClient(connectionString);
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 ServiceBusProcessor processor = client.CreateProcessor("<queue-name>", new ServiceBusProcessorOptions
 {
     PrefetchCount = 10
@@ -89,8 +89,8 @@ has been lost.
 When using the `ServiceBusProcessor`:
 
 ```C# Snippet:ServiceBusProcessorLockLostHandler
-string connectionString = "<connection_string>";
-var client = new ServiceBusClient(connectionString);
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 // create a processor that we can use to process the messages
 await using ServiceBusProcessor processor = client.CreateProcessor("<queue-name>");
@@ -149,8 +149,8 @@ Console.ReadKey();
 Here is what the code would look like when using the `ServiceBusSessionProcessor`:
 
 ```C# Snippet:ServiceBusSessionProcessorLockLostHandler
-string connectionString = "<connection_string>";
-var client = new ServiceBusClient(connectionString);
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 // create a processor that we can use to process the messages
 await using ServiceBusSessionProcessor processor = client.CreateSessionProcessor("<queue-name>");

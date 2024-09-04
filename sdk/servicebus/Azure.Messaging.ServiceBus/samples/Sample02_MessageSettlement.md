@@ -7,16 +7,16 @@ received messages. Message settlement can only be used when using a receiver in 
 ## Completing a message
 
 ```C# Snippet:ServiceBusCompleteMessage
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+ServiceBusMessage message = new("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);

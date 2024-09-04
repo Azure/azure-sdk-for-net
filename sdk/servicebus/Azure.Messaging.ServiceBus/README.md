@@ -51,7 +51,7 @@ Once you have a connection string, you can authenticate your client with it.
 ```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(connectionString);
 ```
 
 To see how to authenticate using Azure.Identity, view this [example](#authenticating-with-azureidentity).
@@ -141,16 +141,16 @@ We guarantee that all client instance methods are thread-safe and independent of
 Message sending is performed using the `ServiceBusSender`. Receiving is performed using the `ServiceBusReceiver`.
 
 ```C# Snippet:ServiceBusSendAndReceive
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send. UTF-8 encoding is used when providing a string.
-ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+ServiceBusMessage message = new("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -172,7 +172,7 @@ There are two ways of sending several messages at once. The first way of doing t
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 // add the messages that we plan to send to a local queue
-Queue<ServiceBusMessage> messages = new Queue<ServiceBusMessage>();
+Queue<ServiceBusMessage> messages = new();
 messages.Enqueue(new ServiceBusMessage("First message"));
 messages.Enqueue(new ServiceBusMessage("Second message"));
 messages.Enqueue(new ServiceBusMessage("Third message"));
@@ -216,9 +216,11 @@ while (messages.Count > 0)
 The second way uses the `SendMessagesAsync` overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are too large to fit in a single batch, the operation will throw an exception.
 
 ```C# Snippet:ServiceBusSendAndReceiveBatch
-IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
-messages.Add(new ServiceBusMessage("First"));
-messages.Add(new ServiceBusMessage("Second"));
+IList<ServiceBusMessage> messages = new List<ServiceBusMessage>
+{
+    new("First"),
+    new("Second")
+};
 // send the messages
 await sender.SendMessagesAsync(messages);
 ```
@@ -245,16 +247,16 @@ foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 In order to remove a message from a queue or subscription, we can call the `CompleteMessageAsync` method.
 
 ```C# Snippet:ServiceBusCompleteMessage
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+ServiceBusMessage message = new("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -326,10 +328,10 @@ For more information, see the [overview of ServiceBus dead letter queues](https:
 The `ServiceBusProcessor` can be thought of as an abstraction around a set of receivers. It uses a callback model to allow code to be specified when a message is received and when an exception occurs. It offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers. Because of its feature set, it should be the go to tool for writing applications that receive from Service Bus entities. The ServiceBusReceiver is recommended for more complex scenarios in which the processor is not able to provide the fine-grained control that one can expect when using the ServiceBusReceiver directly.
 
 ```C# Snippet:ServiceBusProcessMessages
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
@@ -337,15 +339,15 @@ ServiceBusSender sender = client.CreateSender(queueName);
 // create a set of messages that we can send
 ServiceBusMessage[] messages = new ServiceBusMessage[]
 {
-    new ServiceBusMessage("First"),
-    new ServiceBusMessage("Second")
+    new("First"),
+    new("Second")
 };
 
 // send the message batch
 await sender.SendMessagesAsync(messages);
 
 // create the options to use for configuring the processor
-var options = new ServiceBusProcessorOptions
+ServiceBusProcessorOptions options = new()
 {
     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
     // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
@@ -398,7 +400,7 @@ The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/mai
 ```C# Snippet:ServiceBusAuthAAD
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 ### Working with Sessions
@@ -456,7 +458,7 @@ It is also possible to register sub-clients, such as `ServiceBusSender` and `Ser
 public async Task ConfigureServicesAsync(IServiceCollection services)
 {
     // Query the available queues for the Service Bus namespace.
-    var adminClient = new ServiceBusAdministrationClient("<< SERVICE BUS CONNECTION STRING >>");
+    var adminClient = new ServiceBusAdministrationClient("<< FULLY QUALIFIED NAMESPACE >>", new DefaultAzureCredential());
     var queueNames = new List<string>();
 
     // Because the result is async, they need to be captured to a standard list to avoid async
@@ -471,7 +473,7 @@ public async Task ConfigureServicesAsync(IServiceCollection services)
 
     services.AddAzureClients(builder =>
     {
-        builder.AddServiceBusClient("<< SERVICE BUS CONNECTION STRING >>");
+        builder.AddServiceBusAdministrationClientWithNamespace("<< FULLY QUALIFIED NAMESPACE >>");
 
         foreach (var queueName in queueNames)
         {
