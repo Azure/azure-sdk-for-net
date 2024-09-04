@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
     {
         private PrivateDnsZoneResource _privateDns;
 
-        public RecordTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public RecordTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

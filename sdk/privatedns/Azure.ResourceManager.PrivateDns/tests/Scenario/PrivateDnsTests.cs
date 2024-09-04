@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         private ResourceGroupResource _resourceGroup;
         private PrivateDnsZoneCollection _privateZoneResource;
 
-        public PrivateDnsTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public PrivateDnsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
