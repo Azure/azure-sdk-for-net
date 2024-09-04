@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -17,19 +18,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
 #endif
 
                 #region Snippet:ServiceBusWriteReceivedMessage
 
-                var client1 = new ServiceBusClient(connectionString);
+                ServiceBusClient client1 = new(fullyQualifiedNamespace, new DefaultAzureCredential());
                 ServiceBusSender sender = client1.CreateSender(queueName);
 
-                var message = new ServiceBusMessage("some message");
+                ServiceBusMessage message = new("some message");
                 await sender.SendMessageAsync(message);
 
                 ServiceBusReceiver receiver1 = client1.CreateReceiver(queueName);
@@ -42,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 AmqpAnnotatedMessage amqpMessage = AmqpAnnotatedMessage.FromBytes(new BinaryData(amqpMessageBytes));
                 ServiceBusReceivedMessage rehydratedMessage = ServiceBusReceivedMessage.FromAmqpMessage(amqpMessage, new BinaryData(lockTokenBytes));
 
-                var client2 = new ServiceBusClient(connectionString);
+                var client2 = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
                 ServiceBusReceiver receiver2 = client2.CreateReceiver(queueName);
                 await receiver2.CompleteMessageAsync(rehydratedMessage);
                 #endregion
@@ -57,19 +58,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
 #endif
 
                 #region Snippet:ServiceBusWriteReceivedMessageLockToken
 
-                var client1 = new ServiceBusClient(connectionString);
+                ServiceBusClient client1 = new(fullyQualifiedNamespace, new DefaultAzureCredential());
                 ServiceBusSender sender = client1.CreateSender(queueName);
 
-                var message = new ServiceBusMessage("some message");
+                ServiceBusMessage message = new("some message");
                 await sender.SendMessageAsync(message);
 
                 ServiceBusReceiver receiver1 = client1.CreateReceiver(queueName);
@@ -81,7 +82,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 ServiceBusReceivedMessage rehydratedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(lockTokenGuid: new Guid(lockTokenBytes.ToArray()));
 
-                var client2 = new ServiceBusClient(connectionString);
+                ServiceBusClient client2 = new(fullyQualifiedNamespace, new DefaultAzureCredential());
                 ServiceBusReceiver receiver2 = client2.CreateReceiver(queueName);
                 await receiver2.CompleteMessageAsync(rehydratedMessage);
                 #endregion

@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -16,15 +17,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusPurgeMessages
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
 #endif
 
-                await using var client = new ServiceBusClient(connectionString);
-                await using var receiver = client.CreateReceiver(queueName);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+                await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 #if !SNIPPET
                 await SendMessagesAsync(client, queueName, 100);
@@ -42,15 +43,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusPurgeMessagesByDate
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
 #endif
 
-                await using var client = new ServiceBusClient(connectionString);
-                await using var receiver = client.CreateReceiver(queueName);
+                await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
+                await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 #if !SNIPPET
                 await SendMessagesAsync(client, queueName, 100);
@@ -69,15 +70,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusDeleteMessages
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
 #endif
 
-                await using var client = new ServiceBusClient(connectionString);
-                await using var receiver = client.CreateReceiver(queueName);
+                await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
+                await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 #if !SNIPPET
                 await SendMessagesAsync(client, queueName, 100);
@@ -96,15 +97,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusDeleteMessagesByDate
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
 #endif
 
-                await using var client = new ServiceBusClient(connectionString);
-                await using var receiver = client.CreateReceiver(queueName);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+                await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 #if !SNIPPET
                 await SendMessagesAsync(client, queueName, 100);
