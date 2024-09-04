@@ -1,14 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.PrivateDns.Models;
 using Azure.ResourceManager.Resources;
@@ -180,22 +177,26 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         public async Task AddVnetLinkWithResolutionPolicy()
         {
             string privateZoneName = "privatelink.sql.azuresynapse.net";
-            string vnetLinkName = $"{Recording.GenerateAssetName("sample")}";
+            string vnetName = "samplevnet";
+            string vnetLinkName = $"{Recording.GenerateAssetName("samplelink")}";
             var privateZone = await CreatePrivateZone(_resourceGroup, privateZoneName);
+            var vnet = await CreateVirtualNetwork(_resourceGroup, vnetName);
 
             // Add NxDomainRedirect resolutionPolicy
-            var virtualNetworkLinkData = new VirtualNetworkLinkData()
+            var virtualNetworkLinkData = new VirtualNetworkLinkData("global")
             {
-                VirtualNetwork = new WritableSubResource { Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1") },
+                VirtualNetwork = new WritableSubResource { Id = vnet.Id },
                 RegistrationEnabled = false,
                 ResolutionPolicy = ResolutionPolicy.NxDomainRedirect,
             };
+
             await CreateOrUpdateVirtualNetworkLink(privateZone, vnetLinkName, virtualNetworkLinkData);
 
             if (TestEnvironment.Mode == RecordedTestMode.Record)
             {
                 Thread.Sleep(30000);
             }
+
             var virtualNetworkLinkResource = await privateZone.GetVirtualNetworkLinks().GetAsync(vnetLinkName);
             var vnetLinkData = virtualNetworkLinkResource.Value.Data;
             Assert.AreEqual(vnetLinkData.ResolutionPolicy, virtualNetworkLinkData.ResolutionPolicy);
@@ -207,6 +208,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             {
                 Thread.Sleep(30000);
             }
+
             virtualNetworkLinkResource = await privateZone.GetVirtualNetworkLinks().GetAsync(vnetLinkName);
             vnetLinkData = virtualNetworkLinkResource.Value.Data;
             Assert.AreEqual(vnetLinkData.ResolutionPolicy, virtualNetworkLinkData.ResolutionPolicy);
