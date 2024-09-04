@@ -2,6 +2,9 @@ parameters:
   - name: Repository
     type: string
     default: $(Build.Repository.Name)
+  - name: RepositoryPath
+    type: string
+    default: 'sdk'
 ## TODO Remove these convention options once all language repos are updated to remove the usages
   - name: Prefix
     type: string
@@ -36,32 +39,34 @@ jobs:
     vmImage: $(LINUXVMIMAGE)
 
   variables:
-    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-java') }}:
+    RepositoryPath: "$(System.DefaultWorkingDirectory)/${{ parameters.RepositoryPath }}"
+    ProjectForPRValidation: 'public'
+    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-java') }}:
       Prefix: java
       InternalVariableGroups: '1 58 93'
       TestVariableGroups: 64
-    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-android') }}:
+    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-android') }}:
       Prefix: android
       InternalVariableGroups: '1 58 93'
-    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-js') }}:
+    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-js') }}:
       Prefix: js
       InternalVariableGroups: '24 58 93'
       TestVariableGroups: 64
-    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-python') }}:
+    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-python') }}:
       Prefix: python
       InternalVariableGroups: '58 93'
       TestVariableGroups: 64
-    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-net') }}:
+    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-net') }}:
       Prefix: net
       InternalVariableGroups: '13 58 93'
       TestVariableGroups: 64
-    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-cpp') }}:
+    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-cpp') }}:
       Prefix: cpp
       InternalVariableGroups: '58 93 64'
-    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-ios') }}:
+    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-ios') }}:
       Prefix: ios
       InternalVariableGroups: '58 93 64 98'
-    ${{ if eq(parameters.Repository, 'Azure/azure-sdk-for-go') }}:
+    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-go') }}:
       Prefix: go
       InternalVariableGroups: '58 93 64'
       GenerateUnifiedWeekly: true
@@ -80,6 +85,18 @@ jobs:
           - '!sdk/**/session-records/*'
     - template: /eng/common/pipelines/templates/steps/install-pipeline-generation.yml
     - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+
+    - ${{ if endsWith(parameters.Repository, '-pr') }}:
+      - pwsh: |
+          Write-Host "Update variables because we are targeting the private repo:"
+          Write-Host "ProjectForPRValidation = internal"
+          Write-Host "DevOpsPath = $(DevOpsPath)/pr"
+          Write-Host "Prefix = $(Prefix)-pr"
+          Write-Host "##vso[task.setvariable variable=ProjectForPRValidation]internal"
+          Write-Host "##vso[task.setvariable variable=DevOpsPath]$(DevOpsPath)/pr"
+          Write-Host "##vso[task.setvariable variable=Prefix]$(Prefix)-pr"
+        displayName: Update variables for private repp
+
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'opensource-api-connection'
@@ -88,10 +105,10 @@ jobs:
         inlineScript: >
           $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
           --organization azure-sdk
-          --project public
+          --project $(ProjectForPRValidation)
           --prefix $(Prefix)
-          --devopspath "\$(Prefix)"
-          --path $(System.DefaultWorkingDirectory)/sdk
+          --devopspath "$(DevOpsPath)"
+          --path $(RepositoryPath)
           --endpoint Azure
           --repository ${{ parameters.Repository }}
           --convention ci
@@ -99,7 +116,7 @@ jobs:
           --branch refs/heads/$(DefaultBranch)
           --set-managed-variables
           --debug
-      displayName: 'Generate public pipelines for: ${{ parameters.Repository }}'
+      displayName: 'Generate ci pipelines for: ${{ parameters.Repository }}'
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'opensource-api-connection'
@@ -110,8 +127,8 @@ jobs:
           --organization azure-sdk
           --project internal
           --prefix $(Prefix)
-          --devopspath "\$(Prefix)"
-          --path $(System.DefaultWorkingDirectory)/sdk
+          --devopspath "$(DevOpsPath)"
+          --path $(RepositoryPath)
           --endpoint Azure
           --repository ${{ parameters.Repository }}
           --convention up
@@ -120,7 +137,7 @@ jobs:
           --set-managed-variables
           --debug
           --variablegroups $(InternalVariableGroups) $(TestVariableGroups)
-      displayName: 'Generate internal pipelines for: ${{ parameters.Repository }}'
+      displayName: 'Generate release pipelines for: ${{ parameters.Repository }}'
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'opensource-api-connection'
@@ -131,8 +148,8 @@ jobs:
           --organization azure-sdk
           --project internal
           --prefix $(Prefix)
-          --devopspath "\$(Prefix)"
-          --path $(System.DefaultWorkingDirectory)/sdk
+          --devopspath "$(DevOpsPath)"
+          --path $(RepositoryPath)
           --endpoint Azure
           --repository ${{ parameters.Repository }}
           --convention tests
@@ -153,8 +170,8 @@ jobs:
           --organization azure-sdk
           --project internal
           --prefix $(Prefix)
-          --devopspath "\$(Prefix)"
-          --path $(System.DefaultWorkingDirectory)/sdk
+          --devopspath "$(DevOpsPath)"
+          --path $(RepositoryPath)
           --endpoint Azure
           --repository ${{ parameters.Repository }}
           --convention testsweekly
@@ -175,8 +192,8 @@ jobs:
           --organization azure-sdk
           --project internal
           --prefix $(Prefix)
-          --devopspath "\$(Prefix)"
-          --path $(System.DefaultWorkingDirectory)/sdk
+          --devopspath "$(DevOpsPath)"
+          --path $(RepositoryPath)
           --endpoint Azure
           --repository ${{ parameters.Repository }}
           --convention upweekly
