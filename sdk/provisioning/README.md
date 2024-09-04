@@ -1,6 +1,7 @@
 # Azure Provisioning libraries for .NET
 
-The Azure Provisioning libraries are a cloud development kit that allow you to declaratively specify your Azure infrastructure natively in dotnet.
+The Azure Provisioning libraries make it easy to declaratively specify Azure infrastructure natively in .NET.
+
 Azure.Provisioning contains the core functionality for the Azure Provisioning libraries. Azure.Provisioning.{ServiceName} contains the resources specific to a particular service.
 
 ## Getting started
