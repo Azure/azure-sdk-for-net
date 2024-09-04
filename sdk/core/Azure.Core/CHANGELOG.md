@@ -1,12 +1,6 @@
 # Release History
 
-## 1.43.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.43.0 (2024-09-10)
 
 ### Other Changes
 
