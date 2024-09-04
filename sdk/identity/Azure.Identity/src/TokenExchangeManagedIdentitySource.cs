@@ -29,7 +29,7 @@ namespace Azure.Identity
         {
             string tokenFilePath = EnvironmentVariables.AzureFederatedTokenFile;
             string tenantId = EnvironmentVariables.TenantId;
-            string clientId = options.ClientId ?? EnvironmentVariables.ClientId;
+            string clientId = options.ManagedIdentityId?._userAssignedId ?? EnvironmentVariables.ClientId;
 
             if (options.ExcludeTokenExchangeManagedIdentitySource || string.IsNullOrEmpty(tokenFilePath) || string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(clientId))
             {
