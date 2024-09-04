@@ -188,36 +188,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="duration">
-        /// Time frame of the returned weather forecast. By default, the forecast data for next hour will be returned. Available values are
-        ///   * `1` - Return forecast data for the next hour. Default value.
-        ///   * `12` - Return hourly forecast for next 12 hours.
-        ///   * `24` - Return hourly forecast for next 24 hours.
-        ///   * `72` - Return hourly forecast for next 72 hours (3 days).
-        ///   * `120` - Return hourly forecast for next 120 hours (5 days). Only available in S1 SKU.
-        ///   * `240` - Return hourly forecast for next 240 hours (10 days). Only available in S1 SKU.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
+        /// <param name="options"> Get hourly forecast options to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<HourlyForecastResult> GetHourlyForecast(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual Response<HourlyForecastResult> GetHourlyForecast(GetHourlyForecastOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetHourlyForecast");
             scope.Start();
@@ -225,10 +202,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetHourlyForecast(format, coord, unit, duration, language, cancellationToken);
+                return restClient.GetHourlyForecast("json", coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -247,32 +224,14 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="interval">
-        /// Specifies time interval in minutes for the returned weather forecast. Supported values are
-        ///   * `1` -  Retrieve forecast for 1-minute intervals. Returned by default.
-        ///   * `5` - Retrieve forecasts for 5-minute intervals.
-        ///   * `15` - Retrieve forecasts for 15-minute intervals.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
+        /// <param name="options"> Get Minute forecast options to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// 
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<MinuteForecastResult>> GetMinuteForecastAsync(string format, GeoPosition coordinates, int? interval, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MinuteForecastResult>> GetMinuteForecastAsync(GetMinuteForecastOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetMinuteForecast");
             scope.Start();
@@ -280,10 +239,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetMinuteForecastAsync(format, coord, interval, language, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetMinuteForecastAsync("json", coord, options.Interval, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -302,32 +261,14 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="interval">
-        /// Specifies time interval in minutes for the returned weather forecast. Supported values are
-        ///   * `1` -  Retrieve forecast for 1-minute intervals. Returned by default.
-        ///   * `5` - Retrieve forecasts for 5-minute intervals.
-        ///   * `15` - Retrieve forecasts for 15-minute intervals.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
+        /// <param name="options"> Get Minute forecast options to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// 
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<MinuteForecastResult> GetMinuteForecast(string format, GeoPosition coordinates, int? interval, string language, CancellationToken cancellationToken = default)
+        public virtual Response<MinuteForecastResult> GetMinuteForecast(GetMinuteForecastOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetMinuteForecast");
             scope.Start();
@@ -335,10 +276,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetMinuteForecast(format, coord, interval, language, cancellationToken);
+                return restClient.GetMinuteForecast("json", coord, options.Interval, options.Language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -357,34 +298,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="duration">
-        /// Specifies for how many days the quester-day forecast responses are returned. Supported values are:
-        ///   * `1` - Return forecast data for the next day. Returned by default.
-        ///   * `5` - Return forecast data for the next 5 days.
-        ///   * `10` - Return forecast data for next 10 days.
-        ///   * `15` - Return forecast data for the next 15 days.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<QuarterDayForecastResult>> GetQuarterDayForecastAsync(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuarterDayForecastResult>> GetQuarterDayForecastAsync(GetQuarterDayForecastOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetQuarterDayForecast");
             scope.Start();
@@ -392,10 +312,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetQuarterDayForecastAsync(format, coord, unit, duration, language, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetQuarterDayForecastAsync("json", coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -414,34 +334,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="duration">
-        /// Specifies for how many days the quester-day forecast responses are returned. Supported values are:
-        ///   * `1` - Return forecast data for the next day. Returned by default.
-        ///   * `5` - Return forecast data for the next 5 days.
-        ///   * `10` - Return forecast data for next 10 days.
-        ///   * `15` - Return forecast data for the next 15 days.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<QuarterDayForecastResult> GetQuarterDayForecast(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual Response<QuarterDayForecastResult> GetQuarterDayForecast(GetQuarterDayForecastOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetQuarterDayForecast");
             scope.Start();
@@ -449,10 +348,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetQuarterDayForecast(format, coord, unit, duration, language, cancellationToken);
+                return restClient.GetQuarterDayForecast("json", coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -471,38 +370,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="details">
-        /// Return full details for the current conditions. Available values are
-        ///   * `true` - Returns full details. By default all details are returned.
-        ///   * `false` - Returns a truncated version of the current condition data, which includes observation date time, weather phrase, icon code, precipitation indicator flag, and temperature.
-        /// </param>
-        /// <param name="duration">
-        /// Time frame of the returned weather conditions. By default, the most current weather conditions will be returned. Default value is 0. Supported values are:
-        ///    * `0` - Return the most current weather conditions.
-        ///    * `6` - Return weather conditions from past 6 hours.
-        ///    * `24` - Return weather conditions from past 24 hours.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<CurrentConditionsResult>> GetCurrentConditionsAsync(string format, GeoPosition coordinates, string unit, bool details, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CurrentConditionsResult>> GetCurrentConditionsAsync(GetCurrentConditionsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetCurrentConditions");
             scope.Start();
@@ -510,10 +384,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetCurrentConditionsAsync(format, coord, unit, details ? "true" : "false", duration, language, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetCurrentConditionsAsync("json", coord, options.Unit, options.Details ? "true" : "false", options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -532,38 +406,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="details">
-        /// Return full details for the current conditions. Available values are
-        ///   * `true` - Returns full details. By default all details are returned.
-        ///   * `false` - Returns a truncated version of the current condition data, which includes observation date time, weather phrase, icon code, precipitation indicator flag, and temperature.
-        /// </param>
-        /// <param name="duration">
-        /// Time frame of the returned weather conditions. By default, the most current weather conditions will be returned. Default value is 0. Supported values are:
-        ///    * `0` - Return the most current weather conditions.
-        ///    * `6` - Return weather conditions from past 6 hours.
-        ///    * `24` - Return weather conditions from past 24 hours.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<CurrentConditionsResult> GetCurrentConditions(string format, GeoPosition coordinates, string unit, bool details, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual Response<CurrentConditionsResult> GetCurrentConditions(GetCurrentConditionsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetCurrentConditions");
             scope.Start();
@@ -571,10 +420,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetCurrentConditions(format, coord, unit, details ? "true" : "false", duration, language, cancellationToken);
+                return restClient.GetCurrentConditions("json", coord, options.Unit, options.Details ? "true" : "false", options.Duration, options.Language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -593,35 +442,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="duration">
-        /// Specifies for how many days the daily forecast responses are returned. Available values are
-        ///   * `1` - Return forecast data for the next day. Returned by default.
-        ///   * `5` - Return forecast data for the next 5 days.
-        ///   * `10` - Return forecast data for the next 10 days.
-        ///   * `25` - Return forecast data for the next 25 days. Only available in S1 SKU.
-        ///   * `45` - Return forecast data for the next 45 days. Only available in S1 SKU.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyForecastResult>> GetDailyForecastAsync(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyForecastResult>> GetDailyForecastAsync(GetDailyForecastOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyForecast");
             scope.Start();
@@ -629,10 +456,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetDailyForecastAsync(format, coord, unit, duration, language, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetDailyForecastAsync("json", coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -651,35 +478,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="duration">
-        /// Specifies for how many days the daily forecast responses are returned. Available values are
-        ///   * `1` - Return forecast data for the next day. Returned by default.
-        ///   * `5` - Return forecast data for the next 5 days.
-        ///   * `10` - Return forecast data for the next 10 days.
-        ///   * `25` - Return forecast data for the next 25 days. Only available in S1 SKU.
-        ///   * `45` - Return forecast data for the next 45 days. Only available in S1 SKU.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyForecastResult> GetDailyForecast(string format, GeoPosition coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
+        public virtual Response<DailyForecastResult> GetDailyForecast(GetDailyForecastOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyForecast");
             scope.Start();
@@ -687,10 +492,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetDailyForecast(format, coord, unit, duration, language, cancellationToken);
+                return restClient.GetDailyForecast("json", coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -807,31 +612,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
-        /// <param name="details">
-        /// Return full details for the severe weather alerts. Available values are
-        ///   * `true` - Returns full details. By default all details are returned.
-        ///   * `false` - Returns a truncated version of the alerts data, which excludes the area-specific full description of alert details (`alertDetails`).
-        /// </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(string format, GeoPosition coordinates, string language, bool details, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(GetSevereWeatherAlertsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetSevereWeatherAlerts");
             scope.Start();
@@ -839,10 +626,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetSevereWeatherAlertsAsync(format, coord, language, details ? "true" : "false", cancellationToken).ConfigureAwait(false);
+                return await restClient.GetSevereWeatherAlertsAsync("json", coord, options.Language.ToString(), options.Details ? "true" : "false", cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -861,31 +648,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
-        /// <param name="details">
-        /// Return full details for the severe weather alerts. Available values are
-        ///   * `true` - Returns full details. By default all details are returned.
-        ///   * `false` - Returns a truncated version of the alerts data, which excludes the area-specific full description of alert details (`alertDetails`).
-        /// </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<SevereWeatherAlertsResult> GetSevereWeatherAlerts(string format, GeoPosition coordinates, string language, bool details, CancellationToken cancellationToken = default)
+        public virtual Response<SevereWeatherAlertsResult> GetSevereWeatherAlerts(GetSevereWeatherAlertsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetSevereWeatherAlerts");
             scope.Start();
@@ -893,10 +662,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetSevereWeatherAlerts(format, coord, language, details ? "true" : "false", cancellationToken);
+                return restClient.GetSevereWeatherAlerts("json", coord, options.Language.ToString(), options.Details ? "true" : "false", cancellationToken);
             }
             catch (Exception e)
             {
@@ -915,35 +684,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
-        /// <param name="duration">
-        /// Specifies for how many days the daily indices are returned. By default, the indices data for the current day will be returned. When requesting future indices data, the current day is included in the response as day 1. Available values are
-        ///   * `1` - Return daily index data for the current day. Default value.
-        ///   * `5` - Return 5 days of daily index data starting from the current day.
-        ///   * `10` - Return 10 days of daily index data starting from the current day.
-        ///   * `15` - Return 15 days of daily index data starting from the current day.
-        /// </param>
-        /// <param name="indexId"> Numeric index identifier that can be used for restricting returned results to the corresponding index type. Cannot be paired with `indexGroupId`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#index-ids-and-index-groups-ids) for details and to see the supported indices. </param>
-        /// <param name="indexGroupId"> Numeric index group identifier that can be used for restricting returned results to the corresponding subset of indices (index group). Cannot be paired with `indexId`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#index-ids-and-index-groups-ids) for details and to see the supported index groups. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyIndicesResult>> GetDailyIndicesAsync(string format, GeoPosition coordinates, string language, int? duration, int? indexId, int? indexGroupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyIndicesResult>> GetDailyIndicesAsync(GetDailyIndicesOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyIndices");
             scope.Start();
@@ -951,10 +698,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetDailyIndicesAsync(format, coord, language, duration, indexId, indexGroupId, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetDailyIndicesAsync("json", coord, options.Language.ToString(), options.Duration, options.IndexId, options.IndexGroupId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -973,35 +720,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
-        /// <param name="duration">
-        /// Specifies for how many days the daily indices are returned. By default, the indices data for the current day will be returned. When requesting future indices data, the current day is included in the response as day 1. Available values are
-        ///   * `1` - Return daily index data for the current day. Default value.
-        ///   * `5` - Return 5 days of daily index data starting from the current day.
-        ///   * `10` - Return 10 days of daily index data starting from the current day.
-        ///   * `15` - Return 15 days of daily index data starting from the current day.
-        /// </param>
-        /// <param name="indexId"> Numeric index identifier that can be used for restricting returned results to the corresponding index type. Cannot be paired with `indexGroupId`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#index-ids-and-index-groups-ids) for details and to see the supported indices. </param>
-        /// <param name="indexGroupId"> Numeric index group identifier that can be used for restricting returned results to the corresponding subset of indices (index group). Cannot be paired with `indexId`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#index-ids-and-index-groups-ids) for details and to see the supported index groups. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyIndicesResult> GetDailyIndices(string format, GeoPosition coordinates, string language, int? duration, int? indexId, int? indexGroupId, CancellationToken cancellationToken = default)
+        public virtual Response<DailyIndicesResult> GetDailyIndices(GetDailyIndicesOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyIndices");
             scope.Start();
@@ -1009,10 +734,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetDailyIndices(format, coord, language, duration, indexId, indexGroupId, cancellationToken);
+                return restClient.GetDailyIndices("json", coord, options.Language.ToString(), options.Duration, options.IndexId, options.IndexGroupId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1097,24 +822,18 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="year"> Year of the cyclone(s). </param>
-        /// <param name="basinId"> Basin identifier. Allowed values: "AL" | "EP" | "SI" | "NI" | "CP" | "NP" | "SP". </param>
-        /// <param name="governmentStormId"> Government storm Id. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<StormSearchResult>> GetTropicalStormSearchAsync(string format, int year, string basinId, int? governmentStormId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StormSearchResult>> GetTropicalStormSearchAsync(GetTropicalStormSearchOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.SearchTropicalStorm");
             scope.Start();
             try
             {
-                return await restClient.SearchTropicalStormAsync(format, year, basinId, governmentStormId, cancellationToken).ConfigureAwait(false);
+                return await restClient.SearchTropicalStormAsync("json", options.Year, options.BasinId, options.GovernmentStormId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1133,24 +852,18 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="year"> Year of the cyclone(s). </param>
-        /// <param name="basinId"> Basin identifier. Allowed values: "AL" | "EP" | "SI" | "NI" | "CP" | "NP" | "SP". </param>
-        /// <param name="governmentStormId"> Government storm Id. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<StormSearchResult> GetTropicalStormSearch(string format, int year, string basinId, int? governmentStormId, CancellationToken cancellationToken = default)
+        public virtual Response<StormSearchResult> GetTropicalStormSearch(GetTropicalStormSearchOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.SearchTropicalStorm");
             scope.Start();
             try
             {
-                return restClient.SearchTropicalStorm(format, year, basinId, governmentStormId, cancellationToken);
+                return restClient.SearchTropicalStorm("json", options.Year, options.BasinId, options.GovernmentStormId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1169,29 +882,19 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="year"> Year of the cyclone(s). </param>
-        /// <param name="basinId"> Basin identifier. Allowed values: "AL" | "EP" | "SI" | "NI" | "CP" | "NP" | "SP". </param>
-        /// <param name="governmentStormId"> Government storm Id. </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="includeDetails"> When true, wind radii summary data is included in the response. </param>
-        /// <param name="includeGeometricDetails"> When true, wind radii summary data and geoJSON details are included in the response. </param>
-        /// <param name="includeWindowGeometry"> When true, window geometry data (geoJSON) is included in the response. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="basinId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<StormForecastResult>> GetTropicalStormForecastAsync(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StormForecastResult>> GetTropicalStormForecastAsync(GetTropicalStormForecastOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(basinId, nameof(basinId));
+            Common.Argument.AssertNotNull(options.BasinId, nameof(options.BasinId));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormForecast");
             scope.Start();
             try
             {
-                return await restClient.GetTropicalStormForecastAsync(format, year, basinId, governmentStormId, unit, includeDetails, includeGeometricDetails, includeWindowGeometry, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetTropicalStormForecastAsync("json", options.Year, options.BasinId, options.GovernmentStormId, options.Unit, options.IncludeDetails, options.IncludeGeometricDetails, options.IncludeWindowGeometry, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1210,29 +913,19 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="year"> Year of the cyclone(s). </param>
-        /// <param name="basinId"> Basin identifier. Allowed values: "AL" | "EP" | "SI" | "NI" | "CP" | "NP" | "SP". </param>
-        /// <param name="governmentStormId"> Government storm Id. </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="includeDetails"> When true, wind radii summary data is included in the response. </param>
-        /// <param name="includeGeometricDetails"> When true, wind radii summary data and geoJSON details are included in the response. </param>
-        /// <param name="includeWindowGeometry"> When true, window geometry data (geoJSON) is included in the response. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="basinId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<StormForecastResult> GetTropicalStormForecast(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, CancellationToken cancellationToken = default)
+        public virtual Response<StormForecastResult> GetTropicalStormForecast(GetTropicalStormForecastOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(basinId, nameof(basinId));
+            Common.Argument.AssertNotNull(options.BasinId, nameof(options.BasinId));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormForecast");
             scope.Start();
             try
             {
-                return restClient.GetTropicalStormForecast(format, year, basinId, governmentStormId, unit, includeDetails, includeGeometricDetails, includeWindowGeometry, cancellationToken);
+                return restClient.GetTropicalStormForecast("json", options.Year, options.BasinId, options.GovernmentStormId, options.Unit, options.IncludeDetails, options.IncludeGeometricDetails, options.IncludeWindowGeometry, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1251,29 +944,19 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="year"> Year of the cyclone(s). </param>
-        /// <param name="basinId"> Basin identifier. Allowed values: "AL" | "EP" | "SI" | "NI" | "CP" | "NP" | "SP". </param>
-        /// <param name="governmentStormId"> Government storm Id. </param>
-        /// <param name="includeDetails"> When true, wind radii summary data is included in the response. </param>
-        /// <param name="includeGeometricDetails"> When true, wind radii summary data and geoJSON details are included in the response. </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="includeCurrentStorm"> When true, return the current storm location. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="basinId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<StormLocationsResult>> GetTropicalStormLocationsAsync(string format, int year, string basinId, int governmentStormId, bool? includeDetails, bool? includeGeometricDetails, string unit, bool? includeCurrentStorm, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StormLocationsResult>> GetTropicalStormLocationsAsync(GetTropicalStormLocationsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(basinId, nameof(basinId));
+            Common.Argument.AssertNotNull(options.BasinId, nameof(options.BasinId));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormLocations");
             scope.Start();
             try
             {
-                return await restClient.GetTropicalStormLocationsAsync(format, year, basinId, governmentStormId, includeDetails, includeGeometricDetails, unit, includeCurrentStorm, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetTropicalStormLocationsAsync("json", options.Year, options.BasinId, options.GovernmentStormId, options.IncludeDetails, options.IncludeGeometricDetails, options.Unit, options.IncludeCurrentStorm, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1292,29 +975,19 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="year"> Year of the cyclone(s). </param>
-        /// <param name="basinId"> Basin identifier. Allowed values: "AL" | "EP" | "SI" | "NI" | "CP" | "NP" | "SP". </param>
-        /// <param name="governmentStormId"> Government storm Id. </param>
-        /// <param name="includeDetails"> When true, wind radii summary data is included in the response. </param>
-        /// <param name="includeGeometricDetails"> When true, wind radii summary data and geoJSON details are included in the response. </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="includeCurrentStorm"> When true, return the current storm location. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="basinId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<StormLocationsResult> GetTropicalStormLocations(string format, int year, string basinId, int governmentStormId, bool? includeDetails, bool? includeGeometricDetails, string unit, bool? includeCurrentStorm, CancellationToken cancellationToken = default)
+        public virtual Response<StormLocationsResult> GetTropicalStormLocations(GetTropicalStormLocationsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(basinId, nameof(basinId));
+            Common.Argument.AssertNotNull(options.BasinId, nameof(options.BasinId));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormLocations");
             scope.Start();
             try
             {
-                return restClient.GetTropicalStormLocations(format, year, basinId, governmentStormId, includeDetails, includeGeometricDetails, unit, includeCurrentStorm, cancellationToken);
+                return restClient.GetTropicalStormLocations("json", options.Year, options.BasinId, options.GovernmentStormId, options.IncludeDetails, options.IncludeGeometricDetails, options.Unit, options.IncludeCurrentStorm, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1333,27 +1006,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
-        /// <param name="includePollutantDetails"> Boolean value that returns detailed information about each pollutant. By default is True. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<AirQualityResult>> GetCurrentAirQualityAsync(string format, GeoPosition coordinates, string language, bool? includePollutantDetails, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AirQualityResult>> GetCurrentAirQualityAsync(GetCurrentAirQualityOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetCurrentAirQuality");
             scope.Start();
@@ -1361,10 +1020,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetCurrentAirQualityAsync(format, coord, language, includePollutantDetails, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetCurrentAirQualityAsync("json", coord, options.Language.ToString(), options.IncludePollutantDetails, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1383,27 +1042,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
-        /// <param name="includePollutantDetails"> Boolean value that returns detailed information about each pollutant. By default is True. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<AirQualityResult> GetCurrentAirQuality(string format, GeoPosition coordinates, string language, bool? includePollutantDetails, CancellationToken cancellationToken = default)
+        public virtual Response<AirQualityResult> GetCurrentAirQuality(GetCurrentAirQualityOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetCurrentAirQuality");
             scope.Start();
@@ -1411,10 +1056,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetCurrentAirQuality(format, coord, language, includePollutantDetails, cancellationToken);
+                return restClient.GetCurrentAirQuality("json", coord, options.Language.ToString(), options.IncludePollutantDetails, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1433,27 +1078,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
-        /// <param name="duration"> Specifies for how many days from now we would like to know about the air quality. Available values are 1, 2, 3, 4, 5, 6, and 7. Default value is 1. Allowed values: "1" | "2" | "3" | "4" | "5" | "6" | "7". </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyAirQualityForecastResult>> GetAirQualityDailyForecastsAsync(string format, GeoPosition coordinates, string language, int? duration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyAirQualityForecastResult>> GetAirQualityDailyForecastsAsync(GetAirQualityDailyForecastsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetAirQualityDailyForecasts");
             scope.Start();
@@ -1461,10 +1092,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetAirQualityDailyForecastsAsync(format, coord, language, duration, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetAirQualityDailyForecastsAsync("json", coord, options.Language.ToString(), options.Duration, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1483,27 +1114,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
-        /// <param name="duration"> Specifies for how many days from now we would like to know about the air quality. Available values are 1, 2, 3, 4, 5, 6, and 7. Default value is 1. Allowed values: "1" | "2" | "3" | "4" | "5" | "6" | "7". </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyAirQualityForecastResult> GetAirQualityDailyForecasts(string format, GeoPosition coordinates, string language, int? duration, CancellationToken cancellationToken = default)
+        public virtual Response<DailyAirQualityForecastResult> GetAirQualityDailyForecasts(GetAirQualityDailyForecastsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetAirQualityDailyForecasts");
             scope.Start();
@@ -1511,10 +1128,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetAirQualityDailyForecasts(format, coord, language, duration, cancellationToken);
+                return restClient.GetAirQualityDailyForecasts("json", coord, options.Language.ToString(), options.Duration, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1533,28 +1150,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
-        /// <param name="duration"> Specifies for how many hours from now we would like to know about the air quality. Available values are 1, 12, 24, 48, 72, 96. Default value is 1 hour. Allowed values: "1" | "12" | "24" | "48" | "72" | "96". </param>
-        /// <param name="includePollutantDetails"> Boolean value that returns detailed information about each pollutant. By default is True. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<AirQualityResult>> GetAirQualityHourlyForecastsAsync(string format, GeoPosition coordinates, string language, int? duration, bool? includePollutantDetails, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AirQualityResult>> GetAirQualityHourlyForecastsAsync(GetAirQualityHourlyForecastsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetAirQualityHourlyForecasts");
             scope.Start();
@@ -1562,10 +1164,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetAirQualityHourlyForecastsAsync(format, coord, language, duration, includePollutantDetails, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetAirQualityHourlyForecastsAsync("json", coord, options.Language.ToString(), options.Duration, options.IncludePollutantDetails, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1584,28 +1186,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="language">
-        /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
-        ///
-        /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
-        /// </param>
-        /// <param name="duration"> Specifies for how many hours from now we would like to know about the air quality. Available values are 1, 12, 24, 48, 72, 96. Default value is 1 hour. Allowed values: "1" | "12" | "24" | "48" | "72" | "96". </param>
-        /// <param name="includePollutantDetails"> Boolean value that returns detailed information about each pollutant. By default is True. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<AirQualityResult> GetAirQualityHourlyForecasts(string format, GeoPosition coordinates, string language, int? duration, bool? includePollutantDetails, CancellationToken cancellationToken = default)
+        public virtual Response<AirQualityResult> GetAirQualityHourlyForecasts(GetAirQualityHourlyForecastsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetAirQualityHourlyForecasts");
             scope.Start();
@@ -1613,10 +1200,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetAirQualityHourlyForecasts(format, coord, language, duration, includePollutantDetails, cancellationToken);
+                return restClient.GetAirQualityHourlyForecasts("json", coord, options.Language.ToString(), options.Duration, options.IncludePollutantDetails, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1635,24 +1222,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyHistoricalActualsResult>> GetDailyHistoricalActualsAsync(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyHistoricalActualsResult>> GetDailyHistoricalActualsAsync(GetDailyHistoricalActualsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalActuals");
             scope.Start();
@@ -1660,10 +1236,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetDailyHistoricalActualsAsync(format, coord, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetDailyHistoricalActualsAsync("json", coord, options.StartDate, options.EndDate, options.Unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1682,24 +1258,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyHistoricalActualsResult> GetDailyHistoricalActuals(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual Response<DailyHistoricalActualsResult> GetDailyHistoricalActuals(GetDailyHistoricalActualsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalActuals");
             scope.Start();
@@ -1707,10 +1272,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetDailyHistoricalActuals(format, coord, startDate, endDate, unit, cancellationToken);
+                return restClient.GetDailyHistoricalActuals("json", coord, options.StartDate, options.EndDate, options.Unit, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1729,24 +1294,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyHistoricalRecordsResult>> GetDailyHistoricalRecordsAsync(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyHistoricalRecordsResult>> GetDailyHistoricalRecordsAsync(GetDailyHistoricalRecordsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalRecords");
             scope.Start();
@@ -1754,10 +1308,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetDailyHistoricalRecordsAsync(format, coord, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetDailyHistoricalRecordsAsync("json", coord, options.StartDate, options.EndDate, options.Unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1776,24 +1330,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyHistoricalRecordsResult> GetDailyHistoricalRecords(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual Response<DailyHistoricalRecordsResult> GetDailyHistoricalRecords(GetDailyHistoricalRecordsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalRecords");
             scope.Start();
@@ -1801,10 +1344,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetDailyHistoricalRecords(format, coord, startDate, endDate, unit, cancellationToken);
+                return restClient.GetDailyHistoricalRecords("json", coord, options.StartDate, options.EndDate, options.Unit, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1823,24 +1366,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyHistoricalNormalsResult>> GetDailyHistoricalNormalsAsync(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyHistoricalNormalsResult>> GetDailyHistoricalNormalsAsync(GetDailyHistoricalNormalsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalNormals");
             scope.Start();
@@ -1848,10 +1380,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetDailyHistoricalNormalsAsync(format, coord, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetDailyHistoricalNormalsAsync("json", coord, options.StartDate, options.EndDate, options.Unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1870,24 +1402,13 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="coordinates">
-        /// The applicable query specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".
-        ///
-        /// Weather information is generally available for locations on land, bodies of water surrounded by land, and areas of the ocean that are within approximately 50 nautical miles of a coastline.
-        /// </param>
-        /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
-        /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyHistoricalNormalsResult> GetDailyHistoricalNormals(string format, GeoPosition coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
+        public virtual Response<DailyHistoricalNormalsResult> GetDailyHistoricalNormals(GetDailyHistoricalNormalsOptions options, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
+            Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalNormals");
             scope.Start();
@@ -1895,10 +1416,10 @@ namespace Azure.Maps.Weather
             {
                 var coord = new[]
                 {
-                    Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                    Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                    Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                    Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetDailyHistoricalNormals(format, coord, startDate, endDate, unit, cancellationToken);
+                return restClient.GetDailyHistoricalNormals("json", coord, options.StartDate, options.EndDate, options.Unit, cancellationToken);
             }
             catch (Exception e)
             {

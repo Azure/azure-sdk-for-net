@@ -9,40 +9,40 @@ namespace Azure.Maps.Weather
         public MapsWeatherClient(Azure.AzureSasCredential credential, Azure.Maps.Weather.MapsWeatherClientOptions options) { }
         public MapsWeatherClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsWeatherClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Weather.MapsWeatherClientOptions options) { }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyAirQualityForecastResult> GetAirQualityDailyForecasts(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, int? duration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyAirQualityForecastResult>> GetAirQualityDailyForecastsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, int? duration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.AirQualityResult> GetAirQualityHourlyForecasts(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, int? duration, bool? includePollutantDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.AirQualityResult>> GetAirQualityHourlyForecastsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, int? duration, bool? includePollutantDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.AirQualityResult> GetCurrentAirQuality(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, bool? includePollutantDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.AirQualityResult>> GetCurrentAirQualityAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, bool? includePollutantDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.CurrentConditionsResult> GetCurrentConditions(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, bool details, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.CurrentConditionsResult>> GetCurrentConditionsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, bool details, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyForecastResult> GetDailyForecast(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyForecastResult>> GetDailyForecastAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalActualsResult> GetDailyHistoricalActuals(string format, Azure.Core.GeoJson.GeoPosition coordinates, System.DateTimeOffset startDate, System.DateTimeOffset endDate, string unit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalActualsResult>> GetDailyHistoricalActualsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, System.DateTimeOffset startDate, System.DateTimeOffset endDate, string unit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalNormalsResult> GetDailyHistoricalNormals(string format, Azure.Core.GeoJson.GeoPosition coordinates, System.DateTimeOffset startDate, System.DateTimeOffset endDate, string unit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalNormalsResult>> GetDailyHistoricalNormalsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, System.DateTimeOffset startDate, System.DateTimeOffset endDate, string unit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalRecordsResult> GetDailyHistoricalRecords(string format, Azure.Core.GeoJson.GeoPosition coordinates, System.DateTimeOffset startDate, System.DateTimeOffset endDate, string unit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalRecordsResult>> GetDailyHistoricalRecordsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, System.DateTimeOffset startDate, System.DateTimeOffset endDate, string unit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyIndicesResult> GetDailyIndices(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, int? duration, int? indexId, int? indexGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyIndicesResult>> GetDailyIndicesAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, int? duration, int? indexId, int? indexGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.HourlyForecastResult> GetHourlyForecast(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.HourlyForecastResult>> GetHourlyForecastAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.MinuteForecastResult> GetMinuteForecast(string format, Azure.Core.GeoJson.GeoPosition coordinates, int? interval, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.MinuteForecastResult>> GetMinuteForecastAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, int? interval, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.QuarterDayForecastResult> GetQuarterDayForecast(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.QuarterDayForecastResult>> GetQuarterDayForecastAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string unit, int? duration, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.SevereWeatherAlertsResult> GetSevereWeatherAlerts(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, bool details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(string format, Azure.Core.GeoJson.GeoPosition coordinates, string language, bool details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyAirQualityForecastResult> GetAirQualityDailyForecasts(Azure.Maps.Weather.Models.Options.GetAirQualityDailyForecastsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyAirQualityForecastResult>> GetAirQualityDailyForecastsAsync(Azure.Maps.Weather.Models.Options.GetAirQualityDailyForecastsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.AirQualityResult> GetAirQualityHourlyForecasts(Azure.Maps.Weather.Models.Options.GetAirQualityHourlyForecastsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.AirQualityResult>> GetAirQualityHourlyForecastsAsync(Azure.Maps.Weather.Models.Options.GetAirQualityHourlyForecastsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.AirQualityResult> GetCurrentAirQuality(Azure.Maps.Weather.Models.Options.GetCurrentAirQualityOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.AirQualityResult>> GetCurrentAirQualityAsync(Azure.Maps.Weather.Models.Options.GetCurrentAirQualityOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.CurrentConditionsResult> GetCurrentConditions(Azure.Maps.Weather.Models.Options.GetCurrentConditionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.CurrentConditionsResult>> GetCurrentConditionsAsync(Azure.Maps.Weather.Models.Options.GetCurrentConditionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyForecastResult> GetDailyForecast(Azure.Maps.Weather.Models.Options.GetDailyForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyForecastResult>> GetDailyForecastAsync(Azure.Maps.Weather.Models.Options.GetDailyForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalActualsResult> GetDailyHistoricalActuals(Azure.Maps.Weather.Models.Options.GetDailyHistoricalActualsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalActualsResult>> GetDailyHistoricalActualsAsync(Azure.Maps.Weather.Models.Options.GetDailyHistoricalActualsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalNormalsResult> GetDailyHistoricalNormals(Azure.Maps.Weather.Models.Options.GetDailyHistoricalNormalsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalNormalsResult>> GetDailyHistoricalNormalsAsync(Azure.Maps.Weather.Models.Options.GetDailyHistoricalNormalsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalRecordsResult> GetDailyHistoricalRecords(Azure.Maps.Weather.Models.Options.GetDailyHistoricalRecordsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalRecordsResult>> GetDailyHistoricalRecordsAsync(Azure.Maps.Weather.Models.Options.GetDailyHistoricalRecordsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyIndicesResult> GetDailyIndices(Azure.Maps.Weather.Models.Options.GetDailyIndicesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyIndicesResult>> GetDailyIndicesAsync(Azure.Maps.Weather.Models.Options.GetDailyIndicesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.HourlyForecastResult> GetHourlyForecast(Azure.Maps.Weather.Models.Options.GetHourlyForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.HourlyForecastResult>> GetHourlyForecastAsync(Azure.Maps.Weather.Models.Options.GetHourlyForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.MinuteForecastResult> GetMinuteForecast(Azure.Maps.Weather.Models.Options.GetMinuteForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.MinuteForecastResult>> GetMinuteForecastAsync(Azure.Maps.Weather.Models.Options.GetMinuteForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.QuarterDayForecastResult> GetQuarterDayForecast(Azure.Maps.Weather.Models.Options.GetQuarterDayForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.QuarterDayForecastResult>> GetQuarterDayForecastAsync(Azure.Maps.Weather.Models.Options.GetQuarterDayForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.SevereWeatherAlertsResult> GetSevereWeatherAlerts(Azure.Maps.Weather.Models.Options.GetSevereWeatherAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(Azure.Maps.Weather.Models.Options.GetSevereWeatherAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.ActiveStormResult> GetTropicalStormActive(string format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.ActiveStormResult>> GetTropicalStormActiveAsync(string format, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.StormForecastResult> GetTropicalStormForecast(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.StormForecastResult>> GetTropicalStormForecastAsync(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.StormLocationsResult> GetTropicalStormLocations(string format, int year, string basinId, int governmentStormId, bool? includeDetails, bool? includeGeometricDetails, string unit, bool? includeCurrentStorm, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.StormLocationsResult>> GetTropicalStormLocationsAsync(string format, int year, string basinId, int governmentStormId, bool? includeDetails, bool? includeGeometricDetails, string unit, bool? includeCurrentStorm, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.StormSearchResult> GetTropicalStormSearch(string format, int year, string basinId, int? governmentStormId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.StormSearchResult>> GetTropicalStormSearchAsync(string format, int year, string basinId, int? governmentStormId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.StormForecastResult> GetTropicalStormForecast(Azure.Maps.Weather.Models.Options.GetTropicalStormForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.StormForecastResult>> GetTropicalStormForecastAsync(Azure.Maps.Weather.Models.Options.GetTropicalStormForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.StormLocationsResult> GetTropicalStormLocations(Azure.Maps.Weather.Models.Options.GetTropicalStormLocationsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.StormLocationsResult>> GetTropicalStormLocationsAsync(Azure.Maps.Weather.Models.Options.GetTropicalStormLocationsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.StormSearchResult> GetTropicalStormSearch(Azure.Maps.Weather.Models.Options.GetTropicalStormSearchOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.StormSearchResult>> GetTropicalStormSearchAsync(Azure.Maps.Weather.Models.Options.GetTropicalStormSearchOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.WeatherAlongRouteResult> GetWeatherAlongRoute(string format, string query, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.WeatherAlongRouteResult>> GetWeatherAlongRouteAsync(string format, string query, string language, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1212,5 +1212,140 @@ namespace Azure.Maps.Weather.Models
         internal WindDirection() { }
         public int? Degrees { get { throw null; } }
         public string Description { get { throw null; } }
+    }
+}
+namespace Azure.Maps.Weather.Models.Options
+{
+    public partial class GetAirQualityDailyForecastsOptions
+    {
+        public GetAirQualityDailyForecastsOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public int? Duration { get { throw null; } set { } }
+        public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
+    }
+    public partial class GetAirQualityHourlyForecastsOptions
+    {
+        public GetAirQualityHourlyForecastsOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public int? Duration { get { throw null; } set { } }
+        public bool? IncludePollutantDetails { get { throw null; } set { } }
+        public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
+    }
+    public partial class GetCurrentAirQualityOptions
+    {
+        public GetCurrentAirQualityOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public bool? IncludePollutantDetails { get { throw null; } set { } }
+        public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
+    }
+    public partial class GetCurrentConditionsOptions
+    {
+        public GetCurrentConditionsOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public bool Details { get { throw null; } set { } }
+        public int? Duration { get { throw null; } set { } }
+        public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
+    }
+    public partial class GetDailyForecastOptions
+    {
+        public GetDailyForecastOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public int? Duration { get { throw null; } set { } }
+        public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
+    }
+    public partial class GetDailyHistoricalActualsOptions
+    {
+        public GetDailyHistoricalActualsOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public System.DateTimeOffset EndDate { get { throw null; } set { } }
+        public System.DateTimeOffset StartDate { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
+    }
+    public partial class GetDailyHistoricalNormalsOptions
+    {
+        public GetDailyHistoricalNormalsOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public System.DateTimeOffset EndDate { get { throw null; } set { } }
+        public System.DateTimeOffset StartDate { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
+    }
+    public partial class GetDailyHistoricalRecordsOptions
+    {
+        public GetDailyHistoricalRecordsOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public System.DateTimeOffset EndDate { get { throw null; } set { } }
+        public System.DateTimeOffset StartDate { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
+    }
+    public partial class GetDailyIndicesOptions
+    {
+        public GetDailyIndicesOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public int? Duration { get { throw null; } set { } }
+        public int? IndexGroupId { get { throw null; } set { } }
+        public int? IndexId { get { throw null; } set { } }
+        public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
+    }
+    public partial class GetHourlyForecastOptions
+    {
+        public GetHourlyForecastOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public int? Duration { get { throw null; } set { } }
+        public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
+    }
+    public partial class GetMinuteForecastOptions
+    {
+        public GetMinuteForecastOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public int? Interval { get { throw null; } set { } }
+        public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
+    }
+    public partial class GetQuarterDayForecastOptions
+    {
+        public GetQuarterDayForecastOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public int? Duration { get { throw null; } set { } }
+        public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
+    }
+    public partial class GetSevereWeatherAlertsOptions
+    {
+        public GetSevereWeatherAlertsOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public bool Details { get { throw null; } set { } }
+        public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
+    }
+    public partial class GetTropicalStormForecastOptions
+    {
+        public GetTropicalStormForecastOptions() { }
+        public string BasinId { get { throw null; } set { } }
+        public int GovernmentStormId { get { throw null; } set { } }
+        public bool? IncludeDetails { get { throw null; } set { } }
+        public bool? IncludeGeometricDetails { get { throw null; } set { } }
+        public bool? IncludeWindowGeometry { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
+        public int Year { get { throw null; } set { } }
+    }
+    public partial class GetTropicalStormLocationsOptions
+    {
+        public GetTropicalStormLocationsOptions() { }
+        public string BasinId { get { throw null; } set { } }
+        public int GovernmentStormId { get { throw null; } set { } }
+        public bool? IncludeCurrentStorm { get { throw null; } set { } }
+        public bool? IncludeDetails { get { throw null; } set { } }
+        public bool? IncludeGeometricDetails { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
+        public int Year { get { throw null; } set { } }
+    }
+    public partial class GetTropicalStormSearchOptions
+    {
+        public GetTropicalStormSearchOptions() { }
+        public string BasinId { get { throw null; } set { } }
+        public int? GovernmentStormId { get { throw null; } set { } }
+        public int Year { get { throw null; } set { } }
     }
 }

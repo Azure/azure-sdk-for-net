@@ -8,7 +8,7 @@ using Azure.Maps.Weather;
 namespace Azure.Maps.Weather.Models.Options
 {
     /// <summary> Options. </summary>
-    public class GetHourlyForecastOptions
+    public class GetMinuteForecastOptions
     {
         /// <summary> Specifies the coordinates. </summary>
         public GeoPosition Coordinates { get; set; }
@@ -16,7 +16,7 @@ namespace Azure.Maps.Weather.Models.Options
         public WeatherLanguage Language { get; set; }
         /// <summary> Specifies to return the data in either metric units or imperial units. </summary>
         public WeatherDataUnit? Unit { get; set; }
-        /// <summary> Specifies for how long the responses are returned. </summary>
-        public int? Duration { get; set; }
+        /// <summary> Specifies time interval in minutes for the returned weather forecast. </summary>
+        public int? Interval { get; set; }
     }
 }
