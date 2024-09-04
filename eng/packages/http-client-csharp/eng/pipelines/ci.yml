@@ -8,7 +8,7 @@ pr:
     - release/*
   paths:
     include:
-    - packages/npm/http-client-csharp
+    - eng/packages/http-client-csharp
   
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -26,7 +26,6 @@ extends:
               - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
                 parameters:
                   Paths:
-                    - packages/npm/http-client-csharp
                     - eng
                     - Directory.Build.props
                     - Directory.Build.targets
@@ -43,24 +42,24 @@ extends:
               - script: |
                   npm ci
                 displayName: "Install packages"
-                workingDirectory: $(Build.SourcesDirectory)/packages/npm/http-client-csharp
+                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp
               - script: |
                   npm ls -a
                 displayName: "List packages"
-                workingDirectory: $(Build.SourcesDirectory)/packages/npm/http-client-csharp
+                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp
               - script: |
                   npm run prettier
                 displayName: "Emitter format check"
-                workingDirectory: $(Build.SourcesDirectory)/packages/npm/http-client-csharp/emitter
+                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/emitter
               - script: |
                   npm run lint
                 displayName: "Emitter linter check"
-                workingDirectory: $(Build.SourcesDirectory)/packages/npm/http-client-csharp/emitter
+                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/emitter
               - script: |
                   npm run build
                 displayName: 'Build Azure csharp client emitter and generator'
-                workingDirectory: $(Build.SourcesDirectory)/packages/npm/http-client-csharp
-              - pwsh: ./packages/npm/http-client-csharp/eng/scripts/CodeGenerationCheck.ps1
+                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/http-client-csharp
+              - pwsh: ./eng/packages/http-client-csharp/eng/scripts/CodeGenerationCheck.ps1
                 displayName: "Check if generated code is up-to-date"
                 env:
                   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
