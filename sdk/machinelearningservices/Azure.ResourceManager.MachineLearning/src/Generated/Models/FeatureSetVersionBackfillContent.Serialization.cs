@@ -26,6 +26,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(DataAvailabilityStatus))
+            {
+                writer.WritePropertyName("dataAvailabilityStatus"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataAvailabilityStatus)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -47,6 +57,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("featureWindow");
                 }
+            }
+            if (Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Resource))
             {
@@ -113,9 +139,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            IList<DataAvailabilityStatus> dataAvailabilityStatus = default;
             string description = default;
             string displayName = default;
             FeatureWindow featureWindow = default;
+            string jobId = default;
+            IDictionary<string, string> properties = default;
             MaterializationComputeResource resource = default;
             IDictionary<string, string> sparkConfiguration = default;
             IDictionary<string, string> tags = default;
@@ -123,6 +152,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("dataAvailabilityStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataAvailabilityStatus> array = new List<DataAvailabilityStatus>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new DataAvailabilityStatus(item.GetString()));
+                    }
+                    dataAvailabilityStatus = array;
+                    continue;
+                }
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
@@ -141,6 +184,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("jobId"u8))
+                {
+                    jobId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -187,9 +249,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new FeatureSetVersionBackfillContent(
+                dataAvailabilityStatus ?? new ChangeTrackingList<DataAvailabilityStatus>(),
                 description,
                 displayName,
                 featureWindow,
+                jobId,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
                 resource,
                 sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),

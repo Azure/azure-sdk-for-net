@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupInstanceView"/>. </summary>
         /// <param name="capacityReservations"> List of instance view of the capacity reservations under the capacity reservation group. </param>
-        /// <param name="sharedSubscriptionIds"> List of the subscriptions that the capacity reservation group is shared with. **Note:** Minimum api-version: 2024-03-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
+        /// <param name="sharedSubscriptionIds"> List of the subscriptions that the capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CapacityReservationGroupInstanceView(IReadOnlyList<CapacityReservationInstanceViewWithName> capacityReservations, IReadOnlyList<SubResource> sharedSubscriptionIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> List of instance view of the capacity reservations under the capacity reservation group. </summary>
         public IReadOnlyList<CapacityReservationInstanceViewWithName> CapacityReservations { get; }
-        /// <summary> List of the subscriptions that the capacity reservation group is shared with. **Note:** Minimum api-version: 2024-03-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
+        /// <summary> List of the subscriptions that the capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
         public IReadOnlyList<SubResource> SharedSubscriptionIds { get; }
     }
 }

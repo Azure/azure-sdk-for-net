@@ -75,11 +75,38 @@ namespace Azure.Identity.Samples
         [Test]
         public void AuthenticatingWithManagedIdentityCredentialUserAssigned()
         {
-            string userAssignedClientId = "";
-
             #region Snippet:AuthenticatingWithManagedIdentityCredentialUserAssigned
+            string userAssignedClientId = "some client ID";
 
-            var credential = new ManagedIdentityCredential(clientId: userAssignedClientId);
+            var credential = new ManagedIdentityCredential(
+                ManagedIdentityId.FromUserAssignedClientId(userAssignedClientId));
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+
+            #endregion
+        }
+
+        [Test]
+        public void AuthenticatingWithManagedIdentityCredentialUserAssignedResourceId()
+        {
+            #region Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedResourceId
+            ResourceIdentifier userAssignedResourceId = new ResourceIdentifier(
+                "/subscriptions/<subscriptionID>/resourcegroups/<resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<MI name>");
+
+            var credential = new ManagedIdentityCredential(
+                ManagedIdentityId.FromUserAssignedResourceId(userAssignedResourceId));
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+
+            #endregion
+        }
+
+        [Test]
+        public void AuthenticatingWithManagedIdentityCredentialUserAssignedObjectId()
+        {
+            #region Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedObjectId
+            string userAssignedObjectId = "some object ID";
+
+            var credential = new ManagedIdentityCredential(
+                ManagedIdentityId.FromUserAssignedObjectId(userAssignedObjectId));
             var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 
             #endregion
@@ -90,7 +117,7 @@ namespace Azure.Identity.Samples
         {
             #region Snippet:AuthenticatingWithManagedIdentityCredentialSystemAssigned
 
-            var credential = new ManagedIdentityCredential();
+            var credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
             var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 
             #endregion

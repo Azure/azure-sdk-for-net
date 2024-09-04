@@ -107,18 +107,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(Credentials, options);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
-            if (Optional.IsDefined(IntellectualProperty))
-            {
-                if (IntellectualProperty != null)
-                {
-                    writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty, options);
-                }
-                else
-                {
-                    writer.WriteNull("intellectualProperty");
-                }
-            }
             if (options.Format != "W" && Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
@@ -219,7 +207,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string subscriptionId = default;
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
-            IntellectualProperty intellectualProperty = default;
             bool? isDefault = default;
             string description = default;
             IDictionary<string, string> properties = default;
@@ -307,16 +294,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     datastoreType = new DatastoreType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("intellectualProperty"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        intellectualProperty = null;
-                        continue;
-                    }
-                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -379,7 +356,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData,
                 credentials,
                 datastoreType,
-                intellectualProperty,
                 isDefault,
                 accountName,
                 containerName,

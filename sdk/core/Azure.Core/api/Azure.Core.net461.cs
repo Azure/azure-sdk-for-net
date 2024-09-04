@@ -814,6 +814,7 @@ namespace Azure.Core.Diagnostics
         public const string TraitName = "AzureEventSource";
         public const string TraitValue = "true";
         public AzureEventSourceListener(System.Action<System.Diagnostics.Tracing.EventWrittenEventArgs, string> log, System.Diagnostics.Tracing.EventLevel level) { }
+        public AzureEventSourceListener(System.Action<System.Diagnostics.Tracing.EventWrittenEventArgs> log, System.Diagnostics.Tracing.EventLevel level) { }
         public static Azure.Core.Diagnostics.AzureEventSourceListener CreateConsoleLogger(System.Diagnostics.Tracing.EventLevel level = System.Diagnostics.Tracing.EventLevel.Informational) { throw null; }
         public static Azure.Core.Diagnostics.AzureEventSourceListener CreateTraceLogger(System.Diagnostics.Tracing.EventLevel level = System.Diagnostics.Tracing.EventLevel.Informational) { throw null; }
         protected sealed override void OnEventSourceCreated(System.Diagnostics.Tracing.EventSource eventSource) { }

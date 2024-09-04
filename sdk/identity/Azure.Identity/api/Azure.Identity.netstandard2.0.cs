@@ -310,10 +310,27 @@ namespace Azure.Identity
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {
         protected ManagedIdentityCredential() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ManagedIdentityCredential(Azure.Core.ResourceIdentifier resourceId, Azure.Identity.TokenCredentialOptions options = null) { }
+        public ManagedIdentityCredential(Azure.Identity.ManagedIdentityCredentialOptions options) { }
+        public ManagedIdentityCredential(Azure.Identity.ManagedIdentityId managedIdentityId) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ManagedIdentityCredential(string clientId = null, Azure.Identity.TokenCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagedIdentityCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public ManagedIdentityCredentialOptions() { }
+        public Azure.Identity.ManagedIdentityId ManagedIdentityId { get { throw null; } set { } }
+    }
+    public partial class ManagedIdentityId
+    {
+        internal ManagedIdentityId() { }
+        public static Azure.Identity.ManagedIdentityId SystemAssigned { get { throw null; } }
+        public static Azure.Identity.ManagedIdentityId FromUserAssignedClientId(string clientId) { throw null; }
+        public static Azure.Identity.ManagedIdentityId FromUserAssignedObjectId(string objectId) { throw null; }
+        public static Azure.Identity.ManagedIdentityId FromUserAssignedResourceId(Azure.Core.ResourceIdentifier resourceIdentifier) { throw null; }
     }
     public partial class OnBehalfOfCredential : Azure.Core.TokenCredential
     {
