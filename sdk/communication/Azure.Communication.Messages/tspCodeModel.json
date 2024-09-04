@@ -14,31 +14,36 @@
     "$id": "3",
     "Kind": "string",
     "Name": "string",
-    "CrossLanguageDefinitionId": "TypeSpec.string"
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
    },
    "Values": [
     {
      "$id": "4",
      "Name": "text",
      "Value": "text",
-     "Description": "Text message type."
+     "Description": "Text message type.",
+     "Decorators": []
     },
     {
      "$id": "5",
      "Name": "image",
      "Value": "image",
-     "Description": "Image message type."
+     "Description": "Image message type.",
+     "Decorators": []
     },
     {
      "$id": "6",
      "Name": "template",
      "Value": "template",
-     "Description": "Template message type."
+     "Description": "Template message type.",
+     "Decorators": []
     }
    ],
    "Description": "The type of message. Supports text, image, template.",
    "IsExtensible": true,
-   "Usage": "Input,Json"
+   "Usage": "Input,Json",
+   "Decorators": []
   },
   {
    "$id": "7",
@@ -49,49 +54,57 @@
     "$id": "8",
     "Kind": "string",
     "Name": "string",
-    "CrossLanguageDefinitionId": "TypeSpec.string"
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
    },
    "Values": [
     {
      "$id": "9",
      "Name": "text",
      "Value": "text",
-     "Description": "The text template parameter type."
+     "Description": "The text template parameter type.",
+     "Decorators": []
     },
     {
      "$id": "10",
      "Name": "image",
      "Value": "image",
-     "Description": "The image template parameter type."
+     "Description": "The image template parameter type.",
+     "Decorators": []
     },
     {
      "$id": "11",
      "Name": "document",
      "Value": "document",
-     "Description": "The document template parameter type."
+     "Description": "The document template parameter type.",
+     "Decorators": []
     },
     {
      "$id": "12",
      "Name": "video",
      "Value": "video",
-     "Description": "The video template parameter type."
+     "Description": "The video template parameter type.",
+     "Decorators": []
     },
     {
      "$id": "13",
      "Name": "location",
      "Value": "location",
-     "Description": "The location template parameter type."
+     "Description": "The location template parameter type.",
+     "Decorators": []
     },
     {
      "$id": "14",
      "Name": "quickAction",
      "Value": "quickAction",
-     "Description": "The quick action template parameter type."
+     "Description": "The quick action template parameter type.",
+     "Decorators": []
     }
    ],
    "Description": "The type of the template parameter.",
    "IsExtensible": true,
-   "Usage": "Input,Json"
+   "Usage": "Input,Json",
+   "Decorators": []
   },
   {
    "$id": "15",
@@ -102,19 +115,22 @@
     "$id": "16",
     "Kind": "string",
     "Name": "string",
-    "CrossLanguageDefinitionId": "TypeSpec.string"
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
    },
    "Values": [
     {
      "$id": "17",
      "Name": "whatsApp",
      "Value": "whatsApp",
-     "Description": "The WhatsApp template type."
+     "Description": "The WhatsApp template type.",
+     "Decorators": []
     }
    ],
    "Description": "The type of the message template.",
    "IsExtensible": true,
-   "Usage": "Input,Json"
+   "Usage": "Input,Json",
+   "Decorators": []
   },
   {
    "$id": "18",
@@ -125,112 +141,128 @@
     "$id": "19",
     "Kind": "string",
     "Name": "string",
-    "CrossLanguageDefinitionId": "TypeSpec.string"
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
    },
    "Values": [
     {
      "$id": "20",
      "Name": "quickReply",
      "Value": "quickReply",
-     "Description": "The WhatsApp button sub type is quick reply."
+     "Description": "The WhatsApp button sub type is quick reply.",
+     "Decorators": []
     },
     {
      "$id": "21",
      "Name": "url",
      "Value": "url",
-     "Description": "The WhatsApp button sub type is url."
+     "Description": "The WhatsApp button sub type is url.",
+     "Decorators": []
     }
    ],
    "Description": "The WhatsApp button sub type.",
    "IsExtensible": true,
-   "Usage": "Input,Json"
+   "Usage": "Input,Json",
+   "Decorators": []
   },
   {
    "$id": "22",
    "Kind": "enum",
-   "Name": "Versions",
-   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
+   "Name": "MessageTemplateStatus",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
    "ValueType": {
     "$id": "23",
     "Kind": "string",
     "Name": "string",
-    "CrossLanguageDefinitionId": "TypeSpec.string"
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
    },
    "Values": [
     {
      "$id": "24",
-     "Name": "c2024_02_01",
-     "Value": "2024-02-01",
-     "Description": "Azure Communication Messages 2024-02-01 api version"
-    }
-   ],
-   "Description": "Azure Communication Messages Versions",
-   "IsExtensible": false,
-   "Usage": "ApiVersionEnum"
-  },
-  {
-   "$id": "25",
-   "Kind": "enum",
-   "Name": "MessageTemplateStatus",
-   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
-   "ValueType": {
-    "$id": "26",
-    "Kind": "string",
-    "Name": "string",
-    "CrossLanguageDefinitionId": "TypeSpec.string"
-   },
-   "Values": [
-    {
-     "$id": "27",
      "Name": "approved",
      "Value": "approved",
-     "Description": "Message template is approved."
+     "Description": "Message template is approved.",
+     "Decorators": []
     },
     {
-     "$id": "28",
+     "$id": "25",
      "Name": "rejected",
      "Value": "rejected",
-     "Description": "Message template is rejected."
+     "Description": "Message template is rejected.",
+     "Decorators": []
     },
     {
-     "$id": "29",
+     "$id": "26",
      "Name": "pending",
      "Value": "pending",
-     "Description": "Message template is pending."
+     "Description": "Message template is pending.",
+     "Decorators": []
     },
     {
-     "$id": "30",
+     "$id": "27",
      "Name": "paused",
      "Value": "paused",
-     "Description": "Message template is paused."
+     "Description": "Message template is paused.",
+     "Decorators": []
     }
    ],
    "Description": "The aggregated template status.",
    "IsExtensible": true,
-   "Usage": "Output,Json"
+   "Usage": "Output,Json",
+   "Decorators": []
   },
   {
-   "$id": "31",
+   "$id": "28",
    "Kind": "enum",
    "Name": "CommunicationMessagesChannel",
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.CommunicationMessagesChannel",
    "ValueType": {
-    "$id": "32",
+    "$id": "29",
     "Kind": "string",
     "Name": "string",
-    "CrossLanguageDefinitionId": "TypeSpec.string"
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
    },
    "Values": [
     {
-     "$id": "33",
+     "$id": "30",
      "Name": "whatsApp",
      "Value": "whatsApp",
-     "Description": "The WhatsApp communication messages channel type."
+     "Description": "The WhatsApp communication messages channel type.",
+     "Decorators": []
     }
    ],
    "Description": "The type of the communication messages channel.",
    "IsExtensible": true,
-   "Usage": "Output,Json"
+   "Usage": "Output,Json",
+   "Decorators": []
+  },
+  {
+   "$id": "31",
+   "Kind": "enum",
+   "Name": "Versions",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
+   "ValueType": {
+    "$id": "32",
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
+   },
+   "Values": [
+    {
+     "$id": "33",
+     "Name": "c2024_02_01",
+     "Value": "2024-02-01",
+     "Description": "Azure Communication Messages 2024-02-01 api version",
+     "Decorators": []
+    }
+   ],
+   "Description": "Azure Communication Messages Versions",
+   "IsExtensible": false,
+   "Usage": "ApiVersionEnum",
+   "Decorators": []
   },
   {
    "$id": "34",
@@ -241,25 +273,29 @@
     "$id": "35",
     "Kind": "string",
     "Name": "string",
-    "CrossLanguageDefinitionId": "TypeSpec.string"
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
    },
    "Values": [
     {
      "$id": "36",
      "Name": "accepted",
      "Value": "accepted",
-     "Description": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation."
+     "Description": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation.",
+     "Decorators": []
     },
     {
      "$id": "37",
      "Name": "rejected",
      "Value": "rejected",
-     "Description": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server."
+     "Description": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server.",
+     "Decorators": []
     }
    ],
    "Description": "Repeatability Result header options",
    "IsExtensible": false,
-   "Usage": "None"
+   "Usage": "None",
+   "Decorators": []
   }
  ],
  "Models": [
@@ -270,6 +306,7 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent",
    "Usage": "Input,Json",
    "Description": "Details of the message to send.",
+   "Decorators": [],
    "DiscriminatorProperty": {
     "$id": "39",
     "Name": "kind",
@@ -280,7 +317,8 @@
     },
     "IsRequired": true,
     "IsReadOnly": false,
-    "IsDiscriminator": true
+    "IsDiscriminator": true,
+    "Decorators": []
    },
    "Properties": [
     {
@@ -297,11 +335,14 @@
        "$id": "42",
        "Kind": "string",
        "Name": "string",
-       "CrossLanguageDefinitionId": "TypeSpec.string"
-      }
+       "CrossLanguageDefinitionId": "TypeSpec.string",
+       "Decorators": []
+      },
+      "Decorators": []
      },
      "IsRequired": true,
-     "IsReadOnly": false
+     "IsReadOnly": false,
+     "Decorators": []
     },
     {
      "$id": "43",
@@ -316,12 +357,15 @@
        "$id": "45",
        "Kind": "string",
        "Name": "string",
-       "CrossLanguageDefinitionId": "TypeSpec.string"
+       "CrossLanguageDefinitionId": "TypeSpec.string",
+       "Decorators": []
       },
-      "CrossLanguageDefinitionId": "TypeSpec.Array"
+      "CrossLanguageDefinitionId": "TypeSpec.Array",
+      "Decorators": []
      },
      "IsRequired": true,
-     "IsReadOnly": false
+     "IsReadOnly": false,
+     "Decorators": []
     },
     {
      "$ref": "39"
@@ -337,6 +381,7 @@
      "Usage": "Input,Json",
      "Description": "A request to send a text notification.",
      "DiscriminatorValue": "text",
+     "Decorators": [],
      "BaseModel": {
       "$ref": "38"
      },
@@ -353,13 +398,16 @@
          "$id": "50",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
         },
-        "Value": "text"
+        "Value": "text",
+        "Decorators": []
        },
        "IsRequired": true,
        "IsReadOnly": false,
-       "IsDiscriminator": true
+       "IsDiscriminator": true,
+       "Decorators": []
       },
       {
        "$id": "51",
@@ -370,10 +418,12 @@
         "$id": "52",
         "Kind": "string",
         "Name": "string",
-        "CrossLanguageDefinitionId": "TypeSpec.string"
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
        },
        "IsRequired": true,
-       "IsReadOnly": false
+       "IsReadOnly": false,
+       "Decorators": []
       }
      ]
     },
@@ -385,6 +435,7 @@
      "Usage": "Input,Json",
      "Description": "A request to send a media notification.",
      "DiscriminatorValue": "image",
+     "Decorators": [],
      "BaseModel": {
       "$ref": "38"
      },
@@ -401,13 +452,16 @@
          "$id": "56",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
         },
-        "Value": "image"
+        "Value": "image",
+        "Decorators": []
        },
        "IsRequired": true,
        "IsReadOnly": false,
-       "IsDiscriminator": true
+       "IsDiscriminator": true,
+       "Decorators": []
       },
       {
        "$id": "57",
@@ -418,10 +472,12 @@
         "$id": "58",
         "Kind": "string",
         "Name": "string",
-        "CrossLanguageDefinitionId": "TypeSpec.string"
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
        },
        "IsRequired": false,
-       "IsReadOnly": false
+       "IsReadOnly": false,
+       "Decorators": []
       },
       {
        "$id": "59",
@@ -432,10 +488,12 @@
         "$id": "60",
         "Kind": "url",
         "Name": "url",
-        "CrossLanguageDefinitionId": "TypeSpec.url"
+        "CrossLanguageDefinitionId": "TypeSpec.url",
+        "Decorators": []
        },
        "IsRequired": true,
-       "IsReadOnly": false
+       "IsReadOnly": false,
+       "Decorators": []
       }
      ]
     },
@@ -447,6 +505,7 @@
      "Usage": "Input,Json",
      "Description": "A request to send a template notification.",
      "DiscriminatorValue": "template",
+     "Decorators": [],
      "BaseModel": {
       "$ref": "38"
      },
@@ -463,13 +522,16 @@
          "$id": "64",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
         },
-        "Value": "template"
+        "Value": "template",
+        "Decorators": []
        },
        "IsRequired": true,
        "IsReadOnly": false,
-       "IsDiscriminator": true
+       "IsDiscriminator": true,
+       "Decorators": []
       },
       {
        "$id": "65",
@@ -483,6 +545,7 @@
         "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate",
         "Usage": "Input,Json",
         "Description": "The template object used to create templates.",
+        "Decorators": [],
         "Properties": [
          {
           "$id": "67",
@@ -493,10 +556,12 @@
            "$id": "68",
            "Kind": "string",
            "Name": "string",
-           "CrossLanguageDefinitionId": "TypeSpec.string"
+           "CrossLanguageDefinitionId": "TypeSpec.string",
+           "Decorators": []
           },
           "IsRequired": true,
-          "IsReadOnly": false
+          "IsReadOnly": false,
+          "Decorators": []
          },
          {
           "$id": "69",
@@ -507,10 +572,12 @@
            "$id": "70",
            "Kind": "string",
            "Name": "string",
-           "CrossLanguageDefinitionId": "TypeSpec.string"
+           "CrossLanguageDefinitionId": "TypeSpec.string",
+           "Decorators": []
           },
           "IsRequired": true,
-          "IsReadOnly": false
+          "IsReadOnly": false,
+          "Decorators": []
          },
          {
           "$id": "71",
@@ -528,6 +595,7 @@
             "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValue",
             "Usage": "Input,Json",
             "Description": "The class describes a parameter of a template.",
+            "Decorators": [],
             "DiscriminatorProperty": {
              "$id": "74",
              "Name": "kind",
@@ -538,7 +606,8 @@
              },
              "IsRequired": true,
              "IsReadOnly": false,
-             "IsDiscriminator": true
+             "IsDiscriminator": true,
+             "Decorators": []
             },
             "Properties": [
              {
@@ -550,10 +619,12 @@
                "$id": "76",
                "Kind": "string",
                "Name": "string",
-               "CrossLanguageDefinitionId": "TypeSpec.string"
+               "CrossLanguageDefinitionId": "TypeSpec.string",
+               "Decorators": []
               },
               "IsRequired": true,
-              "IsReadOnly": false
+              "IsReadOnly": false,
+              "Decorators": []
              },
              {
               "$ref": "74"
@@ -569,6 +640,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's text value information.",
               "DiscriminatorValue": "text",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -585,13 +657,16 @@
                   "$id": "81",
                   "Kind": "string",
                   "Name": "string",
-                  "CrossLanguageDefinitionId": "TypeSpec.string"
+                  "CrossLanguageDefinitionId": "TypeSpec.string",
+                  "Decorators": []
                  },
-                 "Value": "text"
+                 "Value": "text",
+                 "Decorators": []
                 },
                 "IsRequired": true,
                 "IsReadOnly": false,
-                "IsDiscriminator": true
+                "IsDiscriminator": true,
+                "Decorators": []
                },
                {
                 "$id": "82",
@@ -602,10 +677,12 @@
                  "$id": "83",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
                 "IsRequired": true,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                }
               ]
              },
@@ -617,6 +694,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's image value information.",
               "DiscriminatorValue": "image",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -633,13 +711,16 @@
                   "$id": "87",
                   "Kind": "string",
                   "Name": "string",
-                  "CrossLanguageDefinitionId": "TypeSpec.string"
+                  "CrossLanguageDefinitionId": "TypeSpec.string",
+                  "Decorators": []
                  },
-                 "Value": "image"
+                 "Value": "image",
+                 "Decorators": []
                 },
                 "IsRequired": true,
                 "IsReadOnly": false,
-                "IsDiscriminator": true
+                "IsDiscriminator": true,
+                "Decorators": []
                },
                {
                 "$id": "88",
@@ -650,10 +731,12 @@
                  "$id": "89",
                  "Kind": "url",
                  "Name": "url",
-                 "CrossLanguageDefinitionId": "TypeSpec.url"
+                 "CrossLanguageDefinitionId": "TypeSpec.url",
+                 "Decorators": []
                 },
                 "IsRequired": true,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                },
                {
                 "$id": "90",
@@ -664,10 +747,12 @@
                  "$id": "91",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
                 "IsRequired": false,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                },
                {
                 "$id": "92",
@@ -678,10 +763,12 @@
                  "$id": "93",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
                 "IsRequired": false,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                }
               ]
              },
@@ -693,6 +780,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's document value information.",
               "DiscriminatorValue": "document",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -709,13 +797,16 @@
                   "$id": "97",
                   "Kind": "string",
                   "Name": "string",
-                  "CrossLanguageDefinitionId": "TypeSpec.string"
+                  "CrossLanguageDefinitionId": "TypeSpec.string",
+                  "Decorators": []
                  },
-                 "Value": "document"
+                 "Value": "document",
+                 "Decorators": []
                 },
                 "IsRequired": true,
                 "IsReadOnly": false,
-                "IsDiscriminator": true
+                "IsDiscriminator": true,
+                "Decorators": []
                },
                {
                 "$id": "98",
@@ -726,10 +817,12 @@
                  "$id": "99",
                  "Kind": "url",
                  "Name": "url",
-                 "CrossLanguageDefinitionId": "TypeSpec.url"
+                 "CrossLanguageDefinitionId": "TypeSpec.url",
+                 "Decorators": []
                 },
                 "IsRequired": true,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                },
                {
                 "$id": "100",
@@ -740,10 +833,12 @@
                  "$id": "101",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
                 "IsRequired": false,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                },
                {
                 "$id": "102",
@@ -754,10 +849,12 @@
                  "$id": "103",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
                 "IsRequired": false,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                }
               ]
              },
@@ -769,6 +866,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's video value information.",
               "DiscriminatorValue": "video",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -785,13 +883,16 @@
                   "$id": "107",
                   "Kind": "string",
                   "Name": "string",
-                  "CrossLanguageDefinitionId": "TypeSpec.string"
+                  "CrossLanguageDefinitionId": "TypeSpec.string",
+                  "Decorators": []
                  },
-                 "Value": "video"
+                 "Value": "video",
+                 "Decorators": []
                 },
                 "IsRequired": true,
                 "IsReadOnly": false,
-                "IsDiscriminator": true
+                "IsDiscriminator": true,
+                "Decorators": []
                },
                {
                 "$id": "108",
@@ -802,10 +903,12 @@
                  "$id": "109",
                  "Kind": "url",
                  "Name": "url",
-                 "CrossLanguageDefinitionId": "TypeSpec.url"
+                 "CrossLanguageDefinitionId": "TypeSpec.url",
+                 "Decorators": []
                 },
                 "IsRequired": true,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                },
                {
                 "$id": "110",
@@ -816,10 +919,12 @@
                  "$id": "111",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
                 "IsRequired": false,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                },
                {
                 "$id": "112",
@@ -830,10 +935,12 @@
                  "$id": "113",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
                 "IsRequired": false,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                }
               ]
              },
@@ -845,6 +952,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's location value information.",
               "DiscriminatorValue": "location",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -861,13 +969,16 @@
                   "$id": "117",
                   "Kind": "string",
                   "Name": "string",
-                  "CrossLanguageDefinitionId": "TypeSpec.string"
+                  "CrossLanguageDefinitionId": "TypeSpec.string",
+                  "Decorators": []
                  },
-                 "Value": "location"
+                 "Value": "location",
+                 "Decorators": []
                 },
                 "IsRequired": true,
                 "IsReadOnly": false,
-                "IsDiscriminator": true
+                "IsDiscriminator": true,
+                "Decorators": []
                },
                {
                 "$id": "118",
@@ -878,10 +989,12 @@
                  "$id": "119",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
                 "IsRequired": false,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                },
                {
                 "$id": "120",
@@ -892,10 +1005,12 @@
                  "$id": "121",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
                 "IsRequired": false,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                },
                {
                 "$id": "122",
@@ -906,10 +1021,12 @@
                  "$id": "123",
                  "Kind": "float64",
                  "Name": "float64",
-                 "CrossLanguageDefinitionId": "TypeSpec.float64"
+                 "CrossLanguageDefinitionId": "TypeSpec.float64",
+                 "Decorators": []
                 },
                 "IsRequired": true,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                },
                {
                 "$id": "124",
@@ -920,10 +1037,12 @@
                  "$id": "125",
                  "Kind": "float64",
                  "Name": "float64",
-                 "CrossLanguageDefinitionId": "TypeSpec.float64"
+                 "CrossLanguageDefinitionId": "TypeSpec.float64",
+                 "Decorators": []
                 },
                 "IsRequired": true,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                }
               ]
              },
@@ -935,6 +1054,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's quick action value information.",
               "DiscriminatorValue": "quickAction",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -951,13 +1071,16 @@
                   "$id": "129",
                   "Kind": "string",
                   "Name": "string",
-                  "CrossLanguageDefinitionId": "TypeSpec.string"
+                  "CrossLanguageDefinitionId": "TypeSpec.string",
+                  "Decorators": []
                  },
-                 "Value": "quickAction"
+                 "Value": "quickAction",
+                 "Decorators": []
                 },
                 "IsRequired": true,
                 "IsReadOnly": false,
-                "IsDiscriminator": true
+                "IsDiscriminator": true,
+                "Decorators": []
                },
                {
                 "$id": "130",
@@ -968,10 +1091,12 @@
                  "$id": "131",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
                 "IsRequired": false,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                },
                {
                 "$id": "132",
@@ -982,19 +1107,23 @@
                  "$id": "133",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
                 "IsRequired": false,
-                "IsReadOnly": false
+                "IsReadOnly": false,
+                "Decorators": []
                }
               ]
              }
             }
            },
-           "CrossLanguageDefinitionId": "TypeSpec.Array"
+           "CrossLanguageDefinitionId": "TypeSpec.Array",
+           "Decorators": []
           },
           "IsRequired": false,
-          "IsReadOnly": false
+          "IsReadOnly": false,
+          "Decorators": []
          },
          {
           "$id": "134",
@@ -1008,6 +1137,7 @@
            "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateBindings",
            "Usage": "Input,Json",
            "Description": "The binding object to link values to the template specific locations",
+           "Decorators": [],
            "DiscriminatorProperty": {
             "$id": "136",
             "Name": "kind",
@@ -1018,7 +1148,8 @@
             },
             "IsRequired": true,
             "IsReadOnly": false,
-            "IsDiscriminator": true
+            "IsDiscriminator": true,
+            "Decorators": []
            },
            "Properties": [
             {
@@ -1035,6 +1166,7 @@
              "Usage": "Input,Json",
              "Description": "The template bindings for WhatsApp",
              "DiscriminatorValue": "whatsApp",
+             "Decorators": [],
              "BaseModel": {
               "$ref": "135"
              },
@@ -1051,13 +1183,16 @@
                  "$id": "141",
                  "Kind": "string",
                  "Name": "string",
-                 "CrossLanguageDefinitionId": "TypeSpec.string"
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
                 },
-                "Value": "whatsApp"
+                "Value": "whatsApp",
+                "Decorators": []
                },
                "IsRequired": true,
                "IsReadOnly": false,
-               "IsDiscriminator": true
+               "IsDiscriminator": true,
+               "Decorators": []
               },
               {
                "$id": "142",
@@ -1075,6 +1210,7 @@
                  "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsComponent",
                  "Usage": "Input,Json",
                  "Description": "The template bindings component for WhatsApp",
+                 "Decorators": [],
                  "Properties": [
                   {
                    "$id": "145",
@@ -1085,17 +1221,21 @@
                     "$id": "146",
                     "Kind": "string",
                     "Name": "string",
-                    "CrossLanguageDefinitionId": "TypeSpec.string"
+                    "CrossLanguageDefinitionId": "TypeSpec.string",
+                    "Decorators": []
                    },
                    "IsRequired": true,
-                   "IsReadOnly": false
+                   "IsReadOnly": false,
+                   "Decorators": []
                   }
                  ]
                 },
-                "CrossLanguageDefinitionId": "TypeSpec.Array"
+                "CrossLanguageDefinitionId": "TypeSpec.Array",
+                "Decorators": []
                },
                "IsRequired": false,
-               "IsReadOnly": false
+               "IsReadOnly": false,
+               "Decorators": []
               },
               {
                "$id": "147",
@@ -1109,10 +1249,12 @@
                 "ValueType": {
                  "$ref": "144"
                 },
-                "CrossLanguageDefinitionId": "TypeSpec.Array"
+                "CrossLanguageDefinitionId": "TypeSpec.Array",
+                "Decorators": []
                },
                "IsRequired": false,
-               "IsReadOnly": false
+               "IsReadOnly": false,
+               "Decorators": []
               },
               {
                "$id": "149",
@@ -1126,10 +1268,12 @@
                 "ValueType": {
                  "$ref": "144"
                 },
-                "CrossLanguageDefinitionId": "TypeSpec.Array"
+                "CrossLanguageDefinitionId": "TypeSpec.Array",
+                "Decorators": []
                },
                "IsRequired": false,
-               "IsReadOnly": false
+               "IsReadOnly": false,
+               "Decorators": []
               },
               {
                "$id": "151",
@@ -1147,6 +1291,7 @@
                  "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsButton",
                  "Usage": "Input,Json",
                  "Description": "The template bindings component button for WhatsApp",
+                 "Decorators": [],
                  "Properties": [
                   {
                    "$id": "154",
@@ -1157,7 +1302,8 @@
                     "$ref": "18"
                    },
                    "IsRequired": true,
-                   "IsReadOnly": false
+                   "IsReadOnly": false,
+                   "Decorators": []
                   },
                   {
                    "$id": "155",
@@ -1168,29 +1314,35 @@
                     "$id": "156",
                     "Kind": "string",
                     "Name": "string",
-                    "CrossLanguageDefinitionId": "TypeSpec.string"
+                    "CrossLanguageDefinitionId": "TypeSpec.string",
+                    "Decorators": []
                    },
                    "IsRequired": true,
-                   "IsReadOnly": false
+                   "IsReadOnly": false,
+                   "Decorators": []
                   }
                  ]
                 },
-                "CrossLanguageDefinitionId": "TypeSpec.Array"
+                "CrossLanguageDefinitionId": "TypeSpec.Array",
+                "Decorators": []
                },
                "IsRequired": false,
-               "IsReadOnly": false
+               "IsReadOnly": false,
+               "Decorators": []
               }
              ]
             }
            }
           },
           "IsRequired": false,
-          "IsReadOnly": false
+          "IsReadOnly": false,
+          "Decorators": []
          }
         ]
        },
        "IsRequired": true,
-       "IsReadOnly": false
+       "IsReadOnly": false,
+       "Decorators": []
       }
      ]
     }
@@ -1248,6 +1400,7 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.SendMessageResult",
    "Usage": "Output,Json",
    "Description": "Result of the send message operation.",
+   "Decorators": [],
    "Properties": [
     {
      "$id": "158",
@@ -1265,6 +1418,7 @@
        "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageReceipt",
        "Usage": "Output,Json",
        "Description": "Receipt of the sending one message.",
+       "Decorators": [],
        "Properties": [
         {
          "$id": "161",
@@ -1275,10 +1429,12 @@
           "$id": "162",
           "Kind": "string",
           "Name": "string",
-          "CrossLanguageDefinitionId": "TypeSpec.string"
+          "CrossLanguageDefinitionId": "TypeSpec.string",
+          "Decorators": []
          },
          "IsRequired": true,
-         "IsReadOnly": false
+         "IsReadOnly": false,
+         "Decorators": []
         },
         {
          "$id": "163",
@@ -1289,17 +1445,21 @@
           "$id": "164",
           "Kind": "string",
           "Name": "string",
-          "CrossLanguageDefinitionId": "TypeSpec.string"
+          "CrossLanguageDefinitionId": "TypeSpec.string",
+          "Decorators": []
          },
          "IsRequired": true,
-         "IsReadOnly": false
+         "IsReadOnly": false,
+         "Decorators": []
         }
        ]
       },
-      "CrossLanguageDefinitionId": "TypeSpec.Array"
+      "CrossLanguageDefinitionId": "TypeSpec.Array",
+      "Decorators": []
      },
      "IsRequired": true,
-     "IsReadOnly": false
+     "IsReadOnly": false,
+     "Decorators": []
     }
    ]
   },
@@ -1313,17 +1473,19 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem",
    "Usage": "Output,Json",
    "Description": "The message template as returned from the service.",
+   "Decorators": [],
    "DiscriminatorProperty": {
     "$id": "166",
     "Name": "kind",
     "SerializedName": "kind",
     "Description": "The type discriminator describing a template type.",
     "Type": {
-     "$ref": "31"
+     "$ref": "28"
     },
     "IsRequired": true,
     "IsReadOnly": false,
-    "IsDiscriminator": true
+    "IsDiscriminator": true,
+    "Decorators": []
    },
    "Properties": [
     {
@@ -1335,10 +1497,12 @@
       "$id": "168",
       "Kind": "string",
       "Name": "string",
-      "CrossLanguageDefinitionId": "TypeSpec.string"
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
      },
      "IsRequired": true,
-     "IsReadOnly": true
+     "IsReadOnly": true,
+     "Decorators": []
     },
     {
      "$id": "169",
@@ -1349,10 +1513,12 @@
       "$id": "170",
       "Kind": "string",
       "Name": "string",
-      "CrossLanguageDefinitionId": "TypeSpec.string"
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
      },
      "IsRequired": true,
-     "IsReadOnly": false
+     "IsReadOnly": false,
+     "Decorators": []
     },
     {
      "$id": "171",
@@ -1360,10 +1526,11 @@
      "SerializedName": "status",
      "Description": "The aggregated template status.",
      "Type": {
-      "$ref": "25"
+      "$ref": "22"
      },
      "IsRequired": true,
-     "IsReadOnly": false
+     "IsReadOnly": false,
+     "Decorators": []
     },
     {
      "$ref": "166"
@@ -1379,6 +1546,7 @@
      "Usage": "Output,Json",
      "Description": "The WhatsApp-specific template response contract",
      "DiscriminatorValue": "whatsApp",
+     "Decorators": [],
      "BaseModel": {
       "$ref": "165"
      },
@@ -1392,10 +1560,12 @@
         "$id": "175",
         "Kind": "any",
         "Name": "unknown",
-        "CrossLanguageDefinitionId": ""
+        "CrossLanguageDefinitionId": "",
+        "Decorators": []
        },
        "IsRequired": false,
-       "IsReadOnly": false
+       "IsReadOnly": false,
+       "Decorators": []
       },
       {
        "$id": "176",
@@ -1409,13 +1579,16 @@
          "$id": "178",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
         },
-        "Value": "whatsApp"
+        "Value": "whatsApp",
+        "Decorators": []
        },
        "IsRequired": true,
        "IsReadOnly": false,
-       "IsDiscriminator": true
+       "IsDiscriminator": true,
+       "Decorators": []
       }
      ]
     }
@@ -1431,6 +1604,7 @@
    "CrossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
    "Usage": "None",
    "Description": "Paged collection of MessageTemplateItem items",
+   "Decorators": [],
    "Properties": [
     {
      "$id": "180",
@@ -1444,10 +1618,12 @@
       "ValueType": {
        "$ref": "165"
       },
-      "CrossLanguageDefinitionId": "TypeSpec.Array"
+      "CrossLanguageDefinitionId": "TypeSpec.Array",
+      "Decorators": []
      },
      "IsRequired": true,
-     "IsReadOnly": false
+     "IsReadOnly": false,
+     "Decorators": []
     },
     {
      "$id": "182",
@@ -1463,11 +1639,14 @@
        "$id": "184",
        "Kind": "url",
        "Name": "url",
-       "CrossLanguageDefinitionId": "TypeSpec.url"
-      }
+       "CrossLanguageDefinitionId": "TypeSpec.url",
+       "Decorators": []
+      },
+      "Decorators": []
      },
      "IsRequired": false,
-     "IsReadOnly": false
+     "IsReadOnly": false,
+     "Decorators": []
     }
    ]
   }
@@ -1514,7 +1693,8 @@
         "$id": "190",
         "Kind": "string",
         "Name": "string",
-        "CrossLanguageDefinitionId": "TypeSpec.string"
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
        },
        "Location": "Query",
        "IsApiVersion": true,
@@ -1532,7 +1712,9 @@
          "CrossLanguageDefinitionId": "TypeSpec.string"
         },
         "Value": "2024-02-01"
-       }
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "193",
@@ -1543,7 +1725,8 @@
         "$id": "194",
         "Kind": "string",
         "Name": "string",
-        "CrossLanguageDefinitionId": "TypeSpec.string"
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1551,7 +1734,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": false,
-       "Kind": "Method"
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "195",
@@ -1567,9 +1752,11 @@
          "$id": "197",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
         },
-        "CrossLanguageDefinitionId": "TypeSpec.utcDateTime"
+        "CrossLanguageDefinitionId": "TypeSpec.utcDateTime",
+        "Decorators": []
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1577,7 +1764,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": false,
-       "Kind": "Method"
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "198",
@@ -1593,8 +1782,10 @@
          "$id": "200",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
-        }
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Decorators": []
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1602,7 +1793,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": false,
-       "Kind": "Method"
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "201",
@@ -1616,9 +1809,11 @@
          "$id": "203",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
         },
-        "Value": "application/json"
+        "Value": "application/json",
+        "Decorators": []
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1626,7 +1821,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": true,
-       "Kind": "Constant"
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "204",
@@ -1639,9 +1836,11 @@
          "$id": "206",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
         },
-        "Value": "application/json"
+        "Value": "application/json",
+        "Decorators": []
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1649,7 +1848,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": true,
-       "Kind": "Constant"
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "207",
@@ -1665,7 +1866,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": true,
-       "Kind": "Method"
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       }
      ],
      "Responses": [
@@ -1702,8 +1905,10 @@
            "$id": "212",
            "Kind": "string",
            "Name": "string",
-           "CrossLanguageDefinitionId": "TypeSpec.string"
-          }
+           "CrossLanguageDefinitionId": "TypeSpec.string",
+           "Decorators": []
+          },
+          "Decorators": []
          }
         }
        ],
@@ -1723,7 +1928,8 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationMessagesClient.send"
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationMessagesClient.send",
+     "Decorators": []
     },
     {
      "$id": "213",
@@ -1744,7 +1950,8 @@
         "$id": "215",
         "Kind": "string",
         "Name": "string",
-        "CrossLanguageDefinitionId": "TypeSpec.string"
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
        },
        "Location": "Query",
        "IsApiVersion": true,
@@ -1762,7 +1969,9 @@
          "CrossLanguageDefinitionId": "TypeSpec.string"
         },
         "Value": "2024-02-01"
-       }
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "218",
@@ -1773,7 +1982,8 @@
         "$id": "219",
         "Kind": "string",
         "Name": "string",
-        "CrossLanguageDefinitionId": "TypeSpec.string"
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
        },
        "Location": "Path",
        "IsApiVersion": false,
@@ -1781,7 +1991,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": true,
-       "Kind": "Method"
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "220",
@@ -1797,8 +2009,10 @@
          "$id": "222",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
-        }
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Decorators": []
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1806,7 +2020,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": false,
-       "Kind": "Method"
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "223",
@@ -1819,9 +2035,11 @@
          "$id": "225",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
         },
-        "Value": "application/octet-stream"
+        "Value": "application/octet-stream",
+        "Decorators": []
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1829,7 +2047,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": true,
-       "Kind": "Constant"
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       }
      ],
      "Responses": [
@@ -1843,7 +2063,8 @@
         "Kind": "bytes",
         "Name": "bytes",
         "Encode": "base64",
-        "CrossLanguageDefinitionId": "TypeSpec.bytes"
+        "CrossLanguageDefinitionId": "TypeSpec.bytes",
+        "Decorators": []
        },
        "BodyMediaType": "Json",
        "Headers": [
@@ -1861,8 +2082,10 @@
            "$id": "230",
            "Kind": "string",
            "Name": "string",
-           "CrossLanguageDefinitionId": "TypeSpec.string"
-          }
+           "CrossLanguageDefinitionId": "TypeSpec.string",
+           "Decorators": []
+          },
+          "Decorators": []
          }
         },
         {
@@ -1877,9 +2100,11 @@
            "$id": "233",
            "Kind": "string",
            "Name": "string",
-           "CrossLanguageDefinitionId": "TypeSpec.string"
+           "CrossLanguageDefinitionId": "TypeSpec.string",
+           "Decorators": []
           },
-          "Value": "application/octet-stream"
+          "Value": "application/octet-stream",
+          "Decorators": []
          }
         }
        ],
@@ -1896,7 +2121,8 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "ClientForAcsMessages.NotificationMessagesClient.downloadMedia"
+     "CrossLanguageDefinitionId": "ClientForAcsMessages.NotificationMessagesClient.downloadMedia",
+     "Decorators": []
     }
    ],
    "Protocol": {
@@ -1906,7 +2132,8 @@
     {
      "$ref": "187"
     }
-   ]
+   ],
+   "Decorators": []
   },
   {
    "$id": "235",
@@ -1949,7 +2176,8 @@
         "$id": "240",
         "Kind": "string",
         "Name": "string",
-        "CrossLanguageDefinitionId": "TypeSpec.string"
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
        },
        "Location": "Query",
        "IsApiVersion": true,
@@ -1967,7 +2195,9 @@
          "CrossLanguageDefinitionId": "TypeSpec.string"
         },
         "Value": "2024-02-01"
-       }
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "243",
@@ -1983,8 +2213,10 @@
          "$id": "245",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
-        }
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Decorators": []
        },
        "Location": "Path",
        "IsApiVersion": false,
@@ -1992,7 +2224,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": true,
-       "Kind": "Method"
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "246",
@@ -2003,7 +2237,8 @@
         "$id": "247",
         "Kind": "int32",
         "Name": "int32",
-        "CrossLanguageDefinitionId": "TypeSpec.int32"
+        "CrossLanguageDefinitionId": "TypeSpec.int32",
+        "Decorators": []
        },
        "Location": "Query",
        "IsApiVersion": false,
@@ -2011,7 +2246,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": false,
-       "Kind": "Method"
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "248",
@@ -2027,8 +2264,10 @@
          "$id": "250",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
-        }
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Decorators": []
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -2036,7 +2275,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": false,
-       "Kind": "Method"
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "251",
@@ -2049,9 +2290,11 @@
          "$id": "253",
          "Kind": "string",
          "Name": "string",
-         "CrossLanguageDefinitionId": "TypeSpec.string"
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
         },
-        "Value": "application/json"
+        "Value": "application/json",
+        "Decorators": []
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -2059,7 +2302,9 @@
        "IsEndpoint": false,
        "Explode": false,
        "IsRequired": true,
-       "Kind": "Constant"
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
       }
      ],
      "Responses": [
@@ -2087,8 +2332,10 @@
            "$id": "257",
            "Kind": "string",
            "Name": "string",
-           "CrossLanguageDefinitionId": "TypeSpec.string"
-          }
+           "CrossLanguageDefinitionId": "TypeSpec.string",
+           "Decorators": []
+          },
+          "Decorators": []
          }
         }
        ],
@@ -2110,7 +2357,8 @@
      },
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateClient.listTemplates"
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateClient.listTemplates",
+     "Decorators": []
     }
    ],
    "Protocol": {
@@ -2120,7 +2368,8 @@
     {
      "$ref": "237"
     }
-   ]
+   ],
+   "Decorators": []
   }
  ],
  "Auth": {

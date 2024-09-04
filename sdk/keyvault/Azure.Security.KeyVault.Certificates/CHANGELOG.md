@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- The default service version is now "V7_6_Preview_1".
+
 ## 4.6.0 (2024-02-14)
 
 Changes from both the last release and the last beta include:
@@ -17,7 +19,7 @@ Changes from both the last release and the last beta include:
 ### Features Added
 
 - Added `CertificateProperties.X509ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
-  `CertificateProperties.X509Thumbprint` has been hidden but is still available.
+    `CertificateProperties.X509Thumbprint` has been hidden but is still available.
 
 ### Breaking Changes
 
@@ -46,7 +48,7 @@ Changes from both the last release and the last beta include:
 ### Features Added
 
 - Added `CertificateProperties.X509ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
-  `CertificateProperties.X509Thumbprint` has been hidden but is still available.
+    `CertificateProperties.X509Thumbprint` has been hidden but is still available.
 
 ### Breaking Changes
 
@@ -94,8 +96,8 @@ Changes from both the last release and the last beta include:
 ### Breaking Changes
 
 - Verify the challenge resource matches the vault domain.
-  This should affect few customers who can set `CertificateClientOptions.DisableChallengeResourceVerification` to `true` to disable.
-  See https://aka.ms/azsdk/blog/vault-uri for more information.
+    This should affect few customers who can set `CertificateClientOptions.DisableChallengeResourceVerification` to `true` to disable.
+    See <https://aka.ms/azsdk/blog/vault-uri> for more information.
 
 ## 4.3.0 (2022-03-24)
 

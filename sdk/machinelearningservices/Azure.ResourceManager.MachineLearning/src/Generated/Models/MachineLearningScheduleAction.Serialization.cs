@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "CreateJob": return MachineLearningJobScheduleAction.DeserializeMachineLearningJobScheduleAction(element, options);
                     case "CreateMonitor": return CreateMonitorAction.DeserializeCreateMonitorAction(element, options);
-                    case "ImportData": return ImportDataAction.DeserializeImportDataAction(element, options);
                     case "InvokeBatchEndpoint": return MachineLearningEndpointScheduleAction.DeserializeMachineLearningEndpointScheduleAction(element, options);
                 }
             }

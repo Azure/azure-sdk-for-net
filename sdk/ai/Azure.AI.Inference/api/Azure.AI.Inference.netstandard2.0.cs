@@ -12,6 +12,8 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.ChatResponseMessage ChatResponseMessage(Azure.AI.Inference.ChatRole role = default(Azure.AI.Inference.ChatRole), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.ChatCompletionsToolCall> toolCalls = null) { throw null; }
         public static Azure.AI.Inference.CompletionsUsage CompletionsUsage(int completionTokens = 0, int promptTokens = 0, int totalTokens = 0) { throw null; }
         public static Azure.AI.Inference.ModelInfo ModelInfo(string modelName = null, Azure.AI.Inference.ModelType modelType = default(Azure.AI.Inference.ModelType), string modelProviderName = null) { throw null; }
+        public static Azure.AI.Inference.StreamingChatChoiceUpdate StreamingChatChoiceUpdate(int index = 0, Azure.AI.Inference.CompletionsFinishReason? finishReason = default(Azure.AI.Inference.CompletionsFinishReason?), Azure.AI.Inference.ChatResponseMessage delta = null) { throw null; }
+        public static Azure.AI.Inference.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), string model = null, Azure.AI.Inference.CompletionsUsage usage = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.StreamingChatChoiceUpdate> choices = null) { throw null; }
     }
     public partial class ChatChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatChoice>
     {
@@ -465,10 +467,23 @@ namespace Azure.AI.Inference
         public static bool operator !=(Azure.AI.Inference.ModelType left, Azure.AI.Inference.ModelType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StreamingChatCompletionsUpdate
+    public partial class StreamingChatChoiceUpdate : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.StreamingChatChoiceUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.StreamingChatChoiceUpdate>
+    {
+        internal StreamingChatChoiceUpdate() { }
+        public Azure.AI.Inference.ChatResponseMessage Delta { get { throw null; } }
+        public Azure.AI.Inference.CompletionsFinishReason? FinishReason { get { throw null; } }
+        public int Index { get { throw null; } }
+        Azure.AI.Inference.StreamingChatChoiceUpdate System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.StreamingChatChoiceUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.StreamingChatChoiceUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.StreamingChatChoiceUpdate System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.StreamingChatChoiceUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.StreamingChatChoiceUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.StreamingChatChoiceUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StreamingChatCompletionsUpdate : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.StreamingChatCompletionsUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.StreamingChatCompletionsUpdate>
     {
         internal StreamingChatCompletionsUpdate() { }
         public string AuthorName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Inference.StreamingChatChoiceUpdate> Choices { get { throw null; } }
         public string ContentUpdate { get { throw null; } }
         public System.DateTimeOffset Created { get { throw null; } }
         public Azure.AI.Inference.CompletionsFinishReason? FinishReason { get { throw null; } }
@@ -478,6 +493,12 @@ namespace Azure.AI.Inference
         public string Model { get { throw null; } }
         public Azure.AI.Inference.ChatRole? Role { get { throw null; } }
         public Azure.AI.Inference.StreamingToolCallUpdate ToolCallUpdate { get { throw null; } }
+        public Azure.AI.Inference.CompletionsUsage Usage { get { throw null; } }
+        Azure.AI.Inference.StreamingChatCompletionsUpdate System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.StreamingChatCompletionsUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.StreamingChatCompletionsUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.StreamingChatCompletionsUpdate System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.StreamingChatCompletionsUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.StreamingChatCompletionsUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.StreamingChatCompletionsUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class StreamingFunctionToolCallUpdate : Azure.AI.Inference.StreamingToolCallUpdate
     {

@@ -8,6 +8,7 @@ using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,42 +38,78 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             {
                 case AddSocketToRoomAction addToRoom:
                     {
+                        AssertNotNullOrEmpty(addToRoom.Room, nameof(addToRoom.Room));
+                        AssertNotNullOrEmpty(addToRoom.Namespace, nameof(addToRoom.Namespace));
+                        AssertNotNullOrEmpty(addToRoom.SocketId, nameof(addToRoom.SocketId));
+
                         if (!_socketLifetimeStore.TryFindConnectionIdBySocketId(addToRoom.SocketId, out var connId, out var @namespace))
                         {
-                            throw new InvalidOperationException($"SocketId {addToRoom.SocketId} not found.");
+                            await SendToService(new AddConnectionsToGroupsAction
+                            {
+                                Groups = new string[] { Utilities.GetGroupNameByNamespaceRoom(addToRoom.Namespace, addToRoom.Room) },
+                                // SocketId is also a room name.
+                                Filter = Utilities.GenerateRoomFilter(addToRoom.Namespace, addToRoom.SocketId, false),
+                            }, cancellationToken).ConfigureAwait(false);
                         }
-                        await SendToService(new AddConnectionToGroupAction
+                        else
                         {
-                            ConnectionId = connId,
-                            Group = Utilities.GetGroupNameByNamespaceRoom(@namespace, addToRoom.Room),
-                        }, cancellationToken).ConfigureAwait(false);
+                            // Use AddConnectionToGroup is faster if we can.
+                            await SendToService(new AddConnectionToGroupAction
+                            {
+                                ConnectionId = connId,
+                                Group = Utilities.GetGroupNameByNamespaceRoom(@namespace, addToRoom.Room),
+                            }, cancellationToken).ConfigureAwait(false);
+                        }
                         break;
                     }
                 case RemoveSocketFromRoomAction removeFromRoom:
                     {
+                        AssertNotNullOrEmpty(removeFromRoom.Room, nameof(removeFromRoom.Room));
+                        AssertNotNullOrEmpty(removeFromRoom.Namespace, nameof(removeFromRoom.Namespace));
+                        AssertNotNullOrEmpty(removeFromRoom.SocketId, nameof(removeFromRoom.SocketId));
+
                         if (!_socketLifetimeStore.TryFindConnectionIdBySocketId(removeFromRoom.SocketId, out var connId, out var @namespace))
                         {
-                            break;
+                            await SendToService(new RemoveConnectionsFromGroupsAction
+                            {
+                                Groups = new string[] { Utilities.GetGroupNameByNamespaceRoom(removeFromRoom.Namespace, removeFromRoom.Room) },
+                                // SocketId is also a room name.
+                                Filter = Utilities.GenerateRoomFilter(removeFromRoom.Namespace, removeFromRoom.SocketId, false),
+                            }, cancellationToken).ConfigureAwait(false);
                         }
-                        await SendToService(new RemoveConnectionFromGroupAction
+                        else
                         {
-                            ConnectionId = connId,
-                            Group = Utilities.GetGroupNameByNamespaceRoom(@namespace, removeFromRoom.Room),
-                        }, cancellationToken).ConfigureAwait(false);
+                            await SendToService(new RemoveConnectionFromGroupAction
+                            {
+                                ConnectionId = connId,
+                                Group = Utilities.GetGroupNameByNamespaceRoom(@namespace, removeFromRoom.Room),
+                            }, cancellationToken).ConfigureAwait(false);
+                        }
                         break;
                     }
                 case DisconnectSocketsAction disconnect:
                     {
+                        AssertNotNullOrEmpty(disconnect.Namespace, nameof(disconnect.Namespace));
+
+                        var data = string.Empty;
+                        if (disconnect.CloseUnderlyingConnection)
+                        {
+                            data = JsonConvert.SerializeObject(new { close = true });
+                        }
+
                         await SendToService(new SendToAllAction
                         {
-                            Data = BinaryData.FromBytes(EngineIOProtocol.EncodePacket(new SocketIOPacket(SocketIOPacketType.Disconnect, disconnect.Namespace, string.Empty))),
+                            Data = BinaryData.FromBytes(EngineIOProtocol.EncodePacket(new SocketIOPacket(SocketIOPacketType.Disconnect, disconnect.Namespace, data))),
                             DataType = WebPubSubDataType.Text,
-                            Filter = GenerateRoomFilter(disconnect.Namespace, disconnect.Rooms, null, true),
+                            Filter = Utilities.GenerateRoomFilter(disconnect.Namespace, disconnect.Rooms, null, true),
                         }, cancellationToken).ConfigureAwait(false);
                         break;
                     }
                 case SendToNamespaceAction sendToNamespace:
                     {
+                        AssertNotNullOrEmpty(sendToNamespace.Namespace, nameof(sendToNamespace.Namespace));
+                        AssertNotNullOrEmpty(sendToNamespace.EventName, nameof(sendToNamespace.EventName));
+
                         var dataList = GetData(sendToNamespace.EventName, sendToNamespace.Parameters);
                         var data = EngineIOProtocol.EncodePacket(new SocketIOPacket(SocketIOPacketType.Event,
                             sendToNamespace.Namespace,
@@ -82,16 +119,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                             Data = BinaryData.FromBytes(data),
                             DataType = WebPubSubDataType.Text,
                             Group = Utilities.GetGroupNameByNamespace(sendToNamespace.Namespace),
-                            Filter = GenerateRoomFilter(sendToNamespace.Namespace, null, sendToNamespace.ExceptRooms, false),
+                            Filter = Utilities.GenerateRoomFilter(sendToNamespace.Namespace, null, sendToNamespace.ExceptRooms, false),
                         }, cancellationToken).ConfigureAwait(false);
                         break;
                     }
                 case SendToRoomsAction sendToRoom:
                     {
-                        if (sendToRoom.Rooms == null || sendToRoom.Rooms.Count == 0)
-                        {
-                            throw new ArgumentException("Rooms cannot be empty.");
-                        }
+                        AssertNotNullOrEmpty(sendToRoom.Namespace, nameof(sendToRoom.Namespace));
+                        AssertNotNullOrEmpty(sendToRoom.Rooms, nameof(sendToRoom.Rooms));
+                        AssertNotNullOrEmpty(sendToRoom.EventName, nameof(sendToRoom.EventName));
 
                         var dataList = GetData(sendToRoom.EventName, sendToRoom.Parameters);
                         var data = EngineIOProtocol.EncodePacket(new SocketIOPacket(SocketIOPacketType.Event,
@@ -105,7 +141,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                                 Data = BinaryData.FromBytes(data),
                                 DataType = WebPubSubDataType.Text,
                                 Group = Utilities.GetGroupNameByNamespaceRoom(sendToRoom.Namespace, sendToRoom.Rooms[0]),
-                                Filter = GenerateRoomFilter(sendToRoom.Namespace, null, sendToRoom.ExceptRooms, false),
+                                Filter = Utilities.GenerateRoomFilter(sendToRoom.Namespace, null, sendToRoom.ExceptRooms, false),
                             }, cancellationToken).ConfigureAwait(false);
                             break;
                         }
@@ -115,13 +151,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                             {
                                 Data = BinaryData.FromBytes(data),
                                 DataType = WebPubSubDataType.Text,
-                                Filter = GenerateRoomFilter(sendToRoom.Namespace, sendToRoom.Rooms, sendToRoom.ExceptRooms, true),
+                                Filter = Utilities.GenerateRoomFilter(sendToRoom.Namespace, sendToRoom.Rooms, sendToRoom.ExceptRooms, true),
                             }, cancellationToken).ConfigureAwait(false);
                             break;
                         }
                     }
                 case SendToSocketAction sendToSocket:
                     {
+                        AssertNotNullOrEmpty(sendToSocket.Namespace, nameof(sendToSocket.Namespace));
+                        AssertNotNullOrEmpty(sendToSocket.EventName, nameof(sendToSocket.EventName));
+                        AssertNotNullOrEmpty(sendToSocket.SocketId, nameof(sendToSocket.SocketId));
+
                         var dataList = GetData(sendToSocket.EventName, sendToSocket.Parameters);
                         var data = EngineIOProtocol.EncodePacket(new SocketIOPacket(SocketIOPacketType.Event,
                             sendToSocket.Namespace,
@@ -191,67 +231,40 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                 case CloseGroupConnectionsAction closeGroupConnections:
                     await _service.Client.CloseGroupConnectionsAsync(closeGroupConnections.Group, closeGroupConnections.Excluded, closeGroupConnections.Reason, requestContext).ConfigureAwait(false);
                     break;
+                case AddConnectionsToGroupsAction addConnectionsToGroupsAction:
+                    await _service.Client.AddConnectionsToGroupsAsync(addConnectionsToGroupsAction.Groups, addConnectionsToGroupsAction.Filter, requestContext).ConfigureAwait(false);
+                    break;
+                case RemoveConnectionsFromGroupsAction removeConnectionsFromGroupsAction:
+                    await _service.Client.RemoveConnectionsFromGroupsAsync(removeConnectionsFromGroupsAction.Groups, removeConnectionsFromGroupsAction.Filter, requestContext).ConfigureAwait(false);
+                    break;
                 default:
                     throw new ArgumentException($"Not supported WebPubSubOperation: {nameof(action)}.");
             }
         }
-
-        private string GenerateRoomFilter(string @namespace, string room, bool containsNamespace)
-        {
-            return GenerateRoomFilter(@namespace, new string[] { room }, null, containsNamespace);
-        }
-
-        private string GenerateExceptRoomFilter(string @namespace, string exceptRoom, bool containsNamespace)
-        {
-            return GenerateRoomFilter(@namespace, null, new string[] { exceptRoom }, containsNamespace);
-        }
-
-        private string GenerateRoomFilter(string @namespace, IList<string> rooms, IList<string> exceptRooms, bool containsNamespace)
-        {
-            var filter = containsNamespace ? $"'{Utilities.GetGroupNameByNamespace(@namespace)}' in groups" : string.Empty;
-            if ((rooms == null || rooms.Count == 0) && (exceptRooms == null || exceptRooms.Count == 0))
-            {
-                return filter;
-            }
-
-            if (rooms != null && rooms.Count > 0)
-            {
-                filter = $"'{Utilities.GetGroupNameByNamespaceRoom(@namespace, rooms[0])}' in groups";
-                for (int i = 1; i < rooms.Count; i++)
-                {
-                    filter += $" or '{Utilities.GetGroupNameByNamespaceRoom(@namespace, rooms[i])}' in groups";
-                }
-            }
-
-            var denyFilter = string.Empty;
-            if (exceptRooms != null && exceptRooms.Count > 0)
-            {
-                denyFilter = $"not ('{Utilities.GetGroupNameByNamespaceRoom(@namespace, exceptRooms[0])}' in groups)";
-                for (int i = 1; i < exceptRooms.Count; i++)
-                {
-                    denyFilter += $" and not ('{Utilities.GetGroupNameByNamespaceRoom(@namespace, exceptRooms[i])}' in groups)";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(filter) && !string.IsNullOrEmpty(denyFilter))
-            {
-                return $"{filter} and {denyFilter}";
-            }
-            else if (!string.IsNullOrEmpty(filter))
-            {
-                return filter;
-            }
-            else
-            {
-                return denyFilter;
-            }
-        }
-
         private IList<object> GetData(string eventName, IEnumerable<object> arguments)
         {
             var rst = new List<object> { eventName };
-            rst.AddRange(arguments);
+            if (arguments != null)
+            {
+                rst.AddRange(arguments);
+            }
             return rst;
+        }
+
+        private void AssertNotNullOrEmpty(string value, string name)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException($"{name} cannot be null or empty.");
+            }
+        }
+
+        private void AssertNotNullOrEmpty(IEnumerable<string> value, string name)
+        {
+            if (value == null || value.Count() == 0)
+            {
+                throw new ArgumentException($"{name} cannot be null or empty.");
+            }
         }
     }
 }

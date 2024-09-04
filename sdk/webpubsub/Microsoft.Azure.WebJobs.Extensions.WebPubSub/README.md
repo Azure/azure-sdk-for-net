@@ -94,18 +94,15 @@ public static class WebPubSubOutputBindingFunction
 ### Functions that uses Web PubSub trigger
 
 ```C# Snippet:WebPubSubTriggerFunction
-public static class WebPubSubTriggerFunction
+[FunctionName("WebPubSubTriggerFunction")]
+public static void Run(
+    ILogger logger,
+    [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
+    string data,
+    WebPubSubDataType dataType)
 {
-    [FunctionName("WebPubSubTriggerFunction")]
-    public static void Run(
-        ILogger logger,
-        [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
-        string data,
-        WebPubSubDataType dataType)
-    {
-        logger.LogInformation("Request from: {user}, data: {data}, dataType: {dataType}",
-            request.ConnectionContext.UserId, data, dataType);
-    }
+    logger.LogInformation("Request from: {user}, data: {data}, dataType: {dataType}",
+        request.ConnectionContext.UserId, data, dataType);
 }
 ```
 
@@ -119,6 +116,31 @@ public static class WebPubSubTriggerReturnValueFunction
         [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request)
     {
         return request.CreateResponse(BinaryData.FromString("ack"), WebPubSubDataType.Text);
+    }
+}
+```
+
+### Functions that handles MQTT Client "connect" event
+```C# Snippet:MqttConnectEventTriggerFunction
+[FunctionName("mqttConnect")]
+public static WebPubSubEventResponse Run(
+        [WebPubSubTrigger("hub", WebPubSubEventType.System, "connect", ClientProtocols = WebPubSubTriggerAcceptedClientProtocols.Mqtt)] MqttConnectEventRequest request,
+        ILogger log)
+{
+    if (request.ConnectionContext.ConnectionId != "attacker")
+    {
+        return request.CreateMqttResponse(request.ConnectionContext.UserId, Array.Empty<string>(), new string[] { "webpubsub.joinLeaveGroup.group1", "webpubsub.sendToGroup.group2" });
+    }
+    else
+    {
+        if (request.Mqtt.ProtocolVersion == MqttProtocolVersion.V311)
+        {
+            return request.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode.NotAuthorized);
+        }
+        else
+        {
+            return request.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode.NotAuthorized);
+        }
     }
 }
 ```

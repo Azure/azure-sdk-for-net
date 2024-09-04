@@ -49,8 +49,9 @@ namespace Azure.Maps.Search
             var endpoint = new Uri("https://atlas.microsoft.com");
             var options = new MapsSearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
+            string acceptLanguage = options.SearchLanguage == null ? null : options.SearchLanguage.ToString();
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
-            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version, options.SearchLanguage.ToString());
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version, acceptLanguage);
         }
 
         /// <summary> Initializes a new instance of MapsSearchClient. </summary>

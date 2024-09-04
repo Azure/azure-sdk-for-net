@@ -28,11 +28,8 @@ namespace Azure.ResourceManager.Fabric
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Tags))
@@ -120,10 +117,6 @@ namespace Azure.ResourceManager.Fabric
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = FabricCapacityProperties.DeserializeFabricCapacityProperties(property.Value, options);
                     continue;
                 }

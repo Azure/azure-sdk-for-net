@@ -146,30 +146,26 @@ rename-mapping:
   DeviceState: HciEdgeDeviceState
   EceSecrets.AzureStackLCMUserCredential: AzureStackLcmUserCredential
   EceSecrets.DefaultARBApplication: DefaultArbApplication
-  HostNetwork: HciClusterHostNetwork
-  InfrastructureNetwork: HciClusterInfrastructureNetwork
-  Intents: HciClusterIntents
-  IpPools: HciClusterIPPools
+  InfrastructureNetwork: DeploymentSettingInfrastructureNetwork
+  IpPools: DeploymentSettingIPPools
   LogCollectionRequestProperties: LogCollectionContentProperties
-  NetworkController: HciClusterNetworkController
+  NetworkController: DeploymentSettingNetworkController
   NicDetail: HciEdgeDeviceNicDetail
   NicDetail.ip4Address: IPv4Address
   HciNicDetail.ip4Address: IPv4Address
-  Observability: HciClusterObservability
+  Observability: DeploymentSettingObservability
   Observability.streamingDataClient: IsStreamingDataClientEnabled
   Observability.euLocation: IsEULocation
   Observability.episodicDataUpload: IsEpisodicDataUploadEnabled
-  PhysicalNodes: HciClusterPhysicalNodes
-  QosPolicyOverrides: HciClusterQosPolicyOverrides
+  PhysicalNodes: DeploymentSettingPhysicalNodes
+  QosPolicyOverrides: DeploymentSettingQosPolicyOverrides
   RemoteSupportRequestProperties: RemoteSupportContentProperties
   RemoteSupportNodeSettings.arcResourceId: -|arm-id
   RemoteSupportProperties.expirationTimeStamp: ExpireOn
   RemoteSupportRequestProperties.expirationTimeStamp: ExpireOn
   ReportedProperties: HciEdgeDeviceReportedProperties
-  ScaleUnits: HciClusterScaleUnits
-  Storage: HciClusterStorage
-  StorageAdapterIPInfo: HciClusterStorageAdapterIPInfo
-  StorageNetworks: HciClusterStorageNetworks
+  ScaleUnits: DeploymentSettingScaleUnits
+  Storage: DeploymentSettingStorage
   SwitchDetail: HciEdgeDeviceSwitchDetail
   SwitchExtension: HciEdgeSwitchExtension
   SwitchExtension.extensionEnabled: IsExtensionEnabled
@@ -209,8 +205,21 @@ directive:
   - from: edgeDevices.json
     where: $.definitions
     transform: >
-      $.HostNetwork.properties.intents.items['$ref'] = "./deploymentSettings.json#/definitions/Intents";
-      $.HciNetworkProfile.properties.hostNetwork['$ref'] = "./deploymentSettings.json#/definitions/HostNetwork";
       $.ErrorDetail['x-ms-client-name'] = 'HciValidationFailureDetail';
       $.Extension['x-ms-client-name'] = 'HciEdgeDeviceArcExtension';
+      $.Intents['x-ms-client-name'] = 'HciEdgeDeviceIntents';
+      $.HostNetwork['x-ms-client-name'] = 'HciEdgeDeviceHostNetwork';
+      $.StorageNetworks['x-ms-client-name'] = 'HciEdgeDeviceStorageNetworks';
+      $.StorageAdapterIPInfo['x-ms-client-name'] = 'HciEdgeDeviceStorageAdapterIPInfo';
+      $.AdapterPropertyOverrides['x-ms-client-name'] = 'HciEdgeDeviceAdapterPropertyOverrides';
+      $.VirtualSwitchConfigurationOverrides['x-ms-client-name'] = 'HciEdgeDeviceVirtualSwitchConfigurationOverrides';
+  - from: deploymentSettings.json
+    where: $.definitions
+    transform: >
+      $.Intents['x-ms-client-name'] = 'DeploymentSettingIntents';
+      $.HostNetwork['x-ms-client-name'] = 'DeploymentSettingHostNetwork';
+      $.StorageNetworks['x-ms-client-name'] = 'DeploymentSettingStorageNetworks';
+      $.StorageAdapterIPInfo['x-ms-client-name'] = 'DeploymentSettingStorageAdapterIPInfo';
+      $.AdapterPropertyOverrides['x-ms-client-name'] = 'DeploymentSettingAdapterPropertyOverrides';
+      $.VirtualSwitchConfigurationOverrides['x-ms-client-name'] = 'DeploymentSettingVirtualSwitchConfigurationOverrides';
 ```

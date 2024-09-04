@@ -15,13 +15,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
     public class DisconnectSocketsAction : SocketIOAction
     {
         /// <summary>
-        /// Target namespace.
-        /// </summary>
-        public string Namespace { get; set; }
-
-        /// <summary>
         /// Optional target rooms. If not set, disconnect the whole namespace.
         /// </summary>
         public IList<string> Rooms { get; set; } = new List<string>();
+
+        /// <summary>
+        /// Whether to close the underlying client side Engine.IO connection.
+        /// </summary>
+        public bool CloseUnderlyingConnection { get; set; } = false;
     }
 }

@@ -239,6 +239,18 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MarketplaceSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MarketplaceSubscriptionResource"/> object. </returns>
+        public virtual MarketplaceSubscriptionResource GetMarketplaceSubscriptionResource(ResourceIdentifier id)
+        {
+            MarketplaceSubscriptionResource.ValidateResourceId(id);
+            return new MarketplaceSubscriptionResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="MachineLearningRegistryModelContainerResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningRegistryModelContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningRegistryModelContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -395,18 +407,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningLabelingJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningLabelingJobResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningLabelingJobResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningLabelingJobResource"/> object. </returns>
-        public virtual MachineLearningLabelingJobResource GetMachineLearningLabelingJobResource(ResourceIdentifier id)
-        {
-            MachineLearningLabelingJobResource.ValidateResourceId(id);
-            return new MachineLearningLabelingJobResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="MachineLearningOnlineEndpointResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningOnlineEndpointResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningOnlineEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -443,6 +443,18 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ServerlessEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerlessEndpointResource.CreateResourceIdentifier" /> to create a <see cref="ServerlessEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServerlessEndpointResource"/> object. </returns>
+        public virtual ServerlessEndpointResource GetServerlessEndpointResource(ResourceIdentifier id)
+        {
+            ServerlessEndpointResource.ValidateResourceId(id);
+            return new ServerlessEndpointResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="MachineLearningRegistryResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningRegistryResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningRegistryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -476,6 +488,90 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             MachineLearningWorkspaceConnectionResource.ValidateResourceId(id);
             return new MachineLearningWorkspaceConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceConnectionDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceConnectionDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceConnectionDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceConnectionDeploymentResource"/> object. </returns>
+        public virtual WorkspaceConnectionDeploymentResource GetWorkspaceConnectionDeploymentResource(ResourceIdentifier id)
+        {
+            WorkspaceConnectionDeploymentResource.ValidateResourceId(id);
+            return new WorkspaceConnectionDeploymentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceEndpointDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceEndpointDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceEndpointDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceEndpointDeploymentResource"/> object. </returns>
+        public virtual WorkspaceEndpointDeploymentResource GetWorkspaceEndpointDeploymentResource(ResourceIdentifier id)
+        {
+            WorkspaceEndpointDeploymentResource.ValidateResourceId(id);
+            return new WorkspaceEndpointDeploymentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RaiBlocklistPropertiesBasicResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RaiBlocklistPropertiesBasicResource.CreateResourceIdentifier" /> to create a <see cref="RaiBlocklistPropertiesBasicResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RaiBlocklistPropertiesBasicResource"/> object. </returns>
+        public virtual RaiBlocklistPropertiesBasicResource GetRaiBlocklistPropertiesBasicResource(ResourceIdentifier id)
+        {
+            RaiBlocklistPropertiesBasicResource.ValidateResourceId(id);
+            return new RaiBlocklistPropertiesBasicResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RaiBlocklistItemPropertiesBasicResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RaiBlocklistItemPropertiesBasicResource.CreateResourceIdentifier" /> to create a <see cref="RaiBlocklistItemPropertiesBasicResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RaiBlocklistItemPropertiesBasicResource"/> object. </returns>
+        public virtual RaiBlocklistItemPropertiesBasicResource GetRaiBlocklistItemPropertiesBasicResource(ResourceIdentifier id)
+        {
+            RaiBlocklistItemPropertiesBasicResource.ValidateResourceId(id);
+            return new RaiBlocklistItemPropertiesBasicResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceConnectionRaiPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceConnectionRaiPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceConnectionRaiPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceConnectionRaiPolicyResource"/> object. </returns>
+        public virtual WorkspaceConnectionRaiPolicyResource GetWorkspaceConnectionRaiPolicyResource(ResourceIdentifier id)
+        {
+            WorkspaceConnectionRaiPolicyResource.ValidateResourceId(id);
+            return new WorkspaceConnectionRaiPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceEndpointRaiPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceEndpointRaiPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceEndpointRaiPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceEndpointRaiPolicyResource"/> object. </returns>
+        public virtual WorkspaceEndpointRaiPolicyResource GetWorkspaceEndpointRaiPolicyResource(ResourceIdentifier id)
+        {
+            WorkspaceEndpointRaiPolicyResource.ValidateResourceId(id);
+            return new WorkspaceEndpointRaiPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EndpointResourcePropertiesBasicResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EndpointResourcePropertiesBasicResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResourcePropertiesBasicResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EndpointResourcePropertiesBasicResource"/> object. </returns>
+        public virtual EndpointResourcePropertiesBasicResource GetEndpointResourcePropertiesBasicResource(ResourceIdentifier id)
+        {
+            EndpointResourcePropertiesBasicResource.ValidateResourceId(id);
+            return new EndpointResourcePropertiesBasicResource(Client, id);
         }
 
         /// <summary>
