@@ -11,6 +11,8 @@
 
 ### Bugs Fixed
 
+- Fix HDInsight GetHDInsightClustersAsync Exceptipn: Value cannot be an empty string. (Parameter 'resourceId'). Issue link: https://github.com/Azure/azure-sdk-for-net/issues/45709
+
 ### Other Changes
 
 ## 1.2.0-beta.2 (2023-11-29)

@@ -173,12 +173,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (property.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        resourceId = null;
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    DeserializeResourceId(property, ref resourceId);
                     continue;
                 }
                 if (property.NameEquals("msiResourceId"u8))
