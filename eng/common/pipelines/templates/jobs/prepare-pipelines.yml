@@ -148,6 +148,7 @@ jobs:
           --set-managed-variables
           --debug
       displayName: 'Generate ci pipelines for: ${{ parameters.Repository }}'
+      continueOnError: true
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'opensource-api-connection'
@@ -169,6 +170,7 @@ jobs:
           --debug
           --variablegroups $(InternalVariableGroups) $(TestVariableGroups)
       displayName: 'Generate release pipelines for: ${{ parameters.Repository }}'
+      continueOnError: true
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'opensource-api-connection'
@@ -191,6 +193,7 @@ jobs:
           --variablegroups $(TestVariableGroups)
       displayName: 'Generate test pipelines for: ${{ parameters.Repository }}'
       condition: and(succeeded(), ne(variables['TestVariableGroups'],''))
+      continueOnError: true
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'opensource-api-connection'
@@ -213,6 +216,7 @@ jobs:
           --variablegroups $(TestVariableGroups)
       displayName: 'Generate weekly test pipelines (multi-cloud) for: ${{ parameters.Repository }}'
       condition: and(succeeded(), ne(variables['TestVariableGroups'],''))
+      continueOnError: true
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'opensource-api-connection'
@@ -235,3 +239,4 @@ jobs:
           --variablegroups $(InternalVariableGroups) $(TestVariableGroups)
       displayName: 'Generate weekly unified test pipelines (multi-cloud) for: ${{ parameters.Repository }}'
       condition: and(succeeded(), ne(variables['GenerateUnifiedWeekly'],''))
+      continueOnError: true
