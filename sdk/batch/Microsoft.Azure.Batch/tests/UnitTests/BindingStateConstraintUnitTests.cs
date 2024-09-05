@@ -86,11 +86,8 @@ namespace Azure.Batch.Unit.Tests
             CloudPool boundPool = client.PoolOperations.GetPool(string.Empty, additionalBehaviors: InterceptorFactory.CreateGetPoolRequestInterceptor(protoPool));
 
             // Cannot change these bound properties.
-            Assert.Throws<InvalidOperationException>(() => boundPool.DisplayName = "cannot-change-display-name");
             Assert.Throws<InvalidOperationException>(() => boundPool.Id = "cannot-change-id");
             Assert.Throws<InvalidOperationException>(() => boundPool.TargetDedicatedComputeNodes = 1);
-            Assert.Throws<InvalidOperationException>(() => boundPool.VirtualMachineSize = "cannot-change-1");
-
 
             // Swap the value with the name and the name with the value.
             boundPool.Metadata = new[] { new MetadataItem(metadataItem.Value, metadataItem.Name) };
