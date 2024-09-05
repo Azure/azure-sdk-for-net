@@ -20,20 +20,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageSetting"/>. </summary>
-        /// <param name="imageType"> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </param>
-        /// <param name="reference"> Image reference URL. </param>
+        /// <param name="imageType"> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML Environment images (custom and curated). </param>
+        /// <param name="reference"> Image reference URL if type is docker. Environment name if type is azureml. </param>
+        /// <param name="version"> Version of image being used. If latest then skip this field. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ImageSetting(ImageType? imageType, string reference, IDictionary<string, BinaryData> additionalProperties)
+        internal ImageSetting(ImageType? imageType, string reference, string version, IDictionary<string, BinaryData> additionalProperties)
         {
             ImageType = imageType;
             Reference = reference;
+            Version = version;
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </summary>
+        /// <summary> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML Environment images (custom and curated). </summary>
         public ImageType? ImageType { get; set; }
-        /// <summary> Image reference URL. </summary>
+        /// <summary> Image reference URL if type is docker. Environment name if type is azureml. </summary>
         public string Reference { get; set; }
+        /// <summary> Version of image being used. If latest then skip this field. </summary>
+        public string Version { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>

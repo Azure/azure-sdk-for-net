@@ -60,35 +60,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("instanceType");
                 }
             }
-            if (Optional.IsCollectionDefined(Locations))
-            {
-                if (Locations != null)
-                {
-                    writer.WritePropertyName("locations"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Locations)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("locations");
-                }
-            }
-            if (Optional.IsDefined(MaxInstanceCount))
-            {
-                if (MaxInstanceCount != null)
-                {
-                    writer.WritePropertyName("maxInstanceCount"u8);
-                    writer.WriteNumberValue(MaxInstanceCount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("maxInstanceCount");
-                }
-            }
             if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
@@ -161,8 +132,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string shmSize = default;
             int? instanceCount = default;
             string instanceType = default;
-            IList<string> locations = default;
-            int? maxInstanceCount = default;
             IDictionary<string, BinaryData> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -202,31 +171,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locations"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        locations = null;
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    locations = array;
-                    continue;
-                }
-                if (property.NameEquals("maxInstanceCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        maxInstanceCount = null;
-                        continue;
-                    }
-                    maxInstanceCount = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -258,8 +202,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningJobResourceConfiguration(
                 instanceCount,
                 instanceType,
-                locations ?? new ChangeTrackingList<string>(),
-                maxInstanceCount,
                 properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 serializedAdditionalRawData,
                 dockerArgs,

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Frequency = frequency;
             Interval = interval;
-            TriggerType = MachineLearningTriggerType.Recurrence;
+            TriggerType = TriggerType.Recurrence;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceTrigger"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="frequency"> [Required] The frequency to trigger schedule. </param>
         /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
-        internal MachineLearningRecurrenceTrigger(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningRecurrenceFrequency frequency, int interval, MachineLearningRecurrenceSchedule schedule) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
+        internal MachineLearningRecurrenceTrigger(string endTime, string startTime, string timeZone, TriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningRecurrenceFrequency frequency, int interval, MachineLearningRecurrenceSchedule schedule) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
         {
             Frequency = frequency;
             Interval = interval;

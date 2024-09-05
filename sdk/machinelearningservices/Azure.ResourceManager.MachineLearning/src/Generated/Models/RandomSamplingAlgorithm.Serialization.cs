@@ -26,18 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Logbase))
-            {
-                if (Logbase != null)
-                {
-                    writer.WritePropertyName("logbase"u8);
-                    writer.WriteStringValue(Logbase);
-                }
-                else
-                {
-                    writer.WriteNull("logbase");
-                }
-            }
             if (Optional.IsDefined(Rule))
             {
                 writer.WritePropertyName("rule"u8);
@@ -95,7 +83,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string logbase = default;
             RandomSamplingAlgorithmRule? rule = default;
             int? seed = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
@@ -103,16 +90,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logbase"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        logbase = null;
-                        continue;
-                    }
-                    logbase = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("rule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -143,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, logbase, rule, seed);
+            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, rule, seed);
         }
 
         BinaryData IPersistableModel<RandomSamplingAlgorithm>.Write(ModelReaderWriterOptions options)

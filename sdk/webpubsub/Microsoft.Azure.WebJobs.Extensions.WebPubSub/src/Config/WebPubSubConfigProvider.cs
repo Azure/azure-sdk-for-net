@@ -137,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             var hub = Utilities.FirstOrDefault(attribute.Hub, _options.Hub);
             var service = new WebPubSubService(attribute.Connection, hub);
-            return service.GetClientConnection(attribute.UserId);
+            return service.GetClientConnection(attribute.UserId, clientProtocol: attribute.ClientProtocol);
         }
 
         private void ValidateConnectionString(string attributeConnectionString, string attributeConnectionStringName)
@@ -160,6 +160,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     new ConnectionStatesNewtonsoftConverter(),
                     new WebPubSubDataTypeJsonConverter(),
                     new WebPubSubEventTypeJsonConverter(),
+                    new WebPubSubTriggerAcceptedClientProtocolsJsonConverter(),
                 },
             };
         }
