@@ -654,7 +654,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         [RecordedTest]
-        public async Task OpenReadAsyncOverload_allowModifications()
+        public async Task OpenReadAsyncOverload_AllowModifications()
         {
             int size = Constants.KB;
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -684,7 +684,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         [RecordedTest]
-        public async Task OpenReadAsyncOverload_notAllowModifications()
+        public async Task OpenReadAsyncOverload_NotAllowModifications()
         {
             int size = Constants.KB;
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
