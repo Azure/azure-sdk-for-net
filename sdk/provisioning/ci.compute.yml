@@ -8,7 +8,18 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/provisioning/
+    - sdk/provisioning/ci.compute.yml
+    - sdk/provisioning/Azure.Provisioning
+    - sdk/provisioning/Azure.Provisioning.AppContainers
+    - sdk/provisioning/Azure.Provisioning.ApplicationInsights
+    - sdk/provisioning/Azure.Provisioning.AppService
+    - sdk/provisioning/Azure.Provisioning.Communication
+    - sdk/provisioning/Azure.Provisioning.ContainerRegistry
+    - sdk/provisioning/Azure.Provisioning.ContainerService
+    - sdk/provisioning/Azure.Provisioning.EventGrid
+    - sdk/provisioning/Azure.Provisioning.Kubernetes
+    - sdk/provisioning/Azure.Provisioning.KubernetesConfiguration
+    - sdk/provisioning/Azure.Provisioning.OperationalInsights
     exclude:
     - sdk/provisioning/Generator/
 
@@ -21,61 +32,47 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/provisioning/
+    - sdk/provisioning/ci.compute.yml
+    - sdk/provisioning/Azure.Provisioning
+    - sdk/provisioning/Azure.Provisioning.AppContainers
+    - sdk/provisioning/Azure.Provisioning.ApplicationInsights
+    - sdk/provisioning/Azure.Provisioning.AppService
+    - sdk/provisioning/Azure.Provisioning.Communication
+    - sdk/provisioning/Azure.Provisioning.ContainerRegistry
+    - sdk/provisioning/Azure.Provisioning.ContainerService
+    - sdk/provisioning/Azure.Provisioning.EventGrid
+    - sdk/provisioning/Azure.Provisioning.Kubernetes
+    - sdk/provisioning/Azure.Provisioning.KubernetesConfiguration
+    - sdk/provisioning/Azure.Provisioning.OperationalInsights
     exclude:
     - sdk/provisioning/Generator/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SdkType: compute
     ServiceDirectory: provisioning
     ArtifactName: packages
     Artifacts:
     - name: Azure.Provisioning
       safeName: AzureProvisioning
-    - name: Azure.Provisioning.AppConfiguration
-      safeName: AzureProvisioningAppConfiguration
     - name: Azure.Provisioning.AppContainers
       safeName: AzureProvisioningAppContainers
     - name: Azure.Provisioning.ApplicationInsights
       safeName: AzureProvisioningApplicationInsights
     - name: Azure.Provisioning.AppService
       safeName: AzureProvisioningAppService
-    - name: Azure.Provisioning.CognitiveServices
-      safeName: AzureProvisioningCognitiveServices
     - name: Azure.Provisioning.Communication
       safeName: AzureProvisioningCommunication
     - name: Azure.Provisioning.ContainerRegistry
       safeName: AzureProvisioningContainerRegistry
     - name: Azure.Provisioning.ContainerService
       safeName: AzureProvisioningContainerService
-    - name: Azure.Provisioning.CosmosDB
-      safeName: AzureProvisioningCosmosDB
     - name: Azure.Provisioning.EventGrid
       safeName: AzureProvisioningEventGrid
-    - name: Azure.Provisioning.EventHubs
-      safeName: AzureProvisioningEventHubs
-    - name: Azure.Provisioning.KeyVault
-      safeName: AzureProvisioningKeyVault
     - name: Azure.Provisioning.Kubernetes
       safeName: AzureProvisioningKubernetes
     - name: Azure.Provisioning.KubernetesConfiguration
       safeName: AzureProvisioningKubernetesConfiguration
     - name: Azure.Provisioning.OperationalInsights
       safeName: AzureProvisioningOperationalInsights
-    - name: Azure.Provisioning.PostgreSql
-      safeName: AzureProvisioningPostgreSql
-    - name: Azure.Provisioning.Redis
-      safeName: AzureProvisioningRedis
-    - name: Azure.Provisioning.Search
-      safeName: AzureProvisioningSearch
-    - name: Azure.Provisioning.ServiceBus
-      safeName: AzureProvisioningServiceBus
-    - name: Azure.Provisioning.SignalR
-      safeName: AzureProvisioningSignalR
-    - name: Azure.Provisioning.Sql
-      safeName: AzureProvisioningSql
-    - name: Azure.Provisioning.Storage
-      safeName: AzureProvisioningStorage
-    - name: Azure.Provisioning.WebPubSub
-      safeName: AzureProvisioningWebPubSub
