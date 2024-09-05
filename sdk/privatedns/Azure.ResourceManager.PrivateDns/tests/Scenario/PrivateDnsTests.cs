@@ -208,11 +208,6 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             await CreateOrUpdateVirtualNetworkLink(privateZone, vnetLinkName, virtualNetworkLinkData);
 
-            if (TestEnvironment.Mode == RecordedTestMode.Record)
-            {
-                Thread.Sleep(30000);
-            }
-
             var virtualNetworkLinkResource = await privateZone.GetVirtualNetworkLinks().GetAsync(vnetLinkName);
             var vnetLinkData = virtualNetworkLinkResource.Value.Data;
             Assert.AreEqual(vnetLinkData.ResolutionPolicy, virtualNetworkLinkData.ResolutionPolicy);
@@ -220,10 +215,6 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             // Update resolutionPolicy to default
             virtualNetworkLinkData.ResolutionPolicy = ResolutionPolicy.Default;
             await CreateOrUpdateVirtualNetworkLink(privateZone, vnetLinkName, virtualNetworkLinkData);
-            if (TestEnvironment.Mode == RecordedTestMode.Record)
-            {
-                Thread.Sleep(30000);
-            }
 
             virtualNetworkLinkResource = await privateZone.GetVirtualNetworkLinks().GetAsync(vnetLinkName);
             vnetLinkData = virtualNetworkLinkResource.Value.Data;
