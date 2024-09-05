@@ -16,22 +16,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for GetRemoteDesktop operation.
+    /// Defines headers for Start operation.
     /// </summary>
-    public partial class ComputeNodeGetRemoteDesktopHeaders
+    public partial class ComputeNodeStartHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ComputeNodeGetRemoteDesktopHeaders class.
+        /// Initializes a new instance of the ComputeNodeStartHeaders class.
         /// </summary>
-        public ComputeNodeGetRemoteDesktopHeaders()
+        public ComputeNodeStartHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ComputeNodeGetRemoteDesktopHeaders class.
+        /// Initializes a new instance of the ComputeNodeStartHeaders class.
         /// </summary>
         /// <param name="clientRequestId">The client-request-id provided by the
         /// client during the request. This will be returned only if the
@@ -50,12 +48,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If-None-Match headers.</param>
         /// <param name="lastModified">The time at which the resource was last
         /// modified.</param>
-        public ComputeNodeGetRemoteDesktopHeaders(System.Guid? clientRequestId = default(System.Guid?), System.Guid? requestId = default(System.Guid?), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?))
+        /// <param name="dataServiceId">The OData ID of the resource to which
+        /// the request applied.</param>
+        public ComputeNodeStartHeaders(System.Guid? clientRequestId = default(System.Guid?), System.Guid? requestId = default(System.Guid?), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), string dataServiceId = default(string))
         {
             ClientRequestId = clientRequestId;
             RequestId = requestId;
             ETag = eTag;
             LastModified = lastModified;
+            DataServiceId = dataServiceId;
             CustomInit();
         }
 
@@ -100,6 +101,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
         [JsonProperty(PropertyName = "Last-Modified")]
         public System.DateTime? LastModified { get; set; }
+
+        /// <summary>
+        /// Gets or sets the OData ID of the resource to which the request
+        /// applied.
+        /// </summary>
+        [JsonProperty(PropertyName = "DataServiceId")]
+        public string DataServiceId { get; set; }
 
     }
 }
