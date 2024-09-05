@@ -1,0 +1,65 @@
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - eng/packages/http-client-csharp
+
+variables:
+  - template: /eng/pipelines/templates/variables/image.yml
+  
+extends:
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  parameters:
+    stages:
+      - stage: 'Build'
+        pool:
+          name: $(WINDOWSPOOL)
+          image: $(WINDOWSVMIMAGE)
+          os: windows
+        jobs:
+          - job: Build
+            timeoutInMinutes: 120
+            steps:
+              - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+              - task: UseDotNet@2
+                displayName: 'Use .NET Core SDK'
+                retryCountOnTaskFailure: 3
+                inputs:
+                  useGlobalJson: true
+                  performMultiLevelLookup: true
+              - task: NodeTool@0
+                displayName: "Install Node 18.x"
+                inputs:
+                  versionSpec: '18.x'
+              - script: |
+                  npm ci
+                displayName: "Install packages"
+                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp
+              - script: |
+                  npm ls -a
+                displayName: "List packages"
+                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp
+              - script: |
+                  npm run prettier
+                displayName: "Emitter format check"
+                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/emitter
+              - script: |
+                  npm run lint
+                displayName: "Emitter linter check"
+                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/emitter
+              - script: |
+                  npm run build
+                displayName: 'Build Azure csharp client emitter and generator'
+                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/
+              - pwsh: ./eng/packages/http-client-csharp/eng/scripts/CodeGenerationCheck.ps1
+                displayName: "Check if generated code is up-to-date"
+                env:
+                  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+                  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+                  DOTNET_MULTILEVEL_LOOKUP: 0

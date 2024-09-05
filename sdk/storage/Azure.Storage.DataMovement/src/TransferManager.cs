@@ -20,42 +20,14 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class TransferManager : IAsyncDisposable
     {
-        // Async channel reader tasks. These loop for the lifetime of the object.
-        private readonly Task _currentTaskIsProcessingJob;
-        private readonly Task _currentTaskIsProcessingJobPart;
-        private readonly Task _currentTaskIsProcessingJobChunk;
-
-        /// <summary>
-        /// Channel of Jobs waiting to divided into job parts/files.
-        ///
-        /// Limit 1 task to convert jobs to job parts.
-        /// </summary>
-        private readonly Channel<TransferJobInternal> _jobsToProcessChannel;
-
-        /// <summary>
-        /// Channel of Job parts / files to be divided into chunks / requests
-        ///
-        /// Limit 64 tasks to convert job parts to chunks.
-        /// </summary>
-        private readonly Channel<JobPartInternal> _partsToProcessChannel;
-
-        /// <summary>
-        /// Channel of Job chunks / requests to send to the service.
-        ///
-        /// Limit 4-300/Max amount of tasks allowed to process chunks.
-        /// </summary>
-        private readonly Channel<Func<Task>> _chunksToProcessChannel;
-
-        /// <summary>
-        /// This value can fluctuate depending on if we've reached max capacity
-        /// Future capability for it to fluctuate based on throttling and bandwidth.
-        /// </summary>
-        internal int _maxJobChunkTasks;
+        private readonly IProcessor<TransferJobInternal> _jobsProcessor;
+        private readonly IProcessor<JobPartInternal> _partsProcessor;
+        private readonly IProcessor<Func<Task>> _chunksProcessor;
 
         /// <summary>
         /// Ongoing transfers indexed at the transfer id.
         /// </summary>
-        internal IDictionary<string, DataTransfer> _dataTransfers;
+        internal readonly Dictionary<string, DataTransfer> _dataTransfers = new();
 
         /// <summary>
         /// Designated checkpointer for the respective transfer manager.
@@ -77,8 +49,8 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Cancels the channels operations when disposing.
         /// </summary>
-        private CancellationTokenSource _channelCancellationTokenSource;
-        private CancellationToken _cancellationToken => _channelCancellationTokenSource.Token;
+        private CancellationTokenSource _cancellationTokenSource = new();
+        private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
         private readonly ArrayPool<byte> _arrayPool;
 
@@ -96,130 +68,64 @@ namespace Azure.Storage.DataMovement
         /// <param name="options">Options that will apply to all transfers started by this TransferManager.</param>
         public TransferManager(TransferManagerOptions options = default)
         {
-            _channelCancellationTokenSource = new CancellationTokenSource();
-            _jobsToProcessChannel = Channel.CreateUnbounded<TransferJobInternal>(
-                new UnboundedChannelOptions()
-                {
-                    AllowSynchronousContinuations = true,
-                    SingleReader = true, // To limit the task of processing one job at a time.
-                    // Allow single writers
-                });
-            _partsToProcessChannel = Channel.CreateUnbounded<JobPartInternal>(
-                new UnboundedChannelOptions()
-                {
-                    AllowSynchronousContinuations = true,
-                });
-            _chunksToProcessChannel = Channel.CreateUnbounded<Func<Task>>(
-                new UnboundedChannelOptions()
-                {
-                    AllowSynchronousContinuations = true,
-                });
-            _currentTaskIsProcessingJob = Task.Run(() => NotifyOfPendingJobProcessing());
-            _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
-            _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());
-            _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
+            _jobsProcessor = ChannelProcessing.NewProcessor<TransferJobInternal>(parallelism: 1);
+            _partsProcessor = ChannelProcessing.NewProcessor<JobPartInternal>(DataMovementConstants.MaxJobPartReaders);
+            _chunksProcessor = ChannelProcessing.NewProcessor<Func<Task>>(options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks);
             TransferCheckpointStoreOptions checkpointerOptions = options?.CheckpointerOptions != default ? new TransferCheckpointStoreOptions(options.CheckpointerOptions) : default;
             _checkpointer = checkpointerOptions != default ? checkpointerOptions.GetCheckpointer() : CreateDefaultCheckpointer();
             _resumeProviders = options?.ResumeProviders != null ? new(options.ResumeProviders) : new();
-            _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
             _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : DataTransferErrorMode.StopOnAnyFailure;
             ClientDiagnostics = new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default);
+
+            ConfigureProcessorCallbacks();
         }
 
-        #region Job Channel Management
-        internal async Task QueueJobAsync(TransferJobInternal job)
+        /// <summary>
+        /// Dependency injection constructor.
+        /// </summary>
+        internal TransferManager(
+            IProcessor<TransferJobInternal> jobsProcessor,
+            IProcessor<JobPartInternal> partsProcessor,
+            IProcessor<Func<Task>> chunksProcessor,
+            TransferCheckpointer checkpointer,
+            ICollection<StorageResourceProvider> resumeProviders,
+            ArrayPool<byte> arrayPool,
+            DataTransferErrorMode errorhandling,
+            ClientDiagnostics clientDiagnostics)
         {
-            await _jobsToProcessChannel.Writer.WriteAsync(
-                job,
-                cancellationToken: _cancellationToken).ConfigureAwait(false);
+            _jobsProcessor = jobsProcessor;
+            _partsProcessor = partsProcessor;
+            _chunksProcessor = chunksProcessor;
+            _checkpointer = checkpointer;
+            _resumeProviders = new(resumeProviders);
+            _arrayPool = arrayPool;
+            _errorHandling = errorhandling;
+            ClientDiagnostics = clientDiagnostics;
+
+            ConfigureProcessorCallbacks();
         }
 
-        // Inform the Reader that there's work to be executed for this Channel.
-        private async Task NotifyOfPendingJobProcessing()
+        private void ConfigureProcessorCallbacks()
         {
-            // Process all available items in the queue.
-            while (await _jobsToProcessChannel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
+            _jobsProcessor.Process = ProcessJobAsync;
+            _partsProcessor.Process = ProcessPartAsync;
+            _chunksProcessor.Process = Task.Run;
+        }
+
+        private async Task ProcessJobAsync(TransferJobInternal job, CancellationToken _)
+        {
+            await foreach (JobPartInternal partItem in job.ProcessJobToJobPartAsync().ConfigureAwait(false))
             {
-                TransferJobInternal item = await _jobsToProcessChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                // Execute the task we pulled out of the queue
-                await foreach (JobPartInternal partItem in item.ProcessJobToJobPartAsync().ConfigureAwait(false))
-                {
-                    item.QueueJobPart();
-                    await QueueJobPartAsync(partItem).ConfigureAwait(false);
-                }
+                job.IncrementJobParts();
+                await _partsProcessor.QueueAsync(partItem).ConfigureAwait(false);
             }
         }
-        #endregion Job Channel Management
-
-        #region Job Part Channel Management
-        internal async Task QueueJobPartAsync(JobPartInternal part)
+        private async Task ProcessPartAsync(JobPartInternal part, CancellationToken _)
         {
-            await _partsToProcessChannel.Writer.WriteAsync(part).ConfigureAwait(false);
+            part.SetQueueChunkDelegate(_chunksProcessor.QueueAsync);
+            await part.ProcessPartToChunkAsync().ConfigureAwait(false);
         }
-
-        // Inform the Reader that there's work to be executed for this Channel.
-        private async Task NotifyOfPendingJobPartProcessing()
-        {
-            List<Task> chunkRunners = new List<Task>(DataMovementConstants.MaxJobPartReaders);
-            while (await _partsToProcessChannel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
-            {
-                JobPartInternal item = await _partsToProcessChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                if (chunkRunners.Count >= DataMovementConstants.MaxJobPartReaders)
-                {
-                    // Clear any completed blocks from the task list
-                    int removedRunners = chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
-                    // If no runners have finished..
-                    if (removedRunners == 0)
-                    {
-                        // Wait for at least one runner to finish
-                        await Task.WhenAny(chunkRunners).ConfigureAwait(false);
-                        chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
-                    }
-                }
-                // Execute the task we pulled out of the queue
-                item.SetQueueChunkDelegate(async (item) => await QueueJobChunkAsync(item).ConfigureAwait(false));
-                Task task = item.ProcessPartToChunkAsync();
-
-                // Add task to Chunk Runner to keep track of how many are running
-                chunkRunners.Add(task);
-            }
-        }
-        #endregion Job Part Channel Management
-
-        #region Job Chunk Management
-        internal async Task QueueJobChunkAsync(Func<Task> item)
-        {
-            await _chunksToProcessChannel.Writer.WriteAsync(item).ConfigureAwait(false);
-        }
-
-        private async Task NotifyOfPendingJobChunkProcessing()
-        {
-            List<Task> _currentChunkTasks = new List<Task>(DataMovementConstants.MaxJobChunkTasks);
-            while (await _chunksToProcessChannel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
-            {
-                Func<Task> item = await _chunksToProcessChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                // If we run out of workers
-                if (_currentChunkTasks.Count >= _maxJobChunkTasks)
-                {
-                    if (_currentChunkTasks.Exists(x => x.IsCompleted || x.IsCanceled || x.IsFaulted))
-                    {
-                        // Clear any completed blocks from the task list
-                        _currentChunkTasks.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
-                    }
-                    else
-                    {
-                        await Task.WhenAny(_currentChunkTasks).ConfigureAwait(false);
-                        _currentChunkTasks.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
-                    }
-                }
-
-                // Execute the task we pulled out of the queue
-                Task task = Task.Run(item);
-                _currentChunkTasks.Add(task);
-            }
-        }
-        #endregion Job Chunk Management
 
         #region Transfer Job Management
         /// <summary>
@@ -507,7 +413,7 @@ namespace Azure.Storage.DataMovement
                 throw Errors.InvalidTransferResourceTypes();
             }
             // Queue Job
-            await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+            await _jobsProcessor.QueueAsync(transferJobInternal, _cancellationToken).ConfigureAwait(false);
 
             return dataTransfer;
         }
@@ -531,7 +437,6 @@ namespace Azure.Storage.DataMovement
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
-                        queueChunkTask: QueueJobChunkAsync,
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool,
@@ -571,7 +476,6 @@ namespace Azure.Storage.DataMovement
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
-                        queueChunkTask: QueueJobChunkAsync,
                         CheckPointFolderPath: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool,
@@ -604,7 +508,6 @@ namespace Azure.Storage.DataMovement
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
-                        queueChunkTask: QueueJobChunkAsync,
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool,
@@ -650,7 +553,6 @@ namespace Azure.Storage.DataMovement
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
-                        queueChunkTask: QueueJobChunkAsync,
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool,
@@ -697,7 +599,6 @@ namespace Azure.Storage.DataMovement
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
-                        queueChunkTask: QueueJobChunkAsync,
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool,
@@ -737,7 +638,6 @@ namespace Azure.Storage.DataMovement
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
-                        queueChunkTask: QueueJobChunkAsync,
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool,
@@ -809,10 +709,13 @@ namespace Azure.Storage.DataMovement
         /// <returns>A <see cref="ValueTask"/> of disposing the <see cref="TransferManager"/>.</returns>
         ValueTask IAsyncDisposable.DisposeAsync()
         {
-            if (!_channelCancellationTokenSource.IsCancellationRequested)
+            if (!_cancellationTokenSource.IsCancellationRequested)
             {
-                _channelCancellationTokenSource.Cancel();
+                _cancellationTokenSource.Cancel();
             }
+            _jobsProcessor?.Dispose();
+            _partsProcessor?.Dispose();
+            _chunksProcessor?.Dispose();
             GC.SuppressFinalize(this);
             return default;
         }

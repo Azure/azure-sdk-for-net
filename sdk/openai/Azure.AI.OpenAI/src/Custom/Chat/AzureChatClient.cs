@@ -30,8 +30,8 @@ internal partial class AzureChatClient : ChatClient
         options ??= new();
 
         _deploymentName = deploymentName;
-        _apiVersion = options.Version;
         _endpoint = endpoint;
+        _apiVersion = options.Version;
     }
 
     protected AzureChatClient()

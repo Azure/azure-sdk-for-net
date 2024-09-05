@@ -3,7 +3,6 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using OpenAI.VectorStores;
 
 namespace Azure.AI.OpenAI.VectorStores;
 
