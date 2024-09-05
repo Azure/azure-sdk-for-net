@@ -22,15 +22,6 @@ parameters:
     type: boolean
     default: false
 
-# Standard variable group ids for the Azure SDK repositories
-# AzureSDK_Maven_Release_Pipeline_Secrets: 1
-# AzureSDK_Nuget_Release_Pipeline_Secrets: 13
-# AzureSDK_CocoaPods_Release_Pipeline_Secrets: 98
-# NPM_Registry_Authentication: 24
-# Release_Secrets_for_GitHub: 58
-# Secrets_for_Resource_Provisioner: 64
-# APIReview_AutoCreate_Configurations: 93
-
 jobs:
 - job:
   displayName: 'Prepare pipelines for ${{ parameters.Repository }}'
@@ -41,35 +32,20 @@ jobs:
   variables:
     RepositoryPath: "$(System.DefaultWorkingDirectory)/${{ parameters.RepositoryPath }}"
     ProjectForPRValidation: 'public'
-    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-java') }}:
-      Prefix: java
-      InternalVariableGroups: '1 58 93'
-      TestVariableGroups: 64
-    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-android') }}:
-      Prefix: android
-      InternalVariableGroups: '1 58 93'
-    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-js') }}:
-      Prefix: js
-      InternalVariableGroups: '24 58 93'
-      TestVariableGroups: 64
-    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-python') }}:
-      Prefix: python
-      InternalVariableGroups: '58 93'
-      TestVariableGroups: 64
-    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-net') }}:
-      Prefix: net
-      InternalVariableGroups: '13 58 93'
-      TestVariableGroups: 64
-    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-cpp') }}:
-      Prefix: cpp
-      InternalVariableGroups: '58 93 64'
-    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-ios') }}:
-      Prefix: ios
-      InternalVariableGroups: '58 93 64 98'
-    ${{ if startsWith(parameters.Repository, 'Azure/azure-sdk-for-go') }}:
-      Prefix: go
-      InternalVariableGroups: '58 93 64'
-      GenerateUnifiedWeekly: true
+    Prefix: 'na'
+    DevOpsPath: 'na'
+    InternalVariableGroups: ''
+    GenerateUnifiedWeekly: ''
+    TestVariableGroups: ''
+    
+    # Standard set of variable groups for the Azure SDK repositories
+    AzureSDK_Maven_Release_Pipeline_Secrets: 1
+    AzureSDK_Nuget_Release_Pipeline_Secrets: 13
+    AzureSDK_CocoaPods_Release_Pipeline_Secrets: 98
+    NPM_Registry_Authentication: 24
+    Release_Secrets_for_GitHub: 58
+    Secrets_for_Resource_Provisioner: 64
+    APIReview_AutoCreate_Configurations: 93
 
   steps:
     - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -86,16 +62,71 @@ jobs:
     - template: /eng/common/pipelines/templates/steps/install-pipeline-generation.yml
     - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 
-    - ${{ if endsWith(parameters.Repository, '-pr') }}:
-      - pwsh: |
-          Write-Host "Update variables because we are targeting the private repo:"
-          Write-Host "ProjectForPRValidation = internal"
-          Write-Host "DevOpsPath = $(DevOpsPath)/pr"
-          Write-Host "Prefix = $(Prefix)-pr"
-          Write-Host "##vso[task.setvariable variable=ProjectForPRValidation]internal"
-          Write-Host "##vso[task.setvariable variable=DevOpsPath]$(DevOpsPath)/pr"
-          Write-Host "##vso[task.setvariable variable=Prefix]$(Prefix)-pr"
-        displayName: Update variables for private repp
+    - pwsh: | 
+        Write-Host "Setting up pipeline variables"
+        if ("${{ parameters.Repository }}" -match "Azure/azure-sdk-for-(?<prefix>[^-]*)(?<pr>-pr)?") {
+          $prefix = $matches['prefix']
+          $devOpsPath = $prefix
+          if ($matches['pr']) {
+            $devOpsPath = "${devOpsPath}\pr"
+            $prefix = "${prefix}-pr"
+            Write-Host "##vso[task.setvariable variable=ProjectForPRValidation]internal"
+          }
+          Write-Host "Prefix = $prefix"
+          Write-Host "DevOpsPath = $devOpsPath"
+          Write-Host "##vso[task.setvariable variable=Prefix]$prefix"
+          Write-Host "##vso[task.setvariable variable=DevOpsPath]$devOpsPath"
+        }
+        else {
+          Write-Error "Repository name '${{ parameters.Repository }}' is not in the expected format."
+          exit 1  
+        }
+
+        # Map the language prefix to the appropriate variable groups
+        switch $prefix 
+        {
+          "java" {
+            $internalVariableGroups = '$(AzureSDK_Maven_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
+            $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
+          }
+          "android" {
+            $internalVariableGroups = '$(AzureSDK_Maven_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
+          }
+          "js" {
+            $internalVariableGroups = '$(NPM_Registry_Authentication) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
+            $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
+          }
+          "python" {
+            $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
+            $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
+          }
+          "net" {
+            $internalVariableGroups = '$(AzureSDK_Nuget_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
+            $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
+          }
+          "cpp" {
+            $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner)'
+          }
+          "ios" {
+            $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner) $(AzureSDK_CocoaPods_Release_Pipeline_Secrets)'
+          }
+          "go" {
+            $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner)'
+            $generateUnifiedWeekly = 'true'
+          }
+          default {
+            Write-Error "Prefix '$prefix' is not recognized."
+            exit 1
+          }
+        }
+
+        Write-Host "InternalVariableGroups = $internalVariableGroups"
+        Write-Host "TestVariableGroups = $testVariableGroups"
+        Write-Host "GenerateUnifiedWeekly = $generateUnifiedWeekly"
+        Write-Host "##vso[task.setvariable variable=InternalVariableGroups]$internalVariableGroups"
+        Write-Host "##vso[task.setvariable variable=TestVariableGroups]$testVariableGroups"
+        Write-Host "##vso[task.setvariable variable=GenerateUnifiedWeekly]$generateUnifiedWeekly"
+      displayName: Setup pipeline generation variables
 
     - task: AzureCLI@2
       inputs:
