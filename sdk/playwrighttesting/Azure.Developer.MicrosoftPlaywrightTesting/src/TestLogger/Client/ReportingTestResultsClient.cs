@@ -14,7 +14,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client
 {
     // Data plane generated client.
     /// <summary> The TestResults service client. </summary>
-    public partial class ReportingTestResultsClient
+    internal partial class ReportingTestResultsClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
