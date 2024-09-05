@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="rpObjectId"> The object id of the service principal of the RP provisioned in the tenant. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? rpObjectId, KubernetesRuntimeProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? rpObjectId, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RpObjectId = rpObjectId;
             ProvisioningState = provisioningState;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <summary> The object id of the service principal of the RP provisioned in the tenant. </summary>
         public Guid? RpObjectId { get; }
         /// <summary> Resource provision state. </summary>
-        public KubernetesRuntimeProvisioningState? ProvisioningState { get; }
+        public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
     }
 }

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="peerAddress"> Peer Address. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BgpPeerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? myAsn, int? peerAsn, string peerAddress, KubernetesRuntimeProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BgpPeerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? myAsn, int? peerAsn, string peerAddress, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             MyAsn = myAsn;
             PeerAsn = peerAsn;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <summary> Peer Address. </summary>
         public string PeerAddress { get; set; }
         /// <summary> Resource provision state. </summary>
-        public KubernetesRuntimeProvisioningState? ProvisioningState { get; }
+        public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
     }
 }

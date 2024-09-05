@@ -24,7 +24,7 @@ tag: package-2024-03-01
 
 rename-mapping:
   ServiceResource.properties.rpObjectId: -|uuid
-  ProvisioningState: KubernetesRuntimeProvisioningState
+  ProvisioningState: ContainerOrchestratorProvisioningState
   AccessMode: StorageClassAccessMode
 
 format-by-name-rules:

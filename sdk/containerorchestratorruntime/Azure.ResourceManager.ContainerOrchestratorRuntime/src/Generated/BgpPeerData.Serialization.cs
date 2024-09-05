@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             int? myAsn = default;
             int? peerAsn = default;
             string peerAddress = default;
-            KubernetesRuntimeProvisioningState? provisioningState = default;
+            ContainerOrchestratorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                             {
                                 continue;
                             }
-                            provisioningState = new KubernetesRuntimeProvisioningState(property0.Value.GetString());
+                            provisioningState = new ContainerOrchestratorProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

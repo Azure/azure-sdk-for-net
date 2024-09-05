@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </param>
         /// <param name="provisioningState"> Resource provision state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageClassResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VolumeExpansion? allowVolumeExpansion, IList<string> mountOptions, string provisioner, VolumeBindingMode? volumeBindingMode, IList<StorageClassAccessMode> accessModes, DataResilienceTier? dataResilience, FailoverTier? failoverSpeed, IList<string> limitations, PerformanceTier? performance, long? priority, StorageClassTypeProperties typeProperties, KubernetesRuntimeProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageClassResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VolumeExpansion? allowVolumeExpansion, IList<string> mountOptions, string provisioner, VolumeBindingMode? volumeBindingMode, IList<StorageClassAccessMode> accessModes, DataResilienceTier? dataResilience, FailoverTier? failoverSpeed, IList<string> limitations, PerformanceTier? performance, long? priority, StorageClassTypeProperties typeProperties, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AllowVolumeExpansion = allowVolumeExpansion;
             MountOptions = mountOptions;
@@ -125,6 +125,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </summary>
         public StorageClassTypeProperties TypeProperties { get; set; }
         /// <summary> Resource provision state. </summary>
-        public KubernetesRuntimeProvisioningState? ProvisioningState { get; }
+        public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
     }
 }
