@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed \[BUG\] Method overload BlobBaseClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
 
 ### Other Changes
 
