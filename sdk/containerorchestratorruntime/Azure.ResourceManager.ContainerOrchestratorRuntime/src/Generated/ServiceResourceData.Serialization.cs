@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             if (options.Format != "W" && Optional.IsDefined(RpObjectId))
             {
                 writer.WritePropertyName("rpObjectId"u8);
-                writer.WriteStringValue(RpObjectId);
+                writer.WriteStringValue(RpObjectId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string rpObjectId = default;
-            ProvisioningState? provisioningState = default;
+            Guid? rpObjectId = default;
+            KubernetesRuntimeProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                     {
                         if (property0.NameEquals("rpObjectId"u8))
                         {
-                            rpObjectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rpObjectId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new KubernetesRuntimeProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

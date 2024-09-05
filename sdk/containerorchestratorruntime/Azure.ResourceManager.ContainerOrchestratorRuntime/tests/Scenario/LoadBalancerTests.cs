@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
 
         [TestCase]
         [RecordedTest]
-        public void CreateLoadBalancer()
+        public async Task CreateLoadBalancer()
         {
             var connectedCluster = ConnectedClusterResource.CreateResourceIdentifier("b9e38f20-7c9c-4497-a25d-1a0c5eef2108", "xinyuhe-canary", "test-cluster-euap-arc");
             var loadBalancerCollection = new LoadBalancerCollection(Client, connectedCluster);

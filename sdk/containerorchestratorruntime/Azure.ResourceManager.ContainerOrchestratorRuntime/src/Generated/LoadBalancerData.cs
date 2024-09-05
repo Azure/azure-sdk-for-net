@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="bgpPeers"> The list of BGP peers it should advertise to. Null or empty means to advertise to all peers. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> addresses, IDictionary<string, string> serviceSelector, AdvertiseMode? advertiseMode, IList<string> bgpPeers, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> addresses, IDictionary<string, string> serviceSelector, AdvertiseMode? advertiseMode, IList<string> bgpPeers, KubernetesRuntimeProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Addresses = addresses;
             ServiceSelector = serviceSelector;
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <summary> The list of BGP peers it should advertise to. Null or empty means to advertise to all peers. </summary>
         public IList<string> BgpPeers { get; }
         /// <summary> Resource provision state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public KubernetesRuntimeProvisioningState? ProvisioningState { get; }
     }
 }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public StorageClassPropertiesUpdate()
         {
             MountOptions = new ChangeTrackingList<string>();
-            AccessModes = new ChangeTrackingList<AccessMode>();
+            AccessModes = new ChangeTrackingList<StorageClassAccessMode>();
             Limitations = new ChangeTrackingList<string>();
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="priority"> Selection priority when multiple storage classes meet the criteria. 0: Highest, -1: Never use. </param>
         /// <param name="typeProperties"> New storage class type of storageClass. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageClassPropertiesUpdate(VolumeExpansion? allowVolumeExpansion, IList<string> mountOptions, IList<AccessMode> accessModes, DataResilienceTier? dataResilience, FailoverTier? failoverSpeed, IList<string> limitations, PerformanceTier? performance, long? priority, StorageClassTypePropertiesUpdate typeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageClassPropertiesUpdate(VolumeExpansion? allowVolumeExpansion, IList<string> mountOptions, IList<StorageClassAccessMode> accessModes, DataResilienceTier? dataResilience, FailoverTier? failoverSpeed, IList<string> limitations, PerformanceTier? performance, long? priority, StorageClassTypePropertiesUpdate typeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowVolumeExpansion = allowVolumeExpansion;
             MountOptions = mountOptions;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <summary> Additional mount options. </summary>
         public IList<string> MountOptions { get; }
         /// <summary> The access mode: [ReadWriteOnce, ReadWriteMany] or [ReadWriteOnce]. </summary>
-        public IList<AccessMode> AccessModes { get; }
+        public IList<StorageClassAccessMode> AccessModes { get; }
         /// <summary> Allow single data node failure. </summary>
         public DataResilienceTier? DataResilience { get; set; }
         /// <summary> Failover speed: NA, Slow, Fast. </summary>

@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             IList<string> mountOptions = default;
             string provisioner = default;
             VolumeBindingMode? volumeBindingMode = default;
-            IList<AccessMode> accessModes = default;
+            IList<StorageClassAccessMode> accessModes = default;
             DataResilienceTier? dataResilience = default;
             FailoverTier? failoverSpeed = default;
             IList<string> limitations = default;
             PerformanceTier? performance = default;
             long? priority = default;
             StorageClassTypeProperties typeProperties = default;
-            ProvisioningState? provisioningState = default;
+            KubernetesRuntimeProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,10 +260,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                             {
                                 continue;
                             }
-                            List<AccessMode> array = new List<AccessMode>();
+                            List<StorageClassAccessMode> array = new List<StorageClassAccessMode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AccessMode(item.GetString()));
+                                array.Add(new StorageClassAccessMode(item.GetString()));
                             }
                             accessModes = array;
                             continue;
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new KubernetesRuntimeProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 mountOptions ?? new ChangeTrackingList<string>(),
                 provisioner,
                 volumeBindingMode,
-                accessModes ?? new ChangeTrackingList<AccessMode>(),
+                accessModes ?? new ChangeTrackingList<StorageClassAccessMode>(),
                 dataResilience,
                 failoverSpeed,
                 limitations ?? new ChangeTrackingList<string>(),

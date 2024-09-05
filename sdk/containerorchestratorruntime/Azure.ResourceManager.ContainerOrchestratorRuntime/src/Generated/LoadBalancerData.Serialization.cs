@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             IDictionary<string, string> serviceSelector = default;
             AdvertiseMode? advertiseMode = default;
             IList<string> bgpPeers = default;
-            ProvisioningState? provisioningState = default;
+            KubernetesRuntimeProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new KubernetesRuntimeProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

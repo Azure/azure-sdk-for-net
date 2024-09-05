@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             }
             VolumeExpansion? allowVolumeExpansion = default;
             IList<string> mountOptions = default;
-            IList<AccessMode> accessModes = default;
+            IList<StorageClassAccessMode> accessModes = default;
             DataResilienceTier? dataResilience = default;
             FailoverTier? failoverSpeed = default;
             IList<string> limitations = default;
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                     {
                         continue;
                     }
-                    List<AccessMode> array = new List<AccessMode>();
+                    List<StorageClassAccessMode> array = new List<StorageClassAccessMode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AccessMode(item.GetString()));
+                        array.Add(new StorageClassAccessMode(item.GetString()));
                     }
                     accessModes = array;
                     continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             return new StorageClassPropertiesUpdate(
                 allowVolumeExpansion,
                 mountOptions ?? new ChangeTrackingList<string>(),
-                accessModes ?? new ChangeTrackingList<AccessMode>(),
+                accessModes ?? new ChangeTrackingList<StorageClassAccessMode>(),
                 dataResilience,
                 failoverSpeed,
                 limitations ?? new ChangeTrackingList<string>(),

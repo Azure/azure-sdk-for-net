@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         public StorageClassResourceData()
         {
             MountOptions = new ChangeTrackingList<string>();
-            AccessModes = new ChangeTrackingList<AccessMode>();
+            AccessModes = new ChangeTrackingList<StorageClassAccessMode>();
             Limitations = new ChangeTrackingList<string>();
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </param>
         /// <param name="provisioningState"> Resource provision state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageClassResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VolumeExpansion? allowVolumeExpansion, IList<string> mountOptions, string provisioner, VolumeBindingMode? volumeBindingMode, IList<AccessMode> accessModes, DataResilienceTier? dataResilience, FailoverTier? failoverSpeed, IList<string> limitations, PerformanceTier? performance, long? priority, StorageClassTypeProperties typeProperties, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageClassResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VolumeExpansion? allowVolumeExpansion, IList<string> mountOptions, string provisioner, VolumeBindingMode? volumeBindingMode, IList<StorageClassAccessMode> accessModes, DataResilienceTier? dataResilience, FailoverTier? failoverSpeed, IList<string> limitations, PerformanceTier? performance, long? priority, StorageClassTypeProperties typeProperties, KubernetesRuntimeProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AllowVolumeExpansion = allowVolumeExpansion;
             MountOptions = mountOptions;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <summary> Binding mode of volumes: Immediate, WaitForFirstConsumer. </summary>
         public VolumeBindingMode? VolumeBindingMode { get; set; }
         /// <summary> The access mode: [ReadWriteOnce, ReadWriteMany] or [ReadWriteOnce]. </summary>
-        public IList<AccessMode> AccessModes { get; }
+        public IList<StorageClassAccessMode> AccessModes { get; }
         /// <summary> Allow single data node failure. </summary>
         public DataResilienceTier? DataResilience { get; set; }
         /// <summary> Failover speed: NA, Slow, Fast. </summary>
@@ -125,6 +125,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </summary>
         public StorageClassTypeProperties TypeProperties { get; set; }
         /// <summary> Resource provision state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public KubernetesRuntimeProvisioningState? ProvisioningState { get; }
     }
 }

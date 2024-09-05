@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="peerAddress"> Peer Address. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
         /// <returns> A new <see cref="ContainerOrchestratorRuntime.BgpPeerData"/> instance for mocking. </returns>
-        public static BgpPeerData BgpPeerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? myAsn = null, int? peerAsn = null, string peerAddress = null, ProvisioningState? provisioningState = null)
+        public static BgpPeerData BgpPeerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? myAsn = null, int? peerAsn = null, string peerAddress = null, KubernetesRuntimeProvisioningState? provisioningState = null)
         {
             return new BgpPeerData(
                 id,
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="bgpPeers"> The list of BGP peers it should advertise to. Null or empty means to advertise to all peers. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
         /// <returns> A new <see cref="ContainerOrchestratorRuntime.LoadBalancerData"/> instance for mocking. </returns>
-        public static LoadBalancerData LoadBalancerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> addresses = null, IDictionary<string, string> serviceSelector = null, AdvertiseMode? advertiseMode = null, IEnumerable<string> bgpPeers = null, ProvisioningState? provisioningState = null)
+        public static LoadBalancerData LoadBalancerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> addresses = null, IDictionary<string, string> serviceSelector = null, AdvertiseMode? advertiseMode = null, IEnumerable<string> bgpPeers = null, KubernetesRuntimeProvisioningState? provisioningState = null)
         {
             addresses ??= new List<string>();
             serviceSelector ??= new Dictionary<string, string>();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="rpObjectId"> The object id of the service principal of the RP provisioned in the tenant. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
         /// <returns> A new <see cref="ContainerOrchestratorRuntime.ServiceResourceData"/> instance for mocking. </returns>
-        public static ServiceResourceData ServiceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string rpObjectId = null, ProvisioningState? provisioningState = null)
+        public static ServiceResourceData ServiceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? rpObjectId = null, KubernetesRuntimeProvisioningState? provisioningState = null)
         {
             return new ServiceResourceData(
                 id,
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// </param>
         /// <param name="provisioningState"> Resource provision state. </param>
         /// <returns> A new <see cref="ContainerOrchestratorRuntime.StorageClassResourceData"/> instance for mocking. </returns>
-        public static StorageClassResourceData StorageClassResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VolumeExpansion? allowVolumeExpansion = null, IEnumerable<string> mountOptions = null, string provisioner = null, VolumeBindingMode? volumeBindingMode = null, IEnumerable<AccessMode> accessModes = null, DataResilienceTier? dataResilience = null, FailoverTier? failoverSpeed = null, IEnumerable<string> limitations = null, PerformanceTier? performance = null, long? priority = null, StorageClassTypeProperties typeProperties = null, ProvisioningState? provisioningState = null)
+        public static StorageClassResourceData StorageClassResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VolumeExpansion? allowVolumeExpansion = null, IEnumerable<string> mountOptions = null, string provisioner = null, VolumeBindingMode? volumeBindingMode = null, IEnumerable<StorageClassAccessMode> accessModes = null, DataResilienceTier? dataResilience = null, FailoverTier? failoverSpeed = null, IEnumerable<string> limitations = null, PerformanceTier? performance = null, long? priority = null, StorageClassTypeProperties typeProperties = null, KubernetesRuntimeProvisioningState? provisioningState = null)
         {
             mountOptions ??= new List<string>();
-            accessModes ??= new List<AccessMode>();
+            accessModes ??= new List<StorageClassAccessMode>();
             limitations ??= new List<string>();
 
             return new StorageClassResourceData(

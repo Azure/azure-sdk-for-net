@@ -19,10 +19,13 @@ modelerfour:
 use-model-reader-writer: true
 tag: package-2024-03-01
 
-#mgmt-debug:
-#  show-serialized-names: true
+# mgmt-debug:
+#   show-serialized-names: true
 
- 
+rename-mapping:
+  ServiceResource.properties.rpObjectId: -|uuid
+  ProvisioningState: KubernetesRuntimeProvisioningState
+  AccessMode: StorageClassAccessMode
 
 format-by-name-rules:
   'tenantId': 'uuid'
