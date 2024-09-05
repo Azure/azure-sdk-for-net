@@ -65,7 +65,6 @@ namespace Azure.Provisioning
         public BicepOutput(string name, Azure.Provisioning.Expressions.Expression type, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>), default(Azure.Provisioning.ProvisioningContext)) { }
         public BicepOutput(string name, System.Type type, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>), default(Azure.Provisioning.ProvisioningContext)) { }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
-        public static new Azure.Provisioning.BicepOutput Create<T>(string name, Azure.Provisioning.BicepValue<object>? value = null, Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
     }
     public partial class BicepParameter : Azure.Provisioning.BicepVariable
     {
@@ -73,7 +72,6 @@ namespace Azure.Provisioning
         public BicepParameter(string name, System.Type type, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>), default(Azure.Provisioning.ProvisioningContext)) { }
         public bool IsSecure { get { throw null; } set { } }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
-        public static new Azure.Provisioning.BicepParameter Create<T>(string name, Azure.Provisioning.BicepValue<object>? value = null, Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
     }
     public abstract partial class BicepValue
     {
@@ -106,13 +104,11 @@ namespace Azure.Provisioning
     public partial class BicepVariable : Azure.Provisioning.Primitives.NamedProvisioningConstruct
     {
         protected BicepVariable(string name, Azure.Provisioning.Expressions.Expression type, Azure.Provisioning.BicepValue<object>? value, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Provisioning.ProvisioningContext)) { }
-        public BicepVariable(string name, Azure.Provisioning.Expressions.Expression type, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Provisioning.ProvisioningContext)) { }
         public BicepVariable(string name, System.Type type, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Provisioning.ProvisioningContext)) { }
         protected Azure.Provisioning.Expressions.Expression BicepType { get { throw null; } }
         public string? Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<object> Value { get { throw null; } set { } }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
-        public static Azure.Provisioning.BicepVariable Create<T>(string name, Azure.Provisioning.BicepValue<object>? value = null, Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
     }
     public partial class Infrastructure : Azure.Provisioning.Primitives.Provisionable
     {

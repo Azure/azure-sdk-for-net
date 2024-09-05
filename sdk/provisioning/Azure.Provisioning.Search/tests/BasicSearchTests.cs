@@ -20,8 +20,12 @@ public class BasicSearchTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "The Search service location.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "The Search service location."
+                    };
 
                 SearchService search =
                     new(nameof(search))

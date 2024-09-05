@@ -23,10 +23,13 @@ public class BasicEventGridTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "Service location.";
-
-                BicepParameter webhookUri = BicepParameter.Create<string>(nameof(webhookUri));
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "Service location."
+                    };
+                BicepParameter webhookUri = new(nameof(webhookUri), typeof(string));
 
                 StorageAccount storage =
                     new(nameof(storage))

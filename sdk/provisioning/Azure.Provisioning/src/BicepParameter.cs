@@ -10,28 +10,36 @@ namespace Azure.Provisioning;
 /// <summary>
 /// Represents a parameter in a Bicep template.
 /// </summary>
-/// <param name="name">Name of the output.</param>
-/// <param name="type">Type of the output.</param>
-/// <param name="context">Optional provisioning context.</param>
-public class BicepParameter(string name, Expression type, ProvisioningContext? context = default)
-    : BicepVariable(name, type, value: null, context)
+public class BicepParameter : BicepVariable
 {
-    private bool _isSecure = false;
+    /// <summary>
+    /// Gets or sets whether this parameter uses a secure value.  It will default
+    /// to secure if provided a <see cref="BicepVariable.Value"/> that is known to be secure.
+    /// </summary>
     public bool IsSecure
     {
         get => _isSecure || Value.IsSecure;
         set => _isSecure = value;
     }
+    private bool _isSecure = false;
 
+    /// <summary>
+    /// Creates a new BicepParameter.
+    /// </summary>
+    /// <param name="name">Name of the parameter.</param>
+    /// <param name="type">Type of the parameter.</param>
+    /// <param name="context">Optional provisioning context.</param>
+    public BicepParameter(string name, Expression type, ProvisioningContext? context = default)
+        : base(name, type, value: null, context) { }
+
+    /// <summary>
+    /// Creates a new BicepParameter.
+    /// </summary>
+    /// <param name="name">Name of the parameter.</param>
+    /// <param name="type">Type of the parameter.</param>
+    /// <param name="context">Optional provisioning context.</param>
     public BicepParameter(string name, Type type, ProvisioningContext? context = default)
         : this(name, new TypeExpression(type), context) { }
-
-    public static new BicepParameter Create<T>(string name, BicepValue<object>? value = null, ProvisioningContext? context = default)
-    {
-        BicepParameter variable = new(name, BicepSyntax.Types.Create<T>(), context);
-        if (value is not null) { variable.Value = value; }
-        return variable;
-    }
 
     /// <inheritdoc />
     protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)

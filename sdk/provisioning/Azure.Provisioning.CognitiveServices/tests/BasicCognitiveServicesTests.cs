@@ -21,7 +21,11 @@ public class BasicCognitiveServicesTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location
+                    };
 
                 CognitiveServicesAccount account =
                     new(nameof(account))

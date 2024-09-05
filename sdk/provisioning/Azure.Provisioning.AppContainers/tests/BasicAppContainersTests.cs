@@ -21,11 +21,19 @@ public class BasicAppContainersTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "Service location.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "Service location."
+                    };
 
-                BicepParameter containerImage = BicepParameter.Create<string>(nameof(containerImage), "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest");
-                containerImage.Description = "Specifies the docker container image to deploy.";
+                BicepParameter containerImage =
+                    new(nameof(containerImage), typeof(string))
+                    {
+                        Value = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest",
+                        Description = "Specifies the docker container image to deploy."
+                    };
 
                 OperationalInsightsWorkspace logAnalytics =
                     new(nameof(logAnalytics))
@@ -88,7 +96,7 @@ public class BasicAppContainersTests(bool async)
                                         Resources =
                                             new AppContainerResources
                                             {
-                                                Cpu = new BicepValue<double>(BicepFunction.ParseJson("0.5").Expression!),
+                                                Cpu = BicepFunction.ParseJson("0.5").Expression!,
                                                 Memory = "1Gi"
                                             }
                                     }

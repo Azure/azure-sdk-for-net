@@ -20,8 +20,12 @@ public class BasicOperationalInsightsTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "The workspace location.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "The workspace location."
+                    };
 
                 OperationalInsightsWorkspace workspace =
                     new(nameof(workspace))

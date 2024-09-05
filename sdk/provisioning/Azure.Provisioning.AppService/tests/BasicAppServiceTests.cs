@@ -23,8 +23,12 @@ public class BasicAppServiceTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "Service location.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "Service location."
+                    };
 
                 StorageAccount storage =
                     new(nameof(storage))
@@ -57,7 +61,11 @@ public class BasicAppServiceTests(bool async)
                         RequestSource = ComponentRequestSource.Rest
                     };
 
-                BicepVariable funcAppName = BicepVariable.Create<string>(nameof(funcAppName), BicepFunction.Interpolate($"functionApp-{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}"));
+                BicepVariable funcAppName =
+                    new(nameof(funcAppName), typeof(string))
+                    {
+                        Value = BicepFunction.Interpolate($"functionApp-{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}")
+                    };
 
                 WebSite functionApp =
                     new(nameof(functionApp))

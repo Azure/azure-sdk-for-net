@@ -21,10 +21,17 @@ public class BasicSignalRTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "The SignalR service location.";
-
-                BicepParameter endpointName = BicepParameter.Create<string>(nameof(endpointName), "mySignalRService.55e432ab-7428-3695-b637-de57b20d40e5");
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "The SignalR service location."
+                    };
+                BicepParameter endpointName =
+                    new(nameof(endpointName), typeof(string))
+                    {
+                        Value = "mySignalRService.55e432ab-7428-3695-b637-de57b20d40e5"
+                    };
 
                 SignalRService signalr =
                     new(nameof(signalr), "2022-02-01")

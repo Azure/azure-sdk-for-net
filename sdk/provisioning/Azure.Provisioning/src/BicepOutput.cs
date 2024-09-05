@@ -10,21 +10,25 @@ namespace Azure.Provisioning;
 /// <summary>
 /// Represents an output in a Bicep template.
 /// </summary>
-/// <param name="name">Name of the output.</param>
-/// <param name="type">Type of the output.</param>
-/// <param name="context">Optional provisioning context.</param>
-public class BicepOutput(string name, Expression type, ProvisioningContext? context = default)
-    : BicepVariable(name, type, value: null, context)
+public class BicepOutput : BicepVariable
 {
+    /// <summary>
+    /// Creates a new BicepOutput.
+    /// </summary>
+    /// <param name="name">Name of the output.</param>
+    /// <param name="type">Type of the output.</param>
+    /// <param name="context">Optional provisioning context.</param>
+    public BicepOutput(string name, Expression type, ProvisioningContext? context = default)
+        : base(name, type, value: null, context) { }
+
+    /// <summary>
+    /// Creates a new BicepOutput.
+    /// </summary>
+    /// <param name="name">Name of the output.</param>
+    /// <param name="type">Type of the output.</param>
+    /// <param name="context">Optional provisioning context.</param>
     public BicepOutput(string name, Type type, ProvisioningContext? context = default)
         : this(name, new TypeExpression(type), context) { }
-
-    public static new BicepOutput Create<T>(string name, BicepValue<object>? value = null, ProvisioningContext? context = default)
-    {
-        BicepOutput output = new(name, BicepSyntax.Types.Create<T>(), context);
-        if (value is not null) { output.Value = value; }
-        return output;
-    }
 
     /// <inheritdoc />
     protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)

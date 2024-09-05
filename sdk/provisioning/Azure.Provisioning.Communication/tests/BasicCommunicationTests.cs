@@ -20,8 +20,12 @@ public class BasicCommunicationTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "Service location.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "Service location."
+                    };
 
                 CommunicationService comm =
                     new(nameof(comm), "2023-03-31")

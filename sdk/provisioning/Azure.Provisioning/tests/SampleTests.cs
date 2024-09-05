@@ -31,7 +31,11 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location
+                    };
 
                 // Create a storage account and blob resources
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
@@ -39,7 +43,7 @@ internal class SampleTests(bool async)
                 blobs = new(nameof(blobs)) { Parent = storage };
 
                 // Grab the endpoint
-                endpoint = BicepOutput.Create<string>("blobs_endpoint", storage.PrimaryEndpoints.Value!.BlobUri);
+                endpoint = new BicepOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri };
             })
         .Compare(
             """
@@ -92,9 +96,14 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                BicepParameter principalId = BicepParameter.Create<string>(nameof(principalId), "");
-                BicepParameter tags = BicepParameter.Create<object>(nameof(tags), new BicepDictionary<string>());
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location
+                    };
+                BicepParameter principalId = new(nameof(principalId), typeof(string)) { Value = "" };
+                BicepParameter tags = new(nameof(tags), typeof(object)) { Value = new BicepDictionary<string>() };
+
                 UserAssignedIdentity mi =
                     new(nameof(mi))
                     {
@@ -166,16 +175,16 @@ internal class SampleTests(bool async)
                                     new ObjectExpression(
                                         new PropertyExpression("componentType", new StringLiteral("AspireDashboard")))))));
 
-                BicepOutput.Create<string>("MANAGED_IDENTITY_CLIENT_ID", mi.ClientId);
-                BicepOutput.Create<string>("MANAGED_IDENTITY_NAME", mi.Name);
-                BicepOutput.Create<string>("MANAGED_IDENTITY_PRINCIPAL_ID", mi.PrincipalId);
-                BicepOutput.Create<string>("LOG_ANALYTICS_WORKSPACE_NAME", law.Name);
-                BicepOutput.Create<string>("LOG_ANALYTICS_WORKSPACE_ID", law.Id);
-                BicepOutput.Create<string>("AZURE_CONTAINER_REGISTRY_ENDPOINT", acr.LoginServer);
-                BicepOutput.Create<string>("AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID", mi.Id);
-                BicepOutput.Create<string>("AZURE_CONTAINER_APPS_ENVIRONMENT_NAME", cae.Name);
-                BicepOutput.Create<string>("AZURE_CONTAINER_APPS_ENVIRONMENT_ID", cae.Id);
-                BicepOutput.Create<string>("AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN", cae.DefaultDomain);
+                _ = new BicepOutput("MANAGED_IDENTITY_CLIENT_ID", typeof(string)) { Value = mi.ClientId };
+                _ = new BicepOutput("MANAGED_IDENTITY_NAME", typeof(string)) { Value = mi.Name };
+                _ = new BicepOutput("MANAGED_IDENTITY_PRINCIPAL_ID", typeof(string)) { Value = mi.PrincipalId };
+                _ = new BicepOutput("LOG_ANALYTICS_WORKSPACE_NAME", typeof(string)) { Value = law.Name };
+                _ = new BicepOutput("LOG_ANALYTICS_WORKSPACE_ID", typeof(string)) { Value = law.Id };
+                _ = new BicepOutput("AZURE_CONTAINER_REGISTRY_ENDPOINT", typeof(string)) { Value = acr.LoginServer };
+                _ = new BicepOutput("AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID", typeof(string)) { Value = mi.Id };
+                _ = new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_NAME", typeof(string)) { Value = cae.Name };
+                _ = new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_ID", typeof(string)) { Value = cae.Id };
+                _ = new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN", typeof(string)) { Value = cae.DefaultDomain };
             })
         .Compare(
             """

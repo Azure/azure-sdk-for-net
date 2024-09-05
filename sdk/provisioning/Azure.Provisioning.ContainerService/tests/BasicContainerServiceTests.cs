@@ -21,10 +21,14 @@ public class BasicContainerServiceTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                BicepParameter dnsPrefix = BicepParameter.Create<string>(nameof(dnsPrefix));
-                BicepParameter linuxAdminUsername = BicepParameter.Create<string>(nameof(linuxAdminUsername));
-                BicepParameter sshRsaPublicKey = BicepParameter.Create<string>(nameof(sshRsaPublicKey));
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location
+                    };
+                BicepParameter dnsPrefix = new(nameof(dnsPrefix), typeof(string));
+                BicepParameter linuxAdminUsername = new(nameof(linuxAdminUsername), typeof(string));
+                BicepParameter sshRsaPublicKey = new(nameof(sshRsaPublicKey), typeof(string));
 
                 ContainerServiceManagedCluster aks =
                     new(nameof(aks))

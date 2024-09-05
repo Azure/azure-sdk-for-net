@@ -20,11 +20,19 @@ public class BasicAppConfigurationTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "Config Store location.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "Config Store location."
+                    };
 
-                BicepParameter featureFlagKey = BicepParameter.Create<string>(nameof(featureFlagKey), "FeatureFlagSample");
-                featureFlagKey.Description = "Specifies the key of the feature flag.";
+                BicepParameter featureFlagKey =
+                    new(nameof(featureFlagKey), typeof(string))
+                    {
+                        Value = "FeatureFlagSample",
+                        Description = "Specifies the key of the feature flag."
+                    };
 
                 AppConfigurationStore configStore =
                     new(nameof(configStore), AppConfigurationStore.ResourceVersions.V2022_05_01)
@@ -33,13 +41,16 @@ public class BasicAppConfigurationTests(bool async)
                         SkuName = "Standard",
                     };
 
-                BicepVariable flag = BicepVariable.Create<object>(nameof(flag));
-                flag.Value =
-                    new BicepDictionary<object>
+                BicepVariable flag =
+                    new(nameof(flag), typeof(object))
                     {
-                        { "id", featureFlagKey },
-                        { "description", "A simple feature flag." },
-                        { "enabled", true }
+                        Value =
+                            new BicepDictionary<object>
+                            {
+                                { "id", featureFlagKey },
+                                { "description", "A simple feature flag." },
+                                { "enabled", true }
+                            }
                     };
 
                 AppConfigurationKeyValue featureFlag =

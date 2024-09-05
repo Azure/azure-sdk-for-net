@@ -21,8 +21,12 @@ public class BasicWebPubSubTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "WebPubSub location.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "WebPubSub location."
+                    };
 
                 WebPubSubService webpubsub =
                     new(nameof(webpubsub), "2021-10-01")

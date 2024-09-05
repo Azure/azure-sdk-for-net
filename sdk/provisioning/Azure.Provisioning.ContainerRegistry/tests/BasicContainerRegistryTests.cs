@@ -20,8 +20,12 @@ public class BasicContainerRegistryTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "Service location.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "Service location."
+                    };
 
                 ContainerRegistryService registry =
                     new(nameof(registry))
@@ -33,7 +37,7 @@ public class BasicContainerRegistryTests(bool async)
                     };
                 registry.Tags.Add("container.registry", registry.Name);
 
-                BicepOutput.Create<string>("registryLoginServer", registry.LoginServer);
+                _ = new BicepOutput("registryLoginServer", typeof(string)) { Value = registry.LoginServer };
             })
         .Compare(
             """

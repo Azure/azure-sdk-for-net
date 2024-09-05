@@ -222,9 +222,8 @@ public class ProvisioningContext
     /// </remarks>
     public Random Random { get; set; } = new Random();
 
-    // TODO: Add DefaultInfrastructure class to collect resources
     // TODO: Add a DefaultScope to allow globally scoping all resources
     // TODO: Resource resolvers
-    // TODO: IConfig helpers
+    // TODO: IConfig PropertyProvider
     // TODO: Default CancellationToken to link to all async operations
 }

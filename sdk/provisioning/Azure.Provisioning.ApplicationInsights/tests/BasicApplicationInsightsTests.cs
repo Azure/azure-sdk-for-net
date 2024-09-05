@@ -20,8 +20,12 @@ public class BasicApplicationInsightsTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "Service location.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "Service location."
+                    };
 
                 ApplicationInsightsComponent appInsights =
                     new(nameof(appInsights))
@@ -32,8 +36,8 @@ public class BasicApplicationInsightsTests(bool async)
                         RequestSource = ComponentRequestSource.Rest
                     };
 
-                BicepOutput.Create<string>("appInsightsName", appInsights.Name);
-                BicepOutput.Create<string>("appInsightsKey", appInsights.InstrumentationKey);
+                _ = new BicepOutput("appInsightsName", typeof(string)) { Value = appInsights.Name };
+                _ = new BicepOutput("appInsightsKey", typeof(string)) { Value = appInsights.InstrumentationKey };
             })
         .Compare(
             """

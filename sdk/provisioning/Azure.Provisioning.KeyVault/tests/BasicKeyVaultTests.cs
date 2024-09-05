@@ -20,20 +20,34 @@ public class BasicKeyVaultTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter skuName = BicepParameter.Create<string>(nameof(skuName), KeyVaultSkuName.Standard);
-                skuName.Description = "Vault type";
-
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "Vault location.";
-
-                BicepParameter secretValue = BicepParameter.Create<string>(nameof(secretValue));
-                secretValue.Description = "Specifies the value of the secret that you want to create.";
-                secretValue.IsSecure = true;
-
-                BicepParameter objectId = BicepParameter.Create<string>(nameof(objectId));
-                objectId.Description = "Specifies the object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault.";
-
-                BicepVariable tenantId = BicepVariable.Create<string>(nameof(tenantId), BicepFunction.GetSubscription().TenantId);
+                BicepParameter skuName =
+                    new(nameof(skuName), typeof(string))
+                    {
+                        Value = KeyVaultSkuName.Standard,
+                        Description = "Vault type"
+                    };
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "Vault location."
+                    };
+                BicepParameter secretValue =
+                    new(nameof(secretValue), typeof(string))
+                    {
+                        Description = "Specifies the value of the secret that you want to create.",
+                        IsSecure = true
+                    };
+                BicepParameter objectId =
+                    new(nameof(objectId), typeof(string))
+                    {
+                        Description = "Specifies the object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault."
+                    };
+                BicepVariable tenantId =
+                    new(nameof(tenantId), typeof(string))
+                    {
+                        Value = BicepFunction.GetSubscription().TenantId
+                    };
 
                 KeyVaultService kv =
                     new(nameof(kv))
@@ -77,8 +91,8 @@ public class BasicKeyVaultTests(bool async)
                         Properties = new SecretProperties { Value = secretValue }
                     };
 
-                BicepOutput.Create<string>("name", kv.Name);
-                BicepOutput.Create<string>("resourceId", kv.Id);
+                _ = new BicepOutput("name", typeof(string)) { Value = kv.Name };
+                _ = new BicepOutput("resourceId", typeof(string)) { Value = kv.Id };
             })
         .Compare(
             """

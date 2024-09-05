@@ -20,18 +20,29 @@ public class BasicSqlTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter dbName = BicepParameter.Create<string>(nameof(dbName), "SampleDB");
-                dbName.Description = "The name of the SQL Database.";
-
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "The SQL Server location.";
-
-                BicepParameter adminLogin = BicepParameter.Create<string>(nameof(adminLogin));
-                adminLogin.Description = "The administrator username of the SQL logical server.";
-
-                BicepParameter adminPass = BicepParameter.Create<string>(nameof(adminPass));
-                adminPass.Description = "The administrator password of the SQL logical server.";
-                adminPass.IsSecure = true;
+                BicepParameter dbName =
+                    new(nameof(dbName), typeof(string))
+                    {
+                        Value = "SampleDB",
+                        Description = "The name of the SQL Database."
+                    };
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "The SQL Server location."
+                    };
+                BicepParameter adminLogin =
+                    new(nameof(adminLogin), typeof(string))
+                    {
+                        Description = "The administrator username of the SQL logical server."
+                    };
+                BicepParameter adminPass =
+                    new(nameof(adminPass), typeof(string))
+                    {
+                        Description = "The administrator password of the SQL logical server.",
+                        IsSecure = true
+                    };
 
                 SqlServer sql =
                     new(nameof(sql))

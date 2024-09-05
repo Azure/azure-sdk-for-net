@@ -21,11 +21,14 @@ public class BasicEventHubsTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "Hub location.";
-
-                BicepParameter hubName = BicepParameter.Create<string>(nameof(hubName), "orders");
-                BicepParameter groupName = BicepParameter.Create<string>(nameof(groupName), "managers");
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "Hub location."
+                    };
+                BicepParameter hubName = new(nameof(hubName), typeof(string)) { Value = "orders" };
+                BicepParameter groupName = new(nameof(groupName), typeof(string)) { Value = "managers" };
 
                 EventHubsNamespace ns =
                     new(nameof(ns))

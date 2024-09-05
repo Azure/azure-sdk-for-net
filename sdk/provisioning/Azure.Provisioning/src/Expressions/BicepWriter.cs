@@ -35,7 +35,7 @@ internal class BicepWriter
     {
         foreach (char ch in text)
         {
-            var _ = ch switch
+            _ = ch switch
             {
                 '\\' => Append("\\\\"),
                 '\'' => Append("\\'"),

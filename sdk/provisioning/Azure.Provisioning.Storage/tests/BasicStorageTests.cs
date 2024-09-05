@@ -127,7 +127,7 @@ public class BasicStorageTests(bool async)
             {
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
                 BlobService blobs = new(nameof(blobs)) { Parent = storage };
-                BicepOutput endpoint = BicepOutput.Create<string>("blobs_endpoint", storage.PrimaryEndpoints.Value!.BlobUri);
+                _ = new BicepOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri };
             })
         .Compare(
             """
@@ -163,11 +163,18 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter storageAccountType = BicepParameter.Create<string>(nameof(storageAccountType), StorageSkuName.StandardLrs);
-                storageAccountType.Description = "Storage Account type";
-
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "The storage account location.";
+                BicepParameter storageAccountType =
+                    new(nameof(storageAccountType), typeof(string))
+                    {
+                        Value = StorageSkuName.StandardLrs,
+                        Description = "Storage Account type"
+                    };
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "The storage account location."
+                    };
 
                 StorageAccount sa =
                     new(nameof(sa))
@@ -177,8 +184,8 @@ public class BasicStorageTests(bool async)
                         Kind = StorageKind.StorageV2
                     };
 
-                BicepOutput.Create<string>("storageAccountName", sa.Name);
-                BicepOutput.Create<string>("storageAccountId", sa.Id);
+                _ = new BicepOutput("storageAccountName", typeof(string)) { Value = sa.Name };
+                _ = new BicepOutput("storageAccountId", typeof(string)) { Value = sa.Id };
             })
         .Compare(
             """
@@ -213,11 +220,19 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter containerName = BicepParameter.Create<string>(nameof(containerName), "mycontainer");
-                containerName.Description = "The container name.";
+                BicepParameter containerName =
+                    new(nameof(containerName), typeof(string))
+                    {
+                        Value = "mycontainer",
+                        Description = "The container name."
+                    };
 
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "The storage account location.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "The storage account location."
+                    };
 
                 StorageAccount sa =
                     new(nameof(sa))
@@ -277,11 +292,17 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter storageAccountType = BicepParameter.Create<string>(nameof(storageAccountType), StorageSkuName.StandardLrs);
-                storageAccountType.Description = "Storage Account type";
-
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "The storage account location.";
+                BicepParameter storageAccountType =
+                    new(nameof(storageAccountType), typeof(string))
+                    {
+                        Value = StorageSkuName.StandardLrs,
+                        Description = "Storage Account type"
+                    };
+                BicepParameter location = new(nameof(location), typeof(string))
+                {
+                    Value = BicepFunction.GetResourceGroup().Location,
+                    Description = "The storage account location."
+                };
 
                 StorageAccount sa =
                     new(nameof(sa))
@@ -301,8 +322,8 @@ public class BasicStorageTests(bool async)
                             }
                     };
 
-                BicepOutput.Create<string>("storageAccountName", sa.Name);
-                BicepOutput.Create<string>("storageAccountId", sa.Id);
+                _ = new BicepOutput("storageAccountName", typeof(string)) { Value = sa.Name };
+                _ = new BicepOutput("storageAccountId", typeof(string)) { Value = sa.Id };
             })
         .Compare(
             """

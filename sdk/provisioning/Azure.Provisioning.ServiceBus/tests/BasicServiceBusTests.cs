@@ -20,11 +20,18 @@ public class BasicServiceBusTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "The SB location.";
-
-                BicepParameter queueName = BicepParameter.Create<string>(nameof(queueName), "orders");
-                queueName.Description = "The name of the SB queue.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "The SB location."
+                    };
+                BicepParameter queueName =
+                    new(nameof(queueName), typeof(string))
+                    {
+                        Value = "orders",
+                        Description = "The name of the SB queue."
+                    };
 
                 ServiceBusNamespace sb =
                     new(nameof(sb), ServiceBusNamespace.ResourceVersions.V2021_11_01)

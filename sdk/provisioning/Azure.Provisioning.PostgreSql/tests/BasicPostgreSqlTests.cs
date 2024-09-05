@@ -20,21 +20,33 @@ public class BasicPostgreSqlTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "The database location.";
-
-                BicepParameter adminLogin = BicepParameter.Create<string>(nameof(adminLogin));
-                adminLogin.Description = "The administrator username of the server.";
-
-                BicepParameter adminPass = BicepParameter.Create<string>(nameof(adminPass));
-                adminPass.Description = "The administrator password of the server.";
-                adminPass.IsSecure = true;
-
-                BicepParameter aadAdminName = BicepParameter.Create<string>(nameof(aadAdminName));
-                aadAdminName.Description = "The AAD admin username.";
-
-                BicepParameter aadAdminOid = BicepParameter.Create<string>(nameof(aadAdminOid));
-                aadAdminOid.Description = "The AAD admin Object ID.";
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "The database location."
+                    };
+                BicepParameter adminLogin =
+                    new(nameof(adminLogin), typeof(string))
+                    {
+                        Description = "The administrator username of the server."
+                    };
+                BicepParameter adminPass =
+                    new(nameof(adminPass), typeof(string))
+                    {
+                        Description = "The administrator password of the server.",
+                        IsSecure = true
+                    };
+                BicepParameter aadAdminName =
+                    new(nameof(aadAdminName), typeof(string))
+                    {
+                        Description = "The AAD admin username."
+                    };
+                BicepParameter aadAdminOid =
+                    new(nameof(aadAdminOid), typeof(string))
+                    {
+                        Description = "The AAD admin Object ID."
+                    };
 
                 PostgreSqlFlexibleServer server =
                     new(nameof(server))

@@ -49,7 +49,7 @@ internal class ProvisioningPlanTests(bool async)
         if (SkipTools) { return; }
 
         // Use a string as the default value for a param typed int
-        BicepParameter param = BicepParameter.Create<int>("bar", "Hello, World.");
+        BicepParameter param = new("bar", typeof(int)) { Value = "Hello, World." };
 
         ProvisioningPlan plan = param.ParentInfrastructure!.Build();
         IReadOnlyList<BicepErrorMessage> messages = plan.Lint();

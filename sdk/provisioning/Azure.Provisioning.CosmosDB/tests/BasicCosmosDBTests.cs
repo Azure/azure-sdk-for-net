@@ -21,11 +21,14 @@ public class BasicCosmosDBTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location = BicepParameter.Create<string>(nameof(location), BicepFunction.GetResourceGroup().Location);
-                location.Description = "DB location.";
-
-                BicepParameter dbName = BicepParameter.Create<string>(nameof(dbName), "orders");
-                BicepParameter containerName = BicepParameter.Create<string>(nameof(containerName), "products");
+                BicepParameter location =
+                    new(nameof(location), typeof(string))
+                    {
+                        Value = BicepFunction.GetResourceGroup().Location,
+                        Description = "DB location."
+                    };
+                BicepParameter dbName = new(nameof(dbName), typeof(string)) { Value = "orders" };
+                BicepParameter containerName = new(nameof(containerName), typeof(string)) { Value = "products" };
 
                 CosmosDBAccount cosmos =
                     new(nameof(cosmos))
@@ -72,8 +75,8 @@ public class BasicCosmosDBTests(bool async)
                         },
                     };
 
-                BicepOutput.Create<string>("containerName", container.Name);
-                BicepOutput.Create<string>("containerId", container.Id);
+                _ = new BicepOutput("containerName", typeof(string)) { Value = container.Name };
+                _ = new BicepOutput("containerId", typeof(string)) { Value = container.Id };
             })
         .Compare(
             """
