@@ -10,7 +10,8 @@ In the example shown below, the transport is configured to use web sockets and a
 
 ```C# Snippet:ServiceBusConfigureTransport
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
-ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential(), new ServiceBusClientOptions
+DefaultAzureCredential credential = new();
+ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
 {
     TransportType = ServiceBusTransportType.AmqpWebSockets,
     WebProxy = new WebProxy("https://myproxyserver:80")
@@ -40,7 +41,8 @@ The retry options are used to configure the retry policy for all operations when
 
 ```C# Snippet:ServiceBusConfigureRetryOptions
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
-ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential(), new ServiceBusClientOptions
+DefaultAzureCredential credential = new();
+ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
 {
     RetryOptions = new ServiceBusRetryOptions
     {
@@ -57,7 +59,8 @@ The [prefetch feature](https://docs.microsoft.com/azure/service-bus-messaging/se
 
 ```C# Snippet:ServiceBusConfigurePrefetchReceiver
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
-ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+DefaultAzureCredential credential = new();
+ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 ServiceBusReceiver receiver = client.CreateReceiver("<queue-name>", new ServiceBusReceiverOptions
 {
     PrefetchCount = 10
@@ -68,7 +71,8 @@ And when using the processor:
 
 ```C# Snippet:ServiceBusConfigurePrefetchProcessor
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
-ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+DefaultAzureCredential credential = new();
+ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 ServiceBusProcessor processor = client.CreateProcessor("<queue-name>", new ServiceBusProcessorOptions
 {
     PrefetchCount = 10
@@ -90,7 +94,8 @@ When using the `ServiceBusProcessor`:
 
 ```C# Snippet:ServiceBusProcessorLockLostHandler
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
-ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+DefaultAzureCredential credential = new();
+ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
 // create a processor that we can use to process the messages
 await using ServiceBusProcessor processor = client.CreateProcessor("<queue-name>");
@@ -150,7 +155,8 @@ Here is what the code would look like when using the `ServiceBusSessionProcessor
 
 ```C# Snippet:ServiceBusSessionProcessorLockLostHandler
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
-var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+DefaultAzureCredential credential = new();
+var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
 
 // create a processor that we can use to process the messages
 await using ServiceBusSessionProcessor processor = client.CreateSessionProcessor("<queue-name>");

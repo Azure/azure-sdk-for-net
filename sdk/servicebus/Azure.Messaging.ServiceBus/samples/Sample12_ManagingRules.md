@@ -8,8 +8,9 @@ It is also possible to perform these rule management operations using the `Servi
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string topicName = "<topic_name>";
 string subscriptionName = "<subscription_name>";
+DefaultAzureCredential credential = new();
 
-await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
 await using ServiceBusRuleManager ruleManager = client.CreateRuleManager(topicName, subscriptionName);
 

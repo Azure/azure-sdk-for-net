@@ -2,15 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Azure.Identity;
-using System.Web;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 

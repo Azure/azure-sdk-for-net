@@ -5,9 +5,10 @@ The Azure.Core library contains the [CloudEvent](https://docs.microsoft.com/dotn
 ```C# Snippet:ServiceBusCloudEvents
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
+DefaultAzureCredential credential = new();
 
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);

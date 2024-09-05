@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
@@ -19,9 +18,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 Uri accountUri = new($"https://{TestEnvironment.StorageClaimCheckAccountName}.blob.core.windows.net/claim-checks");
                 #region Snippet:CreateBlobContainer
-                var containerClient = new BlobContainerClient(accountUri, new DefaultAzureCredential());
+#if SNIPPET
+                DefaultAzureCredential credential = new();
+#else
+                var credential = TestEnvironment.Credential;
+#endif
+                var containerClient = new BlobContainerClient(accountUri, credential);
                 await containerClient.CreateIfNotExistsAsync();
-                #endregion
+#endregion
 
                 try
                 {
@@ -43,9 +47,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     #region Snippet:ClaimCheckSendMessage
 
 #if SNIPPET
-                    ServiceBusClient client = new("<service bus fully qualified namespace>", new DefaultAzureCredential());
+                    ServiceBusClient client = new("<service bus fully qualified namespace>", credential);
 #else
-                    ServiceBusClient client = new(TestEnvironment.FullyQualifiedNamespace, new DefaultAzureCredential());
+                    ServiceBusClient client = new(TestEnvironment.FullyQualifiedNamespace, credential);
 #endif
                     ServiceBusSender sender = client.CreateSender(scope.QueueName);
                     await sender.SendMessageAsync(message);
@@ -63,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #else
                         Uri blobUri = new($"https://{TestEnvironment.StorageClaimCheckAccountName}.blob.core.windows.net/claim-checks/{(string)blobNameReceived}");
 #endif
-                        var blobClient = new BlobClient(blobUri, new DefaultAzureCredential());
+                        var blobClient = new BlobClient(blobUri, credential);
 
                         BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
                         BinaryData messageBody = downloadResult.Content;

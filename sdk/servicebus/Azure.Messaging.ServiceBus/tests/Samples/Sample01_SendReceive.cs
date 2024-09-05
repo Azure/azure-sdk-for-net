@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -22,13 +20,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
+
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
                 string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
 #endif
-                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
-
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
 
@@ -138,13 +137,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
+
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
                 string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
-#endif
-                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
+#endif
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
 
@@ -253,14 +254,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string topicName = "<topic_name>";
                 string subscriptionName = "<subscription_name>";
+
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
                 string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string topicName = scope.TopicName;
                 string subscriptionName = scope.SubscriptionNames[0];
-#endif
-                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
+#endif
                 // create the sender that we will use to send to our topic
                 ServiceBusSender sender = client.CreateSender(topicName);
 
@@ -299,7 +302,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 CustomEndpointAddress = new Uri(customEndpoint)
             };
 
+#if SNIPPET
             ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential(), options);
+#else
+            ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential, options);
+#endif
             #endregion
         }
 

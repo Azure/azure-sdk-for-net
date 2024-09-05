@@ -42,7 +42,7 @@ var options = new ServiceBusSessionProcessorOptions
     MaxConcurrentSessions = 5,
 
     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
-    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // Set AutoCompleteMessages to false to [settle messages](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
     // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
     MaxConcurrentCallsPerSession = 2,
 

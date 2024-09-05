@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 
@@ -23,13 +21,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string topicName = "<topic_name>";
                 string subscriptionName = "<subscription_name>";
+                DefaultAzureCredential credential = new();
 #else
                 string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string topicName = scope.TopicName;
                 string subscriptionName = scope.SubscriptionNames.First();
+                var credential = TestEnvironment.Credential;
 #endif
 
-                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
                 await using ServiceBusRuleManager ruleManager = client.CreateRuleManager(topicName, subscriptionName);
 

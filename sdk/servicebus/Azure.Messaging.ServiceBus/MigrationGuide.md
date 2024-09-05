@@ -153,9 +153,9 @@ We continue to support sending bytes in the message. Though, if you are working 
 ```C# Snippet:ServiceBusSendSingleMessage
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
+
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
-
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
@@ -261,7 +261,7 @@ Another notable difference from `Microsoft.Azure.ServiceBus` when it comes to re
 ServiceBusProcessorOptions options = new()
 {
     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
-    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // Set AutoCompleteMessages to false to [settle messages](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
     // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
     AutoCompleteMessages = false,
 
@@ -364,7 +364,7 @@ var options = new ServiceBusSessionProcessorOptions
     MaxConcurrentSessions = 5,
 
     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
-    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // Set AutoCompleteMessages to false to [settle messages](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
     // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
     MaxConcurrentCallsPerSession = 2,
 
@@ -496,7 +496,7 @@ In `Azure.Messaging.ServiceBus`, activity baggage is not currently flowed throug
 
 ## Plugins
  
-In the previous library, `Microsoft.Azure.ServiceBus`, users could [register plugins](https://docs.microsoft.com/dotnet/api/microsoft.azure.servicebus.queueclient.registerplugin?view=azure-dotnet) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. 
+In the previous library, `Microsoft.Azure.ServiceBus`, users could [register plugins](https://learn.microsoft.com/dotnet/api/microsoft.azure.servicebus.queueclient.registerplugin?view=azure-dotnet) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. 
 
 To achieve similar functionality with `Azure.Messaging.ServiceBus`, you can extend the various types as demonstrated in the [extensibility sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample09_Extensibility.md). We also have a [dedicated sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample10_ClaimCheck.md) that demonstrates using the claim check pattern in the new library.
 

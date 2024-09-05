@@ -13,7 +13,6 @@ It is also important to be aware that if there is a receiver reading the entity 
 ```C# Snippet:ServiceBusPurgeMessages
 string fullQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
-
 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
@@ -27,8 +26,7 @@ For scenarios where you would like to delete all messages enqueued before a give
 
 ```C# Snippet:ServiceBusPurgeMessagesByDate
 string fullQualifiedNamespace = "<fully_qualified_namespace>";
-string queueName = "<queue_name>";
-
+string queueName = "<queue_name>";;
 await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
@@ -46,7 +44,6 @@ Note that the service may delete fewer messages than were requested, but will ne
 ```C# Snippet:ServiceBusDeleteMessages
 string fullQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
-
 await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
@@ -62,7 +59,6 @@ When you wish to delete the oldest messages in the entity but restrict it to onl
 ```C# Snippet:ServiceBusDeleteMessagesByDate
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
-
 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 

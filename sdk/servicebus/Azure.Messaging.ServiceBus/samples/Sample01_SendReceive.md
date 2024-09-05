@@ -9,9 +9,9 @@ Message sending is performed using the `ServiceBusSender`. Receiving is performe
 ```C# Snippet:ServiceBusSendAndReceive
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
+
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
-
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
@@ -40,9 +40,9 @@ As discussed in the [Key concepts section](https://github.com/Azure/azure-sdk-fo
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string topicName = "<topic_name>";
 string subscriptionName = "<subscription_name>";
+
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
-
 // create the sender that we will use to send to our topic
 ServiceBusSender sender = client.CreateSender(topicName);
 
@@ -170,7 +170,7 @@ await sender.CancelScheduledMessageAsync(seq);
 
 ### Setting time to live
 
-Message time to live can be configured at the queue or subscription level. By default, it is 14 days. Once this time has passed, the message is considered "expired". You can configure what happens to expired messages at the queue or subscription level. By default, these messages are deleted, but they can also be configured to move to the dead letter queue. More information about message expiry can be found [here](https://docs.microsoft.com/azure/service-bus-messaging/message-expiration). If you want to have an individual message expire before the entity-level configured time, you can set the `TimeToLive` property on the message.
+Message time to live can be configured at the queue or subscription level. By default, it is 14 days. Once this time has passed, the message is considered "expired". You can configure what happens to expired messages at the queue or subscription level. By default, these messages are deleted, but they can also be configured to move to the dead letter queue. More information about message expiry can be found [here](https://learn.microsoft.com/azure/service-bus-messaging/message-expiration). If you want to have an individual message expire before the entity-level configured time, you can set the `TimeToLive` property on the message.
 
 ```C# Snippet:ServiceBusMessageTimeToLive
 var message = new ServiceBusMessage("Hello world!") { TimeToLive = TimeSpan.FromMinutes(5) };

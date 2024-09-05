@@ -8,7 +8,8 @@ In our example, we will assume that the message body can fit in memory. This all
 
 First, we will create a `BlobContainerClient` and use the container name "claim-checks". We will be storing our message bodies in blobs within this container.
 ```C# Snippet:CreateBlobContainer
-var containerClient = new BlobContainerClient(accountUri, new DefaultAzureCredential());
+DefaultAzureCredential credential = new();
+var containerClient = new BlobContainerClient(accountUri, credential);
 await containerClient.CreateIfNotExistsAsync();
 ```
 
@@ -29,7 +30,7 @@ var message = new ServiceBusMessage
 
 Finally, we send our message to our Service Bus queue.
 ```C# Snippet:ClaimCheckSendMessage
-ServiceBusClient client = new("<service bus fully qualified namespace>", new DefaultAzureCredential());
+ServiceBusClient client = new("<service bus fully qualified namespace>", credential);
 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 await sender.SendMessageAsync(message);
 ```
@@ -44,7 +45,7 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync()
 if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
 {
     Uri blobUri = new($"https://<storage account name>.blob.core.windows.net/claim-checks/{(string)blobNameReceived}");
-    var blobClient = new BlobClient(blobUri, new DefaultAzureCredential());
+    var blobClient = new BlobClient(blobUri, credential);
 
     BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
     BinaryData messageBody = downloadResult.Content;

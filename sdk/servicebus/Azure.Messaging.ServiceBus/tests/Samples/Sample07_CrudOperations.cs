@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 
@@ -31,7 +30,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             #region Snippet:ServiceBusAdministrationClientAAD
             // Create a ServiceBusAdministrationClient that will authenticate using default credentials
             string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
+#if SNIPPET
             ServiceBusAdministrationClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+#else
+            ServiceBusAdministrationClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
+#endif
             #endregion
         }
 
@@ -47,11 +50,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
+                var client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
                 string queueName = adminQueueName;
                 string fullyQualifiedNamespace = adminFullyQualifiedNamespace;
+                var client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, TestEnvironment.Credential);
 #endif
-                var client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
                 var options = new CreateQueueOptions(queueName)
                 {
                     AutoDeleteOnIdle = TimeSpan.FromDays(7),
@@ -80,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             }
             finally
             {
-                await new ServiceBusAdministrationClient(adminFullyQualifiedNamespace, new DefaultAzureCredential()).DeleteQueueAsync(adminQueueName);
+                await new ServiceBusAdministrationClient(adminFullyQualifiedNamespace, TestEnvironment.Credential).DeleteQueueAsync(adminQueueName);
             }
         }
 
@@ -123,11 +127,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string topicName = "<topic_name>";
+                var client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
                 string fullyQualifiedNamespace = adminFullyQualifiedNamespace;
                 string topicName = adminTopicName;
+                var client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, TestEnvironment.Credential);
 #endif
-                var client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
                 var topicOptions = new CreateTopicOptions(topicName)
                 {
                     AutoDeleteOnIdle = TimeSpan.FromDays(7),

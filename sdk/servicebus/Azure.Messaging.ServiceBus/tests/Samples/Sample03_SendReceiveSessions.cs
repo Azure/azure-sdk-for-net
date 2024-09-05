@@ -4,7 +4,6 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -20,12 +19,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
+
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
                 string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
 #endif
-                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);

@@ -9,6 +9,7 @@ Receiving from sessions is performed using the `ServiceBusSessionReceiver`. This
 ```C# Snippet:ServiceBusSendAndReceiveSessionMessage
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
+
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
