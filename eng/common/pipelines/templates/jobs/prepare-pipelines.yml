@@ -83,7 +83,7 @@ jobs:
         }
 
         # Map the language prefix to the appropriate variable groups
-        switch $prefix 
+        switch ($prefix)
         {
           "java" {
             $internalVariableGroups = '$(AzureSDK_Maven_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
