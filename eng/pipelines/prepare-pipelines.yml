@@ -5,9 +5,3 @@ variables:
 
 extends:
   template: /eng/common/pipelines/templates/jobs/prepare-pipelines.yml
-  parameters:
-    Repository: $(Build.Repository.Name)
-    Prefix: net
-    CIConventionOptions: ''
-    UPConventionOptions: '--variablegroups 13 58 76 93'
-    TestsConventionOptions: '--variablegroups 64'
