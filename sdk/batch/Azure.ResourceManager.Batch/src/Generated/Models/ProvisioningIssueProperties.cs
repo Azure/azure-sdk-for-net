@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssueProperties(IssueType? issueType, Severity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<AccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProvisioningIssueProperties(IssueType? issueType, BatchSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<AccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IssueType = issueType;
             Severity = severity;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Type of issue. </summary>
         public IssueType? IssueType { get; }
         /// <summary> Severity of the issue. </summary>
-        public Severity? Severity { get; }
+        public BatchSeverity? Severity { get; }
         /// <summary> Description of the issue. </summary>
         public string Description { get; }
         /// <summary> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </summary>

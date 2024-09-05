@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.ProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.Batch.Models.ResourceAssociation resourceAssociation = null, Azure.ResourceManager.Batch.Models.NetworkSecurityProfile profile = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.NetworkSecurityProfile NetworkSecurityProfile(string name = null, int? accessRulesVersion = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.AccessRule> accessRules = null, int? diagnosticSettingsVersion = default(int?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.ProvisioningIssue ProvisioningIssue(string name = null, Azure.ResourceManager.Batch.Models.ProvisioningIssueProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.ProvisioningIssueProperties ProvisioningIssueProperties(Azure.ResourceManager.Batch.Models.IssueType? issueType = default(Azure.ResourceManager.Batch.Models.IssueType?), Azure.ResourceManager.Batch.Models.Severity? severity = default(Azure.ResourceManager.Batch.Models.Severity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.AccessRule> suggestedAccessRules = null) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.ProvisioningIssueProperties ProvisioningIssueProperties(Azure.ResourceManager.Batch.Models.IssueType? issueType = default(Azure.ResourceManager.Batch.Models.IssueType?), Azure.ResourceManager.Batch.Models.BatchSeverity? severity = default(Azure.ResourceManager.Batch.Models.BatchSeverity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.AccessRule> suggestedAccessRules = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.ResourceAssociation ResourceAssociation(string name = null, Azure.ResourceManager.Batch.Models.ResourceAssociationAccessMode? accessMode = default(Azure.ResourceManager.Batch.Models.ResourceAssociationAccessMode?)) { throw null; }
     }
     public partial class AutomaticOSUpgradePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.AutomaticOSUpgradePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.AutomaticOSUpgradePolicy>
@@ -1536,6 +1536,24 @@ namespace Azure.ResourceManager.Batch.Models
         TrustedLaunch = 0,
         ConfidentialVm = 1,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchSeverity : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchSeverity(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchSeverity Error { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchSeverity Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchSeverity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchSeverity left, Azure.ResourceManager.Batch.Models.BatchSeverity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchSeverity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchSeverity left, Azure.ResourceManager.Batch.Models.BatchSeverity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class BatchSkuCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchSkuCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchSkuCapability>
     {
         internal BatchSkuCapability() { }
@@ -1893,7 +1911,7 @@ namespace Azure.ResourceManager.Batch.Models
         internal ProvisioningIssueProperties() { }
         public string Description { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.IssueType? IssueType { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.Severity? Severity { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchSeverity? Severity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.AccessRule> SuggestedAccessRules { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> SuggestedResourceIds { get { throw null; } }
         Azure.ResourceManager.Batch.Models.ProvisioningIssueProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ProvisioningIssueProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1964,24 +1982,6 @@ namespace Azure.ResourceManager.Batch.Models
         public static bool operator ==(Azure.ResourceManager.Batch.Models.SecurityEncryptionType left, Azure.ResourceManager.Batch.Models.SecurityEncryptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Batch.Models.SecurityEncryptionType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Batch.Models.SecurityEncryptionType left, Azure.ResourceManager.Batch.Models.SecurityEncryptionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Severity : System.IEquatable<Azure.ResourceManager.Batch.Models.Severity>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Severity(string value) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.Severity Error { get { throw null; } }
-        public static Azure.ResourceManager.Batch.Models.Severity Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Batch.Models.Severity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Batch.Models.Severity left, Azure.ResourceManager.Batch.Models.Severity right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.Severity (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Batch.Models.Severity left, Azure.ResourceManager.Batch.Models.Severity right) { throw null; }
         public override string ToString() { throw null; }
     }
     public enum UpgradeMode

@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static ProvisioningIssueProperties ProvisioningIssueProperties(IssueType? issueType = null, Severity? severity = null, string description = null, IEnumerable<ResourceIdentifier> suggestedResourceIds = null, IEnumerable<AccessRule> suggestedAccessRules = null)
+        public static ProvisioningIssueProperties ProvisioningIssueProperties(IssueType? issueType = null, BatchSeverity? severity = null, string description = null, IEnumerable<ResourceIdentifier> suggestedResourceIds = null, IEnumerable<AccessRule> suggestedAccessRules = null)
         {
             suggestedResourceIds ??= new List<ResourceIdentifier>();
             suggestedAccessRules ??= new List<AccessRule>();

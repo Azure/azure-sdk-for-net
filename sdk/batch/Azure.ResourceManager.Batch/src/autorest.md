@@ -63,6 +63,7 @@ acronym-mapping:
 prepend-rp-prefix:
 - StorageAccountType
 - ProvisioningState
+- Severity
 
 override-operation-name:
   Location_CheckNameAvailability: CheckBatchNameAvailability

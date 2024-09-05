@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             IssueType? issueType = default;
-            Severity? severity = default;
+            BatchSeverity? severity = default;
             string description = default;
             IReadOnlyList<ResourceIdentifier> suggestedResourceIds = default;
             IReadOnlyList<AccessRule> suggestedAccessRules = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    severity = new Severity(property.Value.GetString());
+                    severity = new BatchSeverity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))
