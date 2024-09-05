@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -108,6 +109,61 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new IngressPortMapping(external, targetPort, exposedPort, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(External), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  external: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  external: ");
+                var boolValue = External == true ? "true" : "false";
+                builder.AppendLine($"{boolValue}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  targetPort: ");
+                builder.AppendLine($"{TargetPort}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExposedPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exposedPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExposedPort))
+                {
+                    builder.Append("  exposedPort: ");
+                    builder.AppendLine($"{ExposedPort.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<IngressPortMapping>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IngressPortMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -116,6 +172,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IngressPortMapping)} does not support writing '{options.Format}' format.");
             }

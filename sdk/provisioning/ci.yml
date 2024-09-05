@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/provisioning/
+    exclude:
+    - sdk/provisioning/Generator/
 
 pr:
   branches:
@@ -20,6 +22,8 @@ pr:
   paths:
     include:
     - sdk/provisioning/
+    exclude:
+    - sdk/provisioning/Generator/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -31,24 +35,38 @@ extends:
       safeName: AzureProvisioning
     - name: Azure.Provisioning.AppConfiguration
       safeName: AzureProvisioningAppConfiguration
+    - name: Azure.Provisioning.AppContainers
+      safeName: AzureProvisioningAppContainers
     - name: Azure.Provisioning.ApplicationInsights
       safeName: AzureProvisioningApplicationInsights
+    - name: Azure.Provisioning.AppService
+      safeName: AzureProvisioningAppService
     - name: Azure.Provisioning.CognitiveServices
       safeName: AzureProvisioningCognitiveServices
+    - name: Azure.Provisioning.Communication
+      safeName: AzureProvisioningCommunication
+    - name: Azure.Provisioning.ContainerRegistry
+      safeName: AzureProvisioningContainerRegistry
+    - name: Azure.Provisioning.ContainerService
+      safeName: AzureProvisioningContainerService
     - name: Azure.Provisioning.CosmosDB
       safeName: AzureProvisioningCosmosDB
+    - name: Azure.Provisioning.EventGrid
+      safeName: AzureProvisioningEventGrid
     - name: Azure.Provisioning.EventHubs
       safeName: AzureProvisioningEventHubs
     - name: Azure.Provisioning.KeyVault
       safeName: AzureProvisioningKeyVault
+    - name: Azure.Provisioning.Kubernetes
+      safeName: AzureProvisioningKubernetes
+    - name: Azure.Provisioning.KubernetesConfiguration
+      safeName: AzureProvisioningKubernetesConfiguration
     - name: Azure.Provisioning.OperationalInsights
       safeName: AzureProvisioningOperationalInsights
     - name: Azure.Provisioning.PostgreSql
       safeName: AzureProvisioningPostgreSql
     - name: Azure.Provisioning.Redis
       safeName: AzureProvisioningRedis
-    - name: Azure.Provisioning.Resources
-      safeName: AzureProvisioningResources
     - name: Azure.Provisioning.Search
       safeName: AzureProvisioningSearch
     - name: Azure.Provisioning.ServiceBus

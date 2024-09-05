@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -184,6 +186,136 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RoutesLogoutEndpoint", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routes: ");
+                builder.AppendLine("{");
+                builder.Append("    logoutEndpoint: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Routes))
+                {
+                    builder.Append("  routes: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Routes, options, 2, false, "  routes: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenStore), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tokenStore: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenStore))
+                {
+                    builder.Append("  tokenStore: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TokenStore, options, 2, false, "  tokenStore: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreserveUrlFragmentsForLogins), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preserveUrlFragmentsForLogins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
+                {
+                    builder.Append("  preserveUrlFragmentsForLogins: ");
+                    var boolValue = PreserveUrlFragmentsForLogins.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedExternalRedirectUrls), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allowedExternalRedirectUrls: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
+                {
+                    if (AllowedExternalRedirectUrls.Any())
+                    {
+                        builder.Append("  allowedExternalRedirectUrls: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedExternalRedirectUrls)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CookieExpiration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cookieExpiration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CookieExpiration))
+                {
+                    builder.Append("  cookieExpiration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CookieExpiration, options, 2, false, "  cookieExpiration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Nonce), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nonce: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Nonce))
+                {
+                    builder.Append("  nonce: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Nonce, options, 2, false, "  nonce: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppLogin>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppLogin>)this).GetFormatFromOptions(options) : options.Format;
@@ -192,6 +324,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppLogin)} does not support writing '{options.Format}' format.");
             }

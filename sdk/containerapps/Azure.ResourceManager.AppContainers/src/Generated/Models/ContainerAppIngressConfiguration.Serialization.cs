@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -322,6 +324,261 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fqdn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fqdn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Fqdn))
+                {
+                    builder.Append("  fqdn: ");
+                    if (Fqdn.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Fqdn}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Fqdn}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(External), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  external: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(External))
+                {
+                    builder.Append("  external: ");
+                    var boolValue = External.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetPort))
+                {
+                    builder.Append("  targetPort: ");
+                    builder.AppendLine($"{TargetPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExposedPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exposedPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExposedPort))
+                {
+                    builder.Append("  exposedPort: ");
+                    builder.AppendLine($"{ExposedPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Transport), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  transport: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Transport))
+                {
+                    builder.Append("  transport: ");
+                    builder.AppendLine($"'{Transport.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Traffic), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  traffic: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Traffic))
+                {
+                    if (Traffic.Any())
+                    {
+                        builder.Append("  traffic: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Traffic)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  traffic: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomDomains), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customDomains: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomDomains))
+                {
+                    if (CustomDomains.Any())
+                    {
+                        builder.Append("  customDomains: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CustomDomains)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  customDomains: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowInsecure), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allowInsecure: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowInsecure))
+                {
+                    builder.Append("  allowInsecure: ");
+                    var boolValue = AllowInsecure.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPSecurityRestrictions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipSecurityRestrictions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IPSecurityRestrictions))
+                {
+                    if (IPSecurityRestrictions.Any())
+                    {
+                        builder.Append("  ipSecurityRestrictions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in IPSecurityRestrictions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ipSecurityRestrictions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("StickySessionsAffinity", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stickySessions: ");
+                builder.AppendLine("{");
+                builder.Append("    affinity: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(StickySessions))
+                {
+                    builder.Append("  stickySessions: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StickySessions, options, 2, false, "  stickySessions: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientCertificateMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientCertificateMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientCertificateMode))
+                {
+                    builder.Append("  clientCertificateMode: ");
+                    builder.AppendLine($"'{ClientCertificateMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorsPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  corsPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CorsPolicy))
+                {
+                    builder.Append("  corsPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CorsPolicy, options, 2, false, "  corsPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalPortMappings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  additionalPortMappings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AdditionalPortMappings))
+                {
+                    if (AdditionalPortMappings.Any())
+                    {
+                        builder.Append("  additionalPortMappings: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AdditionalPortMappings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  additionalPortMappings: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppIngressConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -330,6 +587,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support writing '{options.Format}' format.");
             }

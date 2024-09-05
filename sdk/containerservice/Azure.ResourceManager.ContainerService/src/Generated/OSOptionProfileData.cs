@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> The list of OS options. </summary>
+        [WirePath("properties.osOptionPropertyList")]
         public IReadOnlyList<ContainerServiceOSOptionProperty> OSOptionPropertyList { get; }
     }
 }

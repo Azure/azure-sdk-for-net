@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -212,6 +214,151 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secrets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secrets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Secrets))
+                {
+                    if (Secrets.Any())
+                    {
+                        builder.Append("  secrets: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Secrets)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  secrets: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  triggerType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  triggerType: ");
+                builder.AppendLine($"'{TriggerType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicaTimeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  replicaTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  replicaTimeout: ");
+                builder.AppendLine($"{ReplicaTimeout}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicaRetryLimit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  replicaRetryLimit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplicaRetryLimit))
+                {
+                    builder.Append("  replicaRetryLimit: ");
+                    builder.AppendLine($"{ReplicaRetryLimit.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManualTriggerConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  manualTriggerConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManualTriggerConfig))
+                {
+                    builder.Append("  manualTriggerConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ManualTriggerConfig, options, 2, false, "  manualTriggerConfig: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduleTriggerConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scheduleTriggerConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScheduleTriggerConfig))
+                {
+                    builder.Append("  scheduleTriggerConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ScheduleTriggerConfig, options, 2, false, "  scheduleTriggerConfig: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventTriggerConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  eventTriggerConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EventTriggerConfig))
+                {
+                    builder.Append("  eventTriggerConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, EventTriggerConfig, options, 2, false, "  eventTriggerConfig: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Registries), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  registries: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Registries))
+                {
+                    if (Registries.Any())
+                    {
+                        builder.Append("  registries: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Registries)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  registries: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppJobConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -220,6 +367,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support writing '{options.Format}' format.");
             }
