@@ -9,51 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingSubscriptionCollection
     {
-        // BillingSubscriptionsListByBillingAccount
+        // BillingSubscriptionsGet
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_BillingSubscriptionsListByBillingAccount()
+        public async Task Get_BillingSubscriptionsGet()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/BillingSubscriptionsListByBillingAccount.json
-            // this example is just showing the usage of "BillingSubscriptions_ListByBillingAccount" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this BillingSubscriptionResource
-            string billingAccountName = "{billingAccountName}";
-            BillingSubscriptionCollection collection = tenantResource.GetBillingSubscriptions(billingAccountName);
-
-            // invoke the operation and iterate over the result
-            await foreach (BillingSubscriptionResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                BillingSubscriptionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // BillingSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_BillingSubscription()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/BillingSubscription.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsGet.json
             // this example is just showing the usage of "BillingSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,16 +28,17 @@ namespace Azure.ResourceManager.Billing.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // get the collection of this BillingSubscriptionResource
-            string billingAccountName = "{billingAccountName}";
-            BillingSubscriptionCollection collection = tenantResource.GetBillingSubscriptions(billingAccountName);
+            BillingSubscriptionCollection collection = billingAccount.GetBillingSubscriptions();
 
             // invoke the operation
-            string billingSubscriptionName = "418b0e9c-5dc3-4260-918f-30b90619fe07";
+            string billingSubscriptionName = "11111111-1111-1111-1111-111111111111";
             BillingSubscriptionResource result = await collection.GetAsync(billingSubscriptionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -80,12 +48,12 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingSubscription
+        // BillingSubscriptionsGet
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_BillingSubscription()
+        public async Task Exists_BillingSubscriptionsGet()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/BillingSubscription.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsGet.json
             // this example is just showing the usage of "BillingSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,27 +61,28 @@ namespace Azure.ResourceManager.Billing.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // get the collection of this BillingSubscriptionResource
-            string billingAccountName = "{billingAccountName}";
-            BillingSubscriptionCollection collection = tenantResource.GetBillingSubscriptions(billingAccountName);
+            BillingSubscriptionCollection collection = billingAccount.GetBillingSubscriptions();
 
             // invoke the operation
-            string billingSubscriptionName = "418b0e9c-5dc3-4260-918f-30b90619fe07";
+            string billingSubscriptionName = "11111111-1111-1111-1111-111111111111";
             bool result = await collection.ExistsAsync(billingSubscriptionName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BillingSubscription
+        // BillingSubscriptionsGet
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_BillingSubscription()
+        public async Task GetIfExists_BillingSubscriptionsGet()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/BillingSubscription.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsGet.json
             // this example is just showing the usage of "BillingSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,16 +90,17 @@ namespace Azure.ResourceManager.Billing.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // get the collection of this BillingSubscriptionResource
-            string billingAccountName = "{billingAccountName}";
-            BillingSubscriptionCollection collection = tenantResource.GetBillingSubscriptions(billingAccountName);
+            BillingSubscriptionCollection collection = billingAccount.GetBillingSubscriptions();
 
             // invoke the operation
-            string billingSubscriptionName = "418b0e9c-5dc3-4260-918f-30b90619fe07";
+            string billingSubscriptionName = "11111111-1111-1111-1111-111111111111";
             NullableResponse<BillingSubscriptionResource> response = await collection.GetIfExistsAsync(billingSubscriptionName);
             BillingSubscriptionResource result = response.HasValue ? response.Value : null;
 
@@ -146,6 +116,42 @@ namespace Azure.ResourceManager.Billing.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
+        }
+
+        // BillingSubscriptionsListByBillingAccount
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAll_BillingSubscriptionsListByBillingAccount()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsListByBillingAccount.json
+            // this example is just showing the usage of "BillingSubscriptions_ListByBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // get the collection of this BillingSubscriptionResource
+            BillingSubscriptionCollection collection = billingAccount.GetBillingSubscriptions();
+
+            // invoke the operation and iterate over the result
+            BillingSubscriptionCollectionGetAllOptions options = new BillingSubscriptionCollectionGetAllOptions() { IncludeDeleted = false, IncludeTenantSubscriptions = false };
+            await foreach (BillingSubscriptionResource item in collection.GetAllAsync(options))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BillingSubscriptionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
         }
     }
 }
