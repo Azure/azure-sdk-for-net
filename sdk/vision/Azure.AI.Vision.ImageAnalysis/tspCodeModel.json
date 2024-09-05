@@ -1,0 +1,3297 @@
+{
+ "$id": "1",
+ "Name": "ImageAnalysis",
+ "ApiVersions": [
+  "2023-10-01"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Kind": "enum",
+   "Name": "VisualFeaturesImpl",
+   "CrossLanguageDefinitionId": "ImageAnalysis.VisualFeatures",
+   "ValueType": {
+    "$id": "3",
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
+   },
+   "Values": [
+    {
+     "$id": "4",
+     "Name": "tags",
+     "Value": "tags",
+     "Description": "Extract content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in the image.",
+     "Decorators": []
+    },
+    {
+     "$id": "5",
+     "Name": "caption",
+     "Value": "caption",
+     "Description": "Generate a human-readable caption sentence that describes the content of the image.",
+     "Decorators": []
+    },
+    {
+     "$id": "6",
+     "Name": "denseCaptions",
+     "Value": "denseCaptions",
+     "Description": "Generate human-readable caption sentences for up to 10 different regions in the image, including one for the whole image.",
+     "Decorators": []
+    },
+    {
+     "$id": "7",
+     "Name": "objects",
+     "Value": "objects",
+     "Description": "Object detection. This is similar to tags, but focused on detecting physical objects in the image and returning their location.",
+     "Decorators": []
+    },
+    {
+     "$id": "8",
+     "Name": "read",
+     "Value": "read",
+     "Description": "Extract printed or handwritten text from the image. Also known as Optical Character Recognition (OCR).",
+     "Decorators": []
+    },
+    {
+     "$id": "9",
+     "Name": "smartCrops",
+     "Value": "smartCrops",
+     "Description": "Find representative sub-regions of the image for thumbnail generation, at desired aspect ratios, with priority given to detected faces.",
+     "Decorators": []
+    },
+    {
+     "$id": "10",
+     "Name": "people",
+     "Value": "people",
+     "Description": "Detect people in the image and return their location.",
+     "Decorators": []
+    }
+   ],
+   "Description": "The visual features supported by the Image Analysis service",
+   "IsExtensible": true,
+   "Usage": "Input",
+   "Decorators": []
+  },
+  {
+   "$id": "11",
+   "Kind": "enum",
+   "Name": "Versions",
+   "CrossLanguageDefinitionId": "ImageAnalysis.Versions",
+   "ValueType": {
+    "$id": "12",
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
+   },
+   "Values": [
+    {
+     "$id": "13",
+     "Name": "v2023_10_01",
+     "Value": "2023-10-01",
+     "Decorators": []
+    }
+   ],
+   "IsExtensible": false,
+   "Usage": "ApiVersionEnum",
+   "Decorators": []
+  }
+ ],
+ "Models": [
+  {
+   "$id": "14",
+   "Kind": "model",
+   "Name": "ImageAnalysisResult",
+   "CrossLanguageDefinitionId": "ImageAnalysis.ImageAnalysisResult",
+   "Access": "public",
+   "Usage": "Output,Json",
+   "Description": "Represents the outcome of an Image Analysis operation.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "15",
+     "Name": "caption",
+     "SerializedName": "captionResult",
+     "Description": "The generated phrase that describes the content of the analyzed image.",
+     "Type": {
+      "$id": "16",
+      "Kind": "model",
+      "Name": "CaptionResult",
+      "CrossLanguageDefinitionId": "ImageAnalysis.CaptionResult",
+      "Access": "public",
+      "Usage": "Output,Json",
+      "Description": "Represents a generated phrase that describes the content of the whole image.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "17",
+        "Name": "confidence",
+        "SerializedName": "confidence",
+        "Description": "A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.\nHigher values indicating higher confidence.",
+        "Type": {
+         "$id": "18",
+         "Kind": "float32",
+         "Name": "float32",
+         "CrossLanguageDefinitionId": "TypeSpec.float32",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       },
+       {
+        "$id": "19",
+        "Name": "text",
+        "SerializedName": "text",
+        "Description": "The text of the caption.",
+        "Type": {
+         "$id": "20",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "21",
+     "Name": "denseCaptions",
+     "SerializedName": "denseCaptionsResult",
+     "Description": "The up to 10 generated phrases, the first describing the content of the whole image,\nand the others describing the content of different regions of the image.",
+     "Type": {
+      "$id": "22",
+      "Kind": "model",
+      "Name": "DenseCaptionsResult",
+      "CrossLanguageDefinitionId": "ImageAnalysis.DenseCaptionsResult",
+      "Access": "public",
+      "Usage": "Output,Json",
+      "Description": "Represents a list of up to 10 image captions for different regions of the image.\nThe first caption always applies to the whole image.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "23",
+        "Name": "values",
+        "SerializedName": "values",
+        "Description": "The list of image captions.",
+        "Type": {
+         "$id": "24",
+         "Kind": "array",
+         "Name": "ArrayDenseCaption",
+         "ValueType": {
+          "$id": "25",
+          "Kind": "model",
+          "Name": "DenseCaption",
+          "CrossLanguageDefinitionId": "ImageAnalysis.DenseCaption",
+          "Access": "public",
+          "Usage": "Output,Json",
+          "Description": "Represents a generated phrase that describes the content of the whole image or a region in the image",
+          "Decorators": [],
+          "Properties": [
+           {
+            "$id": "26",
+            "Name": "confidence",
+            "SerializedName": "confidence",
+            "Description": "A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.\nHigher values indicating higher confidence.",
+            "Type": {
+             "$id": "27",
+             "Kind": "float32",
+             "Name": "float32",
+             "CrossLanguageDefinitionId": "TypeSpec.float32",
+             "Decorators": []
+            },
+            "IsRequired": true,
+            "IsReadOnly": false,
+            "Decorators": []
+           },
+           {
+            "$id": "28",
+            "Name": "text",
+            "SerializedName": "text",
+            "Description": "The text of the caption.",
+            "Type": {
+             "$id": "29",
+             "Kind": "string",
+             "Name": "string",
+             "CrossLanguageDefinitionId": "TypeSpec.string",
+             "Decorators": []
+            },
+            "IsRequired": true,
+            "IsReadOnly": false,
+            "Decorators": []
+           },
+           {
+            "$id": "30",
+            "Name": "boundingBox",
+            "SerializedName": "boundingBox",
+            "Description": "The image region of which this caption applies.",
+            "Type": {
+             "$id": "31",
+             "Kind": "model",
+             "Name": "ImageBoundingBox",
+             "CrossLanguageDefinitionId": "ImageAnalysis.ImageBoundingBox",
+             "Access": "public",
+             "Usage": "Output,Json",
+             "Description": "A basic rectangle specifying a sub-region of the image.",
+             "Decorators": [],
+             "Properties": [
+              {
+               "$id": "32",
+               "Name": "x",
+               "SerializedName": "x",
+               "Description": "X-coordinate of the top left point of the area, in pixels.",
+               "Type": {
+                "$id": "33",
+                "Kind": "int32",
+                "Name": "int32",
+                "CrossLanguageDefinitionId": "TypeSpec.int32",
+                "Decorators": []
+               },
+               "IsRequired": true,
+               "IsReadOnly": false,
+               "Decorators": []
+              },
+              {
+               "$id": "34",
+               "Name": "y",
+               "SerializedName": "y",
+               "Description": "Y-coordinate of the top left point of the area, in pixels.",
+               "Type": {
+                "$id": "35",
+                "Kind": "int32",
+                "Name": "int32",
+                "CrossLanguageDefinitionId": "TypeSpec.int32",
+                "Decorators": []
+               },
+               "IsRequired": true,
+               "IsReadOnly": false,
+               "Decorators": []
+              },
+              {
+               "$id": "36",
+               "Name": "width",
+               "SerializedName": "w",
+               "Description": "Width of the area, in pixels.",
+               "Type": {
+                "$id": "37",
+                "Kind": "int32",
+                "Name": "int32",
+                "CrossLanguageDefinitionId": "TypeSpec.int32",
+                "Decorators": []
+               },
+               "IsRequired": true,
+               "IsReadOnly": false,
+               "Decorators": []
+              },
+              {
+               "$id": "38",
+               "Name": "height",
+               "SerializedName": "h",
+               "Description": "Height of the area, in pixels.",
+               "Type": {
+                "$id": "39",
+                "Kind": "int32",
+                "Name": "int32",
+                "CrossLanguageDefinitionId": "TypeSpec.int32",
+                "Decorators": []
+               },
+               "IsRequired": true,
+               "IsReadOnly": false,
+               "Decorators": []
+              }
+             ]
+            },
+            "IsRequired": true,
+            "IsReadOnly": false,
+            "Decorators": []
+           }
+          ]
+         },
+         "CrossLanguageDefinitionId": "TypeSpec.Array",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "40",
+     "Name": "metadata",
+     "SerializedName": "metadata",
+     "Description": "Metadata associated with the analyzed image.",
+     "Type": {
+      "$id": "41",
+      "Kind": "model",
+      "Name": "ImageMetadata",
+      "CrossLanguageDefinitionId": "ImageAnalysis.ImageMetadata",
+      "Access": "public",
+      "Usage": "Output,Json",
+      "Description": "Metadata associated with the analyzed image.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "42",
+        "Name": "height",
+        "SerializedName": "height",
+        "Description": "The height of the image in pixels.",
+        "Type": {
+         "$id": "43",
+         "Kind": "int32",
+         "Name": "int32",
+         "CrossLanguageDefinitionId": "TypeSpec.int32",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       },
+       {
+        "$id": "44",
+        "Name": "width",
+        "SerializedName": "width",
+        "Description": "The width of the image in pixels.",
+        "Type": {
+         "$id": "45",
+         "Kind": "int32",
+         "Name": "int32",
+         "CrossLanguageDefinitionId": "TypeSpec.int32",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "46",
+     "Name": "modelVersion",
+     "SerializedName": "modelVersion",
+     "Description": "The cloud AI model used for the analysis",
+     "Type": {
+      "$id": "47",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "48",
+     "Name": "objects",
+     "SerializedName": "objectsResult",
+     "Description": "A list of detected physical objects in the analyzed image, and their location.",
+     "Type": {
+      "$id": "49",
+      "Kind": "model",
+      "Name": "ObjectsResult",
+      "CrossLanguageDefinitionId": "ImageAnalysis.ObjectsResult",
+      "Access": "public",
+      "Usage": "Output,Json",
+      "Description": "Represents a list of physical object detected in an image and their location.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "50",
+        "Name": "values",
+        "SerializedName": "values",
+        "Description": "A list of physical object detected in an image and their location.",
+        "Type": {
+         "$id": "51",
+         "Kind": "array",
+         "Name": "ArrayDetectedObject",
+         "ValueType": {
+          "$id": "52",
+          "Kind": "model",
+          "Name": "DetectedObject",
+          "CrossLanguageDefinitionId": "ImageAnalysis.DetectedObject",
+          "Access": "public",
+          "Usage": "Output,Json",
+          "Description": "Represents a physical object detected in an image.",
+          "Decorators": [],
+          "Properties": [
+           {
+            "$id": "53",
+            "Name": "boundingBox",
+            "SerializedName": "boundingBox",
+            "Description": "A rectangular boundary where the object was detected.",
+            "Type": {
+             "$ref": "31"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false,
+            "Decorators": []
+           },
+           {
+            "$id": "54",
+            "Name": "tags",
+            "SerializedName": "tags",
+            "Description": "A single-item list containing the object information.",
+            "Type": {
+             "$id": "55",
+             "Kind": "array",
+             "Name": "ArrayDetectedTag",
+             "ValueType": {
+              "$id": "56",
+              "Kind": "model",
+              "Name": "DetectedTag",
+              "CrossLanguageDefinitionId": "ImageAnalysis.DetectedTag",
+              "Access": "public",
+              "Usage": "Output,Json",
+              "Description": "A content entity observation in the image. A tag can be a physical object, living being, scenery, or action\nthat appear in the image.",
+              "Decorators": [],
+              "Properties": [
+               {
+                "$id": "57",
+                "Name": "confidence",
+                "SerializedName": "confidence",
+                "Description": "A score, in the range of 0 to 1 (inclusive), representing the confidence that this entity was observed.\nHigher values indicating higher confidence.",
+                "Type": {
+                 "$id": "58",
+                 "Kind": "float32",
+                 "Name": "float32",
+                 "CrossLanguageDefinitionId": "TypeSpec.float32",
+                 "Decorators": []
+                },
+                "IsRequired": true,
+                "IsReadOnly": false,
+                "Decorators": []
+               },
+               {
+                "$id": "59",
+                "Name": "name",
+                "SerializedName": "name",
+                "Description": "Name of the entity.",
+                "Type": {
+                 "$id": "60",
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
+                },
+                "IsRequired": true,
+                "IsReadOnly": false,
+                "Decorators": []
+               }
+              ]
+             },
+             "CrossLanguageDefinitionId": "TypeSpec.Array",
+             "Decorators": []
+            },
+            "IsRequired": true,
+            "IsReadOnly": false,
+            "Decorators": []
+           }
+          ]
+         },
+         "CrossLanguageDefinitionId": "TypeSpec.Array",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "61",
+     "Name": "people",
+     "SerializedName": "peopleResult",
+     "Description": "A list of detected people in the analyzed image, and their location.",
+     "Type": {
+      "$id": "62",
+      "Kind": "model",
+      "Name": "PeopleResult",
+      "CrossLanguageDefinitionId": "ImageAnalysis.PeopleResult",
+      "Access": "public",
+      "Usage": "Output,Json",
+      "Description": "Represents a list of people detected in an image and their location.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "63",
+        "Name": "values",
+        "SerializedName": "values",
+        "Description": "A list of people detected in an image and their location.",
+        "Type": {
+         "$id": "64",
+         "Kind": "array",
+         "Name": "ArrayDetectedPerson",
+         "ValueType": {
+          "$id": "65",
+          "Kind": "model",
+          "Name": "DetectedPerson",
+          "CrossLanguageDefinitionId": "ImageAnalysis.DetectedPerson",
+          "Access": "public",
+          "Usage": "Output,Json",
+          "Description": "Represents a person detected in an image.",
+          "Decorators": [],
+          "Properties": [
+           {
+            "$id": "66",
+            "Name": "boundingBox",
+            "SerializedName": "boundingBox",
+            "Description": "A rectangular boundary where the person was detected.",
+            "Type": {
+             "$ref": "31"
+            },
+            "IsRequired": true,
+            "IsReadOnly": true,
+            "Decorators": []
+           },
+           {
+            "$id": "67",
+            "Name": "confidence",
+            "SerializedName": "confidence",
+            "Description": "A score, in the range of 0 to 1 (inclusive), representing the confidence that this detection was accurate.\nHigher values indicating higher confidence.",
+            "Type": {
+             "$id": "68",
+             "Kind": "float32",
+             "Name": "float32",
+             "CrossLanguageDefinitionId": "TypeSpec.float32",
+             "Decorators": []
+            },
+            "IsRequired": true,
+            "IsReadOnly": true,
+            "Decorators": []
+           }
+          ]
+         },
+         "CrossLanguageDefinitionId": "TypeSpec.Array",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "69",
+     "Name": "read",
+     "SerializedName": "readResult",
+     "Description": "The extracted printed and hand-written text in the analyze image. Also knows as OCR.",
+     "Type": {
+      "$id": "70",
+      "Kind": "model",
+      "Name": "ReadResult",
+      "CrossLanguageDefinitionId": "ImageAnalysis.ReadResult",
+      "Access": "public",
+      "Usage": "Output,Json",
+      "Description": "The results of a Read (OCR) operation.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "71",
+        "Name": "blocks",
+        "SerializedName": "blocks",
+        "Description": "A list of text blocks in the image. At the moment only one block is returned, containing all the text detected in the image.",
+        "Type": {
+         "$id": "72",
+         "Kind": "array",
+         "Name": "ArrayDetectedTextBlock",
+         "ValueType": {
+          "$id": "73",
+          "Kind": "model",
+          "Name": "DetectedTextBlock",
+          "CrossLanguageDefinitionId": "ImageAnalysis.DetectedTextBlock",
+          "Access": "public",
+          "Usage": "Output,Json",
+          "Description": "Represents a single block of detected text in the image.",
+          "Decorators": [],
+          "Properties": [
+           {
+            "$id": "74",
+            "Name": "lines",
+            "SerializedName": "lines",
+            "Description": "A list of text lines in this block.",
+            "Type": {
+             "$id": "75",
+             "Kind": "array",
+             "Name": "ArrayDetectedTextLine",
+             "ValueType": {
+              "$id": "76",
+              "Kind": "model",
+              "Name": "DetectedTextLine",
+              "CrossLanguageDefinitionId": "ImageAnalysis.DetectedTextLine",
+              "Access": "public",
+              "Usage": "Output,Json",
+              "Description": "Represents a single line of text in the image.",
+              "Decorators": [],
+              "Properties": [
+               {
+                "$id": "77",
+                "Name": "text",
+                "SerializedName": "text",
+                "Description": "Text content of the detected text line.",
+                "Type": {
+                 "$id": "78",
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string",
+                 "Decorators": []
+                },
+                "IsRequired": true,
+                "IsReadOnly": false,
+                "Decorators": []
+               },
+               {
+                "$id": "79",
+                "Name": "boundingPolygon",
+                "SerializedName": "boundingPolygon",
+                "Description": "A bounding polygon around the text line. At the moment only quadrilaterals are supported (represented by 4 image points).",
+                "Type": {
+                 "$id": "80",
+                 "Kind": "array",
+                 "Name": "ArrayImagePoint",
+                 "ValueType": {
+                  "$id": "81",
+                  "Kind": "model",
+                  "Name": "ImagePoint",
+                  "CrossLanguageDefinitionId": "ImageAnalysis.ImagePoint",
+                  "Access": "public",
+                  "Usage": "Output,Json",
+                  "Description": "Represents the coordinates of a single pixel in the image.",
+                  "Decorators": [],
+                  "Properties": [
+                   {
+                    "$id": "82",
+                    "Name": "x",
+                    "SerializedName": "x",
+                    "Description": "The horizontal x-coordinate of this point, in pixels. Zero values corresponds to the left-most pixels in the image.",
+                    "Type": {
+                     "$id": "83",
+                     "Kind": "int32",
+                     "Name": "int32",
+                     "CrossLanguageDefinitionId": "TypeSpec.int32",
+                     "Decorators": []
+                    },
+                    "IsRequired": true,
+                    "IsReadOnly": false,
+                    "Decorators": []
+                   },
+                   {
+                    "$id": "84",
+                    "Name": "y",
+                    "SerializedName": "y",
+                    "Description": "The vertical y-coordinate of this point, in pixels. Zero values corresponds to the top-most pixels in the image.",
+                    "Type": {
+                     "$id": "85",
+                     "Kind": "int32",
+                     "Name": "int32",
+                     "CrossLanguageDefinitionId": "TypeSpec.int32",
+                     "Decorators": []
+                    },
+                    "IsRequired": true,
+                    "IsReadOnly": false,
+                    "Decorators": []
+                   }
+                  ]
+                 },
+                 "CrossLanguageDefinitionId": "TypeSpec.Array",
+                 "Decorators": []
+                },
+                "IsRequired": true,
+                "IsReadOnly": false,
+                "Decorators": []
+               },
+               {
+                "$id": "86",
+                "Name": "words",
+                "SerializedName": "words",
+                "Description": "A list of words in this line.",
+                "Type": {
+                 "$id": "87",
+                 "Kind": "array",
+                 "Name": "ArrayDetectedTextWord",
+                 "ValueType": {
+                  "$id": "88",
+                  "Kind": "model",
+                  "Name": "DetectedTextWord",
+                  "CrossLanguageDefinitionId": "ImageAnalysis.DetectedTextWord",
+                  "Access": "public",
+                  "Usage": "Output,Json",
+                  "Description": "A word object consisting of a contiguous sequence of characters. For non-space delimited languages,\r\nsuch as Chinese, Japanese, and Korean, each character is represented as its own word.",
+                  "Decorators": [],
+                  "Properties": [
+                   {
+                    "$id": "89",
+                    "Name": "text",
+                    "SerializedName": "text",
+                    "Description": "Text content of the word.",
+                    "Type": {
+                     "$id": "90",
+                     "Kind": "string",
+                     "Name": "string",
+                     "CrossLanguageDefinitionId": "TypeSpec.string",
+                     "Decorators": []
+                    },
+                    "IsRequired": true,
+                    "IsReadOnly": false,
+                    "Decorators": []
+                   },
+                   {
+                    "$id": "91",
+                    "Name": "boundingPolygon",
+                    "SerializedName": "boundingPolygon",
+                    "Description": "A bounding polygon around the word. At the moment only quadrilaterals are supported (represented by 4 image points).",
+                    "Type": {
+                     "$id": "92",
+                     "Kind": "array",
+                     "Name": "ArrayImagePoint",
+                     "ValueType": {
+                      "$ref": "81"
+                     },
+                     "CrossLanguageDefinitionId": "TypeSpec.Array",
+                     "Decorators": []
+                    },
+                    "IsRequired": true,
+                    "IsReadOnly": false,
+                    "Decorators": []
+                   },
+                   {
+                    "$id": "93",
+                    "Name": "confidence",
+                    "SerializedName": "confidence",
+                    "Description": "The level of confidence that the word was detected. Confidence scores span the range of 0.0 to 1.0 (inclusive), with higher values indicating a higher confidence of detection.",
+                    "Type": {
+                     "$id": "94",
+                     "Kind": "float32",
+                     "Name": "float32",
+                     "CrossLanguageDefinitionId": "TypeSpec.float32",
+                     "Decorators": []
+                    },
+                    "IsRequired": true,
+                    "IsReadOnly": false,
+                    "Decorators": []
+                   }
+                  ]
+                 },
+                 "CrossLanguageDefinitionId": "TypeSpec.Array",
+                 "Decorators": []
+                },
+                "IsRequired": true,
+                "IsReadOnly": false,
+                "Decorators": []
+               }
+              ]
+             },
+             "CrossLanguageDefinitionId": "TypeSpec.Array",
+             "Decorators": []
+            },
+            "IsRequired": true,
+            "IsReadOnly": false,
+            "Decorators": []
+           }
+          ]
+         },
+         "CrossLanguageDefinitionId": "TypeSpec.Array",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "95",
+     "Name": "smartCrops",
+     "SerializedName": "smartCropsResult",
+     "Description": "A list of crop regions at the desired as aspect ratios (if provided) that can be used as image thumbnails.\nThese regions preserve as much content as possible from the analyzed image, with priority given to detected faces.",
+     "Type": {
+      "$id": "96",
+      "Kind": "model",
+      "Name": "SmartCropsResult",
+      "CrossLanguageDefinitionId": "ImageAnalysis.SmartCropsResult",
+      "Access": "public",
+      "Usage": "Output,Json",
+      "Description": "Smart cropping result. A list of crop regions at the desired as aspect ratios (if provided) that can be used as image thumbnails.\nThese regions preserve as much content as possible from the analyzed image, with priority given to detected faces.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "97",
+        "Name": "values",
+        "SerializedName": "values",
+        "Description": "A list of crop regions.",
+        "Type": {
+         "$id": "98",
+         "Kind": "array",
+         "Name": "ArrayCropRegion",
+         "ValueType": {
+          "$id": "99",
+          "Kind": "model",
+          "Name": "CropRegion",
+          "CrossLanguageDefinitionId": "ImageAnalysis.CropRegion",
+          "Access": "public",
+          "Usage": "Output,Json",
+          "Description": "A region at the desired aspect ratio that can be used as image thumbnail.\nThe region preserves as much content as possible from the analyzed image, with priority given to detected faces.",
+          "Decorators": [],
+          "Properties": [
+           {
+            "$id": "100",
+            "Name": "aspectRatio",
+            "SerializedName": "aspectRatio",
+            "Description": "The aspect ratio of the crop region.\nAspect ratio is calculated by dividing the width of the region in pixels by its height in pixels.\nThe aspect ratio will be in the range 0.75 to 1.8 (inclusive) if provided by the developer during the analyze call.\nOtherwise, it will be in the range 0.5 to 2.0 (inclusive).",
+            "Type": {
+             "$id": "101",
+             "Kind": "float32",
+             "Name": "float32",
+             "CrossLanguageDefinitionId": "TypeSpec.float32",
+             "Decorators": []
+            },
+            "IsRequired": true,
+            "IsReadOnly": false,
+            "Decorators": []
+           },
+           {
+            "$id": "102",
+            "Name": "boundingBox",
+            "SerializedName": "boundingBox",
+            "Description": "The bounding box of the region.",
+            "Type": {
+             "$ref": "31"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false,
+            "Decorators": []
+           }
+          ]
+         },
+         "CrossLanguageDefinitionId": "TypeSpec.Array",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "103",
+     "Name": "tags",
+     "SerializedName": "tagsResult",
+     "Description": "A list of content tags in the analyzed image.",
+     "Type": {
+      "$id": "104",
+      "Kind": "model",
+      "Name": "TagsResult",
+      "CrossLanguageDefinitionId": "ImageAnalysis.TagsResult",
+      "Access": "public",
+      "Usage": "Output,Json",
+      "Description": "A list of entities observed in the image. Tags can be physical objects, living being, scenery, or actions\nthat appear in the image.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "105",
+        "Name": "values",
+        "SerializedName": "values",
+        "Description": "A list of tags.",
+        "Type": {
+         "$id": "106",
+         "Kind": "array",
+         "Name": "ArrayDetectedTag",
+         "ValueType": {
+          "$ref": "56"
+         },
+         "CrossLanguageDefinitionId": "TypeSpec.Array",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$ref": "16"
+  },
+  {
+   "$ref": "22"
+  },
+  {
+   "$ref": "25"
+  },
+  {
+   "$ref": "31"
+  },
+  {
+   "$ref": "41"
+  },
+  {
+   "$ref": "49"
+  },
+  {
+   "$ref": "52"
+  },
+  {
+   "$ref": "56"
+  },
+  {
+   "$ref": "62"
+  },
+  {
+   "$ref": "65"
+  },
+  {
+   "$ref": "70"
+  },
+  {
+   "$ref": "73"
+  },
+  {
+   "$ref": "76"
+  },
+  {
+   "$ref": "81"
+  },
+  {
+   "$ref": "88"
+  },
+  {
+   "$ref": "96"
+  },
+  {
+   "$ref": "99"
+  },
+  {
+   "$ref": "104"
+  },
+  {
+   "$id": "107",
+   "Kind": "model",
+   "Name": "ImageUrl",
+   "CrossLanguageDefinitionId": "ImageAnalysis.ImageUrl",
+   "Usage": "Input,Json",
+   "Description": "An object holding the publicly reachable URL of an image to analyze.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "108",
+     "Name": "url",
+     "SerializedName": "url",
+     "Description": "Publicly reachable URL of an image to analyze.",
+     "Type": {
+      "$id": "109",
+      "Kind": "url",
+      "Name": "url",
+      "CrossLanguageDefinitionId": "TypeSpec.url",
+      "Decorators": []
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "110",
+   "Name": "ImageAnalysisClient",
+   "Operations": [
+    {
+     "$id": "111",
+     "Name": "analyzeFromImageData",
+     "ResourceName": "ImageAnalysis",
+     "Description": "Performs a single Image Analysis operation",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$id": "112",
+       "Name": "endpoint",
+       "NameInRequest": "endpoint",
+       "Description": "Azure AI Computer Vision endpoint (protocol and hostname, for example:\nhttps://<resource-name>.cognitiveservices.azure.com).",
+       "Type": {
+        "$id": "113",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url"
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "114",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "115",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "116",
+        "Type": {
+         "$id": "117",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-10-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "118",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "The format of the HTTP payload.",
+       "Type": {
+        "$id": "119",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "120",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/octet-stream",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "121",
+       "Name": "visualFeatures",
+       "NameInRequest": "features",
+       "Description": "A list of visual features to analyze.\nSeven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.\nAt least one visual feature must be specified.",
+       "Type": {
+        "$id": "122",
+        "Kind": "array",
+        "Name": "ArrayVisualFeatures",
+        "ValueType": {
+         "$ref": "2"
+        },
+        "CrossLanguageDefinitionId": "TypeSpec.Array",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "ArraySerializationDelimiter": ",",
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "123",
+       "Name": "language",
+       "NameInRequest": "language",
+       "Description": "The desired language for result generation (a two-letter language code).\nIf this option is not specified, the default value 'en' is used (English).\nSee https://aka.ms/cv-languages for a list of supported languages.",
+       "Type": {
+        "$id": "124",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "125",
+       "Name": "genderNeutralCaption",
+       "NameInRequest": "gender-neutral-caption",
+       "Description": "Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.\nBy default captions may contain gender terms (for example: 'man', 'woman', or 'boy', 'girl'). \nIf you set this to \"true\", those will be replaced with gender-neutral terms (for example: 'person' or 'child').",
+       "Type": {
+        "$id": "126",
+        "Kind": "boolean",
+        "Name": "boolean",
+        "CrossLanguageDefinitionId": "TypeSpec.boolean",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "127",
+       "Name": "smartCropsAspectRatios",
+       "NameInRequest": "smartcrops-aspect-ratios",
+       "Description": "A list of aspect ratios to use for smart cropping.\nAspect ratios are calculated by dividing the target crop width in pixels by the height in pixels.\nSupported values are between 0.75 and 1.8 (inclusive).\nIf this parameter is not specified, the service will return one crop region with an aspect\nratio it sees fit between 0.5 and 2.0 (inclusive).",
+       "Type": {
+        "$id": "128",
+        "Kind": "array",
+        "Name": "Array",
+        "ValueType": {
+         "$id": "129",
+         "Kind": "float32",
+         "Name": "float32",
+         "CrossLanguageDefinitionId": "TypeSpec.float32",
+         "Decorators": []
+        },
+        "CrossLanguageDefinitionId": "TypeSpec.Array",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "ArraySerializationDelimiter": ",",
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "130",
+       "Name": "modelVersion",
+       "NameInRequest": "model-version",
+       "Description": "The version of cloud AI-model used for analysis.\nThe format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where 'YYYY', 'MM', 'DD' are the year, month and day associated with the model.\nThis is not commonly set, as the default always gives the latest AI model with recent improvements.\nIf however you would like to make sure analysis results do not change over time, set this value to a specific model version.",
+       "Type": {
+        "$id": "131",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "132",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "133",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "134",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "135",
+       "Name": "imageData",
+       "NameInRequest": "imageData",
+       "Description": "The image to be analyzed",
+       "Type": {
+        "$id": "136",
+        "Kind": "bytes",
+        "Name": "bytes",
+        "Encode": "bytes",
+        "CrossLanguageDefinitionId": "TypeSpec.bytes",
+        "Decorators": []
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "137",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "14"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Binary",
+     "Uri": "{endpoint}/computervision",
+     "Path": "/imageanalysis:analyze",
+     "RequestMediaTypes": [
+      "application/octet-stream"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "ImageAnalysis.analyzeFromImageData",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "138",
+       "kind": "http",
+       "name": "AnalyzeFromImageData",
+       "description": "AnalyzeFromImageData",
+       "filePath": "2023-10-01/AnalyzeFromImageData_MaximumSet.json",
+       "rawExample": {
+        "$id": "139",
+        "title": "AnalyzeFromImageData",
+        "operationId": "AnalyzeFromImageData",
+        "parameters": {
+         "$id": "140",
+         "api-version": "2023-10-01",
+         "features": [
+          "read",
+          "tags",
+          "objects",
+          "people",
+          "caption",
+          "denseCaptions",
+          "smartCrops"
+         ],
+         "language": "en",
+         "gender-neutral-caption": true,
+         "smartcrops-aspect-ratios": [
+          0.9,
+          1.33
+         ],
+         "model-version": "latest",
+         "imageData": "<your-image-bytes-here>"
+        },
+        "responses": {
+         "200": {
+          "$id": "142",
+          "body": {
+           "$id": "143",
+           "modelVersion": "2023-10-01",
+           "captionResult": {
+            "$id": "144",
+            "text": "a woman wearing a mask sitting at a table with a laptop",
+            "confidence": 0.8498482704162598
+           },
+           "denseCaptionsResult": {
+            "$id": "145",
+            "values": [
+             {
+              "$id": "146",
+              "text": "a woman wearing a mask sitting at a table with a laptop",
+              "confidence": 0.8502674698829651,
+              "boundingBox": {
+               "$id": "147",
+               "x": 0,
+               "y": 0,
+               "w": 864,
+               "h": 576
+              }
+             },
+             {
+              "$id": "148",
+              "text": "a person using a laptop",
+              "confidence": 0.7724273204803467,
+              "boundingBox": {
+               "$id": "149",
+               "x": 293,
+               "y": 383,
+               "w": 195,
+               "h": 100
+              }
+             },
+             {
+              "$id": "150",
+              "text": "a woman wearing a face mask",
+              "confidence": 0.8209426999092102,
+              "boundingBox": {
+               "$id": "151",
+               "x": 383,
+               "y": 233,
+               "w": 275,
+               "h": 336
+              }
+             },
+             {
+              "$id": "152",
+              "text": "a close-up of a green chair",
+              "confidence": 0.8763102889060974,
+              "boundingBox": {
+               "$id": "153",
+               "x": 616,
+               "y": 211,
+               "w": 164,
+               "h": 249
+              }
+             },
+             {
+              "$id": "154",
+              "text": "a person wearing a colorful cloth face mask",
+              "confidence": 0.7087528109550476,
+              "boundingBox": {
+               "$id": "155",
+               "x": 473,
+               "y": 294,
+               "w": 68,
+               "h": 56
+              }
+             },
+             {
+              "$id": "156",
+              "text": "a person using a laptop",
+              "confidence": 0.7638993859291077,
+              "boundingBox": {
+               "$id": "157",
+               "x": 288,
+               "y": 211,
+               "w": 151,
+               "h": 244
+              }
+             },
+             {
+              "$id": "158",
+              "text": "a woman wearing a colorful fabric face mask",
+              "confidence": 0.7733591794967651,
+              "boundingBox": {
+               "$id": "159",
+               "x": 433,
+               "y": 240,
+               "w": 180,
+               "h": 236
+              }
+             },
+             {
+              "$id": "160",
+              "text": "a close-up of a laptop on a table",
+              "confidence": 0.8536830544471741,
+              "boundingBox": {
+               "$id": "161",
+               "x": 115,
+               "y": 443,
+               "w": 476,
+               "h": 125
+              }
+             },
+             {
+              "$id": "162",
+              "text": "a woman wearing a mask and using a laptop",
+              "confidence": 0.7810136675834656,
+              "boundingBox": {
+               "$id": "163",
+               "x": 0,
+               "y": 0,
+               "w": 774,
+               "h": 432
+              }
+             },
+             {
+              "$id": "164",
+              "text": "a close up of a text",
+              "confidence": 0.640383780002594,
+              "boundingBox": {
+               "$id": "165",
+               "x": 714,
+               "y": 493,
+               "w": 130,
+               "h": 80
+              }
+             }
+            ]
+           },
+           "metadata": {
+            "$id": "166",
+            "width": 864,
+            "height": 576
+           },
+           "tagsResult": {
+            "$id": "167",
+            "values": [
+             {
+              "$id": "168",
+              "name": "furniture",
+              "confidence": 0.9874445199966431
+             },
+             {
+              "$id": "169",
+              "name": "clothing",
+              "confidence": 0.9792501926422119
+             },
+             {
+              "$id": "170",
+              "name": "person",
+              "confidence": 0.9427268505096436
+             },
+             {
+              "$id": "171",
+              "name": "houseplant",
+              "confidence": 0.9400016069412231
+             },
+             {
+              "$id": "172",
+              "name": "desk",
+              "confidence": 0.9182863235473633
+             },
+             {
+              "$id": "173",
+              "name": "indoor",
+              "confidence": 0.8963587284088135
+             },
+             {
+              "$id": "174",
+              "name": "laptop",
+              "confidence": 0.8781813383102417
+             },
+             {
+              "$id": "175",
+              "name": "computer",
+              "confidence": 0.8481525182723999
+             },
+             {
+              "$id": "176",
+              "name": "sitting",
+              "confidence": 0.8134784698486328
+             },
+             {
+              "$id": "177",
+              "name": "wall",
+              "confidence": 0.7511615753173828
+             },
+             {
+              "$id": "178",
+              "name": "woman",
+              "confidence": 0.7410731911659241
+             },
+             {
+              "$id": "179",
+              "name": "table",
+              "confidence": 0.6811168789863586
+             },
+             {
+              "$id": "180",
+              "name": "plant",
+              "confidence": 0.6445199847221375
+             },
+             {
+              "$id": "181",
+              "name": "using",
+              "confidence": 0.5358931422233582
+             }
+            ]
+           },
+           "objectsResult": {
+            "$id": "182",
+            "values": [
+             {
+              "$id": "183",
+              "boundingBox": {
+               "$id": "184",
+               "x": 603,
+               "y": 225,
+               "w": 152,
+               "h": 224
+              },
+              "tags": [
+               {
+                "$id": "185",
+                "name": "chair",
+                "confidence": 0.618
+               }
+              ]
+             },
+             {
+              "$id": "186",
+              "boundingBox": {
+               "$id": "187",
+               "x": 399,
+               "y": 244,
+               "w": 249,
+               "h": 325
+              },
+              "tags": [
+               {
+                "$id": "188",
+                "name": "person",
+                "confidence": 0.881
+               }
+              ]
+             },
+             {
+              "$id": "189",
+              "boundingBox": {
+               "$id": "190",
+               "x": 295,
+               "y": 387,
+               "w": 211,
+               "h": 102
+              },
+              "tags": [
+               {
+                "$id": "191",
+                "name": "Laptop",
+                "confidence": 0.767
+               }
+              ]
+             },
+             {
+              "$id": "192",
+              "boundingBox": {
+               "$id": "193",
+               "x": 441,
+               "y": 436,
+               "w": 256,
+               "h": 136
+              },
+              "tags": [
+               {
+                "$id": "194",
+                "name": "chair",
+                "confidence": 0.581
+               }
+              ]
+             },
+             {
+              "$id": "195",
+              "boundingBox": {
+               "$id": "196",
+               "x": 123,
+               "y": 437,
+               "w": 460,
+               "h": 125
+              },
+              "tags": [
+               {
+                "$id": "197",
+                "name": "dining table",
+                "confidence": 0.606
+               }
+              ]
+             }
+            ]
+           },
+           "readResult": {
+            "$id": "198",
+            "blocks": [
+             {
+              "$id": "199",
+              "lines": [
+               {
+                "$id": "200",
+                "text": "Sample text",
+                "boundingPolygon": [
+                 {
+                  "$id": "201",
+                  "x": 721,
+                  "y": 502
+                 },
+                 {
+                  "$id": "202",
+                  "x": 843,
+                  "y": 502
+                 },
+                 {
+                  "$id": "203",
+                  "x": 843,
+                  "y": 519
+                 },
+                 {
+                  "$id": "204",
+                  "x": 721,
+                  "y": 519
+                 }
+                ],
+                "words": [
+                 {
+                  "$id": "205",
+                  "text": "Sample",
+                  "boundingPolygon": [
+                   {
+                    "$id": "206",
+                    "x": 722,
+                    "y": 503
+                   },
+                   {
+                    "$id": "207",
+                    "x": 785,
+                    "y": 503
+                   },
+                   {
+                    "$id": "208",
+                    "x": 785,
+                    "y": 520
+                   },
+                   {
+                    "$id": "209",
+                    "x": 722,
+                    "y": 520
+                   }
+                  ],
+                  "confidence": 0.993
+                 },
+                 {
+                  "$id": "210",
+                  "text": "text",
+                  "boundingPolygon": [
+                   {
+                    "$id": "211",
+                    "x": 800,
+                    "y": 503
+                   },
+                   {
+                    "$id": "212",
+                    "x": 842,
+                    "y": 502
+                   },
+                   {
+                    "$id": "213",
+                    "x": 842,
+                    "y": 519
+                   },
+                   {
+                    "$id": "214",
+                    "x": 800,
+                    "y": 520
+                   }
+                  ],
+                  "confidence": 0.989
+                 }
+                ]
+               },
+               {
+                "$id": "215",
+                "text": "Hand writing",
+                "boundingPolygon": [
+                 {
+                  "$id": "216",
+                  "x": 720,
+                  "y": 525
+                 },
+                 {
+                  "$id": "217",
+                  "x": 819,
+                  "y": 526
+                 },
+                 {
+                  "$id": "218",
+                  "x": 819,
+                  "y": 544
+                 },
+                 {
+                  "$id": "219",
+                  "x": 720,
+                  "y": 543
+                 }
+                ],
+                "words": [
+                 {
+                  "$id": "220",
+                  "text": "Hand",
+                  "boundingPolygon": [
+                   {
+                    "$id": "221",
+                    "x": 721,
+                    "y": 526
+                   },
+                   {
+                    "$id": "222",
+                    "x": 759,
+                    "y": 526
+                   },
+                   {
+                    "$id": "223",
+                    "x": 759,
+                    "y": 544
+                   },
+                   {
+                    "$id": "224",
+                    "x": 721,
+                    "y": 543
+                   }
+                  ],
+                  "confidence": 0.989
+                 },
+                 {
+                  "$id": "225",
+                  "text": "writing",
+                  "boundingPolygon": [
+                   {
+                    "$id": "226",
+                    "x": 765,
+                    "y": 526
+                   },
+                   {
+                    "$id": "227",
+                    "x": 819,
+                    "y": 527
+                   },
+                   {
+                    "$id": "228",
+                    "x": 819,
+                    "y": 545
+                   },
+                   {
+                    "$id": "229",
+                    "x": 765,
+                    "y": 544
+                   }
+                  ],
+                  "confidence": 0.994
+                 }
+                ]
+               },
+               {
+                "$id": "230",
+                "text": "123 456",
+                "boundingPolygon": [
+                 {
+                  "$id": "231",
+                  "x": 721,
+                  "y": 548
+                 },
+                 {
+                  "$id": "232",
+                  "x": 791,
+                  "y": 548
+                 },
+                 {
+                  "$id": "233",
+                  "x": 791,
+                  "y": 563
+                 },
+                 {
+                  "$id": "234",
+                  "x": 721,
+                  "y": 564
+                 }
+                ],
+                "words": [
+                 {
+                  "$id": "235",
+                  "text": "123",
+                  "boundingPolygon": [
+                   {
+                    "$id": "236",
+                    "x": 723,
+                    "y": 548
+                   },
+                   {
+                    "$id": "237",
+                    "x": 750,
+                    "y": 548
+                   },
+                   {
+                    "$id": "238",
+                    "x": 750,
+                    "y": 564
+                   },
+                   {
+                    "$id": "239",
+                    "x": 723,
+                    "y": 564
+                   }
+                  ],
+                  "confidence": 0.994
+                 },
+                 {
+                  "$id": "240",
+                  "text": "456",
+                  "boundingPolygon": [
+                   {
+                    "$id": "241",
+                    "x": 761,
+                    "y": 548
+                   },
+                   {
+                    "$id": "242",
+                    "x": 788,
+                    "y": 549
+                   },
+                   {
+                    "$id": "243",
+                    "x": 787,
+                    "y": 564
+                   },
+                   {
+                    "$id": "244",
+                    "x": 760,
+                    "y": 564
+                   }
+                  ],
+                  "confidence": 0.999
+                 }
+                ]
+               }
+              ]
+             }
+            ]
+           },
+           "smartCropsResult": {
+            "$id": "245",
+            "values": [
+             {
+              "$id": "246",
+              "aspectRatio": 0.9,
+              "boundingBox": {
+               "$id": "247",
+               "x": 238,
+               "y": 0,
+               "w": 511,
+               "h": 568
+              }
+             },
+             {
+              "$id": "248",
+              "aspectRatio": 1.33,
+              "boundingBox": {
+               "$id": "249",
+               "x": 54,
+               "y": 0,
+               "w": 760,
+               "h": 571
+              }
+             }
+            ]
+           },
+           "peopleResult": {
+            "$id": "250",
+            "values": [
+             {
+              "$id": "251",
+              "boundingBox": {
+               "$id": "252",
+               "x": 395,
+               "y": 241,
+               "w": 261,
+               "h": 333
+              },
+              "confidence": 0.9602553248405457
+             },
+             {
+              "$id": "253",
+              "boundingBox": {
+               "$id": "254",
+               "x": 831,
+               "y": 246,
+               "w": 31,
+               "h": 255
+              },
+              "confidence": 0.0016505217645317316
+             }
+            ]
+           }
+          }
+         },
+         "$id": "141"
+        }
+       },
+       "parameters": [
+        {
+         "$id": "255",
+         "parameter": {
+          "$ref": "114"
+         },
+         "value": {
+          "$id": "256",
+          "kind": "string",
+          "type": {
+           "$ref": "115"
+          },
+          "value": "2023-10-01"
+         }
+        },
+        {
+         "$id": "257",
+         "parameter": {
+          "$ref": "121"
+         },
+         "value": {
+          "$id": "258",
+          "kind": "array",
+          "type": {
+           "$ref": "122"
+          },
+          "value": [
+           {
+            "$id": "259",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "read"
+           },
+           {
+            "$id": "260",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "tags"
+           },
+           {
+            "$id": "261",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "objects"
+           },
+           {
+            "$id": "262",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "people"
+           },
+           {
+            "$id": "263",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "caption"
+           },
+           {
+            "$id": "264",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "denseCaptions"
+           },
+           {
+            "$id": "265",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "smartCrops"
+           }
+          ]
+         }
+        },
+        {
+         "$id": "266",
+         "parameter": {
+          "$ref": "123"
+         },
+         "value": {
+          "$id": "267",
+          "kind": "string",
+          "type": {
+           "$ref": "124"
+          },
+          "value": "en"
+         }
+        },
+        {
+         "$id": "268",
+         "parameter": {
+          "$ref": "125"
+         },
+         "value": {
+          "$id": "269",
+          "kind": "boolean",
+          "type": {
+           "$ref": "126"
+          },
+          "value": true
+         }
+        },
+        {
+         "$id": "270",
+         "parameter": {
+          "$ref": "127"
+         },
+         "value": {
+          "$id": "271",
+          "kind": "array",
+          "type": {
+           "$ref": "128"
+          },
+          "value": [
+           {
+            "$id": "272",
+            "kind": "number",
+            "type": {
+             "$ref": "129"
+            },
+            "value": 0.9
+           },
+           {
+            "$id": "273",
+            "kind": "number",
+            "type": {
+             "$ref": "129"
+            },
+            "value": 1.33
+           }
+          ]
+         }
+        },
+        {
+         "$id": "274",
+         "parameter": {
+          "$ref": "130"
+         },
+         "value": {
+          "$id": "275",
+          "kind": "string",
+          "type": {
+           "$ref": "131"
+          },
+          "value": "latest"
+         }
+        },
+        {
+         "$id": "276",
+         "parameter": {
+          "$ref": "135"
+         },
+         "value": {
+          "$id": "277",
+          "kind": "string",
+          "type": {
+           "$ref": "136"
+          },
+          "value": "<your-image-bytes-here>"
+         }
+        }
+       ],
+       "responses": {
+        "$id": "278"
+       }
+      }
+     ]
+    },
+    {
+     "$id": "279",
+     "Name": "analyzeFromUrl",
+     "ResourceName": "ImageAnalysis",
+     "Description": "Performs a single Image Analysis operation",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$ref": "112"
+      },
+      {
+       "$id": "280",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "281",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "282",
+        "Type": {
+         "$id": "283",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-10-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "284",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "The format of the HTTP payload.",
+       "Type": {
+        "$id": "285",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "286",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "287",
+       "Name": "visualFeatures",
+       "NameInRequest": "features",
+       "Description": "A list of visual features to analyze.\nSeven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.\nAt least one visual feature must be specified.",
+       "Type": {
+        "$id": "288",
+        "Kind": "array",
+        "Name": "ArrayVisualFeatures",
+        "ValueType": {
+         "$ref": "2"
+        },
+        "CrossLanguageDefinitionId": "TypeSpec.Array",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "ArraySerializationDelimiter": ",",
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "289",
+       "Name": "language",
+       "NameInRequest": "language",
+       "Description": "The desired language for result generation (a two-letter language code).\nIf this option is not specified, the default value 'en' is used (English).\nSee https://aka.ms/cv-languages for a list of supported languages.",
+       "Type": {
+        "$id": "290",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "291",
+       "Name": "genderNeutralCaption",
+       "NameInRequest": "gender-neutral-caption",
+       "Description": "Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.\nBy default captions may contain gender terms (for example: 'man', 'woman', or 'boy', 'girl'). \nIf you set this to \"true\", those will be replaced with gender-neutral terms (for example: 'person' or 'child').",
+       "Type": {
+        "$id": "292",
+        "Kind": "boolean",
+        "Name": "boolean",
+        "CrossLanguageDefinitionId": "TypeSpec.boolean",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "293",
+       "Name": "smartCropsAspectRatios",
+       "NameInRequest": "smartcrops-aspect-ratios",
+       "Description": "A list of aspect ratios to use for smart cropping.\nAspect ratios are calculated by dividing the target crop width in pixels by the height in pixels.\nSupported values are between 0.75 and 1.8 (inclusive).\nIf this parameter is not specified, the service will return one crop region with an aspect\nratio it sees fit between 0.5 and 2.0 (inclusive).",
+       "Type": {
+        "$id": "294",
+        "Kind": "array",
+        "Name": "Array",
+        "ValueType": {
+         "$id": "295",
+         "Kind": "float32",
+         "Name": "float32",
+         "CrossLanguageDefinitionId": "TypeSpec.float32",
+         "Decorators": []
+        },
+        "CrossLanguageDefinitionId": "TypeSpec.Array",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "ArraySerializationDelimiter": ",",
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "296",
+       "Name": "modelVersion",
+       "NameInRequest": "model-version",
+       "Description": "The version of cloud AI-model used for analysis.\nThe format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where 'YYYY', 'MM', 'DD' are the year, month and day associated with the model.\nThis is not commonly set, as the default always gives the latest AI model with recent improvements.\nIf however you would like to make sure analysis results do not change over time, set this value to a specific model version.",
+       "Type": {
+        "$id": "297",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "298",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "299",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "300",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "301",
+       "Name": "imageUrl",
+       "NameInRequest": "imageUrl",
+       "Description": "The image to be analyzed",
+       "Type": {
+        "$ref": "107"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "302",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "14"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}/computervision",
+     "Path": "/imageanalysis:analyze",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "ImageAnalysis.analyzeFromUrl",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "303",
+       "kind": "http",
+       "name": "AnalyzeFromUrl",
+       "description": "AnalyzeFromUrl",
+       "filePath": "2023-10-01/AnalyzeFromUrl_MaximumSet.json",
+       "rawExample": {
+        "$id": "304",
+        "title": "AnalyzeFromUrl",
+        "operationId": "AnalyzeFromUrl",
+        "parameters": {
+         "$id": "305",
+         "api-version": "2023-10-01",
+         "features": [
+          "read",
+          "tags",
+          "objects",
+          "people",
+          "caption",
+          "denseCaptions",
+          "smartCrops"
+         ],
+         "language": "en",
+         "gender-neutral-caption": true,
+         "smartcrops-aspect-ratios": [
+          0.9,
+          1.33
+         ],
+         "model-version": "latest",
+         "imageUrl": {
+          "$id": "306",
+          "url": "https://aka.ms/azai/vision/image-analysis-sample.jpg"
+         }
+        },
+        "responses": {
+         "200": {
+          "$id": "308",
+          "body": {
+           "$id": "309",
+           "modelVersion": "2023-10-01",
+           "captionResult": {
+            "$id": "310",
+            "text": "a woman wearing a mask sitting at a table with a laptop",
+            "confidence": 0.8498482704162598
+           },
+           "denseCaptionsResult": {
+            "$id": "311",
+            "values": [
+             {
+              "$id": "312",
+              "text": "a woman wearing a mask sitting at a table with a laptop",
+              "confidence": 0.8502674698829651,
+              "boundingBox": {
+               "$id": "313",
+               "x": 0,
+               "y": 0,
+               "w": 864,
+               "h": 576
+              }
+             },
+             {
+              "$id": "314",
+              "text": "a person using a laptop",
+              "confidence": 0.7724273204803467,
+              "boundingBox": {
+               "$id": "315",
+               "x": 293,
+               "y": 383,
+               "w": 195,
+               "h": 100
+              }
+             },
+             {
+              "$id": "316",
+              "text": "a woman wearing a face mask",
+              "confidence": 0.8209426999092102,
+              "boundingBox": {
+               "$id": "317",
+               "x": 383,
+               "y": 233,
+               "w": 275,
+               "h": 336
+              }
+             },
+             {
+              "$id": "318",
+              "text": "a close-up of a green chair",
+              "confidence": 0.8763102889060974,
+              "boundingBox": {
+               "$id": "319",
+               "x": 616,
+               "y": 211,
+               "w": 164,
+               "h": 249
+              }
+             },
+             {
+              "$id": "320",
+              "text": "a person wearing a colorful cloth face mask",
+              "confidence": 0.7087528109550476,
+              "boundingBox": {
+               "$id": "321",
+               "x": 473,
+               "y": 294,
+               "w": 68,
+               "h": 56
+              }
+             },
+             {
+              "$id": "322",
+              "text": "a person using a laptop",
+              "confidence": 0.7638993859291077,
+              "boundingBox": {
+               "$id": "323",
+               "x": 288,
+               "y": 211,
+               "w": 151,
+               "h": 244
+              }
+             },
+             {
+              "$id": "324",
+              "text": "a woman wearing a colorful fabric face mask",
+              "confidence": 0.7733591794967651,
+              "boundingBox": {
+               "$id": "325",
+               "x": 433,
+               "y": 240,
+               "w": 180,
+               "h": 236
+              }
+             },
+             {
+              "$id": "326",
+              "text": "a close-up of a laptop on a table",
+              "confidence": 0.8536830544471741,
+              "boundingBox": {
+               "$id": "327",
+               "x": 115,
+               "y": 443,
+               "w": 476,
+               "h": 125
+              }
+             },
+             {
+              "$id": "328",
+              "text": "a woman wearing a mask and using a laptop",
+              "confidence": 0.7810136675834656,
+              "boundingBox": {
+               "$id": "329",
+               "x": 0,
+               "y": 0,
+               "w": 774,
+               "h": 432
+              }
+             },
+             {
+              "$id": "330",
+              "text": "a close up of a text",
+              "confidence": 0.640383780002594,
+              "boundingBox": {
+               "$id": "331",
+               "x": 714,
+               "y": 493,
+               "w": 130,
+               "h": 80
+              }
+             }
+            ]
+           },
+           "metadata": {
+            "$id": "332",
+            "width": 864,
+            "height": 576
+           },
+           "tagsResult": {
+            "$id": "333",
+            "values": [
+             {
+              "$id": "334",
+              "name": "furniture",
+              "confidence": 0.9874445199966431
+             },
+             {
+              "$id": "335",
+              "name": "clothing",
+              "confidence": 0.9792501926422119
+             },
+             {
+              "$id": "336",
+              "name": "person",
+              "confidence": 0.9427268505096436
+             },
+             {
+              "$id": "337",
+              "name": "houseplant",
+              "confidence": 0.9400016069412231
+             },
+             {
+              "$id": "338",
+              "name": "desk",
+              "confidence": 0.9182863235473633
+             },
+             {
+              "$id": "339",
+              "name": "indoor",
+              "confidence": 0.8963587284088135
+             },
+             {
+              "$id": "340",
+              "name": "laptop",
+              "confidence": 0.8781813383102417
+             },
+             {
+              "$id": "341",
+              "name": "computer",
+              "confidence": 0.8481525182723999
+             },
+             {
+              "$id": "342",
+              "name": "sitting",
+              "confidence": 0.8134784698486328
+             },
+             {
+              "$id": "343",
+              "name": "wall",
+              "confidence": 0.7511615753173828
+             },
+             {
+              "$id": "344",
+              "name": "woman",
+              "confidence": 0.7410731911659241
+             },
+             {
+              "$id": "345",
+              "name": "table",
+              "confidence": 0.6811168789863586
+             },
+             {
+              "$id": "346",
+              "name": "plant",
+              "confidence": 0.6445199847221375
+             },
+             {
+              "$id": "347",
+              "name": "using",
+              "confidence": 0.5358931422233582
+             }
+            ]
+           },
+           "objectsResult": {
+            "$id": "348",
+            "values": [
+             {
+              "$id": "349",
+              "boundingBox": {
+               "$id": "350",
+               "x": 603,
+               "y": 225,
+               "w": 152,
+               "h": 224
+              },
+              "tags": [
+               {
+                "$id": "351",
+                "name": "chair",
+                "confidence": 0.618
+               }
+              ]
+             },
+             {
+              "$id": "352",
+              "boundingBox": {
+               "$id": "353",
+               "x": 399,
+               "y": 244,
+               "w": 249,
+               "h": 325
+              },
+              "tags": [
+               {
+                "$id": "354",
+                "name": "person",
+                "confidence": 0.881
+               }
+              ]
+             },
+             {
+              "$id": "355",
+              "boundingBox": {
+               "$id": "356",
+               "x": 295,
+               "y": 387,
+               "w": 211,
+               "h": 102
+              },
+              "tags": [
+               {
+                "$id": "357",
+                "name": "Laptop",
+                "confidence": 0.767
+               }
+              ]
+             },
+             {
+              "$id": "358",
+              "boundingBox": {
+               "$id": "359",
+               "x": 441,
+               "y": 436,
+               "w": 256,
+               "h": 136
+              },
+              "tags": [
+               {
+                "$id": "360",
+                "name": "chair",
+                "confidence": 0.581
+               }
+              ]
+             },
+             {
+              "$id": "361",
+              "boundingBox": {
+               "$id": "362",
+               "x": 123,
+               "y": 437,
+               "w": 460,
+               "h": 125
+              },
+              "tags": [
+               {
+                "$id": "363",
+                "name": "dining table",
+                "confidence": 0.606
+               }
+              ]
+             }
+            ]
+           },
+           "readResult": {
+            "$id": "364",
+            "blocks": [
+             {
+              "$id": "365",
+              "lines": [
+               {
+                "$id": "366",
+                "text": "Sample text",
+                "boundingPolygon": [
+                 {
+                  "$id": "367",
+                  "x": 721,
+                  "y": 502
+                 },
+                 {
+                  "$id": "368",
+                  "x": 843,
+                  "y": 502
+                 },
+                 {
+                  "$id": "369",
+                  "x": 843,
+                  "y": 519
+                 },
+                 {
+                  "$id": "370",
+                  "x": 721,
+                  "y": 519
+                 }
+                ],
+                "words": [
+                 {
+                  "$id": "371",
+                  "text": "Sample",
+                  "boundingPolygon": [
+                   {
+                    "$id": "372",
+                    "x": 722,
+                    "y": 503
+                   },
+                   {
+                    "$id": "373",
+                    "x": 785,
+                    "y": 503
+                   },
+                   {
+                    "$id": "374",
+                    "x": 785,
+                    "y": 520
+                   },
+                   {
+                    "$id": "375",
+                    "x": 722,
+                    "y": 520
+                   }
+                  ],
+                  "confidence": 0.993
+                 },
+                 {
+                  "$id": "376",
+                  "text": "text",
+                  "boundingPolygon": [
+                   {
+                    "$id": "377",
+                    "x": 800,
+                    "y": 503
+                   },
+                   {
+                    "$id": "378",
+                    "x": 842,
+                    "y": 502
+                   },
+                   {
+                    "$id": "379",
+                    "x": 842,
+                    "y": 519
+                   },
+                   {
+                    "$id": "380",
+                    "x": 800,
+                    "y": 520
+                   }
+                  ],
+                  "confidence": 0.989
+                 }
+                ]
+               },
+               {
+                "$id": "381",
+                "text": "Hand writing",
+                "boundingPolygon": [
+                 {
+                  "$id": "382",
+                  "x": 720,
+                  "y": 525
+                 },
+                 {
+                  "$id": "383",
+                  "x": 819,
+                  "y": 526
+                 },
+                 {
+                  "$id": "384",
+                  "x": 819,
+                  "y": 544
+                 },
+                 {
+                  "$id": "385",
+                  "x": 720,
+                  "y": 543
+                 }
+                ],
+                "words": [
+                 {
+                  "$id": "386",
+                  "text": "Hand",
+                  "boundingPolygon": [
+                   {
+                    "$id": "387",
+                    "x": 721,
+                    "y": 526
+                   },
+                   {
+                    "$id": "388",
+                    "x": 759,
+                    "y": 526
+                   },
+                   {
+                    "$id": "389",
+                    "x": 759,
+                    "y": 544
+                   },
+                   {
+                    "$id": "390",
+                    "x": 721,
+                    "y": 543
+                   }
+                  ],
+                  "confidence": 0.989
+                 },
+                 {
+                  "$id": "391",
+                  "text": "writing",
+                  "boundingPolygon": [
+                   {
+                    "$id": "392",
+                    "x": 765,
+                    "y": 526
+                   },
+                   {
+                    "$id": "393",
+                    "x": 819,
+                    "y": 527
+                   },
+                   {
+                    "$id": "394",
+                    "x": 819,
+                    "y": 545
+                   },
+                   {
+                    "$id": "395",
+                    "x": 765,
+                    "y": 544
+                   }
+                  ],
+                  "confidence": 0.994
+                 }
+                ]
+               },
+               {
+                "$id": "396",
+                "text": "123 456",
+                "boundingPolygon": [
+                 {
+                  "$id": "397",
+                  "x": 721,
+                  "y": 548
+                 },
+                 {
+                  "$id": "398",
+                  "x": 791,
+                  "y": 548
+                 },
+                 {
+                  "$id": "399",
+                  "x": 791,
+                  "y": 563
+                 },
+                 {
+                  "$id": "400",
+                  "x": 721,
+                  "y": 564
+                 }
+                ],
+                "words": [
+                 {
+                  "$id": "401",
+                  "text": "123",
+                  "boundingPolygon": [
+                   {
+                    "$id": "402",
+                    "x": 723,
+                    "y": 548
+                   },
+                   {
+                    "$id": "403",
+                    "x": 750,
+                    "y": 548
+                   },
+                   {
+                    "$id": "404",
+                    "x": 750,
+                    "y": 564
+                   },
+                   {
+                    "$id": "405",
+                    "x": 723,
+                    "y": 564
+                   }
+                  ],
+                  "confidence": 0.994
+                 },
+                 {
+                  "$id": "406",
+                  "text": "456",
+                  "boundingPolygon": [
+                   {
+                    "$id": "407",
+                    "x": 761,
+                    "y": 548
+                   },
+                   {
+                    "$id": "408",
+                    "x": 788,
+                    "y": 549
+                   },
+                   {
+                    "$id": "409",
+                    "x": 787,
+                    "y": 564
+                   },
+                   {
+                    "$id": "410",
+                    "x": 760,
+                    "y": 564
+                   }
+                  ],
+                  "confidence": 0.999
+                 }
+                ]
+               }
+              ]
+             }
+            ]
+           },
+           "smartCropsResult": {
+            "$id": "411",
+            "values": [
+             {
+              "$id": "412",
+              "aspectRatio": 0.9,
+              "boundingBox": {
+               "$id": "413",
+               "x": 238,
+               "y": 0,
+               "w": 511,
+               "h": 568
+              }
+             },
+             {
+              "$id": "414",
+              "aspectRatio": 1.33,
+              "boundingBox": {
+               "$id": "415",
+               "x": 54,
+               "y": 0,
+               "w": 760,
+               "h": 571
+              }
+             }
+            ]
+           },
+           "peopleResult": {
+            "$id": "416",
+            "values": [
+             {
+              "$id": "417",
+              "boundingBox": {
+               "$id": "418",
+               "x": 395,
+               "y": 241,
+               "w": 261,
+               "h": 333
+              },
+              "confidence": 0.9602553248405457
+             },
+             {
+              "$id": "419",
+              "boundingBox": {
+               "$id": "420",
+               "x": 831,
+               "y": 246,
+               "w": 31,
+               "h": 255
+              },
+              "confidence": 0.0016505217645317316
+             }
+            ]
+           }
+          }
+         },
+         "$id": "307"
+        }
+       },
+       "parameters": [
+        {
+         "$id": "421",
+         "parameter": {
+          "$ref": "280"
+         },
+         "value": {
+          "$id": "422",
+          "kind": "string",
+          "type": {
+           "$ref": "281"
+          },
+          "value": "2023-10-01"
+         }
+        },
+        {
+         "$id": "423",
+         "parameter": {
+          "$ref": "287"
+         },
+         "value": {
+          "$id": "424",
+          "kind": "array",
+          "type": {
+           "$ref": "288"
+          },
+          "value": [
+           {
+            "$id": "425",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "read"
+           },
+           {
+            "$id": "426",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "tags"
+           },
+           {
+            "$id": "427",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "objects"
+           },
+           {
+            "$id": "428",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "people"
+           },
+           {
+            "$id": "429",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "caption"
+           },
+           {
+            "$id": "430",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "denseCaptions"
+           },
+           {
+            "$id": "431",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "smartCrops"
+           }
+          ]
+         }
+        },
+        {
+         "$id": "432",
+         "parameter": {
+          "$ref": "289"
+         },
+         "value": {
+          "$id": "433",
+          "kind": "string",
+          "type": {
+           "$ref": "290"
+          },
+          "value": "en"
+         }
+        },
+        {
+         "$id": "434",
+         "parameter": {
+          "$ref": "291"
+         },
+         "value": {
+          "$id": "435",
+          "kind": "boolean",
+          "type": {
+           "$ref": "292"
+          },
+          "value": true
+         }
+        },
+        {
+         "$id": "436",
+         "parameter": {
+          "$ref": "293"
+         },
+         "value": {
+          "$id": "437",
+          "kind": "array",
+          "type": {
+           "$ref": "294"
+          },
+          "value": [
+           {
+            "$id": "438",
+            "kind": "number",
+            "type": {
+             "$ref": "295"
+            },
+            "value": 0.9
+           },
+           {
+            "$id": "439",
+            "kind": "number",
+            "type": {
+             "$ref": "295"
+            },
+            "value": 1.33
+           }
+          ]
+         }
+        },
+        {
+         "$id": "440",
+         "parameter": {
+          "$ref": "296"
+         },
+         "value": {
+          "$id": "441",
+          "kind": "string",
+          "type": {
+           "$ref": "297"
+          },
+          "value": "latest"
+         }
+        },
+        {
+         "$id": "442",
+         "parameter": {
+          "$ref": "301"
+         },
+         "value": {
+          "$id": "443",
+          "kind": "model",
+          "type": {
+           "$ref": "107"
+          },
+          "value": {
+           "$id": "444",
+           "url": {
+            "$id": "445",
+            "kind": "string",
+            "type": {
+             "$ref": "109"
+            },
+            "value": "https://aka.ms/azai/vision/image-analysis-sample.jpg"
+           }
+          }
+         }
+        }
+       ],
+       "responses": {
+        "$id": "446"
+       }
+      }
+     ]
+    }
+   ],
+   "Protocol": {
+    "$id": "447"
+   },
+   "Parameters": [
+    {
+     "$ref": "112"
+    }
+   ],
+   "Decorators": []
+  }
+ ],
+ "Auth": {
+  "$id": "448",
+  "ApiKey": {
+   "$id": "449",
+   "Name": "Ocp-Apim-Subscription-Key"
+  },
+  "OAuth2": {
+   "$id": "450",
+   "Scopes": [
+    "https://cognitiveservices.azure.com/.default"
+   ]
+  }
+ }
+}
