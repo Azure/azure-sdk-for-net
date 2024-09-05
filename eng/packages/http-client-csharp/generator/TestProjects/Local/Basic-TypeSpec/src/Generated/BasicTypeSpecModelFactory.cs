@@ -29,8 +29,8 @@ namespace BasicTypeSpec.Models
         /// <returns> A new <see cref="Models.Thing"/> instance for mocking. </returns>
         public static Thing Thing(string name = default, BinaryData requiredUnion = default, ThingRequiredLiteralString requiredLiteralString = default, ThingRequiredLiteralInt requiredLiteralInt = default, ThingRequiredLiteralFloat requiredLiteralFloat = default, bool requiredLiteralBool = default, ThingOptionalLiteralString? optionalLiteralString = default, ThingOptionalLiteralInt? optionalLiteralInt = default, ThingOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
         {
-            optionalNullableList = new ChangeTrackingList<int>();
-            requiredNullableList = new ChangeTrackingList<int>();
+            optionalNullableList ??= new ChangeTrackingList<int>();
+            requiredNullableList ??= new ChangeTrackingList<int>();
 
             return new Thing(
                 name,
@@ -77,16 +77,16 @@ namespace BasicTypeSpec.Models
         /// <returns> A new <see cref="Models.RoundTripModel"/> instance for mocking. </returns>
         public static RoundTripModel RoundTripModel(string requiredString = default, int requiredInt = default, IEnumerable<StringFixedEnum> requiredCollection = default, IDictionary<string, StringExtensibleEnum> requiredDictionary = default, Thing requiredModel = default, IntExtensibleEnum? intExtensibleEnum = default, IEnumerable<IntExtensibleEnum> intExtensibleEnumCollection = default, FloatExtensibleEnum? floatExtensibleEnum = default, FloatExtensibleEnumWithIntValue? floatExtensibleEnumWithIntValue = default, IEnumerable<FloatExtensibleEnum> floatExtensibleEnumCollection = default, FloatFixedEnum? floatFixedEnum = default, FloatFixedEnumWithIntValue? floatFixedEnumWithIntValue = default, IEnumerable<FloatFixedEnum> floatFixedEnumCollection = default, IntFixedEnum? intFixedEnum = default, IEnumerable<IntFixedEnum> intFixedEnumCollection = default, StringFixedEnum? stringFixedEnum = default, BinaryData requiredUnknown = default, BinaryData optionalUnknown = default, IDictionary<string, BinaryData> requiredRecordUnknown = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyRequiredRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyOptionalRecordUnknown = default, ModelWithRequiredNullableProperties modelWithRequiredNullable = default, BinaryData requiredBytes = default)
         {
-            requiredCollection = new ChangeTrackingList<StringFixedEnum>();
-            requiredDictionary = new ChangeTrackingDictionary<string, StringExtensibleEnum>();
-            intExtensibleEnumCollection = new ChangeTrackingList<IntExtensibleEnum>();
-            floatExtensibleEnumCollection = new ChangeTrackingList<FloatExtensibleEnum>();
-            floatFixedEnumCollection = new ChangeTrackingList<FloatFixedEnum>();
-            intFixedEnumCollection = new ChangeTrackingList<IntFixedEnum>();
-            requiredRecordUnknown = new ChangeTrackingDictionary<string, BinaryData>();
-            optionalRecordUnknown = new ChangeTrackingDictionary<string, BinaryData>();
-            readOnlyRequiredRecordUnknown = new ChangeTrackingDictionary<string, BinaryData>();
-            readOnlyOptionalRecordUnknown = new ChangeTrackingDictionary<string, BinaryData>();
+            requiredCollection ??= new ChangeTrackingList<StringFixedEnum>();
+            requiredDictionary ??= new ChangeTrackingDictionary<string, StringExtensibleEnum>();
+            intExtensibleEnumCollection ??= new ChangeTrackingList<IntExtensibleEnum>();
+            floatExtensibleEnumCollection ??= new ChangeTrackingList<FloatExtensibleEnum>();
+            floatFixedEnumCollection ??= new ChangeTrackingList<FloatFixedEnum>();
+            intFixedEnumCollection ??= new ChangeTrackingList<IntFixedEnum>();
+            requiredRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
+            optionalRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
+            readOnlyRequiredRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
+            readOnlyOptionalRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new RoundTripModel(
                 requiredString,
@@ -127,52 +127,6 @@ namespace BasicTypeSpec.Models
             return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, null);
         }
 
-        /// <summary> The AnonymousBodyRequest. </summary>
-        /// <param name="name"> name of the Thing. </param>
-        /// <param name="requiredUnion"> required Union. </param>
-        /// <param name="requiredLiteralString"> required literal string. </param>
-        /// <param name="requiredLiteralInt"> required literal int. </param>
-        /// <param name="requiredLiteralFloat"> required literal float. </param>
-        /// <param name="requiredLiteralBool"> required literal bool. </param>
-        /// <param name="optionalLiteralString"> optional literal string. </param>
-        /// <param name="optionalLiteralInt"> optional literal int. </param>
-        /// <param name="optionalLiteralFloat"> optional literal float. </param>
-        /// <param name="optionalLiteralBool"> optional literal bool. </param>
-        /// <param name="requiredBadDescription"> description with xml &lt;|endoftext|&gt;. </param>
-        /// <param name="optionalNullableList"> optional nullable collection. </param>
-        /// <param name="requiredNullableList"> required nullable collection. </param>
-        /// <returns> A new <see cref="Models.AnonymousBodyRequest"/> instance for mocking. </returns>
-        public static AnonymousBodyRequest AnonymousBodyRequest(string name = default, BinaryData requiredUnion = default, AnonymousBodyRequestRequiredLiteralString requiredLiteralString = default, AnonymousBodyRequestRequiredLiteralInt requiredLiteralInt = default, AnonymousBodyRequestRequiredLiteralFloat requiredLiteralFloat = default, bool requiredLiteralBool = default, AnonymousBodyRequestOptionalLiteralString? optionalLiteralString = default, AnonymousBodyRequestOptionalLiteralInt? optionalLiteralInt = default, AnonymousBodyRequestOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
-        {
-            optionalNullableList = new ChangeTrackingList<int>();
-            requiredNullableList = new ChangeTrackingList<int>();
-
-            return new AnonymousBodyRequest(
-                name,
-                requiredUnion,
-                requiredLiteralString,
-                requiredLiteralInt,
-                requiredLiteralFloat,
-                requiredLiteralBool,
-                optionalLiteralString,
-                optionalLiteralInt,
-                optionalLiteralFloat,
-                optionalLiteralBool,
-                requiredBadDescription,
-                optionalNullableList?.ToList(),
-                requiredNullableList?.ToList(),
-                null);
-        }
-
-        /// <summary> The FriendlyModelRequest. </summary>
-        /// <param name="name"> name of the NotFriend. </param>
-        /// <returns> A new <see cref="Models.FriendlyModelRequest"/> instance for mocking. </returns>
-        public static FriendlyModelRequest FriendlyModelRequest(string name = default)
-        {
-
-            return new FriendlyModelRequest(name, null);
-        }
-
         /// <summary> this is not a friendly model but with a friendly name. </summary>
         /// <param name="name"> name of the NotFriend. </param>
         /// <returns> A new <see cref="Models.Friend"/> instance for mocking. </returns>
@@ -180,15 +134,6 @@ namespace BasicTypeSpec.Models
         {
 
             return new Friend(name, null);
-        }
-
-        /// <summary> The ProjectedNameModelRequest. </summary>
-        /// <param name="name"> name of the ModelWithProjectedName. </param>
-        /// <returns> A new <see cref="Models.ProjectedNameModelRequest"/> instance for mocking. </returns>
-        public static ProjectedNameModelRequest ProjectedNameModelRequest(string name = default)
-        {
-
-            return new ProjectedNameModelRequest(name, null);
         }
 
         /// <summary> this is a model with a projected name. </summary>

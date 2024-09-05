@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace BasicTypeSpec.Models
 {
     /// <summary> The ProjectedNameModelRequest. </summary>
-    public partial class ProjectedNameModelRequest
+    internal partial class ProjectedNameModelRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;

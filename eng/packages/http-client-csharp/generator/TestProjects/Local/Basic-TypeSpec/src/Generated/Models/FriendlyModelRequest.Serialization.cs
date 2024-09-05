@@ -12,7 +12,7 @@ using BasicTypeSpec;
 namespace BasicTypeSpec.Models
 {
     /// <summary></summary>
-    public partial class FriendlyModelRequest : IJsonModel<FriendlyModelRequest>
+    internal partial class FriendlyModelRequest : IJsonModel<FriendlyModelRequest>
     {
         internal FriendlyModelRequest()
         {

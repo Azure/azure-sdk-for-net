@@ -12,7 +12,7 @@ using BasicTypeSpec;
 namespace BasicTypeSpec.Models
 {
     /// <summary></summary>
-    public partial class AnonymousBodyRequest : IJsonModel<AnonymousBodyRequest>
+    internal partial class AnonymousBodyRequest : IJsonModel<AnonymousBodyRequest>
     {
         internal AnonymousBodyRequest()
         {

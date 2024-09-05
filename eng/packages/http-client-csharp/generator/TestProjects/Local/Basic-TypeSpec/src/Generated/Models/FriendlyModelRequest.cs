@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace BasicTypeSpec.Models
 {
     /// <summary> The FriendlyModelRequest. </summary>
-    public partial class FriendlyModelRequest
+    internal partial class FriendlyModelRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;

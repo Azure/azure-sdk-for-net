@@ -9,6 +9,9 @@ pr:
   paths:
     include:
     - eng/packages/http-client-csharp
+
+variables:
+  - template: /eng/pipelines/templates/variables/image.yml
   
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -16,19 +19,14 @@ extends:
     stages:
       - stage: 'Build'
         pool:
-          name: azsdk-pool-mms-win-2022-general
-          image: azsdk-pool-mms-win-2022-1espt
+          name: $(WINDOWSPOOL)
+          image: $(WINDOWSVMIMAGE)
           os: windows
         jobs:
           - job: Build
             timeoutInMinutes: 120
             steps:
               - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-                parameters:
-                  Paths:
-                    - eng
-                    - Directory.Build.props
-                    - Directory.Build.targets
               - task: UseDotNet@2
                 displayName: 'Use .NET Core SDK'
                 retryCountOnTaskFailure: 3

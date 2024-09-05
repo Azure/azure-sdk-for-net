@@ -42,7 +42,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal PipelineMessage CreateHelloAgainRequest(string p1, string p2, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateHelloAgainRequest(string p2, string p1, BinaryContent content, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -61,7 +61,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal PipelineMessage CreateNoContentTypeRequest(string p1, string p2, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateNoContentTypeRequest(string p2, string p1, BinaryContent content, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -122,7 +122,7 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/helloLiteral/", false);
             uri.AppendPath(123.ToString(), true);
-            uri.AppendQuery("p3", true.ToString(), true);
+            uri.AppendQuery("p3", TypeFormatters.ConvertToString(true, null), true);
             request.Uri = uri.ToUri();
             request.Headers.Set("p1", "test");
             request.Headers.Set("Accept", "application/json");
@@ -178,7 +178,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal PipelineMessage CreateAnonymousBodyRequest(RequestOptions options)
+        internal PipelineMessage CreateAnonymousBodyRequest(BinaryContent content, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -190,11 +190,12 @@ namespace BasicTypeSpec
             request.Uri = uri.ToUri();
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
+            request.Content = content;
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateFriendlyModelRequest(RequestOptions options)
+        internal PipelineMessage CreateFriendlyModelRequest(BinaryContent content, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -206,6 +207,7 @@ namespace BasicTypeSpec
             request.Uri = uri.ToUri();
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
+            request.Content = content;
             message.Apply(options);
             return message;
         }
@@ -220,12 +222,12 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             request.Uri = uri.ToUri();
-            request.Headers.Set("Repeatability-First-Sent", DateTimeOffset.Now.ToString("R"));
+            request.Headers.Set("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, "R"));
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateProjectedNameModelRequest(RequestOptions options)
+        internal PipelineMessage CreateProjectedNameModelRequest(BinaryContent content, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -237,6 +239,7 @@ namespace BasicTypeSpec
             request.Uri = uri.ToUri();
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
+            request.Content = content;
             message.Apply(options);
             return message;
         }

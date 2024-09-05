@@ -12,7 +12,7 @@ using BasicTypeSpec;
 namespace BasicTypeSpec.Models
 {
     /// <summary></summary>
-    public partial class ProjectedNameModelRequest : IJsonModel<ProjectedNameModelRequest>
+    internal partial class ProjectedNameModelRequest : IJsonModel<ProjectedNameModelRequest>
     {
         internal ProjectedNameModelRequest()
         {
