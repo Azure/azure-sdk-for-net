@@ -11,7 +11,6 @@ using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-using NUnit.Framework.Internal.Commands;
 
 namespace Azure.Core.Extensions.Tests
 {
