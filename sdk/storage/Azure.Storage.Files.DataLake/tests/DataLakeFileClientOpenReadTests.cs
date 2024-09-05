@@ -92,6 +92,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Conditions = conditions
             });
 
+        protected override async Task<Stream> OpenReadAsyncOverload(DataLakeFileClient client, int? bufferSize = null, long position = 0, bool allowModifications = false)
+            => await client.OpenReadAsync(allowModifications, position, bufferSize);
+
         protected override async Task StageDataAsync(DataLakeFileClient client, Stream data)
         {
             using Stream writeStream = await client.OpenWriteAsync( overwrite: true);

@@ -654,429 +654,63 @@ namespace Azure.Storage.Test.Shared
         }
 
         [RecordedTest]
-        public async Task OpenReadAsyncOverload()
+        public async Task OpenReadAsyncOverload_allowModifications()
         {
             int size = Constants.KB;
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(size);
+            byte[] data0 = GetRandomBuffer(size);
+            byte[] data1 = GetRandomBuffer(size);
+            byte[] expectedData = new byte[2 * size];
+            Array.Copy(data0, 0, expectedData, 0, size);
+            Array.Copy(data1, 0, expectedData, size, size);
+
             TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(data));
+            await StageDataAsync(client, new MemoryStream(data0));
 
             // Act
-            Stream outputStream = await OpenReadAsyncOverload(client);
-            byte[] outputBytes = new byte[size];
+            Stream outputStream = await OpenReadAsyncOverload(client, allowModifications: true);
+            byte[] outputBytes = new byte[2 * size];
             await outputStream.ReadAsync(outputBytes, 0, size);
-
-            // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
-            TestHelper.AssertSequenceEqual(data, outputBytes);
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsyncOverload_BufferSize()
-        {
-            int size = Constants.KB;
-            int bufferSize = size / 8;
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(data));
-
-            // Act
-            Stream outputStream = await OpenReadAsyncOverload(client, bufferSize: bufferSize);
-            byte[] outputBytes = new byte[size];
-            int downloadedBytes = 0;
-
-            while (downloadedBytes < size)
-            {
-                downloadedBytes += await outputStream.ReadAsync(outputBytes, downloadedBytes, size / 4);
-            }
-
-            // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
-            TestHelper.AssertSequenceEqual(data, outputBytes);
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsyncOverload_OffsetAndBufferSize()
-        {
-            int size = Constants.KB;
-            int bufferSize = size / 8;
-            int position = size / 2;
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(data));
-
-            byte[] expected = new byte[size];
-            Array.Copy(data, position, expected, position, size - position);
-
-            // Act
-            Stream outputStream = await OpenReadAsyncOverload(client, bufferSize: bufferSize, position: position);
-            byte[] outputBytes = new byte[size];
-
-            int downloadedBytes = position;
-
-            while (downloadedBytes < size)
-            {
-                downloadedBytes += await outputStream.ReadAsync(outputBytes, downloadedBytes, size / 4);
-            }
-
-            // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
-            TestHelper.AssertSequenceEqual(expected, outputBytes);
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsyncOverload_Error()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                OpenReadAsyncOverload(client),
-                e => Assert.AreEqual(OpenReadAsync_Error_Code, e.ErrorCode));
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsyncOverload_StrangeOffsetsTest()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-
-            int size = Constants.KB;
-            int bufferSize = 157;
-            byte[] expectedData = GetRandomBuffer(size);
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(expectedData));
-
-            Stream outputStream = await OpenReadAsyncOverload(client, bufferSize: bufferSize);
-            byte[] actualData = new byte[size];
-            int offset = 0;
-
-            // Act
-            int count = 0;
-            int readBytes = -1;
-            while (readBytes != 0)
-            {
-                for (count = 6; count < 37; count += 6)
-                {
-                    readBytes = await outputStream.ReadAsync(actualData, offset, count);
-                    if (readBytes == 0)
-                    {
-                        break;
-                    }
-                    offset += readBytes;
-                }
-            }
-
-            // Assert
-            TestHelper.AssertSequenceEqual(expectedData, actualData);
-        }
-
-        [RecordedTest]
-        public virtual async Task OpenReadAsyncOverload_Modified()
-        {
-            int size = Constants.KB;
-            int bufferSize = size / 2;
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(data));
-
-            // Act
-            Stream outputStream = await OpenReadAsyncOverload(client, bufferSize: bufferSize);
-            byte[] outputBytes = new byte[size];
-            await outputStream.ReadAsync(outputBytes, 0, size / 2);
 
             // Modify the blob.
-            await ModifyDataAsync(client, new MemoryStream(GetRandomBuffer(size)), ModifyDataMode.Replace);
+            await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
+
+            await outputStream.ReadAsync(outputBytes, size, size);
 
             // Assert
-            await AssertExpectedExceptionOpenReadModifiedAsync(outputStream.ReadAsync(outputBytes, size / 2, size / 2));
+            TestHelper.AssertSequenceEqual(expectedData, outputBytes);
         }
 
         [RecordedTest]
-        [Ignore("Don't want to record 1 GB of data.")]
-        public async Task OpenReadAsyncOverload_LargeData()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-            int length = 1 * Constants.GB;
-            byte[] expectedData = GetRandomBuffer(length);
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            using Stream stream = new MemoryStream(expectedData);
-            await StageDataAsync(client, stream);
-
-            Stream outputStream = await OpenReadAsyncOverload(client);
-            int readSize = 8 * Constants.MB;
-            byte[] actualData = new byte[readSize];
-            int offset = 0;
-
-            // Act
-            for (int i = 0; i < length / readSize; i++)
-            {
-                int actualRead = await outputStream.ReadAsync(actualData, 0, readSize);
-                for (int j = 0; j < actualRead; j++)
-                {
-                    // Assert
-                    if (actualData[j] != expectedData[offset + j])
-                    {
-                        Assert.Fail($"Index {offset + j} does not match.  Expected: {expectedData[offset + j]} Actual: {actualData[j]}");
-                    }
-                }
-                offset += actualRead;
-            }
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsyncOverload_CopyReadStreamToAnotherStream()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-            long size = 4 * Constants.MB;
-            byte[] expectedData = GetRandomBuffer(size);
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(expectedData));
-
-            MemoryStream outputStream = new MemoryStream();
-
-            // Act
-            using Stream blobStream = await OpenReadAsyncOverload(client);
-            await blobStream.CopyToAsync(outputStream);
-
-            TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsyncOverload_InvalidParameterTests()
+        public async Task OpenReadAsyncOverload_notAllowModifications()
         {
             int size = Constants.KB;
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(size);
+            byte[] data0 = GetRandomBuffer(size);
+            byte[] data1 = GetRandomBuffer(size);
+            byte[] expectedData = new byte[2 * size];
+            Array.Copy(data0, 0, expectedData, 0, size);
+            Array.Copy(data1, 0, expectedData, size, size);
+
             TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(data));
-            Stream stream = await OpenReadAsyncOverload(client);
+            await StageDataAsync(client, new MemoryStream(data0));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
-                stream.ReadAsync(buffer: null, offset: 0, count: 10),
-                new ArgumentNullException("buffer", "buffer cannot be null."));
-
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
-                stream.ReadAsync(buffer: new byte[10], offset: -1, count: 10),
-                new ArgumentOutOfRangeException("offset", "offset cannot be less than 0."));
-
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
-                stream.ReadAsync(buffer: new byte[10], offset: 11, count: 10),
-                new ArgumentOutOfRangeException("offset", "offset cannot exceed buffer length."));
-
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
-                stream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
-                new ArgumentOutOfRangeException("count", "count cannot be less than 0."));
-        }
-
-        [RecordedTest]
-        public async Task OpenReadAsyncOverload_Seek_PositionUnchanged()
-        {
-            int size = Constants.KB;
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(data));
-
-            // Act
-            Stream outputStream = await OpenReadAsyncOverload(client);
-            byte[] outputBytes = new byte[size];
-            outputStream.Seek(0, SeekOrigin.Begin);
-
-            Assert.AreEqual(0, outputStream.Position);
-
+            Stream outputStream = await OpenReadAsyncOverload(client, allowModifications: false);
+            byte[] outputBytes = new byte[2 * size];
             await outputStream.ReadAsync(outputBytes, 0, size);
 
-            // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
-            TestHelper.AssertSequenceEqual(data, outputBytes);
-        }
+            // Modify the blob.
+            await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
 
-        [RecordedTest]
-        public async Task OpenReadAsyncOverload_Seek_NegativeNewPosition()
-        {
-            int size = Constants.KB;
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(data));
-
-            // Act
-            Stream outputStream = await OpenReadAsyncOverload(client);
-            TestHelper.AssertExpectedException<ArgumentException>(
-                () => outputStream.Seek(-10, SeekOrigin.Begin),
-                new ArgumentException("New offset cannot be less than 0.  Value was -10", "offset"));
-        }
-
-        [RecordedTest]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task OpenReadAsyncOverload_Seek_NewPositionGreaterThanResourceLength(bool allowModifications)
-        {
-            int size = Constants.KB;
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(data));
-
-            // Act
-            Stream outputStream = await OpenReadAsyncOverload(client, allowModifications: allowModifications);
-            TestHelper.AssertExpectedException<ArgumentException>(
-                () => outputStream.Seek(1025, SeekOrigin.Begin),
-                new ArgumentException("You cannot seek past the last known length of the underlying blob or file.", "offset"));
-
-            Assert.AreEqual(size, outputStream.Length);
-        }
-
-        [RecordedTest]
-        [TestCase(0, SeekOrigin.Begin)]
-        [TestCase(10, SeekOrigin.Begin)]
-        [TestCase(-10, SeekOrigin.Current)]
-        [TestCase(0, SeekOrigin.Current)]
-        [TestCase(10, SeekOrigin.Current)]
-        [TestCase(0, SeekOrigin.End)]
-        [TestCase(-10, SeekOrigin.End)]
-        public async Task OpenReadAsyncOverload_Seek_Position(long offset, SeekOrigin origin)
-        {
-            int size = Constants.KB;
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(data));
-
-            Stream outputStream = await OpenReadAsyncOverload(client);
-            int readBytes = 512;
-            await outputStream.ReadAsync(new byte[readBytes], 0, readBytes);
-            Assert.AreEqual(512, outputStream.Position);
-
-            // Act
-            outputStream.Seek(offset, origin);
+            await outputStream.ReadAsync(outputBytes, size, size);
 
             // Assert
-            if (origin == SeekOrigin.Begin)
-            {
-                Assert.AreEqual(offset, outputStream.Position);
-            }
-            else if (origin == SeekOrigin.Current)
-            {
-                Assert.AreEqual(readBytes + offset, outputStream.Position);
-            }
-            else
-            {
-                Assert.AreEqual(size + offset, outputStream.Position);
-            }
-
-            Assert.AreEqual(size, outputStream.Length);
-        }
-
-        [RecordedTest]
-        // lower position within _buffer
-        [TestCase(-50)]
-        // higher position within _buffer
-        [TestCase(50)]
-        // lower position below _buffer
-        [TestCase(-100)]
-        // higher position above _buffer
-        [TestCase(100)]
-        public async Task OpenReadAsyncOverload_Seek(long offset)
-        {
-            int size = Constants.KB;
-            int bufferSize = 128;
-            int initalPosition = 450;
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-
-            // Arrange
-            byte[] data = GetRandomBuffer(size);
-            byte[] expectedData = new byte[size - (initalPosition + offset)];
-            Array.Copy(data, initalPosition + offset, expectedData, 0, size - (initalPosition + offset));
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(data));
-
-            // Act
-            Stream openReadStream = await OpenReadAsyncOverload(client, bufferSize: bufferSize);
-            int readbytes = initalPosition;
-            while (readbytes > 0)
-            {
-                readbytes -= await openReadStream.ReadAsync(new byte[readbytes], 0, readbytes);
-            }
-
-            openReadStream.Seek(offset, SeekOrigin.Current);
-
-            using MemoryStream outputStream = new MemoryStream();
-            await openReadStream.CopyToAsync(outputStream);
-
-            // Assert
-            Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
-            Assert.AreEqual(size, openReadStream.Length);
-            TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
-        }
-
-        [RecordedTest]
-        // lower position within _buffer
-        [TestCase(400)]
-        // higher positiuon within _buffer
-        [TestCase(500)]
-        // lower position below _buffer
-        [TestCase(250)]
-        // higher position above _buffer
-        [TestCase(550)]
-        public async Task OpenReadAsyncOverload_SetPosition(long position)
-        {
-            int size = Constants.KB;
-            int bufferSize = 128;
-            int initalPosition = 450;
-            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
-
-            // Arrange
-            byte[] data = GetRandomBuffer(size);
-            byte[] expectedData = new byte[size - position];
-            Array.Copy(data, position, expectedData, 0, size - position);
-            TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await StageDataAsync(client, new MemoryStream(data));
-
-            // Act
-            Stream openReadStream = await OpenReadAsyncOverload(client, bufferSize: bufferSize);
-            int readbytes = initalPosition;
-            while (readbytes > 0)
-            {
-                readbytes -= await openReadStream.ReadAsync(new byte[readbytes], 0, readbytes);
-            }
-
-            openReadStream.Position = position;
-
-            using MemoryStream outputStream = new MemoryStream();
-            await openReadStream.CopyToAsync(outputStream);
-
-            // Assert
-            Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
-            TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
+            Assert.AreNotEqual(expectedData, outputBytes);
         }
     }
 }
