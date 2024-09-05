@@ -80,20 +80,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies description. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Specifies description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Specifies the backfill feature window to be materialized. </summary>
+        [WirePath("featureWindow")]
         public FeatureWindow FeatureWindow { get; set; }
         /// <summary> Specified the data availability status that you want to backfill. </summary>
+        [WirePath("dataAvailabilityStatus")]
         public IList<DataAvailabilityStatus> DataAvailabilityStatus { get; }
         /// <summary> Specify the jobId to retry the failed materialization. </summary>
+        [WirePath("jobId")]
         public string JobId { get; set; }
         /// <summary> Specifies the tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Specifies the compute resource settings. </summary>
         internal MaterializationComputeResource Resource { get; set; }
         /// <summary> Specifies the instance type. </summary>
+        [WirePath("resource.instanceType")]
         public string ResourceInstanceType
         {
             get => Resource is null ? default : Resource.InstanceType;
@@ -106,8 +113,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies the spark compute settings. </summary>
+        [WirePath("sparkConfiguration")]
         public IDictionary<string, string> SparkConfiguration { get; }
         /// <summary> Specifies the properties. </summary>
+        [WirePath("properties")]
         public IDictionary<string, string> Properties { get; }
     }
 }

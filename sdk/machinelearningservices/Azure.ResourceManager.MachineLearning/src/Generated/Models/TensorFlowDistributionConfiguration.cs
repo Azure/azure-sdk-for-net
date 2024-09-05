@@ -32,8 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Number of workers. If not specified, will default to the instance count. </summary>
+        [WirePath("workerCount")]
         public int? WorkerCount { get; set; }
         /// <summary> Number of parameter server tasks. </summary>
+        [WirePath("parameterServerCount")]
         public int? ParameterServerCount { get; set; }
     }
 }

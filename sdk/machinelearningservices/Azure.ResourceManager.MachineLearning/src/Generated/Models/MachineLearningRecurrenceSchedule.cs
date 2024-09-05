@@ -82,12 +82,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] List of hours for the schedule. </summary>
+        [WirePath("hours")]
         public IList<int> Hours { get; }
         /// <summary> [Required] List of minutes for the schedule. </summary>
+        [WirePath("minutes")]
         public IList<int> Minutes { get; }
         /// <summary> List of days for the schedule. </summary>
+        [WirePath("weekDays")]
         public IList<MachineLearningDayOfWeek> WeekDays { get; set; }
         /// <summary> List of month days for the schedule. </summary>
+        [WirePath("monthDays")]
         public IList<int> MonthDays { get; set; }
     }
 }

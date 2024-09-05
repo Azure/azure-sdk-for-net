@@ -160,13 +160,13 @@ Data =
             MachineLearningModelVersionResource machineLearningModelVersion = client.GetMachineLearningModelVersionResource(machineLearningModelVersionResourceId);
 
             // invoke the operation
-            DestinationAsset body = new DestinationAsset()
+            DestinationAssetContent content = new DestinationAssetContent()
             {
                 RegistryName = "string",
                 DestinationName = "string",
                 DestinationVersion = "string",
             };
-            await machineLearningModelVersion.PublishAsync(WaitUntil.Completed, body);
+            await machineLearningModelVersion.PublishAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }

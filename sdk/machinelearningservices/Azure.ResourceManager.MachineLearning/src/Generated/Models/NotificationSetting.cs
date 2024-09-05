@@ -71,14 +71,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> This is the email recipient list which has a limitation of 499 characters in total concat with comma separator. </summary>
+        [WirePath("emails")]
         public IList<string> Emails { get; set; }
         /// <summary> Send email notification to user on specified notification type. </summary>
+        [WirePath("emailOn")]
         public IList<EmailNotificationEnableType> EmailOn { get; set; }
         /// <summary>
         /// Send webhook callback to a service. Key is a user-provided name for the webhook.
         /// Please note <see cref="MachineLearningWebhook"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureDevOpsWebhook"/>.
         /// </summary>
+        [WirePath("webhooks")]
         public IDictionary<string, MachineLearningWebhook> Webhooks { get; set; }
     }
 }

@@ -75,13 +75,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Defaults to 500ms.
         /// (Now increase `request_timeout_ms` to account for any networking/queue delays)
         /// </summary>
+        [WirePath("maxQueueWait")]
         public TimeSpan? MaxQueueWait { get; set; }
         /// <summary>
         /// The scoring timeout in ISO 8601 format.
         /// Defaults to 5000ms.
         /// </summary>
+        [WirePath("requestTimeout")]
         public TimeSpan? RequestTimeout { get; set; }
         /// <summary> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </summary>
+        [WirePath("maxConcurrentRequestsPerInstance")]
         public int? MaxConcurrentRequestsPerInstance { get; set; }
     }
 }

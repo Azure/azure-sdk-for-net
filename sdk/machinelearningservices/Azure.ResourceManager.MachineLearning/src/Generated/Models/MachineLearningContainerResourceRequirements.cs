@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Container resource request info:. </summary>
+        [WirePath("containerResourceRequests")]
         public MachineLearningContainerResourceSettings ContainerResourceRequests { get; set; }
         /// <summary> Container resource limit info:. </summary>
+        [WirePath("containerResourceLimits")]
         public MachineLearningContainerResourceSettings ContainerResourceLimits { get; set; }
     }
 }

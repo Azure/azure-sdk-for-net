@@ -86,13 +86,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] Task type for AutoMLJob. </summary>
         internal TaskType TaskType { get; set; }
         /// <summary> Log verbosity for the job. </summary>
+        [WirePath("logVerbosity")]
         public MachineLearningLogVerbosity? LogVerbosity { get; set; }
         /// <summary> [Required] Training data input. </summary>
+        [WirePath("trainingData")]
         public MachineLearningTableJobInput TrainingData { get; set; }
         /// <summary>
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </summary>
+        [WirePath("targetColumnName")]
         public string TargetColumnName { get; set; }
     }
 }

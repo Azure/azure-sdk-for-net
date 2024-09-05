@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -206,6 +208,169 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 preprocessingComponentId);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowOffset), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  windowOffset: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  windowOffset: ");
+                var formattedTimeSpan = TypeFormatters.ToString(WindowOffset, "P");
+                builder.AppendLine($"'{formattedTimeSpan}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  windowSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  windowSize: ");
+                var formattedTimeSpan = TypeFormatters.ToString(WindowSize, "P");
+                builder.AppendLine($"'{formattedTimeSpan}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreprocessingComponentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preprocessingComponentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreprocessingComponentId))
+                {
+                    builder.Append("  preprocessingComponentId: ");
+                    if (PreprocessingComponentId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PreprocessingComponentId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PreprocessingComponentId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InputDataType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  inputDataType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  inputDataType: ");
+                builder.AppendLine($"'{InputDataType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataContext), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataContext: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataContext))
+                {
+                    builder.Append("  dataContext: ");
+                    if (DataContext.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DataContext}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DataContext}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobInputType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobInputType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  jobInputType: ");
+                builder.AppendLine($"'{JobInputType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  uri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    builder.Append("  uri: ");
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  columns: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Columns))
+                {
+                    if (Columns.Any())
+                    {
+                        builder.Append("  columns: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Columns)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RollingInputData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RollingInputData>)this).GetFormatFromOptions(options) : options.Format;
@@ -214,6 +379,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RollingInputData)} does not support writing '{options.Format}' format.");
             }

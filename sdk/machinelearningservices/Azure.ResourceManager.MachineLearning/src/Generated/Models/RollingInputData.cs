@@ -52,10 +52,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The time offset between the end of the data window and the monitor's current run time. </summary>
+        [WirePath("windowOffset")]
         public TimeSpan WindowOffset { get; set; }
         /// <summary> [Required] The size of the rolling data window. </summary>
+        [WirePath("windowSize")]
         public TimeSpan WindowSize { get; set; }
         /// <summary> Reference to the component asset used to preprocess the data. </summary>
+        [WirePath("preprocessingComponentId")]
         public string PreprocessingComponentId { get; set; }
     }
 }

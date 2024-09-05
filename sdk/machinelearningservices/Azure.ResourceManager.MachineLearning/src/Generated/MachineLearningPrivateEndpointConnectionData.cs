@@ -87,20 +87,25 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The sku of the workspace. </summary>
+        [WirePath("sku")]
         public MachineLearningSku Sku { get; set; }
         /// <summary> The resource of private end point. </summary>
         internal SubResource SubResource { get; set; }
         /// <summary> Gets Id. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier SubResourceId
         {
             get => SubResource is null ? default : SubResource.Id;
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public MachineLearningPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public MachineLearningPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

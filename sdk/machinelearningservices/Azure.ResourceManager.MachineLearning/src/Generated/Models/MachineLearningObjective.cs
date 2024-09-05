@@ -74,8 +74,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Name of the metric to optimize. </summary>
+        [WirePath("primaryMetric")]
         public string PrimaryMetric { get; set; }
         /// <summary> [Required] Defines supported metric goals for hyperparameter tuning. </summary>
+        [WirePath("goal")]
         public MachineLearningGoal Goal { get; set; }
     }
 }

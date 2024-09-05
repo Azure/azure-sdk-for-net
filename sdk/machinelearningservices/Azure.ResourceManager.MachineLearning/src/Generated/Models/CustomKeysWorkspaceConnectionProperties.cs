@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"> Custom Keys credential object. </param>
-        internal CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, ConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData, CustomKeys credentials) : base(authType, category, createdByWorkspaceArmId, expiryOn, group, isSharedToAll, target, metadata, sharedUserList, value, valueFormat, serializedAdditionalRawData)
+        internal CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData, CustomKeys credentials) : base(authType, category, createdByWorkspaceArmId, expiryOn, group, isSharedToAll, target, metadata, sharedUserList, value, valueFormat, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Custom Keys credential object. </summary>
         internal CustomKeys Credentials { get; set; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("credentials.keys")]
         public IDictionary<string, string> CredentialsKeys
         {
             get

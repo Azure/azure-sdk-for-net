@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // invoke the operation
             string name = "string";
             string version = "string";
-            GetBlobReferenceSasRequestDto body = new GetBlobReferenceSasRequestDto()
+            BlobReferenceSasContent content = new BlobReferenceSasContent()
             {
                 AssetId = "string",
                 BlobUri = new Uri("https://www.contoso.com/example"),
             };
-            GetBlobReferenceSasResponseDto result = await machineLearningRegistry.GetBlobReferenceSasRegistryDataReferenceAsync(name, version, body);
+            BlobReferenceSasResult result = await machineLearningRegistry.GetBlobReferenceSasRegistryDataReferenceAsync(name, version, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

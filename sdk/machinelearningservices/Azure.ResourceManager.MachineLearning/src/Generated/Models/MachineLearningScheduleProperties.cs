@@ -67,22 +67,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Display name of schedule. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Is the schedule enabled?. </summary>
+        [WirePath("isEnabled")]
         public bool? IsEnabled { get; set; }
         /// <summary>
         /// [Required] Specifies the trigger details
         /// Please note <see cref="MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
         /// </summary>
+        [WirePath("trigger")]
         public MachineLearningTriggerBase Trigger { get; set; }
         /// <summary>
         /// [Required] Specifies the action of the schedule
         /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/>, <see cref="CreateMonitorAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
         /// </summary>
+        [WirePath("action")]
         public MachineLearningScheduleAction Action { get; set; }
         /// <summary> Provisioning state for the schedule. </summary>
+        [WirePath("provisioningState")]
         public MachineLearningScheduleProvisioningStatus? ProvisioningState { get; }
     }
 }

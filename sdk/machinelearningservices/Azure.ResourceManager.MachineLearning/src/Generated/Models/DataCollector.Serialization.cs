@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -134,6 +136,78 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new DataCollector(collections, rollingRate, requestLogging, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Collections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  collections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Collections))
+                {
+                    if (Collections.Any())
+                    {
+                        builder.Append("  collections: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Collections)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  collections: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RollingRate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rollingRate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RollingRate))
+                {
+                    builder.Append("  rollingRate: ");
+                    builder.AppendLine($"'{RollingRate.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RequestLoggingCaptureHeaders", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestLogging: ");
+                builder.AppendLine("{");
+                builder.Append("    captureHeaders: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestLogging))
+                {
+                    builder.Append("  requestLogging: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RequestLogging, options, 2, false, "  requestLogging: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DataCollector>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataCollector>)this).GetFormatFromOptions(options) : options.Format;
@@ -142,6 +216,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataCollector)} does not support writing '{options.Format}' format.");
             }

@@ -35,10 +35,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Sweep Job max total trials. </summary>
+        [WirePath("maxTotalTrials")]
         public int? MaxTotalTrials { get; set; }
         /// <summary> Sweep Job max concurrent trials. </summary>
+        [WirePath("maxConcurrentTrials")]
         public int? MaxConcurrentTrials { get; set; }
         /// <summary> Sweep Job Trial timeout value. </summary>
+        [WirePath("trialTimeout")]
         public TimeSpan? TrialTimeout { get; set; }
     }
 }

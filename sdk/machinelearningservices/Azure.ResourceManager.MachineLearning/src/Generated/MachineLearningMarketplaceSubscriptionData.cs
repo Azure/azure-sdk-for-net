@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing the MarketplaceSubscription data model.
+    /// A class representing the MachineLearningMarketplaceSubscription data model.
     /// Azure Resource Manager resource envelope.
     /// </summary>
-    public partial class MarketplaceSubscriptionData : ResourceData
+    public partial class MachineLearningMarketplaceSubscriptionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,35 +51,36 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplaceSubscriptionData"/>. </summary>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public MarketplaceSubscriptionData(MarketplaceSubscriptionProperties properties)
+        public MachineLearningMarketplaceSubscriptionData(MachineLearningMarketplaceSubscriptionProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplaceSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MarketplaceSubscriptionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MachineLearningMarketplaceSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningMarketplaceSubscriptionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionData"/> for deserialization. </summary>
-        internal MarketplaceSubscriptionData()
+        /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplaceSubscriptionData"/> for deserialization. </summary>
+        internal MachineLearningMarketplaceSubscriptionData()
         {
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
-        public MarketplaceSubscriptionProperties Properties { get; set; }
+        [WirePath("properties")]
+        public MachineLearningMarketplaceSubscriptionProperties Properties { get; set; }
     }
 }

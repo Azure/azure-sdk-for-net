@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -266,6 +268,178 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 blockedTrainingAlgorithms ?? new ChangeTrackingList<AutoMLVerticalRegressionModel>());
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedTrainingAlgorithms), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allowedTrainingAlgorithms: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedTrainingAlgorithms))
+                {
+                    if (AllowedTrainingAlgorithms.Any())
+                    {
+                        builder.Append("  allowedTrainingAlgorithms: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedTrainingAlgorithms)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockedTrainingAlgorithms), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  blockedTrainingAlgorithms: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlockedTrainingAlgorithms))
+                {
+                    if (BlockedTrainingAlgorithms.Any())
+                    {
+                        builder.Append("  blockedTrainingAlgorithms: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BlockedTrainingAlgorithms)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsOnnxCompatibleModelsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableOnnxCompatibleModels: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
+                {
+                    builder.Append("  enableOnnxCompatibleModels: ");
+                    var boolValue = IsOnnxCompatibleModelsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StackEnsembleSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stackEnsembleSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StackEnsembleSettings))
+                {
+                    builder.Append("  stackEnsembleSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StackEnsembleSettings, options, 2, false, "  stackEnsembleSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStackEnsembleEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableStackEnsemble: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsStackEnsembleEnabled))
+                {
+                    builder.Append("  enableStackEnsemble: ");
+                    var boolValue = IsStackEnsembleEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVoteEnsembleEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableVoteEnsemble: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsVoteEnsembleEnabled))
+                {
+                    builder.Append("  enableVoteEnsemble: ");
+                    var boolValue = IsVoteEnsembleEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnsembleModelDownloadTimeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ensembleModelDownloadTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnsembleModelDownloadTimeout))
+                {
+                    builder.Append("  ensembleModelDownloadTimeout: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(EnsembleModelDownloadTimeout.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsModelExplainabilityEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableModelExplainability: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsModelExplainabilityEnabled))
+                {
+                    builder.Append("  enableModelExplainability: ");
+                    var boolValue = IsModelExplainabilityEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDnnTrainingEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableDnnTraining: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDnnTrainingEnabled))
+                {
+                    builder.Append("  enableDnnTraining: ");
+                    var boolValue = IsDnnTrainingEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RegressionTrainingSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RegressionTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -274,6 +448,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support writing '{options.Format}' format.");
             }

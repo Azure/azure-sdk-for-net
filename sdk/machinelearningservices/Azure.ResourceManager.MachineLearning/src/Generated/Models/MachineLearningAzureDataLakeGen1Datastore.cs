@@ -61,12 +61,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Azure Data Lake store name. </summary>
+        [WirePath("storeName")]
         public string StoreName { get; set; }
         /// <summary> Indicates which identity to use to authenticate service data access to customer's storage. </summary>
+        [WirePath("serviceDataAccessAuthIdentity")]
         public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
         /// <summary> Azure Subscription Id. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
         /// <summary> Azure Resource Group name. </summary>
+        [WirePath("resourceGroup")]
         public string ResourceGroup { get; set; }
     }
 }

@@ -61,12 +61,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Primary metric for Text-NER task.
         /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
         /// </summary>
+        [WirePath("primaryMetric")]
         public ClassificationPrimaryMetric? PrimaryMetric { get; }
         /// <summary> Execution constraints for AutoMLJob. </summary>
+        [WirePath("limitSettings")]
         public NlpVerticalLimitSettings LimitSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>
         internal NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
         /// <summary> Dataset language, useful for the text data. </summary>
+        [WirePath("featurizationSettings.datasetLanguage")]
         public string FeaturizationDatasetLanguage
         {
             get => FeaturizationSettings is null ? default : FeaturizationSettings.DatasetLanguage;
@@ -79,6 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Validation data inputs. </summary>
+        [WirePath("validationData")]
         public MachineLearningTableJobInput ValidationData { get; set; }
     }
 }

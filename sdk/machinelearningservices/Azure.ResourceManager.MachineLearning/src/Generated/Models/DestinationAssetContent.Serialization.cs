@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class DestinationAsset : IUtf8JsonSerializable, IJsonModel<DestinationAsset>
+    public partial class DestinationAssetContent : IUtf8JsonSerializable, IJsonModel<DestinationAssetContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DestinationAsset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DestinationAssetContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DestinationAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DestinationAssetContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationAsset>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DestinationAsset)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,19 +80,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        DestinationAsset IJsonModel<DestinationAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DestinationAssetContent IJsonModel<DestinationAssetContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationAsset>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DestinationAsset)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDestinationAsset(document.RootElement, options);
+            return DeserializeDestinationAssetContent(document.RootElement, options);
         }
 
-        internal static DestinationAsset DeserializeDestinationAsset(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DestinationAssetContent DeserializeDestinationAssetContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -143,38 +143,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DestinationAsset(registryName, destinationName, destinationVersion, serializedAdditionalRawData);
+            return new DestinationAssetContent(registryName, destinationName, destinationVersion, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DestinationAsset>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DestinationAssetContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationAsset>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DestinationAsset)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DestinationAsset IPersistableModel<DestinationAsset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DestinationAssetContent IPersistableModel<DestinationAssetContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationAsset>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDestinationAsset(document.RootElement, options);
+                        return DeserializeDestinationAssetContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DestinationAsset)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DestinationAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DestinationAssetContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

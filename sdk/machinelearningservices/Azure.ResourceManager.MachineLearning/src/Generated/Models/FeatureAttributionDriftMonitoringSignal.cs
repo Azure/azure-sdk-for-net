@@ -77,22 +77,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] A list of metrics to calculate and their associated thresholds. </summary>
+        [WirePath("metricThreshold")]
         public FeatureAttributionMetricThreshold MetricThreshold { get; set; }
         /// <summary> [Required] The settings for computing feature importance. </summary>
+        [WirePath("featureImportanceSettings")]
         public FeatureImportanceSettings FeatureImportanceSettings { get; set; }
         /// <summary>
         /// [Required] The data which drift will be calculated for.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </summary>
+        [WirePath("productionData")]
         public IList<MonitoringInputDataBase> ProductionData { get; }
         /// <summary>
         /// [Required] The data to calculate drift against.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </summary>
+        [WirePath("referenceData")]
         public MonitoringInputDataBase ReferenceData { get; set; }
         /// <summary> A dictionary that maps feature names to their respective data types. </summary>
+        [WirePath("featureDataTypeOverride")]
         public IDictionary<string, MonitoringFeatureDataType> FeatureDataTypeOverride { get; set; }
     }
 }

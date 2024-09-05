@@ -32,8 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Is the asset archived?. </summary>
+        [WirePath("isArchived")]
         public bool? IsArchived { get; set; }
         /// <summary> If the name version are system generated (anonymous registration). </summary>
+        [WirePath("isAnonymous")]
         public bool? IsAnonymous { get; set; }
     }
 }

@@ -33,8 +33,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The path of the file/directory in the job output. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> ARM resource ID of the job. </summary>
+        [WirePath("jobId")]
         public ResourceIdentifier JobId { get; set; }
     }
 }

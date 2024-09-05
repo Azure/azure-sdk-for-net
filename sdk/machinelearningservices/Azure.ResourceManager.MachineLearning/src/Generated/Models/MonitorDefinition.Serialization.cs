@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -150,6 +152,95 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MonitorDefinition(monitoringTarget, signals, computeConfiguration, alertNotificationSettings, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MonitoringTarget), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  monitoringTarget: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MonitoringTarget))
+                {
+                    builder.Append("  monitoringTarget: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MonitoringTarget, options, 2, false, "  monitoringTarget: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Signals), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signals: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Signals))
+                {
+                    if (Signals.Any())
+                    {
+                        builder.Append("  signals: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Signals)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  signals: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  computeConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ComputeConfiguration))
+                {
+                    builder.Append("  computeConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ComputeConfiguration, options, 2, false, "  computeConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("Emails", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertNotificationSettings: ");
+                builder.AppendLine("{");
+                builder.AppendLine("    emailNotificationSettings: {");
+                builder.Append("      emails: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("    }");
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertNotificationSettings))
+                {
+                    builder.Append("  alertNotificationSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AlertNotificationSettings, options, 2, false, "  alertNotificationSettings: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MonitorDefinition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -158,6 +249,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MonitorDefinition)} does not support writing '{options.Format}' format.");
             }

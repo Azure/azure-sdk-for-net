@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The number of failures to allow before returning an unhealthy status. </summary>
+        [WirePath("failureThreshold")]
         public int? FailureThreshold { get; set; }
         /// <summary> The number of successful probes before returning a healthy status. </summary>
+        [WirePath("successThreshold")]
         public int? SuccessThreshold { get; set; }
         /// <summary> The probe timeout in ISO 8601 format. </summary>
+        [WirePath("timeout")]
         public TimeSpan? Timeout { get; set; }
         /// <summary> The length of time between probes in ISO 8601 format. </summary>
+        [WirePath("period")]
         public TimeSpan? Period { get; set; }
         /// <summary> The delay before the first probe in ISO 8601 format. </summary>
+        [WirePath("initialDelay")]
         public TimeSpan? InitialDelay { get; set; }
     }
 }

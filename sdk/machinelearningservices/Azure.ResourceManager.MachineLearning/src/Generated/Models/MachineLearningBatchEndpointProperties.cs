@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Name of the deployment that will be default for the endpoint.
         /// This deployment will end up getting 100% traffic when the endpoint scoring URL is invoked.
         /// </summary>
+        [WirePath("defaults.deploymentName")]
         public string DefaultsDeploymentName
         {
             get => Defaults is null ? default : Defaults.DeploymentName;
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Provisioning state for the endpoint. </summary>
+        [WirePath("provisioningState")]
         public MachineLearningEndpointProvisioningState? ProvisioningState { get; }
     }
 }

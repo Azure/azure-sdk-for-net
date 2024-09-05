@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="OneLakeArtifact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LakeHouseArtifact"/>.
         /// </summary>
+        [WirePath("artifact")]
         public OneLakeArtifact Artifact { get; set; }
         /// <summary> [Required] OneLake workspace name. </summary>
+        [WirePath("oneLakeWorkspaceName")]
         public string OneLakeWorkspaceName { get; set; }
         /// <summary> OneLake endpoint to use for the datastore. </summary>
+        [WirePath("endpoint")]
         public string Endpoint { get; set; }
         /// <summary> Indicates which identity to use to authenticate service data access to customer's storage. </summary>
+        [WirePath("serviceDataAccessAuthIdentity")]
         public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
     }
 }

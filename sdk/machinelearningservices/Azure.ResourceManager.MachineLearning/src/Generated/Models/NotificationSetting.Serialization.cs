@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -177,6 +179,104 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new NotificationSetting(emails ?? new ChangeTrackingList<string>(), emailOn ?? new ChangeTrackingList<EmailNotificationEnableType>(), webhooks ?? new ChangeTrackingDictionary<string, MachineLearningWebhook>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Emails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  emails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Emails))
+                {
+                    if (Emails.Any())
+                    {
+                        builder.Append("  emails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Emails)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EmailOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  emailOn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EmailOn))
+                {
+                    if (EmailOn.Any())
+                    {
+                        builder.Append("  emailOn: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EmailOn)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Webhooks), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  webhooks: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Webhooks))
+                {
+                    if (Webhooks.Any())
+                    {
+                        builder.Append("  webhooks: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Webhooks)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  webhooks: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<NotificationSetting>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationSetting>)this).GetFormatFromOptions(options) : options.Format;
@@ -185,6 +285,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NotificationSetting)} does not support writing '{options.Format}' format.");
             }

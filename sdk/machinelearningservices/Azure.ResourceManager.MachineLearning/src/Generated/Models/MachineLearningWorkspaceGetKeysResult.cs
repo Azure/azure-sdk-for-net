@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the user storage key. </summary>
+        [WirePath("userStorageKey")]
         public string UserStorageKey { get; }
         /// <summary> Gets the user storage resource id. </summary>
+        [WirePath("userStorageResourceId")]
         public string UserStorageResourceId { get; }
         /// <summary> Gets the app insights instrumentation key. </summary>
+        [WirePath("appInsightsInstrumentationKey")]
         public string AppInsightsInstrumentationKey { get; }
         /// <summary> Gets the container registry credentials. </summary>
+        [WirePath("containerRegistryCredentials")]
         public MachineLearningContainerRegistryCredentials ContainerRegistryCredentials { get; }
         /// <summary> Gets the notebook access keys. </summary>
+        [WirePath("notebookAccessKeys")]
         public MachineLearningWorkspaceGetNotebookKeysResult NotebookAccessKeys { get; }
     }
 }

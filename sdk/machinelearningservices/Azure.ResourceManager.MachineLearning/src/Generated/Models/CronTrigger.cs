@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </summary>
+        [WirePath("expression")]
         public string Expression { get; set; }
     }
 }

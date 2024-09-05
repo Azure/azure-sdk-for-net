@@ -58,12 +58,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] Storage type backing the datastore. </summary>
         internal DatastoreType DatastoreType { get; set; }
         /// <summary> Readonly property to indicate if datastore is the workspace default datastore. </summary>
+        [WirePath("isDefault")]
         public bool? IsDefault { get; }
         /// <summary>
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </summary>
+        [WirePath("credentials")]
         public MachineLearningDatastoreCredentials Credentials { get; set; }
     }
 }

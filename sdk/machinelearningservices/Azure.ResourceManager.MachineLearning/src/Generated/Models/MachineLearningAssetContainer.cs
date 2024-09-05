@@ -34,10 +34,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Is the asset archived?. </summary>
+        [WirePath("isArchived")]
         public bool? IsArchived { get; set; }
         /// <summary> The latest version inside this container. </summary>
+        [WirePath("latestVersion")]
         public string LatestVersion { get; }
         /// <summary> The next auto incremental version. </summary>
+        [WirePath("nextVersion")]
         public string NextVersion { get; }
     }
 }

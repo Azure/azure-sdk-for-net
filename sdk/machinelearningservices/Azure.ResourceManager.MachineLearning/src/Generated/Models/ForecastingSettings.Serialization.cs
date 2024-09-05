@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -352,6 +354,261 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountryOrRegionForHolidays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  countryOrRegionForHolidays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CountryOrRegionForHolidays))
+                {
+                    builder.Append("  countryOrRegionForHolidays: ");
+                    if (CountryOrRegionForHolidays.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CountryOrRegionForHolidays}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CountryOrRegionForHolidays}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeColumnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeColumnName))
+                {
+                    builder.Append("  timeColumnName: ");
+                    if (TimeColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TimeColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TimeColumnName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetLags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetLags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetLags))
+                {
+                    builder.Append("  targetLags: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TargetLags, options, 2, false, "  targetLags: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetRollingWindowSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetRollingWindowSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetRollingWindowSize))
+                {
+                    builder.Append("  targetRollingWindowSize: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TargetRollingWindowSize, options, 2, false, "  targetRollingWindowSize: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForecastHorizon), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  forecastHorizon: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ForecastHorizon))
+                {
+                    builder.Append("  forecastHorizon: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ForecastHorizon, options, 2, false, "  forecastHorizon: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeSeriesIdColumnNames), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeSeriesIdColumnNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TimeSeriesIdColumnNames))
+                {
+                    if (TimeSeriesIdColumnNames.Any())
+                    {
+                        builder.Append("  timeSeriesIdColumnNames: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TimeSeriesIdColumnNames)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Frequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  frequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Frequency))
+                {
+                    builder.Append("  frequency: ");
+                    if (Frequency.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Frequency}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Frequency}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FeatureLags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  featureLags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FeatureLags))
+                {
+                    builder.Append("  featureLags: ");
+                    builder.AppendLine($"'{FeatureLags.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Seasonality), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  seasonality: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Seasonality))
+                {
+                    builder.Append("  seasonality: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Seasonality, options, 2, false, "  seasonality: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShortSeriesHandlingConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  shortSeriesHandlingConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShortSeriesHandlingConfig))
+                {
+                    builder.Append("  shortSeriesHandlingConfig: ");
+                    builder.AppendLine($"'{ShortSeriesHandlingConfig.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseStl), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  useStl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UseStl))
+                {
+                    builder.Append("  useStl: ");
+                    builder.AppendLine($"'{UseStl.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetAggregateFunction), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetAggregateFunction: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetAggregateFunction))
+                {
+                    builder.Append("  targetAggregateFunction: ");
+                    builder.AppendLine($"'{TargetAggregateFunction.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CvStepSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cvStepSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CvStepSize))
+                {
+                    builder.Append("  cvStepSize: ");
+                    builder.AppendLine($"{CvStepSize.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ForecastingSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ForecastingSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -360,6 +617,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ForecastingSettings)} does not support writing '{options.Format}' format.");
             }

@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Specifies the type of data. </summary>
+        [WirePath("dataType")]
         public MachineLearningDataType DataType { get; set; }
     }
 }

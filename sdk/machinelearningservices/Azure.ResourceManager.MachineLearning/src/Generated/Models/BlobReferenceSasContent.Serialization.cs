@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class GetBlobReferenceSasRequestDto : IUtf8JsonSerializable, IJsonModel<GetBlobReferenceSasRequestDto>
+    public partial class BlobReferenceSasContent : IUtf8JsonSerializable, IJsonModel<BlobReferenceSasContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetBlobReferenceSasRequestDto>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobReferenceSasContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GetBlobReferenceSasRequestDto>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BlobReferenceSasContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetBlobReferenceSasRequestDto>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetBlobReferenceSasRequestDto)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobReferenceSasContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        GetBlobReferenceSasRequestDto IJsonModel<GetBlobReferenceSasRequestDto>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BlobReferenceSasContent IJsonModel<BlobReferenceSasContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetBlobReferenceSasRequestDto>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetBlobReferenceSasRequestDto)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobReferenceSasContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetBlobReferenceSasRequestDto(document.RootElement, options);
+            return DeserializeBlobReferenceSasContent(document.RootElement, options);
         }
 
-        internal static GetBlobReferenceSasRequestDto DeserializeGetBlobReferenceSasRequestDto(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BlobReferenceSasContent DeserializeBlobReferenceSasContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -120,38 +120,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GetBlobReferenceSasRequestDto(assetId, blobUri, serializedAdditionalRawData);
+            return new BlobReferenceSasContent(assetId, blobUri, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GetBlobReferenceSasRequestDto>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BlobReferenceSasContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetBlobReferenceSasRequestDto>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceSasContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetBlobReferenceSasRequestDto)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobReferenceSasContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GetBlobReferenceSasRequestDto IPersistableModel<GetBlobReferenceSasRequestDto>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BlobReferenceSasContent IPersistableModel<BlobReferenceSasContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetBlobReferenceSasRequestDto>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceSasContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeGetBlobReferenceSasRequestDto(document.RootElement, options);
+                        return DeserializeBlobReferenceSasContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetBlobReferenceSasRequestDto)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobReferenceSasContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GetBlobReferenceSasRequestDto>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BlobReferenceSasContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

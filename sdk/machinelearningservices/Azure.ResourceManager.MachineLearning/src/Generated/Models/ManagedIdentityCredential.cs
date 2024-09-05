@@ -38,14 +38,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> ManagedIdentityCredential identity type. </summary>
+        [WirePath("managedIdentityType")]
         public string ManagedIdentityType { get; }
         /// <summary> Full arm scope for the Id. For ManagedIdentityType = SystemManaged, this field is null. </summary>
+        [WirePath("userManagedIdentityResourceId")]
         public string UserManagedIdentityResourceId { get; }
         /// <summary> ClientId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </summary>
+        [WirePath("userManagedIdentityClientId")]
         public string UserManagedIdentityClientId { get; }
         /// <summary> PrincipalId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </summary>
+        [WirePath("userManagedIdentityPrincipalId")]
         public string UserManagedIdentityPrincipalId { get; }
         /// <summary> TenantId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </summary>
+        [WirePath("userManagedIdentityTenantId")]
         public string UserManagedIdentityTenantId { get; }
     }
 }

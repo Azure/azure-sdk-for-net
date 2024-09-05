@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -830,6 +831,538 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AmsGradient), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  amsGradient: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AmsGradient))
+                {
+                    builder.Append("  amsGradient: ");
+                    var boolValue = AmsGradient.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdvancedSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  advancedSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdvancedSettings))
+                {
+                    builder.Append("  advancedSettings: ");
+                    if (AdvancedSettings.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdvancedSettings}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdvancedSettings}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Augmentations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  augmentations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Augmentations))
+                {
+                    builder.Append("  augmentations: ");
+                    if (Augmentations.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Augmentations}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Augmentations}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Beta1), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  beta1: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Beta1))
+                {
+                    builder.Append("  beta1: ");
+                    builder.AppendLine($"'{Beta1.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Beta2), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  beta2: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Beta2))
+                {
+                    builder.Append("  beta2: ");
+                    builder.AppendLine($"'{Beta2.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CheckpointFrequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  checkpointFrequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CheckpointFrequency))
+                {
+                    builder.Append("  checkpointFrequency: ");
+                    builder.AppendLine($"{CheckpointFrequency.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CheckpointRunId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  checkpointRunId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CheckpointRunId))
+                {
+                    builder.Append("  checkpointRunId: ");
+                    if (CheckpointRunId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CheckpointRunId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CheckpointRunId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CheckpointModel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  checkpointModel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CheckpointModel))
+                {
+                    builder.Append("  checkpointModel: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CheckpointModel, options, 2, false, "  checkpointModel: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Distributed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  distributed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Distributed))
+                {
+                    builder.Append("  distributed: ");
+                    var boolValue = Distributed.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EarlyStopping), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  earlyStopping: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EarlyStopping))
+                {
+                    builder.Append("  earlyStopping: ");
+                    var boolValue = EarlyStopping.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EarlyStoppingDelay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  earlyStoppingDelay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EarlyStoppingDelay))
+                {
+                    builder.Append("  earlyStoppingDelay: ");
+                    builder.AppendLine($"{EarlyStoppingDelay.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EarlyStoppingPatience), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  earlyStoppingPatience: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EarlyStoppingPatience))
+                {
+                    builder.Append("  earlyStoppingPatience: ");
+                    builder.AppendLine($"{EarlyStoppingPatience.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EvaluationFrequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  evaluationFrequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EvaluationFrequency))
+                {
+                    builder.Append("  evaluationFrequency: ");
+                    builder.AppendLine($"{EvaluationFrequency.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableOnnxNormalization), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableOnnxNormalization: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableOnnxNormalization))
+                {
+                    builder.Append("  enableOnnxNormalization: ");
+                    var boolValue = EnableOnnxNormalization.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GradientAccumulationStep), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  gradientAccumulationStep: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GradientAccumulationStep))
+                {
+                    builder.Append("  gradientAccumulationStep: ");
+                    builder.AppendLine($"{GradientAccumulationStep.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LayersToFreeze), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  layersToFreeze: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LayersToFreeze))
+                {
+                    builder.Append("  layersToFreeze: ");
+                    builder.AppendLine($"{LayersToFreeze.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LearningRate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  learningRate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LearningRate))
+                {
+                    builder.Append("  learningRate: ");
+                    builder.AppendLine($"'{LearningRate.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LearningRateScheduler), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  learningRateScheduler: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LearningRateScheduler))
+                {
+                    builder.Append("  learningRateScheduler: ");
+                    builder.AppendLine($"'{LearningRateScheduler.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModelName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  modelName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ModelName))
+                {
+                    builder.Append("  modelName: ");
+                    if (ModelName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ModelName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ModelName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Momentum), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  momentum: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Momentum))
+                {
+                    builder.Append("  momentum: ");
+                    builder.AppendLine($"'{Momentum.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Nesterov), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nesterov: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Nesterov))
+                {
+                    builder.Append("  nesterov: ");
+                    var boolValue = Nesterov.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfEpochs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  numberOfEpochs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberOfEpochs))
+                {
+                    builder.Append("  numberOfEpochs: ");
+                    builder.AppendLine($"{NumberOfEpochs.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfWorkers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  numberOfWorkers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberOfWorkers))
+                {
+                    builder.Append("  numberOfWorkers: ");
+                    builder.AppendLine($"{NumberOfWorkers.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Optimizer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  optimizer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Optimizer))
+                {
+                    builder.Append("  optimizer: ");
+                    builder.AppendLine($"'{Optimizer.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RandomSeed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  randomSeed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RandomSeed))
+                {
+                    builder.Append("  randomSeed: ");
+                    builder.AppendLine($"{RandomSeed.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepLRGamma), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stepLRGamma: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StepLRGamma))
+                {
+                    builder.Append("  stepLRGamma: ");
+                    builder.AppendLine($"'{StepLRGamma.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepLRStepSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stepLRStepSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StepLRStepSize))
+                {
+                    builder.Append("  stepLRStepSize: ");
+                    builder.AppendLine($"{StepLRStepSize.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrainingBatchSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  trainingBatchSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrainingBatchSize))
+                {
+                    builder.Append("  trainingBatchSize: ");
+                    builder.AppendLine($"{TrainingBatchSize.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationBatchSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  validationBatchSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ValidationBatchSize))
+                {
+                    builder.Append("  validationBatchSize: ");
+                    builder.AppendLine($"{ValidationBatchSize.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WarmupCosineLRCycles), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  warmupCosineLRCycles: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WarmupCosineLRCycles))
+                {
+                    builder.Append("  warmupCosineLRCycles: ");
+                    builder.AppendLine($"'{WarmupCosineLRCycles.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WarmupCosineLRWarmupEpochs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  warmupCosineLRWarmupEpochs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WarmupCosineLRWarmupEpochs))
+                {
+                    builder.Append("  warmupCosineLRWarmupEpochs: ");
+                    builder.AppendLine($"{WarmupCosineLRWarmupEpochs.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeightDecay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  weightDecay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WeightDecay))
+                {
+                    builder.Append("  weightDecay: ");
+                    builder.AppendLine($"'{WeightDecay.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ImageModelSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ImageModelSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -838,6 +1371,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ImageModelSettings)} does not support writing '{options.Format}' format.");
             }

@@ -78,10 +78,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The ArmId of the keyVault where the customer owned encryption key is present. </summary>
+        [WirePath("keyVaultArmId")]
         public ResourceIdentifier KeyVaultArmId { get; set; }
         /// <summary> Key vault uri to access the encryption key. </summary>
+        [WirePath("keyIdentifier")]
         public string KeyIdentifier { get; set; }
         /// <summary> For future use - The client id of the identity which will be used to access key vault. </summary>
+        [WirePath("identityClientId")]
         public string IdentityClientId { get; set; }
     }
 }

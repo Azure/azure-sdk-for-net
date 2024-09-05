@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The threshold value. If null, a default value will be set depending on the selected metric. </summary>
         internal MonitoringThreshold Threshold { get; set; }
         /// <summary> The threshold value. If null, the set default is dependent on the metric type. </summary>
+        [WirePath("threshold.value")]
         public double? ThresholdValue
         {
             get => Threshold is null ? default : Threshold.Value;
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The feature attribution metric to calculate. </summary>
+        [WirePath("metric")]
         public FeatureAttributionMetric Metric { get; set; }
     }
 }

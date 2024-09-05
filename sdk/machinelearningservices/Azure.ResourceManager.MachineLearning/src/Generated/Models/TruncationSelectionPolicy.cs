@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The percentage of runs to cancel at each evaluation interval. </summary>
+        [WirePath("truncationPercentage")]
         public int? TruncationPercentage { get; set; }
     }
 }

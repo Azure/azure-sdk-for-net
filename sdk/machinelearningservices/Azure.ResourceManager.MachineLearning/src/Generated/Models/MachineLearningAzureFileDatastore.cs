@@ -70,18 +70,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Storage account name. </summary>
+        [WirePath("accountName")]
         public string AccountName { get; set; }
         /// <summary> [Required] The name of the Azure file share that the datastore points to. </summary>
+        [WirePath("fileShareName")]
         public string FileShareName { get; set; }
         /// <summary> Azure cloud endpoint for the storage account. </summary>
+        [WirePath("endpoint")]
         public string Endpoint { get; set; }
         /// <summary> Protocol used to communicate with the storage account. </summary>
+        [WirePath("protocol")]
         public string Protocol { get; set; }
         /// <summary> Indicates which identity to use to authenticate service data access to customer's storage. </summary>
+        [WirePath("serviceDataAccessAuthIdentity")]
         public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
         /// <summary> Azure Subscription Id. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
         /// <summary> Azure Resource Group name. </summary>
+        [WirePath("resourceGroup")]
         public string ResourceGroup { get; set; }
     }
 }

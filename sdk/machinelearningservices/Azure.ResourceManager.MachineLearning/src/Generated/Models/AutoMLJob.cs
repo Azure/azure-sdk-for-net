@@ -92,29 +92,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Compute Resource configuration for the job. </summary>
+        [WirePath("resources")]
         public MachineLearningJobResourceConfiguration Resources { get; set; }
         /// <summary>
         /// The ARM resource ID of the Environment specification for the job.
         /// This is optional value to provide, if not provided, AutoML will default this to Production AutoML curated environment version when running the job.
         /// </summary>
+        [WirePath("environmentId")]
         public string EnvironmentId { get; set; }
         /// <summary> Environment variables included in the job. </summary>
+        [WirePath("environmentVariables")]
         public IDictionary<string, string> EnvironmentVariables { get; set; }
         /// <summary>
         /// [Required] This represents scenario which can be one of Tables/NLP/Image
         /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/> and <see cref="TextNer"/>.
         /// </summary>
+        [WirePath("taskDetails")]
         public AutoMLVertical TaskDetails { get; set; }
         /// <summary>
         /// Mapping of output data bindings used in the job.
         /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </summary>
+        [WirePath("outputs")]
         public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
         /// <summary> Queue settings for the job. </summary>
         internal JobQueueSettings QueueSettings { get; set; }
         /// <summary> Controls the compute job tier. </summary>
+        [WirePath("queueSettings.jobTier")]
         public JobTier? QueueJobTier
         {
             get => QueueSettings is null ? default : QueueSettings.JobTier;

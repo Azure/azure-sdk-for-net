@@ -76,16 +76,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Number of vCPUs request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         /// </summary>
+        [WirePath("cpu")]
         public string Cpu { get; set; }
         /// <summary>
         /// Memory size request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         /// </summary>
+        [WirePath("memory")]
         public string Memory { get; set; }
         /// <summary>
         /// Number of Nvidia GPU cards request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         /// </summary>
+        [WirePath("gpu")]
         public string Gpu { get; set; }
     }
 }

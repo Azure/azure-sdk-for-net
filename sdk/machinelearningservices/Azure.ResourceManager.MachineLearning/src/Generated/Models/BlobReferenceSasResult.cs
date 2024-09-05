@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Publishing destination registry asset information. </summary>
-    public partial class DestinationAsset
+    /// <summary> BlobReferenceSASResponse for getBlobReferenceSAS API. </summary>
+    public partial class BlobReferenceSasResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DestinationAsset"/>. </summary>
-        public DestinationAsset()
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceSasResult"/>. </summary>
+        internal BlobReferenceSasResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DestinationAsset"/>. </summary>
-        /// <param name="registryName"> Destination registry name. </param>
-        /// <param name="destinationName"> Destination asset name. </param>
-        /// <param name="destinationVersion"> Destination asset version. </param>
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceSasResult"/>. </summary>
+        /// <param name="blobReferenceForConsumption"> Blob reference for consumption details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DestinationAsset(string registryName, string destinationName, string destinationVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BlobReferenceSasResult(GetBlobReferenceForConsumptionDto blobReferenceForConsumption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RegistryName = registryName;
-            DestinationName = destinationName;
-            DestinationVersion = destinationVersion;
+            BlobReferenceForConsumption = blobReferenceForConsumption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Destination registry name. </summary>
-        public string RegistryName { get; set; }
-        /// <summary> Destination asset name. </summary>
-        public string DestinationName { get; set; }
-        /// <summary> Destination asset version. </summary>
-        public string DestinationVersion { get; set; }
+        /// <summary> Blob reference for consumption details. </summary>
+        [WirePath("blobReferenceForConsumption")]
+        public GetBlobReferenceForConsumptionDto BlobReferenceForConsumption { get; }
     }
 }

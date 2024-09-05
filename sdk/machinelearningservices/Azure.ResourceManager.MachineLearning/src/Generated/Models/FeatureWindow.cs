@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies the feature window start time. </summary>
+        [WirePath("featureWindowStart")]
         public DateTimeOffset? FeatureWindowStart { get; set; }
         /// <summary> Specifies the feature window end time. </summary>
+        [WirePath("featureWindowEnd")]
         public DateTimeOffset? FeatureWindowEnd { get; set; }
     }
 }

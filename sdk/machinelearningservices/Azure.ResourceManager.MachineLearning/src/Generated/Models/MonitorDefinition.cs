@@ -95,22 +95,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The entities targeted by the monitor. </summary>
+        [WirePath("monitoringTarget")]
         public MonitoringTarget MonitoringTarget { get; set; }
         /// <summary>
         /// [Required] The signals to monitor.
         /// Please note <see cref="MonitoringSignalBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/> and <see cref="PredictionDriftMonitoringSignal"/>.
         /// </summary>
+        [WirePath("signals")]
         public IDictionary<string, MonitoringSignalBase> Signals { get; }
         /// <summary>
         /// [Required] The ARM resource ID of the compute resource to run the monitoring job on.
         /// Please note <see cref="MonitorComputeConfigurationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MonitorServerlessSparkCompute"/>.
         /// </summary>
+        [WirePath("computeConfiguration")]
         public MonitorComputeConfigurationBase ComputeConfiguration { get; set; }
         /// <summary> The monitor's notification settings. </summary>
         internal MonitorNotificationSettings AlertNotificationSettings { get; set; }
         /// <summary> The email recipient list which has a limitation of 499 characters in total. </summary>
+        [WirePath("alertNotificationSettings.emailNotificationSettings.emails")]
         public IList<string> Emails
         {
             get => AlertNotificationSettings is null ? default : AlertNotificationSettings.Emails;

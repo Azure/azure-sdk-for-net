@@ -34,8 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Uri where code is located. </summary>
+        [WirePath("codeUri")]
         public Uri CodeUri { get; set; }
         /// <summary> Provisioning state for the code version. </summary>
+        [WirePath("provisioningState")]
         public RegistryAssetProvisioningState? ProvisioningState { get; }
     }
 }

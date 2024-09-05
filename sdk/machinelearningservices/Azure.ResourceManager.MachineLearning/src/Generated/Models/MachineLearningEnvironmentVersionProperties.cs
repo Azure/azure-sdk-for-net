@@ -60,28 +60,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Environment type is either user managed or curated by the Azure ML service
         /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments" /&gt;
         /// </summary>
+        [WirePath("environmentType")]
         public MachineLearningEnvironmentType? EnvironmentType { get; }
         /// <summary>
         /// Name of the image that will be used for the environment.
         /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
         /// </summary>
+        [WirePath("image")]
         public string Image { get; set; }
         /// <summary>
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
         /// &lt;see href="https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment" /&gt;
         /// </summary>
+        [WirePath("condaFile")]
         public string CondaFile { get; set; }
         /// <summary> Configuration settings for Docker build context. </summary>
+        [WirePath("build")]
         public MachineLearningBuildContext Build { get; set; }
         /// <summary> The OS type of the environment. </summary>
+        [WirePath("osType")]
         public MachineLearningOperatingSystemType? OSType { get; set; }
         /// <summary> Defines configuration specific to inference. </summary>
+        [WirePath("inferenceConfig")]
         public MachineLearningInferenceContainerProperties InferenceConfig { get; set; }
         /// <summary> Defines if image needs to be rebuilt based on base image changes. </summary>
+        [WirePath("autoRebuild")]
         public AutoRebuildSetting? AutoRebuild { get; set; }
         /// <summary> Provisioning state for the environment version. </summary>
+        [WirePath("provisioningState")]
         public RegistryAssetProvisioningState? ProvisioningState { get; }
         /// <summary> Stage in the environment lifecycle assigned to this environment. </summary>
+        [WirePath("stage")]
         public string Stage { get; set; }
     }
 }

@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The model settings (model id) for the model being serviced on the ServerlessEndpoint. </summary>
         internal ModelSettings ModelSettings { get; set; }
         /// <summary> The unique model identifier that this ServerlessEndpoint should provision. </summary>
+        [WirePath("modelSettings.modelId")]
         public string ModelId
         {
             get => ModelSettings is null ? default : ModelSettings.ModelId;
@@ -93,18 +94,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Specifies the authentication mode for the Serverless endpoint. </summary>
+        [WirePath("authMode")]
         public ServerlessInferenceEndpointAuthMode AuthMode { get; set; }
         /// <summary> The inference uri to target when making requests against the serverless endpoint. </summary>
+        [WirePath("inferenceEndpoint")]
         public ServerlessInferenceEndpoint InferenceEndpoint { get; }
         /// <summary> Provisioning state for the endpoint. </summary>
+        [WirePath("provisioningState")]
         public MachineLearningEndpointProvisioningState? ProvisioningState { get; }
         /// <summary> The current state of the ServerlessEndpoint. </summary>
+        [WirePath("endpointState")]
         public ServerlessEndpointState? EndpointState { get; }
         /// <summary> The MarketplaceSubscription Azure ID associated to this ServerlessEndpoint. </summary>
+        [WirePath("marketplaceSubscriptionId")]
         public string MarketplaceSubscriptionId { get; }
         /// <summary> Specifies the content safety options. If omitted, the default content safety settings will be configured. </summary>
         internal ContentSafety ContentSafety { get; set; }
         /// <summary> [Required] Specifies the status of content safety. </summary>
+        [WirePath("contentSafety.contentSafetyStatus")]
         public ContentSafetyStatus? ContentSafetyStatus
         {
             get => ContentSafety is null ? default(ContentSafetyStatus?) : ContentSafety.ContentSafetyStatus;

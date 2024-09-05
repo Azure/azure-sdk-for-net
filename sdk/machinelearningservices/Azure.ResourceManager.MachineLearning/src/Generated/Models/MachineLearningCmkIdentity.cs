@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The ArmId of the user assigned identity that will be used to access the customer managed key vault. </summary>
+        [WirePath("userAssignedIdentity")]
         public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

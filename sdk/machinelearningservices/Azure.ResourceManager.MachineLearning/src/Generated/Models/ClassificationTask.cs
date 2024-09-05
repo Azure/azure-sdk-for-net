@@ -81,12 +81,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Primary metric for the task. </summary>
+        [WirePath("primaryMetric")]
         public ClassificationPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Inputs for training phase for an AutoML Job. </summary>
+        [WirePath("trainingSettings")]
         public ClassificationTrainingSettings TrainingSettings { get; set; }
         /// <summary> Positive label for binary metrics calculation. </summary>
+        [WirePath("positiveLabel")]
         public string PositiveLabel { get; set; }
         /// <summary> Execution constraints for AutoMLJob. </summary>
+        [WirePath("limitSettings")]
         public TableVerticalLimitSettings LimitSettings { get; set; }
         /// <summary>
         /// Number of cross validation folds to be applied on training dataset
@@ -94,28 +98,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="Models.NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
         /// </summary>
+        [WirePath("nCrossValidations")]
         public NCrossValidations NCrossValidations { get; set; }
         /// <summary> Columns to use for CVSplit data. </summary>
+        [WirePath("cvSplitColumnNames")]
         public IList<string> CvSplitColumnNames { get; set; }
         /// <summary> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </summary>
+        [WirePath("weightColumnName")]
         public string WeightColumnName { get; set; }
         /// <summary> Validation data inputs. </summary>
+        [WirePath("validationData")]
         public MachineLearningTableJobInput ValidationData { get; set; }
         /// <summary> Test data input. </summary>
+        [WirePath("testData")]
         public MachineLearningTableJobInput TestData { get; set; }
         /// <summary>
         /// The fraction of training dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </summary>
+        [WirePath("validationDataSize")]
         public double? ValidationDataSize { get; set; }
         /// <summary>
         /// The fraction of test dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </summary>
+        [WirePath("testDataSize")]
         public double? TestDataSize { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>
+        [WirePath("featurizationSettings")]
         public TableVerticalFeaturizationSettings FeaturizationSettings { get; set; }
     }
 }

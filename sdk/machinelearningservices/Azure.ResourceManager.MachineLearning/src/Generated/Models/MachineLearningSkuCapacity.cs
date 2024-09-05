@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the minimum. </summary>
+        [WirePath("minimum")]
         public int? Minimum { get; }
         /// <summary> Gets or sets the maximum. </summary>
+        [WirePath("maximum")]
         public int? Maximum { get; }
         /// <summary> Gets or sets the default capacity. </summary>
+        [WirePath("default")]
         public int? Default { get; }
         /// <summary> Gets or sets the type of the scale. </summary>
+        [WirePath("scaleType")]
         public MachineLearningSkuScaleType? ScaleType { get; }
     }
 }

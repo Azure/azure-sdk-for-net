@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -108,6 +109,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new FeatureAttributionMetricThreshold(threshold, metric, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ThresholdValue", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  threshold: ");
+                builder.AppendLine("{");
+                builder.Append("    value: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Threshold))
+                {
+                    builder.Append("  threshold: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Threshold, options, 2, false, "  threshold: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metric), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  metric: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  metric: ");
+                builder.AppendLine($"'{Metric.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FeatureAttributionMetricThreshold>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FeatureAttributionMetricThreshold>)this).GetFormatFromOptions(options) : options.Format;
@@ -116,6 +162,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FeatureAttributionMetricThreshold)} does not support writing '{options.Format}' format.");
             }

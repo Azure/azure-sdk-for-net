@@ -92,6 +92,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/> and <see cref="MachineLearningSweepJob"/>.
         /// </summary>
+        [WirePath("properties")]
         public MachineLearningJobProperties Properties { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> BlobReferenceSASRequest for getBlobReferenceSAS API. </summary>
-    public partial class GetBlobReferenceSasRequestDto
+    /// <summary> Publishing destination registry asset information. </summary>
+    public partial class DestinationAssetContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GetBlobReferenceSasRequestDto"/>. </summary>
-        public GetBlobReferenceSasRequestDto()
+        /// <summary> Initializes a new instance of <see cref="DestinationAssetContent"/>. </summary>
+        public DestinationAssetContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetBlobReferenceSasRequestDto"/>. </summary>
-        /// <param name="assetId"> Id of the asset to be accessed. </param>
-        /// <param name="blobUri"> Blob uri of the asset to be accessed. </param>
+        /// <summary> Initializes a new instance of <see cref="DestinationAssetContent"/>. </summary>
+        /// <param name="registryName"> Destination registry name. </param>
+        /// <param name="destinationName"> Destination asset name. </param>
+        /// <param name="destinationVersion"> Destination asset version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetBlobReferenceSasRequestDto(string assetId, Uri blobUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DestinationAssetContent(string registryName, string destinationName, string destinationVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AssetId = assetId;
-            BlobUri = blobUri;
+            RegistryName = registryName;
+            DestinationName = destinationName;
+            DestinationVersion = destinationVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Id of the asset to be accessed. </summary>
-        public string AssetId { get; set; }
-        /// <summary> Blob uri of the asset to be accessed. </summary>
-        public Uri BlobUri { get; set; }
+        /// <summary> Destination registry name. </summary>
+        [WirePath("registryName")]
+        public string RegistryName { get; set; }
+        /// <summary> Destination asset name. </summary>
+        [WirePath("destinationName")]
+        public string DestinationName { get; set; }
+        /// <summary> Destination asset version. </summary>
+        [WirePath("destinationVersion")]
+        public string DestinationVersion { get; set; }
     }
 }

@@ -65,10 +65,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Indicates whether or not the encryption is enabled for the workspace. </summary>
+        [WirePath("status")]
         public MachineLearningEncryptionStatus Status { get; set; }
         /// <summary> The identity that will be used to access the key vault for encryption at rest. </summary>
         internal MachineLearningCmkIdentity Identity { get; set; }
         /// <summary> The ArmId of the user assigned identity that will be used to access the customer managed key vault. </summary>
+        [WirePath("identity.userAssignedIdentity")]
         public ResourceIdentifier UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
@@ -81,6 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Customer Key vault properties. </summary>
+        [WirePath("keyVaultProperties")]
         public MachineLearningEncryptionKeyVaultProperties KeyVaultProperties { get; set; }
     }
 }

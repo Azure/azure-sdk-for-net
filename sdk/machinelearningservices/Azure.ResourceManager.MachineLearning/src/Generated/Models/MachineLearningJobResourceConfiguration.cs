@@ -32,8 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Size of the docker container's shared memory block. This should be in the format of (number)(unit) where number as to be greater than 0 and the unit can be one of b(bytes), k(kilobytes), m(megabytes), or g(gigabytes). </summary>
+        [WirePath("shmSize")]
         public string ShmSize { get; set; }
         /// <summary> Extra arguments to pass to the Docker run command. This would override any parameters that have already been set by the system, or in this section. This parameter is only supported for Azure ML compute types. </summary>
+        [WirePath("dockerArgs")]
         public string DockerArgs { get; set; }
     }
 }

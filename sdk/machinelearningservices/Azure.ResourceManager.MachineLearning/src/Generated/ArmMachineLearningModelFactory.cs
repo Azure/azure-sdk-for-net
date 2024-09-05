@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <returns> A new <see cref="Models.MachineLearningWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceConnectionProperties MachineLearningWorkspaceConnectionProperties(string authType = null, MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
+        public static MachineLearningWorkspaceConnectionProperties MachineLearningWorkspaceConnectionProperties(string authType = null, MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -982,12 +982,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GetBlobReferenceSasResponseDto"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobReferenceSasResult"/>. </summary>
         /// <param name="blobReferenceForConsumption"> Blob reference for consumption details. </param>
-        /// <returns> A new <see cref="Models.GetBlobReferenceSasResponseDto"/> instance for mocking. </returns>
-        public static GetBlobReferenceSasResponseDto GetBlobReferenceSasResponseDto(GetBlobReferenceForConsumptionDto blobReferenceForConsumption = null)
+        /// <returns> A new <see cref="Models.BlobReferenceSasResult"/> instance for mocking. </returns>
+        public static BlobReferenceSasResult BlobReferenceSasResult(GetBlobReferenceForConsumptionDto blobReferenceForConsumption = null)
         {
-            return new GetBlobReferenceSasResponseDto(blobReferenceForConsumption, serializedAdditionalRawData: null);
+            return new BlobReferenceSasResult(blobReferenceForConsumption, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetBlobReferenceForConsumptionDto"/>. </summary>
@@ -1747,16 +1747,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearning.MarketplaceSubscriptionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningMarketplaceSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.MarketplaceSubscriptionData"/> instance for mocking. </returns>
-        public static MarketplaceSubscriptionData MarketplaceSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MarketplaceSubscriptionProperties properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningMarketplaceSubscriptionData"/> instance for mocking. </returns>
+        public static MachineLearningMarketplaceSubscriptionData MachineLearningMarketplaceSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningMarketplaceSubscriptionProperties properties = null)
         {
-            return new MarketplaceSubscriptionData(
+            return new MachineLearningMarketplaceSubscriptionData(
                 id,
                 name,
                 resourceType,
@@ -1765,25 +1765,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSubscriptionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningMarketplaceSubscriptionProperties"/>. </summary>
         /// <param name="modelId"> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </param>
         /// <param name="marketplacePlan"> Marketplace Plan associated with the Marketplace Subscription. </param>
         /// <param name="marketplaceSubscriptionStatus"> Current status of the Marketplace Subscription. </param>
         /// <param name="provisioningState"> Provisioning State of the Marketplace Subscription. </param>
-        /// <returns> A new <see cref="Models.MarketplaceSubscriptionProperties"/> instance for mocking. </returns>
-        public static MarketplaceSubscriptionProperties MarketplaceSubscriptionProperties(string modelId = null, MarketplacePlan marketplacePlan = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, MarketplaceSubscriptionProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.MachineLearningMarketplaceSubscriptionProperties"/> instance for mocking. </returns>
+        public static MachineLearningMarketplaceSubscriptionProperties MachineLearningMarketplaceSubscriptionProperties(string modelId = null, MachineLearningMarketplacePlan marketplacePlan = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, MarketplaceSubscriptionProvisioningState? provisioningState = null)
         {
-            return new MarketplaceSubscriptionProperties(modelId, marketplacePlan, marketplaceSubscriptionStatus, provisioningState, serializedAdditionalRawData: null);
+            return new MachineLearningMarketplaceSubscriptionProperties(modelId, marketplacePlan, marketplaceSubscriptionStatus, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplacePlan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningMarketplacePlan"/>. </summary>
         /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
         /// <param name="offerId"> The identifying name of the Offer of the Marketplace Plan. </param>
         /// <param name="planId"> The identifying name of the Plan of the Marketplace Plan. </param>
-        /// <returns> A new <see cref="Models.MarketplacePlan"/> instance for mocking. </returns>
-        public static MarketplacePlan MarketplacePlan(string publisherId = null, string offerId = null, string planId = null)
+        /// <returns> A new <see cref="Models.MachineLearningMarketplacePlan"/> instance for mocking. </returns>
+        public static MachineLearningMarketplacePlan MachineLearningMarketplacePlan(string publisherId = null, string offerId = null, string planId = null)
         {
-            return new MarketplacePlan(publisherId, offerId, planId, serializedAdditionalRawData: null);
+            return new MachineLearningMarketplacePlan(publisherId, offerId, planId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningOnlineEndpointData"/>. </summary>
@@ -2803,7 +2803,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="credentialsPat"></param>
         /// <returns> A new <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
-        public static MachineLearningPatAuthTypeWorkspaceConnection MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsPat = null)
+        public static MachineLearningPatAuthTypeWorkspaceConnection MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsPat = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -2837,7 +2837,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="credentialsSas"></param>
         /// <returns> A new <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
-        public static MachineLearningSasAuthTypeWorkspaceConnection MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsSas = null)
+        public static MachineLearningSasAuthTypeWorkspaceConnection MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsSas = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -2871,7 +2871,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
-        public static MachineLearningUsernamePasswordAuthTypeWorkspaceConnection MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, MachineLearningWorkspaceConnectionUsernamePassword credentials = null)
+        public static MachineLearningUsernamePasswordAuthTypeWorkspaceConnection MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, MachineLearningWorkspaceConnectionUsernamePassword credentials = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -2904,7 +2904,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <returns> A new <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
-        public static MachineLearningNoneAuthTypeWorkspaceConnection MachineLearningNoneAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
+        public static MachineLearningNoneAuthTypeWorkspaceConnection MachineLearningNoneAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -2937,7 +2937,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
-        public static MachineLearningManagedIdentityAuthTypeWorkspaceConnection MachineLearningManagedIdentityAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, MachineLearningWorkspaceConnectionManagedIdentity credentials = null)
+        public static MachineLearningManagedIdentityAuthTypeWorkspaceConnection MachineLearningManagedIdentityAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, MachineLearningWorkspaceConnectionManagedIdentity credentials = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -2970,7 +2970,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <returns> A new <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static AadAuthTypeWorkspaceConnectionProperties AadAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
+        public static AadAuthTypeWorkspaceConnectionProperties AadAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -3003,7 +3003,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static AccessKeyAuthTypeWorkspaceConnectionProperties AccessKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionAccessKey credentials = null)
+        public static AccessKeyAuthTypeWorkspaceConnectionProperties AccessKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionAccessKey credentials = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -3037,7 +3037,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="credentialsKey"></param>
         /// <returns> A new <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static AccountKeyAuthTypeWorkspaceConnectionProperties AccountKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsKey = null)
+        public static AccountKeyAuthTypeWorkspaceConnectionProperties AccountKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsKey = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -3071,7 +3071,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="credentialsKey"> Api key object for workspace connection credential. </param>
         /// <returns> A new <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static ApiKeyAuthWorkspaceConnectionProperties ApiKeyAuthWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsKey = null)
+        public static ApiKeyAuthWorkspaceConnectionProperties ApiKeyAuthWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsKey = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -3105,7 +3105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="credentialsKeys"> Custom Keys credential object. </param>
         /// <returns> A new <see cref="Models.CustomKeysWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static CustomKeysWorkspaceConnectionProperties CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, IDictionary<string, string> credentialsKeys = null)
+        public static CustomKeysWorkspaceConnectionProperties CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, IDictionary<string, string> credentialsKeys = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -3143,7 +3143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// depending on each OAuth2 provider's implementation.
         /// </param>
         /// <returns> A new <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static OAuth2AuthTypeWorkspaceConnectionProperties OAuth2AuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionOAuth2 credentials = null)
+        public static OAuth2AuthTypeWorkspaceConnectionProperties OAuth2AuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionOAuth2 credentials = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -3177,7 +3177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static ServicePrincipalAuthTypeWorkspaceConnectionProperties ServicePrincipalAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionServicePrincipal credentials = null)
+        public static ServicePrincipalAuthTypeWorkspaceConnectionProperties ServicePrincipalAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionServicePrincipal credentials = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();

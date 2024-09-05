@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -151,6 +152,94 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 maxInstances);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PollingInterval), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pollingInterval: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PollingInterval))
+                {
+                    builder.Append("  pollingInterval: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(PollingInterval.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetUtilizationPercentage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetUtilizationPercentage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetUtilizationPercentage))
+                {
+                    builder.Append("  targetUtilizationPercentage: ");
+                    builder.AppendLine($"{TargetUtilizationPercentage.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinInstances), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minInstances: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinInstances))
+                {
+                    builder.Append("  minInstances: ");
+                    builder.AppendLine($"{MinInstances.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxInstances), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxInstances: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxInstances))
+                {
+                    builder.Append("  maxInstances: ");
+                    builder.AppendLine($"{MaxInstances.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scaleType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  scaleType: ");
+                builder.AppendLine($"'{ScaleType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningTargetUtilizationScaleSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTargetUtilizationScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -159,6 +248,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support writing '{options.Format}' format.");
             }

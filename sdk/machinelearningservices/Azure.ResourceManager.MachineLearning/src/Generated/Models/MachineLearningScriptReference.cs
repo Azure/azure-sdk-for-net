@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The storage source of the script: workspace. </summary>
+        [WirePath("scriptSource")]
         public string ScriptSource { get; set; }
         /// <summary> The location of scripts in the mounted volume. </summary>
+        [WirePath("scriptData")]
         public string ScriptData { get; set; }
         /// <summary> Optional command line arguments passed to the script to run. </summary>
+        [WirePath("scriptArguments")]
         public string ScriptArguments { get; set; }
         /// <summary> Optional time period passed to timeout command. </summary>
+        [WirePath("timeout")]
         public string Timeout { get; set; }
     }
 }

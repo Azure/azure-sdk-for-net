@@ -70,14 +70,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Description of the endpoint deployment. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
+        [WirePath("properties")]
         public IDictionary<string, string> Properties { get; set; }
         /// <summary> Code configuration for the endpoint deployment. </summary>
+        [WirePath("codeConfiguration")]
         public MachineLearningCodeConfiguration CodeConfiguration { get; set; }
         /// <summary> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </summary>
+        [WirePath("environmentId")]
         public string EnvironmentId { get; set; }
         /// <summary> Environment variables configuration for the deployment. </summary>
+        [WirePath("environmentVariables")]
         public IDictionary<string, string> EnvironmentVariables { get; set; }
     }
 }

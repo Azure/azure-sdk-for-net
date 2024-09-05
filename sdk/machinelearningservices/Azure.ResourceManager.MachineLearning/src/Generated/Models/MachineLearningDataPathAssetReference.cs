@@ -32,8 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The path of the file/directory in the datastore. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> ARM resource ID of the datastore where the asset is located. </summary>
+        [WirePath("datastoreId")]
         public string DatastoreId { get; set; }
     }
 }

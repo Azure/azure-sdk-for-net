@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -123,6 +124,63 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, seed, rule);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Seed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  seed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Seed))
+                {
+                    builder.Append("  seed: ");
+                    builder.AppendLine($"{Seed.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rule), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rule: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Rule))
+                {
+                    builder.Append("  rule: ");
+                    builder.AppendLine($"'{Rule.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SamplingAlgorithmType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  samplingAlgorithmType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  samplingAlgorithmType: ");
+                builder.AppendLine($"'{SamplingAlgorithmType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RandomSamplingAlgorithm>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RandomSamplingAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
@@ -131,6 +189,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support writing '{options.Format}' format.");
             }

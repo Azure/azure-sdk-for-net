@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Type of Bind Option. </summary>
+        [WirePath("propagation")]
         public string Propagation { get; set; }
         /// <summary> Indicate whether to create host path. </summary>
+        [WirePath("createHostPath")]
         public bool? DoesCreateHostPath { get; set; }
         /// <summary> Mention the selinux options. </summary>
+        [WirePath("selinux")]
         public string Selinux { get; set; }
     }
 }

@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Literal value for the input. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the username. </summary>
+        [WirePath("username")]
         public string Username { get; set; }
         /// <summary> Gets or sets the password. </summary>
+        [WirePath("password")]
         public string Password { get; set; }
         /// <summary> Optional, required by connections like SalesForce for extra security in addition to UsernamePassword. </summary>
+        [WirePath("securityToken")]
         public string SecurityToken { get; set; }
     }
 }

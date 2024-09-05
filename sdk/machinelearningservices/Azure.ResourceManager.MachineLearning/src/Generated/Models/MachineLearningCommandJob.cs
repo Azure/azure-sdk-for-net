@@ -99,34 +99,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Compute Resource configuration for the job. </summary>
+        [WirePath("resources")]
         public MachineLearningJobResourceConfiguration Resources { get; set; }
         /// <summary> ARM resource ID of the code asset. </summary>
+        [WirePath("codeId")]
         public ResourceIdentifier CodeId { get; set; }
         /// <summary> [Required] The command to execute on startup of the job. eg. "python train.py". </summary>
+        [WirePath("command")]
         public string Command { get; set; }
         /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
+        [WirePath("environmentId")]
         public ResourceIdentifier EnvironmentId { get; set; }
         /// <summary>
         /// Mapping of input data bindings used in the job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </summary>
+        [WirePath("inputs")]
         public IDictionary<string, MachineLearningJobInput> Inputs { get; set; }
         /// <summary>
         /// Mapping of output data bindings used in the job.
         /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </summary>
+        [WirePath("outputs")]
         public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
         /// <summary>
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
         /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </summary>
+        [WirePath("distribution")]
         public MachineLearningDistributionConfiguration Distribution { get; set; }
         /// <summary> Command Job limit. </summary>
+        [WirePath("limits")]
         public MachineLearningCommandJobLimits Limits { get; set; }
         /// <summary> Environment variables included in the job. </summary>
+        [WirePath("environmentVariables")]
         public IDictionary<string, string> EnvironmentVariables { get; set; }
         /// <summary>
         /// Input parameters.
@@ -158,10 +167,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("parameters")]
         public BinaryData Parameters { get; }
         /// <summary> Queue settings for the job. </summary>
         internal JobQueueSettings QueueSettings { get; set; }
         /// <summary> Controls the compute job tier. </summary>
+        [WirePath("queueSettings.jobTier")]
         public JobTier? QueueJobTier
         {
             get => QueueSettings is null ? default : QueueSettings.JobTier;

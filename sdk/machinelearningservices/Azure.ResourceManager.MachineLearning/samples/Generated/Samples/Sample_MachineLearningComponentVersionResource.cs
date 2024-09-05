@@ -153,13 +153,13 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningComponentVersionResource machineLearningComponentVersion = client.GetMachineLearningComponentVersionResource(machineLearningComponentVersionResourceId);
 
             // invoke the operation
-            DestinationAsset body = new DestinationAsset()
+            DestinationAssetContent content = new DestinationAssetContent()
             {
                 RegistryName = "string",
                 DestinationName = "string",
                 DestinationVersion = "string",
             };
-            await machineLearningComponentVersion.PublishAsync(WaitUntil.Completed, body);
+            await machineLearningComponentVersion.PublishAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }

@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the notebook resource id. </summary>
+        [WirePath("notebookResourceId")]
         public string NotebookResourceId { get; }
         /// <summary> Gets the host name. </summary>
+        [WirePath("hostName")]
         public string HostName { get; }
         /// <summary> Gets the public dns. </summary>
+        [WirePath("publicDns")]
         public string PublicDns { get; }
         /// <summary> Gets the access token. </summary>
+        [WirePath("accessToken")]
         public string AccessToken { get; }
         /// <summary> Gets the token type. </summary>
+        [WirePath("tokenType")]
         public string TokenType { get; }
         /// <summary> Gets the expires in. </summary>
+        [WirePath("expiresIn")]
         public int? ExpiresIn { get; }
         /// <summary> Gets the refresh token. </summary>
+        [WirePath("refreshToken")]
         public string RefreshToken { get; }
         /// <summary> Gets the scope. </summary>
+        [WirePath("scope")]
         public string Scope { get; }
     }
 }

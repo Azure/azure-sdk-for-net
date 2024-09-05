@@ -91,15 +91,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Image crop size that is input to the neural network for the training dataset. Must be a positive integer. </summary>
+        [WirePath("trainingCropSize")]
         public int? TrainingCropSize { get; set; }
         /// <summary> Image crop size that is input to the neural network for the validation dataset. Must be a positive integer. </summary>
+        [WirePath("validationCropSize")]
         public int? ValidationCropSize { get; set; }
         /// <summary> Image size to which to resize before cropping for validation dataset. Must be a positive integer. </summary>
+        [WirePath("validationResizeSize")]
         public int? ValidationResizeSize { get; set; }
         /// <summary>
         /// Weighted loss. The accepted values are 0 for no weighted loss.
         /// 1 for weighted loss with sqrt.(class_weights). 2 for weighted loss with class_weights. Must be 0 or 1 or 2.
         /// </summary>
+        [WirePath("weightedLoss")]
         public int? WeightedLoss { get; set; }
     }
 }

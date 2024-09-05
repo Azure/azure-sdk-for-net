@@ -94,20 +94,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The resource tags for the machine learning workspace. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
+        [WirePath("sku")]
         public MachineLearningSku Sku { get; set; }
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The description of this workspace. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The friendly name for this workspace. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> The compute name for image build. </summary>
+        [WirePath("properties.imageBuildCompute")]
         public string ImageBuildCompute { get; set; }
         /// <summary> The service managed resource settings. </summary>
         internal ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
         /// <summary> The throughput of the collections in cosmosdb database. </summary>
+        [WirePath("properties.serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
         public int? CosmosDbCollectionsThroughput
         {
             get => ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
@@ -120,26 +127,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
+        [WirePath("properties.primaryUserAssignedIdentity")]
         public string PrimaryUserAssignedIdentity { get; set; }
         /// <summary> Settings for serverless compute created in the workspace. </summary>
+        [WirePath("properties.serverlessComputeSettings")]
         public ServerlessComputeSettings ServerlessComputeSettings { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public PublicNetworkAccess? PublicNetworkAccessType { get; set; }
         /// <summary> ARM id of the application insights associated with this workspace. </summary>
+        [WirePath("properties.applicationInsights")]
         public string ApplicationInsights { get; set; }
         /// <summary> ARM id of the container registry associated with this workspace. </summary>
+        [WirePath("properties.containerRegistry")]
         public string ContainerRegistry { get; set; }
         /// <summary> Settings for feature store type workspace. </summary>
+        [WirePath("properties.featureStoreSettings")]
         public FeatureStoreSettings FeatureStoreSettings { get; set; }
         /// <summary> Managed Network settings for a machine learning workspace. </summary>
+        [WirePath("properties.managedNetwork")]
         public ManagedNetworkSettings ManagedNetwork { get; set; }
         /// <summary> Gets or sets the enable data isolation. </summary>
+        [WirePath("properties.enableDataIsolation")]
         public bool? EnableDataIsolation { get; set; }
         /// <summary> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </summary>
+        [WirePath("properties.v1LegacyMode")]
         public bool? V1LegacyMode { get; set; }
         /// <summary> Gets or sets the encryption. </summary>
         internal EncryptionUpdateProperties Encryption { get; set; }
         /// <summary> Gets or sets the key identifier. </summary>
+        [WirePath("properties.encryption.keyVaultProperties.keyIdentifier")]
         public string KeyIdentifier
         {
             get => Encryption is null ? default : Encryption.KeyIdentifier;

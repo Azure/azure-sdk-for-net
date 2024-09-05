@@ -98,12 +98,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// Please note <see cref="MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
         /// </summary>
+        [WirePath("properties")]
         public MachineLearningOnlineDeploymentProperties Properties { get; set; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
+        [WirePath("sku")]
         public MachineLearningSku Sku { get; set; }
     }
 }

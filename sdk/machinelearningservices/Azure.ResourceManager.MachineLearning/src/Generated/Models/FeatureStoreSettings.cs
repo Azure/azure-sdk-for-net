@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Compute runtime config for feature store type workspace. </summary>
         internal ComputeRuntimeDto ComputeRuntime { get; set; }
         /// <summary> Gets or sets the spark runtime version. </summary>
+        [WirePath("computeRuntime.sparkRuntimeVersion")]
         public string SparkRuntimeVersion
         {
             get => ComputeRuntime is null ? default : ComputeRuntime.SparkRuntimeVersion;
@@ -78,8 +79,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the offline store connection name. </summary>
+        [WirePath("offlineStoreConnectionName")]
         public string OfflineStoreConnectionName { get; set; }
         /// <summary> Gets or sets the online store connection name. </summary>
+        [WirePath("onlineStoreConnectionName")]
         public string OnlineStoreConnectionName { get; set; }
     }
 }

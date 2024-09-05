@@ -86,12 +86,16 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
+        [WirePath("properties")]
         public MachineLearningBatchDeploymentProperties Properties { get; set; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
+        [WirePath("sku")]
         public MachineLearningSku Sku { get; set; }
     }
 }

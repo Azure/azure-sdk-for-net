@@ -41,8 +41,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Allowed models for classification task. </summary>
+        [WirePath("allowedTrainingAlgorithms")]
         public IList<ClassificationModel> AllowedTrainingAlgorithms { get; set; }
         /// <summary> Blocked models for classification task. </summary>
+        [WirePath("blockedTrainingAlgorithms")]
         public IList<ClassificationModel> BlockedTrainingAlgorithms { get; set; }
     }
 }

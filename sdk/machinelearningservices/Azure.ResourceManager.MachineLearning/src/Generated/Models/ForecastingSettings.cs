@@ -118,35 +118,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Country or region for holidays for forecasting tasks.
         /// These should be ISO 3166 two-letter country/region codes, for example 'US' or 'GB'.
         /// </summary>
+        [WirePath("countryOrRegionForHolidays")]
         public string CountryOrRegionForHolidays { get; set; }
         /// <summary> The name of the time column. This parameter is required when forecasting to specify the datetime column in the input data used for building the time series and inferring its frequency. </summary>
+        [WirePath("timeColumnName")]
         public string TimeColumnName { get; set; }
         /// <summary>
         /// The number of past periods to lag from the target column.
         /// Please note <see cref="Models.TargetLags"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoTargetLags"/> and <see cref="CustomTargetLags"/>.
         /// </summary>
+        [WirePath("targetLags")]
         public TargetLags TargetLags { get; set; }
         /// <summary>
         /// The number of past periods used to create a rolling window average of the target column.
         /// Please note <see cref="Models.TargetRollingWindowSize"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoTargetRollingWindowSize"/> and <see cref="CustomTargetRollingWindowSize"/>.
         /// </summary>
+        [WirePath("targetRollingWindowSize")]
         public TargetRollingWindowSize TargetRollingWindowSize { get; set; }
         /// <summary>
         /// The desired maximum forecast horizon in units of time-series frequency.
         /// Please note <see cref="Models.ForecastHorizon"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoForecastHorizon"/> and <see cref="CustomForecastHorizon"/>.
         /// </summary>
+        [WirePath("forecastHorizon")]
         public ForecastHorizon ForecastHorizon { get; set; }
         /// <summary>
         /// The names of columns used to group a timeseries. It can be used to create multiple series.
         /// If grain is not defined, the data set is assumed to be one time-series. This parameter is used with task type forecasting.
         /// </summary>
+        [WirePath("timeSeriesIdColumnNames")]
         public IList<string> TimeSeriesIdColumnNames { get; set; }
         /// <summary> When forecasting, this parameter represents the period with which the forecast is desired, for example daily, weekly, yearly, etc. The forecast frequency is dataset frequency by default. </summary>
+        [WirePath("frequency")]
         public string Frequency { get; set; }
         /// <summary> Flag for generating lags for the numeric features with 'auto' or null. </summary>
+        [WirePath("featureLags")]
         public MachineLearningFeatureLag? FeatureLags { get; set; }
         /// <summary>
         /// Set time series seasonality as an integer multiple of the series frequency.
@@ -154,21 +162,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="ForecastingSeasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoSeasonality"/> and <see cref="CustomSeasonality"/>.
         /// </summary>
+        [WirePath("seasonality")]
         public ForecastingSeasonality Seasonality { get; set; }
         /// <summary> The parameter defining how if AutoML should handle short time series. </summary>
+        [WirePath("shortSeriesHandlingConfig")]
         public MachineLearningShortSeriesHandlingConfiguration? ShortSeriesHandlingConfig { get; set; }
         /// <summary> Configure STL Decomposition of the time-series target column. </summary>
+        [WirePath("useStl")]
         public MachineLearningUseStl? UseStl { get; set; }
         /// <summary>
         /// The function to be used to aggregate the time series target column to conform to a user specified frequency.
         /// If the TargetAggregateFunction is set i.e. not 'None', but the freq parameter is not set, the error is raised. The possible target aggregation functions are: "sum", "max", "min" and "mean".
         /// </summary>
+        [WirePath("targetAggregateFunction")]
         public TargetAggregationFunction? TargetAggregateFunction { get; set; }
         /// <summary>
         /// Number of periods between the origin time of one CV fold and the next fold. For
         /// example, if `CVStepSize` = 3 for daily data, the origin time for each fold will be
         /// three days apart.
         /// </summary>
+        [WirePath("cvStepSize")]
         public int? CvStepSize { get; set; }
     }
 }

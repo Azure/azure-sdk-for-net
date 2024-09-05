@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The resource requirements for the container (cpu and memory). </summary>
+        [WirePath("containerResourceRequirements")]
         public MachineLearningContainerResourceRequirements ContainerResourceRequirements { get; set; }
     }
 }

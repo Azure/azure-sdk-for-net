@@ -82,13 +82,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Recommented format would be "2022-06-01T00:00:01"
         /// If not present, the schedule will run indefinitely
         /// </summary>
+        [WirePath("endTime")]
         public string EndTime { get; set; }
         /// <summary> Specifies start time of schedule in ISO 8601 format, but without a UTC offset. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; set; }
         /// <summary>
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </summary>
+        [WirePath("timeZone")]
         public string TimeZone { get; set; }
     }
 }

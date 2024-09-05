@@ -84,20 +84,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="PredictionDriftMetricThresholdBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CategoricalPredictionDriftMetricThreshold"/> and <see cref="NumericalPredictionDriftMetricThreshold"/>.
         /// </summary>
+        [WirePath("metricThresholds")]
         public IList<PredictionDriftMetricThresholdBase> MetricThresholds { get; }
         /// <summary>
         /// [Required] The data which drift will be calculated for.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </summary>
+        [WirePath("productionData")]
         public MonitoringInputDataBase ProductionData { get; set; }
         /// <summary>
         /// [Required] The data to calculate drift against.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </summary>
+        [WirePath("referenceData")]
         public MonitoringInputDataBase ReferenceData { get; set; }
         /// <summary> A dictionary that maps feature names to their respective data types. </summary>
+        [WirePath("featureDataTypeOverride")]
         public IDictionary<string, MonitoringFeatureDataType> FeatureDataTypeOverride { get; set; }
     }
 }

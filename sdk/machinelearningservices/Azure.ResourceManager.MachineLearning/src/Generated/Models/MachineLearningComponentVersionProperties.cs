@@ -67,8 +67,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("componentSpec")]
         public BinaryData ComponentSpec { get; set; }
         /// <summary> Provisioning state for the component version. </summary>
+        [WirePath("provisioningState")]
         public RegistryAssetProvisioningState? ProvisioningState { get; }
     }
 }

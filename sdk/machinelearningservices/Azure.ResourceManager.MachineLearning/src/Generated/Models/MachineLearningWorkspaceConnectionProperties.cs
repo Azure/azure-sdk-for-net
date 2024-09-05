@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, ConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthType = authType;
             Category = category;
@@ -88,20 +88,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Authentication type of the connection target. </summary>
         internal MachineLearningConnectionAuthType AuthType { get; set; }
         /// <summary> Category of the connection. </summary>
+        [WirePath("category")]
         public MachineLearningConnectionCategory? Category { get; set; }
         /// <summary> Gets the created by workspace arm id. </summary>
+        [WirePath("createdByWorkspaceArmId")]
         public ResourceIdentifier CreatedByWorkspaceArmId { get; }
         /// <summary> Gets or sets the expiry on. </summary>
+        [WirePath("expiryTime")]
         public DateTimeOffset? ExpiryOn { get; set; }
         /// <summary> Group based on connection category. </summary>
-        public ConnectionGroup? Group { get; }
+        [WirePath("group")]
+        public WorkspaceConnectionGroup? Group { get; }
         /// <summary> Gets or sets the is shared to all. </summary>
+        [WirePath("isSharedToAll")]
         public bool? IsSharedToAll { get; set; }
         /// <summary> Gets or sets the target. </summary>
+        [WirePath("target")]
         public string Target { get; set; }
         /// <summary> Store user metadata for this connection. </summary>
+        [WirePath("metadata")]
         public IDictionary<string, string> Metadata { get; }
         /// <summary> Gets the shared user list. </summary>
+        [WirePath("sharedUserList")]
         public IList<string> SharedUserList { get; }
     }
 }

@@ -47,14 +47,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If 'Off' is selected then no featurization is done.
         /// If 'Custom' is selected then user can specify additional inputs to customize how featurization is done.
         /// </summary>
+        [WirePath("mode")]
         public MachineLearningFeaturizationMode? Mode { get; set; }
         /// <summary> These transformers shall not be used in featurization. </summary>
+        [WirePath("blockedTransformers")]
         public IList<BlockedTransformer> BlockedTransformers { get; set; }
         /// <summary> Dictionary of column name and its type (int, float, string, datetime etc). </summary>
+        [WirePath("columnNameAndTypes")]
         public IDictionary<string, string> ColumnNameAndTypes { get; set; }
         /// <summary> User can specify additional transformers to be used along with the columns to which it would be applied and parameters for the transformer constructor. </summary>
+        [WirePath("transformerParams")]
         public IDictionary<string, IList<ColumnTransformer>> TransformerParams { get; set; }
         /// <summary> Determines whether to use Dnn based featurizers for data featurization. </summary>
+        [WirePath("enableDnnFeaturization")]
         public bool? EnableDnnFeaturization { get; set; }
     }
 }

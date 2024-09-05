@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Indicate whether container shall run in privileged or non-privileged mode. </summary>
+        [WirePath("privileged")]
         public bool? Privileged { get; set; }
         /// <summary>
         /// Additional Properties
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

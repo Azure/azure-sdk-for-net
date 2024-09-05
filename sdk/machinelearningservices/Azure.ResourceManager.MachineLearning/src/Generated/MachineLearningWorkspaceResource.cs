@@ -1067,11 +1067,11 @@ namespace Azure.ResourceManager.MachineLearning
             return GetMachineLearningJobs().Get(id, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MarketplaceSubscriptionResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of MarketplaceSubscriptionResources and their operations over a MarketplaceSubscriptionResource. </returns>
-        public virtual MarketplaceSubscriptionCollection GetMarketplaceSubscriptions()
+        /// <summary> Gets a collection of MachineLearningMarketplaceSubscriptionResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningMarketplaceSubscriptionResources and their operations over a MachineLearningMarketplaceSubscriptionResource. </returns>
+        public virtual MachineLearningMarketplaceSubscriptionCollection GetMachineLearningMarketplaceSubscriptions()
         {
-            return GetCachedClient(client => new MarketplaceSubscriptionCollection(client, Id));
+            return GetCachedClient(client => new MachineLearningMarketplaceSubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1100,9 +1100,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MarketplaceSubscriptionResource>> GetMarketplaceSubscriptionAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningMarketplaceSubscriptionResource>> GetMachineLearningMarketplaceSubscriptionAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetMarketplaceSubscriptions().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningMarketplaceSubscriptions().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1131,9 +1131,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MarketplaceSubscriptionResource> GetMarketplaceSubscription(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningMarketplaceSubscriptionResource> GetMachineLearningMarketplaceSubscription(string name, CancellationToken cancellationToken = default)
         {
-            return GetMarketplaceSubscriptions().Get(name, cancellationToken);
+            return GetMachineLearningMarketplaceSubscriptions().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of MachineLearningOnlineEndpointResources in the MachineLearningWorkspace. </summary>

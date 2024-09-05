@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the resource id. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Gets or sets the client id. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
     }
 }

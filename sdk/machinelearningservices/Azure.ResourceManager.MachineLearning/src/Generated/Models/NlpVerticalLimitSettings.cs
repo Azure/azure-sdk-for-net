@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> AutoML job timeout. </summary>
+        [WirePath("timeout")]
         public TimeSpan? Timeout { get; set; }
         /// <summary> Number of AutoML iterations. </summary>
+        [WirePath("maxTrials")]
         public int? MaxTrials { get; set; }
         /// <summary> Maximum Concurrent AutoML iterations. </summary>
+        [WirePath("maxConcurrentTrials")]
         public int? MaxConcurrentTrials { get; set; }
     }
 }

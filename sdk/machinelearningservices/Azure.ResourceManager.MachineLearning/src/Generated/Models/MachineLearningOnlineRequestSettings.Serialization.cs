@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -122,6 +123,68 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningOnlineRequestSettings(maxQueueWait, requestTimeout, maxConcurrentRequestsPerInstance, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxQueueWait), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxQueueWait: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxQueueWait))
+                {
+                    builder.Append("  maxQueueWait: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(MaxQueueWait.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestTimeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestTimeout))
+                {
+                    builder.Append("  requestTimeout: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(RequestTimeout.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxConcurrentRequestsPerInstance), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxConcurrentRequestsPerInstance: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxConcurrentRequestsPerInstance))
+                {
+                    builder.Append("  maxConcurrentRequestsPerInstance: ");
+                    builder.AppendLine($"{MaxConcurrentRequestsPerInstance.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningOnlineRequestSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineRequestSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +193,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningOnlineRequestSettings)} does not support writing '{options.Format}' format.");
             }

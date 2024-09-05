@@ -13,7 +13,7 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
-    public partial class Sample_MarketplaceSubscriptionResource
+    public partial class Sample_MachineLearningMarketplaceSubscriptionResource
     {
         // Delete Workspace Marketplace Subscription.
         [NUnit.Framework.Test]
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MarketplaceSubscriptionResource created on azure
-            // for more information of creating MarketplaceSubscriptionResource, please refer to the document of MarketplaceSubscriptionResource
+            // this example assumes you already have this MachineLearningMarketplaceSubscriptionResource created on azure
+            // for more information of creating MachineLearningMarketplaceSubscriptionResource, please refer to the document of MachineLearningMarketplaceSubscriptionResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";
-            ResourceIdentifier marketplaceSubscriptionResourceId = MarketplaceSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
-            MarketplaceSubscriptionResource marketplaceSubscription = client.GetMarketplaceSubscriptionResource(marketplaceSubscriptionResourceId);
+            ResourceIdentifier machineLearningMarketplaceSubscriptionResourceId = MachineLearningMarketplaceSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
+            MachineLearningMarketplaceSubscriptionResource machineLearningMarketplaceSubscription = client.GetMachineLearningMarketplaceSubscriptionResource(machineLearningMarketplaceSubscriptionResourceId);
 
             // invoke the operation
-            await marketplaceSubscription.DeleteAsync(WaitUntil.Completed);
+            await machineLearningMarketplaceSubscription.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MarketplaceSubscriptionResource created on azure
-            // for more information of creating MarketplaceSubscriptionResource, please refer to the document of MarketplaceSubscriptionResource
+            // this example assumes you already have this MachineLearningMarketplaceSubscriptionResource created on azure
+            // for more information of creating MachineLearningMarketplaceSubscriptionResource, please refer to the document of MachineLearningMarketplaceSubscriptionResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";
-            ResourceIdentifier marketplaceSubscriptionResourceId = MarketplaceSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
-            MarketplaceSubscriptionResource marketplaceSubscription = client.GetMarketplaceSubscriptionResource(marketplaceSubscriptionResourceId);
+            ResourceIdentifier machineLearningMarketplaceSubscriptionResourceId = MachineLearningMarketplaceSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
+            MachineLearningMarketplaceSubscriptionResource machineLearningMarketplaceSubscription = client.GetMachineLearningMarketplaceSubscriptionResource(machineLearningMarketplaceSubscriptionResourceId);
 
             // invoke the operation
-            MarketplaceSubscriptionResource result = await marketplaceSubscription.GetAsync();
+            MachineLearningMarketplaceSubscriptionResource result = await machineLearningMarketplaceSubscription.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MarketplaceSubscriptionData resourceData = result.Data;
+            MachineLearningMarketplaceSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -88,23 +88,23 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MarketplaceSubscriptionResource created on azure
-            // for more information of creating MarketplaceSubscriptionResource, please refer to the document of MarketplaceSubscriptionResource
+            // this example assumes you already have this MachineLearningMarketplaceSubscriptionResource created on azure
+            // for more information of creating MachineLearningMarketplaceSubscriptionResource, please refer to the document of MachineLearningMarketplaceSubscriptionResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";
-            ResourceIdentifier marketplaceSubscriptionResourceId = MarketplaceSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
-            MarketplaceSubscriptionResource marketplaceSubscription = client.GetMarketplaceSubscriptionResource(marketplaceSubscriptionResourceId);
+            ResourceIdentifier machineLearningMarketplaceSubscriptionResourceId = MachineLearningMarketplaceSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
+            MachineLearningMarketplaceSubscriptionResource machineLearningMarketplaceSubscription = client.GetMachineLearningMarketplaceSubscriptionResource(machineLearningMarketplaceSubscriptionResourceId);
 
             // invoke the operation
-            MarketplaceSubscriptionData data = new MarketplaceSubscriptionData(new MarketplaceSubscriptionProperties("string"));
-            ArmOperation<MarketplaceSubscriptionResource> lro = await marketplaceSubscription.UpdateAsync(WaitUntil.Completed, data);
-            MarketplaceSubscriptionResource result = lro.Value;
+            MachineLearningMarketplaceSubscriptionData data = new MachineLearningMarketplaceSubscriptionData(new MachineLearningMarketplaceSubscriptionProperties("string"));
+            ArmOperation<MachineLearningMarketplaceSubscriptionResource> lro = await machineLearningMarketplaceSubscription.UpdateAsync(WaitUntil.Completed, data);
+            MachineLearningMarketplaceSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MarketplaceSubscriptionData resourceData = result.Data;
+            MachineLearningMarketplaceSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

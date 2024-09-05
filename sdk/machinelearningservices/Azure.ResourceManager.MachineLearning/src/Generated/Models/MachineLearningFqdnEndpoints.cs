@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the properties. </summary>
+        [WirePath("properties")]
         public MachineLearningFqdnEndpointsProperties Properties { get; }
     }
 }

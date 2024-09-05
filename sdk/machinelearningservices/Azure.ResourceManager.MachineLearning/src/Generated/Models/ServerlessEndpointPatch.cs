@@ -30,8 +30,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
+        [WirePath("sku")]
         public MachineLearningSkuPatch Sku { get; set; }
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public MachineLearningPartialManagedServiceIdentity Identity { get; set; }
     }
 }

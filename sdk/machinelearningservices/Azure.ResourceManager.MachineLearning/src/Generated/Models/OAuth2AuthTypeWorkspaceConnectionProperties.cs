@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// ClientId and ClientSecret are required. Other properties are optional
         /// depending on each OAuth2 provider's implementation.
         /// </param>
-        internal OAuth2AuthTypeWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, ConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData, WorkspaceConnectionOAuth2 credentials) : base(authType, category, createdByWorkspaceArmId, expiryOn, group, isSharedToAll, target, metadata, sharedUserList, value, valueFormat, serializedAdditionalRawData)
+        internal OAuth2AuthTypeWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData, WorkspaceConnectionOAuth2 credentials) : base(authType, category, createdByWorkspaceArmId, expiryOn, group, isSharedToAll, target, metadata, sharedUserList, value, valueFormat, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;
@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// ClientId and ClientSecret are required. Other properties are optional
         /// depending on each OAuth2 provider's implementation.
         /// </summary>
+        [WirePath("credentials")]
         public WorkspaceConnectionOAuth2 Credentials { get; set; }
     }
 }

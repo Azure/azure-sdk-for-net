@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -224,6 +225,149 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 validationData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryMetric), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  primaryMetric: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryMetric))
+                {
+                    builder.Append("  primaryMetric: ");
+                    builder.AppendLine($"'{PrimaryMetric.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LimitSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  limitSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LimitSettings))
+                {
+                    builder.Append("  limitSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LimitSettings, options, 2, false, "  limitSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FeaturizationDatasetLanguage", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  featurizationSettings: ");
+                builder.AppendLine("{");
+                builder.Append("    datasetLanguage: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FeaturizationSettings))
+                {
+                    builder.Append("  featurizationSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FeaturizationSettings, options, 2, false, "  featurizationSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  validationData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ValidationData))
+                {
+                    builder.Append("  validationData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ValidationData, options, 2, false, "  validationData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaskType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  taskType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  taskType: ");
+                builder.AppendLine($"'{TaskType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogVerbosity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logVerbosity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogVerbosity))
+                {
+                    builder.Append("  logVerbosity: ");
+                    builder.AppendLine($"'{LogVerbosity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrainingData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  trainingData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrainingData))
+                {
+                    builder.Append("  trainingData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TrainingData, options, 2, false, "  trainingData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetColumnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetColumnName))
+                {
+                    builder.Append("  targetColumnName: ");
+                    if (TargetColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetColumnName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TextClassificationMultilabel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TextClassificationMultilabel>)this).GetFormatFromOptions(options) : options.Format;
@@ -232,6 +376,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TextClassificationMultilabel)} does not support writing '{options.Format}' format.");
             }

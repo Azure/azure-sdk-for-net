@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MarketplaceSubscriptionResource"/> and their operations.
-    /// Each <see cref="MarketplaceSubscriptionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
-    /// To get a <see cref="MarketplaceSubscriptionCollection"/> instance call the GetMarketplaceSubscriptions method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// A class representing a collection of <see cref="MachineLearningMarketplaceSubscriptionResource"/> and their operations.
+    /// Each <see cref="MachineLearningMarketplaceSubscriptionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningMarketplaceSubscriptionCollection"/> instance call the GetMachineLearningMarketplaceSubscriptions method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
-    public partial class MarketplaceSubscriptionCollection : ArmCollection, IEnumerable<MarketplaceSubscriptionResource>, IAsyncEnumerable<MarketplaceSubscriptionResource>
+    public partial class MachineLearningMarketplaceSubscriptionCollection : ArmCollection, IEnumerable<MachineLearningMarketplaceSubscriptionResource>, IAsyncEnumerable<MachineLearningMarketplaceSubscriptionResource>
     {
-        private readonly ClientDiagnostics _marketplaceSubscriptionClientDiagnostics;
-        private readonly MarketplaceSubscriptionsRestOperations _marketplaceSubscriptionRestClient;
+        private readonly ClientDiagnostics _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics;
+        private readonly MarketplaceSubscriptionsRestOperations _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MarketplaceSubscriptionCollection"/> class for mocking. </summary>
-        protected MarketplaceSubscriptionCollection()
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningMarketplaceSubscriptionCollection"/> class for mocking. </summary>
+        protected MachineLearningMarketplaceSubscriptionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MarketplaceSubscriptionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningMarketplaceSubscriptionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal MarketplaceSubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MachineLearningMarketplaceSubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _marketplaceSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MarketplaceSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MarketplaceSubscriptionResource.ResourceType, out string marketplaceSubscriptionApiVersion);
-            _marketplaceSubscriptionRestClient = new MarketplaceSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, marketplaceSubscriptionApiVersion);
+            _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningMarketplaceSubscriptionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MachineLearningMarketplaceSubscriptionResource.ResourceType, out string machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsApiVersion);
+            _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient = new MarketplaceSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MarketplaceSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, MarketplaceSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningMarketplaceSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, MachineLearningMarketplaceSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _marketplaceSubscriptionClientDiagnostics.CreateScope("MarketplaceSubscriptionCollection.CreateOrUpdate");
+            using var scope = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics.CreateScope("MachineLearningMarketplaceSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _marketplaceSubscriptionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MarketplaceSubscriptionResource>(new MarketplaceSubscriptionOperationSource(Client), _marketplaceSubscriptionClientDiagnostics, Pipeline, _marketplaceSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new MachineLearningArmOperation<MachineLearningMarketplaceSubscriptionResource>(new MachineLearningMarketplaceSubscriptionOperationSource(Client), _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics, Pipeline, _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MarketplaceSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string name, MarketplaceSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningMarketplaceSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string name, MachineLearningMarketplaceSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _marketplaceSubscriptionClientDiagnostics.CreateScope("MarketplaceSubscriptionCollection.CreateOrUpdate");
+            using var scope = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics.CreateScope("MachineLearningMarketplaceSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _marketplaceSubscriptionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MarketplaceSubscriptionResource>(new MarketplaceSubscriptionOperationSource(Client), _marketplaceSubscriptionClientDiagnostics, Pipeline, _marketplaceSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
+                var operation = new MachineLearningArmOperation<MachineLearningMarketplaceSubscriptionResource>(new MachineLearningMarketplaceSubscriptionOperationSource(Client), _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics, Pipeline, _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<MarketplaceSubscriptionResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningMarketplaceSubscriptionResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _marketplaceSubscriptionClientDiagnostics.CreateScope("MarketplaceSubscriptionCollection.Get");
+            using var scope = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics.CreateScope("MachineLearningMarketplaceSubscriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _marketplaceSubscriptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                var response = await _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MarketplaceSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningMarketplaceSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<MarketplaceSubscriptionResource> Get(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningMarketplaceSubscriptionResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _marketplaceSubscriptionClientDiagnostics.CreateScope("MarketplaceSubscriptionCollection.Get");
+            using var scope = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics.CreateScope("MachineLearningMarketplaceSubscriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = _marketplaceSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                var response = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MarketplaceSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningMarketplaceSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,18 +256,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MarketplaceSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MarketplaceSubscriptionResource> GetAllAsync(string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningMarketplaceSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningMarketplaceSubscriptionResource> GetAllAsync(string skip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceSubscriptionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _marketplaceSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MarketplaceSubscriptionResource(Client, MarketplaceSubscriptionData.DeserializeMarketplaceSubscriptionData(e)), _marketplaceSubscriptionClientDiagnostics, Pipeline, "MarketplaceSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningMarketplaceSubscriptionResource(Client, MachineLearningMarketplaceSubscriptionData.DeserializeMachineLearningMarketplaceSubscriptionData(e)), _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics, Pipeline, "MachineLearningMarketplaceSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -287,18 +287,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MarketplaceSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MarketplaceSubscriptionResource> GetAll(string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningMarketplaceSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningMarketplaceSubscriptionResource> GetAll(string skip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceSubscriptionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _marketplaceSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MarketplaceSubscriptionResource(Client, MarketplaceSubscriptionData.DeserializeMarketplaceSubscriptionData(e)), _marketplaceSubscriptionClientDiagnostics, Pipeline, "MarketplaceSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningMarketplaceSubscriptionResource(Client, MachineLearningMarketplaceSubscriptionData.DeserializeMachineLearningMarketplaceSubscriptionData(e)), _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics, Pipeline, "MachineLearningMarketplaceSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _marketplaceSubscriptionClientDiagnostics.CreateScope("MarketplaceSubscriptionCollection.Exists");
+            using var scope = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics.CreateScope("MachineLearningMarketplaceSubscriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _marketplaceSubscriptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _marketplaceSubscriptionClientDiagnostics.CreateScope("MarketplaceSubscriptionCollection.Exists");
+            using var scope = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics.CreateScope("MachineLearningMarketplaceSubscriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _marketplaceSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,18 +412,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<NullableResponse<MarketplaceSubscriptionResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MachineLearningMarketplaceSubscriptionResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _marketplaceSubscriptionClientDiagnostics.CreateScope("MarketplaceSubscriptionCollection.GetIfExists");
+            using var scope = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics.CreateScope("MachineLearningMarketplaceSubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _marketplaceSubscriptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<MarketplaceSubscriptionResource>(response.GetRawResponse());
-                return Response.FromValue(new MarketplaceSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MachineLearningMarketplaceSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningMarketplaceSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MarketplaceSubscriptionResource"/></description>
+        /// <description><see cref="MachineLearningMarketplaceSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,18 +457,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual NullableResponse<MarketplaceSubscriptionResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MachineLearningMarketplaceSubscriptionResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _marketplaceSubscriptionClientDiagnostics.CreateScope("MarketplaceSubscriptionCollection.GetIfExists");
+            using var scope = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsClientDiagnostics.CreateScope("MachineLearningMarketplaceSubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _marketplaceSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _machineLearningMarketplaceSubscriptionMarketplaceSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<MarketplaceSubscriptionResource>(response.GetRawResponse());
-                return Response.FromValue(new MarketplaceSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MachineLearningMarketplaceSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningMarketplaceSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        IEnumerator<MarketplaceSubscriptionResource> IEnumerable<MarketplaceSubscriptionResource>.GetEnumerator()
+        IEnumerator<MachineLearningMarketplaceSubscriptionResource> IEnumerable<MachineLearningMarketplaceSubscriptionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.MachineLearning
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MarketplaceSubscriptionResource> IAsyncEnumerable<MarketplaceSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MachineLearningMarketplaceSubscriptionResource> IAsyncEnumerable<MachineLearningMarketplaceSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

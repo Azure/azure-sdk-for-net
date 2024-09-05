@@ -443,15 +443,15 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MarketplaceSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MarketplaceSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MachineLearningMarketplaceSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningMarketplaceSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningMarketplaceSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MarketplaceSubscriptionResource"/> object. </returns>
-        public virtual MarketplaceSubscriptionResource GetMarketplaceSubscriptionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningMarketplaceSubscriptionResource"/> object. </returns>
+        public virtual MachineLearningMarketplaceSubscriptionResource GetMachineLearningMarketplaceSubscriptionResource(ResourceIdentifier id)
         {
-            MarketplaceSubscriptionResource.ValidateResourceId(id);
-            return new MarketplaceSubscriptionResource(Client, id);
+            MachineLearningMarketplaceSubscriptionResource.ValidateResourceId(id);
+            return new MachineLearningMarketplaceSubscriptionResource(Client, id);
         }
 
         /// <summary>

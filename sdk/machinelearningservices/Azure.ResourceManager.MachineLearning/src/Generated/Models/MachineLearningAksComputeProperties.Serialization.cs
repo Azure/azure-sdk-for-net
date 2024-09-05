@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -288,6 +290,188 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterFqdn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clusterFqdn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusterFqdn))
+                {
+                    builder.Append("  clusterFqdn: ");
+                    if (ClusterFqdn.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClusterFqdn}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClusterFqdn}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemServices), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemServices: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SystemServices))
+                {
+                    if (SystemServices.Any())
+                    {
+                        builder.Append("  systemServices: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SystemServices)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  systemServices: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgentCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  agentCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AgentCount))
+                {
+                    builder.Append("  agentCount: ");
+                    builder.AppendLine($"{AgentCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgentVmSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  agentVmSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AgentVmSize))
+                {
+                    builder.Append("  agentVmSize: ");
+                    if (AgentVmSize.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AgentVmSize}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AgentVmSize}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterPurpose), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clusterPurpose: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusterPurpose))
+                {
+                    builder.Append("  clusterPurpose: ");
+                    builder.AppendLine($"'{ClusterPurpose.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SslConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sslConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SslConfiguration))
+                {
+                    builder.Append("  sslConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SslConfiguration, options, 2, false, "  sslConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AksNetworkingConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aksNetworkingConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AksNetworkingConfiguration))
+                {
+                    builder.Append("  aksNetworkingConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AksNetworkingConfiguration, options, 2, false, "  aksNetworkingConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoadBalancerType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  loadBalancerType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LoadBalancerType))
+                {
+                    builder.Append("  loadBalancerType: ");
+                    builder.AppendLine($"'{LoadBalancerType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoadBalancerSubnet), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  loadBalancerSubnet: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LoadBalancerSubnet))
+                {
+                    builder.Append("  loadBalancerSubnet: ");
+                    if (LoadBalancerSubnet.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LoadBalancerSubnet}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LoadBalancerSubnet}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningAksComputeProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -296,6 +480,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support writing '{options.Format}' format.");
             }

@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] OneLake artifact type. </summary>
         internal OneLakeArtifactType ArtifactType { get; set; }
         /// <summary> [Required] OneLake artifact name. </summary>
+        [WirePath("artifactName")]
         public string ArtifactName { get; set; }
     }
 }

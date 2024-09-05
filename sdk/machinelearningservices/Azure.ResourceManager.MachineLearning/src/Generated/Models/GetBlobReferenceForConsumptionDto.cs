@@ -68,14 +68,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Blob uri, example: https://blob.windows.core.net/Container/Path. </summary>
+        [WirePath("blobUri")]
         public Uri BlobUri { get; }
         /// <summary> The ARM id of the storage account. </summary>
+        [WirePath("storageAccountArmId")]
         public string StorageAccountArmId { get; }
         /// <summary>
         /// Credential info to access storage account
         /// Please note <see cref="DataReferenceCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DockerCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="AnonymousAccessCredential"/> and <see cref="SasCredential"/>.
         /// </summary>
+        [WirePath("credential")]
         public DataReferenceCredential Credential { get; }
     }
 }

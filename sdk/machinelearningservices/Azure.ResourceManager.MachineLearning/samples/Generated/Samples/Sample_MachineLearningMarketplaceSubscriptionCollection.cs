@@ -13,7 +13,7 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
-    public partial class Sample_MarketplaceSubscriptionCollection
+    public partial class Sample_MachineLearningMarketplaceSubscriptionCollection
     {
         // List Workspace Marketplace Subscription.
         [NUnit.Framework.Test]
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
-            // get the collection of this MarketplaceSubscriptionResource
-            MarketplaceSubscriptionCollection collection = machineLearningWorkspace.GetMarketplaceSubscriptions();
+            // get the collection of this MachineLearningMarketplaceSubscriptionResource
+            MachineLearningMarketplaceSubscriptionCollection collection = machineLearningWorkspace.GetMachineLearningMarketplaceSubscriptions();
 
             // invoke the operation and iterate over the result
-            await foreach (MarketplaceSubscriptionResource item in collection.GetAllAsync())
+            await foreach (MachineLearningMarketplaceSubscriptionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MarketplaceSubscriptionData resourceData = item.Data;
+                MachineLearningMarketplaceSubscriptionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
-            // get the collection of this MarketplaceSubscriptionResource
-            MarketplaceSubscriptionCollection collection = machineLearningWorkspace.GetMarketplaceSubscriptions();
+            // get the collection of this MachineLearningMarketplaceSubscriptionResource
+            MachineLearningMarketplaceSubscriptionCollection collection = machineLearningWorkspace.GetMachineLearningMarketplaceSubscriptions();
 
             // invoke the operation
             string name = "string";
-            MarketplaceSubscriptionResource result = await collection.GetAsync(name);
+            MachineLearningMarketplaceSubscriptionResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MarketplaceSubscriptionData resourceData = result.Data;
+            MachineLearningMarketplaceSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
-            // get the collection of this MarketplaceSubscriptionResource
-            MarketplaceSubscriptionCollection collection = machineLearningWorkspace.GetMarketplaceSubscriptions();
+            // get the collection of this MachineLearningMarketplaceSubscriptionResource
+            MachineLearningMarketplaceSubscriptionCollection collection = machineLearningWorkspace.GetMachineLearningMarketplaceSubscriptions();
 
             // invoke the operation
             string name = "string";
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
-            // get the collection of this MarketplaceSubscriptionResource
-            MarketplaceSubscriptionCollection collection = machineLearningWorkspace.GetMarketplaceSubscriptions();
+            // get the collection of this MachineLearningMarketplaceSubscriptionResource
+            MachineLearningMarketplaceSubscriptionCollection collection = machineLearningWorkspace.GetMachineLearningMarketplaceSubscriptions();
 
             // invoke the operation
             string name = "string";
-            NullableResponse<MarketplaceSubscriptionResource> response = await collection.GetIfExistsAsync(name);
-            MarketplaceSubscriptionResource result = response.HasValue ? response.Value : null;
+            NullableResponse<MachineLearningMarketplaceSubscriptionResource> response = await collection.GetIfExistsAsync(name);
+            MachineLearningMarketplaceSubscriptionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MarketplaceSubscriptionData resourceData = result.Data;
+                MachineLearningMarketplaceSubscriptionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -182,18 +182,18 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
-            // get the collection of this MarketplaceSubscriptionResource
-            MarketplaceSubscriptionCollection collection = machineLearningWorkspace.GetMarketplaceSubscriptions();
+            // get the collection of this MachineLearningMarketplaceSubscriptionResource
+            MachineLearningMarketplaceSubscriptionCollection collection = machineLearningWorkspace.GetMachineLearningMarketplaceSubscriptions();
 
             // invoke the operation
             string name = "string";
-            MarketplaceSubscriptionData data = new MarketplaceSubscriptionData(new MarketplaceSubscriptionProperties("string"));
-            ArmOperation<MarketplaceSubscriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            MarketplaceSubscriptionResource result = lro.Value;
+            MachineLearningMarketplaceSubscriptionData data = new MachineLearningMarketplaceSubscriptionData(new MachineLearningMarketplaceSubscriptionProperties("string"));
+            ArmOperation<MachineLearningMarketplaceSubscriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            MachineLearningMarketplaceSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MarketplaceSubscriptionData resourceData = result.Data;
+            MachineLearningMarketplaceSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -215,6 +216,137 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ModelId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  modelSettings: ");
+                builder.AppendLine("{");
+                builder.Append("    modelId: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ModelSettings))
+                {
+                    builder.Append("  modelSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ModelSettings, options, 2, false, "  modelSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  authMode: ");
+                builder.AppendLine($"'{AuthMode.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InferenceEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  inferenceEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InferenceEndpoint))
+                {
+                    builder.Append("  inferenceEndpoint: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, InferenceEndpoint, options, 2, false, "  inferenceEndpoint: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endpointState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndpointState))
+                {
+                    builder.Append("  endpointState: ");
+                    builder.AppendLine($"'{EndpointState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MarketplaceSubscriptionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  marketplaceSubscriptionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MarketplaceSubscriptionId))
+                {
+                    builder.Append("  marketplaceSubscriptionId: ");
+                    if (MarketplaceSubscriptionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MarketplaceSubscriptionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MarketplaceSubscriptionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ContentSafetyStatus", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contentSafety: ");
+                builder.AppendLine("{");
+                builder.Append("    contentSafetyStatus: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentSafety))
+                {
+                    builder.Append("  contentSafety: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContentSafety, options, 2, false, "  contentSafety: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ServerlessEndpointProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -223,6 +355,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServerlessEndpointProperties)} does not support writing '{options.Format}' format.");
             }

@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] Specifies the type of signal to monitor. </summary>
         internal MonitoringSignalType SignalType { get; set; }
         /// <summary> The current notification mode for this signal. </summary>
+        [WirePath("notificationTypes")]
         public IList<MonitoringNotificationType> NotificationTypes { get; set; }
         /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
+        [WirePath("properties")]
         public IDictionary<string, string> Properties { get; set; }
     }
 }

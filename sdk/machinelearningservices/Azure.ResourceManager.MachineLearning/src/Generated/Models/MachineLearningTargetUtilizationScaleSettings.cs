@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The polling interval in ISO 8691 format. Only supports duration with precision as low as Seconds. </summary>
+        [WirePath("pollingInterval")]
         public TimeSpan? PollingInterval { get; set; }
         /// <summary> Target CPU usage for the autoscaler. </summary>
+        [WirePath("targetUtilizationPercentage")]
         public int? TargetUtilizationPercentage { get; set; }
         /// <summary> The minimum number of instances to always be present. </summary>
+        [WirePath("minInstances")]
         public int? MinInstances { get; set; }
         /// <summary> The maximum number of instances that the deployment can scale to. The quota will be reserved for max_instances. </summary>
+        [WirePath("maxInstances")]
         public int? MaxInstances { get; set; }
     }
 }

@@ -146,64 +146,77 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Maximum number of detections per image, for all classes. Must be a positive integer.
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("boxDetectionsPerImage")]
         public int? BoxDetectionsPerImage { get; set; }
         /// <summary>
         /// During inference, only return proposals with a classification score greater than
         /// BoxScoreThreshold. Must be a float in the range[0, 1].
         /// </summary>
+        [WirePath("boxScoreThreshold")]
         public float? BoxScoreThreshold { get; set; }
         /// <summary>
         /// Image size for train and validation. Must be a positive integer.
         /// Note: The training run may get into CUDA OOM if the size is too big.
         /// Note: This settings is only supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("imageSize")]
         public int? ImageSize { get; set; }
         /// <summary>
         /// Maximum size of the image to be rescaled before feeding it to the backbone.
         /// Must be a positive integer. Note: training run may get into CUDA OOM if the size is too big.
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("maxSize")]
         public int? MaxSize { get; set; }
         /// <summary>
         /// Minimum size of the image to be rescaled before feeding it to the backbone.
         /// Must be a positive integer. Note: training run may get into CUDA OOM if the size is too big.
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("minSize")]
         public int? MinSize { get; set; }
         /// <summary>
         /// Model size. Must be 'small', 'medium', 'large', or 'xlarge'.
         /// Note: training run may get into CUDA OOM if the model size is too big.
         /// Note: This settings is only supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("modelSize")]
         public MachineLearningModelSize? ModelSize { get; set; }
         /// <summary>
         /// Enable multi-scale image by varying image size by +/- 50%.
         /// Note: training run may get into CUDA OOM if no sufficient GPU memory.
         /// Note: This settings is only supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("multiScale")]
         public bool? MultiScale { get; set; }
         /// <summary> IOU threshold used during inference in NMS post processing. Must be a float in the range [0, 1]. </summary>
+        [WirePath("nmsIouThreshold")]
         public float? NmsIouThreshold { get; set; }
         /// <summary>
         /// The grid size to use for tiling each image. Note: TileGridSize must not be
         /// None to enable small object detection logic. A string containing two integers in mxn format.
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("tileGridSize")]
         public string TileGridSize { get; set; }
         /// <summary>
         /// Overlap ratio between adjacent tiles in each dimension. Must be float in the range [0, 1).
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("tileOverlapRatio")]
         public float? TileOverlapRatio { get; set; }
         /// <summary>
         /// The IOU threshold to use to perform NMS while merging predictions from tiles and image.
         /// Used in validation/ inference. Must be float in the range [0, 1].
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("tilePredictionsNmsThreshold")]
         public float? TilePredictionsNmsThreshold { get; set; }
         /// <summary> IOU threshold to use when computing validation metric. Must be float in the range [0, 1]. </summary>
+        [WirePath("validationIouThreshold")]
         public float? ValidationIouThreshold { get; set; }
         /// <summary> Metric computation method to use for validation metrics. </summary>
+        [WirePath("validationMetricType")]
         public ValidationMetricType? ValidationMetricType { get; set; }
     }
 }

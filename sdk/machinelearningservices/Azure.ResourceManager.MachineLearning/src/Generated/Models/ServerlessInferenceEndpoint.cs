@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The inference uri to target when making requests against the Serverless Endpoint. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; }
         /// <summary> Specifies any required headers to target this serverless endpoint. </summary>
+        [WirePath("headers")]
         public IReadOnlyDictionary<string, string> Headers { get; }
     }
 }

@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Specifies the feature spec details. </summary>
         internal FeaturesetSpecification Specification { get; set; }
         /// <summary> Specifies the spec path. </summary>
+        [WirePath("specification.path")]
         public string SpecificationPath
         {
             get => Specification is null ? default : Specification.Path;
@@ -55,12 +56,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies the materialization settings. </summary>
+        [WirePath("materializationSettings")]
         public MaterializationSettings MaterializationSettings { get; set; }
         /// <summary> Specifies the asset stage. </summary>
+        [WirePath("stage")]
         public string Stage { get; set; }
         /// <summary> Specifies list of entities. </summary>
+        [WirePath("entities")]
         public IList<string> Entities { get; set; }
         /// <summary> Provisioning state for the featureset version container. </summary>
+        [WirePath("provisioningState")]
         public RegistryAssetProvisioningState? ProvisioningState { get; }
     }
 }

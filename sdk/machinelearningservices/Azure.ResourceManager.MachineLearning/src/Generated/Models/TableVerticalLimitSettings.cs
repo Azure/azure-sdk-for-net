@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Number of iterations. </summary>
+        [WirePath("maxTrials")]
         public int? MaxTrials { get; set; }
         /// <summary> Iteration timeout. </summary>
+        [WirePath("trialTimeout")]
         public TimeSpan? TrialTimeout { get; set; }
         /// <summary> AutoML job timeout. </summary>
+        [WirePath("timeout")]
         public TimeSpan? Timeout { get; set; }
         /// <summary> Maximum Concurrent iterations. </summary>
+        [WirePath("maxConcurrentTrials")]
         public int? MaxConcurrentTrials { get; set; }
         /// <summary> Max cores per iteration. </summary>
+        [WirePath("maxCoresPerTrial")]
         public int? MaxCoresPerTrial { get; set; }
         /// <summary> Exit score for the AutoML job. </summary>
+        [WirePath("exitScore")]
         public double? ExitScore { get; set; }
         /// <summary> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </summary>
+        [WirePath("enableEarlyTermination")]
         public bool? EnableEarlyTermination { get; set; }
     }
 }

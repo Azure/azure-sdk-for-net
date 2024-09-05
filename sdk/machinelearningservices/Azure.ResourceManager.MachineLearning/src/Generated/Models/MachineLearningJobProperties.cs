@@ -64,19 +64,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] Specifies the type of job. </summary>
         internal JobType JobType { get; set; }
         /// <summary> Display name of job. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Status of the job. </summary>
+        [WirePath("status")]
         public MachineLearningJobStatus? Status { get; }
         /// <summary> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </summary>
+        [WirePath("experimentName")]
         public string ExperimentName { get; set; }
         /// <summary>
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </summary>
+        [WirePath("services")]
         public IDictionary<string, MachineLearningJobService> Services { get; set; }
         /// <summary> ARM resource ID of the compute resource. </summary>
+        [WirePath("computeId")]
         public ResourceIdentifier ComputeId { get; set; }
         /// <summary> Is the asset archived?. </summary>
+        [WirePath("isArchived")]
         public bool? IsArchived { get; set; }
         /// <summary>
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
@@ -84,10 +90,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </summary>
+        [WirePath("identity")]
         public MachineLearningIdentityConfiguration Identity { get; set; }
         /// <summary> ARM resource ID of the component resource. </summary>
+        [WirePath("componentId")]
         public ResourceIdentifier ComponentId { get; set; }
         /// <summary> Notification setting for the job. </summary>
+        [WirePath("notificationSetting")]
         public NotificationSetting NotificationSetting { get; set; }
     }
 }

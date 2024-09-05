@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] Specifies the type of data. </summary>
         internal MachineLearningDataType DataType { get; set; }
         /// <summary> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </summary>
+        [WirePath("dataUri")]
         public Uri DataUri { get; set; }
     }
 }

@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Access token for endpoint authentication. </summary>
+        [WirePath("accessToken")]
         public string AccessToken { get; }
         /// <summary> Access token type. </summary>
+        [WirePath("tokenType")]
         public string TokenType { get; }
         /// <summary> Access token expiry time (UTC). </summary>
+        [WirePath("expiryTimeUtc")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Refresh access token after time (UTC). </summary>
+        [WirePath("refreshAfterTimeUtc")]
         public DateTimeOffset? RefreshOn { get; }
     }
 }

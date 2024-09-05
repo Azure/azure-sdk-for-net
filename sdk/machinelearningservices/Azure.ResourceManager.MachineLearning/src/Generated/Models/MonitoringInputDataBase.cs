@@ -87,12 +87,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] Specifies the type of signal to monitor. </summary>
         internal MonitoringInputDataType InputDataType { get; set; }
         /// <summary> The context metadata of the data source. </summary>
+        [WirePath("dataContext")]
         public string DataContext { get; set; }
         /// <summary> [Required] Specifies the type of job. </summary>
+        [WirePath("jobInputType")]
         public JobInputType JobInputType { get; set; }
         /// <summary> [Required] Input Asset URI. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
         /// <summary> Mapping of column names to special uses. </summary>
+        [WirePath("columns")]
         public IDictionary<string, string> Columns { get; set; }
     }
 }

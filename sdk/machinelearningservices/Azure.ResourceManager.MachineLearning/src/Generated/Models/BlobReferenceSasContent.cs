@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> BlobReferenceSASResponse for getBlobReferenceSAS API. </summary>
-    public partial class GetBlobReferenceSasResponseDto
+    /// <summary> BlobReferenceSASRequest for getBlobReferenceSAS API. </summary>
+    public partial class BlobReferenceSasContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GetBlobReferenceSasResponseDto"/>. </summary>
-        internal GetBlobReferenceSasResponseDto()
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceSasContent"/>. </summary>
+        public BlobReferenceSasContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetBlobReferenceSasResponseDto"/>. </summary>
-        /// <param name="blobReferenceForConsumption"> Blob reference for consumption details. </param>
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceSasContent"/>. </summary>
+        /// <param name="assetId"> Id of the asset to be accessed. </param>
+        /// <param name="blobUri"> Blob uri of the asset to be accessed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetBlobReferenceSasResponseDto(GetBlobReferenceForConsumptionDto blobReferenceForConsumption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BlobReferenceSasContent(string assetId, Uri blobUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            BlobReferenceForConsumption = blobReferenceForConsumption;
+            AssetId = assetId;
+            BlobUri = blobUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Blob reference for consumption details. </summary>
-        public GetBlobReferenceForConsumptionDto BlobReferenceForConsumption { get; }
+        /// <summary> Id of the asset to be accessed. </summary>
+        [WirePath("assetId")]
+        public string AssetId { get; set; }
+        /// <summary> Blob uri of the asset to be accessed. </summary>
+        [WirePath("blobUri")]
+        public Uri BlobUri { get; set; }
     }
 }

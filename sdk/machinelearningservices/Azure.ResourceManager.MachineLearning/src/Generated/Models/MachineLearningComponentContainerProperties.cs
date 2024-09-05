@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Provisioning state for the component container. </summary>
+        [WirePath("provisioningState")]
         public RegistryAssetProvisioningState? ProvisioningState { get; }
     }
 }

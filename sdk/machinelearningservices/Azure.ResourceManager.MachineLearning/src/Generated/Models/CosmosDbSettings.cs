@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The throughput of the collections in cosmosdb database. </summary>
+        [WirePath("collectionsThroughput")]
         public int? CollectionsThroughput { get; set; }
     }
 }

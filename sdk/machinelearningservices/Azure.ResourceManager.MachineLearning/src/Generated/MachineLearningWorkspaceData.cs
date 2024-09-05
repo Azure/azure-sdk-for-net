@@ -149,54 +149,78 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Gets or sets the kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> The sku of the workspace. </summary>
+        [WirePath("sku")]
         public MachineLearningSku Sku { get; set; }
         /// <summary> The immutable id associated with this workspace. </summary>
+        [WirePath("properties.workspaceId")]
         public string WorkspaceId { get; }
         /// <summary> The description of this workspace. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The friendly name for this workspace. This name in mutable. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </summary>
+        [WirePath("properties.keyVault")]
         public string KeyVault { get; set; }
         /// <summary> ARM id of the application insights associated with this workspace. </summary>
+        [WirePath("properties.applicationInsights")]
         public string ApplicationInsights { get; set; }
         /// <summary> ARM id of the container registry associated with this workspace. </summary>
+        [WirePath("properties.containerRegistry")]
         public string ContainerRegistry { get; set; }
         /// <summary> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </summary>
+        [WirePath("properties.storageAccount")]
         public string StorageAccount { get; set; }
         /// <summary> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </summary>
+        [WirePath("properties.discoveryUrl")]
         public Uri DiscoveryUri { get; set; }
         /// <summary> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </summary>
+        [WirePath("properties.provisioningState")]
         public MachineLearningProvisioningState? ProvisioningState { get; }
         /// <summary> The encryption settings of Azure ML workspace. </summary>
+        [WirePath("properties.encryption")]
         public MachineLearningEncryptionSetting Encryption { get; set; }
         /// <summary> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </summary>
+        [WirePath("properties.hbiWorkspace")]
         public bool? IsHbiWorkspace { get; set; }
         /// <summary> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </summary>
+        [WirePath("properties.serviceProvisionedResourceGroup")]
         public string ServiceProvisionedResourceGroup { get; }
         /// <summary> Count of private connections in the workspace. </summary>
+        [WirePath("properties.privateLinkCount")]
         public int? PrivateLinkCount { get; }
         /// <summary> The compute name for image build. </summary>
+        [WirePath("properties.imageBuildCompute")]
         public string ImageBuildCompute { get; set; }
         /// <summary> The flag to indicate whether to allow public access when behind VNet. </summary>
+        [WirePath("properties.allowPublicAccessWhenBehindVnet")]
         public bool? AllowPublicAccessWhenBehindVnet { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public PublicNetworkAccess? PublicNetworkAccessType { get; set; }
         /// <summary> The list of private endpoint connections in the workspace. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<MachineLearningPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Settings for serverless compute created in the workspace. </summary>
+        [WirePath("properties.serverlessComputeSettings")]
         public ServerlessComputeSettings ServerlessComputeSettings { get; set; }
         /// <summary> The list of shared private link resources in this workspace. </summary>
+        [WirePath("properties.sharedPrivateLinkResources")]
         public IList<MachineLearningSharedPrivateLinkResource> SharedPrivateLinkResources { get; }
         /// <summary> The notebook info of Azure ML workspace. </summary>
+        [WirePath("properties.notebookInfo")]
         public MachineLearningNotebookResourceInfo NotebookInfo { get; }
         /// <summary> The service managed resource settings. </summary>
         internal ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
         /// <summary> The throughput of the collections in cosmosdb database. </summary>
+        [WirePath("properties.serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
         public int? CosmosDbCollectionsThroughput
         {
             get => ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
@@ -209,26 +233,37 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
+        [WirePath("properties.primaryUserAssignedIdentity")]
         public string PrimaryUserAssignedIdentity { get; set; }
         /// <summary> The tenant id associated with this workspace. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
         /// <summary> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </summary>
+        [WirePath("properties.storageHnsEnabled")]
         public bool? IsStorageHnsEnabled { get; }
         /// <summary> The URI associated with this workspace that machine learning flow must point at to set up tracking. </summary>
+        [WirePath("properties.mlFlowTrackingUri")]
         public Uri MlFlowTrackingUri { get; }
         /// <summary> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </summary>
+        [WirePath("properties.v1LegacyMode")]
         public bool? IsV1LegacyMode { get; set; }
         /// <summary> Managed Network settings for a machine learning workspace. </summary>
+        [WirePath("properties.managedNetwork")]
         public ManagedNetworkSettings ManagedNetwork { get; set; }
         /// <summary> Settings for feature store type workspace. </summary>
+        [WirePath("properties.featureStoreSettings")]
         public FeatureStoreSettings FeatureStoreSettings { get; set; }
         /// <summary> Gets the associated workspaces. </summary>
+        [WirePath("properties.associatedWorkspaces")]
         public IList<string> AssociatedWorkspaces { get; }
         /// <summary> Gets or sets the enable data isolation. </summary>
+        [WirePath("properties.enableDataIsolation")]
         public bool? EnableDataIsolation { get; set; }
         /// <summary> Gets or sets the hub resource id. </summary>
+        [WirePath("properties.hubResourceId")]
         public ResourceIdentifier HubResourceId { get; set; }
         /// <summary> WorkspaceHub's configuration object. </summary>
+        [WirePath("properties.workspaceHubConfig")]
         public WorkspaceHubConfig WorkspaceHubConfig { get; set; }
     }
 }

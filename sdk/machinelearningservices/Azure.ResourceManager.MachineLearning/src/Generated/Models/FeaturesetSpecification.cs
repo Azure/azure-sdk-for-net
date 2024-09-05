@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies the spec path. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
     }
 }

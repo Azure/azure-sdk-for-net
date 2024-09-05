@@ -52,14 +52,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Authority URL used for authentication. </summary>
+        [WirePath("authorityUrl")]
         public Uri AuthorityUri { get; set; }
         /// <summary> Resource the service principal has access to. </summary>
+        [WirePath("resourceUrl")]
         public Uri ResourceUri { get; set; }
         /// <summary> [Required] ID of the tenant to which the service principal belongs. </summary>
+        [WirePath("tenantId")]
         public Guid TenantId { get; set; }
         /// <summary> [Required] Service principal client ID. </summary>
+        [WirePath("clientId")]
         public Guid ClientId { get; set; }
         /// <summary> [Required] Service principal secrets. </summary>
+        [WirePath("secrets")]
         public MachineLearningServicePrincipalDatastoreSecrets Secrets { get; set; }
     }
 }

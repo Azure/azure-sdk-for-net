@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the user storage key. </summary>
+        [WirePath("userStorageKey")]
         public string UserStorageKey { get; }
     }
 }

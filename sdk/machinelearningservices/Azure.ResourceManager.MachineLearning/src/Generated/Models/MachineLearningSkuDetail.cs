@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The resource type name. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> Gets or sets the Sku. </summary>
+        [WirePath("sku")]
         public MachineLearningSkuSetting Sku { get; }
         /// <summary> Gets or sets the Sku Capacity. </summary>
+        [WirePath("capacity")]
         public MachineLearningSkuCapacity Capacity { get; }
     }
 }

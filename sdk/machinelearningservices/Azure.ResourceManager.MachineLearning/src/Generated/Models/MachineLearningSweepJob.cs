@@ -137,40 +137,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("searchSpace")]
         public BinaryData SearchSpace { get; set; }
         /// <summary>
         /// [Required] The hyperparameter sampling algorithm
         /// Please note <see cref="Models.SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
         /// </summary>
+        [WirePath("samplingAlgorithm")]
         public SamplingAlgorithm SamplingAlgorithm { get; set; }
         /// <summary> Sweep Job limit. </summary>
+        [WirePath("limits")]
         public MachineLearningSweepJobLimits Limits { get; set; }
         /// <summary>
         /// Early termination policies enable canceling poor-performing runs before they complete
         /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </summary>
+        [WirePath("earlyTermination")]
         public MachineLearningEarlyTerminationPolicy EarlyTermination { get; set; }
         /// <summary> [Required] Optimization objective. </summary>
+        [WirePath("objective")]
         public MachineLearningObjective Objective { get; set; }
         /// <summary> [Required] Trial component definition. </summary>
+        [WirePath("trial")]
         public MachineLearningTrialComponent Trial { get; set; }
         /// <summary>
         /// Mapping of input data bindings used in the job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </summary>
+        [WirePath("inputs")]
         public IDictionary<string, MachineLearningJobInput> Inputs { get; set; }
         /// <summary>
         /// Mapping of output data bindings used in the job.
         /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </summary>
+        [WirePath("outputs")]
         public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
         /// <summary> Queue settings for the job. </summary>
         internal JobQueueSettings QueueSettings { get; set; }
         /// <summary> Controls the compute job tier. </summary>
+        [WirePath("queueSettings.jobTier")]
         public JobTier? QueueJobTier
         {
             get => QueueSettings is null ? default : QueueSettings.JobTier;

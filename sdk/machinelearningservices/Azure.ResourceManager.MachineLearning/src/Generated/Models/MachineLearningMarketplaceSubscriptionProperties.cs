@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MarketplaceSubscriptionProperties. </summary>
-    public partial class MarketplaceSubscriptionProperties
+    /// <summary> The MachineLearningMarketplaceSubscriptionProperties. </summary>
+    public partial class MachineLearningMarketplaceSubscriptionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,23 +45,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplaceSubscriptionProperties"/>. </summary>
         /// <param name="modelId"> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public MarketplaceSubscriptionProperties(string modelId)
+        public MachineLearningMarketplaceSubscriptionProperties(string modelId)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
 
             ModelId = modelId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplaceSubscriptionProperties"/>. </summary>
         /// <param name="modelId"> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </param>
         /// <param name="marketplacePlan"> Marketplace Plan associated with the Marketplace Subscription. </param>
         /// <param name="marketplaceSubscriptionStatus"> Current status of the Marketplace Subscription. </param>
         /// <param name="provisioningState"> Provisioning State of the Marketplace Subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSubscriptionProperties(string modelId, MarketplacePlan marketplacePlan, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, MarketplaceSubscriptionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningMarketplaceSubscriptionProperties(string modelId, MachineLearningMarketplacePlan marketplacePlan, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, MarketplaceSubscriptionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelId = modelId;
             MarketplacePlan = marketplacePlan;
@@ -70,18 +70,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionProperties"/> for deserialization. </summary>
-        internal MarketplaceSubscriptionProperties()
+        /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplaceSubscriptionProperties"/> for deserialization. </summary>
+        internal MachineLearningMarketplaceSubscriptionProperties()
         {
         }
 
         /// <summary> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </summary>
+        [WirePath("modelId")]
         public string ModelId { get; set; }
         /// <summary> Marketplace Plan associated with the Marketplace Subscription. </summary>
-        public MarketplacePlan MarketplacePlan { get; }
+        [WirePath("marketplacePlan")]
+        public MachineLearningMarketplacePlan MarketplacePlan { get; }
         /// <summary> Current status of the Marketplace Subscription. </summary>
+        [WirePath("marketplaceSubscriptionStatus")]
         public MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
         /// <summary> Provisioning State of the Marketplace Subscription. </summary>
+        [WirePath("provisioningState")]
         public MarketplaceSubscriptionProvisioningState? ProvisioningState { get; }
     }
 }

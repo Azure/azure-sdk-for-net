@@ -71,10 +71,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Reference to the model asset targeted by this monitor. </summary>
+        [WirePath("modelId")]
         public string ModelId { get; set; }
         /// <summary> Reference to the deployment asset targeted by this monitor. </summary>
+        [WirePath("deploymentId")]
         public string DeploymentId { get; set; }
         /// <summary> [Required] The machine learning task type of the monitored model. </summary>
+        [WirePath("taskType")]
         public ModelTaskType TaskType { get; set; }
     }
 }

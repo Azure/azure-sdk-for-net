@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Some RP chose "None". Other RPs use this for region expansion. </summary>
+        [WirePath("actionsRequired")]
         public string ActionsRequired { get; set; }
         /// <summary> User-defined message that, per NRP doc, may be used for approval-related message. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Connection status of the service consumer with the service provider. </summary>
+        [WirePath("status")]
         public EndpointServiceConnectionStatus? Status { get; set; }
     }
 }

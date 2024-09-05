@@ -98,14 +98,19 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
+        [WirePath("sku")]
         public MachineLearningSku Sku { get; set; }
         /// <summary> Discovery URL for the Registry. </summary>
+        [WirePath("properties.discoveryUrl")]
         public Uri DiscoveryUri { get; set; }
         /// <summary> IntellectualPropertyPublisher for the registry. </summary>
+        [WirePath("properties.intellectualPropertyPublisher")]
         public string IntellectualPropertyPublisher { get; set; }
         /// <summary> ResourceId of the managed RG if the registry has system created resources. </summary>
         internal ArmResourceId ManagedResourceGroup { get; set; }
@@ -113,6 +118,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"
         /// or "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{AcrName}"
         /// </summary>
+        [WirePath("properties.managedResourceGroup.resourceId")]
         public ResourceIdentifier ManagedResourceId
         {
             get => ManagedResourceGroup is null ? default : ManagedResourceGroup.ResourceId;
@@ -125,15 +131,19 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary> MLFlow Registry URI for the Registry. </summary>
+        [WirePath("properties.mlFlowRegistryUri")]
         public Uri MlFlowRegistryUri { get; set; }
         /// <summary> Private endpoint connections info used for pending connections in private link portal. </summary>
+        [WirePath("properties.registryPrivateEndpointConnections")]
         public IList<RegistryPrivateEndpointConnection> RegistryPrivateEndpointConnections { get; set; }
         /// <summary>
         /// Is the Registry accessible from the internet?
         /// Possible values: "Enabled" or "Disabled"
         /// </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
         /// <summary> Details of each region the registry is in. </summary>
+        [WirePath("properties.regionDetails")]
         public IList<RegistryRegionArmDetails> RegionDetails { get; set; }
     }
 }

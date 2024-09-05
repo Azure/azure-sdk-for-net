@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Unique name of the private link. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The resource id that private link links to. </summary>
+        [WirePath("properties.privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
         /// <summary> The private link resource group id. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId { get; set; }
         /// <summary> Request message. </summary>
+        [WirePath("properties.requestMessage")]
         public string RequestMessage { get; set; }
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
+        [WirePath("properties.status")]
         public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
     }
 }

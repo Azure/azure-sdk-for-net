@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -276,6 +278,200 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>());
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Features), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  features: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Features))
+                {
+                    builder.Append("  features: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Features, options, 2, false, "  features: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FeatureImportanceSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  featureImportanceSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FeatureImportanceSettings))
+                {
+                    builder.Append("  featureImportanceSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FeatureImportanceSettings, options, 2, false, "  featureImportanceSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricThresholds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  metricThresholds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MetricThresholds))
+                {
+                    if (MetricThresholds.Any())
+                    {
+                        builder.Append("  metricThresholds: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MetricThresholds)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  metricThresholds: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductionData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  productionData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProductionData))
+                {
+                    builder.Append("  productionData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ProductionData, options, 2, false, "  productionData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReferenceData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  referenceData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReferenceData))
+                {
+                    builder.Append("  referenceData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ReferenceData, options, 2, false, "  referenceData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FeatureDataTypeOverride), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  featureDataTypeOverride: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
+                {
+                    if (FeatureDataTypeOverride.Any())
+                    {
+                        builder.Append("  featureDataTypeOverride: ");
+                        builder.AppendLine("{");
+                        foreach (var item in FeatureDataTypeOverride)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            builder.AppendLine($"'{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignalType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signalType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  signalType: ");
+                builder.AppendLine($"'{SignalType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notificationTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotificationTypes))
+                {
+                    if (NotificationTypes.Any())
+                    {
+                        builder.Append("  notificationTypes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NotificationTypes)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Properties))
+                {
+                    if (Properties.Any())
+                    {
+                        builder.Append("  properties: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Properties)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DataDriftMonitoringSignal>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
@@ -284,6 +480,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataDriftMonitoringSignal)} does not support writing '{options.Format}' format.");
             }

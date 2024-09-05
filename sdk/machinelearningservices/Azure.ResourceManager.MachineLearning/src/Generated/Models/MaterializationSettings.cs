@@ -69,14 +69,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies the stores to which materialization should happen. </summary>
+        [WirePath("storeType")]
         public MaterializationStoreType? StoreType { get; set; }
         /// <summary> Specifies the schedule details. </summary>
+        [WirePath("schedule")]
         public MachineLearningRecurrenceTrigger Schedule { get; set; }
         /// <summary> Specifies the notification details. </summary>
+        [WirePath("notification")]
         public NotificationSetting Notification { get; set; }
         /// <summary> Specifies the compute resource settings. </summary>
         internal MaterializationComputeResource Resource { get; set; }
         /// <summary> Specifies the instance type. </summary>
+        [WirePath("resource.instanceType")]
         public string ResourceInstanceType
         {
             get => Resource is null ? default : Resource.InstanceType;
@@ -89,6 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies the spark compute settings. </summary>
+        [WirePath("sparkConfiguration")]
         public IDictionary<string, string> SparkConfiguration { get; set; }
     }
 }

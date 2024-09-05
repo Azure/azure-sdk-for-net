@@ -34,8 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Ratio of the allowed distance from the best performing run. </summary>
+        [WirePath("slackFactor")]
         public float? SlackFactor { get; set; }
         /// <summary> Absolute distance allowed from the best performing run. </summary>
+        [WirePath("slackAmount")]
         public float? SlackAmount { get; set; }
     }
 }

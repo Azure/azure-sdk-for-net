@@ -75,14 +75,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Blob URI path for client to upload data.
         /// Example: https://blob.windows.core.net/Container/Path
         /// </summary>
+        [WirePath("blobUri")]
         public Uri BlobUri { get; }
         /// <summary> Arm ID of the storage account to use. </summary>
+        [WirePath("storageAccountArmId")]
         public ResourceIdentifier StorageAccountArmId { get; }
         /// <summary>
         /// Credential info to access storage account
         /// Please note <see cref="PendingUploadCredentialDto"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SasCredentialDto"/>.
         /// </summary>
+        [WirePath("credential")]
         public PendingUploadCredentialDto Credential { get; }
     }
 }

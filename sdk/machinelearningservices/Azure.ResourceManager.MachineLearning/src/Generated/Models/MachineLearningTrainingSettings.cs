@@ -75,21 +75,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Flag for enabling onnx compatible models. </summary>
+        [WirePath("enableOnnxCompatibleModels")]
         public bool? IsOnnxCompatibleModelsEnabled { get; set; }
         /// <summary> Stack ensemble settings for stack ensemble run. </summary>
+        [WirePath("stackEnsembleSettings")]
         public MachineLearningStackEnsembleSettings StackEnsembleSettings { get; set; }
         /// <summary> Enable stack ensemble run. </summary>
+        [WirePath("enableStackEnsemble")]
         public bool? IsStackEnsembleEnabled { get; set; }
         /// <summary> Enable voting ensemble run. </summary>
+        [WirePath("enableVoteEnsemble")]
         public bool? IsVoteEnsembleEnabled { get; set; }
         /// <summary>
         /// During VotingEnsemble and StackEnsemble model generation, multiple fitted models from the previous child runs are downloaded.
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
         /// </summary>
+        [WirePath("ensembleModelDownloadTimeout")]
         public TimeSpan? EnsembleModelDownloadTimeout { get; set; }
         /// <summary> Flag to turn on explainability on best model. </summary>
+        [WirePath("enableModelExplainability")]
         public bool? IsModelExplainabilityEnabled { get; set; }
         /// <summary> Enable recommendation of DNN models. </summary>
+        [WirePath("enableDnnTraining")]
         public bool? IsDnnTrainingEnabled { get; set; }
     }
 }

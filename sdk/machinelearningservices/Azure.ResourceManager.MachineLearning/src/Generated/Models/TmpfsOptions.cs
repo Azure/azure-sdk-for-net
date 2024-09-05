@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Mention the Tmpfs size. </summary>
+        [WirePath("size")]
         public int? Size { get; set; }
     }
 }

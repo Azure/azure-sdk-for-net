@@ -33,8 +33,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Output Asset URI. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
         /// <summary> Output Asset Delivery Mode. </summary>
+        [WirePath("mode")]
         public MachineLearningOutputDeliveryMode? Mode { get; set; }
     }
 }

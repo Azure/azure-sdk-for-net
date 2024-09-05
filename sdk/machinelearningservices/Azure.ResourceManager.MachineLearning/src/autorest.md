@@ -21,6 +21,7 @@ modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -99,7 +100,6 @@ request-path-to-resource-name:
 prepend-rp-prefix:
   - Feature
   - FeatureProperties
-  - LabelingJob
   - Registry
   - Webhook
   - WebhookType
@@ -108,7 +108,6 @@ prepend-rp-prefix:
 rename-mapping:
   FeaturesetContainer: MachineLearningFeatureSetContainer
   FeaturesetContainerProperties: MachineLearningFeatureSetContainerProperties
-  FeaturesetJob: MachineLearningFeatureSetJob
   FeaturesetVersion: MachineLearningFeatureSetVersion
   FeaturesetVersionBackfillRequest: FeatureSetVersionBackfillContent
   FeaturesetVersionProperties: MachineLearningFeatureSetVersionProperties
@@ -116,7 +115,6 @@ rename-mapping:
   FeaturestoreEntityContainerProperties: MachineLearningFeatureStoreEntityContainerProperties
   FeaturestoreEntityVersion: MachineLearningFeaturestoreEntityVersion
   FeaturestoreEntityVersionProperties: MachineLearningFeatureStoreEntityVersionProperties
-  FeaturestoreJobType: FeatureStoreJobType
   ComputeInstanceProperties.setupScripts: SetupScriptsSettings
   Workspace: MachineLearningWorkspace
   ComputeResource: MachineLearningCompute
@@ -141,7 +139,6 @@ rename-mapping:
   SynapseSparkProperties: MachineLearningSynapseSparkProperties
   ProvisioningState: MachineLearningProvisioningState
   ListWorkspaceKeysResult: MachineLearningWorkspaceGetKeysResult
-  ListWorkspaceKeysResult.userStorageArmId: UserStorageResourceId
   RegistryListCredentialsResult: MachineLearningContainerRegistryCredentials
   Password: MachineLearningPasswordDetail
   BatchDeploymentTrackedResource: MachineLearningBatchDeployment
@@ -440,7 +437,6 @@ rename-mapping:
   Workspace.properties.publicNetworkAccess: PublicNetworkAccessType
   WorkspaceUpdateParameters.properties.publicNetworkAccess: PublicNetworkAccessType
   AllocationState: MachineLearningAllocationState
-  FeatureResource: MachineLearningFeatureResource
   ResourceId.id: -|arm-id
   JobBase.componentId: -|arm-id
   JobBase.computeId: -|arm-id
@@ -478,8 +474,6 @@ rename-mapping:
   AllNodes: JobAllNodes
   Nodes: JobNodes
   AssetProvisioningState: RegistryAssetProvisioningState
-  BaseEnvironmentId: BaseEnvironmentType
-  BaseEnvironmentId.resourceId: -|arm-id
   BlobReferenceForConsumptionDto.storageAccountArmId: -|arm-id
   Collection: DataCollectionConfiguration
   Docker: DockerSetting
@@ -489,36 +483,29 @@ rename-mapping:
   ConnectionCategory.AzureSqlDb: AzureSqlDB
   ConnectionCategory.AzureMySqlDb: AzureMySqlDB
   ConnectionCategory.AzurePostgresDb: AzurePostgresDB
-  EncryptionProperty.cosmosDbResourceId: CosmosDBResourceId|arm-id
-  EncryptionProperty.searchAccountResourceId: -|arm-id
-  EncryptionProperty.storageAccountResourceId: -|arm-id
-  MLAssistConfiguration: MachineLearningAssistConfiguration
-  MLAssistConfigurationEnabled: MachineLearningAssistEnabledConfiguration
-  MlflowAutologger: MachineLearningFlowAutoLogger
-  MLFlowAutologgerState: MachineLearningFlowAutoLoggerState
-  MultiSelect: LabelCategoryMultiSelect
-  PackageRequest: ModelPackageContent
-  PackageResponse: ModelPackageResult
-  PackageInputPathId.resourceId: -|arm-id
   PrivateEndpointResource: RegistryPrivateEndpoint
   PrivateEndpointResource.subnetArmId: -|arm-id
   PrivateEndpoint: PrivateEndpointBase
   PrivateEndpoint.id: -|arm-id
   QueueSettings: JobQueueSettings
-  Ray: RayDistributionConfiguration
   RegistryPrivateEndpointConnection.id: -|arm-id
   RuleAction: NetworkingRuleAction
   RuleCategory: OutboundRuleCategory
   RuleStatus: OutboundRuleStatus
   RuleType: OutboundRuleType
-  StatusMessage: JobStatusMessage
-  StatusMessageLevel: JobStatusMessageLevel
   ImageType.azureml: AzureML
-  ProtectionLevel: IntellectualProtectionLevel
-  OsPatchingStatus.latestPatchTime: -|date-time
-  OsPatchingStatus.scheduledRebootTime: -|date-time
   ServerlessComputeSettings.serverlessComputeNoPublicIP: HasNoPublicIP
   PrivateEndpointConnection.properties.privateEndpoint: SubResource
+  MarketplacePlan: MachineLearningMarketplacePlan
+  MarketplaceSubscription: MachineLearningMarketplaceSubscription
+  MarketplaceSubscriptionProperties: MachineLearningMarketplaceSubscriptionProperties
+  ComputeRecurrenceFrequency: MachineLearningComputeRecurrenceFrequency
+  ComputeRecurrenceSchedule: MachineLearningComputeRecurrenceSchedule
+  ComputeWeekDay: MachineLearningComputeWeekDay
+  ConnectionGroup: WorkspaceConnectionGroup
+  DestinationAsset: DestinationAssetContent
+  GetBlobReferenceSASRequestDto: BlobReferenceSasContent
+  GetBlobReferenceSASResponseDto: BlobReferenceSasResult
 
 suppress-abstract-base-class:
 - MachineLearningJobProperties

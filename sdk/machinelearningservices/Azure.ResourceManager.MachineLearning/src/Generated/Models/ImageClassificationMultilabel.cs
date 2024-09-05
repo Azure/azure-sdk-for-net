@@ -68,22 +68,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Primary metric to optimize for this task. </summary>
+        [WirePath("primaryMetric")]
         public ClassificationMultilabelPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Settings used for training the model. </summary>
+        [WirePath("modelSettings")]
         public ImageModelSettingsClassification ModelSettings { get; set; }
         /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>
+        [WirePath("searchSpace")]
         public IList<ImageModelDistributionSettingsClassification> SearchSpace { get; set; }
         /// <summary> [Required] Limit settings for the AutoML job. </summary>
+        [WirePath("limitSettings")]
         public ImageLimitSettings LimitSettings { get; set; }
         /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
+        [WirePath("sweepSettings")]
         public ImageSweepSettings SweepSettings { get; set; }
         /// <summary> Validation data inputs. </summary>
+        [WirePath("validationData")]
         public MachineLearningTableJobInput ValidationData { get; set; }
         /// <summary>
         /// The fraction of training dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </summary>
+        [WirePath("validationDataSize")]
         public double? ValidationDataSize { get; set; }
     }
 }

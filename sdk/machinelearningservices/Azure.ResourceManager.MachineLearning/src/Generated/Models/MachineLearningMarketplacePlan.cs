@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MarketplacePlan. </summary>
-    public partial class MarketplacePlan
+    /// <summary> The MachineLearningMarketplacePlan. </summary>
+    public partial class MachineLearningMarketplacePlan
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MarketplacePlan"/>. </summary>
-        internal MarketplacePlan()
+        /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplacePlan"/>. </summary>
+        internal MachineLearningMarketplacePlan()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplacePlan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplacePlan"/>. </summary>
         /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
         /// <param name="offerId"> The identifying name of the Offer of the Marketplace Plan. </param>
         /// <param name="planId"> The identifying name of the Plan of the Marketplace Plan. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplacePlan(string publisherId, string offerId, string planId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningMarketplacePlan(string publisherId, string offerId, string planId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublisherId = publisherId;
             OfferId = offerId;
@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The identifying name of the Publisher of the Marketplace Plan. </summary>
+        [WirePath("publisherId")]
         public string PublisherId { get; }
         /// <summary> The identifying name of the Offer of the Marketplace Plan. </summary>
+        [WirePath("offerId")]
         public string OfferId { get; }
         /// <summary> The identifying name of the Plan of the Marketplace Plan. </summary>
+        [WirePath("planId")]
         public string PlanId { get; }
     }
 }

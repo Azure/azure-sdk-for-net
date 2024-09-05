@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Array of private link resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<MachineLearningPrivateLinkResource> Value { get; }
     }
 }

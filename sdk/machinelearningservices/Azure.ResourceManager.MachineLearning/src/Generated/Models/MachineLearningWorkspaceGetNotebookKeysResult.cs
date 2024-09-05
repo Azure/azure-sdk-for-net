@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the primary access key. </summary>
+        [WirePath("primaryAccessKey")]
         public string PrimaryAccessKey { get; }
         /// <summary> Gets the secondary access key. </summary>
+        [WirePath("secondaryAccessKey")]
         public string SecondaryAccessKey { get; }
     }
 }

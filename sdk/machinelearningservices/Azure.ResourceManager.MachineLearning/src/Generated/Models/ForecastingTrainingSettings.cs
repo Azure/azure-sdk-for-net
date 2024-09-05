@@ -41,8 +41,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Allowed models for forecasting task. </summary>
+        [WirePath("allowedTrainingAlgorithms")]
         public IList<ForecastingModel> AllowedTrainingAlgorithms { get; set; }
         /// <summary> Blocked models for forecasting task. </summary>
+        [WirePath("blockedTrainingAlgorithms")]
         public IList<ForecastingModel> BlockedTrainingAlgorithms { get; set; }
     }
 }

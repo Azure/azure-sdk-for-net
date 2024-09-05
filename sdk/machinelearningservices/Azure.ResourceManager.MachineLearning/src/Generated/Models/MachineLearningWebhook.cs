@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] Specifies the type of service to send a callback. </summary>
         internal MachineLearningWebhookType WebhookType { get; set; }
         /// <summary> Send callback on a specified notification event. </summary>
+        [WirePath("eventType")]
         public string EventType { get; set; }
     }
 }

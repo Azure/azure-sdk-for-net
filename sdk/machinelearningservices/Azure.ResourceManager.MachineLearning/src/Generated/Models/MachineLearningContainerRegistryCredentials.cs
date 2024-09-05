@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Gets the username. </summary>
+        [WirePath("username")]
         public string Username { get; }
         /// <summary> Gets the passwords. </summary>
+        [WirePath("passwords")]
         public IReadOnlyList<MachineLearningPasswordDetail> Passwords { get; }
     }
 }

@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Provisioning state for the featurestore entity container. </summary>
+        [WirePath("provisioningState")]
         public RegistryAssetProvisioningState? ProvisioningState { get; }
     }
 }

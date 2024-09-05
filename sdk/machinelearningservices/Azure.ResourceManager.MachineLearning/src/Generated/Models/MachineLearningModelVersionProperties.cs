@@ -43,16 +43,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Mapping of model flavors to their properties. </summary>
+        [WirePath("flavors")]
         public IDictionary<string, MachineLearningFlavorData> Flavors { get; set; }
         /// <summary> The storage format for this entity. Used for NCD. </summary>
+        [WirePath("modelType")]
         public string ModelType { get; set; }
         /// <summary> The URI path to the model contents. </summary>
+        [WirePath("modelUri")]
         public Uri ModelUri { get; set; }
         /// <summary> Name of the training job which produced this model. </summary>
+        [WirePath("jobName")]
         public string JobName { get; set; }
         /// <summary> Provisioning state for the model version. </summary>
+        [WirePath("provisioningState")]
         public RegistryAssetProvisioningState? ProvisioningState { get; }
         /// <summary> Stage in the model lifecycle assigned to this model. </summary>
+        [WirePath("stage")]
         public string Stage { get; set; }
     }
 }

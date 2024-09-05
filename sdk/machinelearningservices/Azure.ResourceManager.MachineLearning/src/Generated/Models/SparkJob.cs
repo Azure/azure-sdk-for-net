@@ -114,44 +114,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Compute Resource configuration for the job. </summary>
+        [WirePath("resources")]
         public SparkResourceConfiguration Resources { get; set; }
         /// <summary> Arguments for the job. </summary>
+        [WirePath("args")]
         public string Args { get; set; }
         /// <summary> [Required] arm-id of the code asset. </summary>
+        [WirePath("codeId")]
         public ResourceIdentifier CodeId { get; set; }
         /// <summary>
         /// [Required] The entry to execute on startup of the job.
         /// Please note <see cref="SparkJobEntry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SparkJobPythonEntry"/> and <see cref="SparkJobScalaEntry"/>.
         /// </summary>
+        [WirePath("entry")]
         public SparkJobEntry Entry { get; set; }
         /// <summary> The ARM resource ID of the Environment specification for the job. </summary>
+        [WirePath("environmentId")]
         public ResourceIdentifier EnvironmentId { get; set; }
         /// <summary>
         /// Mapping of input data bindings used in the job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </summary>
+        [WirePath("inputs")]
         public IDictionary<string, MachineLearningJobInput> Inputs { get; set; }
         /// <summary>
         /// Mapping of output data bindings used in the job.
         /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </summary>
+        [WirePath("outputs")]
         public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
         /// <summary> Python files used in the job. </summary>
+        [WirePath("pyFiles")]
         public IList<string> PyFiles { get; set; }
         /// <summary> Jar files used in the job. </summary>
+        [WirePath("jars")]
         public IList<string> Jars { get; set; }
         /// <summary> Files used in the job. </summary>
+        [WirePath("files")]
         public IList<string> Files { get; set; }
         /// <summary> Archive files used in the job. </summary>
+        [WirePath("archives")]
         public IList<string> Archives { get; set; }
         /// <summary> Spark configured properties. </summary>
+        [WirePath("conf")]
         public IDictionary<string, string> Conf { get; set; }
         /// <summary> Queue settings for the job. </summary>
         internal JobQueueSettings QueueSettings { get; set; }
         /// <summary> Controls the compute job tier. </summary>
+        [WirePath("queueSettings.jobTier")]
         public JobTier? QueueJobTier
         {
             get => QueueSettings is null ? default : QueueSettings.JobTier;
@@ -164,6 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Environment variables included in the job. </summary>
+        [WirePath("environmentVariables")]
         public IDictionary<string, string> EnvironmentVariables { get; set; }
     }
 }

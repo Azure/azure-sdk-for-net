@@ -53,10 +53,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The frequency to trigger schedule. </summary>
+        [WirePath("frequency")]
         public MachineLearningRecurrenceFrequency Frequency { get; set; }
         /// <summary> [Required] Specifies schedule interval in conjunction with frequency. </summary>
+        [WirePath("interval")]
         public int Interval { get; set; }
         /// <summary> The recurrence schedule. </summary>
+        [WirePath("schedule")]
         public MachineLearningRecurrenceSchedule Schedule { get; set; }
     }
 }

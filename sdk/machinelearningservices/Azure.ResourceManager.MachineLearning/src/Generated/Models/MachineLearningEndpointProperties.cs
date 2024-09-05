@@ -81,19 +81,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Description of the inference endpoint. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
+        [WirePath("properties")]
         public IDictionary<string, string> Properties { get; set; }
         /// <summary> Endpoint URI. </summary>
+        [WirePath("scoringUri")]
         public Uri ScoringUri { get; }
         /// <summary> Endpoint Swagger URI. </summary>
+        [WirePath("swaggerUri")]
         public Uri SwaggerUri { get; }
         /// <summary> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </summary>
+        [WirePath("authMode")]
         public MachineLearningEndpointAuthMode AuthMode { get; set; }
         /// <summary>
         /// EndpointAuthKeys to set initially on an Endpoint.
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
         /// </summary>
+        [WirePath("keys")]
         public MachineLearningEndpointAuthKeys Keys { get; set; }
     }
 }

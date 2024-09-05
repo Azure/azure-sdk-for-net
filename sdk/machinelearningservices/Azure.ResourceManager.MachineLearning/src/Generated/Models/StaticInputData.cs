@@ -52,10 +52,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The start date of the data window. </summary>
+        [WirePath("windowStart")]
         public DateTimeOffset WindowStart { get; set; }
         /// <summary> [Required] The end date of the data window. </summary>
+        [WirePath("windowEnd")]
         public DateTimeOffset WindowEnd { get; set; }
         /// <summary> Reference to the component asset used to preprocess the data. </summary>
+        [WirePath("preprocessingComponentId")]
         public string PreprocessingComponentId { get; set; }
     }
 }
