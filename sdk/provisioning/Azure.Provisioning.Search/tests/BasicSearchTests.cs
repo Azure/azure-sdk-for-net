@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Search.Tests;
 public class BasicSearchTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.search/azure-search-create/main.bicep")]
     public async Task CreateSearchService()
     {

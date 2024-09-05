@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService.Tests;
 public class BasicAppServiceTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/function-app-create-dynamic/main.bicep")]
     public async Task CreateBasicFunctionApp()
     {

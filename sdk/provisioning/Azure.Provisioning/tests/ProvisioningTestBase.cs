@@ -27,7 +27,8 @@ public class ProvisioningTestBase : ManagementRecordedTestBase<ProvisioningTestE
 
     public Trycep CreateBicepTest() => new(this);
 
-    public ProvisioningTestBase(bool async, bool skipTools = true, bool skipLiveCalls = true) : base(async)
+    public ProvisioningTestBase(bool async, bool skipTools = true, bool skipLiveCalls = true)
+        : base(async, RecordedTestMode.Live)
     {
         // Ignore the version of the AZ CLI used to generate the ARM template as this will differ based on the environment
         JsonPathSanitizers.Add("$.._generator.version");
@@ -58,7 +59,7 @@ public class TestProvisioningContextProvider(ProvisioningTestBase test) : Provis
                         test.InstrumentClientOptions(new ArmClientOptions()))),
             DefaultCredential = test.TestEnvironment.Credential,
             DefaultSubscriptionId = test.TestEnvironment.SubscriptionId,
-            Random = test.Recording.Random,
+            // Random = test.Recording.Random, // TODO: Add back when we've enabled recordings
         };
 
     private ProvisioningContext? _current = null;
@@ -233,7 +234,7 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
             await client.GetDefaultSubscriptionAsync(Cancellation).ConfigureAwait(false);
 
         // Generate a random name
-        name ??= Test.Recording.GenerateAlphaNumericId("rg-test-candelete-");
+        name ??= "rg-test-can-delete-" + context.Random.NewGuid().ToString("N");
 
         // Create a resource group to deploy into
         ResourceGroupCollection rgs = ArmSubscription.GetResourceGroups();

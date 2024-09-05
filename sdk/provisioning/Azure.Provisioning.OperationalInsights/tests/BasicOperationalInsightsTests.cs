@@ -13,7 +13,7 @@ namespace Azure.Provisioning.OperationalInsights.Tests;
 public class BasicOperationalInsightsTests(bool async)
     : ProvisioningTestBase(async/*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     public async Task CreateWorkspace()
     {
         await using Trycep test = CreateBicepTest();

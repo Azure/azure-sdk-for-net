@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Storage.Tests;
 public class BasicStorageTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     public async Task CreateDefault()
     {
         await using Trycep test = CreateBicepTest();
@@ -39,7 +39,7 @@ public class BasicStorageTests(bool async)
         .ValidateAndDeployAsync();
     }
 
-    [RecordedTest]
+    [Test]
     public async Task CreateSimpleBlobs()
     {
         await using Trycep test = CreateBicepTest();
@@ -73,7 +73,7 @@ public class BasicStorageTests(bool async)
         .ValidateAndDeployAsync();
     }
 
-    [RecordedTest]
+    [Test]
     public async Task AddStorageRole()
     {
         await using Trycep test = CreateBicepTest();
@@ -118,7 +118,7 @@ public class BasicStorageTests(bool async)
         .ValidateAndDeployAsync();
     }
 
-    [RecordedTest]
+    [Test]
     public async Task GetEndpoint()
     {
         await using Trycep test = CreateBicepTest();
@@ -155,7 +155,7 @@ public class BasicStorageTests(bool async)
         .ValidateAndDeployAsync();
     }
 
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.storage/storage-account-create/main.bicep")]
     public async Task CreateStandardStorageAccount()
     {
@@ -205,7 +205,7 @@ public class BasicStorageTests(bool async)
         .ValidateAndDeployAsync();
     }
 
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.storage/storage-blob-container/main.bicep")]
     public async Task CreateStorageAccountAndContainer()
     {
@@ -269,7 +269,7 @@ public class BasicStorageTests(bool async)
         .ValidateAndDeployAsync();
     }
 
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.storage/storage-account-service-encryption-create/main.bicep")]
     public async Task CreateStorageAccountWithServiceEncryption()
     {
@@ -339,7 +339,7 @@ public class BasicStorageTests(bool async)
         .ValidateAndDeployAsync();
     }
 
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.storage/storage-account-create/main.bicep")]
     public async Task CreateFileShare ()
     {

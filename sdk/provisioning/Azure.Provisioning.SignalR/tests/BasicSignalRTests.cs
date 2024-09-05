@@ -13,7 +13,7 @@ namespace Azure.Provisioning.SignalR.Tests;
 public class BasicSignalRTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.signalrservice/signalr/main.bicep")]
     public async Task CreateSignalRService()
     {

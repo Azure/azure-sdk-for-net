@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CosmosDB.Tests;
 public class BasicCosmosDBTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.documentdb/cosmosdb-free/main.bicep")]
     public async Task CreateCosmosSqlDB()
     {

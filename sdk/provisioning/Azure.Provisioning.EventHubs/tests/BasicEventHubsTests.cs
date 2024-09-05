@@ -13,7 +13,7 @@ namespace Azure.Provisioning.EventHubs.Tests;
 public class BasicEventHubsTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventhub/event-hubs-create-event-hub-and-consumer-group/main.bicep")]
     public async Task CreateEventHubAndConsumerGroup()
     {

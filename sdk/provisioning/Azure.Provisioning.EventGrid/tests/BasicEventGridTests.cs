@@ -15,7 +15,7 @@ namespace Azure.Provisioning.EventGrid.Tests;
 public class BasicEventGridTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventgrid/event-grid-subscription-and-storage/main.bicep")]
     public async Task CreateEventGridForBlobs()
     {

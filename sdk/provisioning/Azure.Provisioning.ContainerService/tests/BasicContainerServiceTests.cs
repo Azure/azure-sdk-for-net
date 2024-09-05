@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService.Tests;
 public class BasicContainerServiceTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.kubernetes/aks/main.bicep")]
     public async Task CreateAksCluster()
     {

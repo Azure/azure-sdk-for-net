@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppConfiguration.Tests;
 public class BasicAppConfigurationTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.appconfiguration/app-configuration-store-ff/main.bicep")]
     public async Task CreateAppConfigAndFeatureFlag()
     {

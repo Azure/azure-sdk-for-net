@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Tests;
 internal class SampleTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     public async Task SimpleDeploy()
     {
         BlobService? blobs = null;
@@ -85,7 +85,7 @@ internal class SampleTests(bool async)
             });
     }
 
-    [RecordedTest]
+    [Test]
     public async Task SimpleContainerApp()
     {
         await using Trycep test = CreateBicepTest();
@@ -290,7 +290,7 @@ internal class SampleTests(bool async)
         .ValidateAndDeployAsync();
     }
 
-    [RecordedTest]
+    [Test]
     public async Task SimpleResourceGroup()
     {
         await using Trycep test = CreateBicepTest();

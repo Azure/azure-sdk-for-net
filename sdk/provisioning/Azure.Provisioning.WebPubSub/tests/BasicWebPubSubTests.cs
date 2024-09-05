@@ -13,7 +13,7 @@ namespace Azure.Provisioning.WebPubSub.Tests;
 public class BasicWebPubSubTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/azure-web-pubsub/main.bicep")]
     public async Task CreateSimpleWebPubSub()
     {

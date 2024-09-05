@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ServiceBus.Tests;
 public class BasicServiceBusTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.servicebus/servicebus-create-queue/main.bicep")]
     public async Task CreateServiceBusQueue()
     {

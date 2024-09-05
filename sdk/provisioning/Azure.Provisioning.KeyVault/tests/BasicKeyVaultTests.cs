@@ -12,7 +12,7 @@ namespace Azure.Provisioning.KeyVault.Tests;
 public class BasicKeyVaultTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.keyvault/key-vault-create/main.bicep")]
     public async Task CreateKeyVaultAndSecret()
     {

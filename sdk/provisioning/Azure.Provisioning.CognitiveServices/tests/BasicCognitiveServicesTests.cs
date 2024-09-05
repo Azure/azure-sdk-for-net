@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CognitiveServices.Tests;
 public class BasicCognitiveServicesTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cognitiveservices/cognitive-services-translate/main.bicep")]
     public async Task CreateTranslation()
     {

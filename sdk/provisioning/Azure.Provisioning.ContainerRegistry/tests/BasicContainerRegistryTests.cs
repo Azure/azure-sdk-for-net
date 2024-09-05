@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tests;
 public class BasicContainerRegistryTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.containerregistry/container-registry/main.bicep")]
     public async Task CreateContainerRegistry()
     {

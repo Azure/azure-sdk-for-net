@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ApplicationInsights.Tests;
 public class BasicApplicationInsightsTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/function-app-create-dynamic/main.bicep")]
     public async Task CreateComponent()
     {

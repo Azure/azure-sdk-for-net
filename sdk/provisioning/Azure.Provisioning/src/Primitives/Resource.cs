@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Primitives;
 /// <summary>
 /// Represents an Azure resource.
 /// </summary>
-/// <param name="resourceName">The friendly namee of the resource.</param>
+/// <param name="resourceName">The friendly name of the resource.</param>
 /// <param name="resourceType">The type of the resource.</param>
 /// <param name="resourceVersion">The version of the resource.</param>
 /// <param name="context">Optional ProvisioningContext.</param>

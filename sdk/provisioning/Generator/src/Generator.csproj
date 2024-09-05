@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0</TargetFrameworks>
+    <Version>1.0.0-beta.1</Version>
     <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>

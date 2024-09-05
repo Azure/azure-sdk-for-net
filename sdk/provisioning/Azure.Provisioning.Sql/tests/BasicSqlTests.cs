@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Sql.Tests;
 public class BasicSqlTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.sql/sql-database/main.bicep")]
     public async Task CreateSimpleSqlServerAndDatabase()
     {

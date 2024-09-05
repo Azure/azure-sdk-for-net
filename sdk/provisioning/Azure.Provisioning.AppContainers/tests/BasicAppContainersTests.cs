@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers.Tests;
 public class BasicAppContainersTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.app/container-app-create/main.bicep")]
     public async Task CreateContainerApp()
     {

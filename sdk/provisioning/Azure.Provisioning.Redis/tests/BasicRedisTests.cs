@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Redis.Tests;
 public class BasicRedisTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [RecordedTest]
+    [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cache/redis-cache/main.bicep")]
     public async Task CreateRedisCache()
     {
