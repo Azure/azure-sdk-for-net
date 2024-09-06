@@ -1,14 +1,9 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (2024-09-10)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## Other Changes
+- Updated the (de)serialization of Web PubSub CloudEvents to use the `System.Text.Json` library.
 
 ## 1.3.0 (2024-09-04)
 

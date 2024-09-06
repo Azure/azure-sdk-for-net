@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
 {
     public class WebPubSubSample
     {
-#region Snippet:WebPubSubDependencyInjection
+        #region Snippet:WebPubSubDependencyInjection
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddWebPubSub(o =>
@@ -20,9 +20,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
                 o.ServiceEndpoint = new("<connection-string>");
             }).AddWebPubSubServiceClient<SampleHub>();
         }
-#endregion
+        #endregion
 
-#region Snippet:WebPubSubMapHub
+        #region Snippet:WebPubSubMapHub
         public void Configure(IApplicationBuilder app)
         {
             app.UseEndpoints(endpoint =>
@@ -30,9 +30,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
                 endpoint.MapWebPubSubHub<SampleHub>("/eventhandler");
             });
         }
-#endregion
+        #endregion
 
-#region Snippet:WebPubSubHubMethods
+        #region Snippet:HandleConnectEvent
         private sealed class SampleHub : WebPubSubHub
         {
             internal WebPubSubServiceClient<SampleHub> _serviceClient;
@@ -52,7 +52,82 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
                 return new ValueTask<ConnectEventResponse>(response);
             }
         }
-#endregion
+        #endregion
+
+        #region Sinppet:HandleMqttConnectEvent
+        private sealed class SampleHub2 : WebPubSubHub
+        {
+            internal WebPubSubServiceClient<SampleHub> _serviceClient;
+
+            // Need to ensure service client is injected by call `AddServiceHub<SampleHub2>` in ConfigureServices.
+            public SampleHub2(WebPubSubServiceClient<SampleHub> serviceClient)
+            {
+                _serviceClient = serviceClient;
+            }
+
+            public override ValueTask<WebPubSubEventResponse> OnMqttConnectAsync(MqttConnectEventRequest request, CancellationToken cancellationToken)
+            {
+                if (request.Mqtt.Username != "baduser")
+                {
+                    return ValueTask.FromResult(request.CreateMqttResponse(request.ConnectionContext.UserId, null, null) as WebPubSubEventResponse);
+                }
+                else
+                {
+                    return request.Mqtt.ProtocolVersion switch
+                    {
+                        MqttProtocolVersion.V311 => ValueTask.FromResult(request.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode.NotAuthorized, "not authorized") as WebPubSubEventResponse),
+                        MqttProtocolVersion.V500 => ValueTask.FromResult(request.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode.NotAuthorized, "not authorized") as WebPubSubEventResponse),
+                        _ => throw new System.NotSupportedException("Unsupported MQTT protocol version")
+                    };
+                }
+            }
+        }
+        #endregion
+
+        #region Sinppet:HandleMqttConnectedEvent
+        private sealed class SampleHub3 : WebPubSubHub
+        {
+            internal WebPubSubServiceClient<SampleHub> _serviceClient;
+
+            // Need to ensure service client is injected by call `AddServiceHub<SampleHub3>` in ConfigureServices.
+            public SampleHub3(WebPubSubServiceClient<SampleHub> serviceClient)
+            {
+                _serviceClient = serviceClient;
+            }
+
+            public override Task OnConnectedAsync(ConnectedEventRequest request)
+            {
+                if (request.ConnectionContext is MqttConnectionContext mqttContext)
+                {
+                    // Have your own logic here
+                }
+                return Task.CompletedTask;
+            }
+        }
+        #endregion
+
+        #region Sinppet:HandleMqttDisconnectedEvent
+        private sealed class SampleHub4 : WebPubSubHub
+        {
+            internal WebPubSubServiceClient<SampleHub> _serviceClient;
+
+            // Need to ensure service client is injected by call `AddServiceHub<SampleHub4>` in ConfigureServices.
+            public SampleHub4(WebPubSubServiceClient<SampleHub> serviceClient)
+            {
+                _serviceClient = serviceClient;
+            }
+
+            public override Task OnDisconnectedAsync(DisconnectedEventRequest request)
+            {
+                if (request is MqttDisconnectedEventRequest mqttDisconnected)
+                {
+                    // Have your own logic here
+                }
+                return Task.CompletedTask;
+            }
+        }
+        #endregion
     }
 }
 #endif
+

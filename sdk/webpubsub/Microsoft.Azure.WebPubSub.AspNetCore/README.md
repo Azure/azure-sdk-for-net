@@ -77,17 +77,17 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 
 ### `WebPubSubHub`
 
-`WebPubSubHub` is an abstract class to let users implement the subscribed Web PubSub service events. After user register the [event handler](https://docs.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) in service side, these events will be forwarded from service to server. And `WebPubSubHub` provides 4 methods mapping to the service events to enable users deal with these events, for example, client management, validations or working with `Azure.Messaging.WebPubSub` to broadcast the messages. See samples below for details.
+`WebPubSubHub` is an abstract class to let users implement the subscribed Web PubSub service events. After user register the [event handler](https://docs.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) in service side, these events will be forwarded from service to server. And `WebPubSubHub` provides methods mapping to the service events to enable users deal with these events, for example, client management, validations or working with `Azure.Messaging.WebPubSub` to broadcast the messages. See samples below for details.
 
 > NOTE
 >
-> Among the 4 methods, `OnConnectAsync()` and `OnMessageReceivedAsync()` are blocking events that service will respect server returns. Besides the mapped correct response, server can throw exceptions whenever the request is against the server side logic. And `UnauthorizedAccessException` and `AuthenticationException` will be converted to `401Unauthorized` and rest will be converted to `500InternalServerError` along with exception message to return service. Then service will drop current client connection.
+> Among the those methods, `OnConnectAsync()`, `OnMqttconnectAsync()` and `OnMessageReceivedAsync()` are blocking events that service will respect server returns. Besides the mapped correct response, server can throw exceptions whenever the request is against the server side logic. And `UnauthorizedAccessException` and `AuthenticationException` will be converted to `401Unauthorized` and rest will be converted to `500InternalServerError` along with exception message to return service. Then service will drop current client connection.
 
 ## Examples
 
 ### Handle upstream `Connect` event
 
-```C# Snippet:WebPubSubHubMethods
+```C# Snippet:HandleConnectEvent
 private sealed class SampleHub : WebPubSubHub
 {
     internal WebPubSubServiceClient<SampleHub> _serviceClient;
@@ -107,6 +107,19 @@ private sealed class SampleHub : WebPubSubHub
         return new ValueTask<ConnectEventResponse>(response);
     }
 }
+```
+
+### Handle upstream MQTT `Connect` event
+```C# Snippet:HandleMqttConnectEvent
+```
+
+### Handle upstream MQTT `Connected` event
+```C# Snippet:HandleMqttConnectedEvent
+```
+
+
+### Handle upstream MQTT `Disconnected` event
+```C# Snippet:HandleMqttDisconnectedEvent
 ```
 
 ## Troubleshooting

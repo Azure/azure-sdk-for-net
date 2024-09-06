@@ -14,6 +14,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public virtual System.Threading.Tasks.Task OnConnectedAsync(Microsoft.Azure.WebPubSub.Common.ConnectedEventRequest request) { throw null; }
         public virtual System.Threading.Tasks.Task OnDisconnectedAsync(Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest request) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Microsoft.Azure.WebPubSub.Common.UserEventResponse> OnMessageReceivedAsync(Microsoft.Azure.WebPubSub.Common.UserEventRequest request, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Microsoft.Azure.WebPubSub.Common.WebPubSubEventResponse> OnMqttConnectAsync(Microsoft.Azure.WebPubSub.Common.MqttConnectEventRequest request, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class WebPubSubOptions
     {

@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Security.Authentication;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -14,6 +16,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
+using Moq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
@@ -71,6 +75,222 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             var converted = JsonSerializer.Deserialize<ConnectEventResponse>(response);
             Assert.AreEqual("testuser", converted.UserId);
+        }
+
+        [TestCase(MqttProtocolVersion.V311)]
+        [TestCase(MqttProtocolVersion.V500)]
+        public async Task TestMqttConnectSuccessfullyWithOnMqttConnectHandler(MqttProtocolVersion protocolVersion)
+        {
+            var hubName = nameof(TestMqttConnectSuccessfullyWithOnMqttConnectHandler);
+            var payload = "{\"mqtt\":{\"protocolVersion\":" + ((int)protocolVersion).ToString() + ",\"username\":\"username\",\"password\":\"password\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"claims\":{\"iat\":[\"1723005952\"],\"exp\":[\"1726605954\"],\"aud\":[\"ws://localhost:8080/clients/mqtt/hubs/simplechat\"],\"http://schemas.microsoft.com/ws/2008/06/identity/claims/role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"user1\"],\"role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"nameid\":[\"user1\"]},\"query\":{\"access_token\":[\"REDATED\"]},\"headers\":{\"Connection\":[\"Upgrade\"],\"Host\":[\"localhost:8080\"],\"Upgrade\":[\"websocket\"],\"Sec-WebSocket-Version\":[\"13\"],\"Sec-WebSocket-Key\":[\"REDATED\"],\"Sec-WebSocket-Extensions\":[\"permessage-deflate; client_max_window_bits\"],\"Sec-WebSocket-Protocol\":[\"mqtt\"]},\"subprotocols\":[\"mqtt\"],\"clientCertificates\":[{\"thumbprint\":\"thumbprint\",\"content\":\"certificate content\"}]}";
+            var context = PrepareHttpContext(hub: hubName,
+                                             addtionalHeaders: new Dictionary<string, StringValues>
+                                             {
+                                                 { Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId" },
+                                                 { Constants.Headers.CloudEvents.MqttSessionId, "sessionId" },
+                                                 { Constants.Headers.CloudEvents.Subprotocol, "mqtt" }
+                                             },
+                                             body: payload);
+            var mqttConnectEventResponse = new MqttConnectEventResponse("userId", new string[] { "group1", "group2" }, new string[] { "webpubsub.joinLeaveGroup" })
+            {
+                Mqtt = new()
+                {
+                    UserProperties = new List<MqttUserProperty> { new MqttUserProperty("a", "b") }
+                }
+            };
+            var hubMock = new Mock<WebPubSubHub>();
+            hubMock.Setup(h => h.OnMqttConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>())).Callback<MqttConnectEventRequest, CancellationToken>((r, token) =>
+            {
+                Assert.AreEqual("mqtt", r.Subprotocols.Single());
+                var clientCert = r.ClientCertificates.Single();
+                Assert.AreEqual("thumbprint", clientCert.Thumbprint);
+                Assert.AreEqual("certificate content", clientCert.Content);
+                Assert.AreEqual("username", r.Mqtt.Username);
+                Assert.AreEqual("password", r.Mqtt.Password);
+                var userProperty = r.Mqtt.UserProperties.Single();
+                Assert.AreEqual("a", userProperty.Name);
+                Assert.AreEqual("b", userProperty.Value);
+                Assert.AreEqual(protocolVersion, r.Mqtt.ProtocolVersion);
+            }).Returns(ValueTask.FromResult(mqttConnectEventResponse as WebPubSubEventResponse));
+            _adaptor.RegisterHub(hubName, hubMock.Object);
+            await _adaptor.HandleRequest(context);
+            Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+            var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            var expectedBody = "{\"mqtt\":{\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"userId\":\"userId\",\"groups\":[\"group1\",\"group2\"],\"subprotocol\":\"mqtt\",\"roles\":[\"webpubsub.joinLeaveGroup\"]}";
+            Assert.AreEqual(expectedBody, response);
+            hubMock.Verify(h => h.OnMqttConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [TestCase(MqttProtocolVersion.V311)]
+        [TestCase(MqttProtocolVersion.V500)]
+        public async Task TestMqttConnectSuccessfullyWithOnConnectHandler(MqttProtocolVersion protocolVersion)
+        {
+            var hubName = nameof(TestMqttConnectSuccessfullyWithOnConnectHandler);
+            var payload = "{\"mqtt\":{\"protocolVersion\":" + ((int)protocolVersion).ToString() + ",\"username\":\"username\",\"password\":\"password\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"claims\":{\"iat\":[\"1723005952\"],\"exp\":[\"1726605954\"],\"aud\":[\"ws://localhost:8080/clients/mqtt/hubs/simplechat\"],\"http://schemas.microsoft.com/ws/2008/06/identity/claims/role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"user1\"],\"role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"nameid\":[\"user1\"]},\"query\":{\"access_token\":[\"REDATED\"]},\"headers\":{\"Connection\":[\"Upgrade\"],\"Host\":[\"localhost:8080\"],\"Upgrade\":[\"websocket\"],\"Sec-WebSocket-Version\":[\"13\"],\"Sec-WebSocket-Key\":[\"REDATED\"],\"Sec-WebSocket-Extensions\":[\"permessage-deflate; client_max_window_bits\"],\"Sec-WebSocket-Protocol\":[\"mqtt\"]},\"subprotocols\":[\"mqtt\"],\"clientCertificates\":[{\"thumbprint\":\"thumbprint\",\"content\":\"certificate content\"}]}";
+            var context = PrepareHttpContext(hub: hubName,
+                                             addtionalHeaders: new Dictionary<string, StringValues>
+                                             {
+                                                 { Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId" },
+                                                 { Constants.Headers.CloudEvents.MqttSessionId, "sessionId" },
+                                                 { Constants.Headers.CloudEvents.Subprotocol, "mqtt" }
+                                             },
+                                             body: payload);
+            var mqttConnectEventResponse = new ConnectEventResponse("userId", new string[] { "group1", "group2" }, "mqtt", new string[] { "webpubsub.joinLeaveGroup" });
+            var hubMock = new Mock<WebPubSubHub>();
+            hubMock.Setup(h => h.OnConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>())).Callback<ConnectEventRequest, CancellationToken>((r, token) =>
+            {
+                Assert.AreEqual("mqtt", r.Subprotocols.Single());
+                var clientCert = r.ClientCertificates.Single();
+                Assert.AreEqual("thumbprint", clientCert.Thumbprint);
+                Assert.AreEqual("certificate content", clientCert.Content);
+            }).Returns(ValueTask.FromResult(mqttConnectEventResponse));
+            _adaptor.RegisterHub(hubName, hubMock.Object);
+            await _adaptor.HandleRequest(context);
+            Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+            var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            var expectedBody = "{\"userId\":\"userId\",\"groups\":[\"group1\",\"group2\"],\"subprotocol\":\"mqtt\",\"roles\":[\"webpubsub.joinLeaveGroup\"]}";
+            Assert.AreEqual(expectedBody, response);
+            hubMock.Verify(h => h.OnMqttConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        private static readonly IEnumerable<object[]> TestHandleMqttConnectErrorWithOnMqttConnectHandlerData = new object[][]
+        {
+            new object[]
+            {
+                MqttProtocolVersion.V311,
+                (MqttConnectEventRequest r, CancellationToken t)=>ValueTask.FromResult(r.CreateErrorResponse(WebPubSubErrorCode.Unauthorized, "error message")as MqttConnectEventErrorResponse),
+                HttpStatusCode.Unauthorized,
+                "{\"mqtt\":{\"code\":5,\"reason\":\"error message\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]}}"
+            },
+            new object[]
+            {
+                MqttProtocolVersion.V500,
+                (MqttConnectEventRequest r, CancellationToken t)=>ValueTask.FromResult(r.CreateErrorResponse(WebPubSubErrorCode.Unauthorized, "error message") as MqttConnectEventErrorResponse),
+                HttpStatusCode.Unauthorized,
+                "{\"mqtt\":{\"code\":135,\"reason\":\"error message\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]}}"
+            },
+            new object[]
+            {
+                MqttProtocolVersion.V311,
+                (MqttConnectEventRequest r, CancellationToken t)=>ValueTask.FromResult(r.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode.BadUsernameOrPassword, "error message")),
+                HttpStatusCode.Unauthorized,
+                "{\"mqtt\":{\"code\":4,\"reason\":\"error message\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]}}"
+            },
+            new object[]
+            {
+                MqttProtocolVersion.V500,
+                (MqttConnectEventRequest r, CancellationToken t)=>ValueTask.FromResult(r.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode.BadUserNameOrPassword, "error message")),
+                HttpStatusCode.Unauthorized,
+                "{\"mqtt\":{\"code\":134,\"reason\":\"error message\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]}}"
+            },
+        };
+
+        [TestCaseSource(nameof(TestHandleMqttConnectErrorWithOnMqttConnectHandlerData))]
+        public async Task TestHandleMqttConnectErrorWithOnMqttConnectHandler(MqttProtocolVersion protocolVersion, Func<MqttConnectEventRequest, CancellationToken, ValueTask<MqttConnectEventErrorResponse>> handler, HttpStatusCode expectedStatusCode, string expectedResponseBody)
+        {
+            var hubName = nameof(TestHandleMqttConnectErrorWithOnMqttConnectHandler);
+            var payload = "{\"mqtt\":{\"protocolVersion\":" + ((int)protocolVersion).ToString() + ",\"username\":\"username\",\"password\":\"password\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"claims\":{\"iat\":[\"1723005952\"],\"exp\":[\"1726605954\"],\"aud\":[\"ws://localhost:8080/clients/mqtt/hubs/simplechat\"],\"http://schemas.microsoft.com/ws/2008/06/identity/claims/role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"user1\"],\"role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"nameid\":[\"user1\"]},\"query\":{\"access_token\":[\"REDATED\"]},\"headers\":{\"Connection\":[\"Upgrade\"],\"Host\":[\"localhost:8080\"],\"Upgrade\":[\"websocket\"],\"Sec-WebSocket-Version\":[\"13\"],\"Sec-WebSocket-Key\":[\"REDATED\"],\"Sec-WebSocket-Extensions\":[\"permessage-deflate; client_max_window_bits\"],\"Sec-WebSocket-Protocol\":[\"mqtt\"]},\"subprotocols\":[\"mqtt\"],\"clientCertificates\":[{\"thumbprint\":\"thumbprint\",\"content\":\"certificate content\"}]}";
+            var context = PrepareHttpContext(hub: hubName,
+                                             addtionalHeaders: new Dictionary<string, StringValues>
+                                             {
+                                                 { Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId" },
+                                                 { Constants.Headers.CloudEvents.MqttSessionId, "sessionId" },
+                                                 { Constants.Headers.CloudEvents.Subprotocol, "mqtt" }
+                                             },
+                                             body: payload);
+            var mqttConnectEventResponse = new MqttConnectEventResponse("userId", new string[] { "group1", "group2" }, new string[] { "webpubsub.joinLeaveGroup" })
+            {
+                Mqtt = new()
+                {
+                    UserProperties = new List<MqttUserProperty> { new MqttUserProperty("a", "b") }
+                }
+            };
+            var hubMock = new Mock<WebPubSubHub>();
+            hubMock.Setup(h => h.OnMqttConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>())).Callback<MqttConnectEventRequest, CancellationToken>((r, token) =>
+            {
+                Assert.AreEqual("mqtt", r.Subprotocols.Single());
+                var clientCert = r.ClientCertificates.Single();
+                Assert.AreEqual("thumbprint", clientCert.Thumbprint);
+                Assert.AreEqual("certificate content", clientCert.Content);
+                Assert.AreEqual("username", r.Mqtt.Username);
+                Assert.AreEqual("password", r.Mqtt.Password);
+                var userProperty = r.Mqtt.UserProperties.Single();
+                Assert.AreEqual("a", userProperty.Name);
+                Assert.AreEqual("b", userProperty.Value);
+                Assert.AreEqual(protocolVersion, r.Mqtt.ProtocolVersion);
+            }).Returns<MqttConnectEventRequest, CancellationToken>(async (r, t) =>
+            {
+                var response = await handler(r, t);
+                response.Mqtt.UserProperties = new List<MqttUserProperty> { new("a", "b") };
+                return response;
+            });
+            _adaptor.RegisterHub(hubName, hubMock.Object);
+            await _adaptor.HandleRequest(context);
+            Assert.AreEqual((int)expectedStatusCode, context.Response.StatusCode);
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+            var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            Console.WriteLine(response);
+            Assert.AreEqual(expectedResponseBody, response);
+            hubMock.Verify(h => h.OnMqttConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        private static readonly IEnumerable<object[]> TestHandleMqttConnectErrorWithOnConnectHandlerData = new object[][]
+        {
+            new object[]
+            {
+                MqttProtocolVersion.V311,
+                new UnauthorizedAccessException("error message"),
+                HttpStatusCode.Unauthorized,
+                "{\"mqtt\":{\"code\":5,\"reason\":\"error message\",\"userProperties\":null}}"
+            },
+            new object[]
+            {
+                MqttProtocolVersion.V500,
+                new UnauthorizedAccessException("error message"),
+                HttpStatusCode.Unauthorized,
+                "{\"mqtt\":{\"code\":135,\"reason\":\"error message\",\"userProperties\":null}}"
+            },
+            new object[]
+            {
+                MqttProtocolVersion.V311,
+                new AuthenticationException("error message"),
+                HttpStatusCode.Unauthorized,
+                "{\"mqtt\":{\"code\":4,\"reason\":\"error message\",\"userProperties\":null}}"
+            },
+            new object[]
+            {
+                MqttProtocolVersion.V500,
+                new AuthenticationException("error message"),
+                HttpStatusCode.Unauthorized,
+                "{\"mqtt\":{\"code\":134,\"reason\":\"error message\",\"userProperties\":null}}"
+            },
+        };
+
+        [TestCaseSource(nameof(TestHandleMqttConnectErrorWithOnConnectHandlerData))]
+        public async Task TestHandleMqttConnectErrorWithOnConnectHandler(MqttProtocolVersion protocolVersion, Exception exception, HttpStatusCode expectedStatusCode, string expectedResponseBody)
+        {
+            var hubName = nameof(TestHandleMqttConnectErrorWithOnConnectHandler);
+            var payload = "{\"mqtt\":{\"protocolVersion\":" + ((int)protocolVersion).ToString() + ",\"username\":\"username\",\"password\":\"password\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"claims\":{\"iat\":[\"1723005952\"],\"exp\":[\"1726605954\"],\"aud\":[\"ws://localhost:8080/clients/mqtt/hubs/simplechat\"],\"http://schemas.microsoft.com/ws/2008/06/identity/claims/role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"user1\"],\"role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"nameid\":[\"user1\"]},\"query\":{\"access_token\":[\"REDATED\"]},\"headers\":{\"Connection\":[\"Upgrade\"],\"Host\":[\"localhost:8080\"],\"Upgrade\":[\"websocket\"],\"Sec-WebSocket-Version\":[\"13\"],\"Sec-WebSocket-Key\":[\"REDATED\"],\"Sec-WebSocket-Extensions\":[\"permessage-deflate; client_max_window_bits\"],\"Sec-WebSocket-Protocol\":[\"mqtt\"]},\"subprotocols\":[\"mqtt\"],\"clientCertificates\":[{\"thumbprint\":\"thumbprint\",\"content\":\"certificate content\"}]}";
+            var context = PrepareHttpContext(hub: hubName,
+                                             addtionalHeaders: new Dictionary<string, StringValues>
+                                             {
+                                                 { Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId" },
+                                                 { Constants.Headers.CloudEvents.MqttSessionId, "sessionId" },
+                                                 { Constants.Headers.CloudEvents.Subprotocol, "mqtt" }
+                                             },
+                                             body: payload);
+            var hubMock = new Mock<WebPubSubHub>();
+            hubMock.Setup(h => h.OnMqttConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>())).Throws(exception);
+            _adaptor.RegisterHub(hubName, hubMock.Object);
+            await _adaptor.HandleRequest(context);
+            Assert.AreEqual((int)expectedStatusCode, context.Response.StatusCode);
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+            var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            Console.WriteLine(response);
+            Assert.AreEqual(expectedResponseBody, response);
+            hubMock.Verify(h => h.OnMqttConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -206,7 +426,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             string userId = "testuser",
             string body = null,
             string contentType = Constants.ContentTypes.PlainTextContentType,
-            Dictionary<string, BinaryData> connectionState = null)
+            Dictionary<string, BinaryData> connectionState = null,
+            Dictionary<string, StringValues> addtionalHeaders = null)
         {
             var context = new DefaultHttpContext();
             var services = new ServiceCollection();
@@ -232,6 +453,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 { Constants.Headers.CloudEvents.Signature, signatures },
                 { Constants.Headers.CloudEvents.WebPubSubVersion, "1.0" },
             };
+            if (addtionalHeaders != null)
+            {
+                foreach (var item in addtionalHeaders)
+                {
+                    headers.Add(item);
+                }
+            }
 
             if (!string.IsNullOrEmpty(uri.Host))
             {
@@ -292,9 +520,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 // simple tests.
                 switch (request.Data.ToString())
                 {
-                    case "1": response.SetState("counter", 10);
+                    case "1":
+                        response.SetState("counter", 10);
                         break;
-                    case "2": response.SetState("new", "new");
+                    case "2":
+                        response.SetState("new", "new");
                         break;
                     case "3":
                         response.ClearStates();
