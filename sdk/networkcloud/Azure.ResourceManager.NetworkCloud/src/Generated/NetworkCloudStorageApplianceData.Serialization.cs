@@ -98,6 +98,16 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("managementIpv4Address"u8);
                 writer.WriteStringValue(ManagementIPv4Address.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(Manufacturer))
+            {
+                writer.WritePropertyName("manufacturer"u8);
+                writer.WriteStringValue(Manufacturer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -117,10 +127,25 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("remoteVendorManagementStatus"u8);
                 writer.WriteStringValue(RemoteVendorManagementStatus.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SecretRotationStatus))
+            {
+                writer.WritePropertyName("secretRotationStatus"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecretRotationStatus)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("serialNumber"u8);
             writer.WriteStringValue(SerialNumber);
             writer.WritePropertyName("storageApplianceSkuId"u8);
             writer.WriteStringValue(StorageApplianceSkuId);
+            if (options.Format != "W" && Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -174,13 +199,17 @@ namespace Azure.ResourceManager.NetworkCloud
             StorageApplianceDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
             IPAddress managementIPv4Address = default;
+            string manufacturer = default;
+            string model = default;
             StorageApplianceProvisioningState? provisioningState = default;
             ResourceIdentifier rackId = default;
             long rackSlot = default;
             RemoteVendorManagementFeature? remoteVendorManagementFeature = default;
             RemoteVendorManagementStatus? remoteVendorManagementStatus = default;
+            IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
             string serialNumber = default;
             string storageApplianceSkuId = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -297,6 +326,16 @@ namespace Azure.ResourceManager.NetworkCloud
                             managementIPv4Address = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("manufacturer"u8))
+                        {
+                            manufacturer = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("model"u8))
+                        {
+                            model = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -334,6 +373,20 @@ namespace Azure.ResourceManager.NetworkCloud
                             remoteVendorManagementStatus = new RemoteVendorManagementStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("secretRotationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SecretRotationStatus> array = new List<SecretRotationStatus>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
+                            }
+                            secretRotationStatus = array;
+                            continue;
+                        }
                         if (property0.NameEquals("serialNumber"u8))
                         {
                             serialNumber = property0.Value.GetString();
@@ -342,6 +395,11 @@ namespace Azure.ResourceManager.NetworkCloud
                         if (property0.NameEquals("storageApplianceSkuId"u8))
                         {
                             storageApplianceSkuId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("version"u8))
+                        {
+                            version = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -368,13 +426,17 @@ namespace Azure.ResourceManager.NetworkCloud
                 detailedStatus,
                 detailedStatusMessage,
                 managementIPv4Address,
+                manufacturer,
+                model,
                 provisioningState,
                 rackId,
                 rackSlot,
                 remoteVendorManagementFeature,
                 remoteVendorManagementStatus,
+                secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>(),
                 serialNumber,
                 storageApplianceSkuId,
+                version,
                 serializedAdditionalRawData);
         }
 

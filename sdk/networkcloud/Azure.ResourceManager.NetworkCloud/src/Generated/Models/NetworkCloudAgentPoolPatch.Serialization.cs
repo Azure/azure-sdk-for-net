@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(AdministratorConfiguration))
+            {
+                writer.WritePropertyName("administratorConfiguration"u8);
+                writer.WriteObjectValue(AdministratorConfiguration, options);
+            }
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
+            NodePoolAdministratorConfigurationPatch administratorConfiguration = default;
             long? count = default;
             AgentPoolUpgradeSettings upgradeSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,6 +124,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("administratorConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administratorConfiguration = NodePoolAdministratorConfigurationPatch.DeserializeNodePoolAdministratorConfigurationPatch(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("count"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -145,7 +160,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudAgentPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), count, upgradeSettings, serializedAdditionalRawData);
+            return new NetworkCloudAgentPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), administratorConfiguration, count, upgradeSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudAgentPoolPatch>.Write(ModelReaderWriterOptions options)
