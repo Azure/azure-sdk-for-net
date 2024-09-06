@@ -31,6 +31,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ParentRuleNames))
+            {
+                writer.WritePropertyName("parentRuleNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in ParentRuleNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -77,6 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             OutboundRuleCategory? category = default;
+            IReadOnlyList<string> parentRuleNames = default;
             OutboundRuleStatus? status = default;
             OutboundRuleType type = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -90,6 +101,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     category = new OutboundRuleCategory(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("parentRuleNames"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    parentRuleNames = array;
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -112,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownOutboundRule(category, status, type, serializedAdditionalRawData);
+            return new UnknownOutboundRule(category, parentRuleNames ?? new ChangeTrackingList<string>(), status, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningOutboundRule>.Write(ModelReaderWriterOptions options)

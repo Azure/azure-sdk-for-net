@@ -5,13 +5,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal static class Constants
     {
-        public static readonly char[] HeaderSeparator = { ',', ' '};
+        public static readonly char[] HeaderSeparator = { ',', ' ' };
         public const string AllowedAllOrigins = "*";
 
         // WebPubSubOptions can be set by customers.
         public const string WebPubSubConnectionStringName = "WebPubSubConnectionString";
         public const string HubNameStringName = "WebPubSubHub";
         public const string WebPubSubValidationStringName = "WebPubSubValidation";
+
+        public const string MqttWebSocketSubprotocolValue = "mqtt";
 
         public static class ContentTypes
         {
@@ -45,6 +47,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 public const string UserId = Prefix + "userId";
                 public const string State = Prefix + "connectionState";
                 public const string AwpsVersion = Prefix + "awpsversion";
+                public const string Subprotocol = Prefix + "subprotocol";
+
+                #region MQTT
+                public const string MqttPhysicalConnectionId = Prefix + "physicalConnectionId";
+                public const string MqttSessionId = Prefix + "sessionId";
+                #endregion
 
                 public const string TypeSystemPrefix = "azure.webpubsub.sys.";
                 public const string TypeUserPrefix = "azure.webpubsub.user.";

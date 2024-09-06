@@ -71,12 +71,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("workspaceConnection"u8);
-            writer.WriteObjectValue(WorkspaceConnection, options);
-            if (Optional.IsDefined(Mode))
+            if (Optional.IsCollectionDefined(NotificationTypes))
             {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                if (NotificationTypes != null)
+                {
+                    writer.WritePropertyName("notificationTypes"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NotificationTypes)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("notificationTypes");
+                }
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -140,8 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, MonitoringInputDataBase> inputAssets = default;
             IDictionary<string, MachineLearningJobInput> inputs = default;
             IList<CustomMetricThreshold> metricThresholds = default;
-            MonitoringWorkspaceConnection workspaceConnection = default;
-            MonitoringNotificationMode? mode = default;
+            IList<MonitoringNotificationType> notificationTypes = default;
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -193,18 +202,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     metricThresholds = array;
                     continue;
                 }
-                if (property.NameEquals("workspaceConnection"u8))
-                {
-                    workspaceConnection = MonitoringWorkspaceConnection.DeserializeMonitoringWorkspaceConnection(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("mode"u8))
+                if (property.NameEquals("notificationTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        notificationTypes = null;
                         continue;
                     }
-                    mode = new MonitoringNotificationMode(property.Value.GetString());
+                    List<MonitoringNotificationType> array = new List<MonitoringNotificationType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new MonitoringNotificationType(item.GetString()));
+                    }
+                    notificationTypes = array;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -234,15 +244,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CustomMonitoringSignal(
-                mode,
+                notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 signalType,
                 serializedAdditionalRawData,
                 componentId,
                 inputAssets ?? new ChangeTrackingDictionary<string, MonitoringInputDataBase>(),
                 inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
-                metricThresholds,
-                workspaceConnection);
+                metricThresholds);
         }
 
         BinaryData IPersistableModel<CustomMonitoringSignal>.Write(ModelReaderWriterOptions options)

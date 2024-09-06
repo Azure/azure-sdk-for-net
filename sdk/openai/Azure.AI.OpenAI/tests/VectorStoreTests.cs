@@ -10,14 +10,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using Azure.Core.TestFramework;
+using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
+using OpenAI.TestFramework;
 using OpenAI.VectorStores;
 
 namespace Azure.AI.OpenAI.Tests;
-
-#pragma warning disable OPENAI001
 
 public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
 {
@@ -111,10 +110,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             Assert.That(vectorStore.Name, Is.EqualTo($"Test Vector Store {i}"));
         }
 
-
-        AsyncPageCollection<VectorStore> response = SyncOrAsync(client,
-            c => c.GetVectorStores(new VectorStoreCollectionOptions() { Order = ListOrder.NewestFirst }),
-            c => c.GetVectorStoresAsync(new VectorStoreCollectionOptions() { Order = ListOrder.NewestFirst }));
+        AsyncPageCollection<VectorStore> response = client.GetVectorStoresAsync(new VectorStoreCollectionOptions() { Order = ListOrder.NewestFirst });
         Assert.That(response, Is.Not.Null);
 
         int lastIdSeen = int.MaxValue;
@@ -169,9 +165,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         Thread.Sleep(1000);
 
         int count = 0;
-        AsyncPageCollection<VectorStoreFileAssociation> response = SyncOrAsync(client,
-            c => c.GetFileAssociations(vectorStore),
-            c => c.GetFileAssociationsAsync(vectorStore));
+        AsyncPageCollection<VectorStoreFileAssociation> response = client.GetFileAssociationsAsync(vectorStore);
         await foreach (VectorStoreFileAssociation association in response.GetAllValuesAsync())
         {
             count++;
@@ -205,9 +199,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             b => b.Status != VectorStoreBatchFileJobStatus.InProgress);
         Assert.That(batchJob.Status, Is.EqualTo(VectorStoreBatchFileJobStatus.Completed));
 
-        AsyncPageCollection<VectorStoreFileAssociation> response = SyncOrAsync(client,
-            c => c.GetFileAssociations(batchJob),
-            c => c.GetFileAssociationsAsync(batchJob));
+        AsyncPageCollection<VectorStoreFileAssociation> response = client.GetFileAssociationsAsync(batchJob);
         await foreach (VectorStoreFileAssociation association in response.GetAllValuesAsync())
         {
             Assert.Multiple(() =>

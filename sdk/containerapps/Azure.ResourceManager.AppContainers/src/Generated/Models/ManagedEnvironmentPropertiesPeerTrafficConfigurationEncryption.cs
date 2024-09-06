@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Boolean indicating whether the peer traffic encryption is enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }
 }

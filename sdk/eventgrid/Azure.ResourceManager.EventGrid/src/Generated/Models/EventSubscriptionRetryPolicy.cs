@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Maximum number of delivery retry attempts for events. </summary>
+        [WirePath("maxDeliveryAttempts")]
         public int? MaxDeliveryAttempts { get; set; }
         /// <summary> Time To Live (in minutes) for events. </summary>
+        [WirePath("eventTimeToLiveInMinutes")]
         public int? EventTimeToLiveInMinutes { get; set; }
     }
 }

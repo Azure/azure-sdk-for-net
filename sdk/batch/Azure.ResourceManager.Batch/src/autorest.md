@@ -8,14 +8,18 @@ azure-arm: true
 csharp: true
 library-name: Batch
 namespace: Azure.ResourceManager.Batch
-require: https://github.com/Azure/azure-rest-api-specs/blob/d6fcc46341f274b8af42a4cdcfa14e1f8d472619/specification/batch/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d85634405ec3b905f1b0bfc350e47cb704aedb61/specification/batch/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
+
 
 # mgmt-debug:
 #   show-serialized-names: true
@@ -59,11 +63,11 @@ acronym-mapping:
 prepend-rp-prefix:
 - StorageAccountType
 - ProvisioningState
+- Severity
 
 override-operation-name:
   Location_CheckNameAvailability: CheckBatchNameAvailability
   Location_GetQuotas: GetBatchQuotas
-  Location_ListSupportedCloudServiceSkus: GetBatchSupportedCloudServiceSkus
   Location_ListSupportedVirtualMachineSkus: GetBatchSupportedVirtualMachineSkus
 
 rename-mapping:
@@ -95,7 +99,6 @@ rename-mapping:
   PoolProvisioningState: BatchAccountPoolProvisioningState
   DeploymentConfiguration: BatchDeploymentConfiguration
   DeploymentConfiguration.virtualMachineConfiguration: vmConfiguration
-  CloudServiceConfiguration: BatchCloudServiceConfiguration
   VirtualMachineConfiguration: BatchVmConfiguration
   DataDisk: BatchVmDataDisk
   DataDisk.diskSizeGB: DiskSizeInGB

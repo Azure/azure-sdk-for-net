@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> List of probes for the container. </summary>
+        [WirePath("probes")]
         public IList<ContainerAppProbe> Probes { get; }
     }
 }

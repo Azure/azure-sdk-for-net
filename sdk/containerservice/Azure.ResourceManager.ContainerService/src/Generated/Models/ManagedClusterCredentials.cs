@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Base64-encoded Kubernetes configuration file. </summary>
+        [WirePath("kubeconfigs")]
         public IReadOnlyList<ManagedClusterCredential> Kubeconfigs { get; }
     }
 }

@@ -84,18 +84,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
-            if (Optional.IsDefined(FixedParameters))
-            {
-                if (FixedParameters != null)
-                {
-                    writer.WritePropertyName("fixedParameters"u8);
-                    writer.WriteObjectValue(FixedParameters, options);
-                }
-                else
-                {
-                    writer.WriteNull("fixedParameters");
-                }
-            }
             if (Optional.IsDefined(LimitSettings))
             {
                 if (LimitSettings != null)
@@ -118,35 +106,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("nCrossValidations");
-                }
-            }
-            if (Optional.IsCollectionDefined(SearchSpace))
-            {
-                if (SearchSpace != null)
-                {
-                    writer.WritePropertyName("searchSpace"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in SearchSpace)
-                    {
-                        writer.WriteObjectValue(item, options);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("searchSpace");
-                }
-            }
-            if (Optional.IsDefined(SweepSettings))
-            {
-                if (SweepSettings != null)
-                {
-                    writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("sweepSettings");
                 }
             }
             if (Optional.IsDefined(TestData))
@@ -273,11 +232,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ForecastingTrainingSettings trainingSettings = default;
             IList<string> cvSplitColumnNames = default;
             TableVerticalFeaturizationSettings featurizationSettings = default;
-            TableFixedParameters fixedParameters = default;
             TableVerticalLimitSettings limitSettings = default;
             NCrossValidations nCrossValidations = default;
-            IList<TableParameterSubspace> searchSpace = default;
-            TableSweepSettings sweepSettings = default;
             MachineLearningTableJobInput testData = default;
             double? testDataSize = default;
             MachineLearningTableJobInput validationData = default;
@@ -345,16 +301,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     featurizationSettings = TableVerticalFeaturizationSettings.DeserializeTableVerticalFeaturizationSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("fixedParameters"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        fixedParameters = null;
-                        continue;
-                    }
-                    fixedParameters = TableFixedParameters.DeserializeTableFixedParameters(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("limitSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -373,31 +319,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     nCrossValidations = NCrossValidations.DeserializeNCrossValidations(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("searchSpace"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        searchSpace = null;
-                        continue;
-                    }
-                    List<TableParameterSubspace> array = new List<TableParameterSubspace>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(TableParameterSubspace.DeserializeTableParameterSubspace(item, options));
-                    }
-                    searchSpace = array;
-                    continue;
-                }
-                if (property.NameEquals("sweepSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        sweepSettings = null;
-                        continue;
-                    }
-                    sweepSettings = TableSweepSettings.DeserializeTableSweepSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("testData"u8))
@@ -496,11 +417,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 trainingSettings,
                 cvSplitColumnNames ?? new ChangeTrackingList<string>(),
                 featurizationSettings,
-                fixedParameters,
                 limitSettings,
                 nCrossValidations,
-                searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(),
-                sweepSettings,
                 testData,
                 testDataSize,
                 validationData,

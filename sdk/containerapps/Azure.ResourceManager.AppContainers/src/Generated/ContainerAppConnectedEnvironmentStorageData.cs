@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Storage properties. </summary>
         internal ConnectedEnvironmentStorageProperties Properties { get; set; }
         /// <summary> Azure file properties. </summary>
+        [WirePath("properties.azureFile")]
         public ContainerAppAzureFileProperties ConnectedEnvironmentStorageAzureFile
         {
             get => Properties is null ? default : Properties.AzureFile;
