@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Properties of ComputeInstance. </summary>
+        [WirePath("properties")]
         public MachineLearningComputeInstanceProperties Properties { get; set; }
     }
 }

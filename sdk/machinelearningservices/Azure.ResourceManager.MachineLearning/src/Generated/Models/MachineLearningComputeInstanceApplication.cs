@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Name of the ComputeInstance application. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> Application' endpoint URI. </summary>
+        [WirePath("endpointUri")]
         public Uri EndpointUri { get; }
     }
 }

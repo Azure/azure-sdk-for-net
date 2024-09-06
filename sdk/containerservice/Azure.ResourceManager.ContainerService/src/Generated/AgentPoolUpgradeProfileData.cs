@@ -89,12 +89,16 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> The Kubernetes version (major.minor.patch). </summary>
+        [WirePath("properties.kubernetesVersion")]
         public string KubernetesVersion { get; }
         /// <summary> The operating system type. The default is Linux. </summary>
+        [WirePath("properties.osType")]
         public ContainerServiceOSType OSType { get; }
         /// <summary> List of orchestrator types and versions available for upgrade. </summary>
+        [WirePath("properties.upgrades")]
         public IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> Upgrades { get; }
         /// <summary> The latest AKS supported node image version. </summary>
+        [WirePath("properties.latestNodeImageVersion")]
         public string LatestNodeImageVersion { get; }
     }
 }

@@ -13,15 +13,16 @@
     public partial class CertificateGetOptions : ITimeoutOptions, IODataSelect { }
     public partial class CertificateListOptions : ITimeoutOptions, IODataSelect, IODataFilter { }
     public partial class CertificateListNextOptions : IOptions { }
+    public partial class ComputeNodeDeallocateOptions : ITimeoutOptions { }
     public partial class ComputeNodeAddUserOptions : ITimeoutOptions { }
     public partial class ComputeNodeDeleteUserOptions : ITimeoutOptions { }
     public partial class ComputeNodeGetOptions : ITimeoutOptions, IODataSelect { }
-    public partial class ComputeNodeGetRemoteDesktopOptions : ITimeoutOptions { }
     public partial class ComputeNodeGetRemoteLoginSettingsOptions : ITimeoutOptions { }
     public partial class ComputeNodeListOptions : ITimeoutOptions, IODataSelect, IODataFilter { }
     public partial class ComputeNodeListNextOptions : IOptions { }
     public partial class ComputeNodeRebootOptions : ITimeoutOptions { }
     public partial class ComputeNodeReimageOptions : ITimeoutOptions { }
+    public partial class ComputeNodeStartOptions : ITimeoutOptions { }
     public partial class ComputeNodeExtensionGetOptions : ITimeoutOptions, IODataSelect { }
     public partial class ComputeNodeExtensionListOptions : ITimeoutOptions, IODataSelect { }
     public partial class ComputeNodeExtensionListNextOptions : IOptions { }

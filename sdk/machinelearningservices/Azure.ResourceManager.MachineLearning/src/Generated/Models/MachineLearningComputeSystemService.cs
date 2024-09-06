@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The type of this system service. </summary>
+        [WirePath("systemServiceType")]
         public string SystemServiceType { get; }
         /// <summary> Public IP address. </summary>
+        [WirePath("publicIpAddress")]
         public string PublicIPAddress { get; }
         /// <summary> The version for this type. </summary>
+        [WirePath("version")]
         public string Version { get; }
     }
 }

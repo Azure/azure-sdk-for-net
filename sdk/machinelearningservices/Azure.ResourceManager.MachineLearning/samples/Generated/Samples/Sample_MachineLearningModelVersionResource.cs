@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteWorkspaceModelVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/ModelVersion/delete.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/ModelVersion/delete.json
             // this example is just showing the usage of "ModelVersions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetWorkspaceModelVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/ModelVersion/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/ModelVersion/get.json
             // this example is just showing the usage of "ModelVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateWorkspaceModelVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/ModelVersion/createOrUpdate.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/ModelVersion/createOrUpdate.json
             // this example is just showing the usage of "ModelVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,11 +117,11 @@ Data =
                 ModelUri = new Uri("string"),
                 IsAnonymous = false,
                 Description = "string",
-                Properties =
+                Tags =
 {
 ["string"] = "string",
 },
-                Tags =
+                Properties =
 {
 ["string"] = "string",
 },
@@ -141,7 +141,7 @@ Data =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Publish_PublishWorkspaceModelVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/ModelVersion/publish.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/ModelVersion/publish.json
             // this example is just showing the usage of "ModelVersions_Publish" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,13 +160,13 @@ Data =
             MachineLearningModelVersionResource machineLearningModelVersion = client.GetMachineLearningModelVersionResource(machineLearningModelVersionResourceId);
 
             // invoke the operation
-            DestinationAsset body = new DestinationAsset()
+            DestinationAssetContent content = new DestinationAssetContent()
             {
+                RegistryName = "string",
                 DestinationName = "string",
                 DestinationVersion = "string",
-                RegistryName = "string",
             };
-            await machineLearningModelVersion.PublishAsync(WaitUntil.Completed, body);
+            await machineLearningModelVersion.PublishAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }

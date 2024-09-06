@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningOutboundRuleBasic data model. </summary>
+    /// <summary>
+    /// A class representing the MachineLearningOutboundRuleBasic data model.
+    /// Outbound Rule Basic Resource for the managed network of a machine learning workspace.
+    /// </summary>
     public partial class MachineLearningOutboundRuleBasicData : ResourceData
     {
         /// <summary>
@@ -89,6 +92,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
         /// </summary>
+        [WirePath("properties")]
         public MachineLearningOutboundRule Properties { get; set; }
     }
 }

@@ -83,26 +83,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Required by Concur connection category. </summary>
+        [WirePath("authUrl")]
         public Uri AuthUri { get; set; }
         /// <summary> Client id in the format of UUID. </summary>
+        [WirePath("clientId")]
         public Guid? ClientId { get; set; }
         /// <summary> Gets or sets the client secret. </summary>
+        [WirePath("clientSecret")]
         public string ClientSecret { get; set; }
         /// <summary> Required by GoogleAdWords connection category. </summary>
+        [WirePath("developerToken")]
         public string DeveloperToken { get; set; }
         /// <summary> Gets or sets the password. </summary>
+        [WirePath("password")]
         public string Password { get; set; }
         /// <summary>
         /// Required by GoogleBigQuery, GoogleAdWords, Hubspot, QuickBooks, Square, Xero, Zoho
         /// where user needs to get RefreshToken offline
         /// </summary>
+        [WirePath("refreshToken")]
         public string RefreshToken { get; set; }
         /// <summary> Required by QuickBooks and Xero connection categories. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary>
         /// Concur, ServiceNow auth server AccessToken grant type is 'Password'
         /// which requires UsernamePassword
         /// </summary>
+        [WirePath("username")]
         public string Username { get; set; }
     }
 }

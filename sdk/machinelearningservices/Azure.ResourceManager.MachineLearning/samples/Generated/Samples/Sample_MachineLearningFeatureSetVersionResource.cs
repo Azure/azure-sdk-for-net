@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteWorkspaceFeaturesetVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/FeaturesetVersion/delete.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/delete.json
             // this example is just showing the usage of "FeaturesetVersions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetWorkspaceFeaturesetVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/FeaturesetVersion/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/get.json
             // this example is just showing the usage of "FeaturesetVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateWorkspaceFeaturesetVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/FeaturesetVersion/createOrUpdate.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/createOrUpdate.json
             // this example is just showing the usage of "FeaturesetVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,24 +103,10 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // invoke the operation
             MachineLearningFeatureSetVersionData data = new MachineLearningFeatureSetVersionData(new MachineLearningFeatureSetVersionProperties()
             {
-                Entities =
-{
-"string"
-},
+                SpecificationPath = "string",
                 MaterializationSettings = new MaterializationSettings()
                 {
-                    Notification = new NotificationSetting()
-                    {
-                        EmailOn =
-{
-EmailNotificationEnableType.JobFailed
-},
-                        Emails =
-{
-"string"
-},
-                    },
-                    ResourceInstanceType = "string",
+                    StoreType = MaterializationStoreType.Online,
                     Schedule = new MachineLearningRecurrenceTrigger(MachineLearningRecurrenceFrequency.Day, 1)
                     {
                         Schedule = new MachineLearningRecurrenceSchedule(new int[]
@@ -131,35 +117,49 @@ EmailNotificationEnableType.JobFailed
 1
             })
                         {
-                            MonthDays =
-{
-1
-},
                             WeekDays =
 {
 MachineLearningDayOfWeek.Monday
+},
+                            MonthDays =
+{
+1
 },
                         },
                         EndTime = "string",
                         StartTime = "string",
                         TimeZone = "string",
                     },
+                    Notification = new NotificationSetting()
+                    {
+                        Emails =
+{
+"string"
+},
+                        EmailOn =
+{
+EmailNotificationEnableType.JobFailed
+},
+                    },
+                    ResourceInstanceType = "string",
                     SparkConfiguration =
 {
 ["string"] = "string",
 },
-                    StoreType = MaterializationStoreType.Online,
                 },
-                SpecificationPath = "string",
                 Stage = "string",
-                IsAnonymous = false,
+                Entities =
+{
+"string"
+},
                 IsArchived = false,
+                IsAnonymous = false,
                 Description = "string",
-                Properties =
+                Tags =
 {
 ["string"] = "string",
 },
-                Tags =
+                Properties =
 {
 ["string"] = "string",
 },
@@ -179,7 +179,7 @@ MachineLearningDayOfWeek.Monday
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Backfill_BackfillWorkspaceFeaturesetVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/FeaturesetVersion/backfill.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/backfill.json
             // this example is just showing the usage of "FeaturesetVersions_Backfill" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -200,24 +200,24 @@ MachineLearningDayOfWeek.Monday
             // invoke the operation
             FeatureSetVersionBackfillContent content = new FeatureSetVersionBackfillContent()
             {
+                DisplayName = "string",
+                Description = "string",
+                FeatureWindow = new FeatureWindow()
+                {
+                    FeatureWindowStart = DateTimeOffset.Parse("2020-01-01T12:34:56.999+00:51"),
+                    FeatureWindowEnd = DateTimeOffset.Parse("2020-01-01T12:34:56.999+00:51"),
+                },
                 DataAvailabilityStatus =
 {
 DataAvailabilityStatus.None
 },
-                Description = "string",
-                DisplayName = "string",
-                FeatureWindow = new FeatureWindow()
-                {
-                    FeatureWindowEnd = DateTimeOffset.Parse("2020-01-01T12:34:56.999+00:51"),
-                    FeatureWindowStart = DateTimeOffset.Parse("2020-01-01T12:34:56.999+00:51"),
-                },
                 JobId = "string",
-                ResourceInstanceType = "string",
-                SparkConfiguration =
+                Tags =
 {
 ["string"] = "string",
 },
-                Tags =
+                ResourceInstanceType = "string",
+                SparkConfiguration =
 {
 ["string"] = "string",
 },

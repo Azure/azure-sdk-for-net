@@ -1237,7 +1237,7 @@ namespace Azure.Storage.DataMovement.Tests
                     CallBase = true,
                 };
                 transfer.Setup(t => t.CanPause()).Returns(canPause);
-                transfer.Setup(t => t.PauseAsync(_mockingToken)).Returns(Task.CompletedTask);
+                transfer.Setup(t => t.PauseAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
                 if (canPause)
                 {
                     pausable.Add(transfer);
@@ -1253,7 +1253,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             foreach (Mock<DataTransfer> transfer in pausable)
             {
-                transfer.Verify(t => t.PauseAsync(_mockingToken), Times.Once());
+                transfer.Verify(t => t.PauseAsync(It.IsAny<CancellationToken>()), Times.Once());
             }
             foreach (Mock<DataTransfer> transfer in pausable.Concat(unpausable))
             {

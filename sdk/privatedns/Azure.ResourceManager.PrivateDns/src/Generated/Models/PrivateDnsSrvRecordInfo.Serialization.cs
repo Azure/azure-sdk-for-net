@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -133,6 +134,89 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsSrvRecordInfo(priority, weight, port, target, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Priority), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  priority: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Priority))
+                {
+                    builder.Append("  priority: ");
+                    builder.AppendLine($"{Priority.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Weight), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  weight: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Weight))
+                {
+                    builder.Append("  weight: ");
+                    builder.AppendLine($"{Weight.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  port: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
+                {
+                    builder.Append("  port: ");
+                    builder.AppendLine($"{Port.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  target: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Target))
+                {
+                    builder.Append("  target: ");
+                    if (Target.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Target}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Target}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PrivateDnsSrvRecordInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsSrvRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +225,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateDnsSrvRecordInfo)} does not support writing '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -33,15 +34,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
-            {
-                writer.WritePropertyName("groupId"u8);
-                writer.WriteStringValue(GroupId);
-            }
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
+            }
+            if (Optional.IsDefined(GroupId))
+            {
+                writer.WritePropertyName("groupId"u8);
+                writer.WriteStringValue(GroupId);
             }
             if (Optional.IsDefined(RequestMessage))
             {
@@ -93,8 +94,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string name = default;
-            string groupId = default;
             ResourceIdentifier privateLinkResourceId = default;
+            string groupId = default;
             string requestMessage = default;
             MachineLearningPrivateEndpointServiceConnectionStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,11 +116,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("groupId"u8))
-                        {
-                            groupId = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("privateLinkResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -127,6 +123,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                                 continue;
                             }
                             privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("groupId"u8))
+                        {
+                            groupId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("requestMessage"u8))
@@ -154,11 +155,128 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningSharedPrivateLinkResource(
                 name,
-                groupId,
                 privateLinkResourceId,
+                groupId,
                 requestMessage,
                 status,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateLinkResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLinkResourceId))
+                {
+                    builder.Append("    privateLinkResourceId: ");
+                    builder.AppendLine($"'{PrivateLinkResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    groupId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GroupId))
+                {
+                    builder.Append("    groupId: ");
+                    if (GroupId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GroupId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GroupId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestMessage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestMessage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestMessage))
+                {
+                    builder.Append("    requestMessage: ");
+                    if (RequestMessage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RequestMessage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RequestMessage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("    status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningSharedPrivateLinkResource>.Write(ModelReaderWriterOptions options)
@@ -169,6 +287,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningSharedPrivateLinkResource)} does not support writing '{options.Format}' format.");
             }
