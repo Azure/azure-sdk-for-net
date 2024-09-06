@@ -203,22 +203,22 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             {
                 VirtualNetwork = new WritableSubResource { Id = vnet.Id },
                 RegistrationEnabled = false,
-                ResolutionPolicy = ResolutionPolicy.NxDomainRedirect,
+                PrivateDnsResolutionPolicy = PrivateDnsResolutionPolicy.NxDomainRedirect,
             };
 
             await CreateOrUpdateVirtualNetworkLink(privateZone, vnetLinkName, virtualNetworkLinkData);
 
             var virtualNetworkLinkResource = await privateZone.GetVirtualNetworkLinks().GetAsync(vnetLinkName);
             var vnetLinkData = virtualNetworkLinkResource.Value.Data;
-            Assert.AreEqual(vnetLinkData.ResolutionPolicy, virtualNetworkLinkData.ResolutionPolicy);
+            Assert.AreEqual(vnetLinkData.PrivateDnsResolutionPolicy, virtualNetworkLinkData.PrivateDnsResolutionPolicy);
 
             // Update resolutionPolicy to default
-            virtualNetworkLinkData.ResolutionPolicy = ResolutionPolicy.Default;
+            virtualNetworkLinkData.PrivateDnsResolutionPolicy = PrivateDnsResolutionPolicy.Default;
             await CreateOrUpdateVirtualNetworkLink(privateZone, vnetLinkName, virtualNetworkLinkData);
 
             virtualNetworkLinkResource = await privateZone.GetVirtualNetworkLinks().GetAsync(vnetLinkName);
             vnetLinkData = virtualNetworkLinkResource.Value.Data;
-            Assert.AreEqual(vnetLinkData.ResolutionPolicy, virtualNetworkLinkData.ResolutionPolicy);
+            Assert.AreEqual(vnetLinkData.PrivateDnsResolutionPolicy, virtualNetworkLinkData.PrivateDnsResolutionPolicy);
         }
 
         private void ValidatePrivateZone(PrivateDnsZoneResource privateZone, string privateZoneName)

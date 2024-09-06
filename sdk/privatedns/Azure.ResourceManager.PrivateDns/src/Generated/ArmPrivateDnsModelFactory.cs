@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="etag"> The ETag of the virtual network link. </param>
         /// <param name="virtualNetworkId"> The reference of the virtual network. </param>
         /// <param name="registrationEnabled"> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </param>
-        /// <param name="resolutionPolicy"> The resolution policy on the virtual network link. Only applicable for virtual network links to privatelink zones, and for A,AAAA,CNAME queries. When set to 'NxDomainRedirect', Azure DNS resolver falls back to public resolution if private dns query resolution results in non-existent domain response. </param>
+        /// <param name="privateDnsResolutionPolicy"> The resolution policy on the virtual network link. Only applicable for virtual network links to privatelink zones, and for A,AAAA,CNAME queries. When set to 'NxDomainRedirect', Azure DNS resolver falls back to public resolution if private dns query resolution results in non-existent domain response. </param>
         /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <returns> A new <see cref="PrivateDns.VirtualNetworkLinkData"/> instance for mocking. </returns>
-        public static VirtualNetworkLinkData VirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, bool? registrationEnabled = null, ResolutionPolicy? resolutionPolicy = null, VirtualNetworkLinkState? virtualNetworkLinkState = null, PrivateDnsProvisioningState? privateDnsProvisioningState = null)
+        public static VirtualNetworkLinkData VirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, bool? registrationEnabled = null, PrivateDnsResolutionPolicy? privateDnsResolutionPolicy = null, VirtualNetworkLinkState? virtualNetworkLinkState = null, PrivateDnsProvisioningState? privateDnsProvisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 etag,
                 virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null,
                 registrationEnabled,
-                resolutionPolicy,
+                privateDnsResolutionPolicy,
                 virtualNetworkLinkState,
                 privateDnsProvisioningState,
                 serializedAdditionalRawData: null);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualNetworkLinkData VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier virtualNetworkId, bool? registrationEnabled, VirtualNetworkLinkState? virtualNetworkLinkState, PrivateDnsProvisioningState? privateDnsProvisioningState)
         {
-            return VirtualNetworkLinkData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, virtualNetworkId: virtualNetworkId, registrationEnabled: registrationEnabled, resolutionPolicy: default, virtualNetworkLinkState: virtualNetworkLinkState, privateDnsProvisioningState: privateDnsProvisioningState);
+            return VirtualNetworkLinkData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, virtualNetworkId: virtualNetworkId, registrationEnabled: registrationEnabled, privateDnsResolutionPolicy: default, virtualNetworkLinkState: virtualNetworkLinkState, privateDnsProvisioningState: privateDnsProvisioningState);
         }
     }
 }
