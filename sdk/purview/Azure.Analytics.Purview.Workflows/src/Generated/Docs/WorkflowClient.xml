@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetWorkflowAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -21,7 +21,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 This sample shows how to call GetWorkflowAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -47,7 +47,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
       <example>
 This sample shows how to call GetWorkflow and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -63,7 +63,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 This sample shows how to call GetWorkflow with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -89,7 +89,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
       <example>
 This sample shows how to call CreateOrReplaceAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -118,7 +118,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 This sample shows how to call CreateOrReplaceAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -161,7 +161,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
       <example>
 This sample shows how to call CreateOrReplace and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -190,7 +190,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 This sample shows how to call CreateOrReplace with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -233,7 +233,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
       <example>
 This sample shows how to call DeleteAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -243,7 +243,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -256,7 +256,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call Delete.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -266,7 +266,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Delete with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -279,7 +279,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ValidateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -305,7 +305,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("message").ToString
 ]]></code>
 This sample shows how to call ValidateAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -340,7 +340,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("message").ToString
       <example>
 This sample shows how to call Validate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -366,7 +366,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("message").ToString
 ]]></code>
 This sample shows how to call Validate with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowClient client = new WorkflowClient(endpoint, credential);
 

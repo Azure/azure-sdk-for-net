@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCollection_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCollection_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCollection_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCollection_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateCollection_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateCollection_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -128,7 +128,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateCollection_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -163,7 +163,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateCollection_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -198,7 +198,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteCollection_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteCollection_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -224,7 +224,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteCollection_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -237,7 +237,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteCollection_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -250,7 +250,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCollectionPath_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -264,7 +264,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCollectionPath_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -278,7 +278,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCollectionPath_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -293,7 +293,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCollectionPath_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -308,7 +308,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetChildCollectionNames_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -323,7 +323,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetChildCollectionNames_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -338,7 +338,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetChildCollectionNames_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
@@ -354,7 +354,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetChildCollectionNames_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 

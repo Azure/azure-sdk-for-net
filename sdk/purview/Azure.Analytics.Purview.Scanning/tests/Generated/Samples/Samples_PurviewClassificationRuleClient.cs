@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProperties_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProperties_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProperties_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProperties_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -136,7 +136,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -162,7 +162,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -176,7 +176,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -190,7 +190,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -206,7 +206,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -222,7 +222,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TagVersion_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -236,7 +236,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TagVersion_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -250,7 +250,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TagVersion_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -273,7 +273,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TagVersion_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -296,7 +296,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetVersions_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -311,7 +311,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetVersions_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -326,7 +326,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetVersions_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -343,7 +343,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetVersions_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 

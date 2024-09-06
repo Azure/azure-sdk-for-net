@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetAccountPropertiesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -16,7 +16,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetAccountPropertiesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -67,7 +67,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call GetAccountProperties and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -78,7 +78,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetAccountProperties with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -129,7 +129,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call UpdateAccountPropertiesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -141,7 +141,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call UpdateAccountPropertiesAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -196,7 +196,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call UpdateAccountProperties and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -208,7 +208,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call UpdateAccountProperties with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -263,7 +263,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call GetAccessKeysAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -274,7 +274,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetAccessKeysAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -289,7 +289,7 @@ Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
       <example>
 This sample shows how to call GetAccessKeys and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -300,7 +300,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetAccessKeys with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -315,7 +315,7 @@ Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
       <example>
 This sample shows how to call RegenerateAccessKeyAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -327,7 +327,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call RegenerateAccessKeyAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -346,7 +346,7 @@ Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
       <example>
 This sample shows how to call RegenerateAccessKey and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -358,7 +358,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call RegenerateAccessKey with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -377,7 +377,7 @@ Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
       <example>
 This sample shows how to call GetCollectionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -389,7 +389,7 @@ await foreach (BinaryData item in client.GetCollectionsAsync(null, null))
 ]]></code>
 This sample shows how to call GetCollectionsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -415,7 +415,7 @@ await foreach (BinaryData item in client.GetCollectionsAsync("<skipToken>", null
       <example>
 This sample shows how to call GetCollections and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -427,7 +427,7 @@ foreach (BinaryData item in client.GetCollections(null, null))
 ]]></code>
 This sample shows how to call GetCollections with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -453,7 +453,7 @@ foreach (BinaryData item in client.GetCollections("<skipToken>", null))
       <example>
 This sample shows how to call GetResourceSetRulesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -465,7 +465,7 @@ await foreach (BinaryData item in client.GetResourceSetRulesAsync(null, null))
 ]]></code>
 This sample shows how to call GetResourceSetRulesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -564,7 +564,7 @@ await foreach (BinaryData item in client.GetResourceSetRulesAsync("<skipToken>",
       <example>
 This sample shows how to call GetResourceSetRules and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
@@ -576,7 +576,7 @@ foreach (BinaryData item in client.GetResourceSetRules(null, null))
 ]]></code>
 This sample shows how to call GetResourceSetRules with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 

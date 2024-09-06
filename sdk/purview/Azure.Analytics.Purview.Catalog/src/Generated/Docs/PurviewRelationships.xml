@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call CreateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -17,7 +17,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -77,7 +77,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call Create and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -89,7 +89,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call Create with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -149,7 +149,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call UpdateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -161,7 +161,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call UpdateAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -221,7 +221,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call Update and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -233,7 +233,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call Update with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -293,7 +293,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetPurviewRelationshipAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -304,7 +304,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPurviewRelationshipAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -367,7 +367,7 @@ Console.WriteLine(result.GetProperty("relationship").GetProperty("lastModifiedTS
       <example>
 This sample shows how to call GetPurviewRelationship and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -378,7 +378,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPurviewRelationship with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -441,7 +441,7 @@ Console.WriteLine(result.GetProperty("relationship").GetProperty("lastModifiedTS
       <example>
 This sample shows how to call DeleteAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -451,7 +451,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -464,7 +464,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call Delete.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
@@ -474,7 +474,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Delete with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 

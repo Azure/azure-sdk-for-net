@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Search_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Search_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Search_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -123,7 +123,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Search_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -196,7 +196,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_Suggest_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -211,7 +211,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Suggest_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -226,7 +226,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_Suggest_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -262,7 +262,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Suggest_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -298,7 +298,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_Browse_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -313,7 +313,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Browse_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -328,7 +328,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_Browse_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -359,7 +359,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Browse_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -390,7 +390,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_AutoComplete_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -405,7 +405,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AutoComplete_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -420,7 +420,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_AutoComplete_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -441,7 +441,7 @@ sort = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AutoComplete_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 

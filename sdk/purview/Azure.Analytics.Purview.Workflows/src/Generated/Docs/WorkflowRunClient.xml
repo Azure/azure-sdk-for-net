@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetWorkflowRunAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
@@ -18,7 +18,7 @@ Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString()
 ]]></code>
 This sample shows how to call GetWorkflowRunAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
@@ -46,7 +46,7 @@ Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString()
       <example>
 This sample shows how to call GetWorkflowRun and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
@@ -59,7 +59,7 @@ Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString()
 ]]></code>
 This sample shows how to call GetWorkflowRun with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
@@ -87,7 +87,7 @@ Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString()
       <example>
 This sample shows how to call CancelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
@@ -98,7 +98,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CancelAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
@@ -115,7 +115,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call Cancel.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
@@ -126,7 +126,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Cancel with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 

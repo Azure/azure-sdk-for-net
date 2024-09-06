@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkflowTask_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkflowTask_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkflowTask_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkflowTask_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
@@ -128,7 +128,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Reassign_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Reassign_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
@@ -156,7 +156,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Reassign_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
@@ -180,7 +180,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Reassign_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 

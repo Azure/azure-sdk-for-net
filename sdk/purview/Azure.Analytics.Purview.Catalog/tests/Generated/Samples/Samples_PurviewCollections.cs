@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateEntity_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateEntity_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateEntity_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
@@ -227,7 +227,7 @@ info = "<info>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateEntity_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
@@ -404,7 +404,7 @@ info = "<info>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateEntityInBulk_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
@@ -419,7 +419,7 @@ info = "<info>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateEntityInBulk_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
@@ -434,7 +434,7 @@ info = "<info>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateEntityInBulk_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
@@ -614,7 +614,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateEntityInBulk_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
@@ -794,7 +794,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_MoveEntitiesToCollection_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
@@ -809,7 +809,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_MoveEntitiesToCollection_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
@@ -824,7 +824,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_MoveEntitiesToCollection_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
@@ -907,7 +907,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_MoveEntitiesToCollection_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 

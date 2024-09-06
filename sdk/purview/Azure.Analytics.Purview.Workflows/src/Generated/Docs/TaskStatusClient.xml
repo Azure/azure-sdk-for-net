@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call UpdateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TaskStatusClient client = new TaskStatusClient(endpoint, credential);
 
@@ -19,7 +19,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call UpdateAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TaskStatusClient client = new TaskStatusClient(endpoint, credential);
 
@@ -37,7 +37,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call Update.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TaskStatusClient client = new TaskStatusClient(endpoint, credential);
 
@@ -51,7 +51,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Update with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TaskStatusClient client = new TaskStatusClient(endpoint, credential);
 

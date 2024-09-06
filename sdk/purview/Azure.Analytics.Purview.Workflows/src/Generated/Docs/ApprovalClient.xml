@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call ApproveAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ApprovalClient client = new ApprovalClient(endpoint, credential);
 
@@ -16,7 +16,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call ApproveAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ApprovalClient client = new ApprovalClient(endpoint, credential);
 
@@ -33,7 +33,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call Approve.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ApprovalClient client = new ApprovalClient(endpoint, credential);
 
@@ -44,7 +44,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Approve with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ApprovalClient client = new ApprovalClient(endpoint, credential);
 
@@ -61,7 +61,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RejectAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ApprovalClient client = new ApprovalClient(endpoint, credential);
 
@@ -72,7 +72,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call RejectAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ApprovalClient client = new ApprovalClient(endpoint, credential);
 
@@ -89,7 +89,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call Reject.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ApprovalClient client = new ApprovalClient(endpoint, credential);
 
@@ -100,7 +100,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Reject with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ApprovalClient client = new ApprovalClient(endpoint, credential);
 

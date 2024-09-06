@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkflow_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkflow_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkflow_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkflow_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrReplace_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -142,7 +142,7 @@ type = "when_term_creation_is_requested",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrReplace_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -174,7 +174,7 @@ type = "when_term_creation_is_requested",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrReplace_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -217,7 +217,7 @@ underGlossary = "<underGlossary>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrReplace_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -260,7 +260,7 @@ underGlossary = "<underGlossary>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -273,7 +273,7 @@ underGlossary = "<underGlossary>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -286,7 +286,7 @@ underGlossary = "<underGlossary>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -299,7 +299,7 @@ underGlossary = "<underGlossary>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -312,7 +312,7 @@ underGlossary = "<underGlossary>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Validate_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -341,7 +341,7 @@ type = "when_term_creation_is_requested",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Validate_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -370,7 +370,7 @@ type = "when_term_creation_is_requested",
         [Ignore("Only validating compilation of examples")]
         public void Example_Validate_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 
@@ -405,7 +405,7 @@ underGlossary = "<underGlossary>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Validate_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             WorkflowClient client = new WorkflowClient(endpoint, credential);
 

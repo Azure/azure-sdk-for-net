@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetWorkflowRunsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
 
@@ -23,7 +23,7 @@ await foreach (BinaryData item in client.GetWorkflowRunsAsync(null, null, null, 
 ]]></code>
 This sample shows how to call GetWorkflowRunsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
 
@@ -48,7 +48,7 @@ await foreach (BinaryData item in client.GetWorkflowRunsAsync("<viewMode>", "1d"
       <example>
 This sample shows how to call GetWorkflowRuns and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
 
@@ -66,7 +66,7 @@ foreach (BinaryData item in client.GetWorkflowRuns(null, null, null, null, null,
 ]]></code>
 This sample shows how to call GetWorkflowRuns with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
 
