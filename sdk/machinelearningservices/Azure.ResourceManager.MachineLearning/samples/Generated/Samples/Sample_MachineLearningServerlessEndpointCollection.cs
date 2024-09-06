@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
-    public partial class Sample_ServerlessEndpointCollection
+    public partial class Sample_MachineLearningServerlessEndpointCollection
     {
         // List Workspace Serverless Endpoint.
         [NUnit.Framework.Test]
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
-            // get the collection of this ServerlessEndpointResource
-            ServerlessEndpointCollection collection = machineLearningWorkspace.GetServerlessEndpoints();
+            // get the collection of this MachineLearningServerlessEndpointResource
+            MachineLearningServerlessEndpointCollection collection = machineLearningWorkspace.GetMachineLearningServerlessEndpoints();
 
             // invoke the operation and iterate over the result
-            await foreach (ServerlessEndpointResource item in collection.GetAllAsync())
+            await foreach (MachineLearningServerlessEndpointResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ServerlessEndpointData resourceData = item.Data;
+                MachineLearningServerlessEndpointData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
-            // get the collection of this ServerlessEndpointResource
-            ServerlessEndpointCollection collection = machineLearningWorkspace.GetServerlessEndpoints();
+            // get the collection of this MachineLearningServerlessEndpointResource
+            MachineLearningServerlessEndpointCollection collection = machineLearningWorkspace.GetMachineLearningServerlessEndpoints();
 
             // invoke the operation
             string name = "string";
-            ServerlessEndpointResource result = await collection.GetAsync(name);
+            MachineLearningServerlessEndpointResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServerlessEndpointData resourceData = result.Data;
+            MachineLearningServerlessEndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
-            // get the collection of this ServerlessEndpointResource
-            ServerlessEndpointCollection collection = machineLearningWorkspace.GetServerlessEndpoints();
+            // get the collection of this MachineLearningServerlessEndpointResource
+            MachineLearningServerlessEndpointCollection collection = machineLearningWorkspace.GetMachineLearningServerlessEndpoints();
 
             // invoke the operation
             string name = "string";
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
-            // get the collection of this ServerlessEndpointResource
-            ServerlessEndpointCollection collection = machineLearningWorkspace.GetServerlessEndpoints();
+            // get the collection of this MachineLearningServerlessEndpointResource
+            MachineLearningServerlessEndpointCollection collection = machineLearningWorkspace.GetMachineLearningServerlessEndpoints();
 
             // invoke the operation
             string name = "string";
-            NullableResponse<ServerlessEndpointResource> response = await collection.GetIfExistsAsync(name);
-            ServerlessEndpointResource result = response.HasValue ? response.Value : null;
+            NullableResponse<MachineLearningServerlessEndpointResource> response = await collection.GetIfExistsAsync(name);
+            MachineLearningServerlessEndpointResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ServerlessEndpointData resourceData = result.Data;
+                MachineLearningServerlessEndpointData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
-            // get the collection of this ServerlessEndpointResource
-            ServerlessEndpointCollection collection = machineLearningWorkspace.GetServerlessEndpoints();
+            // get the collection of this MachineLearningServerlessEndpointResource
+            MachineLearningServerlessEndpointCollection collection = machineLearningWorkspace.GetMachineLearningServerlessEndpoints();
 
             // invoke the operation
             string name = "string";
-            ServerlessEndpointData data = new ServerlessEndpointData(new AzureLocation("string"), new ServerlessEndpointProperties(ServerlessInferenceEndpointAuthMode.Key)
+            MachineLearningServerlessEndpointData data = new MachineLearningServerlessEndpointData(new AzureLocation("string"), new ServerlessEndpointProperties(ServerlessInferenceEndpointAuthMode.Key)
             {
                 ModelId = "string",
                 ContentSafetyStatus = ContentSafetyStatus.Enabled,
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 {
 },
             };
-            ArmOperation<ServerlessEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            ServerlessEndpointResource result = lro.Value;
+            ArmOperation<MachineLearningServerlessEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            MachineLearningServerlessEndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServerlessEndpointData resourceData = result.Data;
+            MachineLearningServerlessEndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

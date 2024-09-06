@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
-    public partial class Sample_ServerlessEndpointResource
+    public partial class Sample_MachineLearningServerlessEndpointResource
     {
         // Delete Workspace Serverless Endpoint.
         [NUnit.Framework.Test]
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerlessEndpointResource created on azure
-            // for more information of creating ServerlessEndpointResource, please refer to the document of ServerlessEndpointResource
+            // this example assumes you already have this MachineLearningServerlessEndpointResource created on azure
+            // for more information of creating MachineLearningServerlessEndpointResource, please refer to the document of MachineLearningServerlessEndpointResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";
-            ResourceIdentifier serverlessEndpointResourceId = ServerlessEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
-            ServerlessEndpointResource serverlessEndpoint = client.GetServerlessEndpointResource(serverlessEndpointResourceId);
+            ResourceIdentifier machineLearningServerlessEndpointResourceId = MachineLearningServerlessEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
+            MachineLearningServerlessEndpointResource machineLearningServerlessEndpoint = client.GetMachineLearningServerlessEndpointResource(machineLearningServerlessEndpointResourceId);
 
             // invoke the operation
-            await serverlessEndpoint.DeleteAsync(WaitUntil.Completed);
+            await machineLearningServerlessEndpoint.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerlessEndpointResource created on azure
-            // for more information of creating ServerlessEndpointResource, please refer to the document of ServerlessEndpointResource
+            // this example assumes you already have this MachineLearningServerlessEndpointResource created on azure
+            // for more information of creating MachineLearningServerlessEndpointResource, please refer to the document of MachineLearningServerlessEndpointResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";
-            ResourceIdentifier serverlessEndpointResourceId = ServerlessEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
-            ServerlessEndpointResource serverlessEndpoint = client.GetServerlessEndpointResource(serverlessEndpointResourceId);
+            ResourceIdentifier machineLearningServerlessEndpointResourceId = MachineLearningServerlessEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
+            MachineLearningServerlessEndpointResource machineLearningServerlessEndpoint = client.GetMachineLearningServerlessEndpointResource(machineLearningServerlessEndpointResourceId);
 
             // invoke the operation
-            ServerlessEndpointResource result = await serverlessEndpoint.GetAsync();
+            MachineLearningServerlessEndpointResource result = await machineLearningServerlessEndpoint.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServerlessEndpointData resourceData = result.Data;
+            MachineLearningServerlessEndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerlessEndpointResource created on azure
-            // for more information of creating ServerlessEndpointResource, please refer to the document of ServerlessEndpointResource
+            // this example assumes you already have this MachineLearningServerlessEndpointResource created on azure
+            // for more information of creating MachineLearningServerlessEndpointResource, please refer to the document of MachineLearningServerlessEndpointResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";
-            ResourceIdentifier serverlessEndpointResourceId = ServerlessEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
-            ServerlessEndpointResource serverlessEndpoint = client.GetServerlessEndpointResource(serverlessEndpointResourceId);
+            ResourceIdentifier machineLearningServerlessEndpointResourceId = MachineLearningServerlessEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
+            MachineLearningServerlessEndpointResource machineLearningServerlessEndpoint = client.GetMachineLearningServerlessEndpointResource(machineLearningServerlessEndpointResourceId);
 
             // invoke the operation
-            ServerlessEndpointPatch patch = new ServerlessEndpointPatch()
+            MachineLearningServerlessEndpointPatch patch = new MachineLearningServerlessEndpointPatch()
             {
                 Sku = new MachineLearningSkuPatch()
                 {
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 {
 },
             };
-            ArmOperation<ServerlessEndpointResource> lro = await serverlessEndpoint.UpdateAsync(WaitUntil.Completed, patch);
-            ServerlessEndpointResource result = lro.Value;
+            ArmOperation<MachineLearningServerlessEndpointResource> lro = await machineLearningServerlessEndpoint.UpdateAsync(WaitUntil.Completed, patch);
+            MachineLearningServerlessEndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServerlessEndpointData resourceData = result.Data;
+            MachineLearningServerlessEndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -146,17 +146,17 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerlessEndpointResource created on azure
-            // for more information of creating ServerlessEndpointResource, please refer to the document of ServerlessEndpointResource
+            // this example assumes you already have this MachineLearningServerlessEndpointResource created on azure
+            // for more information of creating MachineLearningServerlessEndpointResource, please refer to the document of MachineLearningServerlessEndpointResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";
-            ResourceIdentifier serverlessEndpointResourceId = ServerlessEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
-            ServerlessEndpointResource serverlessEndpoint = client.GetServerlessEndpointResource(serverlessEndpointResourceId);
+            ResourceIdentifier machineLearningServerlessEndpointResourceId = MachineLearningServerlessEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
+            MachineLearningServerlessEndpointResource machineLearningServerlessEndpoint = client.GetMachineLearningServerlessEndpointResource(machineLearningServerlessEndpointResourceId);
 
             // invoke the operation
-            MachineLearningEndpointAuthKeys result = await serverlessEndpoint.GetKeysAsync();
+            MachineLearningEndpointAuthKeys result = await machineLearningServerlessEndpoint.GetKeysAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -174,21 +174,21 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerlessEndpointResource created on azure
-            // for more information of creating ServerlessEndpointResource, please refer to the document of ServerlessEndpointResource
+            // this example assumes you already have this MachineLearningServerlessEndpointResource created on azure
+            // for more information of creating MachineLearningServerlessEndpointResource, please refer to the document of MachineLearningServerlessEndpointResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";
-            ResourceIdentifier serverlessEndpointResourceId = ServerlessEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
-            ServerlessEndpointResource serverlessEndpoint = client.GetServerlessEndpointResource(serverlessEndpointResourceId);
+            ResourceIdentifier machineLearningServerlessEndpointResourceId = MachineLearningServerlessEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
+            MachineLearningServerlessEndpointResource machineLearningServerlessEndpoint = client.GetMachineLearningServerlessEndpointResource(machineLearningServerlessEndpointResourceId);
 
             // invoke the operation
             MachineLearningEndpointKeyRegenerateContent content = new MachineLearningEndpointKeyRegenerateContent(MachineLearningKeyType.Primary)
             {
                 KeyValue = "string",
             };
-            ArmOperation<MachineLearningEndpointAuthKeys> lro = await serverlessEndpoint.RegenerateKeysAsync(WaitUntil.Completed, content);
+            ArmOperation<MachineLearningEndpointAuthKeys> lro = await machineLearningServerlessEndpoint.RegenerateKeysAsync(WaitUntil.Completed, content);
             MachineLearningEndpointAuthKeys result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

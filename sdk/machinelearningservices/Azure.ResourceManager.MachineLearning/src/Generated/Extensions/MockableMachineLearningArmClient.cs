@@ -491,15 +491,15 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServerlessEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerlessEndpointResource.CreateResourceIdentifier" /> to create a <see cref="ServerlessEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MachineLearningServerlessEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningServerlessEndpointResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningServerlessEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerlessEndpointResource"/> object. </returns>
-        public virtual ServerlessEndpointResource GetServerlessEndpointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningServerlessEndpointResource"/> object. </returns>
+        public virtual MachineLearningServerlessEndpointResource GetMachineLearningServerlessEndpointResource(ResourceIdentifier id)
         {
-            ServerlessEndpointResource.ValidateResourceId(id);
-            return new ServerlessEndpointResource(Client, id);
+            MachineLearningServerlessEndpointResource.ValidateResourceId(id);
+            return new MachineLearningServerlessEndpointResource(Client, id);
         }
 
         /// <summary>

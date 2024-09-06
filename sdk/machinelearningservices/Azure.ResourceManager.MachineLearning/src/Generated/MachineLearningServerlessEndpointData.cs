@@ -13,8 +13,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the ServerlessEndpoint data model. </summary>
-    public partial class ServerlessEndpointData : TrackedResourceData
+    /// <summary> A class representing the MachineLearningServerlessEndpoint data model. </summary>
+    public partial class MachineLearningServerlessEndpointData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,18 +48,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServerlessEndpointData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServerlessEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ServerlessEndpointData(AzureLocation location, ServerlessEndpointProperties properties) : base(location)
+        public MachineLearningServerlessEndpointData(AzureLocation location, ServerlessEndpointProperties properties) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerlessEndpointData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServerlessEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerlessEndpointProperties properties, string kind, ManagedServiceIdentity identity, MachineLearningSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MachineLearningServerlessEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerlessEndpointProperties properties, string kind, ManagedServiceIdentity identity, MachineLearningSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Kind = kind;
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MachineLearning
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerlessEndpointData"/> for deserialization. </summary>
-        internal ServerlessEndpointData()
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServerlessEndpointData"/> for deserialization. </summary>
+        internal MachineLearningServerlessEndpointData()
         {
         }
 

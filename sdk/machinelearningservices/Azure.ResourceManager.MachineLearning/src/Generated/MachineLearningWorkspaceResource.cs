@@ -1274,11 +1274,11 @@ namespace Azure.ResourceManager.MachineLearning
             return GetMachineLearningSchedules().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerlessEndpointResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of ServerlessEndpointResources and their operations over a ServerlessEndpointResource. </returns>
-        public virtual ServerlessEndpointCollection GetServerlessEndpoints()
+        /// <summary> Gets a collection of MachineLearningServerlessEndpointResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningServerlessEndpointResources and their operations over a MachineLearningServerlessEndpointResource. </returns>
+        public virtual MachineLearningServerlessEndpointCollection GetMachineLearningServerlessEndpoints()
         {
-            return GetCachedClient(client => new ServerlessEndpointCollection(client, Id));
+            return GetCachedClient(client => new MachineLearningServerlessEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -1298,7 +1298,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1307,9 +1307,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerlessEndpointResource>> GetServerlessEndpointAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningServerlessEndpointResource>> GetMachineLearningServerlessEndpointAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetServerlessEndpoints().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningServerlessEndpoints().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1329,7 +1329,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1338,9 +1338,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerlessEndpointResource> GetServerlessEndpoint(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningServerlessEndpointResource> GetMachineLearningServerlessEndpoint(string name, CancellationToken cancellationToken = default)
         {
-            return GetServerlessEndpoints().Get(name, cancellationToken);
+            return GetMachineLearningServerlessEndpoints().Get(name, cancellationToken);
         }
 
         /// <summary>

@@ -756,22 +756,22 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServerlessEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerlessEndpointResource.CreateResourceIdentifier" /> to create a <see cref="ServerlessEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningServerlessEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningServerlessEndpointResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningServerlessEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetServerlessEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningServerlessEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServerlessEndpointResource"/> object. </returns>
-        public static ServerlessEndpointResource GetServerlessEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningServerlessEndpointResource"/> object. </returns>
+        public static MachineLearningServerlessEndpointResource GetMachineLearningServerlessEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetServerlessEndpointResource(id);
+            return GetMockableMachineLearningArmClient(client).GetMachineLearningServerlessEndpointResource(id);
         }
 
         /// <summary>

@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServerlessEndpointResource"/> and their operations.
-    /// Each <see cref="ServerlessEndpointResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
-    /// To get a <see cref="ServerlessEndpointCollection"/> instance call the GetServerlessEndpoints method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// A class representing a collection of <see cref="MachineLearningServerlessEndpointResource"/> and their operations.
+    /// Each <see cref="MachineLearningServerlessEndpointResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningServerlessEndpointCollection"/> instance call the GetMachineLearningServerlessEndpoints method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
-    public partial class ServerlessEndpointCollection : ArmCollection, IEnumerable<ServerlessEndpointResource>, IAsyncEnumerable<ServerlessEndpointResource>
+    public partial class MachineLearningServerlessEndpointCollection : ArmCollection, IEnumerable<MachineLearningServerlessEndpointResource>, IAsyncEnumerable<MachineLearningServerlessEndpointResource>
     {
-        private readonly ClientDiagnostics _serverlessEndpointClientDiagnostics;
-        private readonly ServerlessEndpointsRestOperations _serverlessEndpointRestClient;
+        private readonly ClientDiagnostics _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics;
+        private readonly ServerlessEndpointsRestOperations _machineLearningServerlessEndpointServerlessEndpointsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServerlessEndpointCollection"/> class for mocking. </summary>
-        protected ServerlessEndpointCollection()
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningServerlessEndpointCollection"/> class for mocking. </summary>
+        protected MachineLearningServerlessEndpointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServerlessEndpointCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningServerlessEndpointCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ServerlessEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MachineLearningServerlessEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverlessEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ServerlessEndpointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServerlessEndpointResource.ResourceType, out string serverlessEndpointApiVersion);
-            _serverlessEndpointRestClient = new ServerlessEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverlessEndpointApiVersion);
+            _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningServerlessEndpointResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MachineLearningServerlessEndpointResource.ResourceType, out string machineLearningServerlessEndpointServerlessEndpointsApiVersion);
+            _machineLearningServerlessEndpointServerlessEndpointsRestClient = new ServerlessEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningServerlessEndpointServerlessEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerlessEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, ServerlessEndpointData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningServerlessEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, MachineLearningServerlessEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serverlessEndpointClientDiagnostics.CreateScope("ServerlessEndpointCollection.CreateOrUpdate");
+            using var scope = _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics.CreateScope("MachineLearningServerlessEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverlessEndpointRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<ServerlessEndpointResource>(new ServerlessEndpointOperationSource(Client), _serverlessEndpointClientDiagnostics, Pipeline, _serverlessEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _machineLearningServerlessEndpointServerlessEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new MachineLearningArmOperation<MachineLearningServerlessEndpointResource>(new MachineLearningServerlessEndpointOperationSource(Client), _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics, Pipeline, _machineLearningServerlessEndpointServerlessEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServerlessEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string name, ServerlessEndpointData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningServerlessEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string name, MachineLearningServerlessEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serverlessEndpointClientDiagnostics.CreateScope("ServerlessEndpointCollection.CreateOrUpdate");
+            using var scope = _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics.CreateScope("MachineLearningServerlessEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverlessEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<ServerlessEndpointResource>(new ServerlessEndpointOperationSource(Client), _serverlessEndpointClientDiagnostics, Pipeline, _serverlessEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _machineLearningServerlessEndpointServerlessEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
+                var operation = new MachineLearningArmOperation<MachineLearningServerlessEndpointResource>(new MachineLearningServerlessEndpointOperationSource(Client), _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics, Pipeline, _machineLearningServerlessEndpointServerlessEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<ServerlessEndpointResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningServerlessEndpointResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _serverlessEndpointClientDiagnostics.CreateScope("ServerlessEndpointCollection.Get");
+            using var scope = _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics.CreateScope("MachineLearningServerlessEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serverlessEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                var response = await _machineLearningServerlessEndpointServerlessEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerlessEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningServerlessEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<ServerlessEndpointResource> Get(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningServerlessEndpointResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _serverlessEndpointClientDiagnostics.CreateScope("ServerlessEndpointCollection.Get");
+            using var scope = _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics.CreateScope("MachineLearningServerlessEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = _serverlessEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                var response = _machineLearningServerlessEndpointServerlessEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerlessEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningServerlessEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,18 +256,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerlessEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerlessEndpointResource> GetAllAsync(string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningServerlessEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningServerlessEndpointResource> GetAllAsync(string skip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverlessEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverlessEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServerlessEndpointResource(Client, ServerlessEndpointData.DeserializeServerlessEndpointData(e)), _serverlessEndpointClientDiagnostics, Pipeline, "ServerlessEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningServerlessEndpointServerlessEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningServerlessEndpointServerlessEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningServerlessEndpointResource(Client, MachineLearningServerlessEndpointData.DeserializeMachineLearningServerlessEndpointData(e)), _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics, Pipeline, "MachineLearningServerlessEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -287,18 +287,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerlessEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerlessEndpointResource> GetAll(string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningServerlessEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningServerlessEndpointResource> GetAll(string skip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverlessEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverlessEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServerlessEndpointResource(Client, ServerlessEndpointData.DeserializeServerlessEndpointData(e)), _serverlessEndpointClientDiagnostics, Pipeline, "ServerlessEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningServerlessEndpointServerlessEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningServerlessEndpointServerlessEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningServerlessEndpointResource(Client, MachineLearningServerlessEndpointData.DeserializeMachineLearningServerlessEndpointData(e)), _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics, Pipeline, "MachineLearningServerlessEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _serverlessEndpointClientDiagnostics.CreateScope("ServerlessEndpointCollection.Exists");
+            using var scope = _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics.CreateScope("MachineLearningServerlessEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serverlessEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _machineLearningServerlessEndpointServerlessEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _serverlessEndpointClientDiagnostics.CreateScope("ServerlessEndpointCollection.Exists");
+            using var scope = _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics.CreateScope("MachineLearningServerlessEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serverlessEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _machineLearningServerlessEndpointServerlessEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,18 +412,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<NullableResponse<ServerlessEndpointResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MachineLearningServerlessEndpointResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _serverlessEndpointClientDiagnostics.CreateScope("ServerlessEndpointCollection.GetIfExists");
+            using var scope = _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics.CreateScope("MachineLearningServerlessEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serverlessEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _machineLearningServerlessEndpointServerlessEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<ServerlessEndpointResource>(response.GetRawResponse());
-                return Response.FromValue(new ServerlessEndpointResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MachineLearningServerlessEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningServerlessEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerlessEndpointResource"/></description>
+        /// <description><see cref="MachineLearningServerlessEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,18 +457,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual NullableResponse<ServerlessEndpointResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MachineLearningServerlessEndpointResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _serverlessEndpointClientDiagnostics.CreateScope("ServerlessEndpointCollection.GetIfExists");
+            using var scope = _machineLearningServerlessEndpointServerlessEndpointsClientDiagnostics.CreateScope("MachineLearningServerlessEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serverlessEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _machineLearningServerlessEndpointServerlessEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<ServerlessEndpointResource>(response.GetRawResponse());
-                return Response.FromValue(new ServerlessEndpointResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MachineLearningServerlessEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningServerlessEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        IEnumerator<ServerlessEndpointResource> IEnumerable<ServerlessEndpointResource>.GetEnumerator()
+        IEnumerator<MachineLearningServerlessEndpointResource> IEnumerable<MachineLearningServerlessEndpointResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.MachineLearning
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServerlessEndpointResource> IAsyncEnumerable<ServerlessEndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MachineLearningServerlessEndpointResource> IAsyncEnumerable<MachineLearningServerlessEndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

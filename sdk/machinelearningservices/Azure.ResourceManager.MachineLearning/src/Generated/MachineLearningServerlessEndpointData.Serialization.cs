@@ -17,16 +17,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class ServerlessEndpointData : IUtf8JsonSerializable, IJsonModel<ServerlessEndpointData>
+    public partial class MachineLearningServerlessEndpointData : IUtf8JsonSerializable, IJsonModel<MachineLearningServerlessEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerlessEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServerlessEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ServerlessEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MachineLearningServerlessEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerlessEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServerlessEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerlessEndpointData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningServerlessEndpointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,19 +99,19 @@ namespace Azure.ResourceManager.MachineLearning
             writer.WriteEndObject();
         }
 
-        ServerlessEndpointData IJsonModel<ServerlessEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MachineLearningServerlessEndpointData IJsonModel<MachineLearningServerlessEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerlessEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServerlessEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerlessEndpointData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningServerlessEndpointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServerlessEndpointData(document.RootElement, options);
+            return DeserializeMachineLearningServerlessEndpointData(document.RootElement, options);
         }
 
-        internal static ServerlessEndpointData DeserializeServerlessEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MachineLearningServerlessEndpointData DeserializeMachineLearningServerlessEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServerlessEndpointData(
+            return new MachineLearningServerlessEndpointData(
                 id,
                 name,
                 type,
@@ -410,9 +410,9 @@ namespace Azure.ResourceManager.MachineLearning
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ServerlessEndpointData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MachineLearningServerlessEndpointData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerlessEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServerlessEndpointData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -421,26 +421,26 @@ namespace Azure.ResourceManager.MachineLearning
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerlessEndpointData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningServerlessEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ServerlessEndpointData IPersistableModel<ServerlessEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MachineLearningServerlessEndpointData IPersistableModel<MachineLearningServerlessEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerlessEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServerlessEndpointData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeServerlessEndpointData(document.RootElement, options);
+                        return DeserializeMachineLearningServerlessEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerlessEndpointData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningServerlessEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ServerlessEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MachineLearningServerlessEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

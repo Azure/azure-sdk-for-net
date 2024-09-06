@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="ServerlessEndpointTrackedResourceArmPaginatedResult"/>. </summary>
         internal ServerlessEndpointTrackedResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<ServerlessEndpointData>();
+            Value = new ChangeTrackingList<MachineLearningServerlessEndpointData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerlessEndpointTrackedResourceArmPaginatedResult"/>. </summary>
         /// <param name="value"> An array of objects of type ServerlessEndpoint. </param>
         /// <param name="nextLink"> The link to the next page of ServerlessEndpoint objects. If null, there are no additional pages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessEndpointTrackedResourceArmPaginatedResult(IReadOnlyList<ServerlessEndpointData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerlessEndpointTrackedResourceArmPaginatedResult(IReadOnlyList<MachineLearningServerlessEndpointData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> An array of objects of type ServerlessEndpoint. </summary>
-        public IReadOnlyList<ServerlessEndpointData> Value { get; }
+        public IReadOnlyList<MachineLearningServerlessEndpointData> Value { get; }
         /// <summary> The link to the next page of ServerlessEndpoint objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
     }

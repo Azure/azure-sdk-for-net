@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IReadOnlyList<ServerlessEndpointData> value = default;
+            IReadOnlyList<MachineLearningServerlessEndpointData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<ServerlessEndpointData> array = new List<ServerlessEndpointData>();
+                    List<MachineLearningServerlessEndpointData> array = new List<MachineLearningServerlessEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerlessEndpointData.DeserializeServerlessEndpointData(item, options));
+                        array.Add(MachineLearningServerlessEndpointData.DeserializeMachineLearningServerlessEndpointData(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServerlessEndpointTrackedResourceArmPaginatedResult(value ?? new ChangeTrackingList<ServerlessEndpointData>(), nextLink, serializedAdditionalRawData);
+            return new ServerlessEndpointTrackedResourceArmPaginatedResult(value ?? new ChangeTrackingList<MachineLearningServerlessEndpointData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

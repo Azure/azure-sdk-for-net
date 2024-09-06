@@ -2053,7 +2053,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 provisioningState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearning.ServerlessEndpointData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningServerlessEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2064,12 +2064,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        /// <returns> A new <see cref="MachineLearning.ServerlessEndpointData"/> instance for mocking. </returns>
-        public static ServerlessEndpointData ServerlessEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ServerlessEndpointProperties properties = null, string kind = null, ManagedServiceIdentity identity = null, MachineLearningSku sku = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningServerlessEndpointData"/> instance for mocking. </returns>
+        public static MachineLearningServerlessEndpointData MachineLearningServerlessEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ServerlessEndpointProperties properties = null, string kind = null, ManagedServiceIdentity identity = null, MachineLearningSku sku = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ServerlessEndpointData(
+            return new MachineLearningServerlessEndpointData(
                 id,
                 name,
                 resourceType,

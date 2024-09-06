@@ -506,6 +506,7 @@ rename-mapping:
   DestinationAsset: DestinationAssetContent
   GetBlobReferenceSASRequestDto: BlobReferenceSasContent
   GetBlobReferenceSASResponseDto: BlobReferenceSasResult
+  ServerlessEndpoint: MachineLearningServerlessEndpoint
 
 suppress-abstract-base-class:
 - MachineLearningJobProperties
