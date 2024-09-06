@@ -33,11 +33,7 @@ public static class Default
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = true,
-#if NET
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-#else
-        IgnoreNullValues = true,
-#endif
     };
 
     /// <summary>
@@ -73,11 +69,7 @@ public static class Default
     {
         PropertyNameCaseInsensitive = true,
         WriteIndented = true,
-#if NET
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-#else
-        IgnoreNullValues = true,
-#endif
     };
 
     /// <summary>

@@ -123,7 +123,7 @@ public static class JsonHelpers
             DefaultBufferSize = options.DefaultBufferSize,
             DictionaryKeyPolicy = options.DictionaryKeyPolicy,
             Encoder = options.Encoder,
-            IgnoreNullValues = options.IgnoreNullValues,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties,
             MaxDepth = options.MaxDepth,
             PropertyNameCaseInsensitive = options.PropertyNameCaseInsensitive,
