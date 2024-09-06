@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -107,6 +108,90 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningUserAccountCredentials(adminUserName, adminUserSshPublicKey, adminUserPassword, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminUserName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  adminUserName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdminUserName))
+                {
+                    builder.Append("  adminUserName: ");
+                    if (AdminUserName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdminUserName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdminUserName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminUserSshPublicKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  adminUserSshPublicKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdminUserSshPublicKey))
+                {
+                    builder.Append("  adminUserSshPublicKey: ");
+                    if (AdminUserSshPublicKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdminUserSshPublicKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdminUserSshPublicKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminUserPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  adminUserPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdminUserPassword))
+                {
+                    builder.Append("  adminUserPassword: ");
+                    if (AdminUserPassword.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdminUserPassword}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdminUserPassword}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningUserAccountCredentials>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningUserAccountCredentials>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +200,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningUserAccountCredentials)} does not support writing '{options.Format}' format.");
             }

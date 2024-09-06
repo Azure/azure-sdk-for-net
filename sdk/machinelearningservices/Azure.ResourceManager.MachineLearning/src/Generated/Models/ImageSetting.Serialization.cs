@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -35,11 +36,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("reference"u8);
                 writer.WriteStringValue(Reference);
-            }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -78,7 +74,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             ImageType? type = default;
             string reference = default;
-            string version = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,15 +92,63 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     reference = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
-                {
-                    version = property.Value.GetString();
-                    continue;
-                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ImageSetting(type, reference, version, additionalProperties);
+            return new ImageSetting(type, reference, additionalProperties);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImageType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImageType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{ImageType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reference), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reference: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reference))
+                {
+                    builder.Append("  reference: ");
+                    if (Reference.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reference}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reference}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ImageSetting>.Write(ModelReaderWriterOptions options)
@@ -116,6 +159,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ImageSetting)} does not support writing '{options.Format}' format.");
             }

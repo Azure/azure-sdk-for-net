@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The number of top features to include. </summary>
+        [WirePath("top")]
         public int? Top { get; set; }
     }
 }
