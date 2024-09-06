@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListWorkspaceBatchDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/BatchDeployment/list.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/BatchDeployment/list.json
             // this example is just showing the usage of "BatchDeployments_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetWorkspaceBatchDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/BatchDeployment/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/BatchDeployment/get.json
             // this example is just showing the usage of "BatchDeployments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetWorkspaceBatchDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/BatchDeployment/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/BatchDeployment/get.json
             // this example is just showing the usage of "BatchDeployments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetWorkspaceBatchDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/BatchDeployment/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/BatchDeployment/get.json
             // this example is just showing the usage of "BatchDeployments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateWorkspaceBatchDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Workspace/BatchDeployment/createOrUpdate.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/BatchDeployment/createOrUpdate.json
             // this example is just showing the usage of "BatchDeployments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,10 +201,15 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             {
                 Compute = "string",
                 ErrorThreshold = 1,
-                LoggingLevel = MachineLearningBatchLoggingLevel.Info,
-                MaxConcurrencyPerInstance = 1,
+                RetrySettings = new MachineLearningBatchRetrySettings()
+                {
+                    MaxRetries = 1,
+                    Timeout = XmlConvert.ToTimeSpan("PT5M"),
+                },
                 MiniBatchSize = 1,
+                LoggingLevel = MachineLearningBatchLoggingLevel.Info,
                 Model = new MachineLearningIdAssetReference(new ResourceIdentifier("string")),
+                MaxConcurrencyPerInstance = 1,
                 OutputAction = MachineLearningBatchOutputAction.SummaryOnly,
                 OutputFileName = "string",
                 Resources = new MachineLearningDeploymentResourceConfiguration()
@@ -218,27 +223,23 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 ["cd3c37dc-2876-4ca4-8a54-21bd7619724a"] = null}),
 },
                 },
-                RetrySettings = new MachineLearningBatchRetrySettings()
-                {
-                    MaxRetries = 1,
-                    Timeout = XmlConvert.ToTimeSpan("PT5M"),
-                },
+                Description = "string",
+                Properties =
+{
+["string"] = "string",
+},
                 CodeConfiguration = new MachineLearningCodeConfiguration("string")
                 {
                     CodeId = new ResourceIdentifier("string"),
                 },
-                Description = "string",
                 EnvironmentId = "string",
                 EnvironmentVariables =
 {
 ["string"] = "string",
 },
-                Properties =
-{
-["string"] = "string",
-},
             })
             {
+                Kind = "string",
                 Identity = new ManagedServiceIdentity("SystemAssigned")
                 {
                     UserAssignedIdentities =
@@ -246,7 +247,6 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 [new ResourceIdentifier("string")] = new UserAssignedIdentity(),
 },
                 },
-                Kind = "string",
                 Sku = new MachineLearningSku("string")
                 {
                     Tier = MachineLearningSkuTier.Free,

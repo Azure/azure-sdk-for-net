@@ -101,10 +101,10 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning
-        /// the first successfully obtained <see cref="AccessToken"/>. Acquired tokens are cached by the credential
-        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
-        /// instances to optimize cache effectiveness.
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning the first successfully
+        /// obtained <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
         /// Credentials requiring user interaction, such as <see cref="InteractiveBrowserCredential"/>, are excluded by default.
@@ -119,10 +119,10 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning
-        /// the first successfully obtained <see cref="AccessToken"/>. Acquired tokens are cached by the credential
-        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
-        /// instances to optimize cache effectiveness.
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning the first successfully
+        /// obtained <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
         /// Credentials requiring user interaction, such as <see cref="InteractiveBrowserCredential"/>, are excluded by default.

@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Fields to apply transformer logic on. </summary>
+        [WirePath("fields")]
         public IList<string> Fields { get; set; }
         /// <summary>
         /// Different properties to be passed to transformer.
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("parameters")]
         public BinaryData Parameters { get; set; }
     }
 }
