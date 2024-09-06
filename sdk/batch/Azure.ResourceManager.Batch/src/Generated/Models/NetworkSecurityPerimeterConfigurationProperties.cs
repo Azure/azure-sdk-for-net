@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
         internal NetworkSecurityPerimeterConfigurationProperties()
         {
-            ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
+            ProvisioningIssues = new ChangeTrackingList<BatchProvisioningIssue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, ResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<BatchProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, BatchResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Provisioning state of a network security perimeter configuration that is being created or updated. </summary>
         public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> List of provisioning issues, if any. </summary>
-        public IReadOnlyList<ProvisioningIssue> ProvisioningIssues { get; }
+        public IReadOnlyList<BatchProvisioningIssue> ProvisioningIssues { get; }
         /// <summary> Information about a network security perimeter (NSP). </summary>
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
         /// <summary> Information about resource association. </summary>
-        public ResourceAssociation ResourceAssociation { get; }
+        public BatchResourceAssociation ResourceAssociation { get; }
         /// <summary> Network security perimeter configuration profile. </summary>
         public NetworkSecurityProfile Profile { get; }
     }

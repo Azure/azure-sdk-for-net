@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
-    public partial class ProvisioningIssueProperties
+    public partial class BatchProvisioningIssueProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,21 +46,21 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssueProperties"/>. </summary>
-        internal ProvisioningIssueProperties()
+        /// <summary> Initializes a new instance of <see cref="BatchProvisioningIssueProperties"/>. </summary>
+        internal BatchProvisioningIssueProperties()
         {
             SuggestedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
-            SuggestedAccessRules = new ChangeTrackingList<AccessRule>();
+            SuggestedAccessRules = new ChangeTrackingList<BatchAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssueProperties(IssueType? issueType, BatchSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<AccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchProvisioningIssueProperties(BatchIssueType? issueType, BatchSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<BatchAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IssueType = issueType;
             Severity = severity;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Type of issue. </summary>
-        public IssueType? IssueType { get; }
+        public BatchIssueType? IssueType { get; }
         /// <summary> Severity of the issue. </summary>
         public BatchSeverity? Severity { get; }
         /// <summary> Description of the issue. </summary>
@@ -79,6 +79,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </summary>
         public IReadOnlyList<ResourceIdentifier> SuggestedResourceIds { get; }
         /// <summary> Access rules that can be added to the network security profile (NSP) to remediate the issue. </summary>
-        public IReadOnlyList<AccessRule> SuggestedAccessRules { get; }
+        public IReadOnlyList<BatchAccessRule> SuggestedAccessRules { get; }
     }
 }

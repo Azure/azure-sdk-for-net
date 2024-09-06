@@ -64,6 +64,14 @@ prepend-rp-prefix:
 - StorageAccountType
 - ProvisioningState
 - Severity
+- AccessRule
+- AccessRuleDirection
+- AccessRuleProperties
+- IssueType
+- ProvisioningIssue
+- ProvisioningIssueProperties
+- ResourceAssociation
+- SecurityEncryptionType
 
 override-operation-name:
   Location_CheckNameAvailability: CheckBatchNameAvailability

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Properties of Access Rule. </summary>
-    public partial class AccessRuleProperties
+    public partial class BatchAccessRuleProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRuleProperties"/>. </summary>
-        internal AccessRuleProperties()
+        /// <summary> Initializes a new instance of <see cref="BatchAccessRuleProperties"/>. </summary>
+        internal BatchAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<SubResource>();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Batch.Models
             PhoneNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccessRuleProperties"/>. </summary>
         /// <param name="direction"> Direction of Access Rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRuleProperties(AccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IReadOnlyList<string> emailAddresses, IReadOnlyList<string> phoneNumbers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchAccessRuleProperties(BatchAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IReadOnlyList<string> emailAddresses, IReadOnlyList<string> phoneNumbers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Direction of Access Rule. </summary>
-        public AccessRuleDirection? Direction { get; }
+        public BatchAccessRuleDirection? Direction { get; }
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
         public IReadOnlyList<string> AddressPrefixes { get; }
         /// <summary> Subscriptions for inbound rules. </summary>

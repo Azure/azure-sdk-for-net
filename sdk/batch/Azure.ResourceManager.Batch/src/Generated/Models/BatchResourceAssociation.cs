@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Information about resource association. </summary>
-    public partial class ResourceAssociation
+    public partial class BatchResourceAssociation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceAssociation"/>. </summary>
-        internal ResourceAssociation()
+        /// <summary> Initializes a new instance of <see cref="BatchResourceAssociation"/>. </summary>
+        internal BatchResourceAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResourceAssociation"/>. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access mode of the resource association. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceAssociation(string name, ResourceAssociationAccessMode? accessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchResourceAssociation(string name, ResourceAssociationAccessMode? accessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AccessMode = accessMode;

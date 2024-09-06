@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class ProvisioningIssueProperties : IUtf8JsonSerializable, IJsonModel<ProvisioningIssueProperties>
+    public partial class BatchProvisioningIssueProperties : IUtf8JsonSerializable, IJsonModel<BatchProvisioningIssueProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisioningIssueProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchProvisioningIssueProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchProvisioningIssueProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,19 +84,19 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteEndObject();
         }
 
-        ProvisioningIssueProperties IJsonModel<ProvisioningIssueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchProvisioningIssueProperties IJsonModel<BatchProvisioningIssueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchProvisioningIssueProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProvisioningIssueProperties(document.RootElement, options);
+            return DeserializeBatchProvisioningIssueProperties(document.RootElement, options);
         }
 
-        internal static ProvisioningIssueProperties DeserializeProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchProvisioningIssueProperties DeserializeBatchProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            IssueType? issueType = default;
+            BatchIssueType? issueType = default;
             BatchSeverity? severity = default;
             string description = default;
             IReadOnlyList<ResourceIdentifier> suggestedResourceIds = default;
-            IReadOnlyList<AccessRule> suggestedAccessRules = default;
+            IReadOnlyList<BatchAccessRule> suggestedAccessRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    issueType = new IssueType(property.Value.GetString());
+                    issueType = new BatchIssueType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("severity"u8))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    List<AccessRule> array = new List<AccessRule>();
+                    List<BatchAccessRule> array = new List<BatchAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessRule.DeserializeAccessRule(item, options));
+                        array.Add(BatchAccessRule.DeserializeBatchAccessRule(item, options));
                     }
                     suggestedAccessRules = array;
                     continue;
@@ -177,44 +177,44 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProvisioningIssueProperties(
+            return new BatchProvisioningIssueProperties(
                 issueType,
                 severity,
                 description,
                 suggestedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                suggestedAccessRules ?? new ChangeTrackingList<AccessRule>(),
+                suggestedAccessRules ?? new ChangeTrackingList<BatchAccessRule>(),
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ProvisioningIssueProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchProvisioningIssueProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchProvisioningIssueProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ProvisioningIssueProperties IPersistableModel<ProvisioningIssueProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchProvisioningIssueProperties IPersistableModel<BatchProvisioningIssueProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProvisioningIssueProperties(document.RootElement, options);
+                        return DeserializeBatchProvisioningIssueProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchProvisioningIssueProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProvisioningIssueProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchProvisioningIssueProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

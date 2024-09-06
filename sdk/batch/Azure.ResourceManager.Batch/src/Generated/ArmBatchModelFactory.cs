@@ -594,9 +594,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<ProvisioningIssue> provisioningIssues = null, NetworkSecurityPerimeter networkSecurityPerimeter = null, ResourceAssociation resourceAssociation = null, NetworkSecurityProfile profile = null)
+        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<BatchProvisioningIssue> provisioningIssues = null, NetworkSecurityPerimeter networkSecurityPerimeter = null, BatchResourceAssociation resourceAssociation = null, NetworkSecurityProfile profile = null)
         {
-            provisioningIssues ??= new List<ProvisioningIssue>();
+            provisioningIssues ??= new List<BatchProvisioningIssue>();
 
             return new NetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
@@ -607,28 +607,28 @@ namespace Azure.ResourceManager.Batch.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BatchProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </param>
-        /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
-        public static ProvisioningIssue ProvisioningIssue(string name = null, ProvisioningIssueProperties properties = null)
+        /// <returns> A new <see cref="Models.BatchProvisioningIssue"/> instance for mocking. </returns>
+        public static BatchProvisioningIssue BatchProvisioningIssue(string name = null, BatchProvisioningIssueProperties properties = null)
         {
-            return new ProvisioningIssue(name, properties, serializedAdditionalRawData: null);
+            return new BatchProvisioningIssue(name, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BatchProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
-        /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static ProvisioningIssueProperties ProvisioningIssueProperties(IssueType? issueType = null, BatchSeverity? severity = null, string description = null, IEnumerable<ResourceIdentifier> suggestedResourceIds = null, IEnumerable<AccessRule> suggestedAccessRules = null)
+        /// <returns> A new <see cref="Models.BatchProvisioningIssueProperties"/> instance for mocking. </returns>
+        public static BatchProvisioningIssueProperties BatchProvisioningIssueProperties(BatchIssueType? issueType = null, BatchSeverity? severity = null, string description = null, IEnumerable<ResourceIdentifier> suggestedResourceIds = null, IEnumerable<BatchAccessRule> suggestedAccessRules = null)
         {
             suggestedResourceIds ??= new List<ResourceIdentifier>();
-            suggestedAccessRules ??= new List<AccessRule>();
+            suggestedAccessRules ??= new List<BatchAccessRule>();
 
-            return new ProvisioningIssueProperties(
+            return new BatchProvisioningIssueProperties(
                 issueType,
                 severity,
                 description,
@@ -637,16 +637,16 @@ namespace Azure.ResourceManager.Batch.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BatchAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"> Properties of Access Rule. </param>
-        /// <returns> A new <see cref="Models.AccessRule"/> instance for mocking. </returns>
-        public static AccessRule AccessRule(string name = null, AccessRuleProperties properties = null)
+        /// <returns> A new <see cref="Models.BatchAccessRule"/> instance for mocking. </returns>
+        public static BatchAccessRule BatchAccessRule(string name = null, BatchAccessRuleProperties properties = null)
         {
-            return new AccessRule(name, properties, serializedAdditionalRawData: null);
+            return new BatchAccessRule(name, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccessRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BatchAccessRuleProperties"/>. </summary>
         /// <param name="direction"> Direction of Access Rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
@@ -654,8 +654,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="fullyQualifiedDomainNames"> Fully qualified domain names (FQDN) for outbound rules. </param>
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
-        /// <returns> A new <see cref="Models.AccessRuleProperties"/> instance for mocking. </returns>
-        public static AccessRuleProperties AccessRuleProperties(AccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null, IEnumerable<SubResource> subscriptions = null, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = null, IEnumerable<string> fullyQualifiedDomainNames = null, IEnumerable<string> emailAddresses = null, IEnumerable<string> phoneNumbers = null)
+        /// <returns> A new <see cref="Models.BatchAccessRuleProperties"/> instance for mocking. </returns>
+        public static BatchAccessRuleProperties BatchAccessRuleProperties(BatchAccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null, IEnumerable<SubResource> subscriptions = null, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = null, IEnumerable<string> fullyQualifiedDomainNames = null, IEnumerable<string> emailAddresses = null, IEnumerable<string> phoneNumbers = null)
         {
             addressPrefixes ??= new List<string>();
             subscriptions ??= new List<SubResource>();
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Batch.Models
             emailAddresses ??= new List<string>();
             phoneNumbers ??= new List<string>();
 
-            return new AccessRuleProperties(
+            return new BatchAccessRuleProperties(
                 direction,
                 addressPrefixes?.ToList(),
                 subscriptions?.ToList(),
@@ -685,13 +685,13 @@ namespace Azure.ResourceManager.Batch.Models
             return new NetworkSecurityPerimeter(id, perimeterGuid, location, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BatchResourceAssociation"/>. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access mode of the resource association. </param>
-        /// <returns> A new <see cref="Models.ResourceAssociation"/> instance for mocking. </returns>
-        public static ResourceAssociation ResourceAssociation(string name = null, ResourceAssociationAccessMode? accessMode = null)
+        /// <returns> A new <see cref="Models.BatchResourceAssociation"/> instance for mocking. </returns>
+        public static BatchResourceAssociation BatchResourceAssociation(string name = null, ResourceAssociationAccessMode? accessMode = null)
         {
-            return new ResourceAssociation(name, accessMode, serializedAdditionalRawData: null);
+            return new BatchResourceAssociation(name, accessMode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityProfile"/>. </summary>
@@ -701,9 +701,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityProfile"/> instance for mocking. </returns>
-        public static NetworkSecurityProfile NetworkSecurityProfile(string name = null, int? accessRulesVersion = null, IEnumerable<AccessRule> accessRules = null, int? diagnosticSettingsVersion = null, IEnumerable<string> enabledLogCategories = null)
+        public static NetworkSecurityProfile NetworkSecurityProfile(string name = null, int? accessRulesVersion = null, IEnumerable<BatchAccessRule> accessRules = null, int? diagnosticSettingsVersion = null, IEnumerable<string> enabledLogCategories = null)
         {
-            accessRules ??= new List<AccessRule>();
+            accessRules ??= new List<BatchAccessRule>();
             enabledLogCategories ??= new List<string>();
 
             return new NetworkSecurityProfile(
