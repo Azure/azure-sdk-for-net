@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
         }
         #endregion
 
-        #region Sinppet:HandleMqttConnectEvent
+        #region Snippet:HandleMqttConnectEvent
         private sealed class SampleHub2 : WebPubSubHub
         {
             internal WebPubSubServiceClient<SampleHub> _serviceClient;
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
         }
         #endregion
 
-        #region Sinppet:HandleMqttConnectedEvent
+        #region Snippet:HandleMqttConnectedEvent
         private sealed class SampleHub3 : WebPubSubHub
         {
             internal WebPubSubServiceClient<SampleHub> _serviceClient;
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
         }
         #endregion
 
-        #region Sinppet:HandleMqttDisconnectedEvent
+        #region Snippet:HandleMqttDisconnectedEvent
         private sealed class SampleHub4 : WebPubSubHub
         {
             internal WebPubSubServiceClient<SampleHub> _serviceClient;
