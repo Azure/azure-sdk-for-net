@@ -278,6 +278,7 @@ namespace Azure.Core.Extensions.Tests
             [Values(true, false)] bool additionalTenants,
             [Values(true, false)] bool clientId,
             [Values(true, false)] bool tenantId,
+            [Values(true, false)] bool objectId,
             [Values(true, false)] bool resourceId)
         {
             List<KeyValuePair<string, string>> configEntries = new();
@@ -299,10 +300,15 @@ namespace Azure.Core.Extensions.Tests
             {
                 configEntries.Add(new KeyValuePair<string, string>("managedIdentityResourceId", resourceIdValue));
             }
+            if (objectId)
+            {
+                configEntries.Add(new KeyValuePair<string, string>("managedIdentityObjectId", "objectId"));
+            }
+
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(configEntries).Build();
 
             // if both clientId and resourceId set, we expect an ArgumentException
-            if (clientId && resourceId)
+            if ((clientId && resourceId) || objectId)
             {
                 Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
                 return;
@@ -411,6 +417,34 @@ namespace Azure.Core.Extensions.Tests
             IConfiguration configuration = GetConfiguration(
                 new KeyValuePair<string, string>("managedIdentityResourceId", "ConfigurationResourceId"),
                 new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            Assert.That(
+                () => ClientFactory.CreateCredential(configuration),
+                Throws.InstanceOf<ArgumentException>().With.Message.Contains("managedIdentityResourceId"));
+        }
+
+        [Test]
+        public void CreatesManagedServiceIdentityCredentialsThrowsWhenClientIdAndObjectIdSpecified()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("managedIdentityObjectId", "ConfigurationObjectId"),
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            Assert.That(
+                () => ClientFactory.CreateCredential(configuration),
+                Throws.InstanceOf<ArgumentException>().With.Message.Contains("managedIdentityResourceId"));
+        }
+
+        [Test]
+        public void CreatesManagedServiceIdentityCredentialsThrowsWhenResourceIdAndObjectIdSpecified()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("managedIdentityObjectId", "ConfigurationObjectId"),
+                new KeyValuePair<string, string>("managedIdentityResourceId", "ConfigurationResourceId"),
                 new KeyValuePair<string, string>("credential", "managedidentity")
             );
 
