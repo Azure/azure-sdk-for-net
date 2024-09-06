@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
 using Azure.ResourceManager.Kubernetes;
 using NUnit.Framework;
@@ -13,13 +15,13 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
     [TestFixture]
     public class LoadBalancerTests : ContainerOrchestratorRuntimeManagementTestBase
     {
-        public LoadBalancerTests() : base(false)
+        public LoadBalancerTests() : base(true)
         {
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task CreateLoadBalancer()
+        public async Task CreateLoadBalancerAsync()
         {
             var connectedCluster = ConnectedClusterResource.CreateResourceIdentifier("b9e38f20-7c9c-4497-a25d-1a0c5eef2108", "xinyuhe-canary", "test-cluster-euap-arc");
             var loadBalancerCollection = new LoadBalancerCollection(Client, connectedCluster);
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
                 AdvertiseMode = AdvertiseMode.ARP
             };
             loadBalancerData.Addresses.Add("192.168.10.1/32");
-            loadBalancerCollection.CreateOrUpdate(WaitUntil.Completed, "testlb", loadBalancerData);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testlb", loadBalancerData);
             var bgpPeerData = new BgpPeerData
             {
                 MyAsn = 64000,
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
                 PeerAddress = "192.168.2.0"
             };
             var bgpPeerCollection = new BgpPeerCollection(Client, connectedCluster);
-            bgpPeerCollection.CreateOrUpdate(WaitUntil.Completed, "testpeer", bgpPeerData);
+            await bgpPeerCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testpeer", bgpPeerData);
         }
     }
 }
