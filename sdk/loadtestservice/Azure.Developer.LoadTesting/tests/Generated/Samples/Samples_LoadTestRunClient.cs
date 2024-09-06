@@ -20,7 +20,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTestRun_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -34,7 +34,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTestRun_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -48,7 +48,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTestRun_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -156,7 +156,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTestRun_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -264,7 +264,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTestRun_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -277,7 +277,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTestRun_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -290,7 +290,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTestRun_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -303,7 +303,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTestRun_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -316,7 +316,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTestRunFile_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -330,7 +330,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTestRunFile_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -344,7 +344,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTestRunFile_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -363,7 +363,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTestRunFile_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -382,7 +382,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_StopTestRun_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -396,7 +396,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_StopTestRun_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -410,7 +410,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_StopTestRun_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -518,7 +518,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_StopTestRun_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -626,7 +626,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetricNamespaces_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -640,7 +640,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetricNamespaces_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -654,7 +654,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetricNamespaces_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -669,7 +669,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetricNamespaces_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -684,7 +684,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetricDefinitions_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -698,7 +698,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetricDefinitions_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -712,7 +712,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetricDefinitions_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -734,7 +734,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetricDefinitions_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -756,7 +756,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateAppComponents_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -777,7 +777,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateAppComponents_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -798,7 +798,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateAppComponents_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -836,7 +836,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateAppComponents_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -874,7 +874,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAppComponents_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -888,7 +888,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAppComponents_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -902,7 +902,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAppComponents_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -927,7 +927,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAppComponents_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -952,7 +952,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateServerMetricsConfig_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -967,7 +967,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateServerMetricsConfig_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -982,7 +982,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateServerMetricsConfig_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1024,7 +1024,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateServerMetricsConfig_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1066,7 +1066,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetServerMetricsConfig_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1080,7 +1080,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetServerMetricsConfig_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1094,7 +1094,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetServerMetricsConfig_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1120,7 +1120,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetServerMetricsConfig_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1146,7 +1146,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetrics_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1162,7 +1162,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetrics_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1178,7 +1178,7 @@ namespace Azure.Developer.LoadTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetrics_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1210,7 +1210,7 @@ values = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetrics_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1242,7 +1242,7 @@ values = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetricDimensionValues_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1257,7 +1257,7 @@ values = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetricDimensionValues_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1272,7 +1272,7 @@ values = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetricDimensionValues_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1287,7 +1287,7 @@ values = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetricDimensionValues_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
