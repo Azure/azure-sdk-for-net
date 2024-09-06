@@ -117,7 +117,7 @@ var blobClient = new BlobClient(
     credential);
 ```
 
-1. Set the `AZURE_CLIENT_ID` environment variable.
+2. Set the `AZURE_CLIENT_ID` environment variable.
 
 #### Resource ID
 
@@ -206,7 +206,7 @@ By default, credentials authenticate to the Microsoft Entra endpoint for the Azu
 
 1. Configure credentials with the [AuthorityHost](https://learn.microsoft.com/dotnet/api/azure.identity.tokencredentialoptions.authorityhost?view=azure-dotnet#azure-identity-tokencredentialoptions-authorityhost) property. For example:
 
-    ```C# Snippet:AuthenticatingWithAuthorityHost
+```C# Snippet:AuthenticatingWithAuthorityHost
 var credential = new DefaultAzureCredential(
     new DefaultAzureCredentialOptions
     {
@@ -216,7 +216,7 @@ var credential = new DefaultAzureCredential(
 
     [AzureAuthorityHosts](https://learn.microsoft.com/dotnet/api/azure.identity.azureauthorityhosts?view=azure-dotnet) defines authorities for well-known clouds.
 
-1. Set the `AZURE_AUTHORITY_HOST` environment variable to the appropriate authority host URL. For example, `https://login.microsoftonline.us/`. Note that this setting affects all credentials in the environment. Use the previous solution to set the authority host on a specific credential.
+2. Set the `AZURE_AUTHORITY_HOST` environment variable to the appropriate authority host URL. For example, `https://login.microsoftonline.us/`. Note that this setting affects all credentials in the environment. Use the previous solution to set the authority host on a specific credential.
 
 Not all credentials require this configuration. Credentials that authenticate through a developer tool, such as `AzureCliCredential`, use that tool's configuration.
 
