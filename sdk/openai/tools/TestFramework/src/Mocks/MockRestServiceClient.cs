@@ -88,8 +88,9 @@ public class MockRestServiceClient<TData> : IDisposable
                 .ConfigureAwait(false);
 
             var response = result.GetRawResponse();
+            MockRestService<TData>.Entry entry = response.Content.ToObjectFromJson<MockRestService<TData>.Entry>();
             return ClientResult.FromOptionalValue(
-                response.Content.ToObjectFromJson<MockRestService<TData>.Entry>().data,
+                entry.data,
                 response);
         }
         catch (ClientResultException ex)
