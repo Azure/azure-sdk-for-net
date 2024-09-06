@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkCloudCloudServicesNetworks_ListCloudServicesNetworksForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/CloudServicesNetworks_ListBySubscription.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/CloudServicesNetworks_ListBySubscription.json
             // this example is just showing the usage of "CloudServicesNetworks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCloudServicesNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/CloudServicesNetworks_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/CloudServicesNetworks_Get.json
             // this example is just showing the usage of "CloudServicesNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteCloudServicesNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/CloudServicesNetworks_Delete.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/CloudServicesNetworks_Delete.json
             // this example is just showing the usage of "CloudServicesNetworks_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,9 +101,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudCloudServicesNetworkResource networkCloudCloudServicesNetwork = client.GetNetworkCloudCloudServicesNetworkResource(networkCloudCloudServicesNetworkResourceId);
 
             // invoke the operation
-            await networkCloudCloudServicesNetwork.DeleteAsync(WaitUntil.Completed);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudCloudServicesNetwork.DeleteAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Patch cloud services network
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchCloudServicesNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/CloudServicesNetworks_Patch.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/CloudServicesNetworks_Patch.json
             // this example is just showing the usage of "CloudServicesNetworks_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 {
 new EgressEndpoint("azure-resource-management",new EndpointDependency[]
 {
-new EndpointDependency("https://storageaccountex.blob.core.windows.net")
+new EndpointDependency("storageaccountex.blob.core.windows.net")
 {
 Port = 443,
 }

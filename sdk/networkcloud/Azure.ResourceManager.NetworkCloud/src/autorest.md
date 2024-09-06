@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: NetworkCloud
 namespace: Azure.ResourceManager.NetworkCloud
-require: https://github.com/Azure/azure-rest-api-specs/blob/ed9bde6a3db71b84fdba076ba0546213bcce56ee/specification/networkcloud/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d6be8f199982997f0a94e3e9bbbe8b2f7e304f7d/specification/networkcloud/resource-manager/readme.md
 #tag: package-2023-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
