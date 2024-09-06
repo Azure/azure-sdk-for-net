@@ -21,84 +21,22 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppInitContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppInitContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppInitContainer)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Image))
-            {
-                writer.WritePropertyName("image"u8);
-                writer.WriteStringValue(Image);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsCollectionDefined(Command))
-            {
-                writer.WritePropertyName("command"u8);
-                writer.WriteStartArray();
-                foreach (var item in Command)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Args))
-            {
-                writer.WritePropertyName("args"u8);
-                writer.WriteStartArray();
-                foreach (var item in Args)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Env))
-            {
-                writer.WritePropertyName("env"u8);
-                writer.WriteStartArray();
-                foreach (var item in Env)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Resources))
-            {
-                writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
-            }
-            if (Optional.IsCollectionDefined(VolumeMounts))
-            {
-                writer.WritePropertyName("volumeMounts"u8);
-                writer.WriteStartArray();
-                foreach (var item in VolumeMounts)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         ContainerAppInitContainer IJsonModel<ContainerAppInitContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
