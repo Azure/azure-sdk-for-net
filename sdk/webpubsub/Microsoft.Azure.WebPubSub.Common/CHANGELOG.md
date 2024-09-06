@@ -2,7 +2,7 @@
 
 ## 1.4.0 (2024-09-10)
 
-## Other Changes
+### Other Changes
 - Updated the (de)serialization of Web PubSub CloudEvents to use the `System.Text.Json` library.
 
 ## 1.3.0 (2024-09-04)
