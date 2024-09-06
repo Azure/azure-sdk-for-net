@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<AppContainerResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppContainerResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppContainerResources)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Cpu))
             {
                 writer.WritePropertyName("cpu"u8);
@@ -56,7 +65,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppContainerResources IJsonModel<AppContainerResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -114,6 +122,82 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new AppContainerResources(cpu, memory, ephemeralStorage, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cpu), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cpu: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Cpu))
+                {
+                    builder.Append("  cpu: ");
+                    builder.AppendLine($"'{Cpu.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Memory), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  memory: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Memory))
+                {
+                    builder.Append("  memory: ");
+                    if (Memory.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Memory}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Memory}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EphemeralStorage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ephemeralStorage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EphemeralStorage))
+                {
+                    builder.Append("  ephemeralStorage: ");
+                    if (EphemeralStorage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EphemeralStorage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EphemeralStorage}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppContainerResources>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppContainerResources>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +206,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppContainerResources)} does not support writing '{options.Format}' format.");
             }

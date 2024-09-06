@@ -83,18 +83,23 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The user friendly description of the scope map. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The type of the scope map. E.g. BuildIn scope map. </summary>
+        [WirePath("properties.type")]
         public string ScopeMapType { get; }
         /// <summary> The creation date of scope map. </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerRegistryProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The list of scoped permissions for registry artifacts.
         /// E.g. repositories/repository-name/content/read,
         /// repositories/repository-name/metadata/write
         /// </summary>
+        [WirePath("properties.actions")]
         public IList<string> Actions { get; }
     }
 }

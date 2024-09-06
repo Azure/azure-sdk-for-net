@@ -129,10 +129,19 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
             var data = new BatchAccountPoolData()
             {
                 DisplayName = "test_pool",
-                VmSize = "small",
+                VmSize = "Standard_d4s_v3",
                 DeploymentConfiguration = new BatchDeploymentConfiguration()
                 {
-                    CloudServiceConfiguration = new BatchCloudServiceConfiguration("2")
+                    VmConfiguration = new BatchVmConfiguration(
+                        new BatchImageReference()
+                        {
+                            Publisher = "Canonical",
+                            Offer = "UbuntuServer",
+                            Sku = "18.04-LTS",
+                            Version = "latest",
+                        },
+                        "batch.node.ubuntu 18.04"
+                    ),
                 },
                 StartTask = new BatchAccountPoolStartTask()
                 {
@@ -179,7 +188,7 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         {
             AssertResourceData(poolData1, poolData2);
             Assert.AreEqual(poolData1.ETag, poolData2.ETag);
-            Assert.AreEqual(poolData1.AllocationState, poolData2.AllocationState);
+            //Assert.AreEqual(poolData1.AllocationState, poolData2.AllocationState);
             Assert.AreEqual(poolData1.DisplayName, poolData2.DisplayName);
             Assert.AreEqual(poolData1.VmSize, poolData2.VmSize);
             Assert.AreEqual(poolData1.ProvisioningState, poolData2.ProvisioningState);

@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.Billing
         public BillingPaymentMethodData()
         {
             Logos = new ChangeTrackingList<PaymentMethodLogo>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodData"/>. </summary>
@@ -62,43 +63,61 @@ namespace Azure.ResourceManager.Billing
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="family"> The family of payment method. </param>
-        /// <param name="paymentMethodType"> The type of payment method. </param>
+        /// <param name="paymentMethodId"> Id of payment method. </param>
         /// <param name="accountHolderName"> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </param>
-        /// <param name="expiration"> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </param>
-        /// <param name="lastFourDigits"> Last four digits of payment method. </param>
         /// <param name="displayName"> The display name of the payment method. </param>
+        /// <param name="expiration"> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </param>
+        /// <param name="family"> The family of payment method. </param>
+        /// <param name="lastFourDigits"> Last four digits of payment method. </param>
         /// <param name="logos"> The list of logos for the payment method. </param>
+        /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
+        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodFamily? family, string paymentMethodType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IList<PaymentMethodLogo> logos, PaymentMethodStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier paymentMethodId, string accountHolderName, string displayName, string expiration, PaymentMethodFamily? family, string lastFourDigits, IList<PaymentMethodLogo> logos, string paymentMethodType, PaymentMethodStatus? status, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Family = family;
-            PaymentMethodType = paymentMethodType;
+            PaymentMethodId = paymentMethodId;
             AccountHolderName = accountHolderName;
-            Expiration = expiration;
-            LastFourDigits = lastFourDigits;
             DisplayName = displayName;
+            Expiration = expiration;
+            Family = family;
+            LastFourDigits = lastFourDigits;
             Logos = logos;
+            PaymentMethodType = paymentMethodType;
             Status = status;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The family of payment method. </summary>
-        public PaymentMethodFamily? Family { get; set; }
-        /// <summary> The type of payment method. </summary>
-        public string PaymentMethodType { get; }
+        /// <summary> Id of payment method. </summary>
+        [WirePath("properties.id")]
+        public ResourceIdentifier PaymentMethodId { get; }
         /// <summary> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </summary>
+        [WirePath("properties.accountHolderName")]
         public string AccountHolderName { get; }
-        /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>
-        public string Expiration { get; }
-        /// <summary> Last four digits of payment method. </summary>
-        public string LastFourDigits { get; }
         /// <summary> The display name of the payment method. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
+        /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>
+        [WirePath("properties.expiration")]
+        public string Expiration { get; }
+        /// <summary> The family of payment method. </summary>
+        [WirePath("properties.family")]
+        public PaymentMethodFamily? Family { get; set; }
+        /// <summary> Last four digits of payment method. </summary>
+        [WirePath("properties.lastFourDigits")]
+        public string LastFourDigits { get; }
         /// <summary> The list of logos for the payment method. </summary>
+        [WirePath("properties.logos")]
         public IList<PaymentMethodLogo> Logos { get; }
+        /// <summary> The type of payment method. </summary>
+        [WirePath("properties.paymentMethodType")]
+        public string PaymentMethodType { get; }
         /// <summary> Status of the payment method. </summary>
+        [WirePath("properties.status")]
         public PaymentMethodStatus? Status { get; set; }
+        /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
     }
 }

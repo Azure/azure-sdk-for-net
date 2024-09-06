@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppForwardProxy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppForwardProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Convention))
             {
                 writer.WritePropertyName("convention"u8);
@@ -56,7 +65,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerAppForwardProxy IJsonModel<ContainerAppForwardProxy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -114,6 +122,82 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppForwardProxy(convention, customHostHeaderName, customProtoHeaderName, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Convention), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  convention: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Convention))
+                {
+                    builder.Append("  convention: ");
+                    builder.AppendLine($"'{Convention.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomHostHeaderName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customHostHeaderName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomHostHeaderName))
+                {
+                    builder.Append("  customHostHeaderName: ");
+                    if (CustomHostHeaderName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomHostHeaderName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomHostHeaderName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomProtoHeaderName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customProtoHeaderName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomProtoHeaderName))
+                {
+                    builder.Append("  customProtoHeaderName: ");
+                    if (CustomProtoHeaderName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomProtoHeaderName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomProtoHeaderName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppForwardProxy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppForwardProxy>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +206,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support writing '{options.Format}' format.");
             }

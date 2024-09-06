@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The identity to use when dead-lettering events. </summary>
+        [WirePath("identity")]
         public EventSubscriptionIdentity Identity { get; set; }
         /// <summary>
         /// Information about the destination where events have to be delivered for the event subscription.
@@ -74,6 +75,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Please note <see cref="Models.DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="StorageBlobDeadLetterDestination"/>.
         /// </summary>
+        [WirePath("deadLetterDestination")]
         public DeadLetterDestination DeadLetterDestination { get; set; }
     }
 }

@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -11,13 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Models;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
 using NUnit.Framework.Interfaces;
 using OpenAI.Assistants;
 using OpenAI.Audio;
@@ -27,17 +22,21 @@ using OpenAI.Embeddings;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 using OpenAI.Images;
-using OpenAI.Tests;
+using OpenAI.TestFramework;
+using OpenAI.TestFramework.Recording.Proxy;
+using OpenAI.TestFramework.Recording.Proxy.Service;
+using OpenAI.TestFramework.Recording.RecordingProxy;
+using OpenAI.TestFramework.Recording.Sanitizers;
+using OpenAI.TestFramework.Utils;
 using OpenAI.VectorStores;
-using RetryMode = Azure.Core.RetryMode;
-using RetryOptions = Azure.Core.RetryOptions;
 using TokenCredential = Azure.Core.TokenCredential;
 
 namespace Azure.AI.OpenAI.Tests;
 
-public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
+public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : class
 {
     private const string AZURE_URI_SANITIZER_PATTERN = @"(?<=/(subscriptions|resourceGroups|accounts)/)([^/]+?)(?=(/|$))";
+    private const string SMALL_1x1_PNG = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiQAABYkAZsVxhQAAAAMSURBVBhXY2BgYAAAAAQAAVzN/2kAAAAASUVORK5CYII=";
 
     public static readonly DateTimeOffset START_2024 = new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero);
     public static readonly DateTimeOffset UNIX_EPOCH =
@@ -48,59 +47,92 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 #endif
 
     internal TestConfig TestConfig { get; }
+
     internal Assets Assets { get; }
-    internal DisableRecordingInterceptor RecordingDisabler { get; }
+
+    public AzureTestEnvironment TestEnvironment { get; }
+
+    protected AoaiTestBase(bool isAsync) : this(isAsync, null)
+    { }
 
     protected AoaiTestBase(bool isAsync, RecordedTestMode? mode = null)
         : base(isAsync, mode)
     {
         TestConfig = new TestConfig(Mode);
-        Assets = new Assets(TestEnvironment);
+        Assets = new Assets();
+        TestEnvironment = new AzureTestEnvironment(Mode);
 
-        // Disable additional fluff that is causing issues
-        TestDiagnostics = false;
+        // Remove some of the default sanitizers to customize their behaviour
+        RecordingOptions.SanitizersToRemove.AddRange(
+        [
+            "AZSDK2003", // Location header (we use a less restrictive sanitizer)
+            "AZSDK4001", // Replaces entire host name in URL. We want to mask only subdomain part to make it easier to distinguish requests
+            "AZSDK3430", // OpenAI liberally uses "id" in its JSON responses, and we want to keep them in the recordings
+            "AZSDK3493", // $..name in JSON. OpenAI uses this for things that don't need to be sanitized
+        ]);
 
-        // Add sanitizers to prevent resource names from leaking into recordings
-        UriRegexSanitizers.Add(new UriRegexSanitizer(SanitizedJsonConfig.HOST_SUBDOMAIN_PATTERN)
+        // Prevent resource names from leaking into recordings
+        RecordingOptions.Sanitizers.AddRange(
+        [
+            new UriRegexSanitizer(SanitizedJsonConfig.HOST_SUBDOMAIN_PATTERN)
+            {
+                Value = SanitizedJsonConfig.MASK_STRING
+            },
+            new UriRegexSanitizer(AZURE_URI_SANITIZER_PATTERN)
+            {
+                Value = SanitizedJsonConfig.MASK_STRING
+            },
+            new HeaderRegexSanitizer("Location")
+            {
+                Regex = AZURE_URI_SANITIZER_PATTERN,
+                Value = SanitizedJsonConfig.MASK_STRING
+            },
+            new HeaderRegexSanitizer("Azure-AsyncOperation")
+            {
+                Regex = AZURE_URI_SANITIZER_PATTERN,
+                Value = SanitizedJsonConfig.MASK_STRING
+            },
+            new BodyKeySanitizer("$..endpoint")
+            {
+                Regex = SanitizedJsonConfig.HOST_SUBDOMAIN_PATTERN,
+                Value = SanitizedJsonConfig.MASK_STRING
+            }
+        ]);
+
+        // Prevent keys from leaking into our recordings
+        RecordingOptions.SanitizeJsonBody("*..key", "*..api_key");
+
+        // Because the current implementation of multi-part form content data in OpenAI and Azure OpenAI uses random
+        // to generate boundaries, this causes problems during playback as the boundary will be different each time.
+        // Longer term, we should find a way to pass the TestRecording.Random to the multi-part form generator in the
+        // code. The simplest solution for now is to disable recording the body for these mime types
+        RecordingOptions.RequestOverride = request =>
         {
-            Value = SanitizedJsonConfig.MASK_STRING
-        });
-        UriRegexSanitizers.Add(new UriRegexSanitizer(AZURE_URI_SANITIZER_PATTERN)
+            if (request?.Headers.GetFirstOrDefault("Content-Type")?.StartsWith("multipart/form-data") == true)
+            {
+                return RequestRecordMode.RecordWithoutRequestBody;
+            }
+
+            return RequestRecordMode.Record;
+        };
+        RecordingOptions.Sanitizers.Add(new HeaderRegexSanitizer("Content-Type")
         {
-            Value = SanitizedJsonConfig.MASK_STRING
-        });
-        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Azure-AsyncOperation")
-        {
-            Regex = AZURE_URI_SANITIZER_PATTERN,
-            Value = SanitizedJsonConfig.MASK_STRING
-        });
-        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Location")
-        {
-            Regex = AZURE_URI_SANITIZER_PATTERN,
-            Value = SanitizedJsonConfig.MASK_STRING
-        });
-        BodyKeySanitizers.Add(new BodyKeySanitizer("$..endpoint")
-        {
-            Regex = SanitizedJsonConfig.HOST_SUBDOMAIN_PATTERN,
-            Value = SanitizedJsonConfig.MASK_STRING
-        });
-        BodyKeySanitizers.Add(new BodyKeySanitizer("$..id")
-        {
-            Regex = AZURE_URI_SANITIZER_PATTERN,
-            Value = SanitizedJsonConfig.MASK_STRING
+            Regex = @"multipart/form-data; boundary=[^\s]+",
+            Value = "multipart/form-data; boundary=***"
         });
 
-        // Add sanitizers to prevent our keys from leaking into the recordings
-        JsonPathSanitizers.Add("*..key");
-        JsonPathSanitizers.Add("*..api_key");
+        // Data URIs trimmed to prevent the recording from being too large
+        RecordingOptions.Sanitizers.Add(new BodyKeySanitizer("$..url")
+        {
+            Regex = @"(?<=data:image/png;base64,)(.+)",
+            Value = SMALL_1x1_PNG
+        });
 
-        // Multi-part form data gives the test-proxy that is used for recording and playback indigestion (it always thinks it needs
-        // to re-record the test on playback). So let's add an interceptor that will automatically disable body recording for specific
-        // client methods calls, and then re-enable it afterwards.
-        RecordingDisabler = new(() => Recording);
-        RecordingDisabler.DisableBodyRecordingFor<FileClient>(nameof(FileClient.UploadFileAsync));
-
-        IgnoredHeaders.Add("x-ms-client-request-id");
+        // Base64 encoded images in the response are replaced with a 1x1 black pixel PNG image to ensure valid data
+        RecordingOptions.Sanitizers.Add(new BodyKeySanitizer($"..b64_json")
+        {
+            Value = SMALL_1x1_PNG
+        });
     }
 
     /// <summary>
@@ -137,45 +169,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         Action<PipelineResponse>? responseAction = options.ShouldOutputResponses ? DumpResponse : null;
         options.AddPolicy(new TestPipelinePolicy(requestAction, responseAction), PipelinePosition.PerCall);
 
-        // If we are in playback, or record mode we should set the transport to the test proxy transport, except
-        // in the case where we've explicitly specified the transport ourselves. There are cases where we use a
-        // mock pipeline and we don't want those to go to the test proxy.
-        if (options.Transport == null)
-        {
-            // TODO FIXME update once test framework code is updated
-            /* NOTE:
-             * Normally we would call the base class RecordedTestBase.InstrumentClientOptions. Unfortunately this doesn't
-             * currently work since the test framework still relies on a version of Azure.Core that has not been updated
-             * to use the new System.ClientModel types. Thus InstrumentClientOptions expects a type that inherits from
-             * Azure.Core.ClientOptions, whereas we inherit from System.ClientModel.Primitives.ClientPipelineOptions. For
-             * now we duplicate the code from InstrumentClientOptions here
-            */
-
-            if (Mode == RecordedTestMode.Playback)
-            {
-                // You guessed it: the constructor for RetryOptions is internal only. So plan B:
-                RetryOptions retryOpt = (RetryOptions)Activator.CreateInstance(typeof(RetryOptions), true)!;
-
-                // Not making the timeout zero so retry code still goes async
-                retryOpt.Delay = TimeSpan.FromMilliseconds(10);
-                retryOpt.Mode = RetryMode.Fixed;
-
-                options.RetryPolicy = new Utils.Pipeline.ClientRetryPolicyAdapter(retryOpt);
-            }
-
-            // No need to set the transport if we are in Live mode
-            if (Mode != RecordedTestMode.Live)
-            {
-                // Wait what's this? More private or internal only things I need access to?
-                var proxyAccess = NonPublic.FromField<RecordedTestBase, TestProxy>("_proxy");
-                var disableRecordingAccess = NonPublic.FromField<TestRecording, AsyncLocal<EntryRecordModel>>("_disableRecording");
-
-                options.Transport = new Utils.Pipeline.ProxyTransport(
-                    proxyAccess.Get(this),
-                    Recording,
-                    () => disableRecordingAccess.Get(Recording).Value);
-            }
-        }
+        options = ConfigureClientOptions(options);
 
         AzureOpenAIClient topLevelClient;
         if (tokenCredential != null)
@@ -225,7 +219,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     /// <exception cref="NotSupportedException">The client instance passed was not instrumented</exception>
     public virtual TExplicitClient GetTestClientFrom<TExplicitClient>(TClient client, string? deploymentName = null)
     {
-        AzureOpenAiInstrumented? instrumented = _clientToTopLevel.FirstOrDefault(e => ReferenceEquals(client, e.Client));
+        var instrumented = (TopLevelInfo?)GetClientContext(client);
         if (instrumented?.TopLevelClient != null
             && instrumented?.Config != null)
         {
@@ -236,12 +230,66 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
             "instances using the GetTestClient() methods");
     }
 
-    /// <summary>
-    /// Disables the recording of request bodies for the specified method in the current client.
-    /// </summary>
-    /// <param name="methodName">The method name.</param>
-    public virtual void DisableRequestBodyRecording(string methodName)
-        => RecordingDisabler.DisableBodyRecordingFor<TClient>(methodName);
+    #region overrides
+
+    /// <inheritdoc />
+    protected override RecordedTestMode GetDefaultRecordedTestMode()
+        => AzureTestEnvironment.DefaultRecordMode;
+
+    /// <inheritdoc />
+    protected override ProxyServiceOptions CreateProxyServiceOptions()
+        => new()
+        {
+            DotnetExecutable = TestEnvironment.DotNetExe.FullName,
+            TestProxyDll = TestEnvironment.TestProxyDll.FullName,
+            DevCertFile = TestEnvironment.TestProxyHttpsCert.FullName,
+            DevCertPassword = TestEnvironment.TestProxyHttpsCertPassword,
+            StorageLocationDir = TestEnvironment.RepoRoot.FullName,
+        };
+
+    /// <inheritdoc />
+    protected override RecordingStartInformation CreateRecordingSessionStartInfo()
+    {
+        // This uses the same directory structure as the previous Azure.Core.TestFramework used for an easy drop in replacement.
+        // For example, suppose your test class is (and your class name matches the file name):
+        // c:\src\azure-sdk-for-net\sdk\openai\Azure.AI.OpenAI\tests\ChatTests.cs
+        // Then this would return something like:
+        // sdk\openai\Azure.AI.OpenAI\tests\SessionRecords\ChatTests\TestName.json
+        DirectoryInfo? sourceDir = GetType().Assembly.GetAssemblySourceDir();
+        string relativeDir = PathHelpers.GetRelativePath(
+            TestEnvironment.RepoRoot.FullName,
+            sourceDir?.FullName ?? TestEnvironment.RepoRoot.FullName);
+
+        string recordingFile = Path.Combine(
+            relativeDir,
+            "SessionRecords",
+            GetType().Name,
+            GetRecordedTestFileName());
+
+        // Start at the source directory for the current test project, and then walk up the directory structure searching for
+        // an "assets.json" file.
+        string? assetsFile = null;
+        for (
+            DirectoryInfo? current = sourceDir;
+            current != null && current.FullName != TestEnvironment.RepoRoot.FullName;
+            current = current?.Parent)
+        {
+            string file = Path.Combine(current!.FullName, "assets.json");
+            if (File.Exists(file))
+            {
+                assetsFile = file;
+                break;
+            }
+        }
+
+        return new()
+        {
+            RecordingFile = recordingFile,
+            AssetsFile = assetsFile
+        };
+    }
+
+    #endregion
 
     /// <summary>
     /// Polls until a condition has been met with a maximum wait time. The function will always return the last value even
@@ -368,15 +416,15 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
                 throw new NotImplementedException($"Test client helpers not yet implemented for {typeof(TExplicitClient)}");
         };
 
-        object instrumented = InstrumentClient(typeof(TExplicitClient), clientObject, [RecordingDisabler]);
-
-        // Keep track of the corresponding top level client and config
-        _clientToTopLevel.Add(new AzureOpenAiInstrumented
-        {
-            Client = instrumented,
-            TopLevelClient = topLevelClient,
-            Config = config,
-        });
+        object instrumented = WrapClient(
+            typeof(TExplicitClient),
+            clientObject,
+            new TopLevelInfo
+            {
+                TopLevelClient = topLevelClient,
+                Config = config,
+            },
+            null);
 
         return (TExplicitClient)instrumented;
     }
@@ -403,7 +451,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
             request.Content.WriteTo(stream, default);
             stream.Position = 0;
 
-            string? contentType = request.Headers.GetFirstValueOrDefault("Content-Type");
+            string? contentType = request.Headers.GetFirstOrDefault("Content-Type");
             if (IsProbableTextContent(contentType))
             {
                 DumpText(contentType, stream);
@@ -432,7 +480,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         if (response!.Content is not null)
         {
             using Stream stream = response.Content.ToStream();
-            string? contentType = response.Headers.GetFirstValueOrDefault("Content-Type");
+            string? contentType = response.Headers.GetFirstOrDefault("Content-Type");
             if (IsProbableTextContent(contentType))
             {
                 DumpText(contentType, stream);
@@ -639,7 +687,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         PipelineResponse response = result.GetRawResponse();
         Assert.That(response.Status, Is.GreaterThanOrEqualTo(200).And.LessThan(300));
         Assert.That(response.Headers, Is.Not.Null);
-        Assert.That(response.Headers.GetFirstValueOrDefault("Content-Type"), Does.StartWith("application/json"));
+        Assert.That(response.Headers.GetFirstOrDefault("Content-Type"), Does.StartWith("application/json"));
         Assert.That(response.Content, Is.Not.Null);
 
         return response;
@@ -661,64 +709,14 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         using Stream stream = response.Content.ToStream();
         Assert.That(stream, Is.Not.Null);
 
-        TModel? model = JsonHelpers.Deserialize<TModel>(stream, options ?? JsonHelpers.OpenAIJsonOptions);
+        TModel? model = JsonHelpers.Deserialize<TModel>(stream, options ?? JsonOptions.OpenAIJsonOptions);
         Assert.That(model, Is.Not.Null);
         return model!;
     }
 
-    protected AsyncResultCollection<T> SyncOrAsync<T>(TClient client, Func<TClient, ResultCollection<T>> sync, Func<TClient, AsyncResultCollection<T>> async)
+    internal class TopLevelInfo
     {
-        // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
-        //                 a simplified way to make explicit calls to the right methods in tests
-        TClient rawClient = GetOriginal(client);
-
-        if (IsAsync)
-        {
-            return async(rawClient);
-        }
-        else
-        {
-            ResultCollection<T> syncCollection = sync(rawClient);
-            return new SyncToAsyncResultCollection<T>(syncCollection);
-        }
-    }
-
-    protected AsyncPageableCollection<T> SyncOrAsync<T>(TClient client, Func<TClient, PageableCollection<T>> sync, Func<TClient, AsyncPageableCollection<T>> async)
-    {
-        // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
-        //                 a simplified way to make explicit calls to the right methods in tests
-        TClient rawClient = GetOriginal(client);
-
-        if (IsAsync)
-        {
-            return async(rawClient);
-        }
-        else
-        {
-            PageableCollection<T> syncCollection = sync(rawClient);
-            return new SyncToAsyncPageableCollection<T>(syncCollection);
-        }
-    }
-
-    protected Task<List<T>> SyncOrAsyncList<T>(TClient client, Func<TClient, PageableCollection<T>> sync, Func<TClient, AsyncPageableCollection<T>> async)
-    {
-        // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
-        //                 a simplified way to make explicit calls to the right methods in tests
-        TClient rawClient = GetOriginal(client);
-
-        if (IsAsync)
-        {
-            return async(rawClient).ToEnumerableAsync();
-        }
-        else
-        {
-            return Task.FromResult(sync(rawClient).ToList());
-        }
-    }
-
-    internal class AzureOpenAiInstrumented
-    {
-        required public object Client { get; init; }
+        //required public object Client { get; init; }
         required public AzureOpenAIClient TopLevelClient { get; init; }
         required public IConfiguration Config { get; init; }
     }
@@ -729,7 +727,6 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     private readonly List<string> _fileIdsToDelete = [];
     private readonly List<(string, string)> _vectorStoreFileAssociationsToRemove = [];
     private readonly List<string> _vectorStoreIdsToDelete = [];
-    internal readonly List<AzureOpenAiInstrumented> _clientToTopLevel = new();
 }
 
 public class TestClientOptions : AzureOpenAIClientOptions

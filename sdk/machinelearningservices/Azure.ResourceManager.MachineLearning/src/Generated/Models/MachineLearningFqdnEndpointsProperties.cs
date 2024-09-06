@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the category. </summary>
+        [WirePath("category")]
         public string Category { get; }
         /// <summary> Gets the endpoints. </summary>
+        [WirePath("endpoints")]
         public IReadOnlyList<MachineLearningFqdnEndpoint> Endpoints { get; }
     }
 }

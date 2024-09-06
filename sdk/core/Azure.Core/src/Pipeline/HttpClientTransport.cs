@@ -18,8 +18,6 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
-        internal const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
-
         /// <summary>
         /// A shared instance of <see cref="HttpClientTransport"/> with default parameters.
         /// </summary>
@@ -85,7 +83,6 @@ namespace Azure.Core.Pipeline
 #pragma warning restore CA1801
         {
             using HttpRequestMessage httpRequest = BuildRequestMessage(message);
-            SetPropertiesOrOptions<HttpMessage>(httpRequest, MessageForServerCertificateCallback, message);
             HttpResponseMessage responseMessage;
             Stream? contentStream = null;
             message.ClearResponse();

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Details about the error. </summary>
+        [WirePath("error")]
         public ResponseError ErrorDetail { get; }
     }
 }

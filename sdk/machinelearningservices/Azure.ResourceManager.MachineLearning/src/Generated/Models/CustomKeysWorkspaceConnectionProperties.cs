@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -28,12 +29,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="CustomKeysWorkspaceConnectionProperties"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
         /// <param name="expiryOn"></param>
-        /// <param name="metadata"> Any object. </param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
         /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"> Custom Keys credential object. </param>
-        internal CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, DateTimeOffset? expiryOn, BinaryData metadata, string target, IDictionary<string, BinaryData> serializedAdditionalRawData, CustomKeys credentials) : base(authType, category, expiryOn, metadata, target, serializedAdditionalRawData)
+        internal CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData, CustomKeys credentials) : base(authType, category, createdByWorkspaceArmId, expiryOn, group, isSharedToAll, target, metadata, sharedUserList, value, valueFormat, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;
@@ -42,6 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Custom Keys credential object. </summary>
         internal CustomKeys Credentials { get; set; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("credentials.keys")]
         public IDictionary<string, string> CredentialsKeys
         {
             get
