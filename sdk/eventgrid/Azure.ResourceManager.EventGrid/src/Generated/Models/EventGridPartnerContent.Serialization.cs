@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -118,6 +119,75 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new EventGridPartnerContent(partnerRegistrationImmutableId, partnerName, authorizationExpirationTimeInUtc, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerRegistrationImmutableId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  partnerRegistrationImmutableId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerRegistrationImmutableId))
+                {
+                    builder.Append("  partnerRegistrationImmutableId: ");
+                    builder.AppendLine($"'{PartnerRegistrationImmutableId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  partnerName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerName))
+                {
+                    builder.Append("  partnerName: ");
+                    if (PartnerName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PartnerName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PartnerName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationExpireOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authorizationExpirationTimeInUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthorizationExpireOn))
+                {
+                    builder.Append("  authorizationExpirationTimeInUtc: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(AuthorizationExpireOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EventGridPartnerContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventGridPartnerContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +196,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EventGridPartnerContent)} does not support writing '{options.Format}' format.");
             }

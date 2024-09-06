@@ -77,6 +77,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> The Private Endpoint resource for this Connection. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
@@ -89,10 +90,13 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> GroupIds from the private link service resource. </summary>
+        [WirePath("properties.groupIds")]
         public IList<string> GroupIds { get; }
         /// <summary> Details about the state of the connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public EventGridPrivateEndpointConnectionState ConnectionState { get; set; }
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
+        [WirePath("properties.provisioningState")]
         public EventGridResourceProvisioningState? ProvisioningState { get; set; }
     }
 }

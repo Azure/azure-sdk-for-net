@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> This must match the Name of a Volume. </summary>
+        [WirePath("volumeName")]
         public string VolumeName { get; set; }
         /// <summary> Path within the container at which the volume should be mounted.Must not contain ':'. </summary>
+        [WirePath("mountPath")]
         public string MountPath { get; set; }
         /// <summary> Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root). </summary>
+        [WirePath("subPath")]
         public string SubPath { get; set; }
     }
 }

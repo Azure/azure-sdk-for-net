@@ -111,9 +111,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()))
                 .Returns(GetStorageResourceItemsAsyncEnumerable(blobItems));
             ServiceToServiceTransferJob transferJob = new ServiceToServiceTransferJob(
-                new DataTransfer(
-                    id: transferId,
-                    transferManager: new TransferManager()),
+                new DataTransfer(id: transferId),
                 sourceMock.Object,
                 destinationMock.Object,
                 new DataTransferOptions(),
@@ -167,9 +165,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()))
                 .Returns(GetStorageResourceItemsAsyncEnumerable(blobItems));
             ServiceToServiceTransferJob transferJob = new ServiceToServiceTransferJob(
-                new DataTransfer(
-                    id: transferId,
-                    transferManager: new TransferManager()),
+                new DataTransfer(id: transferId),
                 sourceMock.Object,
                 destinationMock.Object,
                 new DataTransferOptions(),
