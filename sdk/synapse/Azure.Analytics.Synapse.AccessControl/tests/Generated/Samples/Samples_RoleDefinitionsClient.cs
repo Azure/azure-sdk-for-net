@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRoleDefinitions_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRoleDefinitions_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRoleDefinitions_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRoleDefinitions_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRoleDefinitionById_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRoleDefinitionById_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRoleDefinitionById_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -145,7 +145,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRoleDefinitionById_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -168,7 +168,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetScopes_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetScopes_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -196,7 +196,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetScopes_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetScopes_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 

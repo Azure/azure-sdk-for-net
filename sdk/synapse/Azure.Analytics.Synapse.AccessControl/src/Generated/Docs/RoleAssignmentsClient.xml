@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call CheckPrincipalAccessAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -32,7 +32,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CheckPrincipalAccessAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -72,7 +72,7 @@ Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssi
       <example>
 This sample shows how to call CheckPrincipalAccess and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -99,7 +99,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CheckPrincipalAccess with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -139,7 +139,7 @@ Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssi
       <example>
 This sample shows how to call GetRoleAssignmentsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -150,7 +150,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetRoleAssignmentsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -169,7 +169,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalType").To
       <example>
 This sample shows how to call GetRoleAssignments and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -180,7 +180,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetRoleAssignments with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -199,7 +199,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalType").To
       <example>
 This sample shows how to call CreateRoleAssignmentAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -216,7 +216,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateRoleAssignmentAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -241,7 +241,7 @@ Console.WriteLine(result.GetProperty("principalType").ToString());
       <example>
 This sample shows how to call CreateRoleAssignment and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -258,7 +258,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateRoleAssignment with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -283,7 +283,7 @@ Console.WriteLine(result.GetProperty("principalType").ToString());
       <example>
 This sample shows how to call GetRoleAssignmentByIdAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -294,7 +294,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetRoleAssignmentByIdAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -312,7 +312,7 @@ Console.WriteLine(result.GetProperty("principalType").ToString());
       <example>
 This sample shows how to call GetRoleAssignmentById and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -323,7 +323,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetRoleAssignmentById with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -341,7 +341,7 @@ Console.WriteLine(result.GetProperty("principalType").ToString());
       <example>
 This sample shows how to call DeleteRoleAssignmentByIdAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -351,7 +351,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteRoleAssignmentByIdAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -364,7 +364,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteRoleAssignmentById.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
@@ -374,7 +374,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteRoleAssignmentById with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
