@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRuleRunPlaybookActionProperties. </summary>
+    /// <summary>
+    /// The AutomationRuleRunPlaybookActionProperties.
+    /// Serialized Name: PlaybookActionProperties
+    /// </summary>
     public partial class AutomationRuleRunPlaybookActionProperties
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookActionProperties"/>. </summary>
-        /// <param name="logicAppResourceId"> The resource id of the playbook resource. </param>
+        /// <param name="logicAppResourceId">
+        /// The resource id of the playbook resource.
+        /// Serialized Name: PlaybookActionProperties.logicAppResourceId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logicAppResourceId"/> is null. </exception>
         public AutomationRuleRunPlaybookActionProperties(ResourceIdentifier logicAppResourceId)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookActionProperties"/>. </summary>
-        /// <param name="logicAppResourceId"> The resource id of the playbook resource. </param>
-        /// <param name="tenantId"> The tenant id of the playbook resource. </param>
+        /// <param name="logicAppResourceId">
+        /// The resource id of the playbook resource.
+        /// Serialized Name: PlaybookActionProperties.logicAppResourceId
+        /// </param>
+        /// <param name="tenantId">
+        /// The tenant id of the playbook resource.
+        /// Serialized Name: PlaybookActionProperties.tenantId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutomationRuleRunPlaybookActionProperties(ResourceIdentifier logicAppResourceId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The resource id of the playbook resource. </summary>
+        /// <summary>
+        /// The resource id of the playbook resource.
+        /// Serialized Name: PlaybookActionProperties.logicAppResourceId
+        /// </summary>
         public ResourceIdentifier LogicAppResourceId { get; set; }
-        /// <summary> The tenant id of the playbook resource. </summary>
+        /// <summary>
+        /// The tenant id of the playbook resource.
+        /// Serialized Name: PlaybookActionProperties.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
     }
 }

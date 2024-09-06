@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRulePropertyArrayConditionSupportedArrayConditionType. </summary>
+    /// <summary>
+    /// The AutomationRulePropertyArrayConditionSupportedArrayConditionType.
+    /// Serialized Name: AutomationRulePropertyArrayConditionSupportedArrayConditionType
+    /// </summary>
     public readonly partial struct AutomationRulePropertyArrayConditionSupportedArrayConditionType : IEquatable<AutomationRulePropertyArrayConditionSupportedArrayConditionType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string AnyItemValue = "AnyItem";
 
-        /// <summary> Evaluate the condition as true if any item fulfills it. </summary>
+        /// <summary>
+        /// Evaluate the condition as true if any item fulfills it
+        /// Serialized Name: AutomationRulePropertyArrayConditionSupportedArrayConditionType.AnyItem
+        /// </summary>
         public static AutomationRulePropertyArrayConditionSupportedArrayConditionType AnyItem { get; } = new AutomationRulePropertyArrayConditionSupportedArrayConditionType(AnyItemValue);
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayConditionSupportedArrayConditionType"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyArrayConditionSupportedArrayConditionType left, AutomationRulePropertyArrayConditionSupportedArrayConditionType right) => left.Equals(right);

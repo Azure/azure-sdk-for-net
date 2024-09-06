@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> the hive that holds the registry key. </summary>
+    /// <summary>
+    /// the hive that holds the registry key.
+    /// Serialized Name: RegistryHive
+    /// </summary>
     public readonly partial struct SecurityInsightsRegistryHive : IEquatable<SecurityInsightsRegistryHive>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string HkeyAValue = "HKEY_A";
         private const string HkeyCurrentUserValue = "HKEY_CURRENT_USER";
 
-        /// <summary> HKEY_LOCAL_MACHINE. </summary>
+        /// <summary>
+        /// HKEY_LOCAL_MACHINE
+        /// Serialized Name: RegistryHive.HKEY_LOCAL_MACHINE
+        /// </summary>
         public static SecurityInsightsRegistryHive HkeyLocalMachine { get; } = new SecurityInsightsRegistryHive(HkeyLocalMachineValue);
-        /// <summary> HKEY_CLASSES_ROOT. </summary>
+        /// <summary>
+        /// HKEY_CLASSES_ROOT
+        /// Serialized Name: RegistryHive.HKEY_CLASSES_ROOT
+        /// </summary>
         public static SecurityInsightsRegistryHive HkeyClassesRoot { get; } = new SecurityInsightsRegistryHive(HkeyClassesRootValue);
-        /// <summary> HKEY_CURRENT_CONFIG. </summary>
+        /// <summary>
+        /// HKEY_CURRENT_CONFIG
+        /// Serialized Name: RegistryHive.HKEY_CURRENT_CONFIG
+        /// </summary>
         public static SecurityInsightsRegistryHive HkeyCurrentConfig { get; } = new SecurityInsightsRegistryHive(HkeyCurrentConfigValue);
-        /// <summary> HKEY_USERS. </summary>
+        /// <summary>
+        /// HKEY_USERS
+        /// Serialized Name: RegistryHive.HKEY_USERS
+        /// </summary>
         public static SecurityInsightsRegistryHive HkeyUsers { get; } = new SecurityInsightsRegistryHive(HkeyUsersValue);
-        /// <summary> HKEY_CURRENT_USER_LOCAL_SETTINGS. </summary>
+        /// <summary>
+        /// HKEY_CURRENT_USER_LOCAL_SETTINGS
+        /// Serialized Name: RegistryHive.HKEY_CURRENT_USER_LOCAL_SETTINGS
+        /// </summary>
         public static SecurityInsightsRegistryHive HkeyCurrentUserLocalSettings { get; } = new SecurityInsightsRegistryHive(HkeyCurrentUserLocalSettingsValue);
-        /// <summary> HKEY_PERFORMANCE_DATA. </summary>
+        /// <summary>
+        /// HKEY_PERFORMANCE_DATA
+        /// Serialized Name: RegistryHive.HKEY_PERFORMANCE_DATA
+        /// </summary>
         public static SecurityInsightsRegistryHive HkeyPerformanceData { get; } = new SecurityInsightsRegistryHive(HkeyPerformanceDataValue);
-        /// <summary> HKEY_PERFORMANCE_NLSTEXT. </summary>
+        /// <summary>
+        /// HKEY_PERFORMANCE_NLSTEXT
+        /// Serialized Name: RegistryHive.HKEY_PERFORMANCE_NLSTEXT
+        /// </summary>
         public static SecurityInsightsRegistryHive HkeyPerformanceNlstext { get; } = new SecurityInsightsRegistryHive(HkeyPerformanceNlstextValue);
-        /// <summary> HKEY_PERFORMANCE_TEXT. </summary>
+        /// <summary>
+        /// HKEY_PERFORMANCE_TEXT
+        /// Serialized Name: RegistryHive.HKEY_PERFORMANCE_TEXT
+        /// </summary>
         public static SecurityInsightsRegistryHive HkeyPerformanceText { get; } = new SecurityInsightsRegistryHive(HkeyPerformanceTextValue);
-        /// <summary> HKEY_A. </summary>
+        /// <summary>
+        /// HKEY_A
+        /// Serialized Name: RegistryHive.HKEY_A
+        /// </summary>
         public static SecurityInsightsRegistryHive HkeyA { get; } = new SecurityInsightsRegistryHive(HkeyAValue);
-        /// <summary> HKEY_CURRENT_USER. </summary>
+        /// <summary>
+        /// HKEY_CURRENT_USER
+        /// Serialized Name: RegistryHive.HKEY_CURRENT_USER
+        /// </summary>
         public static SecurityInsightsRegistryHive HkeyCurrentUser { get; } = new SecurityInsightsRegistryHive(HkeyCurrentUserValue);
         /// <summary> Determines if two <see cref="SecurityInsightsRegistryHive"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsRegistryHive left, SecurityInsightsRegistryHive right) => left.Equals(right);

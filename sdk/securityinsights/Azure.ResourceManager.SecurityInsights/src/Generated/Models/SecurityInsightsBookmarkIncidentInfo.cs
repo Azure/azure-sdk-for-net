@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes related incident information for the bookmark. </summary>
+    /// <summary>
+    /// Describes related incident information for the bookmark
+    /// Serialized Name: IncidentInfo
+    /// </summary>
     public partial class SecurityInsightsBookmarkIncidentInfo
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkIncidentInfo"/>. </summary>
-        /// <param name="incidentId"> Incident Id. </param>
-        /// <param name="severity"> The severity of the incident. </param>
-        /// <param name="title"> The title of the incident. </param>
-        /// <param name="relationName"> Relation Name. </param>
+        /// <param name="incidentId">
+        /// Incident Id
+        /// Serialized Name: IncidentInfo.incidentId
+        /// </param>
+        /// <param name="severity">
+        /// The severity of the incident
+        /// Serialized Name: IncidentInfo.severity
+        /// </param>
+        /// <param name="title">
+        /// The title of the incident
+        /// Serialized Name: IncidentInfo.title
+        /// </param>
+        /// <param name="relationName">
+        /// Relation Name
+        /// Serialized Name: IncidentInfo.relationName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsBookmarkIncidentInfo(Guid? incidentId, SecurityInsightsIncidentSeverity? severity, string title, string relationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Incident Id. </summary>
+        /// <summary>
+        /// Incident Id
+        /// Serialized Name: IncidentInfo.incidentId
+        /// </summary>
         public Guid? IncidentId { get; set; }
-        /// <summary> The severity of the incident. </summary>
+        /// <summary>
+        /// The severity of the incident
+        /// Serialized Name: IncidentInfo.severity
+        /// </summary>
         public SecurityInsightsIncidentSeverity? Severity { get; set; }
-        /// <summary> The title of the incident. </summary>
+        /// <summary>
+        /// The title of the incident
+        /// Serialized Name: IncidentInfo.title
+        /// </summary>
         public string Title { get; set; }
-        /// <summary> Relation Name. </summary>
+        /// <summary>
+        /// Relation Name
+        /// Serialized Name: IncidentInfo.relationName
+        /// </summary>
         public string RelationName { get; set; }
     }
 }

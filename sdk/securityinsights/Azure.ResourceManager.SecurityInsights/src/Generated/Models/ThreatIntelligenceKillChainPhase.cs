@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes threat kill chain phase entity. </summary>
+    /// <summary>
+    /// Describes threat kill chain phase entity
+    /// Serialized Name: ThreatIntelligenceKillChainPhase
+    /// </summary>
     public partial class ThreatIntelligenceKillChainPhase
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceKillChainPhase"/>. </summary>
-        /// <param name="killChainName"> Kill chainName name. </param>
-        /// <param name="phaseName"> Phase name. </param>
+        /// <param name="killChainName">
+        /// Kill chainName name
+        /// Serialized Name: ThreatIntelligenceKillChainPhase.killChainName
+        /// </param>
+        /// <param name="phaseName">
+        /// Phase name
+        /// Serialized Name: ThreatIntelligenceKillChainPhase.phaseName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceKillChainPhase(string killChainName, string phaseName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Kill chainName name. </summary>
+        /// <summary>
+        /// Kill chainName name
+        /// Serialized Name: ThreatIntelligenceKillChainPhase.killChainName
+        /// </summary>
         public string KillChainName { get; set; }
-        /// <summary> Phase name. </summary>
+        /// <summary>
+        /// Phase name
+        /// Serialized Name: ThreatIntelligenceKillChainPhase.phaseName
+        /// </summary>
         public string PhaseName { get; set; }
     }
 }

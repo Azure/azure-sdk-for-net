@@ -10,12 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Model for API authentication with session cookie. </summary>
+    /// <summary>
+    /// Model for API authentication with session cookie.
+    /// Serialized Name: SessionAuthModel
+    /// </summary>
     public partial class SessionAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="SessionAuthModel"/>. </summary>
-        /// <param name="userName"> The user name attribute key value. </param>
-        /// <param name="password"> The password attribute name. </param>
+        /// <param name="userName">
+        /// The user name attribute key value.
+        /// Serialized Name: SessionAuthModel.userName
+        /// </param>
+        /// <param name="password">
+        /// The password attribute name.
+        /// Serialized Name: SessionAuthModel.password
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public SessionAuthModel(IDictionary<string, string> userName, IDictionary<string, string> password)
         {
@@ -30,16 +39,43 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
+        /// <param name="authType">
+        /// The auth type
+        /// Serialized Name: CcpAuthConfig.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="userName"> The user name attribute key value. </param>
-        /// <param name="password"> The password attribute name. </param>
-        /// <param name="queryParameters"> Query parameters to session service endpoint. </param>
-        /// <param name="isPostPayloadJson"> Indicating whether API key is set in HTTP POST payload. </param>
-        /// <param name="headers"> HTTP request headers to session service endpoint. </param>
-        /// <param name="sessionTimeoutInMinutes"> Session timeout in minutes. </param>
-        /// <param name="sessionIdName"> Session id attribute name from HTTP response header. </param>
-        /// <param name="sessionLoginRequestUri"> HTTP request URL to session service endpoint. </param>
+        /// <param name="userName">
+        /// The user name attribute key value.
+        /// Serialized Name: SessionAuthModel.userName
+        /// </param>
+        /// <param name="password">
+        /// The password attribute name.
+        /// Serialized Name: SessionAuthModel.password
+        /// </param>
+        /// <param name="queryParameters">
+        /// Query parameters to session service endpoint.
+        /// Serialized Name: SessionAuthModel.queryParameters
+        /// </param>
+        /// <param name="isPostPayloadJson">
+        /// Indicating whether API key is set in HTTP POST payload.
+        /// Serialized Name: SessionAuthModel.isPostPayloadJson
+        /// </param>
+        /// <param name="headers">
+        /// HTTP request headers to session service endpoint.
+        /// Serialized Name: SessionAuthModel.headers
+        /// </param>
+        /// <param name="sessionTimeoutInMinutes">
+        /// Session timeout in minutes.
+        /// Serialized Name: SessionAuthModel.sessionTimeoutInMinutes
+        /// </param>
+        /// <param name="sessionIdName">
+        /// Session id attribute name from HTTP response header.
+        /// Serialized Name: SessionAuthModel.sessionIdName
+        /// </param>
+        /// <param name="sessionLoginRequestUri">
+        /// HTTP request URL to session service endpoint.
+        /// Serialized Name: SessionAuthModel.sessionLoginRequestUri
+        /// </param>
         internal SessionAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> userName, IDictionary<string, string> password, IDictionary<string, BinaryData> queryParameters, bool? isPostPayloadJson, IDictionary<string, string> headers, int? sessionTimeoutInMinutes, string sessionIdName, Uri sessionLoginRequestUri) : base(authType, serializedAdditionalRawData)
         {
             UserName = userName;
@@ -58,12 +94,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The user name attribute key value. </summary>
+        /// <summary>
+        /// The user name attribute key value.
+        /// Serialized Name: SessionAuthModel.userName
+        /// </summary>
         public IDictionary<string, string> UserName { get; }
-        /// <summary> The password attribute name. </summary>
+        /// <summary>
+        /// The password attribute name.
+        /// Serialized Name: SessionAuthModel.password
+        /// </summary>
         public IDictionary<string, string> Password { get; }
         /// <summary>
         /// Query parameters to session service endpoint.
+        /// Serialized Name: SessionAuthModel.queryParameters
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -93,15 +136,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> QueryParameters { get; }
-        /// <summary> Indicating whether API key is set in HTTP POST payload. </summary>
+        /// <summary>
+        /// Indicating whether API key is set in HTTP POST payload.
+        /// Serialized Name: SessionAuthModel.isPostPayloadJson
+        /// </summary>
         public bool? IsPostPayloadJson { get; set; }
-        /// <summary> HTTP request headers to session service endpoint. </summary>
+        /// <summary>
+        /// HTTP request headers to session service endpoint.
+        /// Serialized Name: SessionAuthModel.headers
+        /// </summary>
         public IDictionary<string, string> Headers { get; }
-        /// <summary> Session timeout in minutes. </summary>
+        /// <summary>
+        /// Session timeout in minutes.
+        /// Serialized Name: SessionAuthModel.sessionTimeoutInMinutes
+        /// </summary>
         public int? SessionTimeoutInMinutes { get; set; }
-        /// <summary> Session id attribute name from HTTP response header. </summary>
+        /// <summary>
+        /// Session id attribute name from HTTP response header.
+        /// Serialized Name: SessionAuthModel.sessionIdName
+        /// </summary>
         public string SessionIdName { get; set; }
-        /// <summary> HTTP request URL to session service endpoint. </summary>
+        /// <summary>
+        /// HTTP request URL to session service endpoint.
+        /// Serialized Name: SessionAuthModel.sessionLoginRequestUri
+        /// </summary>
         public Uri SessionLoginRequestUri { get; set; }
     }
 }

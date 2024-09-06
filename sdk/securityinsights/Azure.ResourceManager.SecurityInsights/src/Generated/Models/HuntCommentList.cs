@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List of all hunt comments. </summary>
+    /// <summary>
+    /// List of all hunt comments
+    /// Serialized Name: HuntCommentList
+    /// </summary>
     internal partial class HuntCommentList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HuntCommentList"/>. </summary>
-        /// <param name="value"> Array of hunt comments. </param>
+        /// <param name="value">
+        /// Array of hunt comments
+        /// Serialized Name: HuntCommentList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HuntCommentList(IEnumerable<SecurityInsightsHuntCommentData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HuntCommentList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of hunt comments. </param>
-        /// <param name="value"> Array of hunt comments. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of hunt comments.
+        /// Serialized Name: HuntCommentList.nextLink
+        /// </param>
+        /// <param name="value">
+        /// Array of hunt comments
+        /// Serialized Name: HuntCommentList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HuntCommentList(string nextLink, IReadOnlyList<SecurityInsightsHuntCommentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of hunt comments. </summary>
+        /// <summary>
+        /// URL to fetch the next set of hunt comments.
+        /// Serialized Name: HuntCommentList.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> Array of hunt comments. </summary>
+        /// <summary>
+        /// Array of hunt comments
+        /// Serialized Name: HuntCommentList.value
+        /// </summary>
         public IReadOnlyList<SecurityInsightsHuntCommentData> Value { get; }
     }
 }

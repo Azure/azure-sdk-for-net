@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a file. </summary>
+    /// <summary>
+    /// Represents a file.
+    /// Serialized Name: FileMetadata
+    /// </summary>
     public partial class FileMetadata
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FileMetadata"/>. </summary>
-        /// <param name="fileFormat"> The format of the file. </param>
-        /// <param name="fileName"> The name of the file. </param>
-        /// <param name="fileSize"> The size of the file. </param>
-        /// <param name="fileContentUri"> A URI with a valid SAS token to allow uploading / downloading the file. </param>
-        /// <param name="deleteStatus"> Indicates whether the file was deleted from the storage account. </param>
+        /// <param name="fileFormat">
+        /// The format of the file
+        /// Serialized Name: FileMetadata.fileFormat
+        /// </param>
+        /// <param name="fileName">
+        /// The name of the file.
+        /// Serialized Name: FileMetadata.fileName
+        /// </param>
+        /// <param name="fileSize">
+        /// The size of the file.
+        /// Serialized Name: FileMetadata.fileSize
+        /// </param>
+        /// <param name="fileContentUri">
+        /// A URI with a valid SAS token to allow uploading / downloading the file.
+        /// Serialized Name: FileMetadata.fileContentUri
+        /// </param>
+        /// <param name="deleteStatus">
+        /// Indicates whether the file was deleted from the storage account.
+        /// Serialized Name: FileMetadata.deleteStatus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FileMetadata(FileFormat? fileFormat, string fileName, int? fileSize, Uri fileContentUri, DeleteStatus? deleteStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +85,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The format of the file. </summary>
+        /// <summary>
+        /// The format of the file
+        /// Serialized Name: FileMetadata.fileFormat
+        /// </summary>
         public FileFormat? FileFormat { get; set; }
-        /// <summary> The name of the file. </summary>
+        /// <summary>
+        /// The name of the file.
+        /// Serialized Name: FileMetadata.fileName
+        /// </summary>
         public string FileName { get; set; }
-        /// <summary> The size of the file. </summary>
+        /// <summary>
+        /// The size of the file.
+        /// Serialized Name: FileMetadata.fileSize
+        /// </summary>
         public int? FileSize { get; set; }
-        /// <summary> A URI with a valid SAS token to allow uploading / downloading the file. </summary>
+        /// <summary>
+        /// A URI with a valid SAS token to allow uploading / downloading the file.
+        /// Serialized Name: FileMetadata.fileContentUri
+        /// </summary>
         public Uri FileContentUri { get; }
-        /// <summary> Indicates whether the file was deleted from the storage account. </summary>
+        /// <summary>
+        /// Indicates whether the file was deleted from the storage account.
+        /// Serialized Name: FileMetadata.deleteStatus
+        /// </summary>
         public DeleteStatus? DeleteStatus { get; }
     }
 }

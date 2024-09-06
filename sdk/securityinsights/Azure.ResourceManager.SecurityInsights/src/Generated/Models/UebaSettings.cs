@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Settings with single toggle. </summary>
+    /// <summary>
+    /// Settings with single toggle.
+    /// Serialized Name: Ueba
+    /// </summary>
     public partial class UebaSettings : SecurityInsightsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="UebaSettings"/>. </summary>
@@ -27,17 +30,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the setting. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// The kind of the setting
+        /// Serialized Name: Settings.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="dataSources"> The relevant data sources that enriched by ueba. </param>
+        /// <param name="dataSources">
+        /// The relevant data sources that enriched by ueba
+        /// Serialized Name: Ueba.properties.dataSources
+        /// </param>
         internal UebaSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<UebaDataSource> dataSources) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             DataSources = dataSources;
             Kind = kind;
         }
 
-        /// <summary> The relevant data sources that enriched by ueba. </summary>
+        /// <summary>
+        /// The relevant data sources that enriched by ueba
+        /// Serialized Name: Ueba.properties.dataSources
+        /// </summary>
         public IList<UebaDataSource> DataSources { get; }
     }
 }

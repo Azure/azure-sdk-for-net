@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Status while trying to fetch the deployment information. </summary>
+    /// <summary>
+    /// Status while trying to fetch the deployment information.
+    /// Serialized Name: DeploymentFetchStatus
+    /// </summary>
     public readonly partial struct SourceControlDeploymentFetchStatus : IEquatable<SourceControlDeploymentFetchStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string UnauthorizedValue = "Unauthorized";
         private const string NotFoundValue = "NotFound";
 
-        /// <summary> Success. </summary>
+        /// <summary>
+        /// Success
+        /// Serialized Name: DeploymentFetchStatus.Success
+        /// </summary>
         public static SourceControlDeploymentFetchStatus Success { get; } = new SourceControlDeploymentFetchStatus(SuccessValue);
-        /// <summary> Unauthorized. </summary>
+        /// <summary>
+        /// Unauthorized
+        /// Serialized Name: DeploymentFetchStatus.Unauthorized
+        /// </summary>
         public static SourceControlDeploymentFetchStatus Unauthorized { get; } = new SourceControlDeploymentFetchStatus(UnauthorizedValue);
-        /// <summary> NotFound. </summary>
+        /// <summary>
+        /// NotFound
+        /// Serialized Name: DeploymentFetchStatus.NotFound
+        /// </summary>
         public static SourceControlDeploymentFetchStatus NotFound { get; } = new SourceControlDeploymentFetchStatus(NotFoundValue);
         /// <summary> Determines if two <see cref="SourceControlDeploymentFetchStatus"/> values are the same. </summary>
         public static bool operator ==(SourceControlDeploymentFetchStatus left, SourceControlDeploymentFetchStatus right) => left.Equals(right);

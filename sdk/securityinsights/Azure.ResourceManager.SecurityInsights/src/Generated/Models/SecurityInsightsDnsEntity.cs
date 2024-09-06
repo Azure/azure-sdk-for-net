@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a dns entity. </summary>
+    /// <summary>
+    /// Represents a dns entity.
+    /// Serialized Name: DnsEntity
+    /// </summary>
     public partial class SecurityInsightsDnsEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsDnsEntity"/>. </summary>
@@ -28,14 +31,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="kind">
+        /// The kind of the entity.
+        /// Serialized Name: Entity.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="dnsServerIPEntityId"> An ip entity id for the dns server resolving the request. </param>
-        /// <param name="domainName"> The name of the dns record associated with the alert. </param>
-        /// <param name="hostIPAddressEntityId"> An ip entity id for the dns request client. </param>
-        /// <param name="ipAddressEntityIds"> Ip entity identifiers for the resolved ip address. </param>
+        /// <param name="additionalData">
+        /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: DnsEntity.properties.additionalData
+        /// </param>
+        /// <param name="friendlyName">
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: DnsEntity.properties.friendlyName
+        /// </param>
+        /// <param name="dnsServerIPEntityId">
+        /// An ip entity id for the dns server resolving the request
+        /// Serialized Name: DnsEntity.properties.dnsServerIpEntityId
+        /// </param>
+        /// <param name="domainName">
+        /// The name of the dns record associated with the alert
+        /// Serialized Name: DnsEntity.properties.domainName
+        /// </param>
+        /// <param name="hostIPAddressEntityId">
+        /// An ip entity id for the dns request client
+        /// Serialized Name: DnsEntity.properties.hostIpAddressEntityId
+        /// </param>
+        /// <param name="ipAddressEntityIds">
+        /// Ip entity identifiers for the resolved ip address.
+        /// Serialized Name: DnsEntity.properties.ipAddressEntityIds
+        /// </param>
         internal SecurityInsightsDnsEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string dnsServerIPEntityId, string domainName, string hostIPAddressEntityId, IReadOnlyList<string> ipAddressEntityIds) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -49,6 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: DnsEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -78,15 +103,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        /// <summary>
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: DnsEntity.properties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> An ip entity id for the dns server resolving the request. </summary>
+        /// <summary>
+        /// An ip entity id for the dns server resolving the request
+        /// Serialized Name: DnsEntity.properties.dnsServerIpEntityId
+        /// </summary>
         public string DnsServerIPEntityId { get; }
-        /// <summary> The name of the dns record associated with the alert. </summary>
+        /// <summary>
+        /// The name of the dns record associated with the alert
+        /// Serialized Name: DnsEntity.properties.domainName
+        /// </summary>
         public string DomainName { get; }
-        /// <summary> An ip entity id for the dns request client. </summary>
+        /// <summary>
+        /// An ip entity id for the dns request client
+        /// Serialized Name: DnsEntity.properties.hostIpAddressEntityId
+        /// </summary>
         public string HostIPAddressEntityId { get; }
-        /// <summary> Ip entity identifiers for the resolved ip address. </summary>
+        /// <summary>
+        /// Ip entity identifiers for the resolved ip address.
+        /// Serialized Name: DnsEntity.properties.ipAddressEntityIds
+        /// </summary>
         public IReadOnlyList<string> IPAddressEntityIds { get; }
     }
 }

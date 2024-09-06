@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a mail cluster entity. </summary>
+    /// <summary>
+    /// Represents a mail cluster entity.
+    /// Serialized Name: MailClusterEntity
+    /// </summary>
     public partial class SecurityInsightsMailClusterEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailClusterEntity"/>. </summary>
@@ -29,25 +32,79 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="kind">
+        /// The kind of the entity.
+        /// Serialized Name: Entity.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="networkMessageIds"> The mail message IDs that are part of the mail cluster. </param>
-        /// <param name="countByDeliveryStatus"> Count of mail messages by DeliveryStatus string representation. </param>
-        /// <param name="countByThreatType"> Count of mail messages by ThreatType string representation. </param>
-        /// <param name="countByProtectionStatus"> Count of mail messages by ProtectionStatus string representation. </param>
-        /// <param name="threats"> The threats of mail messages that are part of the mail cluster. </param>
-        /// <param name="query"> The query that was used to identify the messages of the mail cluster. </param>
-        /// <param name="queryOn"> The query time. </param>
-        /// <param name="mailCount"> The number of mail messages that are part of the mail cluster. </param>
-        /// <param name="isVolumeAnomaly"> Is this a volume anomaly mail cluster. </param>
-        /// <param name="source"> The source of the mail cluster (default is 'O365 ATP'). </param>
-        /// <param name="clusterSourceIdentifier"> The id of the cluster source. </param>
-        /// <param name="clusterSourceType"> The type of the cluster source. </param>
-        /// <param name="clusterQueryStartOn"> The cluster query start time. </param>
-        /// <param name="clusterQueryEndOn"> The cluster query end time. </param>
-        /// <param name="clusterGroup"> The cluster group. </param>
+        /// <param name="additionalData">
+        /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: MailClusterEntity.properties.additionalData
+        /// </param>
+        /// <param name="friendlyName">
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: MailClusterEntity.properties.friendlyName
+        /// </param>
+        /// <param name="networkMessageIds">
+        /// The mail message IDs that are part of the mail cluster
+        /// Serialized Name: MailClusterEntity.properties.networkMessageIds
+        /// </param>
+        /// <param name="countByDeliveryStatus">
+        /// Count of mail messages by DeliveryStatus string representation
+        /// Serialized Name: MailClusterEntity.properties.countByDeliveryStatus
+        /// </param>
+        /// <param name="countByThreatType">
+        /// Count of mail messages by ThreatType string representation
+        /// Serialized Name: MailClusterEntity.properties.countByThreatType
+        /// </param>
+        /// <param name="countByProtectionStatus">
+        /// Count of mail messages by ProtectionStatus string representation
+        /// Serialized Name: MailClusterEntity.properties.countByProtectionStatus
+        /// </param>
+        /// <param name="threats">
+        /// The threats of mail messages that are part of the mail cluster
+        /// Serialized Name: MailClusterEntity.properties.threats
+        /// </param>
+        /// <param name="query">
+        /// The query that was used to identify the messages of the mail cluster
+        /// Serialized Name: MailClusterEntity.properties.query
+        /// </param>
+        /// <param name="queryOn">
+        /// The query time
+        /// Serialized Name: MailClusterEntity.properties.queryTime
+        /// </param>
+        /// <param name="mailCount">
+        /// The number of mail messages that are part of the mail cluster
+        /// Serialized Name: MailClusterEntity.properties.mailCount
+        /// </param>
+        /// <param name="isVolumeAnomaly">
+        /// Is this a volume anomaly mail cluster
+        /// Serialized Name: MailClusterEntity.properties.isVolumeAnomaly
+        /// </param>
+        /// <param name="source">
+        /// The source of the mail cluster (default is 'O365 ATP')
+        /// Serialized Name: MailClusterEntity.properties.source
+        /// </param>
+        /// <param name="clusterSourceIdentifier">
+        /// The id of the cluster source
+        /// Serialized Name: MailClusterEntity.properties.clusterSourceIdentifier
+        /// </param>
+        /// <param name="clusterSourceType">
+        /// The type of the cluster source
+        /// Serialized Name: MailClusterEntity.properties.clusterSourceType
+        /// </param>
+        /// <param name="clusterQueryStartOn">
+        /// The cluster query start time
+        /// Serialized Name: MailClusterEntity.properties.clusterQueryStartTime
+        /// </param>
+        /// <param name="clusterQueryEndOn">
+        /// The cluster query end time
+        /// Serialized Name: MailClusterEntity.properties.clusterQueryEndTime
+        /// </param>
+        /// <param name="clusterGroup">
+        /// The cluster group
+        /// Serialized Name: MailClusterEntity.properties.clusterGroup
+        /// </param>
         internal SecurityInsightsMailClusterEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IReadOnlyList<string> networkMessageIds, BinaryData countByDeliveryStatus, BinaryData countByThreatType, BinaryData countByProtectionStatus, IReadOnlyList<string> threats, string query, DateTimeOffset? queryOn, int? mailCount, bool? isVolumeAnomaly, string source, string clusterSourceIdentifier, string clusterSourceType, DateTimeOffset? clusterQueryStartOn, DateTimeOffset? clusterQueryEndOn, string clusterGroup) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -72,6 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: MailClusterEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -101,12 +159,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        /// <summary>
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: MailClusterEntity.properties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The mail message IDs that are part of the mail cluster. </summary>
+        /// <summary>
+        /// The mail message IDs that are part of the mail cluster
+        /// Serialized Name: MailClusterEntity.properties.networkMessageIds
+        /// </summary>
         public IReadOnlyList<string> NetworkMessageIds { get; }
         /// <summary>
         /// Count of mail messages by DeliveryStatus string representation
+        /// Serialized Name: MailClusterEntity.properties.countByDeliveryStatus
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -138,6 +203,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public BinaryData CountByDeliveryStatus { get; }
         /// <summary>
         /// Count of mail messages by ThreatType string representation
+        /// Serialized Name: MailClusterEntity.properties.countByThreatType
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -169,6 +235,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public BinaryData CountByThreatType { get; }
         /// <summary>
         /// Count of mail messages by ProtectionStatus string representation
+        /// Serialized Name: MailClusterEntity.properties.countByProtectionStatus
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -198,27 +265,60 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public BinaryData CountByProtectionStatus { get; }
-        /// <summary> The threats of mail messages that are part of the mail cluster. </summary>
+        /// <summary>
+        /// The threats of mail messages that are part of the mail cluster
+        /// Serialized Name: MailClusterEntity.properties.threats
+        /// </summary>
         public IReadOnlyList<string> Threats { get; }
-        /// <summary> The query that was used to identify the messages of the mail cluster. </summary>
+        /// <summary>
+        /// The query that was used to identify the messages of the mail cluster
+        /// Serialized Name: MailClusterEntity.properties.query
+        /// </summary>
         public string Query { get; }
-        /// <summary> The query time. </summary>
+        /// <summary>
+        /// The query time
+        /// Serialized Name: MailClusterEntity.properties.queryTime
+        /// </summary>
         public DateTimeOffset? QueryOn { get; }
-        /// <summary> The number of mail messages that are part of the mail cluster. </summary>
+        /// <summary>
+        /// The number of mail messages that are part of the mail cluster
+        /// Serialized Name: MailClusterEntity.properties.mailCount
+        /// </summary>
         public int? MailCount { get; }
-        /// <summary> Is this a volume anomaly mail cluster. </summary>
+        /// <summary>
+        /// Is this a volume anomaly mail cluster
+        /// Serialized Name: MailClusterEntity.properties.isVolumeAnomaly
+        /// </summary>
         public bool? IsVolumeAnomaly { get; }
-        /// <summary> The source of the mail cluster (default is 'O365 ATP'). </summary>
+        /// <summary>
+        /// The source of the mail cluster (default is 'O365 ATP')
+        /// Serialized Name: MailClusterEntity.properties.source
+        /// </summary>
         public string Source { get; }
-        /// <summary> The id of the cluster source. </summary>
+        /// <summary>
+        /// The id of the cluster source
+        /// Serialized Name: MailClusterEntity.properties.clusterSourceIdentifier
+        /// </summary>
         public string ClusterSourceIdentifier { get; }
-        /// <summary> The type of the cluster source. </summary>
+        /// <summary>
+        /// The type of the cluster source
+        /// Serialized Name: MailClusterEntity.properties.clusterSourceType
+        /// </summary>
         public string ClusterSourceType { get; }
-        /// <summary> The cluster query start time. </summary>
+        /// <summary>
+        /// The cluster query start time
+        /// Serialized Name: MailClusterEntity.properties.clusterQueryStartTime
+        /// </summary>
         public DateTimeOffset? ClusterQueryStartOn { get; }
-        /// <summary> The cluster query end time. </summary>
+        /// <summary>
+        /// The cluster query end time
+        /// Serialized Name: MailClusterEntity.properties.clusterQueryEndTime
+        /// </summary>
         public DateTimeOffset? ClusterQueryEndOn { get; }
-        /// <summary> The cluster group. </summary>
+        /// <summary>
+        /// The cluster group
+        /// Serialized Name: MailClusterEntity.properties.clusterGroup
+        /// </summary>
         public string ClusterGroup { get; }
     }
 }

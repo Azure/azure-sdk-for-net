@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsIncidentComment data model.
     /// Represents an incident comment
+    /// Serialized Name: IncidentComment
     /// </summary>
     public partial class SecurityInsightsIncidentCommentData : ResourceData
     {
@@ -61,11 +62,26 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="message"> The comment message. </param>
-        /// <param name="createdOn"> The time the comment was created. </param>
-        /// <param name="lastModifiedOn"> The time the comment was updated. </param>
-        /// <param name="author"> Describes the client that created the comment. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="message">
+        /// The comment message
+        /// Serialized Name: IncidentComment.properties.message
+        /// </param>
+        /// <param name="createdOn">
+        /// The time the comment was created
+        /// Serialized Name: IncidentComment.properties.createdTimeUtc
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// The time the comment was updated
+        /// Serialized Name: IncidentComment.properties.lastModifiedTimeUtc
+        /// </param>
+        /// <param name="author">
+        /// Describes the client that created the comment
+        /// Serialized Name: IncidentComment.properties.author
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsIncidentCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string message, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, SecurityInsightsClientInfo author, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -77,15 +93,30 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The comment message. </summary>
+        /// <summary>
+        /// The comment message
+        /// Serialized Name: IncidentComment.properties.message
+        /// </summary>
         public string Message { get; set; }
-        /// <summary> The time the comment was created. </summary>
+        /// <summary>
+        /// The time the comment was created
+        /// Serialized Name: IncidentComment.properties.createdTimeUtc
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The time the comment was updated. </summary>
+        /// <summary>
+        /// The time the comment was updated
+        /// Serialized Name: IncidentComment.properties.lastModifiedTimeUtc
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> Describes the client that created the comment. </summary>
+        /// <summary>
+        /// Describes the client that created the comment
+        /// Serialized Name: IncidentComment.properties.author
+        /// </summary>
         public SecurityInsightsClientInfo Author { get; }
-        /// <summary> Etag of the azure resource. </summary>
+        /// <summary>
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

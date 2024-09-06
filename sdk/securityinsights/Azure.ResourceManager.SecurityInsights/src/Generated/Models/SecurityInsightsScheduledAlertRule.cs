@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents scheduled alert rule. </summary>
+    /// <summary>
+    /// Represents scheduled alert rule.
+    /// Serialized Name: ScheduledAlertRule
+    /// </summary>
     public partial class SecurityInsightsScheduledAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsScheduledAlertRule"/>. </summary>
@@ -32,32 +35,107 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// The kind of the alert rule
+        /// Serialized Name: AlertRule.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="query"> The query that creates alerts for this rule. </param>
-        /// <param name="queryFrequency"> The frequency (in ISO 8601 duration format) for this alert rule to run. </param>
-        /// <param name="queryPeriod"> The period (in ISO 8601 duration format) that this alert rule looks at. </param>
-        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
-        /// <param name="triggerOperator"> The operation against the threshold that triggers alert rule. </param>
-        /// <param name="triggerThreshold"> The threshold triggers this alert rule. </param>
-        /// <param name="eventGroupingSettings"> The event grouping settings. </param>
-        /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
-        /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
-        /// <param name="alertDetailsOverride"> The alert details override settings. </param>
-        /// <param name="sentinelEntitiesMappings"> Array of the sentinel entity mappings of the alert rule. </param>
-        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
-        /// <param name="templateVersion"> The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;. </param>
-        /// <param name="description"> The description of the alert rule. </param>
-        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
-        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
-        /// <param name="lastModifiedOn"> The last time that this alert rule has been modified. </param>
-        /// <param name="suppressionDuration"> The suppression (in ISO 8601 duration format) to wait since last time this alert rule been triggered. </param>
-        /// <param name="isSuppressionEnabled"> Determines whether the suppression for this alert rule is enabled or disabled. </param>
-        /// <param name="tactics"> The tactics of the alert rule. </param>
-        /// <param name="techniques"> The techniques of the alert rule. </param>
-        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
-        /// <param name="incidentConfiguration"> The settings of the incidents that created from alerts triggered by this analytics rule. </param>
+        /// <param name="query">
+        /// The query that creates alerts for this rule.
+        /// Serialized Name: ScheduledAlertRule.properties.query
+        /// </param>
+        /// <param name="queryFrequency">
+        /// The frequency (in ISO 8601 duration format) for this alert rule to run.
+        /// Serialized Name: ScheduledAlertRule.properties.queryFrequency
+        /// </param>
+        /// <param name="queryPeriod">
+        /// The period (in ISO 8601 duration format) that this alert rule looks at.
+        /// Serialized Name: ScheduledAlertRule.properties.queryPeriod
+        /// </param>
+        /// <param name="severity">
+        /// The severity for alerts created by this alert rule.
+        /// Serialized Name: ScheduledAlertRule.properties.severity
+        /// </param>
+        /// <param name="triggerOperator">
+        /// The operation against the threshold that triggers alert rule.
+        /// Serialized Name: ScheduledAlertRule.properties.triggerOperator
+        /// </param>
+        /// <param name="triggerThreshold">
+        /// The threshold triggers this alert rule.
+        /// Serialized Name: ScheduledAlertRule.properties.triggerThreshold
+        /// </param>
+        /// <param name="eventGroupingSettings">
+        /// The event grouping settings.
+        /// Serialized Name: ScheduledAlertRule.properties.eventGroupingSettings
+        /// </param>
+        /// <param name="customDetails">
+        /// Dictionary of string key-value pairs of columns to be attached to the alert
+        /// Serialized Name: ScheduledAlertRule.properties.customDetails
+        /// </param>
+        /// <param name="entityMappings">
+        /// Array of the entity mappings of the alert rule
+        /// Serialized Name: ScheduledAlertRule.properties.entityMappings
+        /// </param>
+        /// <param name="alertDetailsOverride">
+        /// The alert details override settings
+        /// Serialized Name: ScheduledAlertRule.properties.alertDetailsOverride
+        /// </param>
+        /// <param name="sentinelEntitiesMappings">
+        /// Array of the sentinel entity mappings of the alert rule
+        /// Serialized Name: ScheduledAlertRule.properties.sentinelEntitiesMappings
+        /// </param>
+        /// <param name="alertRuleTemplateName">
+        /// The Name of the alert rule template used to create this rule.
+        /// Serialized Name: ScheduledAlertRule.properties.alertRuleTemplateName
+        /// </param>
+        /// <param name="templateVersion">
+        /// The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;
+        /// Serialized Name: ScheduledAlertRule.properties.templateVersion
+        /// </param>
+        /// <param name="description">
+        /// The description of the alert rule.
+        /// Serialized Name: ScheduledAlertRule.properties.description
+        /// </param>
+        /// <param name="displayName">
+        /// The display name for alerts created by this alert rule.
+        /// Serialized Name: ScheduledAlertRule.properties.displayName
+        /// </param>
+        /// <param name="isEnabled">
+        /// Determines whether this alert rule is enabled or disabled.
+        /// Serialized Name: ScheduledAlertRule.properties.enabled
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// The last time that this alert rule has been modified.
+        /// Serialized Name: ScheduledAlertRule.properties.lastModifiedUtc
+        /// </param>
+        /// <param name="suppressionDuration">
+        /// The suppression (in ISO 8601 duration format) to wait since last time this alert rule been triggered.
+        /// Serialized Name: ScheduledAlertRule.properties.suppressionDuration
+        /// </param>
+        /// <param name="isSuppressionEnabled">
+        /// Determines whether the suppression for this alert rule is enabled or disabled.
+        /// Serialized Name: ScheduledAlertRule.properties.suppressionEnabled
+        /// </param>
+        /// <param name="tactics">
+        /// The tactics of the alert rule
+        /// Serialized Name: ScheduledAlertRule.properties.tactics
+        /// </param>
+        /// <param name="techniques">
+        /// The techniques of the alert rule
+        /// Serialized Name: ScheduledAlertRule.properties.techniques
+        /// </param>
+        /// <param name="subTechniques">
+        /// The sub-techniques of the alert rule
+        /// Serialized Name: ScheduledAlertRule.properties.subTechniques
+        /// </param>
+        /// <param name="incidentConfiguration">
+        /// The settings of the incidents that created from alerts triggered by this analytics rule
+        /// Serialized Name: ScheduledAlertRule.properties.incidentConfiguration
+        /// </param>
         internal SecurityInsightsScheduledAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, SecurityInsightsAlertSeverity? severity, SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, EventGroupingSettings eventGroupingSettings, IDictionary<string, string> customDetails, IList<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride, IList<SentinelEntityMapping> sentinelEntitiesMappings, string alertRuleTemplateName, string templateVersion, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, TimeSpan? suppressionDuration, bool? isSuppressionEnabled, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, IList<string> subTechniques, SecurityInsightsIncidentConfiguration incidentConfiguration) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Query = query;
@@ -86,21 +164,45 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary> The query that creates alerts for this rule. </summary>
+        /// <summary>
+        /// The query that creates alerts for this rule.
+        /// Serialized Name: ScheduledAlertRule.properties.query
+        /// </summary>
         public string Query { get; set; }
-        /// <summary> The frequency (in ISO 8601 duration format) for this alert rule to run. </summary>
+        /// <summary>
+        /// The frequency (in ISO 8601 duration format) for this alert rule to run.
+        /// Serialized Name: ScheduledAlertRule.properties.queryFrequency
+        /// </summary>
         public TimeSpan? QueryFrequency { get; set; }
-        /// <summary> The period (in ISO 8601 duration format) that this alert rule looks at. </summary>
+        /// <summary>
+        /// The period (in ISO 8601 duration format) that this alert rule looks at.
+        /// Serialized Name: ScheduledAlertRule.properties.queryPeriod
+        /// </summary>
         public TimeSpan? QueryPeriod { get; set; }
-        /// <summary> The severity for alerts created by this alert rule. </summary>
+        /// <summary>
+        /// The severity for alerts created by this alert rule.
+        /// Serialized Name: ScheduledAlertRule.properties.severity
+        /// </summary>
         public SecurityInsightsAlertSeverity? Severity { get; set; }
-        /// <summary> The operation against the threshold that triggers alert rule. </summary>
+        /// <summary>
+        /// The operation against the threshold that triggers alert rule.
+        /// Serialized Name: ScheduledAlertRule.properties.triggerOperator
+        /// </summary>
         public SecurityInsightsAlertRuleTriggerOperator? TriggerOperator { get; set; }
-        /// <summary> The threshold triggers this alert rule. </summary>
+        /// <summary>
+        /// The threshold triggers this alert rule.
+        /// Serialized Name: ScheduledAlertRule.properties.triggerThreshold
+        /// </summary>
         public int? TriggerThreshold { get; set; }
-        /// <summary> The event grouping settings. </summary>
+        /// <summary>
+        /// The event grouping settings.
+        /// Serialized Name: ScheduledAlertRule.properties.eventGroupingSettings
+        /// </summary>
         internal EventGroupingSettings EventGroupingSettings { get; set; }
-        /// <summary> The event grouping aggregation kinds. </summary>
+        /// <summary>
+        /// The event grouping aggregation kinds
+        /// Serialized Name: EventGroupingSettings.aggregationKind
+        /// </summary>
         public EventGroupingAggregationKind? EventGroupingAggregationKind
         {
             get => EventGroupingSettings is null ? default : EventGroupingSettings.AggregationKind;
@@ -112,37 +214,85 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        /// <summary> Dictionary of string key-value pairs of columns to be attached to the alert. </summary>
+        /// <summary>
+        /// Dictionary of string key-value pairs of columns to be attached to the alert
+        /// Serialized Name: ScheduledAlertRule.properties.customDetails
+        /// </summary>
         public IDictionary<string, string> CustomDetails { get; }
-        /// <summary> Array of the entity mappings of the alert rule. </summary>
+        /// <summary>
+        /// Array of the entity mappings of the alert rule
+        /// Serialized Name: ScheduledAlertRule.properties.entityMappings
+        /// </summary>
         public IList<SecurityInsightsAlertRuleEntityMapping> EntityMappings { get; }
-        /// <summary> The alert details override settings. </summary>
+        /// <summary>
+        /// The alert details override settings
+        /// Serialized Name: ScheduledAlertRule.properties.alertDetailsOverride
+        /// </summary>
         public SecurityInsightsAlertDetailsOverride AlertDetailsOverride { get; set; }
-        /// <summary> Array of the sentinel entity mappings of the alert rule. </summary>
+        /// <summary>
+        /// Array of the sentinel entity mappings of the alert rule
+        /// Serialized Name: ScheduledAlertRule.properties.sentinelEntitiesMappings
+        /// </summary>
         public IList<SentinelEntityMapping> SentinelEntitiesMappings { get; }
-        /// <summary> The Name of the alert rule template used to create this rule. </summary>
+        /// <summary>
+        /// The Name of the alert rule template used to create this rule.
+        /// Serialized Name: ScheduledAlertRule.properties.alertRuleTemplateName
+        /// </summary>
         public string AlertRuleTemplateName { get; set; }
-        /// <summary> The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;. </summary>
+        /// <summary>
+        /// The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;
+        /// Serialized Name: ScheduledAlertRule.properties.templateVersion
+        /// </summary>
         public string TemplateVersion { get; set; }
-        /// <summary> The description of the alert rule. </summary>
+        /// <summary>
+        /// The description of the alert rule.
+        /// Serialized Name: ScheduledAlertRule.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The display name for alerts created by this alert rule. </summary>
+        /// <summary>
+        /// The display name for alerts created by this alert rule.
+        /// Serialized Name: ScheduledAlertRule.properties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> Determines whether this alert rule is enabled or disabled. </summary>
+        /// <summary>
+        /// Determines whether this alert rule is enabled or disabled.
+        /// Serialized Name: ScheduledAlertRule.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> The last time that this alert rule has been modified. </summary>
+        /// <summary>
+        /// The last time that this alert rule has been modified.
+        /// Serialized Name: ScheduledAlertRule.properties.lastModifiedUtc
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> The suppression (in ISO 8601 duration format) to wait since last time this alert rule been triggered. </summary>
+        /// <summary>
+        /// The suppression (in ISO 8601 duration format) to wait since last time this alert rule been triggered.
+        /// Serialized Name: ScheduledAlertRule.properties.suppressionDuration
+        /// </summary>
         public TimeSpan? SuppressionDuration { get; set; }
-        /// <summary> Determines whether the suppression for this alert rule is enabled or disabled. </summary>
+        /// <summary>
+        /// Determines whether the suppression for this alert rule is enabled or disabled.
+        /// Serialized Name: ScheduledAlertRule.properties.suppressionEnabled
+        /// </summary>
         public bool? IsSuppressionEnabled { get; set; }
-        /// <summary> The tactics of the alert rule. </summary>
+        /// <summary>
+        /// The tactics of the alert rule
+        /// Serialized Name: ScheduledAlertRule.properties.tactics
+        /// </summary>
         public IList<SecurityInsightsAttackTactic> Tactics { get; }
-        /// <summary> The techniques of the alert rule. </summary>
+        /// <summary>
+        /// The techniques of the alert rule
+        /// Serialized Name: ScheduledAlertRule.properties.techniques
+        /// </summary>
         public IList<string> Techniques { get; }
-        /// <summary> The sub-techniques of the alert rule. </summary>
+        /// <summary>
+        /// The sub-techniques of the alert rule
+        /// Serialized Name: ScheduledAlertRule.properties.subTechniques
+        /// </summary>
         public IList<string> SubTechniques { get; }
-        /// <summary> The settings of the incidents that created from alerts triggered by this analytics rule. </summary>
+        /// <summary>
+        /// The settings of the incidents that created from alerts triggered by this analytics rule
+        /// Serialized Name: ScheduledAlertRule.properties.incidentConfiguration
+        /// </summary>
         public SecurityInsightsIncidentConfiguration IncidentConfiguration { get; set; }
     }
 }

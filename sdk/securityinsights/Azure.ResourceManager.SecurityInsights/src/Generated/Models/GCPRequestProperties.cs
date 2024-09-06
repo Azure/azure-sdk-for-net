@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Google Cloud Platform request section properties. </summary>
+    /// <summary>
+    /// Google Cloud Platform request section properties.
+    /// Serialized Name: GCPRequestProperties
+    /// </summary>
     public partial class GCPRequestProperties
     {
         /// <summary>
@@ -47,8 +50,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GCPRequestProperties"/>. </summary>
-        /// <param name="projectId"> The GCP project id. </param>
-        /// <param name="subscriptionNames"> The GCP pub/sub subscription names. </param>
+        /// <param name="projectId">
+        /// The GCP project id.
+        /// Serialized Name: GCPRequestProperties.projectId
+        /// </param>
+        /// <param name="subscriptionNames">
+        /// The GCP pub/sub subscription names.
+        /// Serialized Name: GCPRequestProperties.subscriptionNames
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectId"/> or <paramref name="subscriptionNames"/> is null. </exception>
         public GCPRequestProperties(string projectId, IEnumerable<string> subscriptionNames)
         {
@@ -60,8 +69,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GCPRequestProperties"/>. </summary>
-        /// <param name="projectId"> The GCP project id. </param>
-        /// <param name="subscriptionNames"> The GCP pub/sub subscription names. </param>
+        /// <param name="projectId">
+        /// The GCP project id.
+        /// Serialized Name: GCPRequestProperties.projectId
+        /// </param>
+        /// <param name="subscriptionNames">
+        /// The GCP pub/sub subscription names.
+        /// Serialized Name: GCPRequestProperties.subscriptionNames
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GCPRequestProperties(string projectId, IList<string> subscriptionNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,9 +90,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The GCP project id. </summary>
+        /// <summary>
+        /// The GCP project id.
+        /// Serialized Name: GCPRequestProperties.projectId
+        /// </summary>
         public string ProjectId { get; set; }
-        /// <summary> The GCP pub/sub subscription names. </summary>
+        /// <summary>
+        /// The GCP pub/sub subscription names.
+        /// Serialized Name: GCPRequestProperties.subscriptionNames
+        /// </summary>
         public IList<string> SubscriptionNames { get; }
     }
 }

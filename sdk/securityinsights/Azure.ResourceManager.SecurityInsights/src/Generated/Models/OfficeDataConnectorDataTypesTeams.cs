@@ -10,17 +10,26 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Teams data type connection. </summary>
+    /// <summary>
+    /// Teams data type connection.
+    /// Serialized Name: OfficeDataConnectorDataTypesTeams
+    /// </summary>
     public partial class OfficeDataConnectorDataTypesTeams : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesTeams"/>. </summary>
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
+        /// <param name="state">
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </param>
         public OfficeDataConnectorDataTypesTeams(SecurityInsightsDataTypeConnectionState state) : base(state)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesTeams"/>. </summary>
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
+        /// <param name="state">
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OfficeDataConnectorDataTypesTeams(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
         {

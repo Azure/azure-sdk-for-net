@@ -12,8 +12,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents Activity entity query. </summary>
-    public partial class ActivityEntityQuery : EntityQueryData
+    /// <summary>
+    /// Represents Activity entity query.
+    /// Serialized Name: ActivityEntityQuery
+    /// </summary>
+    public partial class ActivityEntityQuery : SecurityInsightsEntityQueryData
     {
         /// <summary> Initializes a new instance of <see cref="ActivityEntityQuery"/>. </summary>
         public ActivityEntityQuery()
@@ -28,20 +31,59 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> the entity query kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// the entity query kind
+        /// Serialized Name: EntityQuery.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="title"> The entity query title. </param>
-        /// <param name="content"> The entity query content to display in timeline. </param>
-        /// <param name="description"> The entity query description. </param>
-        /// <param name="queryDefinitions"> The Activity query definitions. </param>
-        /// <param name="inputEntityType"> The type of the query's source entity. </param>
-        /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
-        /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
-        /// <param name="templateName"> The template id this activity was created from. </param>
-        /// <param name="isEnabled"> Determines whether this activity is enabled or disabled. </param>
-        /// <param name="createdOn"> The time the activity was created. </param>
-        /// <param name="lastModifiedOn"> The last time the activity was updated. </param>
+        /// <param name="title">
+        /// The entity query title
+        /// Serialized Name: ActivityEntityQuery.properties.title
+        /// </param>
+        /// <param name="content">
+        /// The entity query content to display in timeline
+        /// Serialized Name: ActivityEntityQuery.properties.content
+        /// </param>
+        /// <param name="description">
+        /// The entity query description
+        /// Serialized Name: ActivityEntityQuery.properties.description
+        /// </param>
+        /// <param name="queryDefinitions">
+        /// The Activity query definitions
+        /// Serialized Name: ActivityEntityQuery.properties.queryDefinitions
+        /// </param>
+        /// <param name="inputEntityType">
+        /// The type of the query's source entity
+        /// Serialized Name: ActivityEntityQuery.properties.inputEntityType
+        /// </param>
+        /// <param name="requiredInputFieldsSets">
+        /// List of the fields of the source entity that are required to run the query
+        /// Serialized Name: ActivityEntityQuery.properties.requiredInputFieldsSets
+        /// </param>
+        /// <param name="entitiesFilter">
+        /// The query applied only to entities matching to all filters
+        /// Serialized Name: ActivityEntityQuery.properties.entitiesFilter
+        /// </param>
+        /// <param name="templateName">
+        /// The template id this activity was created from
+        /// Serialized Name: ActivityEntityQuery.properties.templateName
+        /// </param>
+        /// <param name="isEnabled">
+        /// Determines whether this activity is enabled or disabled.
+        /// Serialized Name: ActivityEntityQuery.properties.enabled
+        /// </param>
+        /// <param name="createdOn">
+        /// The time the activity was created
+        /// Serialized Name: ActivityEntityQuery.properties.createdTimeUtc
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// The last time the activity was updated
+        /// Serialized Name: ActivityEntityQuery.properties.lastModifiedTimeUtc
+        /// </param>
         internal ActivityEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, string content, string description, ActivityEntityQueriesPropertiesQueryDefinitions queryDefinitions, EntityType? inputEntityType, IList<IList<string>> requiredInputFieldsSets, IDictionary<string, IList<string>> entitiesFilter, string templateName, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Title = title;
@@ -58,15 +100,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary> The entity query title. </summary>
+        /// <summary>
+        /// The entity query title
+        /// Serialized Name: ActivityEntityQuery.properties.title
+        /// </summary>
         public string Title { get; set; }
-        /// <summary> The entity query content to display in timeline. </summary>
+        /// <summary>
+        /// The entity query content to display in timeline
+        /// Serialized Name: ActivityEntityQuery.properties.content
+        /// </summary>
         public string Content { get; set; }
-        /// <summary> The entity query description. </summary>
+        /// <summary>
+        /// The entity query description
+        /// Serialized Name: ActivityEntityQuery.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The Activity query definitions. </summary>
+        /// <summary>
+        /// The Activity query definitions
+        /// Serialized Name: ActivityEntityQuery.properties.queryDefinitions
+        /// </summary>
         internal ActivityEntityQueriesPropertiesQueryDefinitions QueryDefinitions { get; set; }
-        /// <summary> The Activity query to run on a given entity. </summary>
+        /// <summary>
+        /// The Activity query to run on a given entity
+        /// Serialized Name: ActivityEntityQueriesPropertiesQueryDefinitions.query
+        /// </summary>
         public string Query
         {
             get => QueryDefinitions is null ? default : QueryDefinitions.Query;
@@ -78,19 +135,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        /// <summary> The type of the query's source entity. </summary>
+        /// <summary>
+        /// The type of the query's source entity
+        /// Serialized Name: ActivityEntityQuery.properties.inputEntityType
+        /// </summary>
         public EntityType? InputEntityType { get; set; }
-        /// <summary> List of the fields of the source entity that are required to run the query. </summary>
+        /// <summary>
+        /// List of the fields of the source entity that are required to run the query
+        /// Serialized Name: ActivityEntityQuery.properties.requiredInputFieldsSets
+        /// </summary>
         public IList<IList<string>> RequiredInputFieldsSets { get; }
-        /// <summary> The query applied only to entities matching to all filters. </summary>
+        /// <summary>
+        /// The query applied only to entities matching to all filters
+        /// Serialized Name: ActivityEntityQuery.properties.entitiesFilter
+        /// </summary>
         public IDictionary<string, IList<string>> EntitiesFilter { get; }
-        /// <summary> The template id this activity was created from. </summary>
+        /// <summary>
+        /// The template id this activity was created from
+        /// Serialized Name: ActivityEntityQuery.properties.templateName
+        /// </summary>
         public string TemplateName { get; set; }
-        /// <summary> Determines whether this activity is enabled or disabled. </summary>
+        /// <summary>
+        /// Determines whether this activity is enabled or disabled.
+        /// Serialized Name: ActivityEntityQuery.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> The time the activity was created. </summary>
+        /// <summary>
+        /// The time the activity was created
+        /// Serialized Name: ActivityEntityQuery.properties.createdTimeUtc
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The last time the activity was updated. </summary>
+        /// <summary>
+        /// The last time the activity was updated
+        /// Serialized Name: ActivityEntityQuery.properties.lastModifiedTimeUtc
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
     }
 }

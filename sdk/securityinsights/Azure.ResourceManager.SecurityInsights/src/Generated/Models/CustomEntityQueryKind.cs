@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The kind of the entity query that supports put request. </summary>
+    /// <summary>
+    /// The kind of the entity query that supports put request.
+    /// Serialized Name: CustomEntityQueryKind
+    /// </summary>
     internal readonly partial struct CustomEntityQueryKind : IEquatable<CustomEntityQueryKind>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string ActivityValue = "Activity";
 
-        /// <summary> Activity. </summary>
+        /// <summary>
+        /// Activity
+        /// Serialized Name: CustomEntityQueryKind.Activity
+        /// </summary>
         public static CustomEntityQueryKind Activity { get; } = new CustomEntityQueryKind(ActivityValue);
         /// <summary> Determines if two <see cref="CustomEntityQueryKind"/> values are the same. </summary>
         public static bool operator ==(CustomEntityQueryKind left, CustomEntityQueryKind right) => left.Equals(right);

@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List of all the threat intelligence metric fields (type/threat type/source). </summary>
+    /// <summary>
+    /// List of all the threat intelligence metric fields (type/threat type/source).
+    /// Serialized Name: ThreatIntelligenceMetricsList
+    /// </summary>
     internal partial class ThreatIntelligenceMetricsList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetricsList"/>. </summary>
-        /// <param name="value"> Array of threat intelligence metric fields (type/threat type/source). </param>
+        /// <param name="value">
+        /// Array of threat intelligence metric fields (type/threat type/source).
+        /// Serialized Name: ThreatIntelligenceMetricsList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ThreatIntelligenceMetricsList(IEnumerable<ThreatIntelligenceMetrics> value)
         {
@@ -57,7 +63,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetricsList"/>. </summary>
-        /// <param name="value"> Array of threat intelligence metric fields (type/threat type/source). </param>
+        /// <param name="value">
+        /// Array of threat intelligence metric fields (type/threat type/source).
+        /// Serialized Name: ThreatIntelligenceMetricsList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceMetricsList(IReadOnlyList<ThreatIntelligenceMetrics> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +79,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Array of threat intelligence metric fields (type/threat type/source). </summary>
+        /// <summary>
+        /// Array of threat intelligence metric fields (type/threat type/source).
+        /// Serialized Name: ThreatIntelligenceMetricsList.value
+        /// </summary>
         public IReadOnlyList<ThreatIntelligenceMetrics> Value { get; }
     }
 }

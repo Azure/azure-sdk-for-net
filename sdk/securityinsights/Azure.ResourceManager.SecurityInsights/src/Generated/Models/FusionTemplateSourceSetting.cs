@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a source signal consumed in Fusion detection. </summary>
+    /// <summary>
+    /// Represents a source signal consumed in Fusion detection.
+    /// Serialized Name: FusionTemplateSourceSetting
+    /// </summary>
     public partial class FusionTemplateSourceSetting
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FusionTemplateSourceSetting"/>. </summary>
-        /// <param name="sourceName"> The name of a source signal consumed in Fusion detection. </param>
+        /// <param name="sourceName">
+        /// The name of a source signal consumed in Fusion detection.
+        /// Serialized Name: FusionTemplateSourceSetting.sourceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
         public FusionTemplateSourceSetting(string sourceName)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FusionTemplateSourceSetting"/>. </summary>
-        /// <param name="sourceName"> The name of a source signal consumed in Fusion detection. </param>
-        /// <param name="sourceSubTypes"> All supported source subtypes under this source signal consumed in fusion detection. </param>
+        /// <param name="sourceName">
+        /// The name of a source signal consumed in Fusion detection.
+        /// Serialized Name: FusionTemplateSourceSetting.sourceName
+        /// </param>
+        /// <param name="sourceSubTypes">
+        /// All supported source subtypes under this source signal consumed in fusion detection.
+        /// Serialized Name: FusionTemplateSourceSetting.sourceSubTypes
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FusionTemplateSourceSetting(string sourceName, IList<FusionTemplateSourceSubType> sourceSubTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The name of a source signal consumed in Fusion detection. </summary>
+        /// <summary>
+        /// The name of a source signal consumed in Fusion detection.
+        /// Serialized Name: FusionTemplateSourceSetting.sourceName
+        /// </summary>
         public string SourceName { get; set; }
-        /// <summary> All supported source subtypes under this source signal consumed in fusion detection. </summary>
+        /// <summary>
+        /// All supported source subtypes under this source signal consumed in fusion detection.
+        /// Serialized Name: FusionTemplateSourceSetting.sourceSubTypes
+        /// </summary>
         public IList<FusionTemplateSourceSubType> SourceSubTypes { get; }
     }
 }

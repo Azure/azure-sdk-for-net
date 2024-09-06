@@ -17,8 +17,8 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-# mgmt-debug: 
-#  show-serialized-names: true
+mgmt-debug: 
+  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}: SecurityInsightsThreatIntelligenceIndicator
@@ -93,10 +93,8 @@ rename-mapping:
   Watchlist: SecurityInsightsWatchlist
   Watchlist.properties.created: CreatedOn
   Watchlist.properties.watchlistId: -|uuid
-  source: SecurityInsightsWatchlistSource
   WatchlistItem: SecurityInsightsWatchlistItem
   WatchlistItem.properties.created: CreatedOn
-  WatchlistItem.properties.WatchlistItemId: -|uuid
   AADDataConnector: SecurityInsightsAadDataConnector
   AatpDataConnector: SecurityInsightsAatpDataConnector
   DataTypeState: SecurityInsightsDataTypeConnectionState
@@ -120,11 +118,8 @@ rename-mapping:
   PlaybookActionProperties.logicAppResourceId: -|arm-id
   AutomationRuleTriggeringLogic: SecurityInsightsAutomationRuleTriggeringLogic
   AutomationRuleTriggeringLogic.expirationTimeUtc: ExpireOn
-  triggersOn: SecurityInsightsAutomationRuleTriggersOn
-  triggersWhen: SecurityInsightsAutomationRuleTriggersWhen
   AwsCloudTrailDataConnector: SecurityInsightsAwsCloudTrailDataConnector
   AzureResourceEntity: SecurityInsightsAzureResourceEntity
-  AzureResourceEntity.resourceId: -|arm-id
   CloudApplicationEntity: SecurityInsightsCloudApplicationEntity
   ConfidenceLevel: SecurityInsightsAlertConfidenceLevel
   ConfidenceScoreStatus: SecurityInsightsAlertConfidenceScoreStatus
@@ -175,10 +170,7 @@ rename-mapping:
   DeliveryAction: SecurityInsightsMailMessageDeliveryAction
   DeliveryLocation: SecurityInsightsMailMessageDeliveryLocation
   MalwareEntity: SecurityInsightsMalwareEntity
-  MCASDataConnector: SecurityInsightsMcasDataConnector
-  MCASDataConnectorDataTypes: SecurityInsightsMcasDataConnectorDataTypes
   AlertsDataTypeOfDataConnector: SecurityInsightsAlertsDataTypeOfDataConnector
-  MDATPDataConnector: SecurityInsightsMdatpDataConnector
   MicrosoftSecurityIncidentCreationAlertRule.properties.enabled: IsEnabled
   MicrosoftSecurityIncidentCreationAlertRule.properties.lastModifiedUtc: LastModifiedOn
   MicrosoftSecurityIncidentCreationAlertRuleTemplate.properties.createdDateUTC: CreatedOn
@@ -226,7 +218,11 @@ rename-mapping:
   HuntRelation: SecurityInsightsHuntRelation
   HuntRelation.properties.relatedResourceId: -|arm-id
   HuntOwner: SecurityInsightsHuntOwner
-  Job: AssignmentJob
+  Job: WorkspaceManagerAssignmentJob
+  BillingStatistic: SecurityInsightsBillingStatistic
+  DataConnectorDefinition: SecurityInsightsDataConnectorDefinition
+  EntityQuery: SecurityInsightsEntityQuery
+  EntityQueryTemplate: SecurityInsightsEntityQueryTemplate
   Recommendation: SecurityInsightsRecommendation
   ActivityCustomEntityQuery.properties.enabled: IsEnabled
   ActivityEntityQuery.properties.enabled: IsEnabled
@@ -279,8 +275,6 @@ rename-mapping:
   RequiredPermissions.write: IsWriteAction
   SourceControl.properties.id: SourceControlId | uuid
   AssignmentItem.resourceId: -|arm-id
-  # Not working, check if we still need this.
-  EnrichmentIPAddressBody: EnrichmentIPAddressContent
   EnrichmentDomainBody: EnrichmentDomainContent
   DataConnectorConnectBody: DataConnectorConnectContent
   InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.supportDeepLink: IsDeepLinkSupported
@@ -300,11 +294,15 @@ rename-mapping:
   Warning: ResponseWarning
   Webhook: SourceControlWebhook
   Webhook.rotateWebhookSecret: IsWebhookSecretRotated
+  FileImport: SecurityInsightsFileImport
   FileImport.properties.createdTimeUTC: CreatedOn
   FileImport.properties.filesValidUntilTimeUTC: FilesValidUntil
   FileImport.properties.importValidUntilTimeUTC: ImportValidUntil
+  IncidentTask: SecurityInsightsIncidentTask
   IncidentTask.properties.createdTimeUtc: CreatedOn
   IncidentTask.properties.lastModifiedTimeUtc: LastModifiedOn
+  MetadataModel: SecurityInsightsMetadataModel
+  OfficeConsent: SecurityInsightsOfficeConsent
   Recommendation.properties.creationTimeUtc: CreatedOn
   Recommendation.properties.lastEvaluatedTimeUtc: LastEvaluatedOn
   Recommendation.properties.lastModifiedTimeUtc: LastModifiedOn
@@ -494,9 +492,9 @@ directive:
   - from: Hunts.json
     where: $.definitions.HuntProperties.properties.status
     transform: >
-      $[x-ms-enum].name = 'HuntStatus';
+      $['x-ms-enum'].name = 'HuntStatus';
   - from: WorkspaceManagerAssignments.json
     where: $.definitions.jobItem.properties.status
     transform: >
-      $[x-ms-enum].name = 'PublicationStatus';
+      $['x-ms-enum'].name = 'PublicationStatus';
 ```

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            Status? status = default;
+            PublicationStatus? status = default;
             DateTimeOffset? executionTime = default;
             IList<PublicationFailedError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new PublicationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("executionTime"u8))

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents severity configurations available for a source subtype consumed in Fusion detection. </summary>
+    /// <summary>
+    /// Represents severity configurations available for a source subtype consumed in Fusion detection.
+    /// Serialized Name: FusionTemplateSubTypeSeverityFilter
+    /// </summary>
     public partial class FusionTemplateSubTypeSeverityFilter
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FusionTemplateSubTypeSeverityFilter"/>. </summary>
-        /// <param name="isSupported"> Determines whether severity configuration is supported for this source subtype consumed in Fusion detection. </param>
+        /// <param name="isSupported">
+        /// Determines whether severity configuration is supported for this source subtype consumed in Fusion detection.
+        /// Serialized Name: FusionTemplateSubTypeSeverityFilter.isSupported
+        /// </param>
         public FusionTemplateSubTypeSeverityFilter(bool isSupported)
         {
             IsSupported = isSupported;
@@ -54,8 +60,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FusionTemplateSubTypeSeverityFilter"/>. </summary>
-        /// <param name="isSupported"> Determines whether severity configuration is supported for this source subtype consumed in Fusion detection. </param>
-        /// <param name="severityFilters"> List of all supported severities for this source subtype consumed in Fusion detection. </param>
+        /// <param name="isSupported">
+        /// Determines whether severity configuration is supported for this source subtype consumed in Fusion detection.
+        /// Serialized Name: FusionTemplateSubTypeSeverityFilter.isSupported
+        /// </param>
+        /// <param name="severityFilters">
+        /// List of all supported severities for this source subtype consumed in Fusion detection.
+        /// Serialized Name: FusionTemplateSubTypeSeverityFilter.severityFilters
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FusionTemplateSubTypeSeverityFilter(bool isSupported, IList<SecurityInsightsAlertSeverity> severityFilters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,9 +81,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Determines whether severity configuration is supported for this source subtype consumed in Fusion detection. </summary>
+        /// <summary>
+        /// Determines whether severity configuration is supported for this source subtype consumed in Fusion detection.
+        /// Serialized Name: FusionTemplateSubTypeSeverityFilter.isSupported
+        /// </summary>
         public bool IsSupported { get; set; }
-        /// <summary> List of all supported severities for this source subtype consumed in Fusion detection. </summary>
+        /// <summary>
+        /// List of all supported severities for this source subtype consumed in Fusion detection.
+        /// Serialized Name: FusionTemplateSubTypeSeverityFilter.severityFilters
+        /// </summary>
         public IList<SecurityInsightsAlertSeverity> SeverityFilters { get; }
     }
 }

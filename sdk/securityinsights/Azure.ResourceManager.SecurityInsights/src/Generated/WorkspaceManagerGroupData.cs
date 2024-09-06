@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the WorkspaceManagerGroup data model.
     /// The workspace manager group
+    /// Serialized Name: WorkspaceManagerGroup
     /// </summary>
     public partial class WorkspaceManagerGroupData : ResourceData
     {
@@ -61,10 +62,22 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> The description of the workspace manager group. </param>
-        /// <param name="displayName"> The display name of the workspace manager group. </param>
-        /// <param name="memberResourceNames"> The names of the workspace manager members participating in this group. </param>
-        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="description">
+        /// The description of the workspace manager group
+        /// Serialized Name: WorkspaceManagerGroup.properties.description
+        /// </param>
+        /// <param name="displayName">
+        /// The display name of the workspace manager group
+        /// Serialized Name: WorkspaceManagerGroup.properties.displayName
+        /// </param>
+        /// <param name="memberResourceNames">
+        /// The names of the workspace manager members participating in this group.
+        /// Serialized Name: WorkspaceManagerGroup.properties.memberResourceNames
+        /// </param>
+        /// <param name="etag">
+        /// Resource Etag.
+        /// Serialized Name: AzureEntityResource.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkspaceManagerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string displayName, IList<string> memberResourceNames, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -75,13 +88,25 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The description of the workspace manager group. </summary>
+        /// <summary>
+        /// The description of the workspace manager group
+        /// Serialized Name: WorkspaceManagerGroup.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The display name of the workspace manager group. </summary>
+        /// <summary>
+        /// The display name of the workspace manager group
+        /// Serialized Name: WorkspaceManagerGroup.properties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> The names of the workspace manager members participating in this group. </summary>
+        /// <summary>
+        /// The names of the workspace manager members participating in this group.
+        /// Serialized Name: WorkspaceManagerGroup.properties.memberResourceNames
+        /// </summary>
         public IList<string> MemberResourceNames { get; }
-        /// <summary> Resource Etag. </summary>
+        /// <summary>
+        /// Resource Etag.
+        /// Serialized Name: AzureEntityResource.etag
+        /// </summary>
         public ETag? ETag { get; }
     }
 }

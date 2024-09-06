@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The confidence score calculation status, i.e. indicating if score calculation is pending for this alert, not applicable or final. </summary>
+    /// <summary>
+    /// The confidence score calculation status, i.e. indicating if score calculation is pending for this alert, not applicable or final.
+    /// Serialized Name: ConfidenceScoreStatus
+    /// </summary>
     public readonly partial struct SecurityInsightsAlertConfidenceScoreStatus : IEquatable<SecurityInsightsAlertConfidenceScoreStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string NotFinalValue = "NotFinal";
         private const string FinalValue = "Final";
 
-        /// <summary> Score will not be calculated for this alert as it is not supported by virtual analyst. </summary>
+        /// <summary>
+        /// Score will not be calculated for this alert as it is not supported by virtual analyst
+        /// Serialized Name: ConfidenceScoreStatus.NotApplicable
+        /// </summary>
         public static SecurityInsightsAlertConfidenceScoreStatus NotApplicable { get; } = new SecurityInsightsAlertConfidenceScoreStatus(NotApplicableValue);
-        /// <summary> No score was set yet and calculation is in progress. </summary>
+        /// <summary>
+        /// No score was set yet and calculation is in progress
+        /// Serialized Name: ConfidenceScoreStatus.InProcess
+        /// </summary>
         public static SecurityInsightsAlertConfidenceScoreStatus InProcess { get; } = new SecurityInsightsAlertConfidenceScoreStatus(InProcessValue);
-        /// <summary> Score is calculated and shown as part of the alert, but may be updated again at a later time following the processing of additional data. </summary>
+        /// <summary>
+        /// Score is calculated and shown as part of the alert, but may be updated again at a later time following the processing of additional data
+        /// Serialized Name: ConfidenceScoreStatus.NotFinal
+        /// </summary>
         public static SecurityInsightsAlertConfidenceScoreStatus NotFinal { get; } = new SecurityInsightsAlertConfidenceScoreStatus(NotFinalValue);
-        /// <summary> Final score was calculated and available. </summary>
+        /// <summary>
+        /// Final score was calculated and available
+        /// Serialized Name: ConfidenceScoreStatus.Final
+        /// </summary>
         public static SecurityInsightsAlertConfidenceScoreStatus Final { get; } = new SecurityInsightsAlertConfidenceScoreStatus(FinalValue);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertConfidenceScoreStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertConfidenceScoreStatus left, SecurityInsightsAlertConfidenceScoreStatus right) => left.Equals(right);

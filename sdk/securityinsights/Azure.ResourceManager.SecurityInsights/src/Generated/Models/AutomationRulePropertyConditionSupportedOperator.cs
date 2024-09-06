@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRulePropertyConditionSupportedOperator. </summary>
+    /// <summary>
+    /// The AutomationRulePropertyConditionSupportedOperator.
+    /// Serialized Name: AutomationRulePropertyConditionSupportedOperator
+    /// </summary>
     public readonly partial struct AutomationRulePropertyConditionSupportedOperator : IEquatable<AutomationRulePropertyConditionSupportedOperator>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string EndsWithValue = "EndsWith";
         private const string NotEndsWithValue = "NotEndsWith";
 
-        /// <summary> Evaluates if the property equals at least one of the condition values. </summary>
+        /// <summary>
+        /// Evaluates if the property equals at least one of the condition values
+        /// Serialized Name: AutomationRulePropertyConditionSupportedOperator.Equals
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedOperator EqualsValue { get; } = new AutomationRulePropertyConditionSupportedOperator(EqualsValueValue);
-        /// <summary> Evaluates if the property does not equal any of the condition values. </summary>
+        /// <summary>
+        /// Evaluates if the property does not equal any of the condition values
+        /// Serialized Name: AutomationRulePropertyConditionSupportedOperator.NotEquals
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedOperator NotEquals { get; } = new AutomationRulePropertyConditionSupportedOperator(NotEqualsValue);
-        /// <summary> Evaluates if the property contains at least one of the condition values. </summary>
+        /// <summary>
+        /// Evaluates if the property contains at least one of the condition values
+        /// Serialized Name: AutomationRulePropertyConditionSupportedOperator.Contains
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedOperator Contains { get; } = new AutomationRulePropertyConditionSupportedOperator(ContainsValue);
-        /// <summary> Evaluates if the property does not contain any of the condition values. </summary>
+        /// <summary>
+        /// Evaluates if the property does not contain any of the condition values
+        /// Serialized Name: AutomationRulePropertyConditionSupportedOperator.NotContains
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedOperator NotContains { get; } = new AutomationRulePropertyConditionSupportedOperator(NotContainsValue);
-        /// <summary> Evaluates if the property starts with any of the condition values. </summary>
+        /// <summary>
+        /// Evaluates if the property starts with any of the condition values
+        /// Serialized Name: AutomationRulePropertyConditionSupportedOperator.StartsWith
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedOperator StartsWith { get; } = new AutomationRulePropertyConditionSupportedOperator(StartsWithValue);
-        /// <summary> Evaluates if the property does not start with any of the condition values. </summary>
+        /// <summary>
+        /// Evaluates if the property does not start with any of the condition values
+        /// Serialized Name: AutomationRulePropertyConditionSupportedOperator.NotStartsWith
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedOperator NotStartsWith { get; } = new AutomationRulePropertyConditionSupportedOperator(NotStartsWithValue);
-        /// <summary> Evaluates if the property ends with any of the condition values. </summary>
+        /// <summary>
+        /// Evaluates if the property ends with any of the condition values
+        /// Serialized Name: AutomationRulePropertyConditionSupportedOperator.EndsWith
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedOperator EndsWith { get; } = new AutomationRulePropertyConditionSupportedOperator(EndsWithValue);
-        /// <summary> Evaluates if the property does not end with any of the condition values. </summary>
+        /// <summary>
+        /// Evaluates if the property does not end with any of the condition values
+        /// Serialized Name: AutomationRulePropertyConditionSupportedOperator.NotEndsWith
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedOperator NotEndsWith { get; } = new AutomationRulePropertyConditionSupportedOperator(NotEndsWithValue);
         /// <summary> Determines if two <see cref="AutomationRulePropertyConditionSupportedOperator"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyConditionSupportedOperator left, AutomationRulePropertyConditionSupportedOperator right) => left.Equals(right);

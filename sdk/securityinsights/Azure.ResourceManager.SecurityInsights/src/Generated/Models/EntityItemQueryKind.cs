@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The EntityItemQueryKind. </summary>
+    /// <summary>
+    /// The EntityItemQueryKind.
+    /// Serialized Name: EntityItemQueryKind
+    /// </summary>
     public readonly partial struct EntityItemQueryKind : IEquatable<EntityItemQueryKind>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string InsightValue = "Insight";
 
-        /// <summary> insight. </summary>
+        /// <summary>
+        /// insight
+        /// Serialized Name: EntityItemQueryKind.Insight
+        /// </summary>
         public static EntityItemQueryKind Insight { get; } = new EntityItemQueryKind(InsightValue);
         /// <summary> Determines if two <see cref="EntityItemQueryKind"/> values are the same. </summary>
         public static bool operator ==(EntityItemQueryKind left, EntityItemQueryKind right) => left.Equals(right);

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a file entity. </summary>
+    /// <summary>
+    /// Represents a file entity.
+    /// Serialized Name: FileEntity
+    /// </summary>
     public partial class SecurityInsightsFileEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileEntity"/>. </summary>
@@ -28,14 +31,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="kind">
+        /// The kind of the entity.
+        /// Serialized Name: Entity.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="directory"> The full path to the file. </param>
-        /// <param name="fileHashEntityIds"> The file hash entity identifiers associated with this file. </param>
-        /// <param name="fileName"> The file name without path (some alerts might not include path). </param>
-        /// <param name="hostEntityId"> The Host entity id which the file belongs to. </param>
+        /// <param name="additionalData">
+        /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: FileEntity.properties.additionalData
+        /// </param>
+        /// <param name="friendlyName">
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: FileEntity.properties.friendlyName
+        /// </param>
+        /// <param name="directory">
+        /// The full path to the file.
+        /// Serialized Name: FileEntity.properties.directory
+        /// </param>
+        /// <param name="fileHashEntityIds">
+        /// The file hash entity identifiers associated with this file
+        /// Serialized Name: FileEntity.properties.fileHashEntityIds
+        /// </param>
+        /// <param name="fileName">
+        /// The file name without path (some alerts might not include path).
+        /// Serialized Name: FileEntity.properties.fileName
+        /// </param>
+        /// <param name="hostEntityId">
+        /// The Host entity id which the file belongs to
+        /// Serialized Name: FileEntity.properties.hostEntityId
+        /// </param>
         internal SecurityInsightsFileEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string directory, IReadOnlyList<string> fileHashEntityIds, string fileName, string hostEntityId) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -49,6 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: FileEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -78,15 +103,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        /// <summary>
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: FileEntity.properties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The full path to the file. </summary>
+        /// <summary>
+        /// The full path to the file.
+        /// Serialized Name: FileEntity.properties.directory
+        /// </summary>
         public string Directory { get; }
-        /// <summary> The file hash entity identifiers associated with this file. </summary>
+        /// <summary>
+        /// The file hash entity identifiers associated with this file
+        /// Serialized Name: FileEntity.properties.fileHashEntityIds
+        /// </summary>
         public IReadOnlyList<string> FileHashEntityIds { get; }
-        /// <summary> The file name without path (some alerts might not include path). </summary>
+        /// <summary>
+        /// The file name without path (some alerts might not include path).
+        /// Serialized Name: FileEntity.properties.fileName
+        /// </summary>
         public string FileName { get; }
-        /// <summary> The Host entity id which the file belongs to. </summary>
+        /// <summary>
+        /// The Host entity id which the file belongs to
+        /// Serialized Name: FileEntity.properties.hostEntityId
+        /// </summary>
         public string HostEntityId { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> confidence reason item. </summary>
+    /// <summary>
+    /// confidence reason item
+    /// Serialized Name: SecurityAlertPropertiesConfidenceReasonsItem
+    /// </summary>
     public partial class SecurityInsightsAlertConfidenceReason
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertConfidenceReason"/>. </summary>
-        /// <param name="reason"> The reason's description. </param>
-        /// <param name="reasonType"> The type (category) of the reason. </param>
+        /// <param name="reason">
+        /// The reason's description
+        /// Serialized Name: SecurityAlertPropertiesConfidenceReasonsItem.reason
+        /// </param>
+        /// <param name="reasonType">
+        /// The type (category) of the reason
+        /// Serialized Name: SecurityAlertPropertiesConfidenceReasonsItem.reasonType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAlertConfidenceReason(string reason, string reasonType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The reason's description. </summary>
+        /// <summary>
+        /// The reason's description
+        /// Serialized Name: SecurityAlertPropertiesConfidenceReasonsItem.reason
+        /// </summary>
         public string Reason { get; }
-        /// <summary> The type (category) of the reason. </summary>
+        /// <summary>
+        /// The type (category) of the reason
+        /// Serialized Name: SecurityAlertPropertiesConfidenceReasonsItem.reasonType
+        /// </summary>
         public string ReasonType { get; }
     }
 }

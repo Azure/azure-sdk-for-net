@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> An object used to help follow relationships from this object to other STIX objects. </summary>
+    /// <summary>
+    /// An object used to help follow relationships from this object to other STIX objects.
+    /// Serialized Name: RelationshipHint
+    /// </summary>
     public partial class RelationshipHint
     {
         /// <summary>
@@ -51,8 +54,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RelationshipHint"/>. </summary>
-        /// <param name="fieldName"></param>
-        /// <param name="source"></param>
+        /// <param name="fieldName"> Serialized Name: RelationshipHint.fieldName. </param>
+        /// <param name="source"> Serialized Name: RelationshipHint.source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RelationshipHint(string fieldName, string source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +64,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the field name. </summary>
+        /// <summary> Serialized Name: RelationshipHint.fieldName. </summary>
         public string FieldName { get; }
-        /// <summary> Gets the source. </summary>
+        /// <summary> Serialized Name: RelationshipHint.source. </summary>
         public string Source { get; }
     }
 }

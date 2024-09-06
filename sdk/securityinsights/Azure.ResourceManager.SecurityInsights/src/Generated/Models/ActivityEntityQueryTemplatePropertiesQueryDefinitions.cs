@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The Activity query definitions. </summary>
+    /// <summary>
+    /// The Activity query definitions
+    /// Serialized Name: ActivityEntityQueryTemplatePropertiesQueryDefinitions
+    /// </summary>
     public partial class ActivityEntityQueryTemplatePropertiesQueryDefinitions
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivityEntityQueryTemplatePropertiesQueryDefinitions"/>. </summary>
-        /// <param name="query"> The Activity query to run on a given entity. </param>
-        /// <param name="summarizeBy"> The dimensions we want to summarize the timeline results on, this is comma separated list. </param>
+        /// <param name="query">
+        /// The Activity query to run on a given entity
+        /// Serialized Name: ActivityEntityQueryTemplatePropertiesQueryDefinitions.query
+        /// </param>
+        /// <param name="summarizeBy">
+        /// The dimensions we want to summarize the timeline results on, this is comma separated list
+        /// Serialized Name: ActivityEntityQueryTemplatePropertiesQueryDefinitions.summarizeBy
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ActivityEntityQueryTemplatePropertiesQueryDefinitions(string query, string summarizeBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Activity query to run on a given entity. </summary>
+        /// <summary>
+        /// The Activity query to run on a given entity
+        /// Serialized Name: ActivityEntityQueryTemplatePropertiesQueryDefinitions.query
+        /// </summary>
         public string Query { get; set; }
-        /// <summary> The dimensions we want to summarize the timeline results on, this is comma separated list. </summary>
+        /// <summary>
+        /// The dimensions we want to summarize the timeline results on, this is comma separated list
+        /// Serialized Name: ActivityEntityQueryTemplatePropertiesQueryDefinitions.summarizeBy
+        /// </summary>
         public string SummarizeBy { get; set; }
     }
 }

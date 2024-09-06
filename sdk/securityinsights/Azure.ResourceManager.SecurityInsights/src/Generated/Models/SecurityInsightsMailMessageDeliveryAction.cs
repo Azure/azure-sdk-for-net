@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The delivery action of this mail message like Delivered, Blocked, Replaced etc. </summary>
+    /// <summary>
+    /// The delivery action of this mail message like Delivered, Blocked, Replaced etc
+    /// Serialized Name: DeliveryAction
+    /// </summary>
     public enum SecurityInsightsMailMessageDeliveryAction
     {
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: DeliveryAction.Unknown
+        /// </summary>
         Unknown,
-        /// <summary> DeliveredAsSpam. </summary>
+        /// <summary>
+        /// DeliveredAsSpam
+        /// Serialized Name: DeliveryAction.DeliveredAsSpam
+        /// </summary>
         DeliveredAsSpam,
-        /// <summary> Delivered. </summary>
+        /// <summary>
+        /// Delivered
+        /// Serialized Name: DeliveryAction.Delivered
+        /// </summary>
         Delivered,
-        /// <summary> Blocked. </summary>
+        /// <summary>
+        /// Blocked
+        /// Serialized Name: DeliveryAction.Blocked
+        /// </summary>
         Blocked,
-        /// <summary> Replaced. </summary>
+        /// <summary>
+        /// Replaced
+        /// Serialized Name: DeliveryAction.Replaced
+        /// </summary>
         Replaced
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes a user that the hunt is assigned to. </summary>
+    /// <summary>
+    /// Describes a user that the hunt is assigned to
+    /// Serialized Name: HuntOwner
+    /// </summary>
     public partial class SecurityInsightsHuntOwner
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntOwner"/>. </summary>
-        /// <param name="email"> The email of the user the hunt is assigned to. </param>
-        /// <param name="assignedTo"> The name of the user the hunt is assigned to. </param>
-        /// <param name="objectId"> The object id of the user the hunt is assigned to. </param>
-        /// <param name="userPrincipalName"> The user principal name of the user the hunt is assigned to. </param>
-        /// <param name="ownerType"> The type of the owner the hunt is assigned to. </param>
+        /// <param name="email">
+        /// The email of the user the hunt is assigned to.
+        /// Serialized Name: HuntOwner.email
+        /// </param>
+        /// <param name="assignedTo">
+        /// The name of the user the hunt is assigned to.
+        /// Serialized Name: HuntOwner.assignedTo
+        /// </param>
+        /// <param name="objectId">
+        /// The object id of the user the hunt is assigned to.
+        /// Serialized Name: HuntOwner.objectId
+        /// </param>
+        /// <param name="userPrincipalName">
+        /// The user principal name of the user the hunt is assigned to.
+        /// Serialized Name: HuntOwner.userPrincipalName
+        /// </param>
+        /// <param name="ownerType">
+        /// The type of the owner the hunt is assigned to.
+        /// Serialized Name: HuntOwner.ownerType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsHuntOwner(string email, string assignedTo, Guid? objectId, string userPrincipalName, SecurityInsightsIncidentOwnerType? ownerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +85,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The email of the user the hunt is assigned to. </summary>
+        /// <summary>
+        /// The email of the user the hunt is assigned to.
+        /// Serialized Name: HuntOwner.email
+        /// </summary>
         public string Email { get; set; }
-        /// <summary> The name of the user the hunt is assigned to. </summary>
+        /// <summary>
+        /// The name of the user the hunt is assigned to.
+        /// Serialized Name: HuntOwner.assignedTo
+        /// </summary>
         public string AssignedTo { get; set; }
-        /// <summary> The object id of the user the hunt is assigned to. </summary>
+        /// <summary>
+        /// The object id of the user the hunt is assigned to.
+        /// Serialized Name: HuntOwner.objectId
+        /// </summary>
         public Guid? ObjectId { get; set; }
-        /// <summary> The user principal name of the user the hunt is assigned to. </summary>
+        /// <summary>
+        /// The user principal name of the user the hunt is assigned to.
+        /// Serialized Name: HuntOwner.userPrincipalName
+        /// </summary>
         public string UserPrincipalName { get; set; }
-        /// <summary> The type of the owner the hunt is assigned to. </summary>
+        /// <summary>
+        /// The type of the owner the hunt is assigned to.
+        /// Serialized Name: HuntOwner.ownerType
+        /// </summary>
         public SecurityInsightsIncidentOwnerType? OwnerType { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The set of contacts associated with this domain. </summary>
+    /// <summary>
+    /// The set of contacts associated with this domain
+    /// Serialized Name: EnrichmentDomainWhoisContacts
+    /// </summary>
     public partial class EnrichmentDomainWhoisContacts
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EnrichmentDomainWhoisContacts"/>. </summary>
-        /// <param name="admin"> The admin contact for this whois record. </param>
-        /// <param name="billing"> The billing contact for this whois record. </param>
-        /// <param name="registrant"> The registrant contact for this whois record. </param>
-        /// <param name="tech"> The technical contact for this whois record. </param>
+        /// <param name="admin">
+        /// The admin contact for this whois record
+        /// Serialized Name: EnrichmentDomainWhoisContacts.admin
+        /// </param>
+        /// <param name="billing">
+        /// The billing contact for this whois record
+        /// Serialized Name: EnrichmentDomainWhoisContacts.billing
+        /// </param>
+        /// <param name="registrant">
+        /// The registrant contact for this whois record
+        /// Serialized Name: EnrichmentDomainWhoisContacts.registrant
+        /// </param>
+        /// <param name="tech">
+        /// The technical contact for this whois record
+        /// Serialized Name: EnrichmentDomainWhoisContacts.tech
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EnrichmentDomainWhoisContacts(EnrichmentDomainWhoisContact admin, EnrichmentDomainWhoisContact billing, EnrichmentDomainWhoisContact registrant, EnrichmentDomainWhoisContact tech, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The admin contact for this whois record. </summary>
+        /// <summary>
+        /// The admin contact for this whois record
+        /// Serialized Name: EnrichmentDomainWhoisContacts.admin
+        /// </summary>
         public EnrichmentDomainWhoisContact Admin { get; }
-        /// <summary> The billing contact for this whois record. </summary>
+        /// <summary>
+        /// The billing contact for this whois record
+        /// Serialized Name: EnrichmentDomainWhoisContacts.billing
+        /// </summary>
         public EnrichmentDomainWhoisContact Billing { get; }
-        /// <summary> The registrant contact for this whois record. </summary>
+        /// <summary>
+        /// The registrant contact for this whois record
+        /// Serialized Name: EnrichmentDomainWhoisContacts.registrant
+        /// </summary>
         public EnrichmentDomainWhoisContact Registrant { get; }
-        /// <summary> The technical contact for this whois record. </summary>
+        /// <summary>
+        /// The technical contact for this whois record
+        /// Serialized Name: EnrichmentDomainWhoisContacts.tech
+        /// </summary>
         public EnrichmentDomainWhoisContact Tech { get; }
     }
 }

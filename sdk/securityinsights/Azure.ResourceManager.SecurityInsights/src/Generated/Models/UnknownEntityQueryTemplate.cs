@@ -13,14 +13,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Unknown version of EntityQueryTemplate. </summary>
-    internal partial class UnknownEntityQueryTemplate : EntityQueryTemplateData
+    internal partial class UnknownEntityQueryTemplate : SecurityInsightsEntityQueryTemplateData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEntityQueryTemplate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> the entity query template kind. </param>
+        /// <param name="kind">
+        /// the entity query template kind
+        /// Serialized Name: EntityQueryTemplate.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownEntityQueryTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryTemplateKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {

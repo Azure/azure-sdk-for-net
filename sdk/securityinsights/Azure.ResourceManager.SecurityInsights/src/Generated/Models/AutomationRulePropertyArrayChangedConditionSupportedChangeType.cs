@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRulePropertyArrayChangedConditionSupportedChangeType. </summary>
+    /// <summary>
+    /// The AutomationRulePropertyArrayChangedConditionSupportedChangeType.
+    /// Serialized Name: AutomationRulePropertyArrayChangedConditionSupportedChangeType
+    /// </summary>
     public readonly partial struct AutomationRulePropertyArrayChangedConditionSupportedChangeType : IEquatable<AutomationRulePropertyArrayChangedConditionSupportedChangeType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string AddedValue = "Added";
 
-        /// <summary> Evaluate the condition on items added to the array. </summary>
+        /// <summary>
+        /// Evaluate the condition on items added to the array
+        /// Serialized Name: AutomationRulePropertyArrayChangedConditionSupportedChangeType.Added
+        /// </summary>
         public static AutomationRulePropertyArrayChangedConditionSupportedChangeType Added { get; } = new AutomationRulePropertyArrayChangedConditionSupportedChangeType(AddedValue);
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayChangedConditionSupportedChangeType"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyArrayChangedConditionSupportedChangeType left, AutomationRulePropertyArrayChangedConditionSupportedChangeType right) => left.Equals(right);

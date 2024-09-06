@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The available data types for MCAS (Microsoft Cloud App Security) data connector. </summary>
+    /// <summary>
+    /// The available data types for MCAS (Microsoft Cloud App Security) data connector.
+    /// Serialized Name: McasDataConnectorDataTypes
+    /// </summary>
     public partial class McasDataConnectorDataTypes : SecurityInsightsAlertsDataTypeOfDataConnector
     {
         /// <summary> Initializes a new instance of <see cref="McasDataConnectorDataTypes"/>. </summary>
-        /// <param name="alerts"> Alerts data type connection. </param>
+        /// <param name="alerts">
+        /// Alerts data type connection.
+        /// Serialized Name: AlertsDataTypeOfDataConnector.alerts
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alerts"/> is null. </exception>
         public McasDataConnectorDataTypes(DataConnectorDataTypeCommon alerts) : base(alerts)
         {
@@ -22,17 +28,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="McasDataConnectorDataTypes"/>. </summary>
-        /// <param name="alerts"> Alerts data type connection. </param>
+        /// <param name="alerts">
+        /// Alerts data type connection.
+        /// Serialized Name: AlertsDataTypeOfDataConnector.alerts
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="discoveryLogs"> Discovery log data type connection. </param>
+        /// <param name="discoveryLogs">
+        /// Discovery log data type connection.
+        /// Serialized Name: McasDataConnectorDataTypes.discoveryLogs
+        /// </param>
         internal McasDataConnectorDataTypes(DataConnectorDataTypeCommon alerts, IDictionary<string, BinaryData> serializedAdditionalRawData, DataConnectorDataTypeCommon discoveryLogs) : base(alerts, serializedAdditionalRawData)
         {
             DiscoveryLogs = discoveryLogs;
         }
 
-        /// <summary> Discovery log data type connection. </summary>
+        /// <summary>
+        /// Discovery log data type connection.
+        /// Serialized Name: McasDataConnectorDataTypes.discoveryLogs
+        /// </summary>
         internal DataConnectorDataTypeCommon DiscoveryLogs { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        /// <summary>
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </summary>
         public SecurityInsightsDataTypeConnectionState? DiscoveryLogsState
         {
             get => DiscoveryLogs is null ? default(SecurityInsightsDataTypeConnectionState?) : DiscoveryLogs.State;

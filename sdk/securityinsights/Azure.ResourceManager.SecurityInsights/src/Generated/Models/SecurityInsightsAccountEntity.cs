@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents an account entity. </summary>
+    /// <summary>
+    /// Represents an account entity.
+    /// Serialized Name: AccountEntity
+    /// </summary>
     public partial class SecurityInsightsAccountEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAccountEntity"/>. </summary>
@@ -27,22 +30,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="kind">
+        /// The kind of the entity.
+        /// Serialized Name: Entity.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="aadTenantId"> The Azure Active Directory tenant id. </param>
-        /// <param name="aadUserId"> The Azure Active Directory user id. </param>
-        /// <param name="accountName"> The name of the account. This field should hold only the name without any domain added to it, i.e. administrator. </param>
-        /// <param name="displayName"> The display name of the account. </param>
-        /// <param name="hostEntityId"> The Host entity id that contains the account in case it is a local account (not domain joined). </param>
-        /// <param name="isDomainJoined"> Determines whether this is a domain account. </param>
-        /// <param name="ntDomain"> The NetBIOS domain name as it appears in the alert format domain/username. Examples: NT AUTHORITY. </param>
-        /// <param name="objectGuid"> The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by active directory. </param>
-        /// <param name="puid"> The Azure Active Directory Passport User ID. </param>
-        /// <param name="sid"> The account security identifier, e.g. S-1-5-18. </param>
-        /// <param name="upnSuffix"> The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com. </param>
-        /// <param name="dnsDomain"> The fully qualified domain DNS name. </param>
+        /// <param name="additionalData">
+        /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: AccountEntity.properties.additionalData
+        /// </param>
+        /// <param name="friendlyName">
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: AccountEntity.properties.friendlyName
+        /// </param>
+        /// <param name="aadTenantId">
+        /// The Azure Active Directory tenant id.
+        /// Serialized Name: AccountEntity.properties.aadTenantId
+        /// </param>
+        /// <param name="aadUserId">
+        /// The Azure Active Directory user id.
+        /// Serialized Name: AccountEntity.properties.aadUserId
+        /// </param>
+        /// <param name="accountName">
+        /// The name of the account. This field should hold only the name without any domain added to it, i.e. administrator.
+        /// Serialized Name: AccountEntity.properties.accountName
+        /// </param>
+        /// <param name="displayName">
+        /// The display name of the account.
+        /// Serialized Name: AccountEntity.properties.displayName
+        /// </param>
+        /// <param name="hostEntityId">
+        /// The Host entity id that contains the account in case it is a local account (not domain joined)
+        /// Serialized Name: AccountEntity.properties.hostEntityId
+        /// </param>
+        /// <param name="isDomainJoined">
+        /// Determines whether this is a domain account.
+        /// Serialized Name: AccountEntity.properties.isDomainJoined
+        /// </param>
+        /// <param name="ntDomain">
+        /// The NetBIOS domain name as it appears in the alert format domain/username. Examples: NT AUTHORITY.
+        /// Serialized Name: AccountEntity.properties.ntDomain
+        /// </param>
+        /// <param name="objectGuid">
+        /// The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by active directory.
+        /// Serialized Name: AccountEntity.properties.objectGuid
+        /// </param>
+        /// <param name="puid">
+        /// The Azure Active Directory Passport User ID.
+        /// Serialized Name: AccountEntity.properties.puid
+        /// </param>
+        /// <param name="sid">
+        /// The account security identifier, e.g. S-1-5-18.
+        /// Serialized Name: AccountEntity.properties.sid
+        /// </param>
+        /// <param name="upnSuffix">
+        /// The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com.
+        /// Serialized Name: AccountEntity.properties.upnSuffix
+        /// </param>
+        /// <param name="dnsDomain">
+        /// The fully qualified domain DNS name.
+        /// Serialized Name: AccountEntity.properties.dnsDomain
+        /// </param>
         internal SecurityInsightsAccountEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string aadTenantId, string aadUserId, string accountName, string displayName, string hostEntityId, bool? isDomainJoined, string ntDomain, Guid? objectGuid, string puid, string sid, string upnSuffix, string dnsDomain) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -64,6 +112,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: AccountEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -93,31 +142,70 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        /// <summary>
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: AccountEntity.properties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The Azure Active Directory tenant id. </summary>
+        /// <summary>
+        /// The Azure Active Directory tenant id.
+        /// Serialized Name: AccountEntity.properties.aadTenantId
+        /// </summary>
         public string AadTenantId { get; }
-        /// <summary> The Azure Active Directory user id. </summary>
+        /// <summary>
+        /// The Azure Active Directory user id.
+        /// Serialized Name: AccountEntity.properties.aadUserId
+        /// </summary>
         public string AadUserId { get; }
-        /// <summary> The name of the account. This field should hold only the name without any domain added to it, i.e. administrator. </summary>
+        /// <summary>
+        /// The name of the account. This field should hold only the name without any domain added to it, i.e. administrator.
+        /// Serialized Name: AccountEntity.properties.accountName
+        /// </summary>
         public string AccountName { get; }
-        /// <summary> The display name of the account. </summary>
+        /// <summary>
+        /// The display name of the account.
+        /// Serialized Name: AccountEntity.properties.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> The Host entity id that contains the account in case it is a local account (not domain joined). </summary>
+        /// <summary>
+        /// The Host entity id that contains the account in case it is a local account (not domain joined)
+        /// Serialized Name: AccountEntity.properties.hostEntityId
+        /// </summary>
         public string HostEntityId { get; }
-        /// <summary> Determines whether this is a domain account. </summary>
+        /// <summary>
+        /// Determines whether this is a domain account.
+        /// Serialized Name: AccountEntity.properties.isDomainJoined
+        /// </summary>
         public bool? IsDomainJoined { get; }
-        /// <summary> The NetBIOS domain name as it appears in the alert format domain/username. Examples: NT AUTHORITY. </summary>
+        /// <summary>
+        /// The NetBIOS domain name as it appears in the alert format domain/username. Examples: NT AUTHORITY.
+        /// Serialized Name: AccountEntity.properties.ntDomain
+        /// </summary>
         public string NtDomain { get; }
-        /// <summary> The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by active directory. </summary>
+        /// <summary>
+        /// The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by active directory.
+        /// Serialized Name: AccountEntity.properties.objectGuid
+        /// </summary>
         public Guid? ObjectGuid { get; }
-        /// <summary> The Azure Active Directory Passport User ID. </summary>
+        /// <summary>
+        /// The Azure Active Directory Passport User ID.
+        /// Serialized Name: AccountEntity.properties.puid
+        /// </summary>
         public string Puid { get; }
-        /// <summary> The account security identifier, e.g. S-1-5-18. </summary>
+        /// <summary>
+        /// The account security identifier, e.g. S-1-5-18.
+        /// Serialized Name: AccountEntity.properties.sid
+        /// </summary>
         public string Sid { get; }
-        /// <summary> The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com. </summary>
+        /// <summary>
+        /// The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com.
+        /// Serialized Name: AccountEntity.properties.upnSuffix
+        /// </summary>
         public string UpnSuffix { get; }
-        /// <summary> The fully qualified domain DNS name. </summary>
+        /// <summary>
+        /// The fully qualified domain DNS name.
+        /// Serialized Name: AccountEntity.properties.dnsDomain
+        /// </summary>
         public string DnsDomain { get; }
     }
 }

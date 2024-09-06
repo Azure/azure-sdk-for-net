@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the ProductPackageModel data model.
     /// Represents a Package in Azure Security Insights.
+    /// Serialized Name: ProductPackageModel
     /// </summary>
     public partial class ProductPackageModelData : ResourceData
     {
@@ -64,33 +65,114 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="contentId"> The content id of the package. </param>
-        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId, contentKind and the contentVersion of the package. </param>
-        /// <param name="contentKind"> The package kind. </param>
-        /// <param name="contentSchemaVersion"> The version of the content schema. </param>
-        /// <param name="isNew"> Flag indicates if this is a newly published package. </param>
-        /// <param name="isPreview"> Flag indicates if this package is in preview. </param>
-        /// <param name="isFeatured"> Flag indicates if this package is among the featured list. </param>
-        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
-        /// <param name="version"> the latest version number of the package. </param>
-        /// <param name="displayName"> The display name of the package. </param>
-        /// <param name="description"> The description of the package. </param>
-        /// <param name="publisherDisplayName"> The publisher display name of the package. </param>
-        /// <param name="source"> The source of the package. </param>
-        /// <param name="author"> The author of the package. </param>
-        /// <param name="support"> The support tier of the package. </param>
-        /// <param name="dependencies"> The support tier of the package. </param>
-        /// <param name="providers"> Providers for the package item. </param>
-        /// <param name="firstPublishOn"> first publish date package item. </param>
-        /// <param name="lastPublishOn"> last publish date for the package item. </param>
-        /// <param name="categories"> The categories of the package. </param>
-        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
-        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
-        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
-        /// <param name="installedVersion"> The version of the installed package, null or absent means not installed. </param>
-        /// <param name="metadataResourceId"> The metadata resource id. </param>
-        /// <param name="packagedContent"> The json of the ARM template to deploy. Expandable. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="contentId">
+        /// The content id of the package
+        /// Serialized Name: ProductPackageModel.properties.contentId
+        /// </param>
+        /// <param name="contentProductId">
+        /// Unique ID for the content. It should be generated based on the contentId, contentKind and the contentVersion of the package
+        /// Serialized Name: ProductPackageModel.properties.contentProductId
+        /// </param>
+        /// <param name="contentKind">
+        /// The package kind
+        /// Serialized Name: ProductPackageModel.properties.contentKind
+        /// </param>
+        /// <param name="contentSchemaVersion">
+        /// The version of the content schema.
+        /// Serialized Name: ProductPackageModel.properties.contentSchemaVersion
+        /// </param>
+        /// <param name="isNew">
+        /// Flag indicates if this is a newly published package.
+        /// Serialized Name: ProductPackageModel.properties.isNew
+        /// </param>
+        /// <param name="isPreview">
+        /// Flag indicates if this package is in preview.
+        /// Serialized Name: ProductPackageModel.properties.isPreview
+        /// </param>
+        /// <param name="isFeatured">
+        /// Flag indicates if this package is among the featured list.
+        /// Serialized Name: ProductPackageModel.properties.isFeatured
+        /// </param>
+        /// <param name="isDeprecated">
+        /// Flag indicates if this template is deprecated
+        /// Serialized Name: ProductPackageModel.properties.isDeprecated
+        /// </param>
+        /// <param name="version">
+        /// the latest version number of the package
+        /// Serialized Name: ProductPackageModel.properties.version
+        /// </param>
+        /// <param name="displayName">
+        /// The display name of the package
+        /// Serialized Name: ProductPackageModel.properties.displayName
+        /// </param>
+        /// <param name="description">
+        /// The description of the package
+        /// Serialized Name: ProductPackageModel.properties.description
+        /// </param>
+        /// <param name="publisherDisplayName">
+        /// The publisher display name of the package
+        /// Serialized Name: ProductPackageModel.properties.publisherDisplayName
+        /// </param>
+        /// <param name="source">
+        /// The source of the package
+        /// Serialized Name: ProductPackageModel.properties.source
+        /// </param>
+        /// <param name="author">
+        /// The author of the package
+        /// Serialized Name: ProductPackageModel.properties.author
+        /// </param>
+        /// <param name="support">
+        /// The support tier of the package
+        /// Serialized Name: ProductPackageModel.properties.support
+        /// </param>
+        /// <param name="dependencies">
+        /// The support tier of the package
+        /// Serialized Name: ProductPackageModel.properties.dependencies
+        /// </param>
+        /// <param name="providers">
+        /// Providers for the package item
+        /// Serialized Name: ProductPackageModel.properties.providers
+        /// </param>
+        /// <param name="firstPublishOn">
+        /// first publish date package item
+        /// Serialized Name: ProductPackageModel.properties.firstPublishDate
+        /// </param>
+        /// <param name="lastPublishOn">
+        /// last publish date for the package item
+        /// Serialized Name: ProductPackageModel.properties.lastPublishDate
+        /// </param>
+        /// <param name="categories">
+        /// The categories of the package
+        /// Serialized Name: ProductPackageModel.properties.categories
+        /// </param>
+        /// <param name="threatAnalysisTactics">
+        /// the tactics the resource covers
+        /// Serialized Name: ProductPackageModel.properties.threatAnalysisTactics
+        /// </param>
+        /// <param name="threatAnalysisTechniques">
+        /// the techniques the resource covers, these have to be aligned with the tactics being used
+        /// Serialized Name: ProductPackageModel.properties.threatAnalysisTechniques
+        /// </param>
+        /// <param name="icon">
+        /// the icon identifier. this id can later be fetched from the content metadata
+        /// Serialized Name: ProductPackageModel.properties.icon
+        /// </param>
+        /// <param name="installedVersion">
+        /// The version of the installed package, null or absent means not installed.
+        /// Serialized Name: ProductPackageModel.properties.installedVersion
+        /// </param>
+        /// <param name="metadataResourceId">
+        /// The metadata resource id.
+        /// Serialized Name: ProductPackageModel.properties.metadataResourceId
+        /// </param>
+        /// <param name="packagedContent">
+        /// The json of the ARM template to deploy. Expandable.
+        /// Serialized Name: ProductPackageModel.properties.packagedContent
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProductPackageModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentId, string contentProductId, PackageKind? contentKind, string contentSchemaVersion, MetadataFlag? isNew, MetadataFlag? isPreview, MetadataFlag? isFeatured, MetadataFlag? isDeprecated, string version, string displayName, string description, string publisherDisplayName, MetadataSource source, MetadataAuthor author, MetadataSupport support, MetadataDependencies dependencies, IList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, MetadataCategories categories, IList<string> threatAnalysisTactics, IList<string> threatAnalysisTechniques, string icon, string installedVersion, ResourceIdentifier metadataResourceId, BinaryData packagedContent, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -124,58 +206,134 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The content id of the package. </summary>
+        /// <summary>
+        /// The content id of the package
+        /// Serialized Name: ProductPackageModel.properties.contentId
+        /// </summary>
         public string ContentId { get; set; }
-        /// <summary> Unique ID for the content. It should be generated based on the contentId, contentKind and the contentVersion of the package. </summary>
+        /// <summary>
+        /// Unique ID for the content. It should be generated based on the contentId, contentKind and the contentVersion of the package
+        /// Serialized Name: ProductPackageModel.properties.contentProductId
+        /// </summary>
         public string ContentProductId { get; set; }
-        /// <summary> The package kind. </summary>
+        /// <summary>
+        /// The package kind
+        /// Serialized Name: ProductPackageModel.properties.contentKind
+        /// </summary>
         public PackageKind? ContentKind { get; set; }
-        /// <summary> The version of the content schema. </summary>
+        /// <summary>
+        /// The version of the content schema.
+        /// Serialized Name: ProductPackageModel.properties.contentSchemaVersion
+        /// </summary>
         public string ContentSchemaVersion { get; set; }
-        /// <summary> Flag indicates if this is a newly published package. </summary>
+        /// <summary>
+        /// Flag indicates if this is a newly published package.
+        /// Serialized Name: ProductPackageModel.properties.isNew
+        /// </summary>
         public MetadataFlag? IsNew { get; set; }
-        /// <summary> Flag indicates if this package is in preview. </summary>
+        /// <summary>
+        /// Flag indicates if this package is in preview.
+        /// Serialized Name: ProductPackageModel.properties.isPreview
+        /// </summary>
         public MetadataFlag? IsPreview { get; set; }
-        /// <summary> Flag indicates if this package is among the featured list. </summary>
+        /// <summary>
+        /// Flag indicates if this package is among the featured list.
+        /// Serialized Name: ProductPackageModel.properties.isFeatured
+        /// </summary>
         public MetadataFlag? IsFeatured { get; set; }
-        /// <summary> Flag indicates if this template is deprecated. </summary>
+        /// <summary>
+        /// Flag indicates if this template is deprecated
+        /// Serialized Name: ProductPackageModel.properties.isDeprecated
+        /// </summary>
         public MetadataFlag? IsDeprecated { get; set; }
-        /// <summary> the latest version number of the package. </summary>
+        /// <summary>
+        /// the latest version number of the package
+        /// Serialized Name: ProductPackageModel.properties.version
+        /// </summary>
         public string Version { get; set; }
-        /// <summary> The display name of the package. </summary>
+        /// <summary>
+        /// The display name of the package
+        /// Serialized Name: ProductPackageModel.properties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> The description of the package. </summary>
+        /// <summary>
+        /// The description of the package
+        /// Serialized Name: ProductPackageModel.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The publisher display name of the package. </summary>
+        /// <summary>
+        /// The publisher display name of the package
+        /// Serialized Name: ProductPackageModel.properties.publisherDisplayName
+        /// </summary>
         public string PublisherDisplayName { get; set; }
-        /// <summary> The source of the package. </summary>
+        /// <summary>
+        /// The source of the package
+        /// Serialized Name: ProductPackageModel.properties.source
+        /// </summary>
         public MetadataSource Source { get; set; }
-        /// <summary> The author of the package. </summary>
+        /// <summary>
+        /// The author of the package
+        /// Serialized Name: ProductPackageModel.properties.author
+        /// </summary>
         public MetadataAuthor Author { get; set; }
-        /// <summary> The support tier of the package. </summary>
+        /// <summary>
+        /// The support tier of the package
+        /// Serialized Name: ProductPackageModel.properties.support
+        /// </summary>
         public MetadataSupport Support { get; set; }
-        /// <summary> The support tier of the package. </summary>
+        /// <summary>
+        /// The support tier of the package
+        /// Serialized Name: ProductPackageModel.properties.dependencies
+        /// </summary>
         public MetadataDependencies Dependencies { get; set; }
-        /// <summary> Providers for the package item. </summary>
+        /// <summary>
+        /// Providers for the package item
+        /// Serialized Name: ProductPackageModel.properties.providers
+        /// </summary>
         public IList<string> Providers { get; }
-        /// <summary> first publish date package item. </summary>
+        /// <summary>
+        /// first publish date package item
+        /// Serialized Name: ProductPackageModel.properties.firstPublishDate
+        /// </summary>
         public DateTimeOffset? FirstPublishOn { get; set; }
-        /// <summary> last publish date for the package item. </summary>
+        /// <summary>
+        /// last publish date for the package item
+        /// Serialized Name: ProductPackageModel.properties.lastPublishDate
+        /// </summary>
         public DateTimeOffset? LastPublishOn { get; set; }
-        /// <summary> The categories of the package. </summary>
+        /// <summary>
+        /// The categories of the package
+        /// Serialized Name: ProductPackageModel.properties.categories
+        /// </summary>
         public MetadataCategories Categories { get; set; }
-        /// <summary> the tactics the resource covers. </summary>
+        /// <summary>
+        /// the tactics the resource covers
+        /// Serialized Name: ProductPackageModel.properties.threatAnalysisTactics
+        /// </summary>
         public IList<string> ThreatAnalysisTactics { get; }
-        /// <summary> the techniques the resource covers, these have to be aligned with the tactics being used. </summary>
+        /// <summary>
+        /// the techniques the resource covers, these have to be aligned with the tactics being used
+        /// Serialized Name: ProductPackageModel.properties.threatAnalysisTechniques
+        /// </summary>
         public IList<string> ThreatAnalysisTechniques { get; }
-        /// <summary> the icon identifier. this id can later be fetched from the content metadata. </summary>
+        /// <summary>
+        /// the icon identifier. this id can later be fetched from the content metadata
+        /// Serialized Name: ProductPackageModel.properties.icon
+        /// </summary>
         public string Icon { get; set; }
-        /// <summary> The version of the installed package, null or absent means not installed. </summary>
+        /// <summary>
+        /// The version of the installed package, null or absent means not installed.
+        /// Serialized Name: ProductPackageModel.properties.installedVersion
+        /// </summary>
         public string InstalledVersion { get; set; }
-        /// <summary> The metadata resource id. </summary>
+        /// <summary>
+        /// The metadata resource id.
+        /// Serialized Name: ProductPackageModel.properties.metadataResourceId
+        /// </summary>
         public ResourceIdentifier MetadataResourceId { get; set; }
         /// <summary>
         /// The json of the ARM template to deploy. Expandable.
+        /// Serialized Name: ProductPackageModel.properties.packagedContent
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -205,7 +363,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </para>
         /// </summary>
         public BinaryData PackagedContent { get; set; }
-        /// <summary> Etag of the azure resource. </summary>
+        /// <summary>
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

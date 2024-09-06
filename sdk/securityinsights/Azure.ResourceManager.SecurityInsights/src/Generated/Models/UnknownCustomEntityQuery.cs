@@ -13,15 +13,21 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Unknown version of CustomEntityQuery. </summary>
-    internal partial class UnknownCustomEntityQuery : EntityQueryCreateOrUpdateContent
+    internal partial class UnknownCustomEntityQuery : SecurityInsightsEntityQueryCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomEntityQuery"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> the entity query kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// the entity query kind
+        /// Serialized Name: CustomEntityQuery.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownCustomEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomEntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {

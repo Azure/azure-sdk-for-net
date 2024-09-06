@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The package kind. </summary>
+    /// <summary>
+    /// The package kind
+    /// Serialized Name: PackageKind
+    /// </summary>
     public readonly partial struct PackageKind : IEquatable<PackageKind>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string SolutionValue = "Solution";
         private const string StandaloneValue = "Standalone";
 
-        /// <summary> Solution. </summary>
+        /// <summary>
+        /// Solution
+        /// Serialized Name: PackageKind.Solution
+        /// </summary>
         public static PackageKind Solution { get; } = new PackageKind(SolutionValue);
-        /// <summary> Standalone. </summary>
+        /// <summary>
+        /// Standalone
+        /// Serialized Name: PackageKind.Standalone
+        /// </summary>
         public static PackageKind Standalone { get; } = new PackageKind(StandaloneValue);
         /// <summary> Determines if two <see cref="PackageKind"/> values are the same. </summary>
         public static bool operator ==(PackageKind left, PackageKind right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The type of the label. </summary>
+    /// <summary>
+    /// The type of the label
+    /// Serialized Name: IncidentLabelType
+    /// </summary>
     public readonly partial struct SecurityInsightsIncidentLabelType : IEquatable<SecurityInsightsIncidentLabelType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string UserValue = "User";
         private const string AutoAssignedValue = "AutoAssigned";
 
-        /// <summary> Label manually created by a user. </summary>
+        /// <summary>
+        /// Label manually created by a user
+        /// Serialized Name: IncidentLabelType.User
+        /// </summary>
         public static SecurityInsightsIncidentLabelType User { get; } = new SecurityInsightsIncidentLabelType(UserValue);
-        /// <summary> Label automatically created by the system. </summary>
+        /// <summary>
+        /// Label automatically created by the system
+        /// Serialized Name: IncidentLabelType.AutoAssigned
+        /// </summary>
         public static SecurityInsightsIncidentLabelType AutoAssigned { get; } = new SecurityInsightsIncidentLabelType(AutoAssignedValue);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentLabelType"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentLabelType left, SecurityInsightsIncidentLabelType right) => left.Equals(right);

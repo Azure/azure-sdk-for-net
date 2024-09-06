@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a single clause to be evaluated by a NormalizedCondition. </summary>
+    /// <summary>
+    /// Represents a single clause to be evaluated by a NormalizedCondition.
+    /// Serialized Name: ConditionClause
+    /// </summary>
     public partial class ConditionClause
     {
         /// <summary>
@@ -47,9 +50,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConditionClause"/>. </summary>
-        /// <param name="field"> The name of the field that is evaluated. </param>
-        /// <param name="operator"> Represents an operator in a ConditionClause. </param>
-        /// <param name="values"> The top level connective operator for this condition. </param>
+        /// <param name="field">
+        /// The name of the field that is evaluated.
+        /// Serialized Name: ConditionClause.field
+        /// </param>
+        /// <param name="operator">
+        /// Represents an operator in a ConditionClause.
+        /// Serialized Name: ConditionClause.operator
+        /// </param>
+        /// <param name="values">
+        /// The top level connective operator for this condition.
+        /// Serialized Name: ConditionClause.values
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="field"/> or <paramref name="values"/> is null. </exception>
         public ConditionClause(string field, ConditionClauseOperator @operator, IEnumerable<string> values)
         {
@@ -62,10 +74,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConditionClause"/>. </summary>
-        /// <param name="clauseConnective"> The connective used to join all values in this ConditionClause. </param>
-        /// <param name="field"> The name of the field that is evaluated. </param>
-        /// <param name="operator"> Represents an operator in a ConditionClause. </param>
-        /// <param name="values"> The top level connective operator for this condition. </param>
+        /// <param name="clauseConnective">
+        /// The connective used to join all values in this ConditionClause
+        /// Serialized Name: ConditionClause.clauseConnective
+        /// </param>
+        /// <param name="field">
+        /// The name of the field that is evaluated.
+        /// Serialized Name: ConditionClause.field
+        /// </param>
+        /// <param name="operator">
+        /// Represents an operator in a ConditionClause.
+        /// Serialized Name: ConditionClause.operator
+        /// </param>
+        /// <param name="values">
+        /// The top level connective operator for this condition.
+        /// Serialized Name: ConditionClause.values
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConditionClause(ClauseConnective? clauseConnective, string field, ConditionClauseOperator @operator, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,13 +105,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The connective used to join all values in this ConditionClause. </summary>
+        /// <summary>
+        /// The connective used to join all values in this ConditionClause
+        /// Serialized Name: ConditionClause.clauseConnective
+        /// </summary>
         public ClauseConnective? ClauseConnective { get; set; }
-        /// <summary> The name of the field that is evaluated. </summary>
+        /// <summary>
+        /// The name of the field that is evaluated.
+        /// Serialized Name: ConditionClause.field
+        /// </summary>
         public string Field { get; }
-        /// <summary> Represents an operator in a ConditionClause. </summary>
+        /// <summary>
+        /// Represents an operator in a ConditionClause.
+        /// Serialized Name: ConditionClause.operator
+        /// </summary>
         public ConditionClauseOperator Operator { get; }
-        /// <summary> The top level connective operator for this condition. </summary>
+        /// <summary>
+        /// The top level connective operator for this condition.
+        /// Serialized Name: ConditionClause.values
+        /// </summary>
         public IList<string> Values { get; }
     }
 }

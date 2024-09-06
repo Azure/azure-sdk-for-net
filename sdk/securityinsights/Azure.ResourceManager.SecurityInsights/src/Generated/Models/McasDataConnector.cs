@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents MCAS (Microsoft Cloud App Security) data connector. </summary>
+    /// <summary>
+    /// Represents MCAS (Microsoft Cloud App Security) data connector.
+    /// Serialized Name: McasDataConnector
+    /// </summary>
     public partial class McasDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="McasDataConnector"/>. </summary>
@@ -26,11 +29,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// The data connector kind
+        /// Serialized Name: DataConnector.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
+        /// <param name="tenantId">
+        /// The tenant id to connect to, and get the data from.
+        /// Serialized Name: McasDataConnector.properties.tenantId
+        /// </param>
+        /// <param name="dataTypes">
+        /// The available data types for the connector.
+        /// Serialized Name: McasDataConnector.properties.dataTypes
+        /// </param>
         internal McasDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, McasDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
@@ -38,9 +53,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary> The tenant id to connect to, and get the data from. </summary>
+        /// <summary>
+        /// The tenant id to connect to, and get the data from.
+        /// Serialized Name: McasDataConnector.properties.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> The available data types for the connector. </summary>
+        /// <summary>
+        /// The available data types for the connector.
+        /// Serialized Name: McasDataConnector.properties.dataTypes
+        /// </summary>
         public McasDataConnectorDataTypes DataTypes { get; set; }
     }
 }

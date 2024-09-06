@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Config to describe the instructions blade. </summary>
+    /// <summary>
+    /// Config to describe the instructions blade
+    /// Serialized Name: CodelessUiConnectorConfigProperties
+    /// </summary>
     public partial class CodelessUiConnectorConfigProperties
     {
         /// <summary>
@@ -47,17 +50,50 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CodelessUiConnectorConfigProperties"/>. </summary>
-        /// <param name="title"> Connector blade title. </param>
-        /// <param name="publisher"> Connector publisher name. </param>
-        /// <param name="descriptionMarkdown"> Connector description. </param>
-        /// <param name="graphQueriesTableName"> Name of the table the connector will insert the data to. </param>
-        /// <param name="graphQueries"> The graph query to show the current data status. </param>
-        /// <param name="sampleQueries"> The sample queries for the connector. </param>
-        /// <param name="dataTypes"> Data types to check for last data received. </param>
-        /// <param name="connectivityCriteria"> Define the way the connector check connectivity. </param>
-        /// <param name="availability"> Connector Availability Status. </param>
-        /// <param name="permissions"> Permissions required for the connector. </param>
-        /// <param name="instructionSteps"> Instruction steps to enable the connector. </param>
+        /// <param name="title">
+        /// Connector blade title
+        /// Serialized Name: CodelessUiConnectorConfigProperties.title
+        /// </param>
+        /// <param name="publisher">
+        /// Connector publisher name
+        /// Serialized Name: CodelessUiConnectorConfigProperties.publisher
+        /// </param>
+        /// <param name="descriptionMarkdown">
+        /// Connector description
+        /// Serialized Name: CodelessUiConnectorConfigProperties.descriptionMarkdown
+        /// </param>
+        /// <param name="graphQueriesTableName">
+        /// Name of the table the connector will insert the data to
+        /// Serialized Name: CodelessUiConnectorConfigProperties.graphQueriesTableName
+        /// </param>
+        /// <param name="graphQueries">
+        /// The graph query to show the current data status
+        /// Serialized Name: CodelessUiConnectorConfigProperties.graphQueries
+        /// </param>
+        /// <param name="sampleQueries">
+        /// The sample queries for the connector
+        /// Serialized Name: CodelessUiConnectorConfigProperties.sampleQueries
+        /// </param>
+        /// <param name="dataTypes">
+        /// Data types to check for last data received
+        /// Serialized Name: CodelessUiConnectorConfigProperties.dataTypes
+        /// </param>
+        /// <param name="connectivityCriteria">
+        /// Define the way the connector check connectivity
+        /// Serialized Name: CodelessUiConnectorConfigProperties.connectivityCriteria
+        /// </param>
+        /// <param name="availability">
+        /// Connector Availability Status
+        /// Serialized Name: CodelessUiConnectorConfigProperties.availability
+        /// </param>
+        /// <param name="permissions">
+        /// Permissions required for the connector
+        /// Serialized Name: CodelessUiConnectorConfigProperties.permissions
+        /// </param>
+        /// <param name="instructionSteps">
+        /// Instruction steps to enable the connector
+        /// Serialized Name: CodelessUiConnectorConfigProperties.instructionSteps
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/>, <paramref name="publisher"/>, <paramref name="descriptionMarkdown"/>, <paramref name="graphQueriesTableName"/>, <paramref name="graphQueries"/>, <paramref name="sampleQueries"/>, <paramref name="dataTypes"/>, <paramref name="connectivityCriteria"/>, <paramref name="availability"/>, <paramref name="permissions"/> or <paramref name="instructionSteps"/> is null. </exception>
         public CodelessUiConnectorConfigProperties(string title, string publisher, string descriptionMarkdown, string graphQueriesTableName, IEnumerable<CodelessUiConnectorConfigPropertiesGraphQueriesItem> graphQueries, IEnumerable<CodelessUiConnectorConfigPropertiesSampleQueriesItem> sampleQueries, IEnumerable<CodelessUiConnectorConfigPropertiesDataTypesItem> dataTypes, IEnumerable<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem> connectivityCriteria, ConnectorAvailability availability, ConnectorPermissions permissions, IEnumerable<CodelessUiConnectorConfigPropertiesInstructionStepsItem> instructionSteps)
         {
@@ -87,18 +123,54 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CodelessUiConnectorConfigProperties"/>. </summary>
-        /// <param name="title"> Connector blade title. </param>
-        /// <param name="publisher"> Connector publisher name. </param>
-        /// <param name="descriptionMarkdown"> Connector description. </param>
-        /// <param name="customImage"> An optional custom image to be used when displaying the connector within Azure Sentinel's connector's gallery. </param>
-        /// <param name="graphQueriesTableName"> Name of the table the connector will insert the data to. </param>
-        /// <param name="graphQueries"> The graph query to show the current data status. </param>
-        /// <param name="sampleQueries"> The sample queries for the connector. </param>
-        /// <param name="dataTypes"> Data types to check for last data received. </param>
-        /// <param name="connectivityCriteria"> Define the way the connector check connectivity. </param>
-        /// <param name="availability"> Connector Availability Status. </param>
-        /// <param name="permissions"> Permissions required for the connector. </param>
-        /// <param name="instructionSteps"> Instruction steps to enable the connector. </param>
+        /// <param name="title">
+        /// Connector blade title
+        /// Serialized Name: CodelessUiConnectorConfigProperties.title
+        /// </param>
+        /// <param name="publisher">
+        /// Connector publisher name
+        /// Serialized Name: CodelessUiConnectorConfigProperties.publisher
+        /// </param>
+        /// <param name="descriptionMarkdown">
+        /// Connector description
+        /// Serialized Name: CodelessUiConnectorConfigProperties.descriptionMarkdown
+        /// </param>
+        /// <param name="customImage">
+        /// An optional custom image to be used when displaying the connector within Azure Sentinel's connector's gallery
+        /// Serialized Name: CodelessUiConnectorConfigProperties.customImage
+        /// </param>
+        /// <param name="graphQueriesTableName">
+        /// Name of the table the connector will insert the data to
+        /// Serialized Name: CodelessUiConnectorConfigProperties.graphQueriesTableName
+        /// </param>
+        /// <param name="graphQueries">
+        /// The graph query to show the current data status
+        /// Serialized Name: CodelessUiConnectorConfigProperties.graphQueries
+        /// </param>
+        /// <param name="sampleQueries">
+        /// The sample queries for the connector
+        /// Serialized Name: CodelessUiConnectorConfigProperties.sampleQueries
+        /// </param>
+        /// <param name="dataTypes">
+        /// Data types to check for last data received
+        /// Serialized Name: CodelessUiConnectorConfigProperties.dataTypes
+        /// </param>
+        /// <param name="connectivityCriteria">
+        /// Define the way the connector check connectivity
+        /// Serialized Name: CodelessUiConnectorConfigProperties.connectivityCriteria
+        /// </param>
+        /// <param name="availability">
+        /// Connector Availability Status
+        /// Serialized Name: CodelessUiConnectorConfigProperties.availability
+        /// </param>
+        /// <param name="permissions">
+        /// Permissions required for the connector
+        /// Serialized Name: CodelessUiConnectorConfigProperties.permissions
+        /// </param>
+        /// <param name="instructionSteps">
+        /// Instruction steps to enable the connector
+        /// Serialized Name: CodelessUiConnectorConfigProperties.instructionSteps
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CodelessUiConnectorConfigProperties(string title, string publisher, string descriptionMarkdown, string customImage, string graphQueriesTableName, IList<CodelessUiConnectorConfigPropertiesGraphQueriesItem> graphQueries, IList<CodelessUiConnectorConfigPropertiesSampleQueriesItem> sampleQueries, IList<CodelessUiConnectorConfigPropertiesDataTypesItem> dataTypes, IList<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem> connectivityCriteria, ConnectorAvailability availability, ConnectorPermissions permissions, IList<CodelessUiConnectorConfigPropertiesInstructionStepsItem> instructionSteps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -122,29 +194,65 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Connector blade title. </summary>
+        /// <summary>
+        /// Connector blade title
+        /// Serialized Name: CodelessUiConnectorConfigProperties.title
+        /// </summary>
         public string Title { get; set; }
-        /// <summary> Connector publisher name. </summary>
+        /// <summary>
+        /// Connector publisher name
+        /// Serialized Name: CodelessUiConnectorConfigProperties.publisher
+        /// </summary>
         public string Publisher { get; set; }
-        /// <summary> Connector description. </summary>
+        /// <summary>
+        /// Connector description
+        /// Serialized Name: CodelessUiConnectorConfigProperties.descriptionMarkdown
+        /// </summary>
         public string DescriptionMarkdown { get; set; }
-        /// <summary> An optional custom image to be used when displaying the connector within Azure Sentinel's connector's gallery. </summary>
+        /// <summary>
+        /// An optional custom image to be used when displaying the connector within Azure Sentinel's connector's gallery
+        /// Serialized Name: CodelessUiConnectorConfigProperties.customImage
+        /// </summary>
         public string CustomImage { get; set; }
-        /// <summary> Name of the table the connector will insert the data to. </summary>
+        /// <summary>
+        /// Name of the table the connector will insert the data to
+        /// Serialized Name: CodelessUiConnectorConfigProperties.graphQueriesTableName
+        /// </summary>
         public string GraphQueriesTableName { get; set; }
-        /// <summary> The graph query to show the current data status. </summary>
+        /// <summary>
+        /// The graph query to show the current data status
+        /// Serialized Name: CodelessUiConnectorConfigProperties.graphQueries
+        /// </summary>
         public IList<CodelessUiConnectorConfigPropertiesGraphQueriesItem> GraphQueries { get; }
-        /// <summary> The sample queries for the connector. </summary>
+        /// <summary>
+        /// The sample queries for the connector
+        /// Serialized Name: CodelessUiConnectorConfigProperties.sampleQueries
+        /// </summary>
         public IList<CodelessUiConnectorConfigPropertiesSampleQueriesItem> SampleQueries { get; }
-        /// <summary> Data types to check for last data received. </summary>
+        /// <summary>
+        /// Data types to check for last data received
+        /// Serialized Name: CodelessUiConnectorConfigProperties.dataTypes
+        /// </summary>
         public IList<CodelessUiConnectorConfigPropertiesDataTypesItem> DataTypes { get; }
-        /// <summary> Define the way the connector check connectivity. </summary>
+        /// <summary>
+        /// Define the way the connector check connectivity
+        /// Serialized Name: CodelessUiConnectorConfigProperties.connectivityCriteria
+        /// </summary>
         public IList<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem> ConnectivityCriteria { get; }
-        /// <summary> Connector Availability Status. </summary>
+        /// <summary>
+        /// Connector Availability Status
+        /// Serialized Name: CodelessUiConnectorConfigProperties.availability
+        /// </summary>
         public ConnectorAvailability Availability { get; set; }
-        /// <summary> Permissions required for the connector. </summary>
+        /// <summary>
+        /// Permissions required for the connector
+        /// Serialized Name: CodelessUiConnectorConfigProperties.permissions
+        /// </summary>
         public ConnectorPermissions Permissions { get; set; }
-        /// <summary> Instruction steps to enable the connector. </summary>
+        /// <summary>
+        /// Instruction steps to enable the connector
+        /// Serialized Name: CodelessUiConnectorConfigProperties.instructionSteps
+        /// </summary>
         public IList<CodelessUiConnectorConfigPropertiesInstructionStepsItem> InstructionSteps { get; }
     }
 }

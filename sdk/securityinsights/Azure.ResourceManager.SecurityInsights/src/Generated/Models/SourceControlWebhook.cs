@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Detail about the webhook object. </summary>
+    /// <summary>
+    /// Detail about the webhook object.
+    /// Serialized Name: Webhook
+    /// </summary>
     public partial class SourceControlWebhook
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SourceControlWebhook"/>. </summary>
-        /// <param name="webhookId"> Unique identifier for the webhook. </param>
-        /// <param name="webhookUri"> URL that gets invoked by the webhook. </param>
-        /// <param name="webhookSecretUpdateOn"> Time when the webhook secret was updated. </param>
-        /// <param name="isWebhookSecretRotated"> A flag to instruct the backend service to rotate webhook secret. </param>
+        /// <param name="webhookId">
+        /// Unique identifier for the webhook.
+        /// Serialized Name: Webhook.webhookId
+        /// </param>
+        /// <param name="webhookUri">
+        /// URL that gets invoked by the webhook.
+        /// Serialized Name: Webhook.webhookUrl
+        /// </param>
+        /// <param name="webhookSecretUpdateOn">
+        /// Time when the webhook secret was updated.
+        /// Serialized Name: Webhook.webhookSecretUpdateTime
+        /// </param>
+        /// <param name="isWebhookSecretRotated">
+        /// A flag to instruct the backend service to rotate webhook secret.
+        /// Serialized Name: Webhook.rotateWebhookSecret
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SourceControlWebhook(string webhookId, Uri webhookUri, DateTimeOffset? webhookSecretUpdateOn, bool? isWebhookSecretRotated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Unique identifier for the webhook. </summary>
+        /// <summary>
+        /// Unique identifier for the webhook.
+        /// Serialized Name: Webhook.webhookId
+        /// </summary>
         public string WebhookId { get; }
-        /// <summary> URL that gets invoked by the webhook. </summary>
+        /// <summary>
+        /// URL that gets invoked by the webhook.
+        /// Serialized Name: Webhook.webhookUrl
+        /// </summary>
         public Uri WebhookUri { get; }
-        /// <summary> Time when the webhook secret was updated. </summary>
+        /// <summary>
+        /// Time when the webhook secret was updated.
+        /// Serialized Name: Webhook.webhookSecretUpdateTime
+        /// </summary>
         public DateTimeOffset? WebhookSecretUpdateOn { get; }
-        /// <summary> A flag to instruct the backend service to rotate webhook secret. </summary>
+        /// <summary>
+        /// A flag to instruct the backend service to rotate webhook secret.
+        /// Serialized Name: Webhook.rotateWebhookSecret
+        /// </summary>
         public bool? IsWebhookSecretRotated { get; set; }
     }
 }

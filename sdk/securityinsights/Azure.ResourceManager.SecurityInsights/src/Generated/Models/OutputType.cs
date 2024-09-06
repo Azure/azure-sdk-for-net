@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Insights Column type. </summary>
+    /// <summary>
+    /// Insights Column type.
+    /// Serialized Name: OutputType
+    /// </summary>
     public readonly partial struct OutputType : IEquatable<OutputType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string DateValue = "Date";
         private const string EntityValue = "Entity";
 
-        /// <summary> Number. </summary>
+        /// <summary>
+        /// Number
+        /// Serialized Name: OutputType.Number
+        /// </summary>
         public static OutputType Number { get; } = new OutputType(NumberValue);
-        /// <summary> String. </summary>
+        /// <summary>
+        /// String
+        /// Serialized Name: OutputType.String
+        /// </summary>
         public static OutputType String { get; } = new OutputType(StringValue);
-        /// <summary> Date. </summary>
+        /// <summary>
+        /// Date
+        /// Serialized Name: OutputType.Date
+        /// </summary>
         public static OutputType Date { get; } = new OutputType(DateValue);
-        /// <summary> Entity. </summary>
+        /// <summary>
+        /// Entity
+        /// Serialized Name: OutputType.Entity
+        /// </summary>
         public static OutputType Entity { get; } = new OutputType(EntityValue);
         /// <summary> Determines if two <see cref="OutputType"/> values are the same. </summary>
         public static bool operator ==(OutputType left, OutputType right) => left.Equals(right);

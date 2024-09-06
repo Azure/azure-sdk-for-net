@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataConnectorDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsDataConnectorDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        DataConnectorDefinitionData value = default;
+                        SecurityInsightsDataConnectorDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataConnectorDefinitionData.DeserializeDataConnectorDefinitionData(document.RootElement);
+                        value = SecurityInsightsDataConnectorDefinitionData.DeserializeSecurityInsightsDataConnectorDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataConnectorDefinitionData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsDataConnectorDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataConnectorDefinitionData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsDataConnectorDefinitionData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        DataConnectorDefinitionData value = default;
+                        SecurityInsightsDataConnectorDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataConnectorDefinitionData.DeserializeDataConnectorDefinitionData(document.RootElement);
+                        value = SecurityInsightsDataConnectorDefinitionData.DeserializeSecurityInsightsDataConnectorDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataConnectorDefinitionData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsDataConnectorDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, DataConnectorDefinitionData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, SecurityInsightsDataConnectorDefinitionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, DataConnectorDefinitionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, SecurityInsightsDataConnectorDefinitionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dataConnectorDefinitionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataConnectorDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, DataConnectorDefinitionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsDataConnectorDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, SecurityInsightsDataConnectorDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -300,9 +300,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        DataConnectorDefinitionData value = default;
+                        SecurityInsightsDataConnectorDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataConnectorDefinitionData.DeserializeDataConnectorDefinitionData(document.RootElement);
+                        value = SecurityInsightsDataConnectorDefinitionData.DeserializeSecurityInsightsDataConnectorDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dataConnectorDefinitionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataConnectorDefinitionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, DataConnectorDefinitionData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsDataConnectorDefinitionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName, SecurityInsightsDataConnectorDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        DataConnectorDefinitionData value = default;
+                        SecurityInsightsDataConnectorDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataConnectorDefinitionData.DeserializeDataConnectorDefinitionData(document.RootElement);
+                        value = SecurityInsightsDataConnectorDefinitionData.DeserializeSecurityInsightsDataConnectorDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

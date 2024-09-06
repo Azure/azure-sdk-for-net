@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The type of repository. </summary>
+    /// <summary>
+    /// The type of repository.
+    /// Serialized Name: RepoType
+    /// </summary>
     public readonly partial struct RepoType : IEquatable<RepoType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string GithubValue = "Github";
         private const string AzureDevOpsValue = "AzureDevOps";
 
-        /// <summary> Github. </summary>
+        /// <summary>
+        /// Github
+        /// Serialized Name: RepoType.Github
+        /// </summary>
         public static RepoType Github { get; } = new RepoType(GithubValue);
-        /// <summary> AzureDevOps. </summary>
+        /// <summary>
+        /// AzureDevOps
+        /// Serialized Name: RepoType.AzureDevOps
+        /// </summary>
         public static RepoType AzureDevOps { get; } = new RepoType(AzureDevOpsValue);
         /// <summary> Determines if two <see cref="RepoType"/> values are the same. </summary>
         public static bool operator ==(RepoType left, RepoType right) => left.Equals(right);

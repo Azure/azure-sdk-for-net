@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The CodelessUiConnectorConfigPropertiesDataTypesItem. </summary>
+    /// <summary>
+    /// The CodelessUiConnectorConfigPropertiesDataTypesItem.
+    /// Serialized Name: CodelessUiConnectorConfigPropertiesDataTypesItem
+    /// </summary>
     public partial class CodelessUiConnectorConfigPropertiesDataTypesItem : LastDataReceivedDataType
     {
         /// <summary> Initializes a new instance of <see cref="CodelessUiConnectorConfigPropertiesDataTypesItem"/>. </summary>
@@ -19,8 +22,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CodelessUiConnectorConfigPropertiesDataTypesItem"/>. </summary>
-        /// <param name="name"> Name of the data type to show in the graph. can be use with {{graphQueriesTableName}} placeholder. </param>
-        /// <param name="lastDataReceivedQuery"> Query for indicate last data received. </param>
+        /// <param name="name">
+        /// Name of the data type to show in the graph. can be use with {{graphQueriesTableName}} placeholder
+        /// Serialized Name: LastDataReceivedDataType.name
+        /// </param>
+        /// <param name="lastDataReceivedQuery">
+        /// Query for indicate last data received
+        /// Serialized Name: LastDataReceivedDataType.lastDataReceivedQuery
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CodelessUiConnectorConfigPropertiesDataTypesItem(string name, string lastDataReceivedQuery, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, lastDataReceivedQuery, serializedAdditionalRawData)
         {

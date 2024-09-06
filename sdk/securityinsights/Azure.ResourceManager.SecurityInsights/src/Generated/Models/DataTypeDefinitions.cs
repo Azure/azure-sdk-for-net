@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The data type definition. </summary>
+    /// <summary>
+    /// The data type definition
+    /// Serialized Name: DataTypeDefinitions
+    /// </summary>
     public partial class DataTypeDefinitions
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataTypeDefinitions"/>. </summary>
-        /// <param name="dataType"> The data type name. </param>
+        /// <param name="dataType">
+        /// The data type name
+        /// Serialized Name: DataTypeDefinitions.dataType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataTypeDefinitions(string dataType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The data type name. </summary>
+        /// <summary>
+        /// The data type name
+        /// Serialized Name: DataTypeDefinitions.dataType
+        /// </summary>
         public string DataType { get; set; }
     }
 }

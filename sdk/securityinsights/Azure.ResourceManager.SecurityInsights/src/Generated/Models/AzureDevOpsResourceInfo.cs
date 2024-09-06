@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Resources created in Azure DevOps repository. </summary>
+    /// <summary>
+    /// Resources created in Azure DevOps repository.
+    /// Serialized Name: AzureDevOpsResourceInfo
+    /// </summary>
     public partial class AzureDevOpsResourceInfo
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsResourceInfo"/>. </summary>
-        /// <param name="pipelineId"> Id of the pipeline created for the source-control. </param>
-        /// <param name="serviceConnectionId"> Id of the service-connection created for the source-control. </param>
+        /// <param name="pipelineId">
+        /// Id of the pipeline created for the source-control.
+        /// Serialized Name: AzureDevOpsResourceInfo.pipelineId
+        /// </param>
+        /// <param name="serviceConnectionId">
+        /// Id of the service-connection created for the source-control.
+        /// Serialized Name: AzureDevOpsResourceInfo.serviceConnectionId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AzureDevOpsResourceInfo(string pipelineId, string serviceConnectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Id of the pipeline created for the source-control. </summary>
+        /// <summary>
+        /// Id of the pipeline created for the source-control.
+        /// Serialized Name: AzureDevOpsResourceInfo.pipelineId
+        /// </summary>
         public string PipelineId { get; }
-        /// <summary> Id of the service-connection created for the source-control. </summary>
+        /// <summary>
+        /// Id of the service-connection created for the source-control.
+        /// Serialized Name: AzureDevOpsResourceInfo.serviceConnectionId
+        /// </summary>
         public string ServiceConnectionId { get; }
     }
 }

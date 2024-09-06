@@ -12,8 +12,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents Expansion entity query. </summary>
-    public partial class ExpansionEntityQuery : EntityQueryData
+    /// <summary>
+    /// Represents Expansion entity query.
+    /// Serialized Name: ExpansionEntityQuery
+    /// </summary>
+    public partial class ExpansionEntityQuery : SecurityInsightsEntityQueryData
     {
         /// <summary> Initializes a new instance of <see cref="ExpansionEntityQuery"/>. </summary>
         public ExpansionEntityQuery()
@@ -29,15 +32,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> the entity query kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// the entity query kind
+        /// Serialized Name: EntityQuery.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="dataSources"> List of the data sources that are required to run the query. </param>
-        /// <param name="displayName"> The query display name. </param>
-        /// <param name="inputEntityType"> The type of the query's source entity. </param>
-        /// <param name="inputFields"> List of the fields of the source entity that are required to run the query. </param>
-        /// <param name="outputEntityTypes"> List of the desired output types to be constructed from the result. </param>
-        /// <param name="queryTemplate"> The template query string to be parsed and formatted. </param>
+        /// <param name="dataSources">
+        /// List of the data sources that are required to run the query
+        /// Serialized Name: ExpansionEntityQuery.properties.dataSources
+        /// </param>
+        /// <param name="displayName">
+        /// The query display name
+        /// Serialized Name: ExpansionEntityQuery.properties.displayName
+        /// </param>
+        /// <param name="inputEntityType">
+        /// The type of the query's source entity
+        /// Serialized Name: ExpansionEntityQuery.properties.inputEntityType
+        /// </param>
+        /// <param name="inputFields">
+        /// List of the fields of the source entity that are required to run the query
+        /// Serialized Name: ExpansionEntityQuery.properties.inputFields
+        /// </param>
+        /// <param name="outputEntityTypes">
+        /// List of the desired output types to be constructed from the result
+        /// Serialized Name: ExpansionEntityQuery.properties.outputEntityTypes
+        /// </param>
+        /// <param name="queryTemplate">
+        /// The template query string to be parsed and formatted
+        /// Serialized Name: ExpansionEntityQuery.properties.queryTemplate
+        /// </param>
         internal ExpansionEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> dataSources, string displayName, EntityType? inputEntityType, IList<string> inputFields, IList<EntityType> outputEntityTypes, string queryTemplate) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             DataSources = dataSources;
@@ -49,17 +76,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary> List of the data sources that are required to run the query. </summary>
+        /// <summary>
+        /// List of the data sources that are required to run the query
+        /// Serialized Name: ExpansionEntityQuery.properties.dataSources
+        /// </summary>
         public IList<string> DataSources { get; }
-        /// <summary> The query display name. </summary>
+        /// <summary>
+        /// The query display name
+        /// Serialized Name: ExpansionEntityQuery.properties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> The type of the query's source entity. </summary>
+        /// <summary>
+        /// The type of the query's source entity
+        /// Serialized Name: ExpansionEntityQuery.properties.inputEntityType
+        /// </summary>
         public EntityType? InputEntityType { get; set; }
-        /// <summary> List of the fields of the source entity that are required to run the query. </summary>
+        /// <summary>
+        /// List of the fields of the source entity that are required to run the query
+        /// Serialized Name: ExpansionEntityQuery.properties.inputFields
+        /// </summary>
         public IList<string> InputFields { get; }
-        /// <summary> List of the desired output types to be constructed from the result. </summary>
+        /// <summary>
+        /// List of the desired output types to be constructed from the result
+        /// Serialized Name: ExpansionEntityQuery.properties.outputEntityTypes
+        /// </summary>
         public IList<EntityType> OutputEntityTypes { get; }
-        /// <summary> The template query string to be parsed and formatted. </summary>
+        /// <summary>
+        /// The template query string to be parsed and formatted
+        /// Serialized Name: ExpansionEntityQuery.properties.queryTemplate
+        /// </summary>
         public string QueryTemplate { get; set; }
     }
 }

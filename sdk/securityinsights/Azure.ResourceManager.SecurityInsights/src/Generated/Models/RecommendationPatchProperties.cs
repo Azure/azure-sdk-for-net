@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Recommendation Fields Properties to update. </summary>
+    /// <summary>
+    /// Recommendation Fields Properties to update.
+    /// Serialized Name: RecommendationPatchProperties
+    /// </summary>
     internal partial class RecommendationPatchProperties
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecommendationPatchProperties"/>. </summary>
-        /// <param name="state"> State of the recommendation. </param>
+        /// <param name="state">
+        /// State of the recommendation.
+        /// Serialized Name: RecommendationPatchProperties.state
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RecommendationPatchProperties(RecommendationState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> State of the recommendation. </summary>
+        /// <summary>
+        /// State of the recommendation.
+        /// Serialized Name: RecommendationPatchProperties.state
+        /// </summary>
         public RecommendationState? State { get; set; }
     }
 }

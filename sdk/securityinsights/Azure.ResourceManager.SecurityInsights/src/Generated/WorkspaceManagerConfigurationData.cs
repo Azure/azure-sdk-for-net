@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the WorkspaceManagerConfiguration data model.
     /// The workspace manager configuration
+    /// Serialized Name: WorkspaceManagerConfiguration
     /// </summary>
     public partial class WorkspaceManagerConfigurationData : ResourceData
     {
@@ -61,8 +62,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="mode"> The current mode of the workspace manager configuration. </param>
-        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="mode">
+        /// The current mode of the workspace manager configuration
+        /// Serialized Name: WorkspaceManagerConfiguration.properties.mode
+        /// </param>
+        /// <param name="etag">
+        /// Resource Etag.
+        /// Serialized Name: AzureEntityResource.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkspaceManagerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkspaceManagerConfigurationMode? mode, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,9 +78,15 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The current mode of the workspace manager configuration. </summary>
+        /// <summary>
+        /// The current mode of the workspace manager configuration
+        /// Serialized Name: WorkspaceManagerConfiguration.properties.mode
+        /// </summary>
         public WorkspaceManagerConfigurationMode? Mode { get; set; }
-        /// <summary> Resource Etag. </summary>
+        /// <summary>
+        /// Resource Etag.
+        /// Serialized Name: AzureEntityResource.etag
+        /// </summary>
         public ETag? ETag { get; }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents Amazon Web Services S3 data connector. </summary>
+    /// <summary>
+    /// Represents Amazon Web Services S3 data connector.
+    /// Serialized Name: AwsS3DataConnector
+    /// </summary>
     public partial class AwsS3DataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="AwsS3DataConnector"/>. </summary>
@@ -27,13 +30,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// The data connector kind
+        /// Serialized Name: DataConnector.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="destinationTable"> The logs destination table name in LogAnalytics. </param>
-        /// <param name="sqsUrls"> The AWS sqs urls for the connector. </param>
-        /// <param name="roleArn"> The Aws Role Arn that is used to access the Aws account. </param>
-        /// <param name="logs"> Logs data type. </param>
+        /// <param name="destinationTable">
+        /// The logs destination table name in LogAnalytics.
+        /// Serialized Name: AwsS3DataConnector.properties.destinationTable
+        /// </param>
+        /// <param name="sqsUrls">
+        /// The AWS sqs urls for the connector.
+        /// Serialized Name: AwsS3DataConnector.properties.sqsUrls
+        /// </param>
+        /// <param name="roleArn">
+        /// The Aws Role Arn that is used to access the Aws account.
+        /// Serialized Name: AwsS3DataConnector.properties.roleArn
+        /// </param>
+        /// <param name="logs">
+        /// Logs data type.
+        /// Serialized Name: AwsS3DataConnector.properties.dataTypes.logs
+        /// </param>
         internal AwsS3DataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string destinationTable, IList<string> sqsUrls, string roleArn, AwsS3DataConnectorDataTypesLogs logs) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             DestinationTable = destinationTable;
@@ -43,15 +64,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary> The logs destination table name in LogAnalytics. </summary>
+        /// <summary>
+        /// The logs destination table name in LogAnalytics.
+        /// Serialized Name: AwsS3DataConnector.properties.destinationTable
+        /// </summary>
         public string DestinationTable { get; set; }
-        /// <summary> The AWS sqs urls for the connector. </summary>
+        /// <summary>
+        /// The AWS sqs urls for the connector.
+        /// Serialized Name: AwsS3DataConnector.properties.sqsUrls
+        /// </summary>
         public IList<string> SqsUrls { get; }
-        /// <summary> The Aws Role Arn that is used to access the Aws account. </summary>
+        /// <summary>
+        /// The Aws Role Arn that is used to access the Aws account.
+        /// Serialized Name: AwsS3DataConnector.properties.roleArn
+        /// </summary>
         public string RoleArn { get; set; }
-        /// <summary> Logs data type. </summary>
+        /// <summary>
+        /// Logs data type.
+        /// Serialized Name: AwsS3DataConnector.properties.dataTypes.logs
+        /// </summary>
         internal AwsS3DataConnectorDataTypesLogs Logs { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        /// <summary>
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </summary>
         public SecurityInsightsDataTypeConnectionState? LogsState
         {
             get => Logs is null ? default(SecurityInsightsDataTypeConnectionState?) : Logs.State;

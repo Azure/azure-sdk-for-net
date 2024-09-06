@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Required permissions for the connector. </summary>
+    /// <summary>
+    /// Required permissions for the connector
+    /// Serialized Name: RequiredPermissions
+    /// </summary>
     public partial class RequiredPermissions
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RequiredPermissions"/>. </summary>
-        /// <param name="isCustomAction"> action permission. </param>
-        /// <param name="isWriteAction"> write permission. </param>
-        /// <param name="isReadAction"> read permission. </param>
-        /// <param name="isDeleteAction"> delete permission. </param>
+        /// <param name="isCustomAction">
+        /// action permission
+        /// Serialized Name: RequiredPermissions.action
+        /// </param>
+        /// <param name="isWriteAction">
+        /// write permission
+        /// Serialized Name: RequiredPermissions.write
+        /// </param>
+        /// <param name="isReadAction">
+        /// read permission
+        /// Serialized Name: RequiredPermissions.read
+        /// </param>
+        /// <param name="isDeleteAction">
+        /// delete permission
+        /// Serialized Name: RequiredPermissions.delete
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RequiredPermissions(bool? isCustomAction, bool? isWriteAction, bool? isReadAction, bool? isDeleteAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> action permission. </summary>
+        /// <summary>
+        /// action permission
+        /// Serialized Name: RequiredPermissions.action
+        /// </summary>
         public bool? IsCustomAction { get; set; }
-        /// <summary> write permission. </summary>
+        /// <summary>
+        /// write permission
+        /// Serialized Name: RequiredPermissions.write
+        /// </summary>
         public bool? IsWriteAction { get; set; }
-        /// <summary> read permission. </summary>
+        /// <summary>
+        /// read permission
+        /// Serialized Name: RequiredPermissions.read
+        /// </summary>
         public bool? IsReadAction { get; set; }
-        /// <summary> delete permission. </summary>
+        /// <summary>
+        /// delete permission
+        /// Serialized Name: RequiredPermissions.delete
+        /// </summary>
         public bool? IsDeleteAction { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The kind of repository access credentials. </summary>
+    /// <summary>
+    /// The kind of repository access credentials
+    /// Serialized Name: RepositoryAccessKind
+    /// </summary>
     public readonly partial struct RepositoryAccessKind : IEquatable<RepositoryAccessKind>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string PATValue = "PAT";
         private const string AppValue = "App";
 
-        /// <summary> OAuth. </summary>
+        /// <summary>
+        /// OAuth
+        /// Serialized Name: RepositoryAccessKind.OAuth
+        /// </summary>
         public static RepositoryAccessKind OAuth { get; } = new RepositoryAccessKind(OAuthValue);
-        /// <summary> PAT. </summary>
+        /// <summary>
+        /// PAT
+        /// Serialized Name: RepositoryAccessKind.PAT
+        /// </summary>
         public static RepositoryAccessKind PAT { get; } = new RepositoryAccessKind(PATValue);
-        /// <summary> App. </summary>
+        /// <summary>
+        /// App
+        /// Serialized Name: RepositoryAccessKind.App
+        /// </summary>
         public static RepositoryAccessKind App { get; } = new RepositoryAccessKind(AppValue);
         /// <summary> Determines if two <see cref="RepositoryAccessKind"/> values are the same. </summary>
         public static bool operator ==(RepositoryAccessKind left, RepositoryAccessKind right) => left.Equals(right);

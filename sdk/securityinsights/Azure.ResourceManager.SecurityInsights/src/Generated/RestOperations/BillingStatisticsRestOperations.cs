@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="billingStatisticName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="billingStatisticName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingStatisticData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string billingStatisticName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsBillingStatisticData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string billingStatisticName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        BillingStatisticData value = default;
+                        SecurityInsightsBillingStatisticData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BillingStatisticData.DeserializeBillingStatisticData(document.RootElement);
+                        value = SecurityInsightsBillingStatisticData.DeserializeSecurityInsightsBillingStatisticData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BillingStatisticData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsBillingStatisticData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="billingStatisticName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="billingStatisticName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingStatisticData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string billingStatisticName, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsBillingStatisticData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string billingStatisticName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        BillingStatisticData value = default;
+                        SecurityInsightsBillingStatisticData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BillingStatisticData.DeserializeBillingStatisticData(document.RootElement);
+                        value = SecurityInsightsBillingStatisticData.DeserializeSecurityInsightsBillingStatisticData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BillingStatisticData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsBillingStatisticData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

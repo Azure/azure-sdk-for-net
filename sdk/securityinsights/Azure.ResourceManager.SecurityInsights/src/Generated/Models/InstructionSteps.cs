@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Instruction steps to enable the connector. </summary>
+    /// <summary>
+    /// Instruction steps to enable the connector
+    /// Serialized Name: InstructionSteps
+    /// </summary>
     public partial class InstructionSteps
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InstructionSteps"/>. </summary>
-        /// <param name="title"> Instruction step title. </param>
-        /// <param name="description"> Instruction step description. </param>
-        /// <param name="instructions"> Instruction step details. </param>
+        /// <param name="title">
+        /// Instruction step title
+        /// Serialized Name: InstructionSteps.title
+        /// </param>
+        /// <param name="description">
+        /// Instruction step description
+        /// Serialized Name: InstructionSteps.description
+        /// </param>
+        /// <param name="instructions">
+        /// Instruction step details
+        /// Serialized Name: InstructionSteps.instructions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InstructionSteps(string title, string description, IList<InstructionStepsInstructionsItem> instructions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,11 +76,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Instruction step title. </summary>
+        /// <summary>
+        /// Instruction step title
+        /// Serialized Name: InstructionSteps.title
+        /// </summary>
         public string Title { get; set; }
-        /// <summary> Instruction step description. </summary>
+        /// <summary>
+        /// Instruction step description
+        /// Serialized Name: InstructionSteps.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Instruction step details. </summary>
+        /// <summary>
+        /// Instruction step details
+        /// Serialized Name: InstructionSteps.instructions
+        /// </summary>
         public IList<InstructionStepsInstructionsItem> Instructions { get; }
     }
 }

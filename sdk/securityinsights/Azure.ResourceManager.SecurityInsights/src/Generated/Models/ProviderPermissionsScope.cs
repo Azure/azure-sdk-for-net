@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The scope on which the user should have permissions, in order to be able to create connections. </summary>
+    /// <summary>
+    /// The scope on which the user should have permissions, in order to be able to create connections.
+    /// Serialized Name: ProviderPermissionsScope
+    /// </summary>
     public readonly partial struct ProviderPermissionsScope : IEquatable<ProviderPermissionsScope>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ResourceGroupValue = "ResourceGroup";
         private const string WorkspaceValue = "Workspace";
 
-        /// <summary> Subscription. </summary>
+        /// <summary>
+        /// Subscription
+        /// Serialized Name: ProviderPermissionsScope.Subscription
+        /// </summary>
         public static ProviderPermissionsScope Subscription { get; } = new ProviderPermissionsScope(SubscriptionValue);
-        /// <summary> ResourceGroup. </summary>
+        /// <summary>
+        /// ResourceGroup
+        /// Serialized Name: ProviderPermissionsScope.ResourceGroup
+        /// </summary>
         public static ProviderPermissionsScope ResourceGroup { get; } = new ProviderPermissionsScope(ResourceGroupValue);
-        /// <summary> Workspace. </summary>
+        /// <summary>
+        /// Workspace
+        /// Serialized Name: ProviderPermissionsScope.Workspace
+        /// </summary>
         public static ProviderPermissionsScope Workspace { get; } = new ProviderPermissionsScope(WorkspaceValue);
         /// <summary> Determines if two <see cref="ProviderPermissionsScope"/> values are the same. </summary>
         public static bool operator ==(ProviderPermissionsScope left, ProviderPermissionsScope right) => left.Equals(right);

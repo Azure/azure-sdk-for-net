@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The request paging configuration. </summary>
+    /// <summary>
+    /// The request paging configuration.
+    /// Serialized Name: RestApiPollerRequestPagingConfig
+    /// </summary>
     public partial class RestApiPollerRequestPagingConfig
     {
         /// <summary>
@@ -46,16 +49,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RestApiPollerRequestPagingConfig"/>. </summary>
-        /// <param name="pagingType"> Type of paging. </param>
+        /// <param name="pagingType">
+        /// Type of paging
+        /// Serialized Name: RestApiPollerRequestPagingConfig.pagingType
+        /// </param>
         public RestApiPollerRequestPagingConfig(RestApiPollerRequestPagingKind pagingType)
         {
             PagingType = pagingType;
         }
 
         /// <summary> Initializes a new instance of <see cref="RestApiPollerRequestPagingConfig"/>. </summary>
-        /// <param name="pagingType"> Type of paging. </param>
-        /// <param name="pageSize"> Page size. </param>
-        /// <param name="pageSizeParameterName"> Page size parameter name. </param>
+        /// <param name="pagingType">
+        /// Type of paging
+        /// Serialized Name: RestApiPollerRequestPagingConfig.pagingType
+        /// </param>
+        /// <param name="pageSize">
+        /// Page size
+        /// Serialized Name: RestApiPollerRequestPagingConfig.pageSize
+        /// </param>
+        /// <param name="pageSizeParameterName">
+        /// Page size parameter name
+        /// Serialized Name: RestApiPollerRequestPagingConfig.pageSizeParameterName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RestApiPollerRequestPagingConfig(RestApiPollerRequestPagingKind pagingType, int? pageSize, string pageSizeParameterName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,11 +85,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Type of paging. </summary>
+        /// <summary>
+        /// Type of paging
+        /// Serialized Name: RestApiPollerRequestPagingConfig.pagingType
+        /// </summary>
         public RestApiPollerRequestPagingKind PagingType { get; set; }
-        /// <summary> Page size. </summary>
+        /// <summary>
+        /// Page size
+        /// Serialized Name: RestApiPollerRequestPagingConfig.pageSize
+        /// </summary>
         public int? PageSize { get; set; }
-        /// <summary> Page size parameter name. </summary>
+        /// <summary>
+        /// Page size parameter name
+        /// Serialized Name: RestApiPollerRequestPagingConfig.pageSizeParameterName
+        /// </summary>
         public string PageSizeParameterName { get; set; }
     }
 }

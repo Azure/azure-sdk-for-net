@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The Enum22. </summary>
+    /// <summary>
+    /// The Enum22.
+    /// Serialized Name: Enum22
+    /// </summary>
     public readonly partial struct Enum22 : IEquatable<Enum22>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string ActivityValue = "Activity";
 
-        /// <summary> Activity. </summary>
+        /// <summary>
+        /// Activity
+        /// Serialized Name: Enum22.Activity
+        /// </summary>
         public static Enum22 Activity { get; } = new Enum22(ActivityValue);
         /// <summary> Determines if two <see cref="Enum22"/> values are the same. </summary>
         public static bool operator ==(Enum22 left, Enum22 right) => left.Equals(right);

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the WorkspaceManagerMember data model.
     /// The workspace manager member
+    /// Serialized Name: WorkspaceManagerMember
     /// </summary>
     public partial class WorkspaceManagerMemberData : ResourceData
     {
@@ -60,9 +61,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="targetWorkspaceResourceId"> Fully qualified resource ID of the target Sentinel workspace joining the given Sentinel workspace manager. </param>
-        /// <param name="targetWorkspaceTenantId"> Tenant id of the target Sentinel workspace joining the given Sentinel workspace manager. </param>
-        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="targetWorkspaceResourceId">
+        /// Fully qualified resource ID of the target Sentinel workspace joining the given Sentinel workspace manager
+        /// Serialized Name: WorkspaceManagerMember.properties.targetWorkspaceResourceId
+        /// </param>
+        /// <param name="targetWorkspaceTenantId">
+        /// Tenant id of the target Sentinel workspace joining the given Sentinel workspace manager
+        /// Serialized Name: WorkspaceManagerMember.properties.targetWorkspaceTenantId
+        /// </param>
+        /// <param name="etag">
+        /// Resource Etag.
+        /// Serialized Name: AzureEntityResource.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkspaceManagerMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string targetWorkspaceResourceId, string targetWorkspaceTenantId, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -72,11 +82,20 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Fully qualified resource ID of the target Sentinel workspace joining the given Sentinel workspace manager. </summary>
+        /// <summary>
+        /// Fully qualified resource ID of the target Sentinel workspace joining the given Sentinel workspace manager
+        /// Serialized Name: WorkspaceManagerMember.properties.targetWorkspaceResourceId
+        /// </summary>
         public string TargetWorkspaceResourceId { get; set; }
-        /// <summary> Tenant id of the target Sentinel workspace joining the given Sentinel workspace manager. </summary>
+        /// <summary>
+        /// Tenant id of the target Sentinel workspace joining the given Sentinel workspace manager
+        /// Serialized Name: WorkspaceManagerMember.properties.targetWorkspaceTenantId
+        /// </summary>
         public string TargetWorkspaceTenantId { get; set; }
-        /// <summary> Resource Etag. </summary>
+        /// <summary>
+        /// Resource Etag.
+        /// Serialized Name: AzureEntityResource.etag
+        /// </summary>
         public ETag? ETag { get; }
     }
 }

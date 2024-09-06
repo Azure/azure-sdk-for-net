@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The parameters required to execute an expand operation on the given entity. </summary>
+    /// <summary>
+    /// The parameters required to execute an expand operation on the given entity.
+    /// Serialized Name: EntityExpandParameters
+    /// </summary>
     public partial class EntityExpandContent
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityExpandContent"/>. </summary>
-        /// <param name="endOn"> The end date filter, so the only expansion results returned are before this date. </param>
-        /// <param name="expansionId"> The Id of the expansion to perform. </param>
-        /// <param name="startOn"> The start date filter, so the only expansion results returned are after this date. </param>
+        /// <param name="endOn">
+        /// The end date filter, so the only expansion results returned are before this date.
+        /// Serialized Name: EntityExpandParameters.endTime
+        /// </param>
+        /// <param name="expansionId">
+        /// The Id of the expansion to perform.
+        /// Serialized Name: EntityExpandParameters.expansionId
+        /// </param>
+        /// <param name="startOn">
+        /// The start date filter, so the only expansion results returned are after this date.
+        /// Serialized Name: EntityExpandParameters.startTime
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityExpandContent(DateTimeOffset? endOn, Guid? expansionId, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The end date filter, so the only expansion results returned are before this date. </summary>
+        /// <summary>
+        /// The end date filter, so the only expansion results returned are before this date.
+        /// Serialized Name: EntityExpandParameters.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> The Id of the expansion to perform. </summary>
+        /// <summary>
+        /// The Id of the expansion to perform.
+        /// Serialized Name: EntityExpandParameters.expansionId
+        /// </summary>
         public Guid? ExpansionId { get; set; }
-        /// <summary> The start date filter, so the only expansion results returned are after this date. </summary>
+        /// <summary>
+        /// The start date filter, so the only expansion results returned are after this date.
+        /// Serialized Name: EntityExpandParameters.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; set; }
     }
 }

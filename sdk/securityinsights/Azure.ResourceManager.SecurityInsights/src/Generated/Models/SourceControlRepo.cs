@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a repository. </summary>
+    /// <summary>
+    /// Represents a repository.
+    /// Serialized Name: Repo
+    /// </summary>
     public partial class SourceControlRepo
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SourceControlRepo"/>. </summary>
-        /// <param name="uri"> The url to access the repository. </param>
-        /// <param name="fullName"> The name of the repository. </param>
-        /// <param name="installationId"> The installation id of the repository. </param>
-        /// <param name="branches"> Array of branches. </param>
+        /// <param name="uri">
+        /// The url to access the repository.
+        /// Serialized Name: Repo.url
+        /// </param>
+        /// <param name="fullName">
+        /// The name of the repository.
+        /// Serialized Name: Repo.fullName
+        /// </param>
+        /// <param name="installationId">
+        /// The installation id of the repository.
+        /// Serialized Name: Repo.installationId
+        /// </param>
+        /// <param name="branches">
+        /// Array of branches.
+        /// Serialized Name: Repo.branches
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SourceControlRepo(Uri uri, string fullName, long? installationId, IReadOnlyList<string> branches, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,13 +81,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The url to access the repository. </summary>
+        /// <summary>
+        /// The url to access the repository.
+        /// Serialized Name: Repo.url
+        /// </summary>
         public Uri Uri { get; }
-        /// <summary> The name of the repository. </summary>
+        /// <summary>
+        /// The name of the repository.
+        /// Serialized Name: Repo.fullName
+        /// </summary>
         public string FullName { get; }
-        /// <summary> The installation id of the repository. </summary>
+        /// <summary>
+        /// The installation id of the repository.
+        /// Serialized Name: Repo.installationId
+        /// </summary>
         public long? InstallationId { get; }
-        /// <summary> Array of branches. </summary>
+        /// <summary>
+        /// Array of branches.
+        /// Serialized Name: Repo.branches
+        /// </summary>
         public IReadOnlyList<string> Branches { get; }
     }
 }

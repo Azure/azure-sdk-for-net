@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The V3 alert property. </summary>
+    /// <summary>
+    /// The V3 alert property
+    /// Serialized Name: AlertProperty
+    /// </summary>
     public readonly partial struct AlertProperty : IEquatable<AlertProperty>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string TechniquesValue = "Techniques";
         private const string SubTechniquesValue = "SubTechniques";
 
-        /// <summary> Alert's link. </summary>
+        /// <summary>
+        /// Alert's link
+        /// Serialized Name: AlertProperty.AlertLink
+        /// </summary>
         public static AlertProperty AlertLink { get; } = new AlertProperty(AlertLinkValue);
-        /// <summary> Confidence level property. </summary>
+        /// <summary>
+        /// Confidence level property
+        /// Serialized Name: AlertProperty.ConfidenceLevel
+        /// </summary>
         public static AlertProperty ConfidenceLevel { get; } = new AlertProperty(ConfidenceLevelValue);
-        /// <summary> Confidence score. </summary>
+        /// <summary>
+        /// Confidence score
+        /// Serialized Name: AlertProperty.ConfidenceScore
+        /// </summary>
         public static AlertProperty ConfidenceScore { get; } = new AlertProperty(ConfidenceScoreValue);
-        /// <summary> Extended links to the alert. </summary>
+        /// <summary>
+        /// Extended links to the alert
+        /// Serialized Name: AlertProperty.ExtendedLinks
+        /// </summary>
         public static AlertProperty ExtendedLinks { get; } = new AlertProperty(ExtendedLinksValue);
-        /// <summary> Product name alert property. </summary>
+        /// <summary>
+        /// Product name alert property
+        /// Serialized Name: AlertProperty.ProductName
+        /// </summary>
         public static AlertProperty ProductName { get; } = new AlertProperty(ProductNameValue);
-        /// <summary> Provider name alert property. </summary>
+        /// <summary>
+        /// Provider name alert property
+        /// Serialized Name: AlertProperty.ProviderName
+        /// </summary>
         public static AlertProperty ProviderName { get; } = new AlertProperty(ProviderNameValue);
-        /// <summary> Product component name alert property. </summary>
+        /// <summary>
+        /// Product component name alert property
+        /// Serialized Name: AlertProperty.ProductComponentName
+        /// </summary>
         public static AlertProperty ProductComponentName { get; } = new AlertProperty(ProductComponentNameValue);
-        /// <summary> Remediation steps alert property. </summary>
+        /// <summary>
+        /// Remediation steps alert property
+        /// Serialized Name: AlertProperty.RemediationSteps
+        /// </summary>
         public static AlertProperty RemediationSteps { get; } = new AlertProperty(RemediationStepsValue);
-        /// <summary> Techniques alert property. </summary>
+        /// <summary>
+        /// Techniques alert property
+        /// Serialized Name: AlertProperty.Techniques
+        /// </summary>
         public static AlertProperty Techniques { get; } = new AlertProperty(TechniquesValue);
-        /// <summary> SubTechniques alert property. </summary>
+        /// <summary>
+        /// SubTechniques alert property
+        /// Serialized Name: AlertProperty.SubTechniques
+        /// </summary>
         public static AlertProperty SubTechniques { get; } = new AlertProperty(SubTechniquesValue);
         /// <summary> Determines if two <see cref="AlertProperty"/> values are the same. </summary>
         public static bool operator ==(AlertProperty left, AlertProperty right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The available data types for office data connector. </summary>
+    /// <summary>
+    /// The available data types for office data connector.
+    /// Serialized Name: OfficeDataConnectorDataTypes
+    /// </summary>
     public partial class SecurityInsightsOfficeDataConnectorDataTypes
     {
         /// <summary>
@@ -46,9 +49,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/>. </summary>
-        /// <param name="exchange"> Exchange data type connection. </param>
-        /// <param name="sharePoint"> SharePoint data type connection. </param>
-        /// <param name="teams"> Teams data type connection. </param>
+        /// <param name="exchange">
+        /// Exchange data type connection.
+        /// Serialized Name: OfficeDataConnectorDataTypes.exchange
+        /// </param>
+        /// <param name="sharePoint">
+        /// SharePoint data type connection.
+        /// Serialized Name: OfficeDataConnectorDataTypes.sharePoint
+        /// </param>
+        /// <param name="teams">
+        /// Teams data type connection.
+        /// Serialized Name: OfficeDataConnectorDataTypes.teams
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exchange"/>, <paramref name="sharePoint"/> or <paramref name="teams"/> is null. </exception>
         public SecurityInsightsOfficeDataConnectorDataTypes(OfficeDataConnectorDataTypesExchange exchange, OfficeDataConnectorDataTypesSharePoint sharePoint, OfficeDataConnectorDataTypesTeams teams)
         {
@@ -62,9 +74,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/>. </summary>
-        /// <param name="exchange"> Exchange data type connection. </param>
-        /// <param name="sharePoint"> SharePoint data type connection. </param>
-        /// <param name="teams"> Teams data type connection. </param>
+        /// <param name="exchange">
+        /// Exchange data type connection.
+        /// Serialized Name: OfficeDataConnectorDataTypes.exchange
+        /// </param>
+        /// <param name="sharePoint">
+        /// SharePoint data type connection.
+        /// Serialized Name: OfficeDataConnectorDataTypes.sharePoint
+        /// </param>
+        /// <param name="teams">
+        /// Teams data type connection.
+        /// Serialized Name: OfficeDataConnectorDataTypes.teams
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsOfficeDataConnectorDataTypes(OfficeDataConnectorDataTypesExchange exchange, OfficeDataConnectorDataTypesSharePoint sharePoint, OfficeDataConnectorDataTypesTeams teams, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,9 +95,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Exchange data type connection. </summary>
+        /// <summary>
+        /// Exchange data type connection.
+        /// Serialized Name: OfficeDataConnectorDataTypes.exchange
+        /// </summary>
         internal OfficeDataConnectorDataTypesExchange Exchange { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        /// <summary>
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </summary>
         public SecurityInsightsDataTypeConnectionState? ExchangeState
         {
             get => Exchange is null ? default(SecurityInsightsDataTypeConnectionState?) : Exchange.State;
@@ -86,9 +113,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        /// <summary> SharePoint data type connection. </summary>
+        /// <summary>
+        /// SharePoint data type connection.
+        /// Serialized Name: OfficeDataConnectorDataTypes.sharePoint
+        /// </summary>
         internal OfficeDataConnectorDataTypesSharePoint SharePoint { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        /// <summary>
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </summary>
         public SecurityInsightsDataTypeConnectionState? SharePointState
         {
             get => SharePoint is null ? default(SecurityInsightsDataTypeConnectionState?) : SharePoint.State;
@@ -98,9 +131,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        /// <summary> Teams data type connection. </summary>
+        /// <summary>
+        /// Teams data type connection.
+        /// Serialized Name: OfficeDataConnectorDataTypes.teams
+        /// </summary>
         internal OfficeDataConnectorDataTypesTeams Teams { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        /// <summary>
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </summary>
         public SecurityInsightsDataTypeConnectionState? TeamsState
         {
             get => Teams is null ? default(SecurityInsightsDataTypeConnectionState?) : Teams.State;

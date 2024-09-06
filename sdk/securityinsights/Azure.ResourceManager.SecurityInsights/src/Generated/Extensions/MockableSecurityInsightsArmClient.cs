@@ -107,15 +107,15 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingStatisticResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingStatisticResource.CreateResourceIdentifier" /> to create a <see cref="BillingStatisticResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsBillingStatisticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsBillingStatisticResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsBillingStatisticResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingStatisticResource"/> object. </returns>
-        public virtual BillingStatisticResource GetBillingStatisticResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsBillingStatisticResource"/> object. </returns>
+        public virtual SecurityInsightsBillingStatisticResource GetSecurityInsightsBillingStatisticResource(ResourceIdentifier id)
         {
-            BillingStatisticResource.ValidateResourceId(id);
-            return new BillingStatisticResource(Client, id);
+            SecurityInsightsBillingStatisticResource.ValidateResourceId(id);
+            return new SecurityInsightsBillingStatisticResource(Client, id);
         }
 
         /// <summary>
@@ -215,39 +215,39 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EntityQueryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EntityQueryResource.CreateResourceIdentifier" /> to create an <see cref="EntityQueryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsEntityQueryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsEntityQueryResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsEntityQueryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EntityQueryResource"/> object. </returns>
-        public virtual EntityQueryResource GetEntityQueryResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsEntityQueryResource"/> object. </returns>
+        public virtual SecurityInsightsEntityQueryResource GetSecurityInsightsEntityQueryResource(ResourceIdentifier id)
         {
-            EntityQueryResource.ValidateResourceId(id);
-            return new EntityQueryResource(Client, id);
+            SecurityInsightsEntityQueryResource.ValidateResourceId(id);
+            return new SecurityInsightsEntityQueryResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EntityQueryTemplateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EntityQueryTemplateResource.CreateResourceIdentifier" /> to create an <see cref="EntityQueryTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsEntityQueryTemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsEntityQueryTemplateResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsEntityQueryTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EntityQueryTemplateResource"/> object. </returns>
-        public virtual EntityQueryTemplateResource GetEntityQueryTemplateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsEntityQueryTemplateResource"/> object. </returns>
+        public virtual SecurityInsightsEntityQueryTemplateResource GetSecurityInsightsEntityQueryTemplateResource(ResourceIdentifier id)
         {
-            EntityQueryTemplateResource.ValidateResourceId(id);
-            return new EntityQueryTemplateResource(Client, id);
+            SecurityInsightsEntityQueryTemplateResource.ValidateResourceId(id);
+            return new SecurityInsightsEntityQueryTemplateResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FileImportResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FileImportResource.CreateResourceIdentifier" /> to create a <see cref="FileImportResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsFileImportResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsFileImportResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsFileImportResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FileImportResource"/> object. </returns>
-        public virtual FileImportResource GetFileImportResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsFileImportResource"/> object. </returns>
+        public virtual SecurityInsightsFileImportResource GetSecurityInsightsFileImportResource(ResourceIdentifier id)
         {
-            FileImportResource.ValidateResourceId(id);
-            return new FileImportResource(Client, id);
+            SecurityInsightsFileImportResource.ValidateResourceId(id);
+            return new SecurityInsightsFileImportResource(Client, id);
         }
 
         /// <summary>
@@ -299,39 +299,39 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IncidentTaskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IncidentTaskResource.CreateResourceIdentifier" /> to create an <see cref="IncidentTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsIncidentTaskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsIncidentTaskResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsIncidentTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IncidentTaskResource"/> object. </returns>
-        public virtual IncidentTaskResource GetIncidentTaskResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsIncidentTaskResource"/> object. </returns>
+        public virtual SecurityInsightsIncidentTaskResource GetSecurityInsightsIncidentTaskResource(ResourceIdentifier id)
         {
-            IncidentTaskResource.ValidateResourceId(id);
-            return new IncidentTaskResource(Client, id);
+            SecurityInsightsIncidentTaskResource.ValidateResourceId(id);
+            return new SecurityInsightsIncidentTaskResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MetadataModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MetadataModelResource.CreateResourceIdentifier" /> to create a <see cref="MetadataModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsMetadataModelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsMetadataModelResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsMetadataModelResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MetadataModelResource"/> object. </returns>
-        public virtual MetadataModelResource GetMetadataModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsMetadataModelResource"/> object. </returns>
+        public virtual SecurityInsightsMetadataModelResource GetSecurityInsightsMetadataModelResource(ResourceIdentifier id)
         {
-            MetadataModelResource.ValidateResourceId(id);
-            return new MetadataModelResource(Client, id);
+            SecurityInsightsMetadataModelResource.ValidateResourceId(id);
+            return new SecurityInsightsMetadataModelResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OfficeConsentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OfficeConsentResource.CreateResourceIdentifier" /> to create an <see cref="OfficeConsentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsOfficeConsentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsOfficeConsentResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsOfficeConsentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OfficeConsentResource"/> object. </returns>
-        public virtual OfficeConsentResource GetOfficeConsentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsOfficeConsentResource"/> object. </returns>
+        public virtual SecurityInsightsOfficeConsentResource GetSecurityInsightsOfficeConsentResource(ResourceIdentifier id)
         {
-            OfficeConsentResource.ValidateResourceId(id);
-            return new OfficeConsentResource(Client, id);
+            SecurityInsightsOfficeConsentResource.ValidateResourceId(id);
+            return new SecurityInsightsOfficeConsentResource(Client, id);
         }
 
         /// <summary>
@@ -455,15 +455,15 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssignmentJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssignmentJobResource.CreateResourceIdentifier" /> to create an <see cref="AssignmentJobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="WorkspaceManagerAssignmentJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceManagerAssignmentJobResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceManagerAssignmentJobResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssignmentJobResource"/> object. </returns>
-        public virtual AssignmentJobResource GetAssignmentJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkspaceManagerAssignmentJobResource"/> object. </returns>
+        public virtual WorkspaceManagerAssignmentJobResource GetWorkspaceManagerAssignmentJobResource(ResourceIdentifier id)
         {
-            AssignmentJobResource.ValidateResourceId(id);
-            return new AssignmentJobResource(Client, id);
+            WorkspaceManagerAssignmentJobResource.ValidateResourceId(id);
+            return new WorkspaceManagerAssignmentJobResource(Client, id);
         }
 
         /// <summary>
@@ -503,15 +503,15 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataConnectorDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataConnectorDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DataConnectorDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsDataConnectorDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsDataConnectorDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsDataConnectorDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataConnectorDefinitionResource"/> object. </returns>
-        public virtual DataConnectorDefinitionResource GetDataConnectorDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsDataConnectorDefinitionResource"/> object. </returns>
+        public virtual SecurityInsightsDataConnectorDefinitionResource GetSecurityInsightsDataConnectorDefinitionResource(ResourceIdentifier id)
         {
-            DataConnectorDefinitionResource.ValidateResourceId(id);
-            return new DataConnectorDefinitionResource(Client, id);
+            SecurityInsightsDataConnectorDefinitionResource.ValidateResourceId(id);
+            return new SecurityInsightsDataConnectorDefinitionResource(Client, id);
         }
 
         /// <summary>

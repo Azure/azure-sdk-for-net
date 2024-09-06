@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> A single field mapping of the mapped entity. </summary>
+    /// <summary>
+    /// A single field mapping of the mapped entity
+    /// Serialized Name: FieldMapping
+    /// </summary>
     public partial class SecurityInsightsFieldMapping
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFieldMapping"/>. </summary>
-        /// <param name="identifier"> the V3 identifier of the entity. </param>
-        /// <param name="columnName"> the column name to be mapped to the identifier. </param>
+        /// <param name="identifier">
+        /// the V3 identifier of the entity
+        /// Serialized Name: FieldMapping.identifier
+        /// </param>
+        /// <param name="columnName">
+        /// the column name to be mapped to the identifier
+        /// Serialized Name: FieldMapping.columnName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsFieldMapping(string identifier, string columnName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> the V3 identifier of the entity. </summary>
+        /// <summary>
+        /// the V3 identifier of the entity
+        /// Serialized Name: FieldMapping.identifier
+        /// </summary>
         public string Identifier { get; set; }
-        /// <summary> the column name to be mapped to the identifier. </summary>
+        /// <summary>
+        /// the column name to be mapped to the identifier
+        /// Serialized Name: FieldMapping.columnName
+        /// </summary>
         public string ColumnName { get; set; }
     }
 }

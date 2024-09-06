@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Provider name. </summary>
+    /// <summary>
+    /// Provider name
+    /// Serialized Name: ProviderName
+    /// </summary>
     public readonly partial struct ProviderName : IEquatable<ProviderName>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string MicrosoftOperationalInsightsWorkspacesSharedKeysValue = "Microsoft.OperationalInsights/workspaces/sharedKeys";
         private const string MicrosoftAuthorizationPolicyAssignmentsValue = "Microsoft.Authorization/policyAssignments";
 
-        /// <summary> Microsoft.OperationalInsights/solutions. </summary>
+        /// <summary>
+        /// Microsoft.OperationalInsights/solutions
+        /// Serialized Name: ProviderName.Microsoft.OperationalInsights/solutions
+        /// </summary>
         public static ProviderName MicrosoftOperationalInsightsSolutions { get; } = new ProviderName(MicrosoftOperationalInsightsSolutionsValue);
-        /// <summary> Microsoft.OperationalInsights/workspaces. </summary>
+        /// <summary>
+        /// Microsoft.OperationalInsights/workspaces
+        /// Serialized Name: ProviderName.Microsoft.OperationalInsights/workspaces
+        /// </summary>
         public static ProviderName MicrosoftOperationalInsightsWorkspaces { get; } = new ProviderName(MicrosoftOperationalInsightsWorkspacesValue);
-        /// <summary> Microsoft.OperationalInsights/workspaces/datasources. </summary>
+        /// <summary>
+        /// Microsoft.OperationalInsights/workspaces/datasources
+        /// Serialized Name: ProviderName.Microsoft.OperationalInsights/workspaces/datasources
+        /// </summary>
         public static ProviderName MicrosoftOperationalInsightsWorkspacesDatasources { get; } = new ProviderName(MicrosoftOperationalInsightsWorkspacesDatasourcesValue);
-        /// <summary> microsoft.aadiam/diagnosticSettings. </summary>
+        /// <summary>
+        /// microsoft.aadiam/diagnosticSettings
+        /// Serialized Name: ProviderName.microsoft.aadiam/diagnosticSettings
+        /// </summary>
         public static ProviderName MicrosoftAadiamDiagnosticSettings { get; } = new ProviderName(MicrosoftAadiamDiagnosticSettingsValue);
-        /// <summary> Microsoft.OperationalInsights/workspaces/sharedKeys. </summary>
+        /// <summary>
+        /// Microsoft.OperationalInsights/workspaces/sharedKeys
+        /// Serialized Name: ProviderName.Microsoft.OperationalInsights/workspaces/sharedKeys
+        /// </summary>
         public static ProviderName MicrosoftOperationalInsightsWorkspacesSharedKeys { get; } = new ProviderName(MicrosoftOperationalInsightsWorkspacesSharedKeysValue);
-        /// <summary> Microsoft.Authorization/policyAssignments. </summary>
+        /// <summary>
+        /// Microsoft.Authorization/policyAssignments
+        /// Serialized Name: ProviderName.Microsoft.Authorization/policyAssignments
+        /// </summary>
         public static ProviderName MicrosoftAuthorizationPolicyAssignments { get; } = new ProviderName(MicrosoftAuthorizationPolicyAssignmentsValue);
         /// <summary> Determines if two <see cref="ProviderName"/> values are the same. </summary>
         public static bool operator ==(ProviderName left, ProviderName right) => left.Equals(right);

@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class UnknownEntityQueryTemplate : IUtf8JsonSerializable, IJsonModel<EntityQueryTemplateData>
+    internal partial class UnknownEntityQueryTemplate : IUtf8JsonSerializable, IJsonModel<SecurityInsightsEntityQueryTemplateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityQueryTemplateData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsEntityQueryTemplateData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EntityQueryTemplateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityInsightsEntityQueryTemplateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityQueryTemplateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntityQueryTemplateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityQueryTemplateData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsEntityQueryTemplateData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        EntityQueryTemplateData IJsonModel<EntityQueryTemplateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecurityInsightsEntityQueryTemplateData IJsonModel<SecurityInsightsEntityQueryTemplateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityQueryTemplateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntityQueryTemplateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityQueryTemplateData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsEntityQueryTemplateData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntityQueryTemplateData(document.RootElement, options);
+            return DeserializeSecurityInsightsEntityQueryTemplateData(document.RootElement, options);
         }
 
         internal static UnknownEntityQueryTemplate DeserializeUnknownEntityQueryTemplate(JsonElement element, ModelReaderWriterOptions options = null)
@@ -140,35 +140,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EntityQueryTemplateData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SecurityInsightsEntityQueryTemplateData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityQueryTemplateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntityQueryTemplateData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EntityQueryTemplateData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsEntityQueryTemplateData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EntityQueryTemplateData IPersistableModel<EntityQueryTemplateData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SecurityInsightsEntityQueryTemplateData IPersistableModel<SecurityInsightsEntityQueryTemplateData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityQueryTemplateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntityQueryTemplateData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEntityQueryTemplateData(document.RootElement, options);
+                        return DeserializeSecurityInsightsEntityQueryTemplateData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntityQueryTemplateData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsEntityQueryTemplateData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EntityQueryTemplateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityInsightsEntityQueryTemplateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

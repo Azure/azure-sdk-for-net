@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> timeline aggregation information per kind. </summary>
+    /// <summary>
+    /// timeline aggregation information per kind
+    /// Serialized Name: TimelineAggregation
+    /// </summary>
     internal partial class TimelineAggregation
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TimelineAggregation"/>. </summary>
-        /// <param name="count"> the total items found for a kind. </param>
-        /// <param name="kind"> the query kind. </param>
+        /// <param name="count">
+        /// the total items found for a kind
+        /// Serialized Name: TimelineAggregation.count
+        /// </param>
+        /// <param name="kind">
+        /// the query kind
+        /// Serialized Name: TimelineAggregation.kind
+        /// </param>
         internal TimelineAggregation(int count, EntityTimelineKind kind)
         {
             Count = count;
@@ -55,8 +64,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TimelineAggregation"/>. </summary>
-        /// <param name="count"> the total items found for a kind. </param>
-        /// <param name="kind"> the query kind. </param>
+        /// <param name="count">
+        /// the total items found for a kind
+        /// Serialized Name: TimelineAggregation.count
+        /// </param>
+        /// <param name="kind">
+        /// the query kind
+        /// Serialized Name: TimelineAggregation.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TimelineAggregation(int count, EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,9 +85,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> the total items found for a kind. </summary>
+        /// <summary>
+        /// the total items found for a kind
+        /// Serialized Name: TimelineAggregation.count
+        /// </summary>
         public int Count { get; }
-        /// <summary> the query kind. </summary>
+        /// <summary>
+        /// the query kind
+        /// Serialized Name: TimelineAggregation.kind
+        /// </summary>
         public EntityTimelineKind Kind { get; }
     }
 }

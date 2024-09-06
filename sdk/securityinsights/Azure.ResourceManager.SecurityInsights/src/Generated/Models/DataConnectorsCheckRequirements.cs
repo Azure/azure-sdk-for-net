@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Data connector requirements properties.
+    /// Serialized Name: DataConnectorsCheckRequirements
     /// Please note <see cref="DataConnectorsCheckRequirements"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AwsCloudTrailCheckRequirements"/>, <see cref="AwsS3CheckRequirements"/>, <see cref="AadCheckRequirements"/>, <see cref="AatpCheckRequirements"/>, <see cref="ASCCheckRequirements"/>, <see cref="Dynamics365CheckRequirements"/>, <see cref="IotCheckRequirements"/>, <see cref="McasCheckRequirements"/>, <see cref="MdatpCheckRequirements"/>, <see cref="MicrosoftPurviewInformationProtectionCheckRequirements"/>, <see cref="MstiCheckRequirements"/>, <see cref="MtpCheckRequirements"/>, <see cref="Office365ProjectCheckRequirements"/>, <see cref="OfficeATPCheckRequirements"/>, <see cref="OfficeIRMCheckRequirements"/>, <see cref="OfficePowerBICheckRequirements"/>, <see cref="TICheckRequirements"/> and <see cref="TiTaxiiCheckRequirements"/>.
     /// </summary>
@@ -55,7 +56,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataConnectorsCheckRequirements"/>. </summary>
-        /// <param name="kind"> Describes the kind of connector to be checked. </param>
+        /// <param name="kind">
+        /// Describes the kind of connector to be checked.
+        /// Serialized Name: DataConnectorsCheckRequirements.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataConnectorsCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +67,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Describes the kind of connector to be checked. </summary>
+        /// <summary>
+        /// Describes the kind of connector to be checked.
+        /// Serialized Name: DataConnectorsCheckRequirements.kind
+        /// </summary>
         internal DataConnectorKind Kind { get; set; }
     }
 }

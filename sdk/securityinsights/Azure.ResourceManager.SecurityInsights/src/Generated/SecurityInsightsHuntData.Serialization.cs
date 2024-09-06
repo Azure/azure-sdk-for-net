@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityInsights
             SystemData systemData = default;
             string displayName = default;
             string description = default;
-            Status? status = default;
+            HuntStatus? status = default;
             HypothesisStatus? hypothesisStatus = default;
             IList<SecurityInsightsAttackTactic> attackTactics = default;
             IList<string> attackTechniques = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            status = new Status(property0.Value.GetString());
+                            status = new HuntStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hypothesisStatus"u8))

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Resources created in user's repository for the source-control. </summary>
+    /// <summary>
+    /// Resources created in user's repository for the source-control.
+    /// Serialized Name: RepositoryResourceInfo
+    /// </summary>
     public partial class RepositoryResourceInfo
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RepositoryResourceInfo"/>. </summary>
-        /// <param name="webhook"> The webhook object created for the source-control. </param>
-        /// <param name="gitHubResourceInfo"> Resources created in GitHub for this source-control. </param>
-        /// <param name="azureDevOpsResourceInfo"> Resources created in Azure DevOps for this source-control. </param>
+        /// <param name="webhook">
+        /// The webhook object created for the source-control.
+        /// Serialized Name: RepositoryResourceInfo.webhook
+        /// </param>
+        /// <param name="gitHubResourceInfo">
+        /// Resources created in GitHub for this source-control.
+        /// Serialized Name: RepositoryResourceInfo.gitHubResourceInfo
+        /// </param>
+        /// <param name="azureDevOpsResourceInfo">
+        /// Resources created in Azure DevOps for this source-control.
+        /// Serialized Name: RepositoryResourceInfo.azureDevOpsResourceInfo
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RepositoryResourceInfo(SourceControlWebhook webhook, GitHubResourceInfo gitHubResourceInfo, AzureDevOpsResourceInfo azureDevOpsResourceInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,17 +75,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The webhook object created for the source-control. </summary>
+        /// <summary>
+        /// The webhook object created for the source-control.
+        /// Serialized Name: RepositoryResourceInfo.webhook
+        /// </summary>
         public SourceControlWebhook Webhook { get; set; }
-        /// <summary> Resources created in GitHub for this source-control. </summary>
+        /// <summary>
+        /// Resources created in GitHub for this source-control.
+        /// Serialized Name: RepositoryResourceInfo.gitHubResourceInfo
+        /// </summary>
         internal GitHubResourceInfo GitHubResourceInfo { get; }
-        /// <summary> GitHub application installation id. </summary>
+        /// <summary>
+        /// GitHub application installation id.
+        /// Serialized Name: GitHubResourceInfo.appInstallationId
+        /// </summary>
         public string GitHubResourceInfoAppInstallationId
         {
             get => GitHubResourceInfo?.AppInstallationId;
         }
 
-        /// <summary> Resources created in Azure DevOps for this source-control. </summary>
+        /// <summary>
+        /// Resources created in Azure DevOps for this source-control.
+        /// Serialized Name: RepositoryResourceInfo.azureDevOpsResourceInfo
+        /// </summary>
         public AzureDevOpsResourceInfo AzureDevOpsResourceInfo { get; }
     }
 }

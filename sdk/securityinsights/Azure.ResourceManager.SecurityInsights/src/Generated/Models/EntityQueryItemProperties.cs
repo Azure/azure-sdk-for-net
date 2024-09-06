@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> An properties abstract Query item for entity. </summary>
+    /// <summary>
+    /// An properties abstract Query item for entity
+    /// Serialized Name: EntityQueryItemProperties
+    /// </summary>
     public partial class EntityQueryItemProperties
     {
         /// <summary>
@@ -53,10 +56,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityQueryItemProperties"/>. </summary>
-        /// <param name="dataTypes"> Data types for template. </param>
-        /// <param name="inputEntityType"> The type of the entity. </param>
-        /// <param name="requiredInputFieldsSets"> Data types for template. </param>
-        /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
+        /// <param name="dataTypes">
+        /// Data types for template
+        /// Serialized Name: EntityQueryItemProperties.dataTypes
+        /// </param>
+        /// <param name="inputEntityType">
+        /// The type of the entity
+        /// Serialized Name: EntityQueryItemProperties.inputEntityType
+        /// </param>
+        /// <param name="requiredInputFieldsSets">
+        /// Data types for template
+        /// Serialized Name: EntityQueryItemProperties.requiredInputFieldsSets
+        /// </param>
+        /// <param name="entitiesFilter">
+        /// The query applied only to entities matching to all filters
+        /// Serialized Name: EntityQueryItemProperties.entitiesFilter
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityQueryItemProperties(IReadOnlyList<EntityQueryItemPropertiesDataTypesItem> dataTypes, EntityType? inputEntityType, IReadOnlyList<IList<string>> requiredInputFieldsSets, BinaryData entitiesFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,14 +82,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Data types for template. </summary>
+        /// <summary>
+        /// Data types for template
+        /// Serialized Name: EntityQueryItemProperties.dataTypes
+        /// </summary>
         public IReadOnlyList<EntityQueryItemPropertiesDataTypesItem> DataTypes { get; }
-        /// <summary> The type of the entity. </summary>
+        /// <summary>
+        /// The type of the entity
+        /// Serialized Name: EntityQueryItemProperties.inputEntityType
+        /// </summary>
         public EntityType? InputEntityType { get; }
-        /// <summary> Data types for template. </summary>
+        /// <summary>
+        /// Data types for template
+        /// Serialized Name: EntityQueryItemProperties.requiredInputFieldsSets
+        /// </summary>
         public IReadOnlyList<IList<string>> RequiredInputFieldsSets { get; }
         /// <summary>
         /// The query applied only to entities matching to all filters
+        /// Serialized Name: EntityQueryItemProperties.entitiesFilter
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

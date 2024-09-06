@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The triggered analytics rule run array. </summary>
+    /// <summary>
+    /// The triggered analytics rule run array
+    /// Serialized Name: TriggeredAnalyticsRuleRuns
+    /// </summary>
     internal partial class TriggeredAnalyticsRuleRuns
     {
         /// <summary>
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TriggeredAnalyticsRuleRuns"/>. </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> Serialized Name: TriggeredAnalyticsRuleRuns.value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TriggeredAnalyticsRuleRuns(IEnumerable<TriggeredAnalyticsRuleRunData> value)
         {
@@ -57,8 +60,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TriggeredAnalyticsRuleRuns"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
+        /// <param name="value"> Serialized Name: TriggeredAnalyticsRuleRuns.value. </param>
+        /// <param name="nextLink"> Serialized Name: TriggeredAnalyticsRuleRuns.nextLink. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TriggeredAnalyticsRuleRuns(IReadOnlyList<TriggeredAnalyticsRuleRunData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +75,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: TriggeredAnalyticsRuleRuns.value. </summary>
         public IReadOnlyList<TriggeredAnalyticsRuleRunData> Value { get; }
-        /// <summary> Gets the next link. </summary>
+        /// <summary> Serialized Name: TriggeredAnalyticsRuleRuns.nextLink. </summary>
         public string NextLink { get; }
     }
 }

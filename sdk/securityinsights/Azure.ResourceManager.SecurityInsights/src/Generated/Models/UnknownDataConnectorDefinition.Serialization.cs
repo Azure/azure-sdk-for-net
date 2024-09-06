@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class UnknownDataConnectorDefinition : IUtf8JsonSerializable, IJsonModel<DataConnectorDefinitionData>
+    internal partial class UnknownDataConnectorDefinition : IUtf8JsonSerializable, IJsonModel<SecurityInsightsDataConnectorDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectorDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsDataConnectorDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataConnectorDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityInsightsDataConnectorDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsDataConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataConnectorDefinitionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorDefinitionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        DataConnectorDefinitionData IJsonModel<DataConnectorDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecurityInsightsDataConnectorDefinitionData IJsonModel<SecurityInsightsDataConnectorDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsDataConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataConnectorDefinitionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorDefinitionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataConnectorDefinitionData(document.RootElement, options);
+            return DeserializeSecurityInsightsDataConnectorDefinitionData(document.RootElement, options);
         }
 
         internal static UnknownDataConnectorDefinition DeserializeUnknownDataConnectorDefinition(JsonElement element, ModelReaderWriterOptions options = null)
@@ -156,35 +156,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DataConnectorDefinitionData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsDataConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataConnectorDefinitionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataConnectorDefinitionData IPersistableModel<DataConnectorDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SecurityInsightsDataConnectorDefinitionData IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsDataConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDataConnectorDefinitionData(document.RootElement, options);
+                        return DeserializeSecurityInsightsDataConnectorDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataConnectorDefinitionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataConnectorDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

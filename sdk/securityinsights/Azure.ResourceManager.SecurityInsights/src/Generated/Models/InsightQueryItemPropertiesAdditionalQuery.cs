@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The activity query definitions. </summary>
+    /// <summary>
+    /// The activity query definitions.
+    /// Serialized Name: InsightQueryItemPropertiesAdditionalQuery
+    /// </summary>
     public partial class InsightQueryItemPropertiesAdditionalQuery
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InsightQueryItemPropertiesAdditionalQuery"/>. </summary>
-        /// <param name="query"> The insight query. </param>
-        /// <param name="text"> The insight text. </param>
+        /// <param name="query">
+        /// The insight query.
+        /// Serialized Name: InsightQueryItemPropertiesAdditionalQuery.query
+        /// </param>
+        /// <param name="text">
+        /// The insight text.
+        /// Serialized Name: InsightQueryItemPropertiesAdditionalQuery.text
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InsightQueryItemPropertiesAdditionalQuery(string query, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The insight query. </summary>
+        /// <summary>
+        /// The insight query.
+        /// Serialized Name: InsightQueryItemPropertiesAdditionalQuery.query
+        /// </summary>
         public string Query { get; }
-        /// <summary> The insight text. </summary>
+        /// <summary>
+        /// The insight text.
+        /// Serialized Name: InsightQueryItemPropertiesAdditionalQuery.text
+        /// </summary>
         public string Text { get; }
     }
 }

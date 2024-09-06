@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List of all the jobs. </summary>
+    /// <summary>
+    /// List of all the jobs
+    /// Serialized Name: JobList
+    /// </summary>
     internal partial class JobList
     {
         /// <summary>
@@ -47,9 +50,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="JobList"/>. </summary>
-        /// <param name="value"> Array of jobs. </param>
+        /// <param name="value">
+        /// Array of jobs.
+        /// Serialized Name: JobList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal JobList(IEnumerable<AssignmentJobData> value)
+        internal JobList(IEnumerable<WorkspaceManagerAssignmentJobData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -57,10 +63,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JobList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of jobs. </param>
-        /// <param name="value"> Array of jobs. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of jobs.
+        /// Serialized Name: JobList.nextLink
+        /// </param>
+        /// <param name="value">
+        /// Array of jobs.
+        /// Serialized Name: JobList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobList(string nextLink, IReadOnlyList<AssignmentJobData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal JobList(string nextLink, IReadOnlyList<WorkspaceManagerAssignmentJobData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of jobs. </summary>
+        /// <summary>
+        /// URL to fetch the next set of jobs.
+        /// Serialized Name: JobList.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> Array of jobs. </summary>
-        public IReadOnlyList<AssignmentJobData> Value { get; }
+        /// <summary>
+        /// Array of jobs.
+        /// Serialized Name: JobList.value
+        /// </summary>
+        public IReadOnlyList<WorkspaceManagerAssignmentJobData> Value { get; }
     }
 }

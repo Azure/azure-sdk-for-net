@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            IReadOnlyList<IncidentTaskData> value = default;
+            IReadOnlyList<SecurityInsightsIncidentTaskData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<IncidentTaskData> array = new List<IncidentTaskData>();
+                    List<SecurityInsightsIncidentTaskData> array = new List<SecurityInsightsIncidentTaskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IncidentTaskData.DeserializeIncidentTaskData(item, options));
+                        array.Add(SecurityInsightsIncidentTaskData.DeserializeSecurityInsightsIncidentTaskData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IncidentTaskList(value ?? new ChangeTrackingList<IncidentTaskData>(), nextLink, serializedAdditionalRawData);
+            return new IncidentTaskList(value ?? new ChangeTrackingList<SecurityInsightsIncidentTaskData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IncidentTaskList>.Write(ModelReaderWriterOptions options)

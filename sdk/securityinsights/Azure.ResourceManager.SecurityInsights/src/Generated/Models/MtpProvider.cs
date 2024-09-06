@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The available data providers. </summary>
+    /// <summary>
+    /// The available data providers.
+    /// Serialized Name: MtpProvider
+    /// </summary>
     public readonly partial struct MtpProvider : IEquatable<MtpProvider>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string MicrosoftDefenderForCloudAppsValue = "microsoftDefenderForCloudApps";
         private const string MicrosoftDefenderForIdentityValue = "microsoftDefenderForIdentity";
 
-        /// <summary> microsoftDefenderForCloudApps. </summary>
+        /// <summary>
+        /// microsoftDefenderForCloudApps
+        /// Serialized Name: MtpProvider.microsoftDefenderForCloudApps
+        /// </summary>
         public static MtpProvider MicrosoftDefenderForCloudApps { get; } = new MtpProvider(MicrosoftDefenderForCloudAppsValue);
-        /// <summary> microsoftDefenderForIdentity. </summary>
+        /// <summary>
+        /// microsoftDefenderForIdentity
+        /// Serialized Name: MtpProvider.microsoftDefenderForIdentity
+        /// </summary>
         public static MtpProvider MicrosoftDefenderForIdentity { get; } = new MtpProvider(MicrosoftDefenderForIdentityValue);
         /// <summary> Determines if two <see cref="MtpProvider"/> values are the same. </summary>
         public static bool operator ==(MtpProvider left, MtpProvider right) => left.Equals(right);

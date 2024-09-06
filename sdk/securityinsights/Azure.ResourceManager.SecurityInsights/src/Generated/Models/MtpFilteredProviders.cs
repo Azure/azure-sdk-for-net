@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents the connector's Filtered providers. </summary>
+    /// <summary>
+    /// Represents the connector's Filtered providers
+    /// Serialized Name: MtpFilteredProviders
+    /// </summary>
     internal partial class MtpFilteredProviders
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MtpFilteredProviders"/>. </summary>
-        /// <param name="alerts"> Alerts filtered providers. When filters are not applied, all alerts will stream through the MTP pipeline, still in private preview for all products EXCEPT MDA and MDI, which are in GA state. </param>
+        /// <param name="alerts">
+        /// Alerts filtered providers. When filters are not applied, all alerts will stream through the MTP pipeline, still in private preview for all products EXCEPT MDA and MDI, which are in GA state.
+        /// Serialized Name: MtpFilteredProviders.alerts
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alerts"/> is null. </exception>
         public MtpFilteredProviders(IEnumerable<MtpProvider> alerts)
         {
@@ -57,7 +63,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MtpFilteredProviders"/>. </summary>
-        /// <param name="alerts"> Alerts filtered providers. When filters are not applied, all alerts will stream through the MTP pipeline, still in private preview for all products EXCEPT MDA and MDI, which are in GA state. </param>
+        /// <param name="alerts">
+        /// Alerts filtered providers. When filters are not applied, all alerts will stream through the MTP pipeline, still in private preview for all products EXCEPT MDA and MDI, which are in GA state.
+        /// Serialized Name: MtpFilteredProviders.alerts
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MtpFilteredProviders(IList<MtpProvider> alerts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +79,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Alerts filtered providers. When filters are not applied, all alerts will stream through the MTP pipeline, still in private preview for all products EXCEPT MDA and MDI, which are in GA state. </summary>
+        /// <summary>
+        /// Alerts filtered providers. When filters are not applied, all alerts will stream through the MTP pipeline, still in private preview for all products EXCEPT MDA and MDI, which are in GA state.
+        /// Serialized Name: MtpFilteredProviders.alerts
+        /// </summary>
         public IList<MtpProvider> Alerts { get; }
     }
 }

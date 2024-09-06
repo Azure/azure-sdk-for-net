@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents Codeless API Polling data connector. </summary>
+    /// <summary>
+    /// Represents Codeless API Polling data connector.
+    /// Serialized Name: DataConnectorConnectBody
+    /// </summary>
     public partial class DataConnectorConnectContent
     {
         /// <summary>
@@ -52,17 +55,47 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataConnectorConnectContent"/>. </summary>
-        /// <param name="kind"> The authentication kind used to poll the data. </param>
-        /// <param name="apiKey"> The API key of the audit server. </param>
-        /// <param name="dataCollectionEndpoint"> Used in v2 logs connector. Represents the data collection ingestion endpoint in log analytics. </param>
-        /// <param name="dataCollectionRuleImmutableId"> Used in v2 logs connector. The data collection rule immutable id, the rule defines the transformation and data destination. </param>
-        /// <param name="outputStream"> Used in v2 logs connector. The stream we are sending the data to, this is the name of the streamDeclarations defined in the DCR. </param>
-        /// <param name="clientSecret"> The client secret of the OAuth 2.0 application. </param>
-        /// <param name="clientId"> The client id of the OAuth 2.0 application. </param>
-        /// <param name="authorizationCode"> The authorization code used in OAuth 2.0 code flow to issue a token. </param>
-        /// <param name="userName"> The user name in the audit log server. </param>
-        /// <param name="password"> The user password in the audit log server. </param>
-        /// <param name="requestConfigUserInputValues"></param>
+        /// <param name="kind">
+        /// The authentication kind used to poll the data
+        /// Serialized Name: DataConnectorConnectBody.kind
+        /// </param>
+        /// <param name="apiKey">
+        /// The API key of the audit server.
+        /// Serialized Name: DataConnectorConnectBody.apiKey
+        /// </param>
+        /// <param name="dataCollectionEndpoint">
+        /// Used in v2 logs connector. Represents the data collection ingestion endpoint in log analytics.
+        /// Serialized Name: DataConnectorConnectBody.dataCollectionEndpoint
+        /// </param>
+        /// <param name="dataCollectionRuleImmutableId">
+        /// Used in v2 logs connector. The data collection rule immutable id, the rule defines the transformation and data destination.
+        /// Serialized Name: DataConnectorConnectBody.dataCollectionRuleImmutableId
+        /// </param>
+        /// <param name="outputStream">
+        /// Used in v2 logs connector. The stream we are sending the data to, this is the name of the streamDeclarations defined in the DCR.
+        /// Serialized Name: DataConnectorConnectBody.outputStream
+        /// </param>
+        /// <param name="clientSecret">
+        /// The client secret of the OAuth 2.0 application.
+        /// Serialized Name: DataConnectorConnectBody.clientSecret
+        /// </param>
+        /// <param name="clientId">
+        /// The client id of the OAuth 2.0 application.
+        /// Serialized Name: DataConnectorConnectBody.clientId
+        /// </param>
+        /// <param name="authorizationCode">
+        /// The authorization code used in OAuth 2.0 code flow to issue a token.
+        /// Serialized Name: DataConnectorConnectBody.authorizationCode
+        /// </param>
+        /// <param name="userName">
+        /// The user name in the audit log server.
+        /// Serialized Name: DataConnectorConnectBody.userName
+        /// </param>
+        /// <param name="password">
+        /// The user password in the audit log server.
+        /// Serialized Name: DataConnectorConnectBody.password
+        /// </param>
+        /// <param name="requestConfigUserInputValues"> Serialized Name: DataConnectorConnectBody.requestConfigUserInputValues. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataConnectorConnectContent(ConnectAuthKind? kind, string apiKey, string dataCollectionEndpoint, string dataCollectionRuleImmutableId, string outputStream, string clientSecret, string clientId, string authorizationCode, string userName, string password, IList<BinaryData> requestConfigUserInputValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,28 +113,58 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The authentication kind used to poll the data. </summary>
+        /// <summary>
+        /// The authentication kind used to poll the data
+        /// Serialized Name: DataConnectorConnectBody.kind
+        /// </summary>
         public ConnectAuthKind? Kind { get; set; }
-        /// <summary> The API key of the audit server. </summary>
+        /// <summary>
+        /// The API key of the audit server.
+        /// Serialized Name: DataConnectorConnectBody.apiKey
+        /// </summary>
         public string ApiKey { get; set; }
-        /// <summary> Used in v2 logs connector. Represents the data collection ingestion endpoint in log analytics. </summary>
+        /// <summary>
+        /// Used in v2 logs connector. Represents the data collection ingestion endpoint in log analytics.
+        /// Serialized Name: DataConnectorConnectBody.dataCollectionEndpoint
+        /// </summary>
         public string DataCollectionEndpoint { get; set; }
-        /// <summary> Used in v2 logs connector. The data collection rule immutable id, the rule defines the transformation and data destination. </summary>
+        /// <summary>
+        /// Used in v2 logs connector. The data collection rule immutable id, the rule defines the transformation and data destination.
+        /// Serialized Name: DataConnectorConnectBody.dataCollectionRuleImmutableId
+        /// </summary>
         public string DataCollectionRuleImmutableId { get; set; }
-        /// <summary> Used in v2 logs connector. The stream we are sending the data to, this is the name of the streamDeclarations defined in the DCR. </summary>
+        /// <summary>
+        /// Used in v2 logs connector. The stream we are sending the data to, this is the name of the streamDeclarations defined in the DCR.
+        /// Serialized Name: DataConnectorConnectBody.outputStream
+        /// </summary>
         public string OutputStream { get; set; }
-        /// <summary> The client secret of the OAuth 2.0 application. </summary>
+        /// <summary>
+        /// The client secret of the OAuth 2.0 application.
+        /// Serialized Name: DataConnectorConnectBody.clientSecret
+        /// </summary>
         public string ClientSecret { get; set; }
-        /// <summary> The client id of the OAuth 2.0 application. </summary>
+        /// <summary>
+        /// The client id of the OAuth 2.0 application.
+        /// Serialized Name: DataConnectorConnectBody.clientId
+        /// </summary>
         public string ClientId { get; set; }
-        /// <summary> The authorization code used in OAuth 2.0 code flow to issue a token. </summary>
+        /// <summary>
+        /// The authorization code used in OAuth 2.0 code flow to issue a token.
+        /// Serialized Name: DataConnectorConnectBody.authorizationCode
+        /// </summary>
         public string AuthorizationCode { get; set; }
-        /// <summary> The user name in the audit log server. </summary>
+        /// <summary>
+        /// The user name in the audit log server.
+        /// Serialized Name: DataConnectorConnectBody.userName
+        /// </summary>
         public string UserName { get; set; }
-        /// <summary> The user password in the audit log server. </summary>
+        /// <summary>
+        /// The user password in the audit log server.
+        /// Serialized Name: DataConnectorConnectBody.password
+        /// </summary>
         public string Password { get; set; }
         /// <summary>
-        /// Gets the request config user input values
+        /// Serialized Name: DataConnectorConnectBody.requestConfigUserInputValues
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

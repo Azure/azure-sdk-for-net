@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents an incident label. </summary>
+    /// <summary>
+    /// Represents an incident label
+    /// Serialized Name: IncidentLabel
+    /// </summary>
     public partial class SecurityInsightsIncidentLabel
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentLabel"/>. </summary>
-        /// <param name="labelName"> The name of the label. </param>
+        /// <param name="labelName">
+        /// The name of the label
+        /// Serialized Name: IncidentLabel.labelName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         public SecurityInsightsIncidentLabel(string labelName)
         {
@@ -56,8 +62,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentLabel"/>. </summary>
-        /// <param name="labelName"> The name of the label. </param>
-        /// <param name="labelType"> The type of the label. </param>
+        /// <param name="labelName">
+        /// The name of the label
+        /// Serialized Name: IncidentLabel.labelName
+        /// </param>
+        /// <param name="labelType">
+        /// The type of the label
+        /// Serialized Name: IncidentLabel.labelType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsIncidentLabel(string labelName, SecurityInsightsIncidentLabelType? labelType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,9 +83,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The name of the label. </summary>
+        /// <summary>
+        /// The name of the label
+        /// Serialized Name: IncidentLabel.labelName
+        /// </summary>
         public string LabelName { get; set; }
-        /// <summary> The type of the label. </summary>
+        /// <summary>
+        /// The type of the label
+        /// Serialized Name: IncidentLabel.labelType
+        /// </summary>
         public SecurityInsightsIncidentLabelType? LabelType { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The whois record for a given domain. </summary>
+    /// <summary>
+    /// The whois record for a given domain
+    /// Serialized Name: EnrichmentDomainWhoisDetails
+    /// </summary>
     public partial class EnrichmentDomainWhoisDetails
     {
         /// <summary>
@@ -53,10 +56,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EnrichmentDomainWhoisDetails"/>. </summary>
-        /// <param name="registrar"> The registrar associated with this domain. </param>
-        /// <param name="contacts"> The set of contacts associated with this domain. </param>
-        /// <param name="nameServers"> A list of name servers associated with this domain. </param>
-        /// <param name="statuses"> The set of status flags for this whois record. </param>
+        /// <param name="registrar">
+        /// The registrar associated with this domain
+        /// Serialized Name: EnrichmentDomainWhoisDetails.registrar
+        /// </param>
+        /// <param name="contacts">
+        /// The set of contacts associated with this domain
+        /// Serialized Name: EnrichmentDomainWhoisDetails.contacts
+        /// </param>
+        /// <param name="nameServers">
+        /// A list of name servers associated with this domain
+        /// Serialized Name: EnrichmentDomainWhoisDetails.nameServers
+        /// </param>
+        /// <param name="statuses">
+        /// The set of status flags for this whois record
+        /// Serialized Name: EnrichmentDomainWhoisDetails.statuses
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EnrichmentDomainWhoisDetails(EnrichmentDomainWhoisRegistrarDetails registrar, EnrichmentDomainWhoisContacts contacts, IReadOnlyList<string> nameServers, IReadOnlyList<string> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,13 +82,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The registrar associated with this domain. </summary>
+        /// <summary>
+        /// The registrar associated with this domain
+        /// Serialized Name: EnrichmentDomainWhoisDetails.registrar
+        /// </summary>
         public EnrichmentDomainWhoisRegistrarDetails Registrar { get; }
-        /// <summary> The set of contacts associated with this domain. </summary>
+        /// <summary>
+        /// The set of contacts associated with this domain
+        /// Serialized Name: EnrichmentDomainWhoisDetails.contacts
+        /// </summary>
         public EnrichmentDomainWhoisContacts Contacts { get; }
-        /// <summary> A list of name servers associated with this domain. </summary>
+        /// <summary>
+        /// A list of name servers associated with this domain
+        /// Serialized Name: EnrichmentDomainWhoisDetails.nameServers
+        /// </summary>
         public IReadOnlyList<string> NameServers { get; }
-        /// <summary> The set of status flags for this whois record. </summary>
+        /// <summary>
+        /// The set of status flags for this whois record
+        /// Serialized Name: EnrichmentDomainWhoisDetails.statuses
+        /// </summary>
         public IReadOnlyList<string> Statuses { get; }
     }
 }

@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List all the file imports. </summary>
+    /// <summary>
+    /// List all the file imports.
+    /// Serialized Name: FileImportList
+    /// </summary>
     internal partial class FileImportList
     {
         /// <summary>
@@ -47,9 +50,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FileImportList"/>. </summary>
-        /// <param name="value"> Array of file imports. </param>
+        /// <param name="value">
+        /// Array of file imports.
+        /// Serialized Name: FileImportList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal FileImportList(IEnumerable<FileImportData> value)
+        internal FileImportList(IEnumerable<SecurityInsightsFileImportData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -57,10 +63,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FileImportList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of file imports. </param>
-        /// <param name="value"> Array of file imports. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of file imports.
+        /// Serialized Name: FileImportList.nextLink
+        /// </param>
+        /// <param name="value">
+        /// Array of file imports.
+        /// Serialized Name: FileImportList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileImportList(string nextLink, IReadOnlyList<FileImportData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileImportList(string nextLink, IReadOnlyList<SecurityInsightsFileImportData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of file imports. </summary>
+        /// <summary>
+        /// URL to fetch the next set of file imports.
+        /// Serialized Name: FileImportList.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> Array of file imports. </summary>
-        public IReadOnlyList<FileImportData> Value { get; }
+        /// <summary>
+        /// Array of file imports.
+        /// Serialized Name: FileImportList.value
+        /// </summary>
+        public IReadOnlyList<SecurityInsightsFileImportData> Value { get; }
     }
 }

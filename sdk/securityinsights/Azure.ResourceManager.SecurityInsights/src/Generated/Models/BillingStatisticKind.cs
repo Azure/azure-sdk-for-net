@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The kind of the billing statistic. </summary>
+    /// <summary>
+    /// The kind of the billing statistic
+    /// Serialized Name: BillingStatisticKind
+    /// </summary>
     internal readonly partial struct BillingStatisticKind : IEquatable<BillingStatisticKind>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string SapSolutionUsageValue = "SapSolutionUsage";
 
-        /// <summary> SapSolutionUsage. </summary>
+        /// <summary>
+        /// SapSolutionUsage
+        /// Serialized Name: BillingStatisticKind.SapSolutionUsage
+        /// </summary>
         public static BillingStatisticKind SapSolutionUsage { get; } = new BillingStatisticKind(SapSolutionUsageValue);
         /// <summary> Determines if two <see cref="BillingStatisticKind"/> values are the same. </summary>
         public static bool operator ==(BillingStatisticKind left, BillingStatisticKind right) => left.Equals(right);

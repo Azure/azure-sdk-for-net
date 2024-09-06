@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> User information that made some action. </summary>
+    /// <summary>
+    /// User information that made some action
+    /// Serialized Name: UserInfo
+    /// </summary>
     public partial class SecurityInsightsUserInfo
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsUserInfo"/>. </summary>
-        /// <param name="email"> The email of the user. </param>
-        /// <param name="name"> The name of the user. </param>
-        /// <param name="objectId"> The object id of the user. </param>
+        /// <param name="email">
+        /// The email of the user.
+        /// Serialized Name: UserInfo.email
+        /// </param>
+        /// <param name="name">
+        /// The name of the user.
+        /// Serialized Name: UserInfo.name
+        /// </param>
+        /// <param name="objectId">
+        /// The object id of the user.
+        /// Serialized Name: UserInfo.objectId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsUserInfo(string email, string name, Guid? objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The email of the user. </summary>
+        /// <summary>
+        /// The email of the user.
+        /// Serialized Name: UserInfo.email
+        /// </summary>
         public string Email { get; }
-        /// <summary> The name of the user. </summary>
+        /// <summary>
+        /// The name of the user.
+        /// Serialized Name: UserInfo.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The object id of the user. </summary>
+        /// <summary>
+        /// The object id of the user.
+        /// Serialized Name: UserInfo.objectId
+        /// </summary>
         public Guid? ObjectId { get; set; }
     }
 }

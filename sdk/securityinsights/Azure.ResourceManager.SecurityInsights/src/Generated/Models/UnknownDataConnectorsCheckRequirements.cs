@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class UnknownDataConnectorsCheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataConnectorsCheckRequirements"/>. </summary>
-        /// <param name="kind"> Describes the kind of connector to be checked. </param>
+        /// <param name="kind">
+        /// Describes the kind of connector to be checked.
+        /// Serialized Name: DataConnectorsCheckRequirements.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownDataConnectorsCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {

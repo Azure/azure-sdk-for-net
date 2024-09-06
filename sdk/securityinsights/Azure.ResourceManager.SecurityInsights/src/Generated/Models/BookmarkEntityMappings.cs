@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes the entity mappings of a single entity. </summary>
+    /// <summary>
+    /// Describes the entity mappings of a single entity
+    /// Serialized Name: BookmarkEntityMappings
+    /// </summary>
     public partial class BookmarkEntityMappings
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BookmarkEntityMappings"/>. </summary>
-        /// <param name="entityType"> The entity type. </param>
-        /// <param name="fieldMappings"> Array of fields mapping for that entity type. </param>
+        /// <param name="entityType">
+        /// The entity type
+        /// Serialized Name: BookmarkEntityMappings.entityType
+        /// </param>
+        /// <param name="fieldMappings">
+        /// Array of fields mapping for that entity type
+        /// Serialized Name: BookmarkEntityMappings.fieldMappings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BookmarkEntityMappings(string entityType, IList<EntityFieldMapping> fieldMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The entity type. </summary>
+        /// <summary>
+        /// The entity type
+        /// Serialized Name: BookmarkEntityMappings.entityType
+        /// </summary>
         public string EntityType { get; set; }
-        /// <summary> Array of fields mapping for that entity type. </summary>
+        /// <summary>
+        /// Array of fields mapping for that entity type
+        /// Serialized Name: BookmarkEntityMappings.fieldMappings
+        /// </summary>
         public IList<EntityFieldMapping> FieldMappings { get; }
     }
 }

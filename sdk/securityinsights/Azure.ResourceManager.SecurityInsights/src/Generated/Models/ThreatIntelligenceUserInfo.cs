@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Data about a user or client application. </summary>
+    /// <summary>
+    /// Data about a user or client application.
+    /// Serialized Name: ThreatIntelligenceUserInfo
+    /// </summary>
     public partial class ThreatIntelligenceUserInfo
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceUserInfo"/>. </summary>
-        /// <param name="objectId"> The user's object ID. </param>
-        /// <param name="email"> The user's email address. </param>
-        /// <param name="name"> The user's name. </param>
+        /// <param name="objectId">
+        /// The user's object ID.
+        /// Serialized Name: ThreatIntelligenceUserInfo.objectId
+        /// </param>
+        /// <param name="email">
+        /// The user's email address.
+        /// Serialized Name: ThreatIntelligenceUserInfo.email
+        /// </param>
+        /// <param name="name">
+        /// The user's name.
+        /// Serialized Name: ThreatIntelligenceUserInfo.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceUserInfo(Guid? objectId, string email, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The user's object ID. </summary>
+        /// <summary>
+        /// The user's object ID.
+        /// Serialized Name: ThreatIntelligenceUserInfo.objectId
+        /// </summary>
         public Guid? ObjectId { get; }
-        /// <summary> The user's email address. </summary>
+        /// <summary>
+        /// The user's email address.
+        /// Serialized Name: ThreatIntelligenceUserInfo.email
+        /// </summary>
         public string Email { get; }
-        /// <summary> The user's name. </summary>
+        /// <summary>
+        /// The user's name.
+        /// Serialized Name: ThreatIntelligenceUserInfo.name
+        /// </summary>
         public string Name { get; }
     }
 }

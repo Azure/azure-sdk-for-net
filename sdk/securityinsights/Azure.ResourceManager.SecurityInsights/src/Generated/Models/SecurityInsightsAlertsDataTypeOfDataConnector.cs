@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Alerts data type for data connectors. </summary>
+    /// <summary>
+    /// Alerts data type for data connectors.
+    /// Serialized Name: AlertsDataTypeOfDataConnector
+    /// </summary>
     public partial class SecurityInsightsAlertsDataTypeOfDataConnector
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
-        /// <param name="alerts"> Alerts data type connection. </param>
+        /// <param name="alerts">
+        /// Alerts data type connection.
+        /// Serialized Name: AlertsDataTypeOfDataConnector.alerts
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alerts"/> is null. </exception>
         public SecurityInsightsAlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts)
         {
@@ -56,7 +62,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
-        /// <param name="alerts"> Alerts data type connection. </param>
+        /// <param name="alerts">
+        /// Alerts data type connection.
+        /// Serialized Name: AlertsDataTypeOfDataConnector.alerts
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,9 +73,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Alerts data type connection. </summary>
+        /// <summary>
+        /// Alerts data type connection.
+        /// Serialized Name: AlertsDataTypeOfDataConnector.alerts
+        /// </summary>
         internal DataConnectorDataTypeCommon Alerts { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        /// <summary>
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </summary>
         public SecurityInsightsDataTypeConnectionState? AlertsState
         {
             get => Alerts is null ? default(SecurityInsightsDataTypeConnectionState?) : Alerts.State;

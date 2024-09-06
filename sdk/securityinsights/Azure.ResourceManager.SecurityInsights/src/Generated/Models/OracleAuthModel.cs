@@ -10,14 +10,29 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Model for API authentication for Oracle. </summary>
+    /// <summary>
+    /// Model for API authentication for Oracle.
+    /// Serialized Name: OracleAuthModel
+    /// </summary>
     public partial class OracleAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="OracleAuthModel"/>. </summary>
-        /// <param name="tenantId"> Oracle tenant ID. </param>
-        /// <param name="userId"> Oracle user ID. </param>
-        /// <param name="publicFingerprint"> Public Fingerprint. </param>
-        /// <param name="pemFile"> Content of the PRM file. </param>
+        /// <param name="tenantId">
+        /// Oracle tenant ID
+        /// Serialized Name: OracleAuthModel.tenantId
+        /// </param>
+        /// <param name="userId">
+        /// Oracle user ID
+        /// Serialized Name: OracleAuthModel.userId
+        /// </param>
+        /// <param name="publicFingerprint">
+        /// Public Fingerprint
+        /// Serialized Name: OracleAuthModel.publicFingerprint
+        /// </param>
+        /// <param name="pemFile">
+        /// Content of the PRM file
+        /// Serialized Name: OracleAuthModel.pemFile
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/>, <paramref name="publicFingerprint"/> or <paramref name="pemFile"/> is null. </exception>
         public OracleAuthModel(Guid tenantId, string userId, string publicFingerprint, string pemFile)
         {
@@ -33,12 +48,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
+        /// <param name="authType">
+        /// The auth type
+        /// Serialized Name: CcpAuthConfig.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> Oracle tenant ID. </param>
-        /// <param name="userId"> Oracle user ID. </param>
-        /// <param name="publicFingerprint"> Public Fingerprint. </param>
-        /// <param name="pemFile"> Content of the PRM file. </param>
+        /// <param name="tenantId">
+        /// Oracle tenant ID
+        /// Serialized Name: OracleAuthModel.tenantId
+        /// </param>
+        /// <param name="userId">
+        /// Oracle user ID
+        /// Serialized Name: OracleAuthModel.userId
+        /// </param>
+        /// <param name="publicFingerprint">
+        /// Public Fingerprint
+        /// Serialized Name: OracleAuthModel.publicFingerprint
+        /// </param>
+        /// <param name="pemFile">
+        /// Content of the PRM file
+        /// Serialized Name: OracleAuthModel.pemFile
+        /// </param>
         internal OracleAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid tenantId, string userId, string publicFingerprint, string pemFile) : base(authType, serializedAdditionalRawData)
         {
             TenantId = tenantId;
@@ -53,13 +83,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Oracle tenant ID. </summary>
+        /// <summary>
+        /// Oracle tenant ID
+        /// Serialized Name: OracleAuthModel.tenantId
+        /// </summary>
         public Guid TenantId { get; set; }
-        /// <summary> Oracle user ID. </summary>
+        /// <summary>
+        /// Oracle user ID
+        /// Serialized Name: OracleAuthModel.userId
+        /// </summary>
         public string UserId { get; set; }
-        /// <summary> Public Fingerprint. </summary>
+        /// <summary>
+        /// Public Fingerprint
+        /// Serialized Name: OracleAuthModel.publicFingerprint
+        /// </summary>
         public string PublicFingerprint { get; set; }
-        /// <summary> Content of the PRM file. </summary>
+        /// <summary>
+        /// Content of the PRM file
+        /// Serialized Name: OracleAuthModel.pemFile
+        /// </summary>
         public string PemFile { get; set; }
     }
 }

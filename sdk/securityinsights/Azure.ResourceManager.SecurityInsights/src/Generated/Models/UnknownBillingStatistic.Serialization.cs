@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class UnknownBillingStatistic : IUtf8JsonSerializable, IJsonModel<BillingStatisticData>
+    internal partial class UnknownBillingStatistic : IUtf8JsonSerializable, IJsonModel<SecurityInsightsBillingStatisticData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingStatisticData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsBillingStatisticData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BillingStatisticData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityInsightsBillingStatisticData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingStatisticData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsBillingStatisticData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingStatisticData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsBillingStatisticData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        BillingStatisticData IJsonModel<BillingStatisticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecurityInsightsBillingStatisticData IJsonModel<SecurityInsightsBillingStatisticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingStatisticData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsBillingStatisticData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingStatisticData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsBillingStatisticData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBillingStatisticData(document.RootElement, options);
+            return DeserializeSecurityInsightsBillingStatisticData(document.RootElement, options);
         }
 
         internal static UnknownBillingStatistic DeserializeUnknownBillingStatistic(JsonElement element, ModelReaderWriterOptions options = null)
@@ -156,35 +156,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BillingStatisticData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SecurityInsightsBillingStatisticData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingStatisticData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsBillingStatisticData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingStatisticData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsBillingStatisticData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BillingStatisticData IPersistableModel<BillingStatisticData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SecurityInsightsBillingStatisticData IPersistableModel<SecurityInsightsBillingStatisticData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingStatisticData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsBillingStatisticData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBillingStatisticData(document.RootElement, options);
+                        return DeserializeSecurityInsightsBillingStatisticData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingStatisticData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsBillingStatisticData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BillingStatisticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityInsightsBillingStatisticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

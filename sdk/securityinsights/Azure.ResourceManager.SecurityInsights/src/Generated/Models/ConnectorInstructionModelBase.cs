@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Instruction step details. </summary>
+    /// <summary>
+    /// Instruction step details
+    /// Serialized Name: ConnectorInstructionModelBase
+    /// </summary>
     public partial class ConnectorInstructionModelBase
     {
         /// <summary>
@@ -46,15 +49,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectorInstructionModelBase"/>. </summary>
-        /// <param name="settingType"> The kind of the setting. </param>
+        /// <param name="settingType">
+        /// The kind of the setting
+        /// Serialized Name: ConnectorInstructionModelBase.type
+        /// </param>
         public ConnectorInstructionModelBase(SettingType settingType)
         {
             SettingType = settingType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectorInstructionModelBase"/>. </summary>
-        /// <param name="parameters"> The parameters for the setting. </param>
-        /// <param name="settingType"> The kind of the setting. </param>
+        /// <param name="parameters">
+        /// The parameters for the setting
+        /// Serialized Name: ConnectorInstructionModelBase.parameters
+        /// </param>
+        /// <param name="settingType">
+        /// The kind of the setting
+        /// Serialized Name: ConnectorInstructionModelBase.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectorInstructionModelBase(BinaryData parameters, SettingType settingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,6 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// The parameters for the setting
+        /// Serialized Name: ConnectorInstructionModelBase.parameters
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -99,7 +112,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public BinaryData Parameters { get; set; }
-        /// <summary> The kind of the setting. </summary>
+        /// <summary>
+        /// The kind of the setting
+        /// Serialized Name: ConnectorInstructionModelBase.type
+        /// </summary>
         public SettingType SettingType { get; set; }
     }
 }

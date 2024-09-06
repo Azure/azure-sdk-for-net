@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents Fusion alert rule template. </summary>
+    /// <summary>
+    /// Represents Fusion alert rule template.
+    /// Serialized Name: FusionAlertRuleTemplate
+    /// </summary>
     public partial class SecurityInsightsFusionAlertRuleTemplate : SecurityInsightsAlertRuleTemplateData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFusionAlertRuleTemplate"/>. </summary>
@@ -31,20 +34,59 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
+        /// <param name="kind">
+        /// The kind of the alert rule
+        /// Serialized Name: AlertRuleTemplate.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
-        /// <param name="createdOn"> The time that this alert rule template has been added. </param>
-        /// <param name="lastUpdatedOn"> The time that this alert rule template was last updated. </param>
-        /// <param name="description"> The description of the alert rule template. </param>
-        /// <param name="displayName"> The display name for alert rule template. </param>
-        /// <param name="requiredDataConnectors"> The required data connectors for this template. </param>
-        /// <param name="status"> The alert rule template status. </param>
-        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
-        /// <param name="tactics"> The tactics of the alert rule template. </param>
-        /// <param name="techniques"> The techniques of the alert rule. </param>
-        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
-        /// <param name="sourceSettings"> All supported source signal configurations consumed in fusion detection. </param>
+        /// <param name="alertRulesCreatedByTemplateCount">
+        /// the number of alert rules that were created by this template
+        /// Serialized Name: FusionAlertRuleTemplate.properties.alertRulesCreatedByTemplateCount
+        /// </param>
+        /// <param name="createdOn">
+        /// The time that this alert rule template has been added.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.createdDateUTC
+        /// </param>
+        /// <param name="lastUpdatedOn">
+        /// The time that this alert rule template was last updated.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.lastUpdatedDateUTC
+        /// </param>
+        /// <param name="description">
+        /// The description of the alert rule template.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.description
+        /// </param>
+        /// <param name="displayName">
+        /// The display name for alert rule template.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.displayName
+        /// </param>
+        /// <param name="requiredDataConnectors">
+        /// The required data connectors for this template
+        /// Serialized Name: FusionAlertRuleTemplate.properties.requiredDataConnectors
+        /// </param>
+        /// <param name="status">
+        /// The alert rule template status.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.status
+        /// </param>
+        /// <param name="severity">
+        /// The severity for alerts created by this alert rule.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.severity
+        /// </param>
+        /// <param name="tactics">
+        /// The tactics of the alert rule template
+        /// Serialized Name: FusionAlertRuleTemplate.properties.tactics
+        /// </param>
+        /// <param name="techniques">
+        /// The techniques of the alert rule
+        /// Serialized Name: FusionAlertRuleTemplate.properties.techniques
+        /// </param>
+        /// <param name="subTechniques">
+        /// The sub-techniques of the alert rule
+        /// Serialized Name: FusionAlertRuleTemplate.properties.subTechniques
+        /// </param>
+        /// <param name="sourceSettings">
+        /// All supported source signal configurations consumed in fusion detection.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.sourceSettings
+        /// </param>
         internal SecurityInsightsFusionAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, SecurityInsightsAlertSeverity? severity, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, IList<string> subTechniques, IList<FusionTemplateSourceSetting> sourceSettings) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
@@ -62,29 +104,65 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary> the number of alert rules that were created by this template. </summary>
+        /// <summary>
+        /// the number of alert rules that were created by this template
+        /// Serialized Name: FusionAlertRuleTemplate.properties.alertRulesCreatedByTemplateCount
+        /// </summary>
         public int? AlertRulesCreatedByTemplateCount { get; set; }
-        /// <summary> The time that this alert rule template has been added. </summary>
+        /// <summary>
+        /// The time that this alert rule template has been added.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.createdDateUTC
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The time that this alert rule template was last updated. </summary>
+        /// <summary>
+        /// The time that this alert rule template was last updated.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.lastUpdatedDateUTC
+        /// </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
-        /// <summary> The description of the alert rule template. </summary>
+        /// <summary>
+        /// The description of the alert rule template.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The display name for alert rule template. </summary>
+        /// <summary>
+        /// The display name for alert rule template.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> The required data connectors for this template. </summary>
+        /// <summary>
+        /// The required data connectors for this template
+        /// Serialized Name: FusionAlertRuleTemplate.properties.requiredDataConnectors
+        /// </summary>
         public IList<AlertRuleTemplateDataSource> RequiredDataConnectors { get; }
-        /// <summary> The alert rule template status. </summary>
+        /// <summary>
+        /// The alert rule template status.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.status
+        /// </summary>
         public SecurityInsightsAlertRuleTemplateStatus? Status { get; set; }
-        /// <summary> The severity for alerts created by this alert rule. </summary>
+        /// <summary>
+        /// The severity for alerts created by this alert rule.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.severity
+        /// </summary>
         public SecurityInsightsAlertSeverity? Severity { get; set; }
-        /// <summary> The tactics of the alert rule template. </summary>
+        /// <summary>
+        /// The tactics of the alert rule template
+        /// Serialized Name: FusionAlertRuleTemplate.properties.tactics
+        /// </summary>
         public IList<SecurityInsightsAttackTactic> Tactics { get; }
-        /// <summary> The techniques of the alert rule. </summary>
+        /// <summary>
+        /// The techniques of the alert rule
+        /// Serialized Name: FusionAlertRuleTemplate.properties.techniques
+        /// </summary>
         public IList<string> Techniques { get; }
-        /// <summary> The sub-techniques of the alert rule. </summary>
+        /// <summary>
+        /// The sub-techniques of the alert rule
+        /// Serialized Name: FusionAlertRuleTemplate.properties.subTechniques
+        /// </summary>
         public IList<string> SubTechniques { get; }
-        /// <summary> All supported source signal configurations consumed in fusion detection. </summary>
+        /// <summary>
+        /// All supported source signal configurations consumed in fusion detection.
+        /// Serialized Name: FusionAlertRuleTemplate.properties.sourceSettings
+        /// </summary>
         public IList<FusionTemplateSourceSetting> SourceSettings { get; }
     }
 }

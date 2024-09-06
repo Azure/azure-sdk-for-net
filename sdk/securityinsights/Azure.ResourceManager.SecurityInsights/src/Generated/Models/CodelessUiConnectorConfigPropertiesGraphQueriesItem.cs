@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The CodelessUiConnectorConfigPropertiesGraphQueriesItem. </summary>
+    /// <summary>
+    /// The CodelessUiConnectorConfigPropertiesGraphQueriesItem.
+    /// Serialized Name: CodelessUiConnectorConfigPropertiesGraphQueriesItem
+    /// </summary>
     public partial class CodelessUiConnectorConfigPropertiesGraphQueriesItem : GraphQueries
     {
         /// <summary> Initializes a new instance of <see cref="CodelessUiConnectorConfigPropertiesGraphQueriesItem"/>. </summary>
@@ -19,9 +22,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CodelessUiConnectorConfigPropertiesGraphQueriesItem"/>. </summary>
-        /// <param name="metricName"> the metric that the query is checking. </param>
-        /// <param name="legend"> The legend for the graph. </param>
-        /// <param name="baseQuery"> The base query for the graph. </param>
+        /// <param name="metricName">
+        /// the metric that the query is checking
+        /// Serialized Name: GraphQueries.metricName
+        /// </param>
+        /// <param name="legend">
+        /// The legend for the graph
+        /// Serialized Name: GraphQueries.legend
+        /// </param>
+        /// <param name="baseQuery">
+        /// The base query for the graph
+        /// Serialized Name: GraphQueries.baseQuery
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CodelessUiConnectorConfigPropertiesGraphQueriesItem(string metricName, string legend, string baseQuery, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(metricName, legend, baseQuery, serializedAdditionalRawData)
         {

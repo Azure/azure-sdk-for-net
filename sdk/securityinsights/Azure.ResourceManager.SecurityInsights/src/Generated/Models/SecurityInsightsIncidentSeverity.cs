@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The severity of the incident. </summary>
+    /// <summary>
+    /// The severity of the incident
+    /// Serialized Name: IncidentSeverity
+    /// </summary>
     public readonly partial struct SecurityInsightsIncidentSeverity : IEquatable<SecurityInsightsIncidentSeverity>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string LowValue = "Low";
         private const string InformationalValue = "Informational";
 
-        /// <summary> High severity. </summary>
+        /// <summary>
+        /// High severity
+        /// Serialized Name: IncidentSeverity.High
+        /// </summary>
         public static SecurityInsightsIncidentSeverity High { get; } = new SecurityInsightsIncidentSeverity(HighValue);
-        /// <summary> Medium severity. </summary>
+        /// <summary>
+        /// Medium severity
+        /// Serialized Name: IncidentSeverity.Medium
+        /// </summary>
         public static SecurityInsightsIncidentSeverity Medium { get; } = new SecurityInsightsIncidentSeverity(MediumValue);
-        /// <summary> Low severity. </summary>
+        /// <summary>
+        /// Low severity
+        /// Serialized Name: IncidentSeverity.Low
+        /// </summary>
         public static SecurityInsightsIncidentSeverity Low { get; } = new SecurityInsightsIncidentSeverity(LowValue);
-        /// <summary> Informational severity. </summary>
+        /// <summary>
+        /// Informational severity
+        /// Serialized Name: IncidentSeverity.Informational
+        /// </summary>
         public static SecurityInsightsIncidentSeverity Informational { get; } = new SecurityInsightsIncidentSeverity(InformationalValue);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentSeverity"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentSeverity left, SecurityInsightsIncidentSeverity right) => left.Equals(right);

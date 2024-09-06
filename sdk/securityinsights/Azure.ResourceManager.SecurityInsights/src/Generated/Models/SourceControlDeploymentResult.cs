@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Status while trying to fetch the deployment information. </summary>
+    /// <summary>
+    /// Status while trying to fetch the deployment information.
+    /// Serialized Name: DeploymentResult
+    /// </summary>
     public readonly partial struct SourceControlDeploymentResult : IEquatable<SourceControlDeploymentResult>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
-        /// <summary> Success. </summary>
+        /// <summary>
+        /// Success
+        /// Serialized Name: DeploymentResult.Success
+        /// </summary>
         public static SourceControlDeploymentResult Success { get; } = new SourceControlDeploymentResult(SuccessValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: DeploymentResult.Canceled
+        /// </summary>
         public static SourceControlDeploymentResult Canceled { get; } = new SourceControlDeploymentResult(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: DeploymentResult.Failed
+        /// </summary>
         public static SourceControlDeploymentResult Failed { get; } = new SourceControlDeploymentResult(FailedValue);
         /// <summary> Determines if two <see cref="SourceControlDeploymentResult"/> values are the same. </summary>
         public static bool operator ==(SourceControlDeploymentResult left, SourceControlDeploymentResult right) => left.Equals(right);

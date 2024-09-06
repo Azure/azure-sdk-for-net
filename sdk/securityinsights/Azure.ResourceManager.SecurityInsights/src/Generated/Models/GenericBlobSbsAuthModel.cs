@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Model for API authentication for working with service bus or storage account. </summary>
+    /// <summary>
+    /// Model for API authentication for working with service bus or storage account.
+    /// Serialized Name: GenericBlobSbsAuthModel
+    /// </summary>
     public partial class GenericBlobSbsAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="GenericBlobSbsAuthModel"/>. </summary>
@@ -22,10 +25,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GenericBlobSbsAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
+        /// <param name="authType">
+        /// The auth type
+        /// Serialized Name: CcpAuthConfig.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="credentialsConfig"> Credentials for service bus namespace, keyvault uri for access key. </param>
-        /// <param name="storageAccountCredentialsConfig"> Credentials for storage account, keyvault uri for access key. </param>
+        /// <param name="credentialsConfig">
+        /// Credentials for service bus namespace, keyvault uri for access key
+        /// Serialized Name: GenericBlobSbsAuthModel.credentialsConfig
+        /// </param>
+        /// <param name="storageAccountCredentialsConfig">
+        /// Credentials for storage account, keyvault uri for access key
+        /// Serialized Name: GenericBlobSbsAuthModel.storageAccountCredentialsConfig
+        /// </param>
         internal GenericBlobSbsAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> credentialsConfig, IDictionary<string, string> storageAccountCredentialsConfig) : base(authType, serializedAdditionalRawData)
         {
             CredentialsConfig = credentialsConfig;
@@ -33,9 +45,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             AuthType = authType;
         }
 
-        /// <summary> Credentials for service bus namespace, keyvault uri for access key. </summary>
+        /// <summary>
+        /// Credentials for service bus namespace, keyvault uri for access key
+        /// Serialized Name: GenericBlobSbsAuthModel.credentialsConfig
+        /// </summary>
         public IDictionary<string, string> CredentialsConfig { get; }
-        /// <summary> Credentials for storage account, keyvault uri for access key. </summary>
+        /// <summary>
+        /// Credentials for storage account, keyvault uri for access key
+        /// Serialized Name: GenericBlobSbsAuthModel.storageAccountCredentialsConfig
+        /// </summary>
         public IDictionary<string, string> StorageAccountCredentialsConfig { get; }
     }
 }

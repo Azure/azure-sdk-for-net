@@ -11,17 +11,41 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents security alert timeline item. </summary>
+    /// <summary>
+    /// Represents security alert timeline item.
+    /// Serialized Name: SecurityAlertTimelineItem
+    /// </summary>
     public partial class SecurityAlertTimelineItem : EntityTimelineItem
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAlertTimelineItem"/>. </summary>
-        /// <param name="azureResourceId"> The alert azure resource id. </param>
-        /// <param name="displayName"> The alert name. </param>
-        /// <param name="severity"> The alert severity. </param>
-        /// <param name="endOn"> The alert end time. </param>
-        /// <param name="startOn"> The alert start time. </param>
-        /// <param name="generatedOn"> The alert generated time. </param>
-        /// <param name="alertType"> The name of the alert type. </param>
+        /// <param name="azureResourceId">
+        /// The alert azure resource id.
+        /// Serialized Name: SecurityAlertTimelineItem.azureResourceId
+        /// </param>
+        /// <param name="displayName">
+        /// The alert name.
+        /// Serialized Name: SecurityAlertTimelineItem.displayName
+        /// </param>
+        /// <param name="severity">
+        /// The alert severity.
+        /// Serialized Name: SecurityAlertTimelineItem.severity
+        /// </param>
+        /// <param name="endOn">
+        /// The alert end time.
+        /// Serialized Name: SecurityAlertTimelineItem.endTimeUtc
+        /// </param>
+        /// <param name="startOn">
+        /// The alert start time.
+        /// Serialized Name: SecurityAlertTimelineItem.startTimeUtc
+        /// </param>
+        /// <param name="generatedOn">
+        /// The alert generated time.
+        /// Serialized Name: SecurityAlertTimelineItem.timeGenerated
+        /// </param>
+        /// <param name="alertType">
+        /// The name of the alert type.
+        /// Serialized Name: SecurityAlertTimelineItem.alertType
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureResourceId"/>, <paramref name="displayName"/> or <paramref name="alertType"/> is null. </exception>
         internal SecurityAlertTimelineItem(ResourceIdentifier azureResourceId, string displayName, SecurityInsightsAlertSeverity severity, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn, string alertType)
         {
@@ -41,19 +65,55 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertTimelineItem"/>. </summary>
-        /// <param name="kind"> The entity query kind type. </param>
+        /// <param name="kind">
+        /// The entity query kind type.
+        /// Serialized Name: EntityTimelineItem.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureResourceId"> The alert azure resource id. </param>
-        /// <param name="productName"> The alert product name. </param>
-        /// <param name="description"> The alert description. </param>
-        /// <param name="displayName"> The alert name. </param>
-        /// <param name="severity"> The alert severity. </param>
-        /// <param name="endOn"> The alert end time. </param>
-        /// <param name="startOn"> The alert start time. </param>
-        /// <param name="generatedOn"> The alert generated time. </param>
-        /// <param name="alertType"> The name of the alert type. </param>
-        /// <param name="intent"> The intent of the alert. </param>
-        /// <param name="techniques"> The techniques of the alert. </param>
+        /// <param name="azureResourceId">
+        /// The alert azure resource id.
+        /// Serialized Name: SecurityAlertTimelineItem.azureResourceId
+        /// </param>
+        /// <param name="productName">
+        /// The alert product name.
+        /// Serialized Name: SecurityAlertTimelineItem.productName
+        /// </param>
+        /// <param name="description">
+        /// The alert description.
+        /// Serialized Name: SecurityAlertTimelineItem.description
+        /// </param>
+        /// <param name="displayName">
+        /// The alert name.
+        /// Serialized Name: SecurityAlertTimelineItem.displayName
+        /// </param>
+        /// <param name="severity">
+        /// The alert severity.
+        /// Serialized Name: SecurityAlertTimelineItem.severity
+        /// </param>
+        /// <param name="endOn">
+        /// The alert end time.
+        /// Serialized Name: SecurityAlertTimelineItem.endTimeUtc
+        /// </param>
+        /// <param name="startOn">
+        /// The alert start time.
+        /// Serialized Name: SecurityAlertTimelineItem.startTimeUtc
+        /// </param>
+        /// <param name="generatedOn">
+        /// The alert generated time.
+        /// Serialized Name: SecurityAlertTimelineItem.timeGenerated
+        /// </param>
+        /// <param name="alertType">
+        /// The name of the alert type.
+        /// Serialized Name: SecurityAlertTimelineItem.alertType
+        /// </param>
+        /// <param name="intent">
+        /// The intent of the alert.
+        /// Serialized Name: SecurityAlertTimelineItem.intent
+        /// </param>
+        /// <param name="techniques">
+        /// The techniques of the alert.
+        /// Serialized Name: SecurityAlertTimelineItem.techniques
+        /// </param>
         internal SecurityAlertTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azureResourceId, string productName, string description, string displayName, SecurityInsightsAlertSeverity severity, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn, string alertType, SecurityInsightsKillChainIntent? intent, IReadOnlyList<string> techniques) : base(kind, serializedAdditionalRawData)
         {
             AzureResourceId = azureResourceId;
@@ -75,27 +135,60 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The alert azure resource id. </summary>
+        /// <summary>
+        /// The alert azure resource id.
+        /// Serialized Name: SecurityAlertTimelineItem.azureResourceId
+        /// </summary>
         public ResourceIdentifier AzureResourceId { get; }
-        /// <summary> The alert product name. </summary>
+        /// <summary>
+        /// The alert product name.
+        /// Serialized Name: SecurityAlertTimelineItem.productName
+        /// </summary>
         public string ProductName { get; }
-        /// <summary> The alert description. </summary>
+        /// <summary>
+        /// The alert description.
+        /// Serialized Name: SecurityAlertTimelineItem.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> The alert name. </summary>
+        /// <summary>
+        /// The alert name.
+        /// Serialized Name: SecurityAlertTimelineItem.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> The alert severity. </summary>
+        /// <summary>
+        /// The alert severity.
+        /// Serialized Name: SecurityAlertTimelineItem.severity
+        /// </summary>
         public SecurityInsightsAlertSeverity Severity { get; }
-        /// <summary> The alert end time. </summary>
+        /// <summary>
+        /// The alert end time.
+        /// Serialized Name: SecurityAlertTimelineItem.endTimeUtc
+        /// </summary>
         public DateTimeOffset EndOn { get; }
-        /// <summary> The alert start time. </summary>
+        /// <summary>
+        /// The alert start time.
+        /// Serialized Name: SecurityAlertTimelineItem.startTimeUtc
+        /// </summary>
         public DateTimeOffset StartOn { get; }
-        /// <summary> The alert generated time. </summary>
+        /// <summary>
+        /// The alert generated time.
+        /// Serialized Name: SecurityAlertTimelineItem.timeGenerated
+        /// </summary>
         public DateTimeOffset GeneratedOn { get; }
-        /// <summary> The name of the alert type. </summary>
+        /// <summary>
+        /// The name of the alert type.
+        /// Serialized Name: SecurityAlertTimelineItem.alertType
+        /// </summary>
         public string AlertType { get; }
-        /// <summary> The intent of the alert. </summary>
+        /// <summary>
+        /// The intent of the alert.
+        /// Serialized Name: SecurityAlertTimelineItem.intent
+        /// </summary>
         public SecurityInsightsKillChainIntent? Intent { get; }
-        /// <summary> The techniques of the alert. </summary>
+        /// <summary>
+        /// The techniques of the alert.
+        /// Serialized Name: SecurityAlertTimelineItem.techniques
+        /// </summary>
         public IReadOnlyList<string> Techniques { get; }
     }
 }

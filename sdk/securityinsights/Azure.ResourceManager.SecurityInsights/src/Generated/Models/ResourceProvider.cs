@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Resource provider permissions required for the connector. </summary>
+    /// <summary>
+    /// Resource provider permissions required for the connector
+    /// Serialized Name: ResourceProvider
+    /// </summary>
     public partial class ResourceProvider
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProvider"/>. </summary>
-        /// <param name="provider"> Provider name. </param>
-        /// <param name="permissionsDisplayText"> Permission description text. </param>
-        /// <param name="providerDisplayName"> Permission provider display name. </param>
-        /// <param name="scope"> Permission provider scope. </param>
-        /// <param name="requiredPermissions"> Required permissions for the connector. </param>
+        /// <param name="provider">
+        /// Provider name
+        /// Serialized Name: ResourceProvider.provider
+        /// </param>
+        /// <param name="permissionsDisplayText">
+        /// Permission description text
+        /// Serialized Name: ResourceProvider.permissionsDisplayText
+        /// </param>
+        /// <param name="providerDisplayName">
+        /// Permission provider display name
+        /// Serialized Name: ResourceProvider.providerDisplayName
+        /// </param>
+        /// <param name="scope">
+        /// Permission provider scope
+        /// Serialized Name: ResourceProvider.scope
+        /// </param>
+        /// <param name="requiredPermissions">
+        /// Required permissions for the connector
+        /// Serialized Name: ResourceProvider.requiredPermissions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceProvider(ProviderName? provider, string permissionsDisplayText, string providerDisplayName, PermissionProviderScope? scope, RequiredPermissions requiredPermissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +85,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Provider name. </summary>
+        /// <summary>
+        /// Provider name
+        /// Serialized Name: ResourceProvider.provider
+        /// </summary>
         public ProviderName? Provider { get; set; }
-        /// <summary> Permission description text. </summary>
+        /// <summary>
+        /// Permission description text
+        /// Serialized Name: ResourceProvider.permissionsDisplayText
+        /// </summary>
         public string PermissionsDisplayText { get; set; }
-        /// <summary> Permission provider display name. </summary>
+        /// <summary>
+        /// Permission provider display name
+        /// Serialized Name: ResourceProvider.providerDisplayName
+        /// </summary>
         public string ProviderDisplayName { get; set; }
-        /// <summary> Permission provider scope. </summary>
+        /// <summary>
+        /// Permission provider scope
+        /// Serialized Name: ResourceProvider.scope
+        /// </summary>
         public PermissionProviderScope? Scope { get; set; }
-        /// <summary> Required permissions for the connector. </summary>
+        /// <summary>
+        /// Required permissions for the connector
+        /// Serialized Name: ResourceProvider.requiredPermissions
+        /// </summary>
         public RequiredPermissions RequiredPermissions { get; set; }
     }
 }

@@ -426,11 +426,11 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetSecurityInsightsIncidents().Get(incidentId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingStatisticResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
-        /// <returns> An object representing collection of BillingStatisticResources and their operations over a BillingStatisticResource. </returns>
-        public virtual BillingStatisticCollection GetBillingStatistics()
+        /// <summary> Gets a collection of SecurityInsightsBillingStatisticResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
+        /// <returns> An object representing collection of SecurityInsightsBillingStatisticResources and their operations over a SecurityInsightsBillingStatisticResource. </returns>
+        public virtual SecurityInsightsBillingStatisticCollection GetSecurityInsightsBillingStatistics()
         {
-            return GetCachedClient(client => new BillingStatisticCollection(client, Id));
+            return GetCachedClient(client => new SecurityInsightsBillingStatisticCollection(client, Id));
         }
 
         /// <summary>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingStatisticResource"/></description>
+        /// <description><see cref="SecurityInsightsBillingStatisticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,9 +459,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="billingStatisticName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingStatisticName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingStatisticResource>> GetBillingStatisticAsync(string billingStatisticName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsBillingStatisticResource>> GetSecurityInsightsBillingStatisticAsync(string billingStatisticName, CancellationToken cancellationToken = default)
         {
-            return await GetBillingStatistics().GetAsync(billingStatisticName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsBillingStatistics().GetAsync(billingStatisticName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingStatisticResource"/></description>
+        /// <description><see cref="SecurityInsightsBillingStatisticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -490,9 +490,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="billingStatisticName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingStatisticName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingStatisticResource> GetBillingStatistic(string billingStatisticName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsBillingStatisticResource> GetSecurityInsightsBillingStatistic(string billingStatisticName, CancellationToken cancellationToken = default)
         {
-            return GetBillingStatistics().Get(billingStatisticName, cancellationToken);
+            return GetSecurityInsightsBillingStatistics().Get(billingStatisticName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityInsightsBookmarkResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
@@ -846,11 +846,11 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetTemplateModels().Get(templateId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EntityQueryResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
-        /// <returns> An object representing collection of EntityQueryResources and their operations over a EntityQueryResource. </returns>
-        public virtual EntityQueryCollection GetEntityQueries()
+        /// <summary> Gets a collection of SecurityInsightsEntityQueryResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
+        /// <returns> An object representing collection of SecurityInsightsEntityQueryResources and their operations over a SecurityInsightsEntityQueryResource. </returns>
+        public virtual SecurityInsightsEntityQueryCollection GetSecurityInsightsEntityQueries()
         {
-            return GetCachedClient(client => new EntityQueryCollection(client, Id));
+            return GetCachedClient(client => new SecurityInsightsEntityQueryCollection(client, Id));
         }
 
         /// <summary>
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityQueryResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityQueryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -879,9 +879,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="entityQueryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entityQueryId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EntityQueryResource>> GetEntityQueryAsync(string entityQueryId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsEntityQueryResource>> GetSecurityInsightsEntityQueryAsync(string entityQueryId, CancellationToken cancellationToken = default)
         {
-            return await GetEntityQueries().GetAsync(entityQueryId, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsEntityQueries().GetAsync(entityQueryId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityQueryResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityQueryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -910,47 +910,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="entityQueryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entityQueryId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EntityQueryResource> GetEntityQuery(string entityQueryId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsEntityQueryResource> GetSecurityInsightsEntityQuery(string entityQueryId, CancellationToken cancellationToken = default)
         {
-            return GetEntityQueries().Get(entityQueryId, cancellationToken);
+            return GetSecurityInsightsEntityQueries().Get(entityQueryId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EntityQueryTemplateResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
-        /// <returns> An object representing collection of EntityQueryTemplateResources and their operations over a EntityQueryTemplateResource. </returns>
-        public virtual EntityQueryTemplateCollection GetEntityQueryTemplates()
+        /// <summary> Gets a collection of SecurityInsightsEntityQueryTemplateResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
+        /// <returns> An object representing collection of SecurityInsightsEntityQueryTemplateResources and their operations over a SecurityInsightsEntityQueryTemplateResource. </returns>
+        public virtual SecurityInsightsEntityQueryTemplateCollection GetSecurityInsightsEntityQueryTemplates()
         {
-            return GetCachedClient(client => new EntityQueryTemplateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an entity query.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EntityQueryTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EntityQueryTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="entityQueryTemplateId"> entity query template ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entityQueryTemplateId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EntityQueryTemplateResource>> GetEntityQueryTemplateAsync(string entityQueryTemplateId, CancellationToken cancellationToken = default)
-        {
-            return await GetEntityQueryTemplates().GetAsync(entityQueryTemplateId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new SecurityInsightsEntityQueryTemplateCollection(client, Id));
         }
 
         /// <summary>
@@ -970,7 +939,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityQueryTemplateResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityQueryTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -979,16 +948,47 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="entityQueryTemplateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EntityQueryTemplateResource> GetEntityQueryTemplate(string entityQueryTemplateId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsEntityQueryTemplateResource>> GetSecurityInsightsEntityQueryTemplateAsync(string entityQueryTemplateId, CancellationToken cancellationToken = default)
         {
-            return GetEntityQueryTemplates().Get(entityQueryTemplateId, cancellationToken);
+            return await GetSecurityInsightsEntityQueryTemplates().GetAsync(entityQueryTemplateId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of FileImportResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
-        /// <returns> An object representing collection of FileImportResources and their operations over a FileImportResource. </returns>
-        public virtual FileImportCollection GetFileImports()
+        /// <summary>
+        /// Gets an entity query.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EntityQueryTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsEntityQueryTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="entityQueryTemplateId"> entity query template ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entityQueryTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsEntityQueryTemplateResource> GetSecurityInsightsEntityQueryTemplate(string entityQueryTemplateId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new FileImportCollection(client, Id));
+            return GetSecurityInsightsEntityQueryTemplates().Get(entityQueryTemplateId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsFileImportResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
+        /// <returns> An object representing collection of SecurityInsightsFileImportResources and their operations over a SecurityInsightsFileImportResource. </returns>
+        public virtual SecurityInsightsFileImportCollection GetSecurityInsightsFileImports()
+        {
+            return GetCachedClient(client => new SecurityInsightsFileImportCollection(client, Id));
         }
 
         /// <summary>
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FileImportResource"/></description>
+        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1017,9 +1017,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FileImportResource>> GetFileImportAsync(string fileImportId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsFileImportResource>> GetSecurityInsightsFileImportAsync(string fileImportId, CancellationToken cancellationToken = default)
         {
-            return await GetFileImports().GetAsync(fileImportId, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsFileImports().GetAsync(fileImportId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FileImportResource"/></description>
+        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1048,9 +1048,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FileImportResource> GetFileImport(string fileImportId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsFileImportResource> GetSecurityInsightsFileImport(string fileImportId, CancellationToken cancellationToken = default)
         {
-            return GetFileImports().Get(fileImportId, cancellationToken);
+            return GetSecurityInsightsFileImports().Get(fileImportId, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityInsightsHuntResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
@@ -1122,11 +1122,11 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetSecurityInsightsHunts().Get(huntId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MetadataModelResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
-        /// <returns> An object representing collection of MetadataModelResources and their operations over a MetadataModelResource. </returns>
-        public virtual MetadataModelCollection GetMetadataModels()
+        /// <summary> Gets a collection of SecurityInsightsMetadataModelResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
+        /// <returns> An object representing collection of SecurityInsightsMetadataModelResources and their operations over a SecurityInsightsMetadataModelResource. </returns>
+        public virtual SecurityInsightsMetadataModelCollection GetSecurityInsightsMetadataModels()
         {
-            return GetCachedClient(client => new MetadataModelCollection(client, Id));
+            return GetCachedClient(client => new SecurityInsightsMetadataModelCollection(client, Id));
         }
 
         /// <summary>
@@ -1146,7 +1146,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MetadataModelResource"/></description>
+        /// <description><see cref="SecurityInsightsMetadataModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1155,9 +1155,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MetadataModelResource>> GetMetadataModelAsync(string metadataName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsMetadataModelResource>> GetSecurityInsightsMetadataModelAsync(string metadataName, CancellationToken cancellationToken = default)
         {
-            return await GetMetadataModels().GetAsync(metadataName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsMetadataModels().GetAsync(metadataName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1177,7 +1177,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MetadataModelResource"/></description>
+        /// <description><see cref="SecurityInsightsMetadataModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1186,47 +1186,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MetadataModelResource> GetMetadataModel(string metadataName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsMetadataModelResource> GetSecurityInsightsMetadataModel(string metadataName, CancellationToken cancellationToken = default)
         {
-            return GetMetadataModels().Get(metadataName, cancellationToken);
+            return GetSecurityInsightsMetadataModels().Get(metadataName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OfficeConsentResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
-        /// <returns> An object representing collection of OfficeConsentResources and their operations over a OfficeConsentResource. </returns>
-        public virtual OfficeConsentCollection GetOfficeConsents()
+        /// <summary> Gets a collection of SecurityInsightsOfficeConsentResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
+        /// <returns> An object representing collection of SecurityInsightsOfficeConsentResources and their operations over a SecurityInsightsOfficeConsentResource. </returns>
+        public virtual SecurityInsightsOfficeConsentCollection GetSecurityInsightsOfficeConsents()
         {
-            return GetCachedClient(client => new OfficeConsentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an office365 consent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/officeConsents/{consentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OfficeConsents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OfficeConsentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="consentId"> consent ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="consentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="consentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OfficeConsentResource>> GetOfficeConsentAsync(string consentId, CancellationToken cancellationToken = default)
-        {
-            return await GetOfficeConsents().GetAsync(consentId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new SecurityInsightsOfficeConsentCollection(client, Id));
         }
 
         /// <summary>
@@ -1246,7 +1215,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OfficeConsentResource"/></description>
+        /// <description><see cref="SecurityInsightsOfficeConsentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1255,9 +1224,40 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="consentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="consentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OfficeConsentResource> GetOfficeConsent(string consentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsOfficeConsentResource>> GetSecurityInsightsOfficeConsentAsync(string consentId, CancellationToken cancellationToken = default)
         {
-            return GetOfficeConsents().Get(consentId, cancellationToken);
+            return await GetSecurityInsightsOfficeConsents().GetAsync(consentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an office365 consent.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/officeConsents/{consentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OfficeConsents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsOfficeConsentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="consentId"> consent ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="consentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="consentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsOfficeConsentResource> GetSecurityInsightsOfficeConsent(string consentId, CancellationToken cancellationToken = default)
+        {
+            return GetSecurityInsightsOfficeConsents().Get(consentId, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityInsightsSentinelOnboardingStateResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
@@ -2084,11 +2084,11 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetWorkspaceManagerMembers().Get(workspaceManagerMemberName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataConnectorDefinitionResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
-        /// <returns> An object representing collection of DataConnectorDefinitionResources and their operations over a DataConnectorDefinitionResource. </returns>
-        public virtual DataConnectorDefinitionCollection GetDataConnectorDefinitions()
+        /// <summary> Gets a collection of SecurityInsightsDataConnectorDefinitionResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
+        /// <returns> An object representing collection of SecurityInsightsDataConnectorDefinitionResources and their operations over a SecurityInsightsDataConnectorDefinitionResource. </returns>
+        public virtual SecurityInsightsDataConnectorDefinitionCollection GetSecurityInsightsDataConnectorDefinitions()
         {
-            return GetCachedClient(client => new DataConnectorDefinitionCollection(client, Id));
+            return GetCachedClient(client => new SecurityInsightsDataConnectorDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -2108,7 +2108,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataConnectorDefinitionResource"/></description>
+        /// <description><see cref="SecurityInsightsDataConnectorDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2117,9 +2117,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataConnectorDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataConnectorDefinitionResource>> GetDataConnectorDefinitionAsync(string dataConnectorDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsDataConnectorDefinitionResource>> GetSecurityInsightsDataConnectorDefinitionAsync(string dataConnectorDefinitionName, CancellationToken cancellationToken = default)
         {
-            return await GetDataConnectorDefinitions().GetAsync(dataConnectorDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsDataConnectorDefinitions().GetAsync(dataConnectorDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2139,7 +2139,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataConnectorDefinitionResource"/></description>
+        /// <description><see cref="SecurityInsightsDataConnectorDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2148,9 +2148,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataConnectorDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataConnectorDefinitionResource> GetDataConnectorDefinition(string dataConnectorDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsDataConnectorDefinitionResource> GetSecurityInsightsDataConnectorDefinition(string dataConnectorDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetDataConnectorDefinitions().Get(dataConnectorDefinitionName, cancellationToken);
+            return GetSecurityInsightsDataConnectorDefinitions().Get(dataConnectorDefinitionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityInsightsDataConnectorResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>

@@ -11,7 +11,10 @@ using System.Globalization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The connector Availability Status. </summary>
+    /// <summary>
+    /// The connector Availability Status
+    /// Serialized Name: AvailabilityStatus
+    /// </summary>
     public readonly partial struct ConnectorAvailabilityStatus : IEquatable<ConnectorAvailabilityStatus>
     {
         private readonly int _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const int _1Value = 1;
 
-        /// <summary> 1. </summary>
+        /// <summary>
+        /// 1
+        /// Serialized Name: AvailabilityStatus.1
+        /// </summary>
         public static ConnectorAvailabilityStatus _1 { get; } = new ConnectorAvailabilityStatus(_1Value);
 
         internal int ToSerialInt32() => _value;

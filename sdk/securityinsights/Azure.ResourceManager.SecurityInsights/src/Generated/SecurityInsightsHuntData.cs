@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsHunt data model.
     /// Represents a Hunt in Azure Security Insights.
+    /// Serialized Name: Hunt
     /// </summary>
     public partial class SecurityInsightsHuntData : ResourceData
     {
@@ -64,17 +65,44 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> The display name of the hunt. </param>
-        /// <param name="description"> The description of the hunt. </param>
-        /// <param name="status"> The status of the hunt. </param>
-        /// <param name="hypothesisStatus"> The hypothesis status of the hunt. </param>
-        /// <param name="attackTactics"> A list of mitre attack tactics the hunt is associated with. </param>
-        /// <param name="attackTechniques"> A list of a mitre attack techniques the hunt is associated with. </param>
-        /// <param name="labels"> List of labels relevant to this hunt. </param>
-        /// <param name="owner"> Describes a user that the hunt is assigned to. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="displayName">
+        /// The display name of the hunt
+        /// Serialized Name: Hunt.properties.displayName
+        /// </param>
+        /// <param name="description">
+        /// The description of the hunt
+        /// Serialized Name: Hunt.properties.description
+        /// </param>
+        /// <param name="status">
+        /// The status of the hunt.
+        /// Serialized Name: Hunt.properties.status
+        /// </param>
+        /// <param name="hypothesisStatus">
+        /// The hypothesis status of the hunt.
+        /// Serialized Name: Hunt.properties.hypothesisStatus
+        /// </param>
+        /// <param name="attackTactics">
+        /// A list of mitre attack tactics the hunt is associated with
+        /// Serialized Name: Hunt.properties.attackTactics
+        /// </param>
+        /// <param name="attackTechniques">
+        /// A list of a mitre attack techniques the hunt is associated with
+        /// Serialized Name: Hunt.properties.attackTechniques
+        /// </param>
+        /// <param name="labels">
+        /// List of labels relevant to this hunt
+        /// Serialized Name: Hunt.properties.labels
+        /// </param>
+        /// <param name="owner">
+        /// Describes a user that the hunt is assigned to
+        /// Serialized Name: Hunt.properties.owner
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsHuntData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, Status? status, HypothesisStatus? hypothesisStatus, IList<SecurityInsightsAttackTactic> attackTactics, IList<string> attackTechniques, IList<string> labels, SecurityInsightsHuntOwner owner, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsHuntData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, HuntStatus? status, HypothesisStatus? hypothesisStatus, IList<SecurityInsightsAttackTactic> attackTactics, IList<string> attackTechniques, IList<string> labels, SecurityInsightsHuntOwner owner, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;
@@ -88,23 +116,50 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The display name of the hunt. </summary>
+        /// <summary>
+        /// The display name of the hunt
+        /// Serialized Name: Hunt.properties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> The description of the hunt. </summary>
+        /// <summary>
+        /// The description of the hunt
+        /// Serialized Name: Hunt.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The status of the hunt. </summary>
-        public Status? Status { get; set; }
-        /// <summary> The hypothesis status of the hunt. </summary>
+        /// <summary>
+        /// The status of the hunt.
+        /// Serialized Name: Hunt.properties.status
+        /// </summary>
+        public HuntStatus? Status { get; set; }
+        /// <summary>
+        /// The hypothesis status of the hunt.
+        /// Serialized Name: Hunt.properties.hypothesisStatus
+        /// </summary>
         public HypothesisStatus? HypothesisStatus { get; set; }
-        /// <summary> A list of mitre attack tactics the hunt is associated with. </summary>
+        /// <summary>
+        /// A list of mitre attack tactics the hunt is associated with
+        /// Serialized Name: Hunt.properties.attackTactics
+        /// </summary>
         public IList<SecurityInsightsAttackTactic> AttackTactics { get; }
-        /// <summary> A list of a mitre attack techniques the hunt is associated with. </summary>
+        /// <summary>
+        /// A list of a mitre attack techniques the hunt is associated with
+        /// Serialized Name: Hunt.properties.attackTechniques
+        /// </summary>
         public IList<string> AttackTechniques { get; }
-        /// <summary> List of labels relevant to this hunt. </summary>
+        /// <summary>
+        /// List of labels relevant to this hunt
+        /// Serialized Name: Hunt.properties.labels
+        /// </summary>
         public IList<string> Labels { get; }
-        /// <summary> Describes a user that the hunt is assigned to. </summary>
+        /// <summary>
+        /// Describes a user that the hunt is assigned to
+        /// Serialized Name: Hunt.properties.owner
+        /// </summary>
         public SecurityInsightsHuntOwner Owner { get; set; }
-        /// <summary> Etag of the azure resource. </summary>
+        /// <summary>
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            IReadOnlyList<MetadataModelData> value = default;
+            IReadOnlyList<SecurityInsightsMetadataModelData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MetadataModelData> array = new List<MetadataModelData>();
+                    List<SecurityInsightsMetadataModelData> array = new List<SecurityInsightsMetadataModelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataModelData.DeserializeMetadataModelData(item, options));
+                        array.Add(SecurityInsightsMetadataModelData.DeserializeSecurityInsightsMetadataModelData(item, options));
                     }
                     value = array;
                     continue;

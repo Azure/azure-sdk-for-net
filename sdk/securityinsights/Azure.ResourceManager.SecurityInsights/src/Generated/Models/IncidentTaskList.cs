@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The IncidentTaskList. </summary>
+    /// <summary>
+    /// The IncidentTaskList.
+    /// Serialized Name: IncidentTaskList
+    /// </summary>
     internal partial class IncidentTaskList
     {
         /// <summary>
@@ -48,23 +51,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="IncidentTaskList"/>. </summary>
         internal IncidentTaskList()
         {
-            Value = new ChangeTrackingList<IncidentTaskData>();
+            Value = new ChangeTrackingList<SecurityInsightsIncidentTaskData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IncidentTaskList"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
+        /// <param name="value"> Serialized Name: IncidentTaskList.value. </param>
+        /// <param name="nextLink"> Serialized Name: IncidentTaskList.nextLink. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IncidentTaskList(IReadOnlyList<IncidentTaskData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IncidentTaskList(IReadOnlyList<SecurityInsightsIncidentTaskData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<IncidentTaskData> Value { get; }
-        /// <summary> Gets the next link. </summary>
+        /// <summary> Serialized Name: IncidentTaskList.value. </summary>
+        public IReadOnlyList<SecurityInsightsIncidentTaskData> Value { get; }
+        /// <summary> Serialized Name: IncidentTaskList.nextLink. </summary>
         public string NextLink { get; }
     }
 }

@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fileImportId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FileImportData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsFileImportData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -229,13 +229,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        FileImportData value = default;
+                        SecurityInsightsFileImportData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FileImportData.DeserializeFileImportData(document.RootElement);
+                        value = SecurityInsightsFileImportData.DeserializeSecurityInsightsFileImportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FileImportData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsFileImportData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fileImportId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FileImportData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsFileImportData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -262,19 +262,19 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        FileImportData value = default;
+                        SecurityInsightsFileImportData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FileImportData.DeserializeFileImportData(document.RootElement);
+                        value = SecurityInsightsFileImportData.DeserializeSecurityInsightsFileImportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FileImportData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsFileImportData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, FileImportData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, SecurityInsightsFileImportData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, FileImportData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, SecurityInsightsFileImportData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="fileImportId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FileImportData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, FileImportData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsFileImportData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, SecurityInsightsFileImportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -339,9 +339,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 201:
                     {
-                        FileImportData value = default;
+                        SecurityInsightsFileImportData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FileImportData.DeserializeFileImportData(document.RootElement);
+                        value = SecurityInsightsFileImportData.DeserializeSecurityInsightsFileImportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="fileImportId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FileImportData> Create(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, FileImportData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsFileImportData> Create(string subscriptionId, string resourceGroupName, string workspaceName, string fileImportId, SecurityInsightsFileImportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -372,9 +372,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 201:
                     {
-                        FileImportData value = default;
+                        SecurityInsightsFileImportData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FileImportData.DeserializeFileImportData(document.RootElement);
+                        value = SecurityInsightsFileImportData.DeserializeSecurityInsightsFileImportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

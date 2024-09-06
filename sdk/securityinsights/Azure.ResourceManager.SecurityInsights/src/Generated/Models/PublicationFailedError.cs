@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The error description for why a publication failed. </summary>
+    /// <summary>
+    /// The error description for why a publication failed
+    /// Serialized Name: Error
+    /// </summary>
     public partial class PublicationFailedError
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PublicationFailedError"/>. </summary>
-        /// <param name="memberResourceName"> The member resource name for which the publication error occured. </param>
-        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="memberResourceName">
+        /// The member resource name for which the publication error occured
+        /// Serialized Name: Error.memberResourceName
+        /// </param>
+        /// <param name="errorMessage">
+        /// The error message
+        /// Serialized Name: Error.errorMessage
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="memberResourceName"/> or <paramref name="errorMessage"/> is null. </exception>
         public PublicationFailedError(string memberResourceName, string errorMessage)
         {
@@ -59,8 +68,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicationFailedError"/>. </summary>
-        /// <param name="memberResourceName"> The member resource name for which the publication error occured. </param>
-        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="memberResourceName">
+        /// The member resource name for which the publication error occured
+        /// Serialized Name: Error.memberResourceName
+        /// </param>
+        /// <param name="errorMessage">
+        /// The error message
+        /// Serialized Name: Error.errorMessage
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PublicationFailedError(string memberResourceName, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,9 +89,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The member resource name for which the publication error occured. </summary>
+        /// <summary>
+        /// The member resource name for which the publication error occured
+        /// Serialized Name: Error.memberResourceName
+        /// </summary>
         public string MemberResourceName { get; set; }
-        /// <summary> The error message. </summary>
+        /// <summary>
+        /// The error message
+        /// Serialized Name: Error.errorMessage
+        /// </summary>
         public string ErrorMessage { get; set; }
     }
 }

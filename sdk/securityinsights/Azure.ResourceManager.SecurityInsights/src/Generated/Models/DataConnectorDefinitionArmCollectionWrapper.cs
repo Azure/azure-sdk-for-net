@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Encapsulate the data connector definition object. </summary>
+    /// <summary>
+    /// Encapsulate the data connector definition object
+    /// Serialized Name: DataConnectorDefinitionArmCollectionWrapper
+    /// </summary>
     internal partial class DataConnectorDefinitionArmCollectionWrapper
     {
         /// <summary>
@@ -48,17 +51,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="DataConnectorDefinitionArmCollectionWrapper"/>. </summary>
         internal DataConnectorDefinitionArmCollectionWrapper()
         {
-            Value = new ChangeTrackingList<DataConnectorDefinitionData>();
+            Value = new ChangeTrackingList<SecurityInsightsDataConnectorDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataConnectorDefinitionArmCollectionWrapper"/>. </summary>
         /// <param name="value">
-        /// Please note <see cref="DataConnectorDefinitionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: DataConnectorDefinitionArmCollectionWrapper.value
+        /// Please note <see cref="SecurityInsightsDataConnectorDefinitionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CustomizableConnectorDefinitionData"/>.
         /// </param>
-        /// <param name="nextLink"></param>
+        /// <param name="nextLink"> Serialized Name: DataConnectorDefinitionArmCollectionWrapper.nextLink. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataConnectorDefinitionArmCollectionWrapper(IReadOnlyList<DataConnectorDefinitionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataConnectorDefinitionArmCollectionWrapper(IReadOnlyList<SecurityInsightsDataConnectorDefinitionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -66,12 +70,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary>
-        /// Gets the value
-        /// Please note <see cref="DataConnectorDefinitionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: DataConnectorDefinitionArmCollectionWrapper.value
+        /// Please note <see cref="SecurityInsightsDataConnectorDefinitionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CustomizableConnectorDefinitionData"/>.
         /// </summary>
-        public IReadOnlyList<DataConnectorDefinitionData> Value { get; }
-        /// <summary> Gets the next link. </summary>
+        public IReadOnlyList<SecurityInsightsDataConnectorDefinitionData> Value { get; }
+        /// <summary> Serialized Name: DataConnectorDefinitionArmCollectionWrapper.nextLink. </summary>
         public string NextLink { get; }
     }
 }

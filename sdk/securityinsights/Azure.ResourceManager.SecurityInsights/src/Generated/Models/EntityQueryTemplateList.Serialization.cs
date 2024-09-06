@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<EntityQueryTemplateData> value = default;
+            IReadOnlyList<SecurityInsightsEntityQueryTemplateData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    List<EntityQueryTemplateData> array = new List<EntityQueryTemplateData>();
+                    List<SecurityInsightsEntityQueryTemplateData> array = new List<SecurityInsightsEntityQueryTemplateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityQueryTemplateData.DeserializeEntityQueryTemplateData(item, options));
+                        array.Add(SecurityInsightsEntityQueryTemplateData.DeserializeSecurityInsightsEntityQueryTemplateData(item, options));
                     }
                     value = array;
                     continue;

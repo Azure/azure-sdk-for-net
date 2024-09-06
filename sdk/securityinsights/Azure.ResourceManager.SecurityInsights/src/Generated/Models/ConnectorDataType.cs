@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary>
     /// The data type which is created by the connector,
     /// including a query indicated when was the last time that data type was received in the workspace.
+    /// Serialized Name: ConnectorDataType
     /// </summary>
     public partial class ConnectorDataType
     {
@@ -49,8 +50,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectorDataType"/>. </summary>
-        /// <param name="name"> Gets or sets the name of the data type to show in the graph. </param>
-        /// <param name="lastDataReceivedQuery"> Gets or sets the query to indicate when relevant data was last received in the workspace. </param>
+        /// <param name="name">
+        /// Gets or sets the name of the data type to show in the graph.
+        /// Serialized Name: ConnectorDataType.name
+        /// </param>
+        /// <param name="lastDataReceivedQuery">
+        /// Gets or sets the query to indicate when relevant data was last received in the workspace.
+        /// Serialized Name: ConnectorDataType.lastDataReceivedQuery
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="lastDataReceivedQuery"/> is null. </exception>
         public ConnectorDataType(string name, string lastDataReceivedQuery)
         {
@@ -62,8 +69,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectorDataType"/>. </summary>
-        /// <param name="name"> Gets or sets the name of the data type to show in the graph. </param>
-        /// <param name="lastDataReceivedQuery"> Gets or sets the query to indicate when relevant data was last received in the workspace. </param>
+        /// <param name="name">
+        /// Gets or sets the name of the data type to show in the graph.
+        /// Serialized Name: ConnectorDataType.name
+        /// </param>
+        /// <param name="lastDataReceivedQuery">
+        /// Gets or sets the query to indicate when relevant data was last received in the workspace.
+        /// Serialized Name: ConnectorDataType.lastDataReceivedQuery
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectorDataType(string name, string lastDataReceivedQuery, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,9 +90,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Gets or sets the name of the data type to show in the graph. </summary>
+        /// <summary>
+        /// Gets or sets the name of the data type to show in the graph.
+        /// Serialized Name: ConnectorDataType.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the query to indicate when relevant data was last received in the workspace. </summary>
+        /// <summary>
+        /// Gets or sets the query to indicate when relevant data was last received in the workspace.
+        /// Serialized Name: ConnectorDataType.lastDataReceivedQuery
+        /// </summary>
         public string LastDataReceivedQuery { get; set; }
     }
 }

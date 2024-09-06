@@ -10,21 +10,27 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes an automation rule action to run a playbook. </summary>
+    /// <summary>
+    /// Describes an automation rule action to run a playbook
+    /// Serialized Name: AutomationRuleRunPlaybookAction
+    /// </summary>
     public partial class AutomationRuleRunPlaybookAction : SecurityInsightsAutomationRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookAction"/>. </summary>
-        /// <param name="order"></param>
+        /// <param name="order"> Serialized Name: AutomationRuleAction.order. </param>
         public AutomationRuleRunPlaybookAction(int order) : base(order)
         {
             ActionType = ActionType.RunPlaybook;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookAction"/>. </summary>
-        /// <param name="order"></param>
-        /// <param name="actionType"> The type of the automation rule action. </param>
+        /// <param name="order"> Serialized Name: AutomationRuleAction.order. </param>
+        /// <param name="actionType">
+        /// The type of the automation rule action.
+        /// Serialized Name: AutomationRuleAction.actionType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="actionConfiguration"></param>
+        /// <param name="actionConfiguration"> Serialized Name: AutomationRuleRunPlaybookAction.actionConfiguration. </param>
         internal AutomationRuleRunPlaybookAction(int order, ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, AutomationRuleRunPlaybookActionProperties actionConfiguration) : base(order, actionType, serializedAdditionalRawData)
         {
             ActionConfiguration = actionConfiguration;
@@ -36,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Gets or sets the action configuration. </summary>
+        /// <summary> Serialized Name: AutomationRuleRunPlaybookAction.actionConfiguration. </summary>
         public AutomationRuleRunPlaybookActionProperties ActionConfiguration { get; set; }
     }
 }

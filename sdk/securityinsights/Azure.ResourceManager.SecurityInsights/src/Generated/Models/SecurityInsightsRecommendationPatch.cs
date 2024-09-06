@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Recommendation Fields to update. </summary>
+    /// <summary>
+    /// Recommendation Fields to update.
+    /// Serialized Name: RecommendationPatch
+    /// </summary>
     public partial class SecurityInsightsRecommendationPatch
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsRecommendationPatch"/>. </summary>
-        /// <param name="properties"> Recommendation Fields Properties to update. </param>
+        /// <param name="properties">
+        /// Recommendation Fields Properties to update.
+        /// Serialized Name: RecommendationPatch.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsRecommendationPatch(RecommendationPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,9 +65,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Recommendation Fields Properties to update. </summary>
+        /// <summary>
+        /// Recommendation Fields Properties to update.
+        /// Serialized Name: RecommendationPatch.properties
+        /// </summary>
         internal RecommendationPatchProperties Properties { get; set; }
-        /// <summary> State of the recommendation. </summary>
+        /// <summary>
+        /// State of the recommendation.
+        /// Serialized Name: RecommendationPatchProperties.state
+        /// </summary>
         public RecommendationState? RecommendationPatchState
         {
             get => Properties is null ? default : Properties.State;

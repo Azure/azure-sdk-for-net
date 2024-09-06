@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a condition used to query for TI objects. </summary>
+    /// <summary>
+    /// Represents a condition used to query for TI objects.
+    /// Serialized Name: ConditionProperties
+    /// </summary>
     public partial class ConditionProperties
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConditionProperties"/>. </summary>
-        /// <param name="clauses"> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </param>
+        /// <param name="clauses">
+        /// The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator.
+        /// Serialized Name: ConditionProperties.clauses
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clauses"/> is null. </exception>
         public ConditionProperties(IEnumerable<ConditionClause> clauses)
         {
@@ -57,9 +63,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConditionProperties"/>. </summary>
-        /// <param name="stixObjectType"> The STIX type for the objects returned by this query. </param>
-        /// <param name="clauses"> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </param>
-        /// <param name="conditionConnective"> The top level connective operator for this condition. </param>
+        /// <param name="stixObjectType">
+        /// The STIX type for the objects returned by this query.
+        /// Serialized Name: ConditionProperties.stixObjectType
+        /// </param>
+        /// <param name="clauses">
+        /// The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator.
+        /// Serialized Name: ConditionProperties.clauses
+        /// </param>
+        /// <param name="conditionConnective">
+        /// The top level connective operator for this condition.
+        /// Serialized Name: ConditionProperties.conditionConnective
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConditionProperties(string stixObjectType, IList<ConditionClause> clauses, ClauseConnective? conditionConnective, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,11 +89,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The STIX type for the objects returned by this query. </summary>
+        /// <summary>
+        /// The STIX type for the objects returned by this query.
+        /// Serialized Name: ConditionProperties.stixObjectType
+        /// </summary>
         public string StixObjectType { get; }
-        /// <summary> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </summary>
+        /// <summary>
+        /// The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator.
+        /// Serialized Name: ConditionProperties.clauses
+        /// </summary>
         public IList<ConditionClause> Clauses { get; }
-        /// <summary> The top level connective operator for this condition. </summary>
+        /// <summary>
+        /// The top level connective operator for this condition.
+        /// Serialized Name: ConditionProperties.conditionConnective
+        /// </summary>
         public ClauseConnective? ConditionConnective { get; set; }
     }
 }

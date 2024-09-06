@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List of all the entity queries. </summary>
+    /// <summary>
+    /// List of all the entity queries.
+    /// Serialized Name: EntityQueryList
+    /// </summary>
     internal partial class EntityQueryList
     {
         /// <summary>
@@ -49,11 +52,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="EntityQueryList"/>. </summary>
         /// <param name="value">
         /// Array of entity queries.
-        /// Please note <see cref="EntityQueryData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: EntityQueryList.value
+        /// Please note <see cref="SecurityInsightsEntityQueryData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ActivityEntityQuery"/> and <see cref="ExpansionEntityQuery"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal EntityQueryList(IEnumerable<EntityQueryData> value)
+        internal EntityQueryList(IEnumerable<SecurityInsightsEntityQueryData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -61,14 +65,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityQueryList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of entity queries. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of entity queries.
+        /// Serialized Name: EntityQueryList.nextLink
+        /// </param>
         /// <param name="value">
         /// Array of entity queries.
-        /// Please note <see cref="EntityQueryData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: EntityQueryList.value
+        /// Please note <see cref="SecurityInsightsEntityQueryData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ActivityEntityQuery"/> and <see cref="ExpansionEntityQuery"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EntityQueryList(string nextLink, IReadOnlyList<EntityQueryData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EntityQueryList(string nextLink, IReadOnlyList<SecurityInsightsEntityQueryData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -80,13 +88,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of entity queries. </summary>
+        /// <summary>
+        /// URL to fetch the next set of entity queries.
+        /// Serialized Name: EntityQueryList.nextLink
+        /// </summary>
         public string NextLink { get; }
         /// <summary>
         /// Array of entity queries.
-        /// Please note <see cref="EntityQueryData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: EntityQueryList.value
+        /// Please note <see cref="SecurityInsightsEntityQueryData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ActivityEntityQuery"/> and <see cref="ExpansionEntityQuery"/>.
         /// </summary>
-        public IReadOnlyList<EntityQueryData> Value { get; }
+        public IReadOnlyList<SecurityInsightsEntityQueryData> Value { get; }
     }
 }

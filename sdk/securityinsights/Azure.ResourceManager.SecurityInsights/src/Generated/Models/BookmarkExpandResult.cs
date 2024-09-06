@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The entity expansion result operation response. </summary>
+    /// <summary>
+    /// The entity expansion result operation response.
+    /// Serialized Name: BookmarkExpandResponse
+    /// </summary>
     public partial class BookmarkExpandResult
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BookmarkExpandResult"/>. </summary>
-        /// <param name="metaData"> The metadata from the expansion operation results. </param>
-        /// <param name="value"> The expansion result values. </param>
+        /// <param name="metaData">
+        /// The metadata from the expansion operation results.
+        /// Serialized Name: BookmarkExpandResponse.metaData
+        /// </param>
+        /// <param name="value">
+        /// The expansion result values.
+        /// Serialized Name: BookmarkExpandResponse.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BookmarkExpandResult(ExpansionResultsMetadata metaData, BookmarkExpandResponseValue value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,15 +70,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The metadata from the expansion operation results. </summary>
+        /// <summary>
+        /// The metadata from the expansion operation results.
+        /// Serialized Name: BookmarkExpandResponse.metaData
+        /// </summary>
         internal ExpansionResultsMetadata MetaData { get; }
-        /// <summary> Information of the aggregated nodes in the expansion result. </summary>
+        /// <summary>
+        /// Information of the aggregated nodes in the expansion result.
+        /// Serialized Name: ExpansionResultsMetadata.aggregations
+        /// </summary>
         public IReadOnlyList<ExpansionResultAggregation> MetaDataAggregations
         {
             get => MetaData?.Aggregations;
         }
 
-        /// <summary> The expansion result values. </summary>
+        /// <summary>
+        /// The expansion result values.
+        /// Serialized Name: BookmarkExpandResponse.value
+        /// </summary>
         public BookmarkExpandResponseValue Value { get; }
     }
 }

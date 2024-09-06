@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The parameters required to execute s timeline operation on the given entity. </summary>
+    /// <summary>
+    /// The parameters required to execute s timeline operation on the given entity.
+    /// Serialized Name: EntityTimelineParameters
+    /// </summary>
     public partial class EntityTimelineContent
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EntityTimelineContent"/>. </summary>
-        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
-        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
+        /// <param name="startOn">
+        /// The start timeline date, so the results returned are after this date.
+        /// Serialized Name: EntityTimelineParameters.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// The end timeline date, so the results returned are before this date.
+        /// Serialized Name: EntityTimelineParameters.endTime
+        /// </param>
         public EntityTimelineContent(DateTimeOffset startOn, DateTimeOffset endOn)
         {
             Kinds = new ChangeTrackingList<EntityTimelineKind>();
@@ -56,10 +65,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityTimelineContent"/>. </summary>
-        /// <param name="kinds"> Array of timeline Item kinds. </param>
-        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
-        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
-        /// <param name="numberOfBucket"> The number of bucket for timeline queries aggregation. </param>
+        /// <param name="kinds">
+        /// Array of timeline Item kinds.
+        /// Serialized Name: EntityTimelineParameters.kinds
+        /// </param>
+        /// <param name="startOn">
+        /// The start timeline date, so the results returned are after this date.
+        /// Serialized Name: EntityTimelineParameters.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// The end timeline date, so the results returned are before this date.
+        /// Serialized Name: EntityTimelineParameters.endTime
+        /// </param>
+        /// <param name="numberOfBucket">
+        /// The number of bucket for timeline queries aggregation.
+        /// Serialized Name: EntityTimelineParameters.numberOfBucket
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityTimelineContent(IList<EntityTimelineKind> kinds, DateTimeOffset startOn, DateTimeOffset endOn, int? numberOfBucket, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,13 +96,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Array of timeline Item kinds. </summary>
+        /// <summary>
+        /// Array of timeline Item kinds.
+        /// Serialized Name: EntityTimelineParameters.kinds
+        /// </summary>
         public IList<EntityTimelineKind> Kinds { get; }
-        /// <summary> The start timeline date, so the results returned are after this date. </summary>
+        /// <summary>
+        /// The start timeline date, so the results returned are after this date.
+        /// Serialized Name: EntityTimelineParameters.startTime
+        /// </summary>
         public DateTimeOffset StartOn { get; }
-        /// <summary> The end timeline date, so the results returned are before this date. </summary>
+        /// <summary>
+        /// The end timeline date, so the results returned are before this date.
+        /// Serialized Name: EntityTimelineParameters.endTime
+        /// </summary>
         public DateTimeOffset EndOn { get; }
-        /// <summary> The number of bucket for timeline queries aggregation. </summary>
+        /// <summary>
+        /// The number of bucket for timeline queries aggregation.
+        /// Serialized Name: EntityTimelineParameters.numberOfBucket
+        /// </summary>
         public int? NumberOfBucket { get; set; }
     }
 }

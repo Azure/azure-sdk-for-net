@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="metadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetadataModelData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsMetadataModelData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -229,13 +229,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        MetadataModelData value = default;
+                        SecurityInsightsMetadataModelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetadataModelData.DeserializeMetadataModelData(document.RootElement);
+                        value = SecurityInsightsMetadataModelData.DeserializeSecurityInsightsMetadataModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MetadataModelData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsMetadataModelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="metadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetadataModelData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsMetadataModelData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -262,13 +262,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        MetadataModelData value = default;
+                        SecurityInsightsMetadataModelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetadataModelData.DeserializeMetadataModelData(document.RootElement);
+                        value = SecurityInsightsMetadataModelData.DeserializeSecurityInsightsMetadataModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MetadataModelData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsMetadataModelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, MetadataModelData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, SecurityInsightsMetadataModelData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, MetadataModelData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, SecurityInsightsMetadataModelData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="metadataName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetadataModelData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, MetadataModelData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsMetadataModelData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, SecurityInsightsMetadataModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -432,9 +432,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        MetadataModelData value = default;
+                        SecurityInsightsMetadataModelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetadataModelData.DeserializeMetadataModelData(document.RootElement);
+                        value = SecurityInsightsMetadataModelData.DeserializeSecurityInsightsMetadataModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="metadataName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetadataModelData> Create(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, MetadataModelData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsMetadataModelData> Create(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, SecurityInsightsMetadataModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -466,9 +466,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        MetadataModelData value = default;
+                        SecurityInsightsMetadataModelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetadataModelData.DeserializeMetadataModelData(document.RootElement);
+                        value = SecurityInsightsMetadataModelData.DeserializeSecurityInsightsMetadataModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, MetadataModelPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, SecurityInsightsMetadataModelPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, MetadataModelPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, SecurityInsightsMetadataModelPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="metadataName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetadataModelData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, MetadataModelPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsMetadataModelData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, SecurityInsightsMetadataModelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -541,9 +541,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        MetadataModelData value = default;
+                        SecurityInsightsMetadataModelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetadataModelData.DeserializeMetadataModelData(document.RootElement);
+                        value = SecurityInsightsMetadataModelData.DeserializeSecurityInsightsMetadataModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="metadataName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetadataModelData> Update(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, MetadataModelPatch patch, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsMetadataModelData> Update(string subscriptionId, string resourceGroupName, string workspaceName, string metadataName, SecurityInsightsMetadataModelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -574,9 +574,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        MetadataModelData value = default;
+                        SecurityInsightsMetadataModelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetadataModelData.DeserializeMetadataModelData(document.RootElement);
+                        value = SecurityInsightsMetadataModelData.DeserializeSecurityInsightsMetadataModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

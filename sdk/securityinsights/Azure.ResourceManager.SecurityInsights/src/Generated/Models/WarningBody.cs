@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Warning details. </summary>
+    /// <summary>
+    /// Warning details.
+    /// Serialized Name: WarningBody
+    /// </summary>
     public partial class WarningBody
     {
         /// <summary>
@@ -52,9 +55,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WarningBody"/>. </summary>
-        /// <param name="code"> An identifier for the warning. Codes are invariant and are intended to be consumed programmatically. </param>
-        /// <param name="message"> A message describing the warning, intended to be suitable for display in a user interface. </param>
-        /// <param name="details"></param>
+        /// <param name="code">
+        /// An identifier for the warning. Codes are invariant and are intended to be consumed programmatically.
+        /// Serialized Name: WarningBody.code
+        /// </param>
+        /// <param name="message">
+        /// A message describing the warning, intended to be suitable for display in a user interface.
+        /// Serialized Name: WarningBody.message
+        /// </param>
+        /// <param name="details"> Serialized Name: WarningBody.details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WarningBody(WarningCode? code, string message, IReadOnlyList<WarningBody> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,11 +73,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An identifier for the warning. Codes are invariant and are intended to be consumed programmatically. </summary>
+        /// <summary>
+        /// An identifier for the warning. Codes are invariant and are intended to be consumed programmatically.
+        /// Serialized Name: WarningBody.code
+        /// </summary>
         public WarningCode? Code { get; }
-        /// <summary> A message describing the warning, intended to be suitable for display in a user interface. </summary>
+        /// <summary>
+        /// A message describing the warning, intended to be suitable for display in a user interface.
+        /// Serialized Name: WarningBody.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> Gets the details. </summary>
+        /// <summary> Serialized Name: WarningBody.details. </summary>
         public IReadOnlyList<WarningBody> Details { get; }
     }
 }

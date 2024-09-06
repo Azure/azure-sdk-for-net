@@ -10,12 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Data type for Microsoft Threat Intelligence Platforms data connector. </summary>
+    /// <summary>
+    /// Data type for Microsoft Threat Intelligence Platforms data connector.
+    /// Serialized Name: MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed
+    /// </summary>
     public partial class MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed"/>. </summary>
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <param name="lookbackPeriod"> The lookback period for the feed to be imported. </param>
+        /// <param name="state">
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </param>
+        /// <param name="lookbackPeriod">
+        /// The lookback period for the feed to be imported.
+        /// Serialized Name: MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed.lookbackPeriod
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lookbackPeriod"/> is null. </exception>
         public MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(SecurityInsightsDataTypeConnectionState state, string lookbackPeriod) : base(state)
         {
@@ -25,9 +34,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed"/>. </summary>
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
+        /// <param name="state">
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="lookbackPeriod"> The lookback period for the feed to be imported. </param>
+        /// <param name="lookbackPeriod">
+        /// The lookback period for the feed to be imported.
+        /// Serialized Name: MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed.lookbackPeriod
+        /// </param>
         internal MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> serializedAdditionalRawData, string lookbackPeriod) : base(state, serializedAdditionalRawData)
         {
             LookbackPeriod = lookbackPeriod;
@@ -38,7 +53,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The lookback period for the feed to be imported. </summary>
+        /// <summary>
+        /// The lookback period for the feed to be imported.
+        /// Serialized Name: MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed.lookbackPeriod
+        /// </summary>
         public string LookbackPeriod { get; set; }
     }
 }

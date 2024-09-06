@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRulePropertyChangedConditionSupportedPropertyType. </summary>
+    /// <summary>
+    /// The AutomationRulePropertyChangedConditionSupportedPropertyType.
+    /// Serialized Name: AutomationRulePropertyChangedConditionSupportedPropertyType
+    /// </summary>
     public readonly partial struct AutomationRulePropertyChangedConditionSupportedPropertyType : IEquatable<AutomationRulePropertyChangedConditionSupportedPropertyType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string IncidentStatusValue = "IncidentStatus";
         private const string IncidentOwnerValue = "IncidentOwner";
 
-        /// <summary> Evaluate the condition on the incident severity. </summary>
+        /// <summary>
+        /// Evaluate the condition on the incident severity
+        /// Serialized Name: AutomationRulePropertyChangedConditionSupportedPropertyType.IncidentSeverity
+        /// </summary>
         public static AutomationRulePropertyChangedConditionSupportedPropertyType IncidentSeverity { get; } = new AutomationRulePropertyChangedConditionSupportedPropertyType(IncidentSeverityValue);
-        /// <summary> Evaluate the condition on the incident status. </summary>
+        /// <summary>
+        /// Evaluate the condition on the incident status
+        /// Serialized Name: AutomationRulePropertyChangedConditionSupportedPropertyType.IncidentStatus
+        /// </summary>
         public static AutomationRulePropertyChangedConditionSupportedPropertyType IncidentStatus { get; } = new AutomationRulePropertyChangedConditionSupportedPropertyType(IncidentStatusValue);
-        /// <summary> Evaluate the condition on the incident owner. </summary>
+        /// <summary>
+        /// Evaluate the condition on the incident owner
+        /// Serialized Name: AutomationRulePropertyChangedConditionSupportedPropertyType.IncidentOwner
+        /// </summary>
         public static AutomationRulePropertyChangedConditionSupportedPropertyType IncidentOwner { get; } = new AutomationRulePropertyChangedConditionSupportedPropertyType(IncidentOwnerValue);
         /// <summary> Determines if two <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyChangedConditionSupportedPropertyType left, AutomationRulePropertyChangedConditionSupportedPropertyType right) => left.Equals(right);

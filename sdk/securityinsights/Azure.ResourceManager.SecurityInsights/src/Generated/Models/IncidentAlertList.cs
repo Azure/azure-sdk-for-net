@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List of incident alerts. </summary>
+    /// <summary>
+    /// List of incident alerts.
+    /// Serialized Name: IncidentAlertList
+    /// </summary>
     internal partial class IncidentAlertList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IncidentAlertList"/>. </summary>
-        /// <param name="value"> Array of incident alerts. </param>
+        /// <param name="value">
+        /// Array of incident alerts.
+        /// Serialized Name: IncidentAlertList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentAlertList(IEnumerable<SecurityInsightsAlert> value)
         {
@@ -57,7 +63,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IncidentAlertList"/>. </summary>
-        /// <param name="value"> Array of incident alerts. </param>
+        /// <param name="value">
+        /// Array of incident alerts.
+        /// Serialized Name: IncidentAlertList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IncidentAlertList(IReadOnlyList<SecurityInsightsAlert> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +79,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Array of incident alerts. </summary>
+        /// <summary>
+        /// Array of incident alerts.
+        /// Serialized Name: IncidentAlertList.value
+        /// </summary>
         public IReadOnlyList<SecurityInsightsAlert> Value { get; }
     }
 }

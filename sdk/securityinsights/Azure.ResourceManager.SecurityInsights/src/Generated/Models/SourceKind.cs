@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Source type of the content. </summary>
+    /// <summary>
+    /// Source type of the content
+    /// Serialized Name: SourceKind
+    /// </summary>
     public readonly partial struct SourceKind : IEquatable<SourceKind>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string SolutionValue = "Solution";
         private const string SourceRepositoryValue = "SourceRepository";
 
-        /// <summary> LocalWorkspace. </summary>
+        /// <summary>
+        /// LocalWorkspace
+        /// Serialized Name: SourceKind.LocalWorkspace
+        /// </summary>
         public static SourceKind LocalWorkspace { get; } = new SourceKind(LocalWorkspaceValue);
-        /// <summary> Community. </summary>
+        /// <summary>
+        /// Community
+        /// Serialized Name: SourceKind.Community
+        /// </summary>
         public static SourceKind Community { get; } = new SourceKind(CommunityValue);
-        /// <summary> Solution. </summary>
+        /// <summary>
+        /// Solution
+        /// Serialized Name: SourceKind.Solution
+        /// </summary>
         public static SourceKind Solution { get; } = new SourceKind(SolutionValue);
-        /// <summary> SourceRepository. </summary>
+        /// <summary>
+        /// SourceRepository
+        /// Serialized Name: SourceKind.SourceRepository
+        /// </summary>
         public static SourceKind SourceRepository { get; } = new SourceKind(SourceRepositoryValue);
         /// <summary> Determines if two <see cref="SourceKind"/> values are the same. </summary>
         public static bool operator ==(SourceKind left, SourceKind right) => left.Equals(right);

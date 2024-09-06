@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The HTTP method, default value GET. </summary>
+    /// <summary>
+    /// The HTTP method, default value GET.
+    /// Serialized Name: HttpMethodVerb
+    /// </summary>
     public readonly partial struct HttpMethodVerb : IEquatable<HttpMethodVerb>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string PUTValue = "PUT";
         private const string DeleteValue = "DELETE";
 
-        /// <summary> GET. </summary>
+        /// <summary>
+        /// GET
+        /// Serialized Name: HttpMethodVerb.GET
+        /// </summary>
         public static HttpMethodVerb GET { get; } = new HttpMethodVerb(GETValue);
-        /// <summary> POST. </summary>
+        /// <summary>
+        /// POST
+        /// Serialized Name: HttpMethodVerb.POST
+        /// </summary>
         public static HttpMethodVerb Post { get; } = new HttpMethodVerb(PostValue);
-        /// <summary> PUT. </summary>
+        /// <summary>
+        /// PUT
+        /// Serialized Name: HttpMethodVerb.PUT
+        /// </summary>
         public static HttpMethodVerb PUT { get; } = new HttpMethodVerb(PUTValue);
-        /// <summary> DELETE. </summary>
+        /// <summary>
+        /// DELETE
+        /// Serialized Name: HttpMethodVerb.DELETE
+        /// </summary>
         public static HttpMethodVerb Delete { get; } = new HttpMethodVerb(DeleteValue);
         /// <summary> Determines if two <see cref="HttpMethodVerb"/> values are the same. </summary>
         public static bool operator ==(HttpMethodVerb left, HttpMethodVerb right) => left.Equals(right);

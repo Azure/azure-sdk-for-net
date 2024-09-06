@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetSecurityInsightsIncidentComments().Get(incidentCommentId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IncidentTaskResources in the SecurityInsightsIncident. </summary>
-        /// <returns> An object representing collection of IncidentTaskResources and their operations over a IncidentTaskResource. </returns>
-        public virtual IncidentTaskCollection GetIncidentTasks()
+        /// <summary> Gets a collection of SecurityInsightsIncidentTaskResources in the SecurityInsightsIncident. </summary>
+        /// <returns> An object representing collection of SecurityInsightsIncidentTaskResources and their operations over a SecurityInsightsIncidentTaskResource. </returns>
+        public virtual SecurityInsightsIncidentTaskCollection GetSecurityInsightsIncidentTasks()
         {
-            return GetCachedClient(client => new IncidentTaskCollection(client, Id));
+            return GetCachedClient(client => new SecurityInsightsIncidentTaskCollection(client, Id));
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IncidentTaskResource"/></description>
+        /// <description><see cref="SecurityInsightsIncidentTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,9 +261,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="incidentTaskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="incidentTaskId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IncidentTaskResource>> GetIncidentTaskAsync(string incidentTaskId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsIncidentTaskResource>> GetSecurityInsightsIncidentTaskAsync(string incidentTaskId, CancellationToken cancellationToken = default)
         {
-            return await GetIncidentTasks().GetAsync(incidentTaskId, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsIncidentTasks().GetAsync(incidentTaskId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IncidentTaskResource"/></description>
+        /// <description><see cref="SecurityInsightsIncidentTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="incidentTaskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="incidentTaskId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IncidentTaskResource> GetIncidentTask(string incidentTaskId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsIncidentTaskResource> GetSecurityInsightsIncidentTask(string incidentTaskId, CancellationToken cancellationToken = default)
         {
-            return GetIncidentTasks().Get(incidentTaskId, cancellationToken);
+            return GetSecurityInsightsIncidentTasks().Get(incidentTaskId, cancellationToken);
         }
 
         /// <summary>

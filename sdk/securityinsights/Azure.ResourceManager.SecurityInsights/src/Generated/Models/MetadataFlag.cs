@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The boolean value the metadata is for. </summary>
+    /// <summary>
+    /// The boolean value the metadata is for.
+    /// Serialized Name: Flag
+    /// </summary>
     public readonly partial struct MetadataFlag : IEquatable<MetadataFlag>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string TrueValue = "true";
         private const string FalseValue = "false";
 
-        /// <summary> true. </summary>
+        /// <summary>
+        /// true
+        /// Serialized Name: Flag.true
+        /// </summary>
         public static MetadataFlag True { get; } = new MetadataFlag(TrueValue);
-        /// <summary> false. </summary>
+        /// <summary>
+        /// false
+        /// Serialized Name: Flag.false
+        /// </summary>
         public static MetadataFlag False { get; } = new MetadataFlag(FalseValue);
         /// <summary> Determines if two <see cref="MetadataFlag"/> values are the same. </summary>
         public static bool operator ==(MetadataFlag left, MetadataFlag right) => left.Equals(right);

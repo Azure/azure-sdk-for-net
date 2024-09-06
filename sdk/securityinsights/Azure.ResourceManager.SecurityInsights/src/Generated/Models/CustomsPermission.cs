@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Customs permissions required for the connector. </summary>
+    /// <summary>
+    /// Customs permissions required for the connector
+    /// Serialized Name: Customs
+    /// </summary>
     public partial class CustomsPermission : CustomsPermissionProperties
     {
         /// <summary> Initializes a new instance of <see cref="CustomsPermission"/>. </summary>
@@ -19,8 +22,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomsPermission"/>. </summary>
-        /// <param name="name"> Customs permissions name. </param>
-        /// <param name="description"> Customs permissions description. </param>
+        /// <param name="name">
+        /// Customs permissions name
+        /// Serialized Name: CustomsPermission.name
+        /// </param>
+        /// <param name="description">
+        /// Customs permissions description
+        /// Serialized Name: CustomsPermission.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomsPermission(string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, description, serializedAdditionalRawData)
         {

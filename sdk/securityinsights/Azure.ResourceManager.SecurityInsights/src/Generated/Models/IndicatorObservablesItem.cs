@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> An observable of this indicator. </summary>
+    /// <summary>
+    /// An observable of this indicator
+    /// Serialized Name: IndicatorObservablesItem
+    /// </summary>
     public partial class IndicatorObservablesItem
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IndicatorObservablesItem"/>. </summary>
-        /// <param name="indicatorObservablesItemType"> The type of the observable of this indicator. </param>
-        /// <param name="value"> The value of the observable of this indicator. </param>
+        /// <param name="indicatorObservablesItemType">
+        /// The type of the observable of this indicator
+        /// Serialized Name: IndicatorObservablesItem.type
+        /// </param>
+        /// <param name="value">
+        /// The value of the observable of this indicator
+        /// Serialized Name: IndicatorObservablesItem.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IndicatorObservablesItem(string indicatorObservablesItemType, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of the observable of this indicator. </summary>
+        /// <summary>
+        /// The type of the observable of this indicator
+        /// Serialized Name: IndicatorObservablesItem.type
+        /// </summary>
         public string IndicatorObservablesItemType { get; set; }
-        /// <summary> The value of the observable of this indicator. </summary>
+        /// <summary>
+        /// The value of the observable of this indicator
+        /// Serialized Name: IndicatorObservablesItem.value
+        /// </summary>
         public string Value { get; set; }
     }
 }
