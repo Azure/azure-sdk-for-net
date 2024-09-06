@@ -679,11 +679,13 @@ namespace Azure.Storage.Test.Shared
             await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
 
             byte[] outputBytesAfterModify = new byte[size];
+            byte[] emptyBytes = new byte[size];
             await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
 
             // Assert
             TestHelper.AssertSequenceEqual(expectedDataBeforeModify, outputBytesBeforeModify);
             TestHelper.AssertSequenceEqual(expectedDataAfterModify, outputBytesAfterModify);
+            Assert.AreNotEqual(emptyBytes, outputBytesAfterModify);
         }
 
         [RecordedTest]
@@ -712,11 +714,13 @@ namespace Azure.Storage.Test.Shared
             await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
 
             byte[] outputBytesAfterModify = new byte[size];
+            byte[] emptyBytes = new byte[size];
             await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
 
             // Assert
             TestHelper.AssertSequenceEqual(expectedDataBeforeModify, outputBytesBeforeModify);
             Assert.AreNotEqual(expectedDataAfterModify, outputBytesAfterModify);
+            TestHelper.AssertSequenceEqual(emptyBytes, outputBytesAfterModify);
         }
     }
 }
