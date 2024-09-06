@@ -1,15 +1,3 @@
-namespace Azure.Monitor.OpenTelemetry.Events
-{
-    public sealed partial class ApplicationInsightsEventLogger : Azure.Monitor.OpenTelemetry.Events.IApplicationInsightsEventLogger
-    {
-        public ApplicationInsightsEventLogger(Microsoft.Extensions.Logging.ILoggerFactory loggerFactory) { }
-        public void TrackEvent(string name, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.KeyValuePair<string, object?>>? attributes = null) { }
-    }
-    public partial interface IApplicationInsightsEventLogger
-    {
-        void TrackEvent(string name, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.KeyValuePair<string, object?>>? attributes = null);
-    }
-}
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     public static partial class AzureMonitorExporterExtensions

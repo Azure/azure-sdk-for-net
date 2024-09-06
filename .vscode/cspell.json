@@ -229,6 +229,14 @@
       ]
     },
     {
+      "filename": "**/sdk/billing/**/*.cs",
+      "words": [
+        "puid",
+        "resellee",
+        "cnpj"
+      ]
+    },
+    {
       "filename": "**/sdk/billingbenefits/**/*.cs",
       "words": [
         "Hana"

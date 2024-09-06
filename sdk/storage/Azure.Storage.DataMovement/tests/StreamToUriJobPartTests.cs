@@ -129,7 +129,6 @@ namespace Azure.Storage.DataMovement.Tests
             //Arrange
             string transferId = Guid.NewGuid().ToString();
             long length = Constants.KB;
-            Mock<TransferJobInternal.QueueChunkTaskInternal> mockQueueChunkTask = MockQueueInternalTasks.GetQueueChunkTask();
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = MockQueueInternalTasks.GetPartQueueChunkTask();
 
             // Set up Destination to copy in one shot with a large chunk size and smaller total length.
@@ -166,7 +165,6 @@ namespace Azure.Storage.DataMovement.Tests
                 mockSource.Object,
                 mockDestination.Object,
                 new DataTransferOptions(),
-                mockQueueChunkTask.Object,
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
@@ -263,7 +261,6 @@ namespace Azure.Storage.DataMovement.Tests
                 source: mockSource.Object,
                 destination: mockDestination.Object);
 
-            Mock<TransferJobInternal.QueueChunkTaskInternal> mockQueueChunkTask = MockQueueInternalTasks.GetQueueChunkTask();
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = MockQueueInternalTasks.GetPartQueueChunkTask();
 
             StreamToUriTransferJob job = new(
@@ -273,7 +270,6 @@ namespace Azure.Storage.DataMovement.Tests
                 mockSource.Object,
                 mockDestination.Object,
                 new DataTransferOptions(),
-                mockQueueChunkTask.Object,
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
