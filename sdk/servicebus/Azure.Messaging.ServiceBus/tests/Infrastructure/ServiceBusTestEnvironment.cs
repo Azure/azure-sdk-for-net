@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <value>The fully qualified namespace, as contained within the associated connection string.</value>
         ///
-        public string FullyQualifiedNamespace => GetRecordedVariable("SERVICEBUS_FULLY_QUALIFIED_NAMESPACE");
+        public string FullyQualifiedNamespace => new Uri(GetRecordedVariable("SERVICEBUS_FULLY_QUALIFIED_NAMESPACE")).Host;
 
         /// <summary>
         ///   The secondary fully qualified namespace for the Service Bus namespace represented by this scope.
@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <value>The secondary fully qualified namespace, as contained within the associated connection string.</value>
         ///
-        public string SecondaryFullyQualifiedNamespace => GetRecordedVariable("SERVICEBUS_SECONDARY_FULLY_QUALIFIED_NAMESPACE");
+        public string SecondaryFullyQualifiedNamespace => new Uri(GetRecordedVariable("SERVICEBUS_SECONDARY_FULLY_QUALIFIED_NAMESPACE")).Host;
 
         /// <summary>
         ///   The premium fully qualified namespace for the Service Bus namespace represented by this scope.
@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <value>The premium fully qualified namespace, as contained within the associated connection string.</value>
         ///
-        public string PremiumFullyQualifiedNamespace => GetRecordedVariable("SERVICEBUS_PREMIUM_FULLY_QUALIFIED_NAMESPACE");
+        public string PremiumFullyQualifiedNamespace => new Uri(GetRecordedVariable("SERVICEBUS_PREMIUM_FULLY_QUALIFIED_NAMESPACE")).Host;
 
         /// <summary>
         ///   The shared access key name for the Service Bus namespace represented by this scope.
