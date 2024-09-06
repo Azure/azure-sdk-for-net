@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityInsights
             string displayName = default;
             string description = default;
             RepoType repoType = default;
-            IList<Models.ContentType> contentTypes = default;
+            IList<SourceControlContentType> contentTypes = default;
             SourceControlRepository repository = default;
             SourceControlServicePrincipal servicePrincipal = default;
             RepositoryAccess repositoryAccess = default;
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.SecurityInsights
                         }
                         if (property0.NameEquals("contentTypes"u8))
                         {
-                            List<Models.ContentType> array = new List<Models.ContentType>();
+                            List<SourceControlContentType> array = new List<SourceControlContentType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Models.ContentType(item.GetString()));
+                                array.Add(new SourceControlContentType(item.GetString()));
                             }
                             contentTypes = array;
                             continue;

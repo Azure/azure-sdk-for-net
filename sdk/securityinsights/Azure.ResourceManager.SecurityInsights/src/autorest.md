@@ -12,6 +12,13 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481
 tag: package-preview-2024-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+    - AutomationRules_CreateOrUpdate
+    - Incidents_CreateOrUpdate
+    - ThreatIntelligence_Query
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -68,6 +75,7 @@ rename-mapping:
   ApiKeyAuthModel:  SecurityInsightsApiKeyAuthModel
   ASCCheckRequirements: AscCheckRequirements
   ASCDataConnector: SecurityInsightsAscDataConnector
+  AssignmentItem: WorkspaceManagerAssignmentItem
   AssignmentItem.resourceId: -|arm-id
   AttackPattern: TiObjectKindAttackPattern
   AttackTactic: SecurityInsightsAttackTactic
@@ -83,6 +91,7 @@ rename-mapping:
   AutomationRuleTriggeringLogic: SecurityInsightsAutomationRuleTriggeringLogic
   Availability: ConnectorAvailability
   AvailabilityStatus: ConnectorAvailabilityStatus
+  AWSAuthModel: AwsAuthModel
   AwsCloudTrailDataConnector: SecurityInsightsAwsCloudTrailDataConnector
   AzureResourceEntity: SecurityInsightsAzureResourceEntity
   BillingStatistic: SecurityInsightsBillingStatistic
@@ -99,6 +108,7 @@ rename-mapping:
   ConfidenceLevel: SecurityInsightsAlertConfidenceLevel
   ConfidenceScoreStatus: SecurityInsightsAlertConfidenceScoreStatus
   Connective: ClauseConnective
+  ContentType: SourceControlContentType
   CustomizableConnectorDefinition.properties.createdTimeUtc: CreatedOn
   CustomizableConnectorDefinition.properties.lastModifiedUtc: LastModifiedOn
   CustomizableConnectorDefinition: CustomizableConnectorDefinitionData
@@ -108,6 +118,7 @@ rename-mapping:
   DataConnectorConnectBody: DataConnectorConnectContent
   DataConnectorDefinition: SecurityInsightsDataConnectorDefinition
   DataTypeState: SecurityInsightsDataTypeConnectionState
+  DCRConfiguration: DcrConfiguration
   DeliveryAction: SecurityInsightsMailMessageDeliveryAction
   DeliveryLocation: SecurityInsightsMailMessageDeliveryLocation
   Deployment: SourceControlDeployment
@@ -133,6 +144,7 @@ rename-mapping:
   EntityMappingType: SecurityInsightsAlertRuleEntityMappingType
   EntityQuery: SecurityInsightsEntityQuery
   EntityQueryTemplate: SecurityInsightsEntityQueryTemplate
+  Enum22: EntityTemplateQueryKind
   Error: PublicationFailedError
   FieldMapping: SecurityInsightsFieldMapping
   FileEntity: SecurityInsightsFileEntity

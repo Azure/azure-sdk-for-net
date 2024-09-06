@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string connectorDefinitionName = default;
             GCPAuthProperties auth = default;
             GCPRequestProperties request = default;
-            DCRConfiguration dcrConfig = default;
+            DcrConfiguration dcrConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            dcrConfig = DCRConfiguration.DeserializeDCRConfiguration(property0.Value, options);
+                            dcrConfig = DcrConfiguration.DeserializeDcrConfiguration(property0.Value, options);
                             continue;
                         }
                     }

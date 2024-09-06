@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="auth"> The auth section of the connector. </param>
         /// <param name="request"> The request section of the connector. </param>
         /// <param name="dcrConfig"> The configuration of the destination of the data. </param>
-        internal GCPDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectorDefinitionName, GCPAuthProperties auth, GCPRequestProperties request, DCRConfiguration dcrConfig) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal GCPDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectorDefinitionName, GCPAuthProperties auth, GCPRequestProperties request, DcrConfiguration dcrConfig) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             ConnectorDefinitionName = connectorDefinitionName;
             Auth = auth;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public GCPRequestProperties Request { get; set; }
         /// <summary> The configuration of the destination of the data. </summary>
         [WirePath("properties.dcrConfig")]
-        public DCRConfiguration DcrConfig { get; set; }
+        public DcrConfiguration DcrConfig { get; set; }
     }
 }

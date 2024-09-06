@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AssignmentItem : IUtf8JsonSerializable, IJsonModel<AssignmentItem>
+    public partial class WorkspaceManagerAssignmentItem : IUtf8JsonSerializable, IJsonModel<WorkspaceManagerAssignmentItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceManagerAssignmentItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AssignmentItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkspaceManagerAssignmentItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssignmentItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceManagerAssignmentItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceManagerAssignmentItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        AssignmentItem IJsonModel<AssignmentItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WorkspaceManagerAssignmentItem IJsonModel<WorkspaceManagerAssignmentItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssignmentItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceManagerAssignmentItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceManagerAssignmentItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssignmentItem(document.RootElement, options);
+            return DeserializeWorkspaceManagerAssignmentItem(document.RootElement, options);
         }
 
-        internal static AssignmentItem DeserializeAssignmentItem(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WorkspaceManagerAssignmentItem DeserializeWorkspaceManagerAssignmentItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssignmentItem(resourceId, serializedAdditionalRawData);
+            return new WorkspaceManagerAssignmentItem(resourceId, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<AssignmentItem>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WorkspaceManagerAssignmentItem>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssignmentItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceManagerAssignmentItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -134,26 +134,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceManagerAssignmentItem)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AssignmentItem IPersistableModel<AssignmentItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WorkspaceManagerAssignmentItem IPersistableModel<WorkspaceManagerAssignmentItem>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssignmentItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceManagerAssignmentItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAssignmentItem(document.RootElement, options);
+                        return DeserializeWorkspaceManagerAssignmentItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceManagerAssignmentItem)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AssignmentItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkspaceManagerAssignmentItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

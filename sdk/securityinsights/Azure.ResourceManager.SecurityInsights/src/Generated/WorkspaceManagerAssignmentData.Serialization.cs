@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights
             string targetResourceName = default;
             DateTimeOffset? lastJobEndTime = default;
             ProvisioningState? lastJobProvisioningState = default;
-            IList<AssignmentItem> items = default;
+            IList<WorkspaceManagerAssignmentItem> items = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            List<AssignmentItem> array = new List<AssignmentItem>();
+                            List<WorkspaceManagerAssignmentItem> array = new List<WorkspaceManagerAssignmentItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AssignmentItem.DeserializeAssignmentItem(item, options));
+                                array.Add(WorkspaceManagerAssignmentItem.DeserializeWorkspaceManagerAssignmentItem(item, options));
                             }
                             items = array;
                             continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 targetResourceName,
                 lastJobEndTime,
                 lastJobProvisioningState,
-                items ?? new ChangeTrackingList<AssignmentItem>(),
+                items ?? new ChangeTrackingList<WorkspaceManagerAssignmentItem>(),
                 etag,
                 serializedAdditionalRawData);
         }

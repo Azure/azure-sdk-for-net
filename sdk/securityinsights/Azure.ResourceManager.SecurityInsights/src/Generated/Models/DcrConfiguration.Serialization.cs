@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class DCRConfiguration : IUtf8JsonSerializable, IJsonModel<DCRConfiguration>
+    public partial class DcrConfiguration : IUtf8JsonSerializable, IJsonModel<DcrConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DCRConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DcrConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DCRConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DcrConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DCRConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DCRConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DcrConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        DCRConfiguration IJsonModel<DCRConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DcrConfiguration IJsonModel<DcrConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DCRConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DCRConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DcrConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDCRConfiguration(document.RootElement, options);
+            return DeserializeDcrConfiguration(document.RootElement, options);
         }
 
-        internal static DCRConfiguration DeserializeDCRConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DcrConfiguration DeserializeDcrConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DCRConfiguration(dataCollectionEndpoint, dataCollectionRuleImmutableId, streamName, serializedAdditionalRawData);
+            return new DcrConfiguration(dataCollectionEndpoint, dataCollectionRuleImmutableId, streamName, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -186,9 +186,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<DCRConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DcrConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DCRConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -197,26 +197,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DCRConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DcrConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DCRConfiguration IPersistableModel<DCRConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DcrConfiguration IPersistableModel<DcrConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DCRConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDCRConfiguration(document.RootElement, options);
+                        return DeserializeDcrConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DCRConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DcrConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DCRConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DcrConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

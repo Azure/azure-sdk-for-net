@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The configuration of the destination of the data. </summary>
-    public partial class DCRConfiguration
+    public partial class DcrConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DCRConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DcrConfiguration"/>. </summary>
         /// <param name="dataCollectionEndpoint"> Represents the data collection ingestion endpoint in log analytics. </param>
         /// <param name="dataCollectionRuleImmutableId"> The data collection rule immutable id, the rule defines the transformation and data destination. </param>
         /// <param name="streamName"> The stream we are sending the data to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpoint"/>, <paramref name="dataCollectionRuleImmutableId"/> or <paramref name="streamName"/> is null. </exception>
-        public DCRConfiguration(string dataCollectionEndpoint, string dataCollectionRuleImmutableId, string streamName)
+        public DcrConfiguration(string dataCollectionEndpoint, string dataCollectionRuleImmutableId, string streamName)
         {
             Argument.AssertNotNull(dataCollectionEndpoint, nameof(dataCollectionEndpoint));
             Argument.AssertNotNull(dataCollectionRuleImmutableId, nameof(dataCollectionRuleImmutableId));
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             StreamName = streamName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DCRConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DcrConfiguration"/>. </summary>
         /// <param name="dataCollectionEndpoint"> Represents the data collection ingestion endpoint in log analytics. </param>
         /// <param name="dataCollectionRuleImmutableId"> The data collection rule immutable id, the rule defines the transformation and data destination. </param>
         /// <param name="streamName"> The stream we are sending the data to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DCRConfiguration(string dataCollectionEndpoint, string dataCollectionRuleImmutableId, string streamName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DcrConfiguration(string dataCollectionEndpoint, string dataCollectionRuleImmutableId, string streamName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataCollectionEndpoint = dataCollectionEndpoint;
             DataCollectionRuleImmutableId = dataCollectionRuleImmutableId;
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DCRConfiguration"/> for deserialization. </summary>
-        internal DCRConfiguration()
+        /// <summary> Initializes a new instance of <see cref="DcrConfiguration"/> for deserialization. </summary>
+        internal DcrConfiguration()
         {
         }
 

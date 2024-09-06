@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="contentTypes"> Array of source control content types. </param>
         /// <param name="repository"> Repository metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="contentTypes"/> or <paramref name="repository"/> is null. </exception>
-        public SecurityInsightsSourceControlData(string displayName, RepoType repoType, IEnumerable<Models.ContentType> contentTypes, SourceControlRepository repository)
+        public SecurityInsightsSourceControlData(string displayName, RepoType repoType, IEnumerable<SourceControlContentType> contentTypes, SourceControlRepository repository)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(contentTypes, nameof(contentTypes));
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="pullRequest"> Information regarding the pull request of the source control. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? sourceControlId, SourceControlVersion? version, string displayName, string description, RepoType repoType, IList<Models.ContentType> contentTypes, SourceControlRepository repository, SourceControlServicePrincipal servicePrincipal, RepositoryAccess repositoryAccess, RepositoryResourceInfo repositoryResourceInfo, SourceControlDeploymentInfo lastDeploymentInfo, PullRequestInfo pullRequest, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? sourceControlId, SourceControlVersion? version, string displayName, string description, RepoType repoType, IList<SourceControlContentType> contentTypes, SourceControlRepository repository, SourceControlServicePrincipal servicePrincipal, RepositoryAccess repositoryAccess, RepositoryResourceInfo repositoryResourceInfo, SourceControlDeploymentInfo lastDeploymentInfo, PullRequestInfo pullRequest, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SourceControlId = sourceControlId;
             Version = version;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public RepoType RepoType { get; set; }
         /// <summary> Array of source control content types. </summary>
         [WirePath("properties.contentTypes")]
-        public IList<Models.ContentType> ContentTypes { get; }
+        public IList<SourceControlContentType> ContentTypes { get; }
         /// <summary> Repository metadata. </summary>
         [WirePath("properties.repository")]
         public SourceControlRepository Repository { get; set; }

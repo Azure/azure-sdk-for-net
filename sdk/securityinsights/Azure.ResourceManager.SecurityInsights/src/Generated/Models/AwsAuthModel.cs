@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Model for API authentication with AWS. </summary>
-    public partial class AWSAuthModel : CcpAuthConfig
+    public partial class AwsAuthModel : CcpAuthConfig
     {
-        /// <summary> Initializes a new instance of <see cref="AWSAuthModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsAuthModel"/>. </summary>
         /// <param name="roleArn"> AWS STS assume role ARN. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleArn"/> is null. </exception>
-        public AWSAuthModel(string roleArn)
+        public AwsAuthModel(string roleArn)
         {
             Argument.AssertNotNull(roleArn, nameof(roleArn));
 
@@ -24,20 +24,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             AuthType = CcpAuthType.AWS;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AWSAuthModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsAuthModel"/>. </summary>
         /// <param name="authType"> The auth type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="roleArn"> AWS STS assume role ARN. </param>
         /// <param name="externalId"> AWS STS assume role external ID. This is used to prevent the confused deputy problem: 'https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html'. </param>
-        internal AWSAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string roleArn, string externalId) : base(authType, serializedAdditionalRawData)
+        internal AwsAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string roleArn, string externalId) : base(authType, serializedAdditionalRawData)
         {
             RoleArn = roleArn;
             ExternalId = externalId;
             AuthType = authType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AWSAuthModel"/> for deserialization. </summary>
-        internal AWSAuthModel()
+        /// <summary> Initializes a new instance of <see cref="AwsAuthModel"/> for deserialization. </summary>
+        internal AwsAuthModel()
         {
         }
 

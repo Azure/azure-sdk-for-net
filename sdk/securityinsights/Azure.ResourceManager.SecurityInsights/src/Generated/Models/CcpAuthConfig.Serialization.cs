@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 switch (discriminator.GetString())
                 {
                     case "APIKey": return SecurityInsightsApiKeyAuthModel.DeserializeSecurityInsightsApiKeyAuthModel(element, options);
-                    case "AWS": return AWSAuthModel.DeserializeAWSAuthModel(element, options);
+                    case "AWS": return AwsAuthModel.DeserializeAwsAuthModel(element, options);
                     case "Basic": return BasicAuthModel.DeserializeBasicAuthModel(element, options);
                     case "GCP": return GCPAuthModel.DeserializeGCPAuthModel(element, options);
                     case "GitHub": return GitHubAuthModel.DeserializeGitHubAuthModel(element, options);

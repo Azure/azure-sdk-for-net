@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string connectorDefinitionName = default;
             CcpAuthConfig auth = default;
             RestApiPollerRequestConfig request = default;
-            DCRConfiguration dcrConfig = default;
+            DcrConfiguration dcrConfig = default;
             bool? isActive = default;
             string dataType = default;
             CcpResponseConfig response = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            dcrConfig = DCRConfiguration.DeserializeDCRConfiguration(property0.Value, options);
+                            dcrConfig = DcrConfiguration.DeserializeDcrConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isActive"u8))

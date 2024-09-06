@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentData"/>. </summary>
         public WorkspaceManagerAssignmentData()
         {
-            Items = new ChangeTrackingList<AssignmentItem>();
+            Items = new ChangeTrackingList<WorkspaceManagerAssignmentItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentData"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="items"> List of resources included in this workspace manager assignment. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceManagerAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string targetResourceName, DateTimeOffset? lastJobEndOn, ProvisioningState? lastJobProvisioningState, IList<AssignmentItem> items, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkspaceManagerAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string targetResourceName, DateTimeOffset? lastJobEndOn, ProvisioningState? lastJobProvisioningState, IList<WorkspaceManagerAssignmentItem> items, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TargetResourceName = targetResourceName;
             LastJobEndOn = lastJobEndOn;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public ProvisioningState? LastJobProvisioningState { get; }
         /// <summary> List of resources included in this workspace manager assignment. </summary>
         [WirePath("properties.items")]
-        public IList<AssignmentItem> Items { get; }
+        public IList<WorkspaceManagerAssignmentItem> Items { get; }
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }

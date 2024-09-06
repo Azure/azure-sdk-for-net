@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary>
     /// Base Model for API authentication.
     /// Please note <see cref="CcpAuthConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AWSAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
+    /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AwsAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
     /// </summary>
     public abstract partial class CcpAuthConfig
     {

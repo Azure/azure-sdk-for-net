@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, Enum22? kind)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, EntityTemplateQueryKind? kind)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, Enum22? kind)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, EntityTemplateQueryKind? kind)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EntityQueryTemplateList>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, Enum22? kind = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EntityQueryTemplateList>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, EntityTemplateQueryKind? kind = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EntityQueryTemplateList> List(string subscriptionId, string resourceGroupName, string workspaceName, Enum22? kind = null, CancellationToken cancellationToken = default)
+        public Response<EntityQueryTemplateList> List(string subscriptionId, string resourceGroupName, string workspaceName, EntityTemplateQueryKind? kind = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, Enum22? kind)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, EntityTemplateQueryKind? kind)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, Enum22? kind)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, EntityTemplateQueryKind? kind)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EntityQueryTemplateList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, Enum22? kind = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EntityQueryTemplateList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, EntityTemplateQueryKind? kind = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EntityQueryTemplateList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, Enum22? kind = null, CancellationToken cancellationToken = default)
+        public Response<EntityQueryTemplateList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, EntityTemplateQueryKind? kind = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

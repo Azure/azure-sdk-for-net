@@ -1922,9 +1922,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="pullRequest"> Information regarding the pull request of the source control. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsSourceControlData"/> instance for mocking. </returns>
-        public static SecurityInsightsSourceControlData SecurityInsightsSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? sourceControlId = null, SourceControlVersion? version = null, string displayName = null, string description = null, RepoType repoType = default, IEnumerable<ContentType> contentTypes = null, SourceControlRepository repository = null, SourceControlServicePrincipal servicePrincipal = null, RepositoryAccess repositoryAccess = null, RepositoryResourceInfo repositoryResourceInfo = null, SourceControlDeploymentInfo lastDeploymentInfo = null, PullRequestInfo pullRequest = null, ETag? etag = null)
+        public static SecurityInsightsSourceControlData SecurityInsightsSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? sourceControlId = null, SourceControlVersion? version = null, string displayName = null, string description = null, RepoType repoType = default, IEnumerable<SourceControlContentType> contentTypes = null, SourceControlRepository repository = null, SourceControlServicePrincipal servicePrincipal = null, RepositoryAccess repositoryAccess = null, RepositoryResourceInfo repositoryResourceInfo = null, SourceControlDeploymentInfo lastDeploymentInfo = null, PullRequestInfo pullRequest = null, ETag? etag = null)
         {
-            contentTypes ??= new List<ContentType>();
+            contentTypes ??= new List<SourceControlContentType>();
 
             return new SecurityInsightsSourceControlData(
                 id,
@@ -2436,9 +2436,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="items"> List of resources included in this workspace manager assignment. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerAssignmentData"/> instance for mocking. </returns>
-        public static WorkspaceManagerAssignmentData WorkspaceManagerAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string targetResourceName = null, DateTimeOffset? lastJobEndOn = null, ProvisioningState? lastJobProvisioningState = null, IEnumerable<AssignmentItem> items = null, ETag? etag = null)
+        public static WorkspaceManagerAssignmentData WorkspaceManagerAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string targetResourceName = null, DateTimeOffset? lastJobEndOn = null, ProvisioningState? lastJobProvisioningState = null, IEnumerable<WorkspaceManagerAssignmentItem> items = null, ETag? etag = null)
         {
-            items ??= new List<AssignmentItem>();
+            items ??= new List<WorkspaceManagerAssignmentItem>();
 
             return new WorkspaceManagerAssignmentData(
                 id,
@@ -4239,7 +4239,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="auth">
         /// The a authentication model.
         /// Please note <see cref="CcpAuthConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AWSAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
+        /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AwsAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
         /// </param>
         /// <param name="request"> The request configuration. </param>
         /// <param name="dcrConfig"> The DCR related properties. </param>
@@ -4249,7 +4249,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="paging"> The paging configuration. </param>
         /// <param name="addOnAttributes"> The add on attributes. The key name will become attribute name (a column) and the value will become the attribute value in the payload. </param>
         /// <returns> A new <see cref="Models.RestApiPollerDataConnector"/> instance for mocking. </returns>
-        public static RestApiPollerDataConnector RestApiPollerDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string connectorDefinitionName = null, CcpAuthConfig auth = null, RestApiPollerRequestConfig request = null, DCRConfiguration dcrConfig = null, bool? isActive = null, string dataType = null, CcpResponseConfig response = null, RestApiPollerRequestPagingConfig paging = null, IDictionary<string, string> addOnAttributes = null)
+        public static RestApiPollerDataConnector RestApiPollerDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string connectorDefinitionName = null, CcpAuthConfig auth = null, RestApiPollerRequestConfig request = null, DcrConfiguration dcrConfig = null, bool? isActive = null, string dataType = null, CcpResponseConfig response = null, RestApiPollerRequestPagingConfig paging = null, IDictionary<string, string> addOnAttributes = null)
         {
             addOnAttributes ??= new Dictionary<string, string>();
 
@@ -4283,7 +4283,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="request"> The request section of the connector. </param>
         /// <param name="dcrConfig"> The configuration of the destination of the data. </param>
         /// <returns> A new <see cref="Models.GCPDataConnector"/> instance for mocking. </returns>
-        public static GCPDataConnector GCPDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string connectorDefinitionName = null, GCPAuthProperties auth = null, GCPRequestProperties request = null, DCRConfiguration dcrConfig = null)
+        public static GCPDataConnector GCPDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string connectorDefinitionName = null, GCPAuthProperties auth = null, GCPRequestProperties request = null, DcrConfiguration dcrConfig = null)
         {
             return new GCPDataConnector(
                 id,

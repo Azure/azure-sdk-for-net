@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> An entity describing a content item. </summary>
-    public partial class AssignmentItem
+    public partial class WorkspaceManagerAssignmentItem
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssignmentItem"/>. </summary>
-        public AssignmentItem()
+        /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentItem"/>. </summary>
+        public WorkspaceManagerAssignmentItem()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssignmentItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentItem"/>. </summary>
         /// <param name="resourceId"> The resource id of the content item. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssignmentItem(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkspaceManagerAssignmentItem(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;

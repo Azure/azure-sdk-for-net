@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AWSAuthModel : IUtf8JsonSerializable, IJsonModel<AWSAuthModel>
+    public partial class AwsAuthModel : IUtf8JsonSerializable, IJsonModel<AwsAuthModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AWSAuthModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsAuthModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AWSAuthModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AwsAuthModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AWSAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AwsAuthModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AWSAuthModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsAuthModel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        AWSAuthModel IJsonModel<AWSAuthModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AwsAuthModel IJsonModel<AwsAuthModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AWSAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AwsAuthModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AWSAuthModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsAuthModel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAWSAuthModel(document.RootElement, options);
+            return DeserializeAwsAuthModel(document.RootElement, options);
         }
 
-        internal static AWSAuthModel DeserializeAWSAuthModel(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AwsAuthModel DeserializeAwsAuthModel(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AWSAuthModel(type, serializedAdditionalRawData, roleArn, externalId);
+            return new AwsAuthModel(type, serializedAdditionalRawData, roleArn, externalId);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -178,9 +178,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<AWSAuthModel>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AwsAuthModel>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AWSAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AwsAuthModel>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -189,26 +189,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AWSAuthModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsAuthModel)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AWSAuthModel IPersistableModel<AWSAuthModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AwsAuthModel IPersistableModel<AwsAuthModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AWSAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AwsAuthModel>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAWSAuthModel(document.RootElement, options);
+                        return DeserializeAwsAuthModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AWSAuthModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsAuthModel)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AWSAuthModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AwsAuthModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

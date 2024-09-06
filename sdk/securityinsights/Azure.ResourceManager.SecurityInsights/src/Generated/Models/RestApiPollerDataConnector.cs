@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="auth">
         /// The a authentication model.
         /// Please note <see cref="CcpAuthConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AWSAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
+        /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AwsAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
         /// </param>
         /// <param name="request"> The request configuration. </param>
         /// <param name="dcrConfig"> The DCR related properties. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="response"> The response configuration. </param>
         /// <param name="paging"> The paging configuration. </param>
         /// <param name="addOnAttributes"> The add on attributes. The key name will become attribute name (a column) and the value will become the attribute value in the payload. </param>
-        internal RestApiPollerDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectorDefinitionName, CcpAuthConfig auth, RestApiPollerRequestConfig request, DCRConfiguration dcrConfig, bool? isActive, string dataType, CcpResponseConfig response, RestApiPollerRequestPagingConfig paging, IDictionary<string, string> addOnAttributes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal RestApiPollerDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectorDefinitionName, CcpAuthConfig auth, RestApiPollerRequestConfig request, DcrConfiguration dcrConfig, bool? isActive, string dataType, CcpResponseConfig response, RestApiPollerRequestPagingConfig paging, IDictionary<string, string> addOnAttributes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             ConnectorDefinitionName = connectorDefinitionName;
             Auth = auth;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary>
         /// The a authentication model.
         /// Please note <see cref="CcpAuthConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AWSAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
+        /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AwsAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
         /// </summary>
         [WirePath("properties.auth")]
         public CcpAuthConfig Auth { get; set; }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public RestApiPollerRequestConfig Request { get; set; }
         /// <summary> The DCR related properties. </summary>
         [WirePath("properties.dcrConfig")]
-        public DCRConfiguration DcrConfig { get; set; }
+        public DcrConfiguration DcrConfig { get; set; }
         /// <summary> Indicates whether the connector is active or not. </summary>
         [WirePath("properties.isActive")]
         public bool? IsActive { get; set; }
