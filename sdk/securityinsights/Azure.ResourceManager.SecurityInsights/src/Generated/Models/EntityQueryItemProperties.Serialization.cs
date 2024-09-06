@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -186,6 +188,120 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new EntityQueryItemProperties(dataTypes ?? new ChangeTrackingList<EntityQueryItemPropertiesDataTypesItem>(), inputEntityType, requiredInputFieldsSets ?? new ChangeTrackingList<IList<string>>(), entitiesFilter, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataTypes))
+                {
+                    if (DataTypes.Any())
+                    {
+                        builder.Append("  dataTypes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DataTypes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dataTypes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InputEntityType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  inputEntityType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InputEntityType))
+                {
+                    builder.Append("  inputEntityType: ");
+                    builder.AppendLine($"'{InputEntityType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredInputFieldsSets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requiredInputFieldsSets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RequiredInputFieldsSets))
+                {
+                    if (RequiredInputFieldsSets.Any())
+                    {
+                        builder.Append("  requiredInputFieldsSets: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RequiredInputFieldsSets)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine("[");
+                            foreach (var item0 in item)
+                            {
+                                if (item0 == null)
+                                {
+                                    builder.Append("null");
+                                    continue;
+                                }
+                                if (item0.Contains(Environment.NewLine))
+                                {
+                                    builder.AppendLine("    '''");
+                                    builder.AppendLine($"{item0}'''");
+                                }
+                                else
+                                {
+                                    builder.AppendLine($"    '{item0}'");
+                                }
+                            }
+                            builder.AppendLine("  ]");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EntitiesFilter), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  entitiesFilter: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EntitiesFilter))
+                {
+                    builder.Append("  entitiesFilter: ");
+                    builder.AppendLine($"'{EntitiesFilter.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EntityQueryItemProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EntityQueryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -194,6 +310,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EntityQueryItemProperties)} does not support writing '{options.Format}' format.");
             }

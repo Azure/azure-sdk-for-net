@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The severity for alerts created by this alert rule.
-    /// Serialized Name: AttackTactic
-    /// </summary>
+    /// <summary> The severity for alerts created by this alert rule. </summary>
     public readonly partial struct SecurityInsightsAttackTactic : IEquatable<SecurityInsightsAttackTactic>
     {
         private readonly string _value;
@@ -43,90 +40,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ImpairProcessControlValue = "ImpairProcessControl";
         private const string InhibitResponseFunctionValue = "InhibitResponseFunction";
 
-        /// <summary>
-        /// Reconnaissance
-        /// Serialized Name: AttackTactic.Reconnaissance
-        /// </summary>
+        /// <summary> Reconnaissance. </summary>
         public static SecurityInsightsAttackTactic Reconnaissance { get; } = new SecurityInsightsAttackTactic(ReconnaissanceValue);
-        /// <summary>
-        /// ResourceDevelopment
-        /// Serialized Name: AttackTactic.ResourceDevelopment
-        /// </summary>
+        /// <summary> ResourceDevelopment. </summary>
         public static SecurityInsightsAttackTactic ResourceDevelopment { get; } = new SecurityInsightsAttackTactic(ResourceDevelopmentValue);
-        /// <summary>
-        /// InitialAccess
-        /// Serialized Name: AttackTactic.InitialAccess
-        /// </summary>
+        /// <summary> InitialAccess. </summary>
         public static SecurityInsightsAttackTactic InitialAccess { get; } = new SecurityInsightsAttackTactic(InitialAccessValue);
-        /// <summary>
-        /// Execution
-        /// Serialized Name: AttackTactic.Execution
-        /// </summary>
+        /// <summary> Execution. </summary>
         public static SecurityInsightsAttackTactic Execution { get; } = new SecurityInsightsAttackTactic(ExecutionValue);
-        /// <summary>
-        /// Persistence
-        /// Serialized Name: AttackTactic.Persistence
-        /// </summary>
+        /// <summary> Persistence. </summary>
         public static SecurityInsightsAttackTactic Persistence { get; } = new SecurityInsightsAttackTactic(PersistenceValue);
-        /// <summary>
-        /// PrivilegeEscalation
-        /// Serialized Name: AttackTactic.PrivilegeEscalation
-        /// </summary>
+        /// <summary> PrivilegeEscalation. </summary>
         public static SecurityInsightsAttackTactic PrivilegeEscalation { get; } = new SecurityInsightsAttackTactic(PrivilegeEscalationValue);
-        /// <summary>
-        /// DefenseEvasion
-        /// Serialized Name: AttackTactic.DefenseEvasion
-        /// </summary>
+        /// <summary> DefenseEvasion. </summary>
         public static SecurityInsightsAttackTactic DefenseEvasion { get; } = new SecurityInsightsAttackTactic(DefenseEvasionValue);
-        /// <summary>
-        /// CredentialAccess
-        /// Serialized Name: AttackTactic.CredentialAccess
-        /// </summary>
+        /// <summary> CredentialAccess. </summary>
         public static SecurityInsightsAttackTactic CredentialAccess { get; } = new SecurityInsightsAttackTactic(CredentialAccessValue);
-        /// <summary>
-        /// Discovery
-        /// Serialized Name: AttackTactic.Discovery
-        /// </summary>
+        /// <summary> Discovery. </summary>
         public static SecurityInsightsAttackTactic Discovery { get; } = new SecurityInsightsAttackTactic(DiscoveryValue);
-        /// <summary>
-        /// LateralMovement
-        /// Serialized Name: AttackTactic.LateralMovement
-        /// </summary>
+        /// <summary> LateralMovement. </summary>
         public static SecurityInsightsAttackTactic LateralMovement { get; } = new SecurityInsightsAttackTactic(LateralMovementValue);
-        /// <summary>
-        /// Collection
-        /// Serialized Name: AttackTactic.Collection
-        /// </summary>
+        /// <summary> Collection. </summary>
         public static SecurityInsightsAttackTactic Collection { get; } = new SecurityInsightsAttackTactic(CollectionValue);
-        /// <summary>
-        /// Exfiltration
-        /// Serialized Name: AttackTactic.Exfiltration
-        /// </summary>
+        /// <summary> Exfiltration. </summary>
         public static SecurityInsightsAttackTactic Exfiltration { get; } = new SecurityInsightsAttackTactic(ExfiltrationValue);
-        /// <summary>
-        /// CommandAndControl
-        /// Serialized Name: AttackTactic.CommandAndControl
-        /// </summary>
+        /// <summary> CommandAndControl. </summary>
         public static SecurityInsightsAttackTactic CommandAndControl { get; } = new SecurityInsightsAttackTactic(CommandAndControlValue);
-        /// <summary>
-        /// Impact
-        /// Serialized Name: AttackTactic.Impact
-        /// </summary>
+        /// <summary> Impact. </summary>
         public static SecurityInsightsAttackTactic Impact { get; } = new SecurityInsightsAttackTactic(ImpactValue);
-        /// <summary>
-        /// PreAttack
-        /// Serialized Name: AttackTactic.PreAttack
-        /// </summary>
+        /// <summary> PreAttack. </summary>
         public static SecurityInsightsAttackTactic PreAttack { get; } = new SecurityInsightsAttackTactic(PreAttackValue);
-        /// <summary>
-        /// ImpairProcessControl
-        /// Serialized Name: AttackTactic.ImpairProcessControl
-        /// </summary>
+        /// <summary> ImpairProcessControl. </summary>
         public static SecurityInsightsAttackTactic ImpairProcessControl { get; } = new SecurityInsightsAttackTactic(ImpairProcessControlValue);
-        /// <summary>
-        /// InhibitResponseFunction
-        /// Serialized Name: AttackTactic.InhibitResponseFunction
-        /// </summary>
+        /// <summary> InhibitResponseFunction. </summary>
         public static SecurityInsightsAttackTactic InhibitResponseFunction { get; } = new SecurityInsightsAttackTactic(InhibitResponseFunctionValue);
         /// <summary> Determines if two <see cref="SecurityInsightsAttackTactic"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAttackTactic left, SecurityInsightsAttackTactic right) => left.Equals(right);

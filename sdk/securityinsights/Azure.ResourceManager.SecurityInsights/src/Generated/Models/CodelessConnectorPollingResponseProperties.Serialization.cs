@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -132,6 +134,119 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new CodelessConnectorPollingResponseProperties(eventsJsonPaths, successStatusJsonPath, successStatusValue, isGzipCompressed, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventsJsonPaths), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  eventsJsonPaths: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EventsJsonPaths))
+                {
+                    if (EventsJsonPaths.Any())
+                    {
+                        builder.Append("  eventsJsonPaths: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EventsJsonPaths)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessStatusJsonPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  successStatusJsonPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SuccessStatusJsonPath))
+                {
+                    builder.Append("  successStatusJsonPath: ");
+                    if (SuccessStatusJsonPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SuccessStatusJsonPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SuccessStatusJsonPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessStatusValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  successStatusValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SuccessStatusValue))
+                {
+                    builder.Append("  successStatusValue: ");
+                    if (SuccessStatusValue.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SuccessStatusValue}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SuccessStatusValue}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGzipCompressed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isGzipCompressed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsGzipCompressed))
+                {
+                    builder.Append("  isGzipCompressed: ");
+                    var boolValue = IsGzipCompressed.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CodelessConnectorPollingResponseProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,6 +255,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CodelessConnectorPollingResponseProperties)} does not support writing '{options.Format}' format.");
             }

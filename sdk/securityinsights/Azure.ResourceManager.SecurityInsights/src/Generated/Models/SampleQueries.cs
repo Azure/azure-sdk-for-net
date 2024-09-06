@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The sample queries for the connector
-    /// Serialized Name: SampleQueries
-    /// </summary>
+    /// <summary> The sample queries for the connector. </summary>
     public partial class SampleQueries
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SampleQueries"/>. </summary>
-        /// <param name="description">
-        /// The sample query description
-        /// Serialized Name: SampleQueries.description
-        /// </param>
-        /// <param name="query">
-        /// the sample query
-        /// Serialized Name: SampleQueries.query
-        /// </param>
+        /// <param name="description"> The sample query description. </param>
+        /// <param name="query"> the sample query. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SampleQueries(string description, string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The sample query description
-        /// Serialized Name: SampleQueries.description
-        /// </summary>
+        /// <summary> The sample query description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
-        /// <summary>
-        /// the sample query
-        /// Serialized Name: SampleQueries.query
-        /// </summary>
+        /// <summary> the sample query. </summary>
+        [WirePath("query")]
         public string Query { get; set; }
     }
 }

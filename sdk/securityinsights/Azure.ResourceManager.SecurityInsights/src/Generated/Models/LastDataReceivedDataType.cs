@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Data type for last data received
-    /// Serialized Name: LastDataReceivedDataType
-    /// </summary>
+    /// <summary> Data type for last data received. </summary>
     public partial class LastDataReceivedDataType
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LastDataReceivedDataType"/>. </summary>
-        /// <param name="name">
-        /// Name of the data type to show in the graph. can be use with {{graphQueriesTableName}} placeholder
-        /// Serialized Name: LastDataReceivedDataType.name
-        /// </param>
-        /// <param name="lastDataReceivedQuery">
-        /// Query for indicate last data received
-        /// Serialized Name: LastDataReceivedDataType.lastDataReceivedQuery
-        /// </param>
+        /// <param name="name"> Name of the data type to show in the graph. can be use with {{graphQueriesTableName}} placeholder. </param>
+        /// <param name="lastDataReceivedQuery"> Query for indicate last data received. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LastDataReceivedDataType(string name, string lastDataReceivedQuery, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the data type to show in the graph. can be use with {{graphQueriesTableName}} placeholder
-        /// Serialized Name: LastDataReceivedDataType.name
-        /// </summary>
+        /// <summary> Name of the data type to show in the graph. can be use with {{graphQueriesTableName}} placeholder. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Query for indicate last data received
-        /// Serialized Name: LastDataReceivedDataType.lastDataReceivedQuery
-        /// </summary>
+        /// <summary> Query for indicate last data received. </summary>
+        [WirePath("lastDataReceivedQuery")]
         public string LastDataReceivedQuery { get; set; }
     }
 }

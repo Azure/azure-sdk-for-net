@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The hash algorithm type.
-    /// Serialized Name: FileHashAlgorithm
-    /// </summary>
+    /// <summary> The hash algorithm type. </summary>
     public readonly partial struct SecurityInsightsFileHashAlgorithm : IEquatable<SecurityInsightsFileHashAlgorithm>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string Sha256Value = "SHA256";
         private const string Sha256ACValue = "SHA256AC";
 
-        /// <summary>
-        /// Unknown hash algorithm
-        /// Serialized Name: FileHashAlgorithm.Unknown
-        /// </summary>
+        /// <summary> Unknown hash algorithm. </summary>
         public static SecurityInsightsFileHashAlgorithm Unknown { get; } = new SecurityInsightsFileHashAlgorithm(UnknownValue);
-        /// <summary>
-        /// MD5 hash type
-        /// Serialized Name: FileHashAlgorithm.MD5
-        /// </summary>
+        /// <summary> MD5 hash type. </summary>
         public static SecurityInsightsFileHashAlgorithm MD5 { get; } = new SecurityInsightsFileHashAlgorithm(MD5Value);
-        /// <summary>
-        /// SHA1 hash type
-        /// Serialized Name: FileHashAlgorithm.SHA1
-        /// </summary>
+        /// <summary> SHA1 hash type. </summary>
         public static SecurityInsightsFileHashAlgorithm Sha1 { get; } = new SecurityInsightsFileHashAlgorithm(Sha1Value);
-        /// <summary>
-        /// SHA256 hash type
-        /// Serialized Name: FileHashAlgorithm.SHA256
-        /// </summary>
+        /// <summary> SHA256 hash type. </summary>
         public static SecurityInsightsFileHashAlgorithm Sha256 { get; } = new SecurityInsightsFileHashAlgorithm(Sha256Value);
-        /// <summary>
-        /// SHA256 Authenticode hash type
-        /// Serialized Name: FileHashAlgorithm.SHA256AC
-        /// </summary>
+        /// <summary> SHA256 Authenticode hash type. </summary>
         public static SecurityInsightsFileHashAlgorithm Sha256AC { get; } = new SecurityInsightsFileHashAlgorithm(Sha256ACValue);
         /// <summary> Determines if two <see cref="SecurityInsightsFileHashAlgorithm"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsFileHashAlgorithm left, SecurityInsightsFileHashAlgorithm right) => left.Equals(right);

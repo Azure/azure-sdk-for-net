@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Google Cloud Platform auth section properties.
-    /// Serialized Name: GCPAuthProperties
-    /// </summary>
+    /// <summary> Google Cloud Platform auth section properties. </summary>
     public partial class GCPAuthProperties
     {
         /// <summary>
@@ -49,18 +46,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GCPAuthProperties"/>. </summary>
-        /// <param name="serviceAccountEmail">
-        /// The service account that is used to access the GCP project.
-        /// Serialized Name: GCPAuthProperties.serviceAccountEmail
-        /// </param>
-        /// <param name="projectNumber">
-        /// The GCP project number.
-        /// Serialized Name: GCPAuthProperties.projectNumber
-        /// </param>
-        /// <param name="workloadIdentityProviderId">
-        /// The workload identity provider id that is used to gain access to the GCP project.
-        /// Serialized Name: GCPAuthProperties.workloadIdentityProviderId
-        /// </param>
+        /// <param name="serviceAccountEmail"> The service account that is used to access the GCP project. </param>
+        /// <param name="projectNumber"> The GCP project number. </param>
+        /// <param name="workloadIdentityProviderId"> The workload identity provider id that is used to gain access to the GCP project. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceAccountEmail"/>, <paramref name="projectNumber"/> or <paramref name="workloadIdentityProviderId"/> is null. </exception>
         public GCPAuthProperties(string serviceAccountEmail, string projectNumber, string workloadIdentityProviderId)
         {
@@ -74,18 +62,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GCPAuthProperties"/>. </summary>
-        /// <param name="serviceAccountEmail">
-        /// The service account that is used to access the GCP project.
-        /// Serialized Name: GCPAuthProperties.serviceAccountEmail
-        /// </param>
-        /// <param name="projectNumber">
-        /// The GCP project number.
-        /// Serialized Name: GCPAuthProperties.projectNumber
-        /// </param>
-        /// <param name="workloadIdentityProviderId">
-        /// The workload identity provider id that is used to gain access to the GCP project.
-        /// Serialized Name: GCPAuthProperties.workloadIdentityProviderId
-        /// </param>
+        /// <param name="serviceAccountEmail"> The service account that is used to access the GCP project. </param>
+        /// <param name="projectNumber"> The GCP project number. </param>
+        /// <param name="workloadIdentityProviderId"> The workload identity provider id that is used to gain access to the GCP project. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GCPAuthProperties(string serviceAccountEmail, string projectNumber, string workloadIdentityProviderId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -100,20 +79,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The service account that is used to access the GCP project.
-        /// Serialized Name: GCPAuthProperties.serviceAccountEmail
-        /// </summary>
+        /// <summary> The service account that is used to access the GCP project. </summary>
+        [WirePath("serviceAccountEmail")]
         public string ServiceAccountEmail { get; set; }
-        /// <summary>
-        /// The GCP project number.
-        /// Serialized Name: GCPAuthProperties.projectNumber
-        /// </summary>
+        /// <summary> The GCP project number. </summary>
+        [WirePath("projectNumber")]
         public string ProjectNumber { get; set; }
-        /// <summary>
-        /// The workload identity provider id that is used to gain access to the GCP project.
-        /// Serialized Name: GCPAuthProperties.workloadIdentityProviderId
-        /// </summary>
+        /// <summary> The workload identity provider id that is used to gain access to the GCP project. </summary>
+        [WirePath("workloadIdentityProviderId")]
         public string WorkloadIdentityProviderId { get; set; }
     }
 }

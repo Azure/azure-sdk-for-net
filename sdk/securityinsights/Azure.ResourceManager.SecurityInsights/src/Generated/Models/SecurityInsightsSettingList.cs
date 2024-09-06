@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List of all the settings.
-    /// Serialized Name: SettingList
-    /// </summary>
+    /// <summary> List of all the settings. </summary>
     internal partial class SecurityInsightsSettingList
     {
         /// <summary>
@@ -52,7 +49,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsSettingList"/>. </summary>
         /// <param name="value">
         /// Array of settings.
-        /// Serialized Name: SettingList.value
         /// Please note <see cref="SecurityInsightsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="EntityAnalytics"/>, <see cref="EyesOn"/> and <see cref="UebaSettings"/>.
         /// </param>
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsSettingList"/>. </summary>
         /// <param name="value">
         /// Array of settings.
-        /// Serialized Name: SettingList.value
         /// Please note <see cref="SecurityInsightsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="EntityAnalytics"/>, <see cref="EyesOn"/> and <see cref="UebaSettings"/>.
         /// </param>
@@ -85,10 +80,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// Array of settings.
-        /// Serialized Name: SettingList.value
         /// Please note <see cref="SecurityInsightsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="EntityAnalytics"/>, <see cref="EyesOn"/> and <see cref="UebaSettings"/>.
         /// </summary>
+        [WirePath("value")]
         public IReadOnlyList<SecurityInsightsSettingData> Value { get; }
     }
 }

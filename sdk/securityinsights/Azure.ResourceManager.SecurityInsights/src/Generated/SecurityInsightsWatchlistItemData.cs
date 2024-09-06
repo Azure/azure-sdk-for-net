@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsWatchlistItem data model.
     /// Represents a Watchlist item in Azure Security Insights.
-    /// Serialized Name: WatchlistItem
     /// </summary>
     public partial class SecurityInsightsWatchlistItemData : ResourceData
     {
@@ -64,50 +63,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="watchlistItemType">
-        /// The type of the watchlist item
-        /// Serialized Name: WatchlistItem.properties.watchlistItemType
-        /// </param>
-        /// <param name="watchlistItemId">
-        /// The id (a Guid) of the watchlist item
-        /// Serialized Name: WatchlistItem.properties.watchlistItemId
-        /// </param>
-        /// <param name="tenantId">
-        /// The tenantId to which the watchlist item belongs to
-        /// Serialized Name: WatchlistItem.properties.tenantId
-        /// </param>
-        /// <param name="isDeleted">
-        /// A flag that indicates if the watchlist item is deleted or not
-        /// Serialized Name: WatchlistItem.properties.isDeleted
-        /// </param>
-        /// <param name="createdOn">
-        /// The time the watchlist item was created
-        /// Serialized Name: WatchlistItem.properties.created
-        /// </param>
-        /// <param name="updatedOn">
-        /// The last time the watchlist item was updated
-        /// Serialized Name: WatchlistItem.properties.updated
-        /// </param>
-        /// <param name="createdBy">
-        /// Describes a user that created the watchlist item
-        /// Serialized Name: WatchlistItem.properties.createdBy
-        /// </param>
-        /// <param name="updatedBy">
-        /// Describes a user that updated the watchlist item
-        /// Serialized Name: WatchlistItem.properties.updatedBy
-        /// </param>
-        /// <param name="itemsKeyValueDictionary">
-        /// key-value pairs for a watchlist item
-        /// Serialized Name: WatchlistItem.properties.itemsKeyValue
-        /// </param>
-        /// <param name="entityMappingDictionary">
-        /// key-value pairs for a watchlist item entity mapping
-        /// Serialized Name: WatchlistItem.properties.entityMapping
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="watchlistItemType"> The type of the watchlist item. </param>
+        /// <param name="watchlistItemId"> The id (a Guid) of the watchlist item. </param>
+        /// <param name="tenantId"> The tenantId to which the watchlist item belongs to. </param>
+        /// <param name="isDeleted"> A flag that indicates if the watchlist item is deleted or not. </param>
+        /// <param name="createdOn"> The time the watchlist item was created. </param>
+        /// <param name="updatedOn"> The last time the watchlist item was updated. </param>
+        /// <param name="createdBy"> Describes a user that created the watchlist item. </param>
+        /// <param name="updatedBy"> Describes a user that updated the watchlist item. </param>
+        /// <param name="itemsKeyValueDictionary"> key-value pairs for a watchlist item. </param>
+        /// <param name="entityMappingDictionary"> key-value pairs for a watchlist item entity mapping. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsWatchlistItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string watchlistItemType, string watchlistItemId, Guid? tenantId, bool? isDeleted, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, SecurityInsightsUserInfo createdBy, SecurityInsightsUserInfo updatedBy, IDictionary<string, BinaryData> itemsKeyValueDictionary, IDictionary<string, BinaryData> entityMappingDictionary, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -125,49 +91,32 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of the watchlist item
-        /// Serialized Name: WatchlistItem.properties.watchlistItemType
-        /// </summary>
+        /// <summary> The type of the watchlist item. </summary>
+        [WirePath("properties.watchlistItemType")]
         public string WatchlistItemType { get; set; }
-        /// <summary>
-        /// The id (a Guid) of the watchlist item
-        /// Serialized Name: WatchlistItem.properties.watchlistItemId
-        /// </summary>
+        /// <summary> The id (a Guid) of the watchlist item. </summary>
+        [WirePath("properties.watchlistItemId")]
         public string WatchlistItemId { get; set; }
-        /// <summary>
-        /// The tenantId to which the watchlist item belongs to
-        /// Serialized Name: WatchlistItem.properties.tenantId
-        /// </summary>
+        /// <summary> The tenantId to which the watchlist item belongs to. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
-        /// <summary>
-        /// A flag that indicates if the watchlist item is deleted or not
-        /// Serialized Name: WatchlistItem.properties.isDeleted
-        /// </summary>
+        /// <summary> A flag that indicates if the watchlist item is deleted or not. </summary>
+        [WirePath("properties.isDeleted")]
         public bool? IsDeleted { get; set; }
-        /// <summary>
-        /// The time the watchlist item was created
-        /// Serialized Name: WatchlistItem.properties.created
-        /// </summary>
+        /// <summary> The time the watchlist item was created. </summary>
+        [WirePath("properties.created")]
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// The last time the watchlist item was updated
-        /// Serialized Name: WatchlistItem.properties.updated
-        /// </summary>
+        /// <summary> The last time the watchlist item was updated. </summary>
+        [WirePath("properties.updated")]
         public DateTimeOffset? UpdatedOn { get; set; }
-        /// <summary>
-        /// Describes a user that created the watchlist item
-        /// Serialized Name: WatchlistItem.properties.createdBy
-        /// </summary>
+        /// <summary> Describes a user that created the watchlist item. </summary>
+        [WirePath("properties.createdBy")]
         public SecurityInsightsUserInfo CreatedBy { get; set; }
-        /// <summary>
-        /// Describes a user that updated the watchlist item
-        /// Serialized Name: WatchlistItem.properties.updatedBy
-        /// </summary>
+        /// <summary> Describes a user that updated the watchlist item. </summary>
+        [WirePath("properties.updatedBy")]
         public SecurityInsightsUserInfo UpdatedBy { get; set; }
         /// <summary>
         /// key-value pairs for a watchlist item
-        /// Serialized Name: WatchlistItem.properties.itemsKeyValue
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -196,10 +145,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.itemsKeyValue")]
         public IDictionary<string, BinaryData> ItemsKeyValueDictionary { get; }
         /// <summary>
         /// key-value pairs for a watchlist item entity mapping
-        /// Serialized Name: WatchlistItem.properties.entityMapping
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -228,11 +177,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.entityMapping")]
         public IDictionary<string, BinaryData> EntityMappingDictionary { get; }
-        /// <summary>
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </summary>
+        /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

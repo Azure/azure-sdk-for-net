@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Anomaly Security ML Analytics Settings
-    /// Serialized Name: AnomalySecurityMLAnalyticsSettings
-    /// </summary>
+    /// <summary> Represents Anomaly Security ML Analytics Settings. </summary>
     public partial class AnomalySecurityMLAnalyticsSettings : SecurityMLAnalyticsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="AnomalySecurityMLAnalyticsSettings"/>. </summary>
@@ -32,71 +29,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of security ML Analytics Settings
-        /// Serialized Name: SecurityMLAnalyticsSetting.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The kind of security ML Analytics Settings. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="description">
-        /// The description of the SecurityMLAnalyticsSettings.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.description
-        /// </param>
-        /// <param name="displayName">
-        /// The display name for settings created by this SecurityMLAnalyticsSettings.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.displayName
-        /// </param>
-        /// <param name="isEnabled">
-        /// Determines whether this settings is enabled or disabled.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.enabled
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// The last time that this SecurityMLAnalyticsSettings has been modified.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.lastModifiedUtc
-        /// </param>
-        /// <param name="requiredDataConnectors">
-        /// The required data sources for this SecurityMLAnalyticsSettings
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.requiredDataConnectors
-        /// </param>
-        /// <param name="tactics">
-        /// The tactics of the SecurityMLAnalyticsSettings
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.tactics
-        /// </param>
-        /// <param name="techniques">
-        /// The techniques of the SecurityMLAnalyticsSettings
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.techniques
-        /// </param>
-        /// <param name="anomalyVersion">
-        /// The anomaly version of the AnomalySecurityMLAnalyticsSettings.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.anomalyVersion
-        /// </param>
-        /// <param name="customizableObservations">
-        /// The customizable observations of the AnomalySecurityMLAnalyticsSettings.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.customizableObservations
-        /// </param>
-        /// <param name="frequency">
-        /// The frequency that this SecurityMLAnalyticsSettings will be run.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.frequency
-        /// </param>
-        /// <param name="settingsStatus">
-        /// The anomaly SecurityMLAnalyticsSettings status
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.settingsStatus
-        /// </param>
-        /// <param name="isDefaultSettings">
-        /// Determines whether this anomaly security ml analytics settings is a default settings
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.isDefaultSettings
-        /// </param>
-        /// <param name="anomalySettingsVersion">
-        /// The anomaly settings version of the Anomaly security ml analytics settings that dictates whether job version gets updated or not.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.anomalySettingsVersion
-        /// </param>
-        /// <param name="settingsDefinitionId">
-        /// The anomaly settings definition Id
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.settingsDefinitionId
-        /// </param>
+        /// <param name="description"> The description of the SecurityMLAnalyticsSettings. </param>
+        /// <param name="displayName"> The display name for settings created by this SecurityMLAnalyticsSettings. </param>
+        /// <param name="isEnabled"> Determines whether this settings is enabled or disabled. </param>
+        /// <param name="lastModifiedOn"> The last time that this SecurityMLAnalyticsSettings has been modified. </param>
+        /// <param name="requiredDataConnectors"> The required data sources for this SecurityMLAnalyticsSettings. </param>
+        /// <param name="tactics"> The tactics of the SecurityMLAnalyticsSettings. </param>
+        /// <param name="techniques"> The techniques of the SecurityMLAnalyticsSettings. </param>
+        /// <param name="anomalyVersion"> The anomaly version of the AnomalySecurityMLAnalyticsSettings. </param>
+        /// <param name="customizableObservations"> The customizable observations of the AnomalySecurityMLAnalyticsSettings. </param>
+        /// <param name="frequency"> The frequency that this SecurityMLAnalyticsSettings will be run. </param>
+        /// <param name="settingsStatus"> The anomaly SecurityMLAnalyticsSettings status. </param>
+        /// <param name="isDefaultSettings"> Determines whether this anomaly security ml analytics settings is a default settings. </param>
+        /// <param name="anomalySettingsVersion"> The anomaly settings version of the Anomaly security ml analytics settings that dictates whether job version gets updated or not. </param>
+        /// <param name="settingsDefinitionId"> The anomaly settings definition Id. </param>
         internal AnomalySecurityMLAnalyticsSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, string anomalyVersion, BinaryData customizableObservations, TimeSpan? frequency, AnomalySecurityMLAnalyticsSettingsStatus? settingsStatus, bool? isDefaultSettings, int? anomalySettingsVersion, Guid? settingsDefinitionId) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Description = description;
@@ -116,49 +65,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The description of the SecurityMLAnalyticsSettings.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.description
-        /// </summary>
+        /// <summary> The description of the SecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// The display name for settings created by this SecurityMLAnalyticsSettings.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.displayName
-        /// </summary>
+        /// <summary> The display name for settings created by this SecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Determines whether this settings is enabled or disabled.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.enabled
-        /// </summary>
+        /// <summary> Determines whether this settings is enabled or disabled. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// The last time that this SecurityMLAnalyticsSettings has been modified.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.lastModifiedUtc
-        /// </summary>
+        /// <summary> The last time that this SecurityMLAnalyticsSettings has been modified. </summary>
+        [WirePath("properties.lastModifiedUtc")]
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// The required data sources for this SecurityMLAnalyticsSettings
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.requiredDataConnectors
-        /// </summary>
+        /// <summary> The required data sources for this SecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.requiredDataConnectors")]
         public IList<SecurityMLAnalyticsSettingsDataSource> RequiredDataConnectors { get; }
-        /// <summary>
-        /// The tactics of the SecurityMLAnalyticsSettings
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.tactics
-        /// </summary>
+        /// <summary> The tactics of the SecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.tactics")]
         public IList<SecurityInsightsAttackTactic> Tactics { get; }
-        /// <summary>
-        /// The techniques of the SecurityMLAnalyticsSettings
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.techniques
-        /// </summary>
+        /// <summary> The techniques of the SecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.techniques")]
         public IList<string> Techniques { get; }
-        /// <summary>
-        /// The anomaly version of the AnomalySecurityMLAnalyticsSettings.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.anomalyVersion
-        /// </summary>
+        /// <summary> The anomaly version of the AnomalySecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.anomalyVersion")]
         public string AnomalyVersion { get; set; }
         /// <summary>
         /// The customizable observations of the AnomalySecurityMLAnalyticsSettings.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.customizableObservations
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -187,31 +119,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.customizableObservations")]
         public BinaryData CustomizableObservations { get; set; }
-        /// <summary>
-        /// The frequency that this SecurityMLAnalyticsSettings will be run.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.frequency
-        /// </summary>
+        /// <summary> The frequency that this SecurityMLAnalyticsSettings will be run. </summary>
+        [WirePath("properties.frequency")]
         public TimeSpan? Frequency { get; set; }
-        /// <summary>
-        /// The anomaly SecurityMLAnalyticsSettings status
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.settingsStatus
-        /// </summary>
+        /// <summary> The anomaly SecurityMLAnalyticsSettings status. </summary>
+        [WirePath("properties.settingsStatus")]
         public AnomalySecurityMLAnalyticsSettingsStatus? SettingsStatus { get; set; }
-        /// <summary>
-        /// Determines whether this anomaly security ml analytics settings is a default settings
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.isDefaultSettings
-        /// </summary>
+        /// <summary> Determines whether this anomaly security ml analytics settings is a default settings. </summary>
+        [WirePath("properties.isDefaultSettings")]
         public bool? IsDefaultSettings { get; set; }
-        /// <summary>
-        /// The anomaly settings version of the Anomaly security ml analytics settings that dictates whether job version gets updated or not.
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.anomalySettingsVersion
-        /// </summary>
+        /// <summary> The anomaly settings version of the Anomaly security ml analytics settings that dictates whether job version gets updated or not. </summary>
+        [WirePath("properties.anomalySettingsVersion")]
         public int? AnomalySettingsVersion { get; set; }
-        /// <summary>
-        /// The anomaly settings definition Id
-        /// Serialized Name: AnomalySecurityMLAnalyticsSettings.properties.settingsDefinitionId
-        /// </summary>
+        /// <summary> The anomaly settings definition Id. </summary>
+        [WirePath("properties.settingsDefinitionId")]
         public Guid? SettingsDefinitionId { get; set; }
     }
 }

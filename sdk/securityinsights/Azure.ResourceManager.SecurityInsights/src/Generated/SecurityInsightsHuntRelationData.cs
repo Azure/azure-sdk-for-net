@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsHuntRelation data model.
     /// Represents a Hunt Relation in Azure Security Insights.
-    /// Serialized Name: HuntRelation
     /// </summary>
     public partial class SecurityInsightsHuntRelationData : ResourceData
     {
@@ -62,30 +61,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="relatedResourceId">
-        /// The id of the related resource
-        /// Serialized Name: HuntRelation.properties.relatedResourceId
-        /// </param>
-        /// <param name="relatedResourceName">
-        /// The name of the related resource
-        /// Serialized Name: HuntRelation.properties.relatedResourceName
-        /// </param>
-        /// <param name="relationType">
-        /// The type of the hunt relation
-        /// Serialized Name: HuntRelation.properties.relationType
-        /// </param>
-        /// <param name="relatedResourceKind">
-        /// The resource that the relation is related to
-        /// Serialized Name: HuntRelation.properties.relatedResourceKind
-        /// </param>
-        /// <param name="labels">
-        /// List of labels relevant to this hunt
-        /// Serialized Name: HuntRelation.properties.labels
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="relatedResourceId"> The id of the related resource. </param>
+        /// <param name="relatedResourceName"> The name of the related resource. </param>
+        /// <param name="relationType"> The type of the hunt relation. </param>
+        /// <param name="relatedResourceKind"> The resource that the relation is related to. </param>
+        /// <param name="labels"> List of labels relevant to this hunt. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsHuntRelationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier relatedResourceId, string relatedResourceName, string relationType, string relatedResourceKind, IList<string> labels, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -98,35 +79,23 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The id of the related resource
-        /// Serialized Name: HuntRelation.properties.relatedResourceId
-        /// </summary>
+        /// <summary> The id of the related resource. </summary>
+        [WirePath("properties.relatedResourceId")]
         public ResourceIdentifier RelatedResourceId { get; set; }
-        /// <summary>
-        /// The name of the related resource
-        /// Serialized Name: HuntRelation.properties.relatedResourceName
-        /// </summary>
+        /// <summary> The name of the related resource. </summary>
+        [WirePath("properties.relatedResourceName")]
         public string RelatedResourceName { get; }
-        /// <summary>
-        /// The type of the hunt relation
-        /// Serialized Name: HuntRelation.properties.relationType
-        /// </summary>
+        /// <summary> The type of the hunt relation. </summary>
+        [WirePath("properties.relationType")]
         public string RelationType { get; }
-        /// <summary>
-        /// The resource that the relation is related to
-        /// Serialized Name: HuntRelation.properties.relatedResourceKind
-        /// </summary>
+        /// <summary> The resource that the relation is related to. </summary>
+        [WirePath("properties.relatedResourceKind")]
         public string RelatedResourceKind { get; }
-        /// <summary>
-        /// List of labels relevant to this hunt
-        /// Serialized Name: HuntRelation.properties.labels
-        /// </summary>
+        /// <summary> List of labels relevant to this hunt. </summary>
+        [WirePath("properties.labels")]
         public IList<string> Labels { get; }
-        /// <summary>
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </summary>
+        /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

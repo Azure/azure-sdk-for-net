@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Retrieve queries for entity result operation response.
-    /// Serialized Name: GetQueriesResponse
-    /// </summary>
+    /// <summary> Retrieve queries for entity result operation response. </summary>
     internal partial class GetQueriesResponse
     {
         /// <summary>
@@ -57,7 +54,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="GetQueriesResponse"/>. </summary>
         /// <param name="value">
         /// The query result values.
-        /// Serialized Name: GetQueriesResponse.value
         /// Please note <see cref="EntityQueryItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InsightQueryItem"/>.
         /// </param>
@@ -70,10 +66,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// The query result values.
-        /// Serialized Name: GetQueriesResponse.value
         /// Please note <see cref="EntityQueryItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InsightQueryItem"/>.
         /// </summary>
+        [WirePath("value")]
         public IReadOnlyList<EntityQueryItem> Value { get; }
     }
 }

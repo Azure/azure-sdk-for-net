@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents ASC (Azure Security Center) data connector.
-    /// Serialized Name: ASCDataConnector
-    /// </summary>
+    /// <summary> Represents ASC (Azure Security Center) data connector. </summary>
     public partial class SecurityInsightsAscDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAscDataConnector"/>. </summary>
@@ -29,23 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The data connector kind
-        /// Serialized Name: DataConnector.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="alerts">
-        /// Alerts data type connection.
-        /// Serialized Name: ASCDataConnector.properties.dataTypes.alerts
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription id to connect to, and get the data from.
-        /// Serialized Name: ASCDataConnector.properties.subscriptionId
-        /// </param>
+        /// <param name="alerts"> Alerts data type connection. </param>
+        /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
         internal SecurityInsightsAscDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, DataConnectorDataTypeCommon alerts, string subscriptionId) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Alerts = alerts;
@@ -53,15 +38,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Alerts data type connection.
-        /// Serialized Name: ASCDataConnector.properties.dataTypes.alerts
-        /// </summary>
+        /// <summary> Alerts data type connection. </summary>
         internal DataConnectorDataTypeCommon Alerts { get; set; }
-        /// <summary>
-        /// Describe whether this data type connection is enabled or not.
-        /// Serialized Name: DataConnectorDataTypeCommon.state
-        /// </summary>
+        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        [WirePath("properties.alerts.state")]
         public SecurityInsightsDataTypeConnectionState? AlertsState
         {
             get => Alerts is null ? default(SecurityInsightsDataTypeConnectionState?) : Alerts.State;
@@ -71,10 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        /// <summary>
-        /// The subscription id to connect to, and get the data from.
-        /// Serialized Name: ASCDataConnector.properties.subscriptionId
-        /// </summary>
+        /// <summary> The subscription id to connect to, and get the data from. </summary>
+        [WirePath("properties.subscriptionId")]
         public string SubscriptionId { get; set; }
     }
 }

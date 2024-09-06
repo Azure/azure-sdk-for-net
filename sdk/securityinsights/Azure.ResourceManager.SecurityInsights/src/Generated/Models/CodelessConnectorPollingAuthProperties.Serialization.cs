@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -268,6 +269,289 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthType))
+                {
+                    builder.Append("  authType: ");
+                    if (AuthType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AuthType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AuthType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiKeyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiKeyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiKeyName))
+                {
+                    builder.Append("  apiKeyName: ");
+                    if (ApiKeyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiKeyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiKeyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiKeyIdentifier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiKeyIdentifier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiKeyIdentifier))
+                {
+                    builder.Append("  apiKeyIdentifier: ");
+                    if (ApiKeyIdentifier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiKeyIdentifier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiKeyIdentifier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApiKeyInPostPayload), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isApiKeyInPostPayload: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsApiKeyInPostPayload))
+                {
+                    builder.Append("  isApiKeyInPostPayload: ");
+                    if (IsApiKeyInPostPayload.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IsApiKeyInPostPayload}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IsApiKeyInPostPayload}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FlowName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  flowName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FlowName))
+                {
+                    builder.Append("  flowName: ");
+                    if (FlowName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FlowName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FlowName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tokenEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenEndpoint))
+                {
+                    builder.Append("  tokenEndpoint: ");
+                    if (TokenEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TokenEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TokenEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authorizationEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthorizationEndpoint))
+                {
+                    builder.Append("  authorizationEndpoint: ");
+                    if (AuthorizationEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AuthorizationEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AuthorizationEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationEndpointQueryParameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authorizationEndpointQueryParameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthorizationEndpointQueryParameters))
+                {
+                    builder.Append("  authorizationEndpointQueryParameters: ");
+                    builder.AppendLine($"'{AuthorizationEndpointQueryParameters.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedirectionEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  redirectionEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RedirectionEndpoint))
+                {
+                    builder.Append("  redirectionEndpoint: ");
+                    if (RedirectionEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RedirectionEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RedirectionEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenEndpointHeaders), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tokenEndpointHeaders: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenEndpointHeaders))
+                {
+                    builder.Append("  tokenEndpointHeaders: ");
+                    builder.AppendLine($"'{TokenEndpointHeaders.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenEndpointQueryParameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tokenEndpointQueryParameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenEndpointQueryParameters))
+                {
+                    builder.Append("  tokenEndpointQueryParameters: ");
+                    builder.AppendLine($"'{TokenEndpointQueryParameters.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientSecretInHeader), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isClientSecretInHeader: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsClientSecretInHeader))
+                {
+                    builder.Append("  isClientSecretInHeader: ");
+                    var boolValue = IsClientSecretInHeader.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scope: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Scope))
+                {
+                    builder.Append("  scope: ");
+                    if (Scope.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Scope}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Scope}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CodelessConnectorPollingAuthProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingAuthProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -276,6 +560,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CodelessConnectorPollingAuthProperties)} does not support writing '{options.Format}' format.");
             }

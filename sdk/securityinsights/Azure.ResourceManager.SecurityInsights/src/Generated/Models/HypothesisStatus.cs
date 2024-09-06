@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The hypothesis status of the hunt.
-    /// Serialized Name: HypothesisStatus
-    /// </summary>
+    /// <summary> The hypothesis status of the hunt. </summary>
     public readonly partial struct HypothesisStatus : IEquatable<HypothesisStatus>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string InvalidatedValue = "Invalidated";
         private const string ValidatedValue = "Validated";
 
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: HypothesisStatus.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static HypothesisStatus Unknown { get; } = new HypothesisStatus(UnknownValue);
-        /// <summary>
-        /// Invalidated
-        /// Serialized Name: HypothesisStatus.Invalidated
-        /// </summary>
+        /// <summary> Invalidated. </summary>
         public static HypothesisStatus Invalidated { get; } = new HypothesisStatus(InvalidatedValue);
-        /// <summary>
-        /// Validated
-        /// Serialized Name: HypothesisStatus.Validated
-        /// </summary>
+        /// <summary> Validated. </summary>
         public static HypothesisStatus Validated { get; } = new HypothesisStatus(ValidatedValue);
         /// <summary> Determines if two <see cref="HypothesisStatus"/> values are the same. </summary>
         public static bool operator ==(HypothesisStatus left, HypothesisStatus right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Connector Availability Status
-    /// Serialized Name: Availability
-    /// </summary>
+    /// <summary> Connector Availability Status. </summary>
     public partial class ConnectorAvailability
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectorAvailability"/>. </summary>
-        /// <param name="status">
-        /// The connector Availability Status
-        /// Serialized Name: Availability.status
-        /// </param>
-        /// <param name="isPreview">
-        /// Set connector as preview
-        /// Serialized Name: Availability.isPreview
-        /// </param>
+        /// <param name="status"> The connector Availability Status. </param>
+        /// <param name="isPreview"> Set connector as preview. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectorAvailability(ConnectorAvailabilityStatus? status, bool? isPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The connector Availability Status
-        /// Serialized Name: Availability.status
-        /// </summary>
+        /// <summary> The connector Availability Status. </summary>
+        [WirePath("status")]
         public ConnectorAvailabilityStatus? Status { get; set; }
-        /// <summary>
-        /// Set connector as preview
-        /// Serialized Name: Availability.isPreview
-        /// </summary>
+        /// <summary> Set connector as preview. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; set; }
     }
 }

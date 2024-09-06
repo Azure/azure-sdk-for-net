@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -135,6 +137,113 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem(filter, summarize, project, linkColumnsDefinitions ?? new ChangeTrackingList<InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Filter), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  filter: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Filter))
+                {
+                    builder.Append("  filter: ");
+                    if (Filter.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Filter}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Filter}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Summarize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  summarize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Summarize))
+                {
+                    builder.Append("  summarize: ");
+                    if (Summarize.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Summarize}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Summarize}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Project), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  project: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Project))
+                {
+                    builder.Append("  project: ");
+                    if (Project.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Project}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Project}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkColumnsDefinitions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  linkColumnsDefinitions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LinkColumnsDefinitions))
+                {
+                    if (LinkColumnsDefinitions.Any())
+                    {
+                        builder.Append("  linkColumnsDefinitions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LinkColumnsDefinitions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  linkColumnsDefinitions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -143,6 +252,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem)} does not support writing '{options.Format}' format.");
             }

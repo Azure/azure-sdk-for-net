@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Indicates whether the file was deleted from the storage account.
-    /// Serialized Name: DeleteStatus
-    /// </summary>
+    /// <summary> Indicates whether the file was deleted from the storage account. </summary>
     public readonly partial struct DeleteStatus : IEquatable<DeleteStatus>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string NotDeletedValue = "NotDeleted";
         private const string UnspecifiedValue = "Unspecified";
 
-        /// <summary>
-        /// The file was deleted.
-        /// Serialized Name: DeleteStatus.Deleted
-        /// </summary>
+        /// <summary> The file was deleted. </summary>
         public static DeleteStatus Deleted { get; } = new DeleteStatus(DeletedValue);
-        /// <summary>
-        /// The file was not deleted.
-        /// Serialized Name: DeleteStatus.NotDeleted
-        /// </summary>
+        /// <summary> The file was not deleted. </summary>
         public static DeleteStatus NotDeleted { get; } = new DeleteStatus(NotDeletedValue);
-        /// <summary>
-        /// Unspecified
-        /// Serialized Name: DeleteStatus.Unspecified
-        /// </summary>
+        /// <summary> Unspecified. </summary>
         public static DeleteStatus Unspecified { get; } = new DeleteStatus(UnspecifiedValue);
         /// <summary> Determines if two <see cref="DeleteStatus"/> values are the same. </summary>
         public static bool operator ==(DeleteStatus left, DeleteStatus right) => left.Equals(right);

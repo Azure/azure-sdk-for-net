@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The AutomationRulePropertyArrayConditionSupportedArrayType.
-    /// Serialized Name: AutomationRulePropertyArrayConditionSupportedArrayType
-    /// </summary>
+    /// <summary> The AutomationRulePropertyArrayConditionSupportedArrayType. </summary>
     public readonly partial struct AutomationRulePropertyArrayConditionSupportedArrayType : IEquatable<AutomationRulePropertyArrayConditionSupportedArrayType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string CustomDetailsValue = "CustomDetails";
         private const string CustomDetailValuesValue = "CustomDetailValues";
 
-        /// <summary>
-        /// Evaluate the condition on the custom detail keys
-        /// Serialized Name: AutomationRulePropertyArrayConditionSupportedArrayType.CustomDetails
-        /// </summary>
+        /// <summary> Evaluate the condition on the custom detail keys. </summary>
         public static AutomationRulePropertyArrayConditionSupportedArrayType CustomDetails { get; } = new AutomationRulePropertyArrayConditionSupportedArrayType(CustomDetailsValue);
-        /// <summary>
-        /// Evaluate the condition on a custom detail's values
-        /// Serialized Name: AutomationRulePropertyArrayConditionSupportedArrayType.CustomDetailValues
-        /// </summary>
+        /// <summary> Evaluate the condition on a custom detail's values. </summary>
         public static AutomationRulePropertyArrayConditionSupportedArrayType CustomDetailValues { get; } = new AutomationRulePropertyArrayConditionSupportedArrayType(CustomDetailValuesValue);
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayConditionSupportedArrayType"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyArrayConditionSupportedArrayType left, AutomationRulePropertyArrayConditionSupportedArrayType right) => left.Equals(right);

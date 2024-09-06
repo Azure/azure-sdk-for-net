@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -111,6 +112,71 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new RestApiPollerRequestPagingConfig(pagingType, pageSize, pageSizeParameterName, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PagingType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pagingType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  pagingType: ");
+                builder.AppendLine($"'{PagingType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pageSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PageSize))
+                {
+                    builder.Append("  pageSize: ");
+                    builder.AppendLine($"{PageSize.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageSizeParameterName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pageSizeParameterName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PageSizeParameterName))
+                {
+                    builder.Append("  pageSizeParameterName: ");
+                    if (PageSizeParameterName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PageSizeParameterName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PageSizeParameterName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RestApiPollerRequestPagingConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RestApiPollerRequestPagingConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -119,6 +185,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RestApiPollerRequestPagingConfig)} does not support writing '{options.Format}' format.");
             }

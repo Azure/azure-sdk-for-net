@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -109,6 +110,102 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new GCPAuthModel(type, serializedAdditionalRawData, serviceAccountEmail, projectNumber, workloadIdentityProviderId);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceAccountEmail), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceAccountEmail: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceAccountEmail))
+                {
+                    builder.Append("  serviceAccountEmail: ");
+                    if (ServiceAccountEmail.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceAccountEmail}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceAccountEmail}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProjectNumber), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  projectNumber: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProjectNumber))
+                {
+                    builder.Append("  projectNumber: ");
+                    if (ProjectNumber.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProjectNumber}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProjectNumber}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkloadIdentityProviderId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  workloadIdentityProviderId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkloadIdentityProviderId))
+                {
+                    builder.Append("  workloadIdentityProviderId: ");
+                    if (WorkloadIdentityProviderId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WorkloadIdentityProviderId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WorkloadIdentityProviderId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  type: ");
+                builder.AppendLine($"'{AuthType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GCPAuthModel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GCPAuthModel>)this).GetFormatFromOptions(options) : options.Format;
@@ -117,6 +214,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GCPAuthModel)} does not support writing '{options.Format}' format.");
             }

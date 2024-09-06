@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The type of the owner the hunt is assigned to.
-    /// Serialized Name: OwnerType
-    /// </summary>
+    /// <summary> The type of the owner the hunt is assigned to. </summary>
     public readonly partial struct SecurityInsightsIncidentOwnerType : IEquatable<SecurityInsightsIncidentOwnerType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string UserValue = "User";
         private const string GroupValue = "Group";
 
-        /// <summary>
-        /// The hunt owner type is unknown
-        /// Serialized Name: OwnerType.Unknown
-        /// </summary>
+        /// <summary> The hunt owner type is unknown. </summary>
         public static SecurityInsightsIncidentOwnerType Unknown { get; } = new SecurityInsightsIncidentOwnerType(UnknownValue);
-        /// <summary>
-        /// The hunt owner type is an AAD user
-        /// Serialized Name: OwnerType.User
-        /// </summary>
+        /// <summary> The hunt owner type is an AAD user. </summary>
         public static SecurityInsightsIncidentOwnerType User { get; } = new SecurityInsightsIncidentOwnerType(UserValue);
-        /// <summary>
-        /// The hunt owner type is an AAD group
-        /// Serialized Name: OwnerType.Group
-        /// </summary>
+        /// <summary> The hunt owner type is an AAD group. </summary>
         public static SecurityInsightsIncidentOwnerType Group { get; } = new SecurityInsightsIncidentOwnerType(GroupValue);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentOwnerType"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentOwnerType left, SecurityInsightsIncidentOwnerType right) => left.Equals(right);

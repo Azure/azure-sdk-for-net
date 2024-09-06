@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -143,6 +145,97 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new EntityInsightItem(queryId, queryTimeInterval, tableQueryResults, chartQueryResults ?? new ChangeTrackingList<InsightsTableResult>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  queryId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueryId))
+                {
+                    builder.Append("  queryId: ");
+                    if (QueryId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{QueryId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{QueryId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryTimeInterval), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  queryTimeInterval: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueryTimeInterval))
+                {
+                    builder.Append("  queryTimeInterval: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, QueryTimeInterval, options, 2, false, "  queryTimeInterval: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableQueryResults), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tableQueryResults: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TableQueryResults))
+                {
+                    builder.Append("  tableQueryResults: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TableQueryResults, options, 2, false, "  tableQueryResults: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChartQueryResults), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  chartQueryResults: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ChartQueryResults))
+                {
+                    if (ChartQueryResults.Any())
+                    {
+                        builder.Append("  chartQueryResults: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ChartQueryResults)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  chartQueryResults: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EntityInsightItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EntityInsightItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -151,6 +244,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EntityInsightItem)} does not support writing '{options.Format}' format.");
             }

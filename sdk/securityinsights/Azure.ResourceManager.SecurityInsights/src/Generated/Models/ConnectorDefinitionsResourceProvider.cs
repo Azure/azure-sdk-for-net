@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary>
     /// The resource provider details include the required permissions for the user to create connections.
     /// The user should have the required permissions(Read\Write, ..) in the specified scope ProviderPermissionsScope against the specified resource provider.
-    /// Serialized Name: ConnectorDefinitionsResourceProvider
     /// </summary>
     public partial class ConnectorDefinitionsResourceProvider
     {
@@ -50,26 +49,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectorDefinitionsResourceProvider"/>. </summary>
-        /// <param name="provider">
-        /// Gets or sets the provider name.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.provider
-        /// </param>
-        /// <param name="permissionsDisplayText">
-        /// Gets or sets the permissions description text.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.permissionsDisplayText
-        /// </param>
-        /// <param name="providerDisplayName">
-        /// Gets or sets the permissions provider display name.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.providerDisplayName
-        /// </param>
-        /// <param name="scope">
-        /// The scope on which the user should have permissions, in order to be able to create connections.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.scope
-        /// </param>
+        /// <param name="provider"> Gets or sets the provider name. </param>
+        /// <param name="permissionsDisplayText"> Gets or sets the permissions description text. </param>
+        /// <param name="providerDisplayName"> Gets or sets the permissions provider display name. </param>
+        /// <param name="scope"> The scope on which the user should have permissions, in order to be able to create connections. </param>
         /// <param name="requiredPermissions">
         /// Required permissions for the connector resource provider that define in ResourceProviders.
         /// For more information about the permissions see &lt;see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format"&gt;here&lt;/see&gt;.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.requiredPermissions
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="permissionsDisplayText"/>, <paramref name="providerDisplayName"/> or <paramref name="requiredPermissions"/> is null. </exception>
         public ConnectorDefinitionsResourceProvider(string provider, string permissionsDisplayText, string providerDisplayName, ProviderPermissionsScope scope, ResourceProviderRequiredPermissions requiredPermissions)
@@ -87,26 +73,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectorDefinitionsResourceProvider"/>. </summary>
-        /// <param name="provider">
-        /// Gets or sets the provider name.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.provider
-        /// </param>
-        /// <param name="permissionsDisplayText">
-        /// Gets or sets the permissions description text.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.permissionsDisplayText
-        /// </param>
-        /// <param name="providerDisplayName">
-        /// Gets or sets the permissions provider display name.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.providerDisplayName
-        /// </param>
-        /// <param name="scope">
-        /// The scope on which the user should have permissions, in order to be able to create connections.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.scope
-        /// </param>
+        /// <param name="provider"> Gets or sets the provider name. </param>
+        /// <param name="permissionsDisplayText"> Gets or sets the permissions description text. </param>
+        /// <param name="providerDisplayName"> Gets or sets the permissions provider display name. </param>
+        /// <param name="scope"> The scope on which the user should have permissions, in order to be able to create connections. </param>
         /// <param name="requiredPermissions">
         /// Required permissions for the connector resource provider that define in ResourceProviders.
         /// For more information about the permissions see &lt;see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format"&gt;here&lt;/see&gt;.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.requiredPermissions
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectorDefinitionsResourceProvider(string provider, string permissionsDisplayText, string providerDisplayName, ProviderPermissionsScope scope, ResourceProviderRequiredPermissions requiredPermissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -124,31 +97,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Gets or sets the provider name.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.provider
-        /// </summary>
+        /// <summary> Gets or sets the provider name. </summary>
+        [WirePath("provider")]
         public string Provider { get; set; }
-        /// <summary>
-        /// Gets or sets the permissions description text.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.permissionsDisplayText
-        /// </summary>
+        /// <summary> Gets or sets the permissions description text. </summary>
+        [WirePath("permissionsDisplayText")]
         public string PermissionsDisplayText { get; set; }
-        /// <summary>
-        /// Gets or sets the permissions provider display name.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.providerDisplayName
-        /// </summary>
+        /// <summary> Gets or sets the permissions provider display name. </summary>
+        [WirePath("providerDisplayName")]
         public string ProviderDisplayName { get; set; }
-        /// <summary>
-        /// The scope on which the user should have permissions, in order to be able to create connections.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.scope
-        /// </summary>
+        /// <summary> The scope on which the user should have permissions, in order to be able to create connections. </summary>
+        [WirePath("scope")]
         public ProviderPermissionsScope Scope { get; set; }
         /// <summary>
         /// Required permissions for the connector resource provider that define in ResourceProviders.
         /// For more information about the permissions see &lt;see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format"&gt;here&lt;/see&gt;.
-        /// Serialized Name: ConnectorDefinitionsResourceProvider.requiredPermissions
         /// </summary>
+        [WirePath("requiredPermissions")]
         public ResourceProviderRequiredPermissions RequiredPermissions { get; set; }
     }
 }

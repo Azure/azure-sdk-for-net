@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes threat intelligence metric entity
-    /// Serialized Name: ThreatIntelligenceMetricEntity
-    /// </summary>
+    /// <summary> Describes threat intelligence metric entity. </summary>
     public partial class ThreatIntelligenceMetricEntity
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetricEntity"/>. </summary>
-        /// <param name="metricName">
-        /// Metric name
-        /// Serialized Name: ThreatIntelligenceMetricEntity.metricName
-        /// </param>
-        /// <param name="metricValue">
-        /// Metric value
-        /// Serialized Name: ThreatIntelligenceMetricEntity.metricValue
-        /// </param>
+        /// <param name="metricName"> Metric name. </param>
+        /// <param name="metricValue"> Metric value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceMetricEntity(string metricName, int? metricValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Metric name
-        /// Serialized Name: ThreatIntelligenceMetricEntity.metricName
-        /// </summary>
+        /// <summary> Metric name. </summary>
+        [WirePath("metricName")]
         public string MetricName { get; }
-        /// <summary>
-        /// Metric value
-        /// Serialized Name: ThreatIntelligenceMetricEntity.metricValue
-        /// </summary>
+        /// <summary> Metric value. </summary>
+        [WirePath("metricValue")]
         public int? MetricValue { get; }
     }
 }

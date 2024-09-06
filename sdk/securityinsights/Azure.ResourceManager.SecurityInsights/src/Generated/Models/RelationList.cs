@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List of relations.
-    /// Serialized Name: RelationList
-    /// </summary>
+    /// <summary> List of relations. </summary>
     internal partial class RelationList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RelationList"/>. </summary>
-        /// <param name="value">
-        /// Array of relations.
-        /// Serialized Name: RelationList.value
-        /// </param>
+        /// <param name="value"> Array of relations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RelationList(IEnumerable<SecurityInsightsIncidentRelationData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RelationList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of relations.
-        /// Serialized Name: RelationList.nextLink
-        /// </param>
-        /// <param name="value">
-        /// Array of relations.
-        /// Serialized Name: RelationList.value
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of relations. </param>
+        /// <param name="value"> Array of relations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RelationList(string nextLink, IReadOnlyList<SecurityInsightsIncidentRelationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of relations.
-        /// Serialized Name: RelationList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of relations. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Array of relations.
-        /// Serialized Name: RelationList.value
-        /// </summary>
+        /// <summary> Array of relations. </summary>
         public IReadOnlyList<SecurityInsightsIncidentRelationData> Value { get; }
     }
 }

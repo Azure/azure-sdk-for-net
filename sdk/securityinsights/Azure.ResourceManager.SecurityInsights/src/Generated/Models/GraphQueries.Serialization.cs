@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -110,6 +111,90 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new GraphQueries(metricName, legend, baseQuery, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  metricName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MetricName))
+                {
+                    builder.Append("  metricName: ");
+                    if (MetricName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MetricName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MetricName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Legend), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  legend: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Legend))
+                {
+                    builder.Append("  legend: ");
+                    if (Legend.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Legend}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Legend}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseQuery), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  baseQuery: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BaseQuery))
+                {
+                    builder.Append("  baseQuery: ");
+                    if (BaseQuery.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BaseQuery}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BaseQuery}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GraphQueries>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GraphQueries>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,6 +203,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GraphQueries)} does not support writing '{options.Format}' format.");
             }

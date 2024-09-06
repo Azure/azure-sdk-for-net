@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List available packages.
-    /// Serialized Name: ProductPackageList
-    /// </summary>
+    /// <summary> List available packages. </summary>
     internal partial class ProductPackageList
     {
         /// <summary>
@@ -50,12 +47,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProductPackageList"/>. </summary>
-        /// <param name="value">
-        /// Array of packages.
-        /// Serialized Name: ProductPackageList.value
-        /// </param>
+        /// <param name="value"> Array of packages. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ProductPackageList(IEnumerable<ProductPackageModelData> value)
+        internal ProductPackageList(IEnumerable<SecurityInsightsProductPackageData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductPackageList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of packages.
-        /// Serialized Name: ProductPackageList.nextLink
-        /// </param>
-        /// <param name="value">
-        /// Array of packages.
-        /// Serialized Name: ProductPackageList.value
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of packages. </param>
+        /// <param name="value"> Array of packages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductPackageList(string nextLink, IReadOnlyList<ProductPackageModelData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductPackageList(string nextLink, IReadOnlyList<SecurityInsightsProductPackageData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of packages.
-        /// Serialized Name: ProductPackageList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of packages. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Array of packages.
-        /// Serialized Name: ProductPackageList.value
-        /// </summary>
-        public IReadOnlyList<ProductPackageModelData> Value { get; }
+        /// <summary> Array of packages. </summary>
+        public IReadOnlyList<SecurityInsightsProductPackageData> Value { get; }
     }
 }

@@ -13,10 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents a mail message entity.
-    /// Serialized Name: MailMessageEntity
-    /// </summary>
+    /// <summary> Represents a mail message entity. </summary>
     public partial class SecurityInsightsMailMessageEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailMessageEntity"/>. </summary>
@@ -35,119 +32,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the entity.
-        /// Serialized Name: Entity.kind
-        /// </param>
+        /// <param name="kind"> The kind of the entity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData">
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: MailMessageEntity.properties.additionalData
-        /// </param>
-        /// <param name="friendlyName">
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: MailMessageEntity.properties.friendlyName
-        /// </param>
-        /// <param name="fileEntityIds">
-        /// The File entity ids of this mail message's attachments
-        /// Serialized Name: MailMessageEntity.properties.fileEntityIds
-        /// </param>
-        /// <param name="recipient">
-        /// The recipient of this mail message. Note that in case of multiple recipients the mail message is forked and each copy has one recipient
-        /// Serialized Name: MailMessageEntity.properties.recipient
-        /// </param>
-        /// <param name="uris">
-        /// The Urls contained in this mail message
-        /// Serialized Name: MailMessageEntity.properties.urls
-        /// </param>
-        /// <param name="threats">
-        /// The threats of this mail message
-        /// Serialized Name: MailMessageEntity.properties.threats
-        /// </param>
-        /// <param name="p1Sender">
-        /// The p1 sender's email address
-        /// Serialized Name: MailMessageEntity.properties.p1Sender
-        /// </param>
-        /// <param name="p1SenderDisplayName">
-        /// The p1 sender's display name
-        /// Serialized Name: MailMessageEntity.properties.p1SenderDisplayName
-        /// </param>
-        /// <param name="p1SenderDomain">
-        /// The p1 sender's domain
-        /// Serialized Name: MailMessageEntity.properties.p1SenderDomain
-        /// </param>
-        /// <param name="senderIP">
-        /// The sender's IP address
-        /// Serialized Name: MailMessageEntity.properties.senderIP
-        /// </param>
-        /// <param name="p2Sender">
-        /// The p2 sender's email address
-        /// Serialized Name: MailMessageEntity.properties.p2Sender
-        /// </param>
-        /// <param name="p2SenderDisplayName">
-        /// The p2 sender's display name
-        /// Serialized Name: MailMessageEntity.properties.p2SenderDisplayName
-        /// </param>
-        /// <param name="p2SenderDomain">
-        /// The p2 sender's domain
-        /// Serialized Name: MailMessageEntity.properties.p2SenderDomain
-        /// </param>
-        /// <param name="receiveOn">
-        /// The receive date of this message
-        /// Serialized Name: MailMessageEntity.properties.receiveDate
-        /// </param>
-        /// <param name="networkMessageId">
-        /// The network message id of this mail message
-        /// Serialized Name: MailMessageEntity.properties.networkMessageId
-        /// </param>
-        /// <param name="internetMessageId">
-        /// The internet message id of this mail message
-        /// Serialized Name: MailMessageEntity.properties.internetMessageId
-        /// </param>
-        /// <param name="subject">
-        /// The subject of this mail message
-        /// Serialized Name: MailMessageEntity.properties.subject
-        /// </param>
-        /// <param name="language">
-        /// The language of this mail message
-        /// Serialized Name: MailMessageEntity.properties.language
-        /// </param>
-        /// <param name="threatDetectionMethods">
-        /// The threat detection methods
-        /// Serialized Name: MailMessageEntity.properties.threatDetectionMethods
-        /// </param>
-        /// <param name="bodyFingerprintBin1">
-        /// The bodyFingerprintBin1
-        /// Serialized Name: MailMessageEntity.properties.bodyFingerprintBin1
-        /// </param>
-        /// <param name="bodyFingerprintBin2">
-        /// The bodyFingerprintBin2
-        /// Serialized Name: MailMessageEntity.properties.bodyFingerprintBin2
-        /// </param>
-        /// <param name="bodyFingerprintBin3">
-        /// The bodyFingerprintBin3
-        /// Serialized Name: MailMessageEntity.properties.bodyFingerprintBin3
-        /// </param>
-        /// <param name="bodyFingerprintBin4">
-        /// The bodyFingerprintBin4
-        /// Serialized Name: MailMessageEntity.properties.bodyFingerprintBin4
-        /// </param>
-        /// <param name="bodyFingerprintBin5">
-        /// The bodyFingerprintBin5
-        /// Serialized Name: MailMessageEntity.properties.bodyFingerprintBin5
-        /// </param>
-        /// <param name="antispamDirection">
-        /// The directionality of this mail message
-        /// Serialized Name: MailMessageEntity.properties.antispamDirection
-        /// </param>
-        /// <param name="deliveryAction">
-        /// The delivery action of this mail message like Delivered, Blocked, Replaced etc
-        /// Serialized Name: MailMessageEntity.properties.deliveryAction
-        /// </param>
-        /// <param name="deliveryLocation">
-        /// The delivery location of this mail message like Inbox, JunkFolder etc
-        /// Serialized Name: MailMessageEntity.properties.deliveryLocation
-        /// </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
+        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
+        /// <param name="fileEntityIds"> The File entity ids of this mail message's attachments. </param>
+        /// <param name="recipient"> The recipient of this mail message. Note that in case of multiple recipients the mail message is forked and each copy has one recipient. </param>
+        /// <param name="uris"> The Urls contained in this mail message. </param>
+        /// <param name="threats"> The threats of this mail message. </param>
+        /// <param name="p1Sender"> The p1 sender's email address. </param>
+        /// <param name="p1SenderDisplayName"> The p1 sender's display name. </param>
+        /// <param name="p1SenderDomain"> The p1 sender's domain. </param>
+        /// <param name="senderIP"> The sender's IP address. </param>
+        /// <param name="p2Sender"> The p2 sender's email address. </param>
+        /// <param name="p2SenderDisplayName"> The p2 sender's display name. </param>
+        /// <param name="p2SenderDomain"> The p2 sender's domain. </param>
+        /// <param name="receiveOn"> The receive date of this message. </param>
+        /// <param name="networkMessageId"> The network message id of this mail message. </param>
+        /// <param name="internetMessageId"> The internet message id of this mail message. </param>
+        /// <param name="subject"> The subject of this mail message. </param>
+        /// <param name="language"> The language of this mail message. </param>
+        /// <param name="threatDetectionMethods"> The threat detection methods. </param>
+        /// <param name="bodyFingerprintBin1"> The bodyFingerprintBin1. </param>
+        /// <param name="bodyFingerprintBin2"> The bodyFingerprintBin2. </param>
+        /// <param name="bodyFingerprintBin3"> The bodyFingerprintBin3. </param>
+        /// <param name="bodyFingerprintBin4"> The bodyFingerprintBin4. </param>
+        /// <param name="bodyFingerprintBin5"> The bodyFingerprintBin5. </param>
+        /// <param name="antispamDirection"> The directionality of this mail message. </param>
+        /// <param name="deliveryAction"> The delivery action of this mail message like Delivered, Blocked, Replaced etc. </param>
+        /// <param name="deliveryLocation"> The delivery location of this mail message like Inbox, JunkFolder etc. </param>
         internal SecurityInsightsMailMessageEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IReadOnlyList<string> fileEntityIds, string recipient, IReadOnlyList<Uri> uris, IReadOnlyList<string> threats, string p1Sender, string p1SenderDisplayName, string p1SenderDomain, IPAddress senderIP, string p2Sender, string p2SenderDisplayName, string p2SenderDomain, DateTimeOffset? receiveOn, Guid? networkMessageId, string internetMessageId, string subject, string language, IReadOnlyList<string> threatDetectionMethods, int? bodyFingerprintBin1, int? bodyFingerprintBin2, int? bodyFingerprintBin3, int? bodyFingerprintBin4, int? bodyFingerprintBin5, AntispamMailDirection? antispamDirection, SecurityInsightsMailMessageDeliveryAction? deliveryAction, SecurityInsightsMailMessageDeliveryLocation? deliveryLocation) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -182,7 +95,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: MailMessageEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -211,136 +123,85 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary>
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: MailMessageEntity.properties.friendlyName
-        /// </summary>
+        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
-        /// <summary>
-        /// The File entity ids of this mail message's attachments
-        /// Serialized Name: MailMessageEntity.properties.fileEntityIds
-        /// </summary>
+        /// <summary> The File entity ids of this mail message's attachments. </summary>
+        [WirePath("properties.fileEntityIds")]
         public IReadOnlyList<string> FileEntityIds { get; }
-        /// <summary>
-        /// The recipient of this mail message. Note that in case of multiple recipients the mail message is forked and each copy has one recipient
-        /// Serialized Name: MailMessageEntity.properties.recipient
-        /// </summary>
+        /// <summary> The recipient of this mail message. Note that in case of multiple recipients the mail message is forked and each copy has one recipient. </summary>
+        [WirePath("properties.recipient")]
         public string Recipient { get; }
-        /// <summary>
-        /// The Urls contained in this mail message
-        /// Serialized Name: MailMessageEntity.properties.urls
-        /// </summary>
+        /// <summary> The Urls contained in this mail message. </summary>
+        [WirePath("properties.urls")]
         public IReadOnlyList<Uri> Uris { get; }
-        /// <summary>
-        /// The threats of this mail message
-        /// Serialized Name: MailMessageEntity.properties.threats
-        /// </summary>
+        /// <summary> The threats of this mail message. </summary>
+        [WirePath("properties.threats")]
         public IReadOnlyList<string> Threats { get; }
-        /// <summary>
-        /// The p1 sender's email address
-        /// Serialized Name: MailMessageEntity.properties.p1Sender
-        /// </summary>
+        /// <summary> The p1 sender's email address. </summary>
+        [WirePath("properties.p1Sender")]
         public string P1Sender { get; }
-        /// <summary>
-        /// The p1 sender's display name
-        /// Serialized Name: MailMessageEntity.properties.p1SenderDisplayName
-        /// </summary>
+        /// <summary> The p1 sender's display name. </summary>
+        [WirePath("properties.p1SenderDisplayName")]
         public string P1SenderDisplayName { get; }
-        /// <summary>
-        /// The p1 sender's domain
-        /// Serialized Name: MailMessageEntity.properties.p1SenderDomain
-        /// </summary>
+        /// <summary> The p1 sender's domain. </summary>
+        [WirePath("properties.p1SenderDomain")]
         public string P1SenderDomain { get; }
-        /// <summary>
-        /// The sender's IP address
-        /// Serialized Name: MailMessageEntity.properties.senderIP
-        /// </summary>
+        /// <summary> The sender's IP address. </summary>
+        [WirePath("properties.senderIP")]
         public IPAddress SenderIP { get; }
-        /// <summary>
-        /// The p2 sender's email address
-        /// Serialized Name: MailMessageEntity.properties.p2Sender
-        /// </summary>
+        /// <summary> The p2 sender's email address. </summary>
+        [WirePath("properties.p2Sender")]
         public string P2Sender { get; }
-        /// <summary>
-        /// The p2 sender's display name
-        /// Serialized Name: MailMessageEntity.properties.p2SenderDisplayName
-        /// </summary>
+        /// <summary> The p2 sender's display name. </summary>
+        [WirePath("properties.p2SenderDisplayName")]
         public string P2SenderDisplayName { get; }
-        /// <summary>
-        /// The p2 sender's domain
-        /// Serialized Name: MailMessageEntity.properties.p2SenderDomain
-        /// </summary>
+        /// <summary> The p2 sender's domain. </summary>
+        [WirePath("properties.p2SenderDomain")]
         public string P2SenderDomain { get; }
-        /// <summary>
-        /// The receive date of this message
-        /// Serialized Name: MailMessageEntity.properties.receiveDate
-        /// </summary>
+        /// <summary> The receive date of this message. </summary>
+        [WirePath("properties.receiveDate")]
         public DateTimeOffset? ReceiveOn { get; }
-        /// <summary>
-        /// The network message id of this mail message
-        /// Serialized Name: MailMessageEntity.properties.networkMessageId
-        /// </summary>
+        /// <summary> The network message id of this mail message. </summary>
+        [WirePath("properties.networkMessageId")]
         public Guid? NetworkMessageId { get; }
-        /// <summary>
-        /// The internet message id of this mail message
-        /// Serialized Name: MailMessageEntity.properties.internetMessageId
-        /// </summary>
+        /// <summary> The internet message id of this mail message. </summary>
+        [WirePath("properties.internetMessageId")]
         public string InternetMessageId { get; }
-        /// <summary>
-        /// The subject of this mail message
-        /// Serialized Name: MailMessageEntity.properties.subject
-        /// </summary>
+        /// <summary> The subject of this mail message. </summary>
+        [WirePath("properties.subject")]
         public string Subject { get; }
-        /// <summary>
-        /// The language of this mail message
-        /// Serialized Name: MailMessageEntity.properties.language
-        /// </summary>
+        /// <summary> The language of this mail message. </summary>
+        [WirePath("properties.language")]
         public string Language { get; }
-        /// <summary>
-        /// The threat detection methods
-        /// Serialized Name: MailMessageEntity.properties.threatDetectionMethods
-        /// </summary>
+        /// <summary> The threat detection methods. </summary>
+        [WirePath("properties.threatDetectionMethods")]
         public IReadOnlyList<string> ThreatDetectionMethods { get; }
-        /// <summary>
-        /// The bodyFingerprintBin1
-        /// Serialized Name: MailMessageEntity.properties.bodyFingerprintBin1
-        /// </summary>
+        /// <summary> The bodyFingerprintBin1. </summary>
+        [WirePath("properties.bodyFingerprintBin1")]
         public int? BodyFingerprintBin1 { get; set; }
-        /// <summary>
-        /// The bodyFingerprintBin2
-        /// Serialized Name: MailMessageEntity.properties.bodyFingerprintBin2
-        /// </summary>
+        /// <summary> The bodyFingerprintBin2. </summary>
+        [WirePath("properties.bodyFingerprintBin2")]
         public int? BodyFingerprintBin2 { get; set; }
-        /// <summary>
-        /// The bodyFingerprintBin3
-        /// Serialized Name: MailMessageEntity.properties.bodyFingerprintBin3
-        /// </summary>
+        /// <summary> The bodyFingerprintBin3. </summary>
+        [WirePath("properties.bodyFingerprintBin3")]
         public int? BodyFingerprintBin3 { get; set; }
-        /// <summary>
-        /// The bodyFingerprintBin4
-        /// Serialized Name: MailMessageEntity.properties.bodyFingerprintBin4
-        /// </summary>
+        /// <summary> The bodyFingerprintBin4. </summary>
+        [WirePath("properties.bodyFingerprintBin4")]
         public int? BodyFingerprintBin4 { get; set; }
-        /// <summary>
-        /// The bodyFingerprintBin5
-        /// Serialized Name: MailMessageEntity.properties.bodyFingerprintBin5
-        /// </summary>
+        /// <summary> The bodyFingerprintBin5. </summary>
+        [WirePath("properties.bodyFingerprintBin5")]
         public int? BodyFingerprintBin5 { get; set; }
-        /// <summary>
-        /// The directionality of this mail message
-        /// Serialized Name: MailMessageEntity.properties.antispamDirection
-        /// </summary>
+        /// <summary> The directionality of this mail message. </summary>
+        [WirePath("properties.antispamDirection")]
         public AntispamMailDirection? AntispamDirection { get; set; }
-        /// <summary>
-        /// The delivery action of this mail message like Delivered, Blocked, Replaced etc
-        /// Serialized Name: MailMessageEntity.properties.deliveryAction
-        /// </summary>
+        /// <summary> The delivery action of this mail message like Delivered, Blocked, Replaced etc. </summary>
+        [WirePath("properties.deliveryAction")]
         public SecurityInsightsMailMessageDeliveryAction? DeliveryAction { get; set; }
-        /// <summary>
-        /// The delivery location of this mail message like Inbox, JunkFolder etc
-        /// Serialized Name: MailMessageEntity.properties.deliveryLocation
-        /// </summary>
+        /// <summary> The delivery location of this mail message like Inbox, JunkFolder etc. </summary>
+        [WirePath("properties.deliveryLocation")]
         public SecurityInsightsMailMessageDeliveryLocation? DeliveryLocation { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List all the bookmarks.
-    /// Serialized Name: BookmarkList
-    /// </summary>
+    /// <summary> List all the bookmarks. </summary>
     internal partial class BookmarkList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BookmarkList"/>. </summary>
-        /// <param name="value">
-        /// Array of bookmarks.
-        /// Serialized Name: BookmarkList.value
-        /// </param>
+        /// <param name="value"> Array of bookmarks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal BookmarkList(IEnumerable<SecurityInsightsBookmarkData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BookmarkList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of bookmarks.
-        /// Serialized Name: BookmarkList.nextLink
-        /// </param>
-        /// <param name="value">
-        /// Array of bookmarks.
-        /// Serialized Name: BookmarkList.value
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of bookmarks. </param>
+        /// <param name="value"> Array of bookmarks. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BookmarkList(string nextLink, IReadOnlyList<SecurityInsightsBookmarkData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of bookmarks.
-        /// Serialized Name: BookmarkList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of bookmarks. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Array of bookmarks.
-        /// Serialized Name: BookmarkList.value
-        /// </summary>
+        /// <summary> Array of bookmarks. </summary>
         public IReadOnlyList<SecurityInsightsBookmarkData> Value { get; }
     }
 }

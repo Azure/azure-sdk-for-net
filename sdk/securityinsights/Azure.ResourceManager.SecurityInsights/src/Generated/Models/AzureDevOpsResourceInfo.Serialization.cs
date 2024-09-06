@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -99,6 +100,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new AzureDevOpsResourceInfo(pipelineId, serviceConnectionId, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PipelineId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pipelineId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PipelineId))
+                {
+                    builder.Append("  pipelineId: ");
+                    if (PipelineId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PipelineId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PipelineId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceConnectionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceConnectionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceConnectionId))
+                {
+                    builder.Append("  serviceConnectionId: ");
+                    if (ServiceConnectionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceConnectionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceConnectionId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AzureDevOpsResourceInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -107,6 +169,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AzureDevOpsResourceInfo)} does not support writing '{options.Format}' format.");
             }

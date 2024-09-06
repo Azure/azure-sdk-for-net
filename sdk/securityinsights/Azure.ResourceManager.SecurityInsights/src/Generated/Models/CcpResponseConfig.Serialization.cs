@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -281,6 +283,259 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventsJsonPaths), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  eventsJsonPaths: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EventsJsonPaths))
+                {
+                    if (EventsJsonPaths.Any())
+                    {
+                        builder.Append("  eventsJsonPaths: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EventsJsonPaths)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessStatusJsonPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  successStatusJsonPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SuccessStatusJsonPath))
+                {
+                    builder.Append("  successStatusJsonPath: ");
+                    if (SuccessStatusJsonPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SuccessStatusJsonPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SuccessStatusJsonPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessStatusValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  successStatusValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SuccessStatusValue))
+                {
+                    builder.Append("  successStatusValue: ");
+                    if (SuccessStatusValue.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SuccessStatusValue}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SuccessStatusValue}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGzipCompressed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isGzipCompressed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsGzipCompressed))
+                {
+                    builder.Append("  isGzipCompressed: ");
+                    var boolValue = IsGzipCompressed.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompressionAlgo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  compressionAlgo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CompressionAlgo))
+                {
+                    builder.Append("  compressionAlgo: ");
+                    if (CompressionAlgo.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CompressionAlgo}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CompressionAlgo}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  format: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Format))
+                {
+                    builder.Append("  format: ");
+                    if (Format.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Format}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Format}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CsvDelimiter), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  csvDelimiter: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CsvDelimiter))
+                {
+                    builder.Append("  csvDelimiter: ");
+                    if (CsvDelimiter.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CsvDelimiter}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CsvDelimiter}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasCsvBoundary), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hasCsvBoundary: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HasCsvBoundary))
+                {
+                    builder.Append("  hasCsvBoundary: ");
+                    var boolValue = HasCsvBoundary.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasCsvHeader), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hasCsvHeader: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HasCsvHeader))
+                {
+                    builder.Append("  hasCsvHeader: ");
+                    var boolValue = HasCsvHeader.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsConvertChildPropertiesToArray), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  convertChildPropertiesToArray: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsConvertChildPropertiesToArray))
+                {
+                    builder.Append("  convertChildPropertiesToArray: ");
+                    var boolValue = IsConvertChildPropertiesToArray.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CsvEscape), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  csvEscape: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CsvEscape))
+                {
+                    builder.Append("  csvEscape: ");
+                    if (CsvEscape.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CsvEscape}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CsvEscape}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CcpResponseConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CcpResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -289,6 +544,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CcpResponseConfig)} does not support writing '{options.Format}' format.");
             }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The sourceType of the watchlist
-    /// Serialized Name: SourceType
-    /// </summary>
+    /// <summary> The sourceType of the watchlist. </summary>
     public readonly partial struct SourceType : IEquatable<SourceType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string LocalFileValue = "Local file";
         private const string RemoteStorageValue = "Remote storage";
 
-        /// <summary>
-        /// Local file
-        /// Serialized Name: SourceType.Local file
-        /// </summary>
+        /// <summary> Local file. </summary>
         public static SourceType LocalFile { get; } = new SourceType(LocalFileValue);
-        /// <summary>
-        /// Remote storage
-        /// Serialized Name: SourceType.Remote storage
-        /// </summary>
+        /// <summary> Remote storage. </summary>
         public static SourceType RemoteStorage { get; } = new SourceType(RemoteStorageValue);
         /// <summary> Determines if two <see cref="SourceType"/> values are the same. </summary>
         public static bool operator ==(SourceType left, SourceType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The TiType.
-    /// Serialized Name: TiType
-    /// </summary>
+    /// <summary> The TiType. </summary>
     public readonly partial struct TiType : IEquatable<TiType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string MainValue = "main";
 
-        /// <summary>
-        /// main
-        /// Serialized Name: TiType.main
-        /// </summary>
+        /// <summary> main. </summary>
         public static TiType Main { get; } = new TiType(MainValue);
         /// <summary> Determines if two <see cref="TiType"/> values are the same. </summary>
         public static bool operator ==(TiType left, TiType right) => left.Equals(right);

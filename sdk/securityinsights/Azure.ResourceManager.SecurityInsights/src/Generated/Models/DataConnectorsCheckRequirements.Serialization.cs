@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "AmazonWebServicesS3": return AwsS3CheckRequirements.DeserializeAwsS3CheckRequirements(element, options);
                     case "AzureActiveDirectory": return AadCheckRequirements.DeserializeAadCheckRequirements(element, options);
                     case "AzureAdvancedThreatProtection": return AatpCheckRequirements.DeserializeAatpCheckRequirements(element, options);
-                    case "AzureSecurityCenter": return ASCCheckRequirements.DeserializeASCCheckRequirements(element, options);
+                    case "AzureSecurityCenter": return AscCheckRequirements.DeserializeAscCheckRequirements(element, options);
                     case "Dynamics365": return Dynamics365CheckRequirements.DeserializeDynamics365CheckRequirements(element, options);
                     case "IOT": return IotCheckRequirements.DeserializeIotCheckRequirements(element, options);
                     case "MicrosoftCloudAppSecurity": return McasCheckRequirements.DeserializeMcasCheckRequirements(element, options);

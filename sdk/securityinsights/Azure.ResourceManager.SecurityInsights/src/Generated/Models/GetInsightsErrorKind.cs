@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// GetInsights Query Errors.
-    /// Serialized Name: GetInsightsErrorKind
-    /// </summary>
+    /// <summary> GetInsights Query Errors. </summary>
     internal partial class GetInsightsErrorKind
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GetInsightsErrorKind"/>. </summary>
-        /// <param name="kind">
-        /// the query kind
-        /// Serialized Name: GetInsightsErrorKind.kind
-        /// </param>
-        /// <param name="errorMessage">
-        /// the error message
-        /// Serialized Name: GetInsightsErrorKind.errorMessage
-        /// </param>
+        /// <param name="kind"> the query kind. </param>
+        /// <param name="errorMessage"> the error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errorMessage"/> is null. </exception>
         internal GetInsightsErrorKind(GetInsightsError kind, string errorMessage)
         {
@@ -67,18 +58,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GetInsightsErrorKind"/>. </summary>
-        /// <param name="kind">
-        /// the query kind
-        /// Serialized Name: GetInsightsErrorKind.kind
-        /// </param>
-        /// <param name="queryId">
-        /// the query id
-        /// Serialized Name: GetInsightsErrorKind.queryId
-        /// </param>
-        /// <param name="errorMessage">
-        /// the error message
-        /// Serialized Name: GetInsightsErrorKind.errorMessage
-        /// </param>
+        /// <param name="kind"> the query kind. </param>
+        /// <param name="queryId"> the query id. </param>
+        /// <param name="errorMessage"> the error message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GetInsightsErrorKind(GetInsightsError kind, string queryId, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -93,20 +75,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// the query kind
-        /// Serialized Name: GetInsightsErrorKind.kind
-        /// </summary>
+        /// <summary> the query kind. </summary>
+        [WirePath("kind")]
         public GetInsightsError Kind { get; }
-        /// <summary>
-        /// the query id
-        /// Serialized Name: GetInsightsErrorKind.queryId
-        /// </summary>
+        /// <summary> the query id. </summary>
+        [WirePath("queryId")]
         public string QueryId { get; }
-        /// <summary>
-        /// the error message
-        /// Serialized Name: GetInsightsErrorKind.errorMessage
-        /// </summary>
+        /// <summary> the error message. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
     }
 }

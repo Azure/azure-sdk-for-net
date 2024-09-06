@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Expansion result metadata.
-    /// Serialized Name: TimelineResultsMetadata
-    /// </summary>
+    /// <summary> Expansion result metadata. </summary>
     internal partial class TimelineResultsMetadata
     {
         /// <summary>
@@ -50,14 +47,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TimelineResultsMetadata"/>. </summary>
-        /// <param name="totalCount">
-        /// the total items found for the timeline request
-        /// Serialized Name: TimelineResultsMetadata.totalCount
-        /// </param>
-        /// <param name="aggregations">
-        /// timeline aggregation per kind
-        /// Serialized Name: TimelineResultsMetadata.aggregations
-        /// </param>
+        /// <param name="totalCount"> the total items found for the timeline request. </param>
+        /// <param name="aggregations"> timeline aggregation per kind. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregations"/> is null. </exception>
         internal TimelineResultsMetadata(int totalCount, IEnumerable<TimelineAggregation> aggregations)
         {
@@ -69,18 +60,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TimelineResultsMetadata"/>. </summary>
-        /// <param name="totalCount">
-        /// the total items found for the timeline request
-        /// Serialized Name: TimelineResultsMetadata.totalCount
-        /// </param>
-        /// <param name="aggregations">
-        /// timeline aggregation per kind
-        /// Serialized Name: TimelineResultsMetadata.aggregations
-        /// </param>
-        /// <param name="errors">
-        /// information about the failure queries
-        /// Serialized Name: TimelineResultsMetadata.errors
-        /// </param>
+        /// <param name="totalCount"> the total items found for the timeline request. </param>
+        /// <param name="aggregations"> timeline aggregation per kind. </param>
+        /// <param name="errors"> information about the failure queries. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TimelineResultsMetadata(int totalCount, IReadOnlyList<TimelineAggregation> aggregations, IReadOnlyList<TimelineError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -95,20 +77,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// the total items found for the timeline request
-        /// Serialized Name: TimelineResultsMetadata.totalCount
-        /// </summary>
+        /// <summary> the total items found for the timeline request. </summary>
+        [WirePath("totalCount")]
         public int TotalCount { get; }
-        /// <summary>
-        /// timeline aggregation per kind
-        /// Serialized Name: TimelineResultsMetadata.aggregations
-        /// </summary>
+        /// <summary> timeline aggregation per kind. </summary>
+        [WirePath("aggregations")]
         public IReadOnlyList<TimelineAggregation> Aggregations { get; }
-        /// <summary>
-        /// information about the failure queries
-        /// Serialized Name: TimelineResultsMetadata.errors
-        /// </summary>
+        /// <summary> information about the failure queries. </summary>
+        [WirePath("errors")]
         public IReadOnlyList<TimelineError> Errors { get; }
     }
 }

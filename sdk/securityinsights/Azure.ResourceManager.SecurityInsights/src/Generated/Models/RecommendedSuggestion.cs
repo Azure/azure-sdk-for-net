@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// What suggestions should be taken to complete the recommendation.
-    /// Serialized Name: RecommendedSuggestion
-    /// </summary>
+    /// <summary> What suggestions should be taken to complete the recommendation. </summary>
     public partial class RecommendedSuggestion
     {
         /// <summary>
@@ -49,22 +46,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RecommendedSuggestion"/>. </summary>
-        /// <param name="suggestionTypeId">
-        /// Id of the suggestion type.
-        /// Serialized Name: RecommendedSuggestion.suggestionTypeId
-        /// </param>
-        /// <param name="title">
-        /// Title of the suggestion.
-        /// Serialized Name: RecommendedSuggestion.title
-        /// </param>
-        /// <param name="description">
-        /// Description of the suggestion.
-        /// Serialized Name: RecommendedSuggestion.description
-        /// </param>
-        /// <param name="action">
-        /// Action of the suggestion.
-        /// Serialized Name: RecommendedSuggestion.action
-        /// </param>
+        /// <param name="suggestionTypeId"> Id of the suggestion type. </param>
+        /// <param name="title"> Title of the suggestion. </param>
+        /// <param name="description"> Description of the suggestion. </param>
+        /// <param name="action"> Action of the suggestion. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="suggestionTypeId"/>, <paramref name="title"/>, <paramref name="description"/> or <paramref name="action"/> is null. </exception>
         public RecommendedSuggestion(string suggestionTypeId, string title, string description, string action)
         {
@@ -81,26 +66,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecommendedSuggestion"/>. </summary>
-        /// <param name="suggestionTypeId">
-        /// Id of the suggestion type.
-        /// Serialized Name: RecommendedSuggestion.suggestionTypeId
-        /// </param>
-        /// <param name="title">
-        /// Title of the suggestion.
-        /// Serialized Name: RecommendedSuggestion.title
-        /// </param>
-        /// <param name="description">
-        /// Description of the suggestion.
-        /// Serialized Name: RecommendedSuggestion.description
-        /// </param>
-        /// <param name="action">
-        /// Action of the suggestion.
-        /// Serialized Name: RecommendedSuggestion.action
-        /// </param>
-        /// <param name="additionalProperties">
-        /// Collection of additional properties for the suggestion.
-        /// Serialized Name: RecommendedSuggestion.additionalProperties
-        /// </param>
+        /// <param name="suggestionTypeId"> Id of the suggestion type. </param>
+        /// <param name="title"> Title of the suggestion. </param>
+        /// <param name="description"> Description of the suggestion. </param>
+        /// <param name="action"> Action of the suggestion. </param>
+        /// <param name="additionalProperties"> Collection of additional properties for the suggestion. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RecommendedSuggestion(string suggestionTypeId, string title, string description, string action, IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -117,30 +87,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Id of the suggestion type.
-        /// Serialized Name: RecommendedSuggestion.suggestionTypeId
-        /// </summary>
+        /// <summary> Id of the suggestion type. </summary>
+        [WirePath("suggestionTypeId")]
         public string SuggestionTypeId { get; set; }
-        /// <summary>
-        /// Title of the suggestion.
-        /// Serialized Name: RecommendedSuggestion.title
-        /// </summary>
+        /// <summary> Title of the suggestion. </summary>
+        [WirePath("title")]
         public string Title { get; set; }
-        /// <summary>
-        /// Description of the suggestion.
-        /// Serialized Name: RecommendedSuggestion.description
-        /// </summary>
+        /// <summary> Description of the suggestion. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Action of the suggestion.
-        /// Serialized Name: RecommendedSuggestion.action
-        /// </summary>
+        /// <summary> Action of the suggestion. </summary>
+        [WirePath("action")]
         public string Action { get; set; }
-        /// <summary>
-        /// Collection of additional properties for the suggestion.
-        /// Serialized Name: RecommendedSuggestion.additionalProperties
-        /// </summary>
+        /// <summary> Collection of additional properties for the suggestion. </summary>
+        [WirePath("additionalProperties")]
         public IDictionary<string, string> AdditionalProperties { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes the state of user's license for a connector kind.
-    /// Serialized Name: DataConnectorLicenseState
-    /// </summary>
+    /// <summary> Describes the state of user's license for a connector kind. </summary>
     public readonly partial struct DataConnectorLicenseState : IEquatable<DataConnectorLicenseState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string InvalidValue = "Invalid";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// Valid
-        /// Serialized Name: DataConnectorLicenseState.Valid
-        /// </summary>
+        /// <summary> Valid. </summary>
         public static DataConnectorLicenseState Valid { get; } = new DataConnectorLicenseState(ValidValue);
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: DataConnectorLicenseState.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static DataConnectorLicenseState Invalid { get; } = new DataConnectorLicenseState(InvalidValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: DataConnectorLicenseState.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static DataConnectorLicenseState Unknown { get; } = new DataConnectorLicenseState(UnknownValue);
         /// <summary> Determines if two <see cref="DataConnectorLicenseState"/> values are the same. </summary>
         public static bool operator ==(DataConnectorLicenseState left, DataConnectorLicenseState right) => left.Equals(right);

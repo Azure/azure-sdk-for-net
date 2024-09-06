@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Device importance, determines if the device classified as 'crown jewel'
-    /// Serialized Name: DeviceImportance
-    /// </summary>
+    /// <summary> Device importance, determines if the device classified as 'crown jewel'. </summary>
     public readonly partial struct DeviceImportance : IEquatable<DeviceImportance>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string NormalValue = "Normal";
         private const string HighValue = "High";
 
-        /// <summary>
-        /// Unknown - Default value
-        /// Serialized Name: DeviceImportance.Unknown
-        /// </summary>
+        /// <summary> Unknown - Default value. </summary>
         public static DeviceImportance Unknown { get; } = new DeviceImportance(UnknownValue);
-        /// <summary>
-        /// Low
-        /// Serialized Name: DeviceImportance.Low
-        /// </summary>
+        /// <summary> Low. </summary>
         public static DeviceImportance Low { get; } = new DeviceImportance(LowValue);
-        /// <summary>
-        /// Normal
-        /// Serialized Name: DeviceImportance.Normal
-        /// </summary>
+        /// <summary> Normal. </summary>
         public static DeviceImportance Normal { get; } = new DeviceImportance(NormalValue);
-        /// <summary>
-        /// High
-        /// Serialized Name: DeviceImportance.High
-        /// </summary>
+        /// <summary> High. </summary>
         public static DeviceImportance High { get; } = new DeviceImportance(HighValue);
         /// <summary> Determines if two <see cref="DeviceImportance"/> values are the same. </summary>
         public static bool operator ==(DeviceImportance left, DeviceImportance right) => left.Equals(right);

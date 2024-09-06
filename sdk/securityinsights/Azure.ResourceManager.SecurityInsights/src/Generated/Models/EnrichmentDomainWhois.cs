@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Whois information for a given domain and associated metadata
-    /// Serialized Name: EnrichmentDomainWhois
-    /// </summary>
+    /// <summary> Whois information for a given domain and associated metadata. </summary>
     public partial class EnrichmentDomainWhois
     {
         /// <summary>
@@ -54,30 +51,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EnrichmentDomainWhois"/>. </summary>
-        /// <param name="domain">
-        /// The domain for this whois record
-        /// Serialized Name: EnrichmentDomainWhois.domain
-        /// </param>
-        /// <param name="server">
-        /// The hostname of this registrar's whois server
-        /// Serialized Name: EnrichmentDomainWhois.server
-        /// </param>
-        /// <param name="created">
-        /// The timestamp at which this record was created
-        /// Serialized Name: EnrichmentDomainWhois.created
-        /// </param>
-        /// <param name="updatedOn">
-        /// The timestamp at which this record was last updated
-        /// Serialized Name: EnrichmentDomainWhois.updated
-        /// </param>
-        /// <param name="expireOn">
-        /// The timestamp at which this record will expire
-        /// Serialized Name: EnrichmentDomainWhois.expires
-        /// </param>
-        /// <param name="parsedWhois">
-        /// The whois record for a given domain
-        /// Serialized Name: EnrichmentDomainWhois.parsedWhois
-        /// </param>
+        /// <param name="domain"> The domain for this whois record. </param>
+        /// <param name="server"> The hostname of this registrar's whois server. </param>
+        /// <param name="created"> The timestamp at which this record was created. </param>
+        /// <param name="updatedOn"> The timestamp at which this record was last updated. </param>
+        /// <param name="expireOn"> The timestamp at which this record will expire. </param>
+        /// <param name="parsedWhois"> The whois record for a given domain. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EnrichmentDomainWhois(string domain, string server, DateTimeOffset? created, DateTimeOffset? updatedOn, DateTimeOffset? expireOn, EnrichmentDomainWhoisDetails parsedWhois, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,35 +69,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The domain for this whois record
-        /// Serialized Name: EnrichmentDomainWhois.domain
-        /// </summary>
+        /// <summary> The domain for this whois record. </summary>
+        [WirePath("domain")]
         public string Domain { get; }
-        /// <summary>
-        /// The hostname of this registrar's whois server
-        /// Serialized Name: EnrichmentDomainWhois.server
-        /// </summary>
+        /// <summary> The hostname of this registrar's whois server. </summary>
+        [WirePath("server")]
         public string Server { get; }
-        /// <summary>
-        /// The timestamp at which this record was created
-        /// Serialized Name: EnrichmentDomainWhois.created
-        /// </summary>
+        /// <summary> The timestamp at which this record was created. </summary>
+        [WirePath("created")]
         public DateTimeOffset? Created { get; }
-        /// <summary>
-        /// The timestamp at which this record was last updated
-        /// Serialized Name: EnrichmentDomainWhois.updated
-        /// </summary>
+        /// <summary> The timestamp at which this record was last updated. </summary>
+        [WirePath("updated")]
         public DateTimeOffset? UpdatedOn { get; }
-        /// <summary>
-        /// The timestamp at which this record will expire
-        /// Serialized Name: EnrichmentDomainWhois.expires
-        /// </summary>
+        /// <summary> The timestamp at which this record will expire. </summary>
+        [WirePath("expires")]
         public DateTimeOffset? ExpireOn { get; }
-        /// <summary>
-        /// The whois record for a given domain
-        /// Serialized Name: EnrichmentDomainWhois.parsedWhois
-        /// </summary>
+        /// <summary> The whois record for a given domain. </summary>
+        [WirePath("parsedWhois")]
         public EnrichmentDomainWhoisDetails ParsedWhois { get; }
     }
 }

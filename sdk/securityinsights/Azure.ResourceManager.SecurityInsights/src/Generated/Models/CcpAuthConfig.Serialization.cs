@@ -7,6 +7,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "APIKey": return ApiKeyAuthModel.DeserializeApiKeyAuthModel(element, options);
+                    case "APIKey": return SecurityInsightsApiKeyAuthModel.DeserializeSecurityInsightsApiKeyAuthModel(element, options);
                     case "AWS": return AWSAuthModel.DeserializeAWSAuthModel(element, options);
                     case "Basic": return BasicAuthModel.DeserializeBasicAuthModel(element, options);
                     case "GCP": return GCPAuthModel.DeserializeGCPAuthModel(element, options);
@@ -86,6 +88,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return UnknownCcpAuthConfig.DeserializeUnknownCcpAuthConfig(element, options);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  type: ");
+                builder.AppendLine($"'{AuthType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CcpAuthConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CcpAuthConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -94,6 +123,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CcpAuthConfig)} does not support writing '{options.Format}' format.");
             }

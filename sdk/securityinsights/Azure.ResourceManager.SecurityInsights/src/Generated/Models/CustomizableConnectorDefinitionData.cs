@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Connector definition for kind 'Customizable'.
-    /// Serialized Name: CustomizableConnectorDefinition
-    /// </summary>
+    /// <summary> Connector definition for kind 'Customizable'. </summary>
     public partial class CustomizableConnectorDefinitionData : SecurityInsightsDataConnectorDefinitionData
     {
         /// <summary> Initializes a new instance of <see cref="CustomizableConnectorDefinitionData"/>. </summary>
@@ -29,31 +26,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The data connector kind
-        /// Serialized Name: DataConnectorDefinition.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="createdOn">
-        /// Gets or sets the connector definition created date in UTC format.
-        /// Serialized Name: CustomizableConnectorDefinition.properties.createdTimeUtc
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Gets or sets the connector definition last modified date in UTC format.
-        /// Serialized Name: CustomizableConnectorDefinition.properties.lastModifiedUtc
-        /// </param>
-        /// <param name="connectorUiConfig">
-        /// The UiConfig for 'Customizable' connector definition kind.
-        /// Serialized Name: CustomizableConnectorDefinition.properties.connectorUiConfig
-        /// </param>
-        /// <param name="connectionsConfig">
-        /// The UiConfig for 'Customizable' connector definition kind.
-        /// Serialized Name: CustomizableConnectorDefinition.properties.connectionsConfig
-        /// </param>
+        /// <param name="createdOn"> Gets or sets the connector definition created date in UTC format. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the connector definition last modified date in UTC format. </param>
+        /// <param name="connectorUiConfig"> The UiConfig for 'Customizable' connector definition kind. </param>
+        /// <param name="connectionsConfig"> The UiConfig for 'Customizable' connector definition kind. </param>
         internal CustomizableConnectorDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorDefinitionKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, CustomizableConnectorUiConfig connectorUiConfig, CustomizableConnectionsConfig connectionsConfig) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             CreatedOn = createdOn;
@@ -63,25 +42,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Gets or sets the connector definition created date in UTC format.
-        /// Serialized Name: CustomizableConnectorDefinition.properties.createdTimeUtc
-        /// </summary>
+        /// <summary> Gets or sets the connector definition created date in UTC format. </summary>
+        [WirePath("properties.createdTimeUtc")]
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// Gets or sets the connector definition last modified date in UTC format.
-        /// Serialized Name: CustomizableConnectorDefinition.properties.lastModifiedUtc
-        /// </summary>
+        /// <summary> Gets or sets the connector definition last modified date in UTC format. </summary>
+        [WirePath("properties.lastModifiedUtc")]
         public DateTimeOffset? LastModifiedOn { get; set; }
-        /// <summary>
-        /// The UiConfig for 'Customizable' connector definition kind.
-        /// Serialized Name: CustomizableConnectorDefinition.properties.connectorUiConfig
-        /// </summary>
+        /// <summary> The UiConfig for 'Customizable' connector definition kind. </summary>
+        [WirePath("properties.connectorUiConfig")]
         public CustomizableConnectorUiConfig ConnectorUiConfig { get; set; }
-        /// <summary>
-        /// The UiConfig for 'Customizable' connector definition kind.
-        /// Serialized Name: CustomizableConnectorDefinition.properties.connectionsConfig
-        /// </summary>
+        /// <summary> The UiConfig for 'Customizable' connector definition kind. </summary>
+        [WirePath("properties.connectionsConfig")]
         public CustomizableConnectionsConfig ConnectionsConfig { get; set; }
     }
 }

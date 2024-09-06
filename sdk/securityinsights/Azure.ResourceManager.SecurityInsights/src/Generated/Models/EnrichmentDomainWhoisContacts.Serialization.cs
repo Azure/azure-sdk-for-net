@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -137,6 +138,81 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new EnrichmentDomainWhoisContacts(admin, billing, registrant, tech, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Admin), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  admin: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Admin))
+                {
+                    builder.Append("  admin: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Admin, options, 2, false, "  admin: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Billing), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  billing: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Billing))
+                {
+                    builder.Append("  billing: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Billing, options, 2, false, "  billing: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Registrant), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  registrant: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Registrant))
+                {
+                    builder.Append("  registrant: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Registrant, options, 2, false, "  registrant: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tech), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tech: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tech))
+                {
+                    builder.Append("  tech: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Tech, options, 2, false, "  tech: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EnrichmentDomainWhoisContacts>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainWhoisContacts>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +221,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EnrichmentDomainWhoisContacts)} does not support writing '{options.Format}' format.");
             }

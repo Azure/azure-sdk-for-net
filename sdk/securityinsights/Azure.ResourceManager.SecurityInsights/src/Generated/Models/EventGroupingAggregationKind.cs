@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The event grouping aggregation kinds
-    /// Serialized Name: EventGroupingAggregationKind
-    /// </summary>
+    /// <summary> The event grouping aggregation kinds. </summary>
     public readonly partial struct EventGroupingAggregationKind : IEquatable<EventGroupingAggregationKind>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string SingleAlertValue = "SingleAlert";
         private const string AlertPerResultValue = "AlertPerResult";
 
-        /// <summary>
-        /// SingleAlert
-        /// Serialized Name: EventGroupingAggregationKind.SingleAlert
-        /// </summary>
+        /// <summary> SingleAlert. </summary>
         public static EventGroupingAggregationKind SingleAlert { get; } = new EventGroupingAggregationKind(SingleAlertValue);
-        /// <summary>
-        /// AlertPerResult
-        /// Serialized Name: EventGroupingAggregationKind.AlertPerResult
-        /// </summary>
+        /// <summary> AlertPerResult. </summary>
         public static EventGroupingAggregationKind AlertPerResult { get; } = new EventGroupingAggregationKind(AlertPerResultValue);
         /// <summary> Determines if two <see cref="EventGroupingAggregationKind"/> values are the same. </summary>
         public static bool operator ==(EventGroupingAggregationKind left, EventGroupingAggregationKind right) => left.Equals(right);

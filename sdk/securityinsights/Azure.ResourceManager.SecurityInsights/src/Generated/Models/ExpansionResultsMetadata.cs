@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Expansion result metadata.
-    /// Serialized Name: ExpansionResultsMetadata
-    /// </summary>
+    /// <summary> Expansion result metadata. </summary>
     internal partial class ExpansionResultsMetadata
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpansionResultsMetadata"/>. </summary>
-        /// <param name="aggregations">
-        /// Information of the aggregated nodes in the expansion result.
-        /// Serialized Name: ExpansionResultsMetadata.aggregations
-        /// </param>
+        /// <param name="aggregations"> Information of the aggregated nodes in the expansion result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExpansionResultsMetadata(IReadOnlyList<ExpansionResultAggregation> aggregations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Information of the aggregated nodes in the expansion result.
-        /// Serialized Name: ExpansionResultsMetadata.aggregations
-        /// </summary>
+        /// <summary> Information of the aggregated nodes in the expansion result. </summary>
+        [WirePath("aggregations")]
         public IReadOnlyList<ExpansionResultAggregation> Aggregations { get; }
     }
 }

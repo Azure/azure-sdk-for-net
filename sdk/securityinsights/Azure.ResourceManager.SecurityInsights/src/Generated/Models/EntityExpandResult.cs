@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The entity expansion result operation response.
-    /// Serialized Name: EntityExpandResponse
-    /// </summary>
+    /// <summary> The entity expansion result operation response. </summary>
     public partial class EntityExpandResult
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityExpandResult"/>. </summary>
-        /// <param name="metaData">
-        /// The metadata from the expansion operation results.
-        /// Serialized Name: EntityExpandResponse.metaData
-        /// </param>
-        /// <param name="value">
-        /// The expansion result values.
-        /// Serialized Name: EntityExpandResponse.value
-        /// </param>
+        /// <param name="metaData"> The metadata from the expansion operation results. </param>
+        /// <param name="value"> The expansion result values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityExpandResult(ExpansionResultsMetadata metaData, EntityExpandResponseValue value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,24 +61,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The metadata from the expansion operation results.
-        /// Serialized Name: EntityExpandResponse.metaData
-        /// </summary>
+        /// <summary> The metadata from the expansion operation results. </summary>
         internal ExpansionResultsMetadata MetaData { get; }
-        /// <summary>
-        /// Information of the aggregated nodes in the expansion result.
-        /// Serialized Name: ExpansionResultsMetadata.aggregations
-        /// </summary>
+        /// <summary> Information of the aggregated nodes in the expansion result. </summary>
+        [WirePath("metaData.aggregations")]
         public IReadOnlyList<ExpansionResultAggregation> MetaDataAggregations
         {
             get => MetaData?.Aggregations;
         }
 
-        /// <summary>
-        /// The expansion result values.
-        /// Serialized Name: EntityExpandResponse.value
-        /// </summary>
+        /// <summary> The expansion result values. </summary>
+        [WirePath("value")]
         public EntityExpandResponseValue Value { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Sorting order (ascending/descending/unsorted).
-    /// Serialized Name: ThreatIntelligenceSortingOrder
-    /// </summary>
+    /// <summary> Sorting order (ascending/descending/unsorted). </summary>
     public readonly partial struct ThreatIntelligenceSortingOrder : IEquatable<ThreatIntelligenceSortingOrder>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string AscendingValue = "ascending";
         private const string DescendingValue = "descending";
 
-        /// <summary>
-        /// unsorted
-        /// Serialized Name: ThreatIntelligenceSortingOrder.unsorted
-        /// </summary>
+        /// <summary> unsorted. </summary>
         public static ThreatIntelligenceSortingOrder Unsorted { get; } = new ThreatIntelligenceSortingOrder(UnsortedValue);
-        /// <summary>
-        /// ascending
-        /// Serialized Name: ThreatIntelligenceSortingOrder.ascending
-        /// </summary>
+        /// <summary> ascending. </summary>
         public static ThreatIntelligenceSortingOrder Ascending { get; } = new ThreatIntelligenceSortingOrder(AscendingValue);
-        /// <summary>
-        /// descending
-        /// Serialized Name: ThreatIntelligenceSortingOrder.descending
-        /// </summary>
+        /// <summary> descending. </summary>
         public static ThreatIntelligenceSortingOrder Descending { get; } = new ThreatIntelligenceSortingOrder(DescendingValue);
         /// <summary> Determines if two <see cref="ThreatIntelligenceSortingOrder"/> values are the same. </summary>
         public static bool operator ==(ThreatIntelligenceSortingOrder left, ThreatIntelligenceSortingOrder right) => left.Equals(right);

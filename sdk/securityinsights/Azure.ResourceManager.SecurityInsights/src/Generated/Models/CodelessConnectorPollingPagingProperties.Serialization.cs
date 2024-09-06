@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -187,6 +188,220 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PagingType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pagingType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PagingType))
+                {
+                    builder.Append("  pagingType: ");
+                    if (PagingType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PagingType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PagingType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextPageParaName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nextPageParaName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextPageParaName))
+                {
+                    builder.Append("  nextPageParaName: ");
+                    if (NextPageParaName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NextPageParaName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NextPageParaName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextPageTokenJsonPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nextPageTokenJsonPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextPageTokenJsonPath))
+                {
+                    builder.Append("  nextPageTokenJsonPath: ");
+                    if (NextPageTokenJsonPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NextPageTokenJsonPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NextPageTokenJsonPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageCountAttributePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pageCountAttributePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PageCountAttributePath))
+                {
+                    builder.Append("  pageCountAttributePath: ");
+                    if (PageCountAttributePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PageCountAttributePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PageCountAttributePath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageTotalCountAttributePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pageTotalCountAttributePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PageTotalCountAttributePath))
+                {
+                    builder.Append("  pageTotalCountAttributePath: ");
+                    if (PageTotalCountAttributePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PageTotalCountAttributePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PageTotalCountAttributePath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageTimeStampAttributePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pageTimeStampAttributePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PageTimeStampAttributePath))
+                {
+                    builder.Append("  pageTimeStampAttributePath: ");
+                    if (PageTimeStampAttributePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PageTimeStampAttributePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PageTimeStampAttributePath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchTheLatestTimeStampFromEventsList), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  searchTheLatestTimeStampFromEventsList: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SearchTheLatestTimeStampFromEventsList))
+                {
+                    builder.Append("  searchTheLatestTimeStampFromEventsList: ");
+                    if (SearchTheLatestTimeStampFromEventsList.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SearchTheLatestTimeStampFromEventsList}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SearchTheLatestTimeStampFromEventsList}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageSizeParaName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pageSizeParaName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PageSizeParaName))
+                {
+                    builder.Append("  pageSizeParaName: ");
+                    if (PageSizeParaName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PageSizeParaName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PageSizeParaName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pageSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PageSize))
+                {
+                    builder.Append("  pageSize: ");
+                    builder.AppendLine($"{PageSize.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CodelessConnectorPollingPagingProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingPagingProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -195,6 +410,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CodelessConnectorPollingPagingProperties)} does not support writing '{options.Format}' format.");
             }

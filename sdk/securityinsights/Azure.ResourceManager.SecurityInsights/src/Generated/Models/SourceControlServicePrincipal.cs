@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Service principal metadata.
-    /// Serialized Name: ServicePrincipal
-    /// </summary>
+    /// <summary> Service principal metadata. </summary>
     public partial class SourceControlServicePrincipal
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SourceControlServicePrincipal"/>. </summary>
-        /// <param name="id">
-        /// Id of service principal.
-        /// Serialized Name: ServicePrincipal.id
-        /// </param>
-        /// <param name="tenantId">
-        /// Tenant id of service principal.
-        /// Serialized Name: ServicePrincipal.tenantId
-        /// </param>
-        /// <param name="appId">
-        /// App id of service principal.
-        /// Serialized Name: ServicePrincipal.appId
-        /// </param>
-        /// <param name="credentialsExpireOn">
-        /// Expiration time of service principal credentials.
-        /// Serialized Name: ServicePrincipal.credentialsExpireOn
-        /// </param>
+        /// <param name="id"> Id of service principal. </param>
+        /// <param name="tenantId"> Tenant id of service principal. </param>
+        /// <param name="appId"> App id of service principal. </param>
+        /// <param name="credentialsExpireOn"> Expiration time of service principal credentials. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SourceControlServicePrincipal(string id, Guid? tenantId, string appId, DateTimeOffset? credentialsExpireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,25 +65,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Id of service principal.
-        /// Serialized Name: ServicePrincipal.id
-        /// </summary>
+        /// <summary> Id of service principal. </summary>
+        [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// Tenant id of service principal.
-        /// Serialized Name: ServicePrincipal.tenantId
-        /// </summary>
+        /// <summary> Tenant id of service principal. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
-        /// <summary>
-        /// App id of service principal.
-        /// Serialized Name: ServicePrincipal.appId
-        /// </summary>
+        /// <summary> App id of service principal. </summary>
+        [WirePath("appId")]
         public string AppId { get; }
-        /// <summary>
-        /// Expiration time of service principal credentials.
-        /// Serialized Name: ServicePrincipal.credentialsExpireOn
-        /// </summary>
+        /// <summary> Expiration time of service principal credentials. </summary>
+        [WirePath("credentialsExpireOn")]
         public DateTimeOffset? CredentialsExpireOn { get; set; }
     }
 }

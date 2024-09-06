@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.
-    /// Serialized Name: InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem
-    /// </summary>
+    /// <summary> The InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem. </summary>
     public partial class InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem"/>. </summary>
-        /// <param name="header">
-        /// Insight column header.
-        /// Serialized Name: InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.header
-        /// </param>
-        /// <param name="outputType">
-        /// Insights Column type.
-        /// Serialized Name: InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.outputType
-        /// </param>
-        /// <param name="isDeepLinkSupported">
-        /// Is query supports deep-link.
-        /// Serialized Name: InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.supportDeepLink
-        /// </param>
+        /// <param name="header"> Insight column header. </param>
+        /// <param name="outputType"> Insights Column type. </param>
+        /// <param name="isDeepLinkSupported"> Is query supports deep-link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem(string header, OutputType? outputType, bool? isDeepLinkSupported, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Insight column header.
-        /// Serialized Name: InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.header
-        /// </summary>
+        /// <summary> Insight column header. </summary>
+        [WirePath("header")]
         public string Header { get; }
-        /// <summary>
-        /// Insights Column type.
-        /// Serialized Name: InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.outputType
-        /// </summary>
+        /// <summary> Insights Column type. </summary>
+        [WirePath("outputType")]
         public OutputType? OutputType { get; }
-        /// <summary>
-        /// Is query supports deep-link.
-        /// Serialized Name: InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.supportDeepLink
-        /// </summary>
+        /// <summary> Is query supports deep-link. </summary>
+        [WirePath("supportDeepLink")]
         public bool? IsDeepLinkSupported { get; }
     }
 }

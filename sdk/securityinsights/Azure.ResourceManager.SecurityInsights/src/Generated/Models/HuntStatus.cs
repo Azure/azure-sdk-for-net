@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The status of the hunt.
-    /// Serialized Name: HuntStatus
-    /// </summary>
+    /// <summary> The status of the hunt. </summary>
     public readonly partial struct HuntStatus : IEquatable<HuntStatus>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string BacklogValue = "Backlog";
         private const string ApprovedValue = "Approved";
 
-        /// <summary>
-        /// New
-        /// Serialized Name: HuntStatus.New
-        /// </summary>
+        /// <summary> New. </summary>
         public static HuntStatus New { get; } = new HuntStatus(NewValue);
-        /// <summary>
-        /// Active
-        /// Serialized Name: HuntStatus.Active
-        /// </summary>
+        /// <summary> Active. </summary>
         public static HuntStatus Active { get; } = new HuntStatus(ActiveValue);
-        /// <summary>
-        /// Closed
-        /// Serialized Name: HuntStatus.Closed
-        /// </summary>
+        /// <summary> Closed. </summary>
         public static HuntStatus Closed { get; } = new HuntStatus(ClosedValue);
-        /// <summary>
-        /// Backlog
-        /// Serialized Name: HuntStatus.Backlog
-        /// </summary>
+        /// <summary> Backlog. </summary>
         public static HuntStatus Backlog { get; } = new HuntStatus(BacklogValue);
-        /// <summary>
-        /// Approved
-        /// Serialized Name: HuntStatus.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static HuntStatus Approved { get; } = new HuntStatus(ApprovedValue);
         /// <summary> Determines if two <see cref="HuntStatus"/> values are the same. </summary>
         public static bool operator ==(HuntStatus left, HuntStatus right) => left.Equals(right);

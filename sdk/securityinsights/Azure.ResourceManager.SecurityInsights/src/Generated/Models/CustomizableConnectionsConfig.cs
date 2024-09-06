@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The UiConfig for 'Customizable' connector definition kind.
-    /// Serialized Name: CustomizableConnectionsConfig
-    /// </summary>
+    /// <summary> The UiConfig for 'Customizable' connector definition kind. </summary>
     public partial class CustomizableConnectionsConfig
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CustomizableConnectionsConfig"/>. </summary>
-        /// <param name="templateSpecName">
-        /// Gets or sets the template name. The template includes ARM templates that can be created by the connector, usually it will be the dataConnectors ARM templates.
-        /// Serialized Name: CustomizableConnectionsConfig.templateSpecName
-        /// </param>
-        /// <param name="templateSpecVersion">
-        /// Gets or sets the template version.
-        /// Serialized Name: CustomizableConnectionsConfig.templateSpecVersion
-        /// </param>
+        /// <param name="templateSpecName"> Gets or sets the template name. The template includes ARM templates that can be created by the connector, usually it will be the dataConnectors ARM templates. </param>
+        /// <param name="templateSpecVersion"> Gets or sets the template version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
         public CustomizableConnectionsConfig(string templateSpecName, string templateSpecVersion)
         {
@@ -68,14 +59,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomizableConnectionsConfig"/>. </summary>
-        /// <param name="templateSpecName">
-        /// Gets or sets the template name. The template includes ARM templates that can be created by the connector, usually it will be the dataConnectors ARM templates.
-        /// Serialized Name: CustomizableConnectionsConfig.templateSpecName
-        /// </param>
-        /// <param name="templateSpecVersion">
-        /// Gets or sets the template version.
-        /// Serialized Name: CustomizableConnectionsConfig.templateSpecVersion
-        /// </param>
+        /// <param name="templateSpecName"> Gets or sets the template name. The template includes ARM templates that can be created by the connector, usually it will be the dataConnectors ARM templates. </param>
+        /// <param name="templateSpecVersion"> Gets or sets the template version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomizableConnectionsConfig(string templateSpecName, string templateSpecVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -89,15 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Gets or sets the template name. The template includes ARM templates that can be created by the connector, usually it will be the dataConnectors ARM templates.
-        /// Serialized Name: CustomizableConnectionsConfig.templateSpecName
-        /// </summary>
+        /// <summary> Gets or sets the template name. The template includes ARM templates that can be created by the connector, usually it will be the dataConnectors ARM templates. </summary>
+        [WirePath("templateSpecName")]
         public string TemplateSpecName { get; set; }
-        /// <summary>
-        /// Gets or sets the template version.
-        /// Serialized Name: CustomizableConnectionsConfig.templateSpecVersion
-        /// </summary>
+        /// <summary> Gets or sets the template version. </summary>
+        [WirePath("templateSpecVersion")]
         public string TemplateSpecVersion { get; set; }
     }
 }

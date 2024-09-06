@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -127,6 +129,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new ConnectorPermissions(resourceProvider ?? new ChangeTrackingList<PermissionsResourceProviderItem>(), customs ?? new ChangeTrackingList<PermissionsCustomsItem>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceProvider), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceProvider: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ResourceProvider))
+                {
+                    if (ResourceProvider.Any())
+                    {
+                        builder.Append("  resourceProvider: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ResourceProvider)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  resourceProvider: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Customs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Customs))
+                {
+                    if (Customs.Any())
+                    {
+                        builder.Append("  customs: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Customs)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  customs: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ConnectorPermissions>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorPermissions>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,6 +198,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConnectorPermissions)} does not support writing '{options.Format}' format.");
             }

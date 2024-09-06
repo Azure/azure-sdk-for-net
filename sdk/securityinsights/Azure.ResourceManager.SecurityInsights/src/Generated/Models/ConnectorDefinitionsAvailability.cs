@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The exposure status of the connector to the customers.
-    /// Serialized Name: ConnectorDefinitionsAvailability
-    /// </summary>
+    /// <summary> The exposure status of the connector to the customers. </summary>
     public partial class ConnectorDefinitionsAvailability
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectorDefinitionsAvailability"/>. </summary>
-        /// <param name="status">
-        /// The exposure status of the connector to the customers. Available values are 0-4 (0=None, 1=Available, 2=FeatureFlag, 3=Internal).
-        /// Serialized Name: ConnectorDefinitionsAvailability.status
-        /// </param>
-        /// <param name="isPreview">
-        /// Gets or sets a value indicating whether the connector is preview.
-        /// Serialized Name: ConnectorDefinitionsAvailability.isPreview
-        /// </param>
+        /// <param name="status"> The exposure status of the connector to the customers. Available values are 0-4 (0=None, 1=Available, 2=FeatureFlag, 3=Internal). </param>
+        /// <param name="isPreview"> Gets or sets a value indicating whether the connector is preview. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectorDefinitionsAvailability(int? status, bool? isPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The exposure status of the connector to the customers. Available values are 0-4 (0=None, 1=Available, 2=FeatureFlag, 3=Internal).
-        /// Serialized Name: ConnectorDefinitionsAvailability.status
-        /// </summary>
+        /// <summary> The exposure status of the connector to the customers. Available values are 0-4 (0=None, 1=Available, 2=FeatureFlag, 3=Internal). </summary>
+        [WirePath("status")]
         public int? Status { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether the connector is preview.
-        /// Serialized Name: ConnectorDefinitionsAvailability.isPreview
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether the connector is preview. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; set; }
     }
 }

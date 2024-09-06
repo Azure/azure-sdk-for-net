@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Codeless UI data connector.
-    /// Serialized Name: CodelessUiDataConnector
-    /// </summary>
+    /// <summary> Represents Codeless UI data connector. </summary>
     public partial class CodelessUiDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="CodelessUiDataConnector"/>. </summary>
@@ -29,29 +26,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The data connector kind
-        /// Serialized Name: DataConnector.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="connectorUiConfig">
-        /// Config to describe the instructions blade
-        /// Serialized Name: CodelessUiDataConnector.properties.connectorUiConfig
-        /// </param>
+        /// <param name="connectorUiConfig"> Config to describe the instructions blade. </param>
         internal CodelessUiDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, CodelessUiConnectorConfigProperties connectorUiConfig) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             ConnectorUiConfig = connectorUiConfig;
             Kind = kind;
         }
 
-        /// <summary>
-        /// Config to describe the instructions blade
-        /// Serialized Name: CodelessUiDataConnector.properties.connectorUiConfig
-        /// </summary>
+        /// <summary> Config to describe the instructions blade. </summary>
+        [WirePath("properties.connectorUiConfig")]
         public CodelessUiConnectorConfigProperties ConnectorUiConfig { get; set; }
     }
 }

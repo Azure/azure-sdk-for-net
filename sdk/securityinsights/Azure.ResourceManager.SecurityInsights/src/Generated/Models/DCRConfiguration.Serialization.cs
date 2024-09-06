@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -101,6 +102,90 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new DCRConfiguration(dataCollectionEndpoint, dataCollectionRuleImmutableId, streamName, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataCollectionEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataCollectionEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataCollectionEndpoint))
+                {
+                    builder.Append("  dataCollectionEndpoint: ");
+                    if (DataCollectionEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DataCollectionEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DataCollectionEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataCollectionRuleImmutableId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataCollectionRuleImmutableId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataCollectionRuleImmutableId))
+                {
+                    builder.Append("  dataCollectionRuleImmutableId: ");
+                    if (DataCollectionRuleImmutableId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DataCollectionRuleImmutableId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DataCollectionRuleImmutableId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StreamName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  streamName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StreamName))
+                {
+                    builder.Append("  streamName: ");
+                    if (StreamName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StreamName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StreamName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DCRConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DCRConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -109,6 +194,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DCRConfiguration)} does not support writing '{options.Format}' format.");
             }

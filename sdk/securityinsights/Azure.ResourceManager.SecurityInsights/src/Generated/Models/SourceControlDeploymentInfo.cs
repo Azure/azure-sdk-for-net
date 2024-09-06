@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Information regarding a deployment.
-    /// Serialized Name: DeploymentInfo
-    /// </summary>
+    /// <summary> Information regarding a deployment. </summary>
     public partial class SourceControlDeploymentInfo
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SourceControlDeploymentInfo"/>. </summary>
-        /// <param name="deploymentFetchStatus">
-        /// Status while fetching the last deployment.
-        /// Serialized Name: DeploymentInfo.deploymentFetchStatus
-        /// </param>
-        /// <param name="deployment">
-        /// Deployment information.
-        /// Serialized Name: DeploymentInfo.deployment
-        /// </param>
-        /// <param name="message">
-        /// Additional details about the deployment that can be shown to the user.
-        /// Serialized Name: DeploymentInfo.message
-        /// </param>
+        /// <param name="deploymentFetchStatus"> Status while fetching the last deployment. </param>
+        /// <param name="deployment"> Deployment information. </param>
+        /// <param name="message"> Additional details about the deployment that can be shown to the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SourceControlDeploymentInfo(SourceControlDeploymentFetchStatus? deploymentFetchStatus, SourceControlDeployment deployment, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Status while fetching the last deployment.
-        /// Serialized Name: DeploymentInfo.deploymentFetchStatus
-        /// </summary>
+        /// <summary> Status while fetching the last deployment. </summary>
+        [WirePath("deploymentFetchStatus")]
         public SourceControlDeploymentFetchStatus? DeploymentFetchStatus { get; }
-        /// <summary>
-        /// Deployment information.
-        /// Serialized Name: DeploymentInfo.deployment
-        /// </summary>
+        /// <summary> Deployment information. </summary>
+        [WirePath("deployment")]
         public SourceControlDeployment Deployment { get; }
-        /// <summary>
-        /// Additional details about the deployment that can be shown to the user.
-        /// Serialized Name: DeploymentInfo.message
-        /// </summary>
+        /// <summary> Additional details about the deployment that can be shown to the user. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

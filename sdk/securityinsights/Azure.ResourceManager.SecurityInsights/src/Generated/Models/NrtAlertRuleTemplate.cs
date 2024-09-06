@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents NRT alert rule template.
-    /// Serialized Name: NrtAlertRuleTemplate
-    /// </summary>
+    /// <summary> Represents NRT alert rule template. </summary>
     public partial class NrtAlertRuleTemplate : SecurityInsightsAlertRuleTemplateData
     {
         /// <summary> Initializes a new instance of <see cref="NrtAlertRuleTemplate"/>. </summary>
@@ -35,79 +32,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the alert rule
-        /// Serialized Name: AlertRuleTemplate.kind
-        /// </param>
+        /// <param name="kind"> The kind of the alert rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="alertRulesCreatedByTemplateCount">
-        /// the number of alert rules that were created by this template
-        /// Serialized Name: NrtAlertRuleTemplate.properties.alertRulesCreatedByTemplateCount
-        /// </param>
-        /// <param name="lastUpdatedOn">
-        /// The last time that this alert rule template has been updated.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.lastUpdatedDateUTC
-        /// </param>
-        /// <param name="createdOn">
-        /// The time that this alert rule template has been added.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.createdDateUTC
-        /// </param>
-        /// <param name="description">
-        /// The description of the alert rule template.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.description
-        /// </param>
-        /// <param name="displayName">
-        /// The display name for alert rule template.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.displayName
-        /// </param>
-        /// <param name="requiredDataConnectors">
-        /// The required data sources for this template
-        /// Serialized Name: NrtAlertRuleTemplate.properties.requiredDataConnectors
-        /// </param>
-        /// <param name="status">
-        /// The alert rule template status.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.status
-        /// </param>
-        /// <param name="tactics">
-        /// The tactics of the alert rule
-        /// Serialized Name: NrtAlertRuleTemplate.properties.tactics
-        /// </param>
-        /// <param name="techniques">
-        /// The techniques of the alert rule
-        /// Serialized Name: NrtAlertRuleTemplate.properties.techniques
-        /// </param>
-        /// <param name="query">
-        /// The query that creates alerts for this rule.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.query
-        /// </param>
-        /// <param name="severity">
-        /// The severity for alerts created by this alert rule.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.severity
-        /// </param>
-        /// <param name="version">
-        /// The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.version
-        /// </param>
-        /// <param name="customDetails">
-        /// Dictionary of string key-value pairs of columns to be attached to the alert
-        /// Serialized Name: NrtAlertRuleTemplate.properties.customDetails
-        /// </param>
-        /// <param name="entityMappings">
-        /// Array of the entity mappings of the alert rule
-        /// Serialized Name: NrtAlertRuleTemplate.properties.entityMappings
-        /// </param>
-        /// <param name="alertDetailsOverride">
-        /// The alert details override settings
-        /// Serialized Name: NrtAlertRuleTemplate.properties.alertDetailsOverride
-        /// </param>
-        /// <param name="eventGroupingSettings">
-        /// The event grouping settings.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.eventGroupingSettings
-        /// </param>
-        /// <param name="sentinelEntitiesMappings">
-        /// Array of the sentinel entity mappings of the alert rule
-        /// Serialized Name: NrtAlertRuleTemplate.properties.sentinelEntitiesMappings
-        /// </param>
+        /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
+        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
+        /// <param name="createdOn"> The time that this alert rule template has been added. </param>
+        /// <param name="description"> The description of the alert rule template. </param>
+        /// <param name="displayName"> The display name for alert rule template. </param>
+        /// <param name="requiredDataConnectors"> The required data sources for this template. </param>
+        /// <param name="status"> The alert rule template status. </param>
+        /// <param name="tactics"> The tactics of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="query"> The query that creates alerts for this rule. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <param name="version"> The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;. </param>
+        /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
+        /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
+        /// <param name="alertDetailsOverride"> The alert details override settings. </param>
+        /// <param name="eventGroupingSettings"> The event grouping settings. </param>
+        /// <param name="sentinelEntitiesMappings"> Array of the sentinel entity mappings of the alert rule. </param>
         internal NrtAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, int? alertRulesCreatedByTemplateCount, DateTimeOffset? lastUpdatedOn, DateTimeOffset? createdOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, string query, SecurityInsightsAlertSeverity? severity, string version, IDictionary<string, string> customDetails, IList<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride, EventGroupingSettings eventGroupingSettings, IList<SentinelEntityMapping> sentinelEntitiesMappings) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
@@ -130,90 +73,55 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// the number of alert rules that were created by this template
-        /// Serialized Name: NrtAlertRuleTemplate.properties.alertRulesCreatedByTemplateCount
-        /// </summary>
+        /// <summary> the number of alert rules that were created by this template. </summary>
+        [WirePath("properties.alertRulesCreatedByTemplateCount")]
         public int? AlertRulesCreatedByTemplateCount { get; set; }
-        /// <summary>
-        /// The last time that this alert rule template has been updated.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.lastUpdatedDateUTC
-        /// </summary>
+        /// <summary> The last time that this alert rule template has been updated. </summary>
+        [WirePath("properties.lastUpdatedDateUTC")]
         public DateTimeOffset? LastUpdatedOn { get; }
-        /// <summary>
-        /// The time that this alert rule template has been added.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.createdDateUTC
-        /// </summary>
+        /// <summary> The time that this alert rule template has been added. </summary>
+        [WirePath("properties.createdDateUTC")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The description of the alert rule template.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.description
-        /// </summary>
+        /// <summary> The description of the alert rule template. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// The display name for alert rule template.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.displayName
-        /// </summary>
+        /// <summary> The display name for alert rule template. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The required data sources for this template
-        /// Serialized Name: NrtAlertRuleTemplate.properties.requiredDataConnectors
-        /// </summary>
+        /// <summary> The required data sources for this template. </summary>
+        [WirePath("properties.requiredDataConnectors")]
         public IList<AlertRuleTemplateDataSource> RequiredDataConnectors { get; }
-        /// <summary>
-        /// The alert rule template status.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.status
-        /// </summary>
+        /// <summary> The alert rule template status. </summary>
+        [WirePath("properties.status")]
         public SecurityInsightsAlertRuleTemplateStatus? Status { get; set; }
-        /// <summary>
-        /// The tactics of the alert rule
-        /// Serialized Name: NrtAlertRuleTemplate.properties.tactics
-        /// </summary>
+        /// <summary> The tactics of the alert rule. </summary>
+        [WirePath("properties.tactics")]
         public IList<SecurityInsightsAttackTactic> Tactics { get; }
-        /// <summary>
-        /// The techniques of the alert rule
-        /// Serialized Name: NrtAlertRuleTemplate.properties.techniques
-        /// </summary>
+        /// <summary> The techniques of the alert rule. </summary>
+        [WirePath("properties.techniques")]
         public IList<string> Techniques { get; }
-        /// <summary>
-        /// The query that creates alerts for this rule.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.query
-        /// </summary>
+        /// <summary> The query that creates alerts for this rule. </summary>
+        [WirePath("properties.query")]
         public string Query { get; set; }
-        /// <summary>
-        /// The severity for alerts created by this alert rule.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.severity
-        /// </summary>
+        /// <summary> The severity for alerts created by this alert rule. </summary>
+        [WirePath("properties.severity")]
         public SecurityInsightsAlertSeverity? Severity { get; set; }
-        /// <summary>
-        /// The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.version
-        /// </summary>
+        /// <summary> The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
-        /// <summary>
-        /// Dictionary of string key-value pairs of columns to be attached to the alert
-        /// Serialized Name: NrtAlertRuleTemplate.properties.customDetails
-        /// </summary>
+        /// <summary> Dictionary of string key-value pairs of columns to be attached to the alert. </summary>
+        [WirePath("properties.customDetails")]
         public IDictionary<string, string> CustomDetails { get; }
-        /// <summary>
-        /// Array of the entity mappings of the alert rule
-        /// Serialized Name: NrtAlertRuleTemplate.properties.entityMappings
-        /// </summary>
+        /// <summary> Array of the entity mappings of the alert rule. </summary>
+        [WirePath("properties.entityMappings")]
         public IList<SecurityInsightsAlertRuleEntityMapping> EntityMappings { get; }
-        /// <summary>
-        /// The alert details override settings
-        /// Serialized Name: NrtAlertRuleTemplate.properties.alertDetailsOverride
-        /// </summary>
+        /// <summary> The alert details override settings. </summary>
+        [WirePath("properties.alertDetailsOverride")]
         public SecurityInsightsAlertDetailsOverride AlertDetailsOverride { get; set; }
-        /// <summary>
-        /// The event grouping settings.
-        /// Serialized Name: NrtAlertRuleTemplate.properties.eventGroupingSettings
-        /// </summary>
+        /// <summary> The event grouping settings. </summary>
         internal EventGroupingSettings EventGroupingSettings { get; set; }
-        /// <summary>
-        /// The event grouping aggregation kinds
-        /// Serialized Name: EventGroupingSettings.aggregationKind
-        /// </summary>
+        /// <summary> The event grouping aggregation kinds. </summary>
+        [WirePath("properties.eventGroupingSettings.aggregationKind")]
         public EventGroupingAggregationKind? EventGroupingAggregationKind
         {
             get => EventGroupingSettings is null ? default : EventGroupingSettings.AggregationKind;
@@ -225,10 +133,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        /// <summary>
-        /// Array of the sentinel entity mappings of the alert rule
-        /// Serialized Name: NrtAlertRuleTemplate.properties.sentinelEntitiesMappings
-        /// </summary>
+        /// <summary> Array of the sentinel entity mappings of the alert rule. </summary>
+        [WirePath("properties.sentinelEntitiesMappings")]
         public IList<SentinelEntityMapping> SentinelEntitiesMappings { get; }
     }
 }

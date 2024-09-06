@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The authentication kind used to poll the data
-    /// Serialized Name: ConnectAuthKind
-    /// </summary>
+    /// <summary> The authentication kind used to poll the data. </summary>
     public readonly partial struct ConnectAuthKind : IEquatable<ConnectAuthKind>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string OAuth2Value = "OAuth2";
         private const string APIKeyValue = "APIKey";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: ConnectAuthKind.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static ConnectAuthKind Basic { get; } = new ConnectAuthKind(BasicValue);
-        /// <summary>
-        /// OAuth2
-        /// Serialized Name: ConnectAuthKind.OAuth2
-        /// </summary>
+        /// <summary> OAuth2. </summary>
         public static ConnectAuthKind OAuth2 { get; } = new ConnectAuthKind(OAuth2Value);
-        /// <summary>
-        /// APIKey
-        /// Serialized Name: ConnectAuthKind.APIKey
-        /// </summary>
+        /// <summary> APIKey. </summary>
         public static ConnectAuthKind APIKey { get; } = new ConnectAuthKind(APIKeyValue);
         /// <summary> Determines if two <see cref="ConnectAuthKind"/> values are the same. </summary>
         public static bool operator ==(ConnectAuthKind left, ConnectAuthKind right) => left.Equals(right);

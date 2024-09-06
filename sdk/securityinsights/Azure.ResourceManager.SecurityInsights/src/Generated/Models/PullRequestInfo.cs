@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Information regarding pull request for protected branches.
-    /// Serialized Name: PullRequest
-    /// </summary>
+    /// <summary> Information regarding pull request for protected branches. </summary>
     public partial class PullRequestInfo
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PullRequestInfo"/>. </summary>
-        /// <param name="uri">
-        /// URL of pull request
-        /// Serialized Name: PullRequest.url
-        /// </param>
-        /// <param name="state">
-        /// State of the pull request
-        /// Serialized Name: PullRequest.state
-        /// </param>
+        /// <param name="uri"> URL of pull request. </param>
+        /// <param name="state"> State of the pull request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PullRequestInfo(Uri uri, RecommendationState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// URL of pull request
-        /// Serialized Name: PullRequest.url
-        /// </summary>
+        /// <summary> URL of pull request. </summary>
+        [WirePath("url")]
         public Uri Uri { get; }
-        /// <summary>
-        /// State of the pull request
-        /// Serialized Name: PullRequest.state
-        /// </summary>
+        /// <summary> State of the pull request. </summary>
+        [WirePath("state")]
         public RecommendationState? State { get; }
     }
 }

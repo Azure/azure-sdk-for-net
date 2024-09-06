@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -101,6 +102,75 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsOfficeDataConnectorDataTypes(exchange, sharePoint, teams, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ExchangeState", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exchange: ");
+                builder.AppendLine("{");
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Exchange))
+                {
+                    builder.Append("  exchange: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Exchange, options, 2, false, "  exchange: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SharePointState", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sharePoint: ");
+                builder.AppendLine("{");
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SharePoint))
+                {
+                    builder.Append("  sharePoint: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SharePoint, options, 2, false, "  sharePoint: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("TeamsState", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  teams: ");
+                builder.AppendLine("{");
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Teams))
+                {
+                    builder.Append("  teams: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Teams, options, 2, false, "  teams: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
@@ -109,6 +179,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support writing '{options.Format}' format.");
             }

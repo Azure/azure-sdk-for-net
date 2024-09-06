@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The PermissionsCustomsItem.
-    /// Serialized Name: PermissionsCustomsItem
-    /// </summary>
+    /// <summary> The PermissionsCustomsItem. </summary>
     public partial class PermissionsCustomsItem : CustomsPermission
     {
         /// <summary> Initializes a new instance of <see cref="PermissionsCustomsItem"/>. </summary>
@@ -22,14 +19,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PermissionsCustomsItem"/>. </summary>
-        /// <param name="name">
-        /// Customs permissions name
-        /// Serialized Name: CustomsPermission.name
-        /// </param>
-        /// <param name="description">
-        /// Customs permissions description
-        /// Serialized Name: CustomsPermission.description
-        /// </param>
+        /// <param name="name"> Customs permissions name. </param>
+        /// <param name="description"> Customs permissions description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PermissionsCustomsItem(string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, description, serializedAdditionalRawData)
         {

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -133,6 +134,91 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SourceControlWebhook(webhookId, webhookUrl, webhookSecretUpdateTime, rotateWebhookSecret, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebhookId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  webhookId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WebhookId))
+                {
+                    builder.Append("  webhookId: ");
+                    if (WebhookId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WebhookId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WebhookId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebhookUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  webhookUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WebhookUri))
+                {
+                    builder.Append("  webhookUrl: ");
+                    builder.AppendLine($"'{WebhookUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebhookSecretUpdateOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  webhookSecretUpdateTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WebhookSecretUpdateOn))
+                {
+                    builder.Append("  webhookSecretUpdateTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(WebhookSecretUpdateOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsWebhookSecretRotated), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rotateWebhookSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsWebhookSecretRotated))
+                {
+                    builder.Append("  rotateWebhookSecret: ");
+                    var boolValue = IsWebhookSecretRotated.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SourceControlWebhook>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlWebhook>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +227,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SourceControlWebhook)} does not support writing '{options.Format}' format.");
             }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The entity query kind
-    /// Serialized Name: EntityTimelineKind
-    /// </summary>
+    /// <summary> The entity query kind. </summary>
     public readonly partial struct EntityTimelineKind : IEquatable<EntityTimelineKind>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string SecurityAlertValue = "SecurityAlert";
         private const string AnomalyValue = "Anomaly";
 
-        /// <summary>
-        /// activity
-        /// Serialized Name: EntityTimelineKind.Activity
-        /// </summary>
+        /// <summary> activity. </summary>
         public static EntityTimelineKind Activity { get; } = new EntityTimelineKind(ActivityValue);
-        /// <summary>
-        /// bookmarks
-        /// Serialized Name: EntityTimelineKind.Bookmark
-        /// </summary>
+        /// <summary> bookmarks. </summary>
         public static EntityTimelineKind Bookmark { get; } = new EntityTimelineKind(BookmarkValue);
-        /// <summary>
-        /// security alerts
-        /// Serialized Name: EntityTimelineKind.SecurityAlert
-        /// </summary>
+        /// <summary> security alerts. </summary>
         public static EntityTimelineKind SecurityAlert { get; } = new EntityTimelineKind(SecurityAlertValue);
-        /// <summary>
-        /// anomaly
-        /// Serialized Name: EntityTimelineKind.Anomaly
-        /// </summary>
+        /// <summary> anomaly. </summary>
         public static EntityTimelineKind Anomaly { get; } = new EntityTimelineKind(AnomalyValue);
         /// <summary> Determines if two <see cref="EntityTimelineKind"/> values are the same. </summary>
         public static bool operator ==(EntityTimelineKind left, EntityTimelineKind right) => left.Equals(right);

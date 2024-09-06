@@ -16,9 +16,10 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
-mgmt-debug: 
-  show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}: SecurityInsightsThreatIntelligenceIndicator
@@ -32,317 +33,319 @@ partial-resources:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}: OperationalInsightsWorkspace
 
 rename-mapping:
+  AADDataConnector: SecurityInsightsAadDataConnector
+  AatpDataConnector: SecurityInsightsAatpDataConnector
+  AccountEntity: SecurityInsightsAccountEntity
+  ActionResponse: SecurityInsightsAlertRuleAction
+  ActivityCustomEntityQuery.properties.createdTimeUtc: CreatedOn
+  ActivityCustomEntityQuery.properties.enabled: IsEnabled
+  ActivityCustomEntityQuery.properties.lastModifiedTimeUtc: LastModifiedOn
+  ActivityEntityQuery.properties.createdTimeUtc: CreatedOn
+  ActivityEntityQuery.properties.enabled: IsEnabled
+  ActivityEntityQuery.properties.lastModifiedTimeUtc: LastModifiedOn
+  ActivityEntityQueryTemplatePropertiesQueryDefinitions: ActivityEntityQueryDefinition
+  ActivityTimelineItem.bucketEndTimeUTC: BucketEndOn
+  ActivityTimelineItem.bucketStartTimeUTC: BucketStartOn
+  ActivityTimelineItem.firstActivityTimeUTC: FirstActivityOn
+  ActivityTimelineItem.lastActivityTimeUTC: LastActivityOn
+  AlertDetail: SecurityInsightsAlertDetail
+  AlertDetailsOverride: SecurityInsightsAlertDetailsOverride
+  AlertProperty: SecurityInsightsAlertProperty
+  AlertPropertyMapping: SecurityInsightsAlertPropertyMapping
+  AlertRule: SecurityInsightsAlertRule
+  AlertRuleTemplate: SecurityInsightsAlertRuleTemplate
+  AlertsDataTypeOfDataConnector: SecurityInsightsAlertsDataTypeOfDataConnector
+  AlertSeverity: SecurityInsightsAlertSeverity
+  AlertStatus: SecurityInsightsAlertStatus
+  AnalyticsRuleRunTrigger.properties.executionTimeUtc: ExecuteOn
+  Anomalies: SecurityInsightsSettingAnomaliesKind
+  AnomalySecurityMLAnalyticsSettings.properties.enabled: IsEnabled
+  AnomalySecurityMLAnalyticsSettings.properties.lastModifiedUtc: LastModifiedOn
+  AnomalyTimelineItem.azureResourceId: -|arm-id
+  AnomalyTimelineItem.endTimeUtc: EndOn
+  AnomalyTimelineItem.startTimeUtc: StartOn
+  AnomalyTimelineItem.timeGenerated: GeneratedOn
+  ApiKeyAuthModel:  SecurityInsightsApiKeyAuthModel
+  ASCCheckRequirements: AscCheckRequirements
+  ASCDataConnector: SecurityInsightsAscDataConnector
+  AssignmentItem.resourceId: -|arm-id
+  AttackPattern: TiObjectKindAttackPattern
+  AttackTactic: SecurityInsightsAttackTactic
+  AutomationRule.properties.createdTimeUtc: CreatedOn
+  AutomationRule.properties.lastModifiedTimeUtc: LastModifiedOn
+  AutomationRule: SecurityInsightsAutomationRule
+  AutomationRuleAction: SecurityInsightsAutomationRuleAction
+  AutomationRuleCondition: SecurityInsightsAutomationRuleCondition
+  AutomationRulePropertyConditionSupportedProperty.AccountUPNSuffix: AccountUpnSuffix
+  AutomationRulePropertyConditionSupportedProperty.MailboxUPN: MailboxUpn
+  AutomationRulePropertyConditionSupportedProperty.Url: Uri
+  AutomationRuleTriggeringLogic.expirationTimeUtc: ExpireOn
+  AutomationRuleTriggeringLogic: SecurityInsightsAutomationRuleTriggeringLogic
+  Availability: ConnectorAvailability
+  AvailabilityStatus: ConnectorAvailabilityStatus
+  AwsCloudTrailDataConnector: SecurityInsightsAwsCloudTrailDataConnector
+  AzureResourceEntity: SecurityInsightsAzureResourceEntity
+  BillingStatistic: SecurityInsightsBillingStatistic
+  Bookmark.properties.created: CreatedOn
   Bookmark.properties.updated: UpdatedOn
+  Bookmark: SecurityInsightsBookmark
+  BookmarkExpandResponse: BookmarkExpandResult
+  BookmarkTimelineItem.azureResourceId: -|arm-id
+  BookmarkTimelineItem.endTimeUtc: EndOn
+  BookmarkTimelineItem.startTimeUtc: StartOn
+  CcpResponseConfig.convertChildPropertiesToArray: IsConvertChildPropertiesToArray
+  ClientInfo: SecurityInsightsClientInfo
+  CloudApplicationEntity: SecurityInsightsCloudApplicationEntity
+  ConfidenceLevel: SecurityInsightsAlertConfidenceLevel
+  ConfidenceScoreStatus: SecurityInsightsAlertConfidenceScoreStatus
+  Connective: ClauseConnective
+  CustomizableConnectorDefinition.properties.createdTimeUtc: CreatedOn
+  CustomizableConnectorDefinition.properties.lastModifiedUtc: LastModifiedOn
+  CustomizableConnectorDefinition: CustomizableConnectorDefinitionData
+  Customs: CustomsPermission
+  CustomsPermission: CustomsPermissionProperties
+  DataConnector: SecurityInsightsDataConnector
+  DataConnectorConnectBody: DataConnectorConnectContent
+  DataConnectorDefinition: SecurityInsightsDataConnectorDefinition
+  DataTypeState: SecurityInsightsDataTypeConnectionState
+  DeliveryAction: SecurityInsightsMailMessageDeliveryAction
+  DeliveryLocation: SecurityInsightsMailMessageDeliveryLocation
+  Deployment: SourceControlDeployment
+  DeploymentFetchStatus: SourceControlDeploymentFetchStatus
+  DeploymentInfo: SourceControlDeploymentInfo
+  DeploymentResult: SourceControlDeploymentResult
+  DeploymentState: SourceControlDeploymentState
+  DnsEntity: SecurityInsightsDnsEntity
+  ElevationToken: SecurityInsightsProcessElevationToken
+  EnrichmentDomainBody: EnrichmentDomainContent
   EnrichmentDomainWhois.expires: ExpireOn
   EnrichmentDomainWhois.updated: UpdatedOn
-  HuntingBookmark: SecurityInsightsHuntingBookmark
-  HuntingBookmark.properties.updated: UpdatedOn
+  Entity: SecurityInsightsEntity
+  EntityExpandResponse: EntityExpandResult
+  EntityGetInsightsParameters.addDefaultExtendedTimeRange: IsDefaultExtendedTimeRangeAdded
+  EntityKindEnum.Url: Uri
+  EntityKindEnum: SecurityInsightsEntityKind
+  EntityManualTriggerRequestBody.incidentArmId: -|arm-id
+  EntityManualTriggerRequestBody.logicAppsResourceId: -|arm-id
+  EntityManualTriggerRequestBody: EntityManualTriggerRequestContent
+  EntityMapping: SecurityInsightsAlertRuleEntityMapping
+  EntityMappingType.URL: Uri
+  EntityMappingType: SecurityInsightsAlertRuleEntityMappingType
+  EntityQuery: SecurityInsightsEntityQuery
+  EntityQueryTemplate: SecurityInsightsEntityQueryTemplate
+  Error: PublicationFailedError
+  FieldMapping: SecurityInsightsFieldMapping
+  FileEntity: SecurityInsightsFileEntity
+  FileHashAlgorithm.SHA1: Sha1
+  FileHashAlgorithm.SHA256: Sha256
+  FileHashAlgorithm.SHA256AC: Sha256AC
+  FileHashAlgorithm: SecurityInsightsFileHashAlgorithm
+  FileHashEntity: SecurityInsightsFileHashEntity
+  FileImport.properties.createdTimeUTC: CreatedOn
+  FileImport.properties.filesValidUntilTimeUTC: FilesValidUntil
+  FileImport.properties.importValidUntilTimeUTC: ImportValidUntil
+  FileImport: SecurityInsightsFileImport
+  Flag: MetadataFlag
+  FusionAlertRule.properties.enabled: IsEnabled
+  FusionAlertRule.properties.lastModifiedUtc: LastModifiedOn
+  FusionAlertRule: SecurityInsightsFusionAlertRule
+  FusionAlertRuleTemplate.properties.createdDateUTC: CreatedOn
+  FusionAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
+  FusionAlertRuleTemplate: SecurityInsightsFusionAlertRuleTemplate
+  FusionSourceSettings.enabled: IsEnabled
+  FusionSourceSubTypeSetting.enabled: IsEnabled
+  FusionSubTypeSeverityFiltersItem.enabled: IsEnabled
+  GeoLocation: SecurityInsightsIPEntityGeoLocation
+  GroupingConfiguration.enabled: IsEnabled
+  GroupingConfiguration.reopenClosedIncident: IsClosedIncidentReopened
+  GroupingConfiguration: SecurityInsightsGroupingConfiguration
+  HostEntity.properties.azureID: -|arm-id
+  HostEntity: SecurityInsightsHostEntity
+  Hunt: SecurityInsightsHunt
+  HuntComment: SecurityInsightsHuntComment
   HuntingBookmark.properties.created: CreatedOn
-  Watchlist.properties.updated: UpdatedOn
-  WatchlistItem.properties.updated: UpdatedOn
-  AlertRule: SecurityInsightsAlertRule
-  ThreatIntelligenceInformation: SecurityInsightsThreatIntelligenceIndicatorBase
-  ThreatIntelligenceIndicatorModel: SecurityInsightsThreatIntelligenceIndicatorData
-  ThreatIntelligenceIndicatorModel.properties.lastUpdatedTimeUtc: LastUpdatedOn|date-time
-  ThreatIntelligenceIndicatorModel.properties.created: CreatedOn|date-time
-  ThreatIntelligenceIndicatorModel.properties.externalLastUpdatedTimeUtc: ExternalLastUpdatedOn|date-time
-  ThreatIntelligenceIndicatorModel.properties.validFrom: -|date-time
-  ThreatIntelligenceIndicatorModel.properties.validUntil: -|date-time
-  ThreatIntelligenceIndicatorModel.properties.defanged: IsDefanged
-  ThreatIntelligenceIndicatorModel.properties.revoked: IsRevoked
-  ActionResponse: SecurityInsightsAlertRuleAction
-  AlertRuleTemplate: SecurityInsightsAlertRuleTemplate
-  AutomationRule: SecurityInsightsAutomationRule
-  AutomationRule.properties.lastModifiedTimeUtc: LastModifiedOn
-  AutomationRule.properties.createdTimeUtc: CreatedOn
-  ClientInfo: SecurityInsightsClientInfo
-  UserInfo: SecurityInsightsUserInfo
-  Bookmark: SecurityInsightsBookmark
-  Bookmark.properties.created: CreatedOn
-  IncidentInfo: SecurityInsightsBookmarkIncidentInfo
-  IncidentInfo.incidentId: -|uuid
-  DataConnector: SecurityInsightsDataConnector
-  Incident: SecurityInsightsIncident
+  HuntingBookmark.properties.updated: UpdatedOn
+  HuntingBookmark: SecurityInsightsHuntingBookmark
+  HuntList: SecurityInsightsHuntList
+  HuntOwner: SecurityInsightsHuntOwner
+  HuntRelation.properties.relatedResourceId: -|arm-id
+  HuntRelation: SecurityInsightsHuntRelation
+  Identity: TiObjectKindIdentity
   Incident.properties.additionalData: AdditionalInfo
   Incident.properties.createdTimeUtc: CreatedOn
   Incident.properties.firstActivityTimeUtc: FirstActivityOn
   Incident.properties.lastActivityTimeUtc: LastActivityOn
   Incident.properties.lastModifiedTimeUtc: LastModifiedOn
   Incident.properties.relatedAnalyticRuleIds: -|arm-id
+  Incident: SecurityInsightsIncident
   IncidentAdditionalData: SecurityInsightsIncidentAdditionalInfo
   IncidentClassification: SecurityInsightsIncidentClassification
   IncidentClassificationReason: SecurityInsightsIncidentClassificationReason
+  IncidentComment.properties.createdTimeUtc: CreatedOn
+  IncidentComment.properties.lastModifiedTimeUtc: LastModifiedOn
+  IncidentComment: SecurityInsightsIncidentComment
+  IncidentConfiguration.createIncident: IsIncidentCreated
+  IncidentConfiguration: SecurityInsightsIncidentConfiguration
+  IncidentEntitiesResponse: SecurityInsightsIncidentEntitiesResult
+  IncidentEntitiesResultsMetadata: SecurityInsightsIncidentEntitiesMetadata
+  IncidentInfo.incidentId: -|uuid
+  IncidentInfo: SecurityInsightsBookmarkIncidentInfo
   IncidentLabel: SecurityInsightsIncidentLabel
   IncidentLabelType: SecurityInsightsIncidentLabelType
   IncidentOwnerInfo: SecurityInsightsIncidentOwnerInfo
+  IncidentPropertiesAction: SecurityInsightsIncidentActionConfiguration
   IncidentSeverity: SecurityInsightsIncidentSeverity
   IncidentStatus: SecurityInsightsIncidentStatus
-  IncidentComment: SecurityInsightsIncidentComment
-  IncidentComment.properties.createdTimeUtc: CreatedOn
-  IncidentComment.properties.lastModifiedTimeUtc: LastModifiedOn
-  SecurityAlert: SecurityInsightsAlert
-  SecurityAlert.properties.endTimeUtc: EndOn
-  SecurityAlert.properties.startTimeUtc: StartOn
-  SecurityAlert.properties.timeGenerated: AlertGeneratedOn
-  IncidentEntitiesResponse: SecurityInsightsIncidentEntitiesResult
-  Relation: SecurityInsightsIncidentRelation
-  Relation.properties.relatedResourceId: -|arm-id
-  Relation.properties.relatedResourceType: -|resource-type
-  SentinelOnboardingState: SecurityInsightsSentinelOnboardingState
-  SentinelOnboardingState.properties.customerManagedKey: IsCustomerManagedKeySet
-  Watchlist: SecurityInsightsWatchlist
-  Watchlist.properties.created: CreatedOn
-  Watchlist.properties.watchlistId: -|uuid
-  WatchlistItem: SecurityInsightsWatchlistItem
-  WatchlistItem.properties.created: CreatedOn
-  AADDataConnector: SecurityInsightsAadDataConnector
-  AatpDataConnector: SecurityInsightsAatpDataConnector
-  DataTypeState: SecurityInsightsDataTypeConnectionState
-  AccountEntity: SecurityInsightsAccountEntity
-  AlertDetail: SecurityInsightsAlertDetail
-  AlertDetailsOverride: SecurityInsightsAlertDetailsOverride
-  AlertSeverity: SecurityInsightsAlertSeverity
-  AlertStatus: SecurityInsightsAlertStatus
-  AnomalySecurityMLAnalyticsSettings.properties.enabled: IsEnabled
-  AnomalySecurityMLAnalyticsSettings.properties.lastModifiedUtc: LastModifiedOn
-  SettingsStatus: AnomalySecurityMLAnalyticsSettingsStatus
-  AttackTactic: SecurityInsightsAttackTactic
-  ASCDataConnector: SecurityInsightsAscDataConnector
-  AutomationRuleAction: SecurityInsightsAutomationRuleAction
-  AutomationRuleCondition: SecurityInsightsAutomationRuleCondition
-  IncidentPropertiesAction: SecurityInsightsIncidentActionConfiguration
-  AutomationRulePropertyConditionSupportedProperty.AccountUPNSuffix: AccountUpnSuffix
-  AutomationRulePropertyConditionSupportedProperty.MailboxUPN: MailboxUpn
-  AutomationRulePropertyConditionSupportedProperty.Url: Uri
-  PlaybookActionProperties: AutomationRuleRunPlaybookActionProperties
-  PlaybookActionProperties.logicAppResourceId: -|arm-id
-  AutomationRuleTriggeringLogic: SecurityInsightsAutomationRuleTriggeringLogic
-  AutomationRuleTriggeringLogic.expirationTimeUtc: ExpireOn
-  AwsCloudTrailDataConnector: SecurityInsightsAwsCloudTrailDataConnector
-  AzureResourceEntity: SecurityInsightsAzureResourceEntity
-  CloudApplicationEntity: SecurityInsightsCloudApplicationEntity
-  ConfidenceLevel: SecurityInsightsAlertConfidenceLevel
-  ConfidenceScoreStatus: SecurityInsightsAlertConfidenceScoreStatus
-  DnsEntity: SecurityInsightsDnsEntity
-  Entity: SecurityInsightsEntity
-  EntityKindEnum: SecurityInsightsEntityKind
-  EntityKindEnum.Url: Uri
-  EntityMapping: SecurityInsightsAlertRuleEntityMapping
-  EntityMappingType: SecurityInsightsAlertRuleEntityMappingType
-  EntityMappingType.URL: Uri
-  FieldMapping: SecurityInsightsFieldMapping
-  FileEntity: SecurityInsightsFileEntity
-  FileHashAlgorithm: SecurityInsightsFileHashAlgorithm
-  FileHashAlgorithm.SHA1: Sha1
-  FileHashAlgorithm.SHA256: Sha256
-  FileHashAlgorithm.SHA256AC: Sha256AC
-  FileHashEntity: SecurityInsightsFileHashEntity
-  FusionAlertRule: SecurityInsightsFusionAlertRule
-  FusionAlertRule.properties.enabled: IsEnabled
-  FusionAlertRule.properties.lastModifiedUtc: LastModifiedOn
-  FusionAlertRuleTemplate: SecurityInsightsFusionAlertRuleTemplate
-  FusionAlertRuleTemplate.properties.createdDateUTC: CreatedOn
-  FusionAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
-  TemplateStatus: SecurityInsightsAlertRuleTemplateStatus
-  GeoLocation: SecurityInsightsIPEntityGeoLocation
-  GroupingConfiguration: SecurityInsightsGroupingConfiguration
-  GroupingConfiguration.enabled: IsEnabled
-  GroupingConfiguration.reopenClosedIncident: IsClosedIncidentReopened
-  MatchingMethod: SecurityInsightsGroupingMatchingMethod
-  HostEntity: SecurityInsightsHostEntity
-  HostEntity.properties.azureID: -|arm-id
-  OSFamily: SecurityInsightsHostOSFamily
-  OSFamily.IOS: Ios
-  IncidentConfiguration: SecurityInsightsIncidentConfiguration
-  IncidentConfiguration.createIncident: IsIncidentCreated
-  IncidentEntitiesResultsMetadata: SecurityInsightsIncidentEntitiesMetadata
-  OwnerType:  SecurityInsightsIncidentOwnerType
+  IncidentTask.properties.createdTimeUtc: CreatedOn
+  IncidentTask.properties.lastModifiedTimeUtc: LastModifiedOn
+  IncidentTask: SecurityInsightsIncidentTask
+  Indicator: TiObjectKindIndicator
+  InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.supportDeepLink: IsDeepLinkSupported
   IoTDeviceEntity: SecurityInsightsIotDeviceEntity
-  ThreatIntelligence: SecurityInsightsThreatIntelligence
-  IpEntity: SecurityInsightsIPEntity
   IpEntity.properties.address: -|ip-address
+  IpEntity: SecurityInsightsIPEntity
+  Job: WorkspaceManagerAssignmentJob
+  JobItem.resourceId: -|arm-id
   KillChainIntent: SecurityInsightsKillChainIntent
   MailboxEntity: SecurityInsightsMailboxEntity
   MailClusterEntity: SecurityInsightsMailClusterEntity
-  MailMessageEntity: SecurityInsightsMailMessageEntity
-  MailMessageEntity.properties.urls: Uris
   MailMessageEntity.properties.senderIP: -|ip-address
-  DeliveryAction: SecurityInsightsMailMessageDeliveryAction
-  DeliveryLocation: SecurityInsightsMailMessageDeliveryLocation
+  MailMessageEntity.properties.urls: Uris
+  MailMessageEntity: SecurityInsightsMailMessageEntity
   MalwareEntity: SecurityInsightsMalwareEntity
-  AlertsDataTypeOfDataConnector: SecurityInsightsAlertsDataTypeOfDataConnector
+  MatchingMethod: SecurityInsightsGroupingMatchingMethod
+  MetadataModel: SecurityInsightsMetadata
   MicrosoftSecurityIncidentCreationAlertRule.properties.enabled: IsEnabled
   MicrosoftSecurityIncidentCreationAlertRule.properties.lastModifiedUtc: LastModifiedOn
   MicrosoftSecurityIncidentCreationAlertRuleTemplate.properties.createdDateUTC: CreatedOn
   MicrosoftSecurityIncidentCreationAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
+  MLBehaviorAnalyticsAlertRule.properties.enabled: IsEnabled
+  MLBehaviorAnalyticsAlertRule.properties.lastModifiedUtc: LastModifiedOn
+  MLBehaviorAnalyticsAlertRuleTemplate.properties.createdDateUTC: CreatedOn
+  MLBehaviorAnalyticsAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
+  Mode: WorkspaceManagerConfigurationMode
+  NrtAlertRule.properties.enabled: IsEnabled
+  NrtAlertRule.properties.lastModifiedUtc: LastModifiedOn
+  NrtAlertRule.properties.suppressionEnabled: IsSuppressionEnabled
+  NrtAlertRuleTemplate.properties.createdDateUTC: CreatedOn
+  NrtAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
+  OfficeConsent: SecurityInsightsOfficeConsent
   OfficeDataConnector: SecurityInsightsOfficeDataConnector
   OfficeDataConnectorDataTypes: SecurityInsightsOfficeDataConnectorDataTypes
-  ProcessEntity: SecurityInsightsProcessEntity
+  Operator: ConditionClauseOperator
+  OSFamily.IOS: Ios
+  OSFamily: SecurityInsightsHostOSFamily
+  OwnerType:  SecurityInsightsIncidentOwnerType
+  PackageModel: SecurityInsightsPackage
+  Permissions: ConnectorPermissions
+  PlaybookActionProperties.logicAppResourceId: -|arm-id
+  PlaybookActionProperties: AutomationRuleRunPlaybookActionProperties
   ProcessEntity.properties.creationTimeUtc: CreatedOn
-  ElevationToken: SecurityInsightsProcessElevationToken
+  ProcessEntity: SecurityInsightsProcessEntity
+  ProductPackageModel: SecurityInsightsProductPackage
+  ProductTemplateModel: SecurityInsightsProductTemplate
   PropertyArrayChangedConditionProperties: SecurityInsightsPropertyArrayChangedConditionProperties
   PropertyChangedConditionProperties: SecurityInsightsPropertyChangedConditionProperties
   PropertyConditionProperties: SecurityInsightsPropertyConditionProperties
+  PullRequest: PullRequestInfo
+  Recommendation.properties.creationTimeUtc: CreatedOn
+  Recommendation.properties.lastEvaluatedTimeUtc: LastEvaluatedOn
+  Recommendation.properties.lastModifiedTimeUtc: LastModifiedOn
+  Recommendation: SecurityInsightsRecommendation
+  ReevaluateResponse.lastEvaluatedTimeUtc: LastEvaluatedOn
+  ReevaluateResponse: ReevaluateResult
   RegistryHive: SecurityInsightsRegistryHive
   RegistryKeyEntity: SecurityInsightsRegistryKeyEntity
   RegistryValueEntity: SecurityInsightsRegistryValueEntity
   RegistryValueKind: SecurityInsightsRegistryValueKind
-  ScheduledAlertRule: SecurityInsightsScheduledAlertRule
-  ScheduledAlertRule.properties.enabled: IsEnabled
-  ScheduledAlertRule.properties.lastModifiedUtc: LastModifiedOn
-  ScheduledAlertRule.properties.suppressionEnabled: IsSuppressionEnabled
-  TriggerOperator: SecurityInsightsAlertRuleTriggerOperator
-  SecurityAlertPropertiesConfidenceReasonsItem: SecurityInsightsAlertConfidenceReason
-  SecurityGroupEntity: SecurityInsightsGroupEntity
-  SubmissionMailEntity: SecurityInsightsSubmissionMailEntity
-  SubmissionMailEntity.properties.senderIp: -|ip-address
-  SubmissionMailEntity.properties.submissionDate: SubmitOn
-  SubmissionMailEntity.properties.timestamp: MessageReceivedOn
-  ThreatIntelligenceFilteringCriteria.minValidUntil: -|date-time
-  ThreatIntelligenceFilteringCriteria.maxValidUntil: -|date-time
-  ThreatIntelligenceFilteringCriteria.includeDisabled: IsIncludeDisabled
-  ThreatIntelligenceGranularMarkingModel: ThreatIntelligenceGranularMarkingEntity
-  ThreatIntelligenceMetric.lastUpdatedTimeUtc: LastUpdatedOn
-  TIDataConnector: SecurityInsightsTIDataConnector
-  TIDataConnector.properties.tipLookbackPeriod: TipLookbackOn
-  UrlEntity: SecurityInsightsUriEntity
-  BookmarkExpandResponse: BookmarkExpandResult
-  EntityExpandResponse: EntityExpandResult
-  PullRequest: PullRequestInfo
-  ReevaluateResponse: ReevaluateResult
-  CustomizableConnectorDefinition: CustomizableConnectorDefinitionData
-  TiTaxiiDataConnectorDataTypesTaxiiClient: TiTaxiiDataConnectorDataTypes
-  Hunt: SecurityInsightsHunt
-  HuntList: SecurityInsightsHuntList
-  HuntComment: SecurityInsightsHuntComment
-  HuntRelation: SecurityInsightsHuntRelation
-  HuntRelation.properties.relatedResourceId: -|arm-id
-  HuntOwner: SecurityInsightsHuntOwner
-  Job: WorkspaceManagerAssignmentJob
-  BillingStatistic: SecurityInsightsBillingStatistic
-  DataConnectorDefinition: SecurityInsightsDataConnectorDefinition
-  EntityQuery: SecurityInsightsEntityQuery
-  EntityQueryTemplate: SecurityInsightsEntityQueryTemplate
-  Recommendation: SecurityInsightsRecommendation
-  ActivityCustomEntityQuery.properties.enabled: IsEnabled
-  ActivityEntityQuery.properties.enabled: IsEnabled
-  Settings: SecurityInsightsSettings
-  SettingList: SecurityInsightsSettingList
-  Anomalies: SecurityInsightsSettingAnomaliesKind
-  AnomalyTimelineItem.azureResourceId: -|arm-id
-  AnomalyTimelineItem.timeGenerated: GeneratedOn
-  Availability: ConnectorAvailability
-  AvailabilityStatus: ConnectorAvailabilityStatus
-  BookmarkTimelineItem.azureResourceId: -|arm-id
-  CcpResponseConfig.convertChildPropertiesToArray: IsConvertChildPropertiesToArray
-  Connective: ClauseConnective
-  Customs: CustomsPermission
-  CustomsPermission: CustomsPermissionProperties
-  Deployment: SourceControlDeployment
-  DeploymentFetchStatus: SourceControlDeploymentFetchStatus
-  DeploymentInfo: SourceControlDeploymentInfo
-  DeploymentResult: SourceControlDeploymentResult
-  DeploymentState: SourceControlDeploymentState
-  EntityGetInsightsParameters.addDefaultExtendedTimeRange: IsDefaultExtendedTimeRangeAdded
-  EntityManualTriggerRequestBody: EntityManualTriggerRequestContent
-  EntityManualTriggerRequestBody.incidentArmId: -|arm-id
-  EntityManualTriggerRequestBody.logicAppsResourceId: -|arm-id
-  Error: PublicationFailedError
-  Flag: MetadataFlag
-  FusionSourceSettings.enabled: IsEnabled
-  FusionSourceSubTypeSetting.enabled: IsEnabled
-  FusionSubTypeSeverityFiltersItem.enabled: IsEnabled
-  Identity: TiObjectKindIdentity
-  Indicator: TiObjectKindIndicator
-  AttackPattern: TiObjectKindAttackPattern
+  Relation.properties.relatedResourceId: -|arm-id
+  Relation.properties.relatedResourceType: -|resource-type
+  Relation: SecurityInsightsIncidentRelation
   Relationship: TiObjectKindRelationship
-  ThreatActor: TiObjectKindThreatActor
-  MLBehaviorAnalyticsAlertRule.properties.enabled: IsEnabled
-  Mode: WorkspaceManagerConfigurationMode
-  Operator: ConditionClauseOperator
-  Permissions: ConnectorPermissions
-  # Not working, check if we still need this.
-  # ProductTemplateModelCollectionGetAllOptions.count: ReturnOnlyObjectCount
-  # PackageModelCollectionGetAllOptions 
-  # TemplateModelCollectionGetAllOptions 
-  # Confirm if this a guid or not
-  # OracleAuthModel.tenantId
   Repo: SourceControlRepo
   Repository: SourceControlRepository
   RequiredPermissions.action: IsCustomAction
   RequiredPermissions.delete: IsDeleteAction
   RequiredPermissions.read: IsReadAction
   RequiredPermissions.write: IsWriteAction
-  SourceControl.properties.id: SourceControlId | uuid
-  AssignmentItem.resourceId: -|arm-id
-  EnrichmentDomainBody: EnrichmentDomainContent
-  DataConnectorConnectBody: DataConnectorConnectContent
-  InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.supportDeepLink: IsDeepLinkSupported
-  JobItem.resourceId: -|arm-id
-  NrtAlertRule.properties.enabled: IsEnabled
-  NrtAlertRule.properties.suppressionEnabled: IsSuppressionEnabled
   ResourceProviderRequiredPermissions.action: IsCustomAction
   ResourceProviderRequiredPermissions.delete: IsDeleteAction
   ResourceProviderRequiredPermissions.read: IsReadAction
   ResourceProviderRequiredPermissions.write: IsWriteAction
+  ScheduledAlertRule.properties.enabled: IsEnabled
+  ScheduledAlertRule.properties.lastModifiedUtc: LastModifiedOn
+  ScheduledAlertRule.properties.suppressionEnabled: IsSuppressionEnabled
+  ScheduledAlertRule: SecurityInsightsScheduledAlertRule
+  SecurityAlert.properties.endTimeUtc: EndOn
+  SecurityAlert.properties.startTimeUtc: StartOn
+  SecurityAlert.properties.timeGenerated: AlertGeneratedOn
+  SecurityAlert: SecurityInsightsAlert
+  SecurityAlertPropertiesConfidenceReasonsItem: SecurityInsightsAlertConfidenceReason
   SecurityAlertTimelineItem.azureResourceId: -|arm-id
-  ServicePrincipal: SourceControlServicePrincipal
-  State: RecommendationState
-  ThreatIntelligenceAlertRule.properties.enabled: IsEnabled
-  Ueba: UebaSettings
-  Version: SourceControlVersion
-  Warning: ResponseWarning
-  Webhook: SourceControlWebhook
-  Webhook.rotateWebhookSecret: IsWebhookSecretRotated
-  FileImport: SecurityInsightsFileImport
-  FileImport.properties.createdTimeUTC: CreatedOn
-  FileImport.properties.filesValidUntilTimeUTC: FilesValidUntil
-  FileImport.properties.importValidUntilTimeUTC: ImportValidUntil
-  IncidentTask: SecurityInsightsIncidentTask
-  IncidentTask.properties.createdTimeUtc: CreatedOn
-  IncidentTask.properties.lastModifiedTimeUtc: LastModifiedOn
-  MetadataModel: SecurityInsightsMetadataModel
-  OfficeConsent: SecurityInsightsOfficeConsent
-  Recommendation.properties.creationTimeUtc: CreatedOn
-  Recommendation.properties.lastEvaluatedTimeUtc: LastEvaluatedOn
-  Recommendation.properties.lastModifiedTimeUtc: LastModifiedOn
-  TriggeredAnalyticsRuleRun.properties.executionTimeUtc: ExecuteOn
-  ActivityCustomEntityQuery.properties.createdTimeUtc: CreatedOn
-  ActivityCustomEntityQuery.properties.lastModifiedTimeUtc: LastModifiedOn
-  ActivityEntityQuery.properties.createdTimeUtc: CreatedOn
-  ActivityEntityQuery.properties.lastModifiedTimeUtc: LastModifiedOn
-  ActivityTimelineItem.bucketStartTimeUTC: BucketStartOn
-  ActivityTimelineItem.bucketEndTimeUTC: BucketEndOn
-  ActivityTimelineItem.firstActivityTimeUTC: FirstActivityOn
-  ActivityTimelineItem.lastActivityTimeUTC: LastActivityOn
-  AnalyticsRuleRunTrigger.properties.executionTimeUtc: ExecuteOn
-  AnomalyTimelineItem.endTimeUtc: EndOn
-  AnomalyTimelineItem.startTimeUtc: StartOn
-  BookmarkTimelineItem.endTimeUtc: EndOn
-  BookmarkTimelineItem.startTimeUtc: StartOn
-  CustomizableConnectorDefinition.properties.lastModifiedUtc: LastModifiedOn
-  CustomizableConnectorDefinition.properties.createdTimeUtc: CreatedOn
-  MLBehaviorAnalyticsAlertRule.properties.lastModifiedUtc: LastModifiedOn
-  MLBehaviorAnalyticsAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
-  MLBehaviorAnalyticsAlertRuleTemplate.properties.createdDateUTC: CreatedOn
-  NrtAlertRule.properties.lastModifiedUtc: LastModifiedOn
-  NrtAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
-  NrtAlertRuleTemplate.properties.createdDateUTC: CreatedOn
-  ReevaluateResponse.lastEvaluatedTimeUtc: LastEvaluatedOn
   SecurityAlertTimelineItem.endTimeUtc: EndOn
   SecurityAlertTimelineItem.startTimeUtc: StartOn
   SecurityAlertTimelineItem.timeGenerated: GeneratedOn
+  SecurityGroupEntity: SecurityInsightsGroupEntity
+  SentinelOnboardingState.properties.customerManagedKey: IsCustomerManagedKeySet
+  SentinelOnboardingState: SecurityInsightsSentinelOnboardingState
+  ServicePrincipal: SourceControlServicePrincipal
+  SettingList: SecurityInsightsSettingList
+  Settings: SecurityInsightsSettings
+  SettingsStatus: AnomalySecurityMLAnalyticsSettingsStatus
+  SourceControl: SecurityInsightsSourceControl
+  SourceControl.properties.id: SourceControlId | uuid
+  State: RecommendationState
+  SubmissionMailEntity.properties.senderIp: -|ip-address
+  SubmissionMailEntity.properties.submissionDate: SubmitOn
+  SubmissionMailEntity.properties.timestamp: MessageReceivedOn
+  SubmissionMailEntity: SecurityInsightsSubmissionMailEntity
+  TemplateModel: SecurityInsightsTemplate
+  TemplateStatus: SecurityInsightsAlertRuleTemplateStatus
+  ThreatActor: TiObjectKindThreatActor
+  ThreatIntelligence: SecurityInsightsThreatIntelligence
+  ThreatIntelligenceAlertRule.properties.enabled: IsEnabled
   ThreatIntelligenceAlertRule.properties.lastModifiedUtc: LastModifiedOn
-  ThreatIntelligenceAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
   ThreatIntelligenceAlertRuleTemplate.properties.createdDateUTC: CreatedOn
+  ThreatIntelligenceAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
+  ThreatIntelligenceFilteringCriteria.includeDisabled: IsIncludeDisabled
+  ThreatIntelligenceFilteringCriteria.maxValidUntil: -|date-time
+  ThreatIntelligenceFilteringCriteria.minValidUntil: -|date-time
+  ThreatIntelligenceGranularMarkingModel: ThreatIntelligenceGranularMarkingEntity
+  ThreatIntelligenceIndicatorModel.properties.created: CreatedOn|date-time
+  ThreatIntelligenceIndicatorModel.properties.defanged: IsDefanged
+  ThreatIntelligenceIndicatorModel.properties.externalLastUpdatedTimeUtc: ExternalLastUpdatedOn|date-time
+  ThreatIntelligenceIndicatorModel.properties.lastUpdatedTimeUtc: LastUpdatedOn|date-time
+  ThreatIntelligenceIndicatorModel.properties.revoked: IsRevoked
+  ThreatIntelligenceIndicatorModel.properties.validFrom: -|date-time
+  ThreatIntelligenceIndicatorModel.properties.validUntil: -|date-time
+  ThreatIntelligenceIndicatorModel: SecurityInsightsThreatIntelligenceIndicatorData
+  ThreatIntelligenceInformation: SecurityInsightsThreatIntelligenceIndicatorBase
+  ThreatIntelligenceMetric.lastUpdatedTimeUtc: LastUpdatedOn
+  TIDataConnector.properties.tipLookbackPeriod: TipLookbackOn
+  TIDataConnector: SecurityInsightsTIDataConnector
   TIObject.properties.firstIngestedTimeUtc: FirstIngestedOn
   TIObject.properties.lastIngestedTimeUtc: LastIngestedOn
   TIObject.properties.lastUpdatedDateTimeUtc: LastUpdatedOn
-  # Added property renaming due to api compat check with property breaking chang to dictionary type in 2024-01-01-preview version
-  WatchlistItem.properties.itemsKeyValue: ItemsKeyValueDictionary
-  WatchlistItem.properties.entityMapping: EntityMappingDictionary
-  # Added property renaming due to api compat check with property breaking chang to string type in 2024-01-01-preview version
-  Watchlist.properties.source: SourceString
+  TiTaxiiDataConnectorDataTypesTaxiiClient: TiTaxiiDataConnectorDataTypes
+  TriggeredAnalyticsRuleRun.properties.executionTimeUtc: ExecuteOn
+  TriggerOperator: SecurityInsightsAlertRuleTriggerOperator
+  Ueba: UebaSettings
+  UrlEntity: SecurityInsightsUriEntity
+  UserInfo: SecurityInsightsUserInfo
+  Version: SourceControlVersion
+  Warning: ResponseWarning
+  Watchlist.properties.created: CreatedOn
+  Watchlist.properties.source: SourceString   # Added property renaming due to api compat check with property breaking chang to string type in 2024-01-01-preview version
+  Watchlist.properties.updated: UpdatedOn
+  Watchlist.properties.watchlistId: -|uuid
+  Watchlist: SecurityInsightsWatchlist
+  WatchlistItem.properties.created: CreatedOn
+  WatchlistItem.properties.entityMapping: EntityMappingDictionary # Added property renaming due to api compat check with property breaking chang to dictionary type in 2024-01-01-preview version
+  WatchlistItem.properties.itemsKeyValue: ItemsKeyValueDictionary # Added property renaming due to api compat check with property breaking chang to dictionary type in 2024-01-01-preview version
+  WatchlistItem.properties.updated: UpdatedOn
+  WatchlistItem: SecurityInsightsWatchlistItem
+  Webhook.rotateWebhookSecret: IsWebhookSecretRotated
+  Webhook: SourceControlWebhook
 
 override-operation-name:
   DomainWhois_Get: GetDomainWhoisInformation

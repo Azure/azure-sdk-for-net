@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -100,6 +101,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new McasDataConnectorDataTypes(alerts, serializedAdditionalRawData, discoveryLogs);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DiscoveryLogsState", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  discoveryLogs: ");
+                builder.AppendLine("{");
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(DiscoveryLogs))
+                {
+                    builder.Append("  discoveryLogs: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DiscoveryLogs, options, 2, false, "  discoveryLogs: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AlertsState", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alerts: ");
+                builder.AppendLine("{");
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Alerts))
+                {
+                    builder.Append("  alerts: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Alerts, options, 2, false, "  alerts: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<McasDataConnectorDataTypes>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<McasDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
@@ -108,6 +160,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(McasDataConnectorDataTypes)} does not support writing '{options.Format}' format.");
             }

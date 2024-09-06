@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Grouping matching method. When method is Selected at least one of groupByEntities, groupByAlertDetails, groupByCustomDetails must be provided and not empty.
-    /// Serialized Name: MatchingMethod
-    /// </summary>
+    /// <summary> Grouping matching method. When method is Selected at least one of groupByEntities, groupByAlertDetails, groupByCustomDetails must be provided and not empty. </summary>
     public readonly partial struct SecurityInsightsGroupingMatchingMethod : IEquatable<SecurityInsightsGroupingMatchingMethod>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string AnyAlertValue = "AnyAlert";
         private const string SelectedValue = "Selected";
 
-        /// <summary>
-        /// Grouping alerts into a single incident if all the entities match
-        /// Serialized Name: MatchingMethod.AllEntities
-        /// </summary>
+        /// <summary> Grouping alerts into a single incident if all the entities match. </summary>
         public static SecurityInsightsGroupingMatchingMethod AllEntities { get; } = new SecurityInsightsGroupingMatchingMethod(AllEntitiesValue);
-        /// <summary>
-        /// Grouping any alerts triggered by this rule into a single incident
-        /// Serialized Name: MatchingMethod.AnyAlert
-        /// </summary>
+        /// <summary> Grouping any alerts triggered by this rule into a single incident. </summary>
         public static SecurityInsightsGroupingMatchingMethod AnyAlert { get; } = new SecurityInsightsGroupingMatchingMethod(AnyAlertValue);
-        /// <summary>
-        /// Grouping alerts into a single incident if the selected entities, custom details and alert details match
-        /// Serialized Name: MatchingMethod.Selected
-        /// </summary>
+        /// <summary> Grouping alerts into a single incident if the selected entities, custom details and alert details match. </summary>
         public static SecurityInsightsGroupingMatchingMethod Selected { get; } = new SecurityInsightsGroupingMatchingMethod(SelectedValue);
         /// <summary> Determines if two <see cref="SecurityInsightsGroupingMatchingMethod"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsGroupingMatchingMethod left, SecurityInsightsGroupingMatchingMethod right) => left.Equals(right);

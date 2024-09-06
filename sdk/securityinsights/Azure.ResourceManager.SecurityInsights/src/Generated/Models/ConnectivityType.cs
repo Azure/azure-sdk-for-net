@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// type of connectivity
-    /// Serialized Name: ConnectivityType
-    /// </summary>
+    /// <summary> type of connectivity. </summary>
     public readonly partial struct ConnectivityType : IEquatable<ConnectivityType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string IsConnectedQueryValue = "IsConnectedQuery";
 
-        /// <summary>
-        /// IsConnectedQuery
-        /// Serialized Name: ConnectivityType.IsConnectedQuery
-        /// </summary>
+        /// <summary> IsConnectedQuery. </summary>
         public static ConnectivityType IsConnectedQuery { get; } = new ConnectivityType(IsConnectedQueryValue);
         /// <summary> Determines if two <see cref="ConnectivityType"/> values are the same. </summary>
         public static bool operator ==(ConnectivityType left, ConnectivityType right) => left.Equals(right);

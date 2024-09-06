@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary>
     /// Required permissions for the connector resource provider that define in ResourceProviders.
     /// For more information about the permissions see &lt;see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format"&gt;here&lt;/see&gt;.
-    /// Serialized Name: ResourceProviderRequiredPermissions
     /// </summary>
     public partial class ResourceProviderRequiredPermissions
     {
@@ -55,22 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderRequiredPermissions"/>. </summary>
-        /// <param name="isReadAction">
-        /// Gets or sets a value indicating whether the permission is read action (GET).
-        /// Serialized Name: ResourceProviderRequiredPermissions.read
-        /// </param>
-        /// <param name="isWriteAction">
-        /// Gets or sets a value indicating whether the permission is write action (PUT or PATCH).
-        /// Serialized Name: ResourceProviderRequiredPermissions.write
-        /// </param>
-        /// <param name="isDeleteAction">
-        /// Gets or sets a value indicating whether the permission is delete action (DELETE).
-        /// Serialized Name: ResourceProviderRequiredPermissions.delete
-        /// </param>
-        /// <param name="isCustomAction">
-        /// Gets or sets a value indicating whether the permission is custom actions (POST).
-        /// Serialized Name: ResourceProviderRequiredPermissions.action
-        /// </param>
+        /// <param name="isReadAction"> Gets or sets a value indicating whether the permission is read action (GET). </param>
+        /// <param name="isWriteAction"> Gets or sets a value indicating whether the permission is write action (PUT or PATCH). </param>
+        /// <param name="isDeleteAction"> Gets or sets a value indicating whether the permission is delete action (DELETE). </param>
+        /// <param name="isCustomAction"> Gets or sets a value indicating whether the permission is custom actions (POST). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceProviderRequiredPermissions(bool? isReadAction, bool? isWriteAction, bool? isDeleteAction, bool? isCustomAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,25 +68,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the permission is read action (GET).
-        /// Serialized Name: ResourceProviderRequiredPermissions.read
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether the permission is read action (GET). </summary>
+        [WirePath("read")]
         public bool? IsReadAction { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether the permission is write action (PUT or PATCH).
-        /// Serialized Name: ResourceProviderRequiredPermissions.write
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether the permission is write action (PUT or PATCH). </summary>
+        [WirePath("write")]
         public bool? IsWriteAction { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether the permission is delete action (DELETE).
-        /// Serialized Name: ResourceProviderRequiredPermissions.delete
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether the permission is delete action (DELETE). </summary>
+        [WirePath("delete")]
         public bool? IsDeleteAction { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether the permission is custom actions (POST).
-        /// Serialized Name: ResourceProviderRequiredPermissions.action
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether the permission is custom actions (POST). </summary>
+        [WirePath("action")]
         public bool? IsCustomAction { get; set; }
     }
 }

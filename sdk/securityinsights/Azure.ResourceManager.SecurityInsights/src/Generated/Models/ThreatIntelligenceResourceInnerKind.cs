@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The kind of the threat intelligence entity
-    /// Serialized Name: ThreatIntelligenceResourceInnerKind
-    /// </summary>
+    /// <summary> The kind of the threat intelligence entity. </summary>
     internal readonly partial struct ThreatIntelligenceResourceInnerKind : IEquatable<ThreatIntelligenceResourceInnerKind>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string IndicatorValue = "indicator";
 
-        /// <summary>
-        /// Entity represents threat intelligence indicator in the system.
-        /// Serialized Name: ThreatIntelligenceResourceInnerKind.indicator
-        /// </summary>
+        /// <summary> Entity represents threat intelligence indicator in the system. </summary>
         public static ThreatIntelligenceResourceInnerKind Indicator { get; } = new ThreatIntelligenceResourceInnerKind(IndicatorValue);
         /// <summary> Determines if two <see cref="ThreatIntelligenceResourceInnerKind"/> values are the same. </summary>
         public static bool operator ==(ThreatIntelligenceResourceInnerKind left, ThreatIntelligenceResourceInnerKind right) => left.Equals(right);

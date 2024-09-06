@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The expansion result values.
-    /// Serialized Name: BookmarkExpandResponseValue
-    /// </summary>
+    /// <summary> The expansion result values. </summary>
     public partial class BookmarkExpandResponseValue
     {
         /// <summary>
@@ -58,14 +55,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="BookmarkExpandResponseValue"/>. </summary>
         /// <param name="entities">
         /// Array of the expansion result entities.
-        /// Serialized Name: BookmarkExpandResponseValue.entities
         /// Please note <see cref="SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsAccountEntity"/>, <see cref="SecurityInsightsAzureResourceEntity"/>, <see cref="SecurityInsightsHuntingBookmark"/>, <see cref="SecurityInsightsCloudApplicationEntity"/>, <see cref="SecurityInsightsDnsEntity"/>, <see cref="SecurityInsightsFileEntity"/>, <see cref="SecurityInsightsFileHashEntity"/>, <see cref="SecurityInsightsHostEntity"/>, <see cref="SecurityInsightsIotDeviceEntity"/>, <see cref="SecurityInsightsIPEntity"/>, <see cref="SecurityInsightsMailboxEntity"/>, <see cref="SecurityInsightsMailClusterEntity"/>, <see cref="SecurityInsightsMailMessageEntity"/>, <see cref="SecurityInsightsMalwareEntity"/>, <see cref="NicEntity"/>, <see cref="SecurityInsightsProcessEntity"/>, <see cref="SecurityInsightsRegistryKeyEntity"/>, <see cref="SecurityInsightsRegistryValueEntity"/>, <see cref="SecurityInsightsAlert"/>, <see cref="SecurityInsightsGroupEntity"/>, <see cref="SecurityInsightsSubmissionMailEntity"/> and <see cref="SecurityInsightsUriEntity"/>.
         /// </param>
-        /// <param name="edges">
-        /// Array of expansion result connected entities
-        /// Serialized Name: BookmarkExpandResponseValue.edges
-        /// </param>
+        /// <param name="edges"> Array of expansion result connected entities. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BookmarkExpandResponseValue(IReadOnlyList<SecurityInsightsEntity> entities, IReadOnlyList<ConnectedEntity> edges, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,15 +69,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// Array of the expansion result entities.
-        /// Serialized Name: BookmarkExpandResponseValue.entities
         /// Please note <see cref="SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsAccountEntity"/>, <see cref="SecurityInsightsAzureResourceEntity"/>, <see cref="SecurityInsightsHuntingBookmark"/>, <see cref="SecurityInsightsCloudApplicationEntity"/>, <see cref="SecurityInsightsDnsEntity"/>, <see cref="SecurityInsightsFileEntity"/>, <see cref="SecurityInsightsFileHashEntity"/>, <see cref="SecurityInsightsHostEntity"/>, <see cref="SecurityInsightsIotDeviceEntity"/>, <see cref="SecurityInsightsIPEntity"/>, <see cref="SecurityInsightsMailboxEntity"/>, <see cref="SecurityInsightsMailClusterEntity"/>, <see cref="SecurityInsightsMailMessageEntity"/>, <see cref="SecurityInsightsMalwareEntity"/>, <see cref="NicEntity"/>, <see cref="SecurityInsightsProcessEntity"/>, <see cref="SecurityInsightsRegistryKeyEntity"/>, <see cref="SecurityInsightsRegistryValueEntity"/>, <see cref="SecurityInsightsAlert"/>, <see cref="SecurityInsightsGroupEntity"/>, <see cref="SecurityInsightsSubmissionMailEntity"/> and <see cref="SecurityInsightsUriEntity"/>.
         /// </summary>
+        [WirePath("entities")]
         public IReadOnlyList<SecurityInsightsEntity> Entities { get; }
-        /// <summary>
-        /// Array of expansion result connected entities
-        /// Serialized Name: BookmarkExpandResponseValue.edges
-        /// </summary>
+        /// <summary> Array of expansion result connected entities. </summary>
+        [WirePath("edges")]
         public IReadOnlyList<ConnectedEntity> Edges { get; }
     }
 }

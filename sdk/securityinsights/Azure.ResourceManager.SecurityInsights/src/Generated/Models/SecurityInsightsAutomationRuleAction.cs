@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Describes an automation rule action.
-    /// Serialized Name: AutomationRuleAction
     /// Please note <see cref="SecurityInsightsAutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutomationRuleAddIncidentTaskAction"/>, <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
     /// </summary>
@@ -51,18 +50,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleAction"/>. </summary>
-        /// <param name="order"> Serialized Name: AutomationRuleAction.order. </param>
+        /// <param name="order"></param>
         protected SecurityInsightsAutomationRuleAction(int order)
         {
             Order = order;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleAction"/>. </summary>
-        /// <param name="order"> Serialized Name: AutomationRuleAction.order. </param>
-        /// <param name="actionType">
-        /// The type of the automation rule action.
-        /// Serialized Name: AutomationRuleAction.actionType
-        /// </param>
+        /// <param name="order"></param>
+        /// <param name="actionType"> The type of the automation rule action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAutomationRuleAction(int order, ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,12 +72,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Serialized Name: AutomationRuleAction.order. </summary>
+        /// <summary> Gets or sets the order. </summary>
+        [WirePath("order")]
         public int Order { get; set; }
-        /// <summary>
-        /// The type of the automation rule action.
-        /// Serialized Name: AutomationRuleAction.actionType
-        /// </summary>
+        /// <summary> The type of the automation rule action. </summary>
         internal ActionType ActionType { get; set; }
     }
 }

@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sourceControlId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsSourceControlData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        SourceControlData value = default;
+                        SecurityInsightsSourceControlData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlData.DeserializeSourceControlData(document.RootElement);
+                        value = SecurityInsightsSourceControlData.DeserializeSecurityInsightsSourceControlData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SourceControlData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsSourceControlData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sourceControlId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsSourceControlData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        SourceControlData value = default;
+                        SecurityInsightsSourceControlData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlData.DeserializeSourceControlData(document.RootElement);
+                        value = SecurityInsightsSourceControlData.DeserializeSecurityInsightsSourceControlData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SourceControlData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsSourceControlData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, SourceControlData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, SecurityInsightsSourceControlData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, SourceControlData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, SecurityInsightsSourceControlData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sourceControlId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, SourceControlData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsSourceControlData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, SecurityInsightsSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -300,9 +300,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        SourceControlData value = default;
+                        SecurityInsightsSourceControlData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlData.DeserializeSourceControlData(document.RootElement);
+                        value = SecurityInsightsSourceControlData.DeserializeSecurityInsightsSourceControlData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sourceControlId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlData> Create(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, SourceControlData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsSourceControlData> Create(string subscriptionId, string resourceGroupName, string workspaceName, string sourceControlId, SecurityInsightsSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        SourceControlData value = default;
+                        SecurityInsightsSourceControlData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlData.DeserializeSourceControlData(document.RootElement);
+                        value = SecurityInsightsSourceControlData.DeserializeSecurityInsightsSourceControlData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

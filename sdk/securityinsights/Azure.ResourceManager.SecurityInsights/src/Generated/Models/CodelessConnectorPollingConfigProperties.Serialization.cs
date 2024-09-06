@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -144,6 +145,97 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsActive), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isActive: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsActive))
+                {
+                    builder.Append("  isActive: ");
+                    var boolValue = IsActive.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Auth), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  auth: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Auth))
+                {
+                    builder.Append("  auth: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Auth, options, 2, false, "  auth: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Request), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  request: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Request))
+                {
+                    builder.Append("  request: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Request, options, 2, false, "  request: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Paging), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  paging: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Paging))
+                {
+                    builder.Append("  paging: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Paging, options, 2, false, "  paging: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Response), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  response: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Response))
+                {
+                    builder.Append("  response: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Response, options, 2, false, "  response: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CodelessConnectorPollingConfigProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,6 +244,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CodelessConnectorPollingConfigProperties)} does not support writing '{options.Format}' format.");
             }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The edge that connects the entity to the other entity.
-    /// Serialized Name: EntityEdges
-    /// </summary>
+    /// <summary> The edge that connects the entity to the other entity. </summary>
     public partial class EntityEdges
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityEdges"/>. </summary>
-        /// <param name="targetEntityId">
-        /// The target entity Id.
-        /// Serialized Name: EntityEdges.targetEntityId
-        /// </param>
-        /// <param name="additionalData">
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: EntityEdges.additionalData
-        /// </param>
+        /// <param name="targetEntityId"> The target entity Id. </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityEdges(string targetEntityId, IReadOnlyDictionary<string, BinaryData> additionalData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,14 +62,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The target entity Id.
-        /// Serialized Name: EntityEdges.targetEntityId
-        /// </summary>
+        /// <summary> The target entity Id. </summary>
+        [WirePath("targetEntityId")]
         public string TargetEntityId { get; }
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: EntityEdges.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -107,6 +95,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
     }
 }

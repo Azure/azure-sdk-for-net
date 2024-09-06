@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List all the alert rules.
-    /// Serialized Name: AlertRulesList
-    /// </summary>
+    /// <summary> List all the alert rules. </summary>
     internal partial class AlertRulesList
     {
         /// <summary>
@@ -52,7 +49,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="AlertRulesList"/>. </summary>
         /// <param name="value">
         /// Array of alert rules.
-        /// Serialized Name: AlertRulesList.value
         /// Please note <see cref="SecurityInsightsAlertRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsFusionAlertRule"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>, <see cref="MLBehaviorAnalyticsAlertRule"/>, <see cref="NrtAlertRule"/>, <see cref="SecurityInsightsScheduledAlertRule"/> and <see cref="ThreatIntelligenceAlertRule"/>.
         /// </param>
@@ -65,13 +61,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AlertRulesList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of alert rules.
-        /// Serialized Name: AlertRulesList.nextLink
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of alert rules. </param>
         /// <param name="value">
         /// Array of alert rules.
-        /// Serialized Name: AlertRulesList.value
         /// Please note <see cref="SecurityInsightsAlertRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsFusionAlertRule"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>, <see cref="MLBehaviorAnalyticsAlertRule"/>, <see cref="NrtAlertRule"/>, <see cref="SecurityInsightsScheduledAlertRule"/> and <see cref="ThreatIntelligenceAlertRule"/>.
         /// </param>
@@ -88,14 +80,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of alert rules.
-        /// Serialized Name: AlertRulesList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of alert rules. </summary>
         public string NextLink { get; }
         /// <summary>
         /// Array of alert rules.
-        /// Serialized Name: AlertRulesList.value
         /// Please note <see cref="SecurityInsightsAlertRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsFusionAlertRule"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>, <see cref="MLBehaviorAnalyticsAlertRule"/>, <see cref="NrtAlertRule"/>, <see cref="SecurityInsightsScheduledAlertRule"/> and <see cref="ThreatIntelligenceAlertRule"/>.
         /// </summary>

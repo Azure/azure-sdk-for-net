@@ -14,10 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class UnknownCcpAuthConfig : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCcpAuthConfig"/>. </summary>
-        /// <param name="authType">
-        /// The auth type
-        /// Serialized Name: CcpAuthConfig.type
-        /// </param>
+        /// <param name="authType"> The auth type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownCcpAuthConfig(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, serializedAdditionalRawData)
         {

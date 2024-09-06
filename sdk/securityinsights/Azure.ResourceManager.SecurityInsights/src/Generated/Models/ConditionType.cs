@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The ConditionType.
-    /// Serialized Name: ConditionType
-    /// </summary>
+    /// <summary> The ConditionType. </summary>
     internal readonly partial struct ConditionType : IEquatable<ConditionType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string PropertyArrayChangedValue = "PropertyArrayChanged";
         private const string BooleanValue = "Boolean";
 
-        /// <summary>
-        /// Evaluate an object property value
-        /// Serialized Name: ConditionType.Property
-        /// </summary>
+        /// <summary> Evaluate an object property value. </summary>
         public static ConditionType Property { get; } = new ConditionType(PropertyValue);
-        /// <summary>
-        /// Evaluate an object array property value
-        /// Serialized Name: ConditionType.PropertyArray
-        /// </summary>
+        /// <summary> Evaluate an object array property value. </summary>
         public static ConditionType PropertyArray { get; } = new ConditionType(PropertyArrayValue);
-        /// <summary>
-        /// Evaluate an object property changed value
-        /// Serialized Name: ConditionType.PropertyChanged
-        /// </summary>
+        /// <summary> Evaluate an object property changed value. </summary>
         public static ConditionType PropertyChanged { get; } = new ConditionType(PropertyChangedValue);
-        /// <summary>
-        /// Evaluate an object array property changed value
-        /// Serialized Name: ConditionType.PropertyArrayChanged
-        /// </summary>
+        /// <summary> Evaluate an object array property changed value. </summary>
         public static ConditionType PropertyArrayChanged { get; } = new ConditionType(PropertyArrayChangedValue);
-        /// <summary>
-        /// Apply a boolean operator (e.g AND, OR) to conditions
-        /// Serialized Name: ConditionType.Boolean
-        /// </summary>
+        /// <summary> Apply a boolean operator (e.g AND, OR) to conditions. </summary>
         public static ConditionType Boolean { get; } = new ConditionType(BooleanValue);
         /// <summary> Determines if two <see cref="ConditionType"/> values are the same. </summary>
         public static bool operator ==(ConditionType left, ConditionType right) => left.Equals(right);

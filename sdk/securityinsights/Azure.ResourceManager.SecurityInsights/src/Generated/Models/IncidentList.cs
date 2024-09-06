@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List all the incidents.
-    /// Serialized Name: IncidentList
-    /// </summary>
+    /// <summary> List all the incidents. </summary>
     internal partial class IncidentList
     {
         /// <summary>
@@ -50,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IncidentList"/>. </summary>
-        /// <param name="value"> Serialized Name: IncidentList.value. </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentList(IEnumerable<SecurityInsightsIncidentData> value)
         {
@@ -60,11 +57,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IncidentList"/>. </summary>
-        /// <param name="value"> Serialized Name: IncidentList.value. </param>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of incidents.
-        /// Serialized Name: IncidentList.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> URL to fetch the next set of incidents. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IncidentList(IReadOnlyList<SecurityInsightsIncidentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,12 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Serialized Name: IncidentList.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<SecurityInsightsIncidentData> Value { get; }
-        /// <summary>
-        /// URL to fetch the next set of incidents.
-        /// Serialized Name: IncidentList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of incidents. </summary>
         public string NextLink { get; }
     }
 }

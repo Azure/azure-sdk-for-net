@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -98,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string alertDescriptionFormat = default;
             string alertTacticsColumnName = default;
             string alertSeverityColumnName = default;
-            IList<AlertPropertyMapping> alertDynamicProperties = default;
+            IList<SecurityInsightsAlertPropertyMapping> alertDynamicProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,10 +131,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<AlertPropertyMapping> array = new List<AlertPropertyMapping>();
+                    List<SecurityInsightsAlertPropertyMapping> array = new List<SecurityInsightsAlertPropertyMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertPropertyMapping.DeserializeAlertPropertyMapping(item, options));
+                        array.Add(SecurityInsightsAlertPropertyMapping.DeserializeSecurityInsightsAlertPropertyMapping(item, options));
                     }
                     alertDynamicProperties = array;
                     continue;
@@ -148,8 +150,138 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 alertDescriptionFormat,
                 alertTacticsColumnName,
                 alertSeverityColumnName,
-                alertDynamicProperties ?? new ChangeTrackingList<AlertPropertyMapping>(),
+                alertDynamicProperties ?? new ChangeTrackingList<SecurityInsightsAlertPropertyMapping>(),
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertDisplayNameFormat), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertDisplayNameFormat: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertDisplayNameFormat))
+                {
+                    builder.Append("  alertDisplayNameFormat: ");
+                    if (AlertDisplayNameFormat.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AlertDisplayNameFormat}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AlertDisplayNameFormat}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertDescriptionFormat), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertDescriptionFormat: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertDescriptionFormat))
+                {
+                    builder.Append("  alertDescriptionFormat: ");
+                    if (AlertDescriptionFormat.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AlertDescriptionFormat}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AlertDescriptionFormat}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertTacticsColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertTacticsColumnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertTacticsColumnName))
+                {
+                    builder.Append("  alertTacticsColumnName: ");
+                    if (AlertTacticsColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AlertTacticsColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AlertTacticsColumnName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertSeverityColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertSeverityColumnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertSeverityColumnName))
+                {
+                    builder.Append("  alertSeverityColumnName: ");
+                    if (AlertSeverityColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AlertSeverityColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AlertSeverityColumnName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertDynamicProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertDynamicProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AlertDynamicProperties))
+                {
+                    if (AlertDynamicProperties.Any())
+                    {
+                        builder.Append("  alertDynamicProperties: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AlertDynamicProperties)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  alertDynamicProperties: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertDetailsOverride>.Write(ModelReaderWriterOptions options)
@@ -160,6 +292,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support writing '{options.Format}' format.");
             }

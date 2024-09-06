@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Credentials to access repository.
-    /// Serialized Name: RepositoryAccess
-    /// </summary>
+    /// <summary> Credentials to access repository. </summary>
     public partial class RepositoryAccess
     {
         /// <summary>
@@ -49,40 +46,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RepositoryAccess"/>. </summary>
-        /// <param name="kind">
-        /// The kind of repository access credentials
-        /// Serialized Name: RepositoryAccess.kind
-        /// </param>
+        /// <param name="kind"> The kind of repository access credentials. </param>
         public RepositoryAccess(RepositoryAccessKind kind)
         {
             Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="RepositoryAccess"/>. </summary>
-        /// <param name="kind">
-        /// The kind of repository access credentials
-        /// Serialized Name: RepositoryAccess.kind
-        /// </param>
-        /// <param name="code">
-        /// OAuth Code. Required when `kind` is `OAuth`
-        /// Serialized Name: RepositoryAccess.code
-        /// </param>
-        /// <param name="state">
-        /// OAuth State. Required when `kind` is `OAuth`
-        /// Serialized Name: RepositoryAccess.state
-        /// </param>
-        /// <param name="clientId">
-        /// OAuth ClientId. Required when `kind` is `OAuth`
-        /// Serialized Name: RepositoryAccess.clientId
-        /// </param>
-        /// <param name="token">
-        /// Personal Access Token. Required when `kind` is `PAT`
-        /// Serialized Name: RepositoryAccess.token
-        /// </param>
-        /// <param name="installationId">
-        /// Application installation ID. Required when `kind` is `App`. Supported by `GitHub` only.
-        /// Serialized Name: RepositoryAccess.installationId
-        /// </param>
+        /// <param name="kind"> The kind of repository access credentials. </param>
+        /// <param name="code"> OAuth Code. Required when `kind` is `OAuth`. </param>
+        /// <param name="state"> OAuth State. Required when `kind` is `OAuth`. </param>
+        /// <param name="clientId"> OAuth ClientId. Required when `kind` is `OAuth`. </param>
+        /// <param name="token"> Personal Access Token. Required when `kind` is `PAT`. </param>
+        /// <param name="installationId"> Application installation ID. Required when `kind` is `App`. Supported by `GitHub` only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RepositoryAccess(RepositoryAccessKind kind, string code, string state, string clientId, string token, string installationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -100,35 +76,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The kind of repository access credentials
-        /// Serialized Name: RepositoryAccess.kind
-        /// </summary>
+        /// <summary> The kind of repository access credentials. </summary>
+        [WirePath("kind")]
         public RepositoryAccessKind Kind { get; set; }
-        /// <summary>
-        /// OAuth Code. Required when `kind` is `OAuth`
-        /// Serialized Name: RepositoryAccess.code
-        /// </summary>
+        /// <summary> OAuth Code. Required when `kind` is `OAuth`. </summary>
+        [WirePath("code")]
         public string Code { get; set; }
-        /// <summary>
-        /// OAuth State. Required when `kind` is `OAuth`
-        /// Serialized Name: RepositoryAccess.state
-        /// </summary>
+        /// <summary> OAuth State. Required when `kind` is `OAuth`. </summary>
+        [WirePath("state")]
         public string State { get; set; }
-        /// <summary>
-        /// OAuth ClientId. Required when `kind` is `OAuth`
-        /// Serialized Name: RepositoryAccess.clientId
-        /// </summary>
+        /// <summary> OAuth ClientId. Required when `kind` is `OAuth`. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
-        /// <summary>
-        /// Personal Access Token. Required when `kind` is `PAT`
-        /// Serialized Name: RepositoryAccess.token
-        /// </summary>
+        /// <summary> Personal Access Token. Required when `kind` is `PAT`. </summary>
+        [WirePath("token")]
         public string Token { get; set; }
-        /// <summary>
-        /// Application installation ID. Required when `kind` is `App`. Supported by `GitHub` only.
-        /// Serialized Name: RepositoryAccess.installationId
-        /// </summary>
+        /// <summary> Application installation ID. Required when `kind` is `App`. Supported by `GitHub` only. </summary>
+        [WirePath("installationId")]
         public string InstallationId { get; set; }
     }
 }

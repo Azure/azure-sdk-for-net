@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Customs permissions required for the connector
-    /// Serialized Name: CustomsPermission
-    /// </summary>
+    /// <summary> Customs permissions required for the connector. </summary>
     public partial class CustomsPermissionProperties
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomsPermissionProperties"/>. </summary>
-        /// <param name="name">
-        /// Customs permissions name
-        /// Serialized Name: CustomsPermission.name
-        /// </param>
-        /// <param name="description">
-        /// Customs permissions description
-        /// Serialized Name: CustomsPermission.description
-        /// </param>
+        /// <param name="name"> Customs permissions name. </param>
+        /// <param name="description"> Customs permissions description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomsPermissionProperties(string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Customs permissions name
-        /// Serialized Name: CustomsPermission.name
-        /// </summary>
+        /// <summary> Customs permissions name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Customs permissions description
-        /// Serialized Name: CustomsPermission.description
-        /// </summary>
+        /// <summary> Customs permissions description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

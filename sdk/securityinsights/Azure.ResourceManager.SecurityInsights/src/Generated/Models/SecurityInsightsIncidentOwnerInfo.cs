@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Information on the user an incident is assigned to
-    /// Serialized Name: IncidentOwnerInfo
-    /// </summary>
+    /// <summary> Information on the user an incident is assigned to. </summary>
     public partial class SecurityInsightsIncidentOwnerInfo
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentOwnerInfo"/>. </summary>
-        /// <param name="email">
-        /// The email of the user the incident is assigned to.
-        /// Serialized Name: IncidentOwnerInfo.email
-        /// </param>
-        /// <param name="assignedTo">
-        /// The name of the user the incident is assigned to.
-        /// Serialized Name: IncidentOwnerInfo.assignedTo
-        /// </param>
-        /// <param name="objectId">
-        /// The object id of the user the incident is assigned to.
-        /// Serialized Name: IncidentOwnerInfo.objectId
-        /// </param>
-        /// <param name="userPrincipalName">
-        /// The user principal name of the user the incident is assigned to.
-        /// Serialized Name: IncidentOwnerInfo.userPrincipalName
-        /// </param>
-        /// <param name="ownerType">
-        /// The type of the owner the incident is assigned to.
-        /// Serialized Name: IncidentOwnerInfo.ownerType
-        /// </param>
+        /// <param name="email"> The email of the user the incident is assigned to. </param>
+        /// <param name="assignedTo"> The name of the user the incident is assigned to. </param>
+        /// <param name="objectId"> The object id of the user the incident is assigned to. </param>
+        /// <param name="userPrincipalName"> The user principal name of the user the incident is assigned to. </param>
+        /// <param name="ownerType"> The type of the owner the incident is assigned to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsIncidentOwnerInfo(string email, string assignedTo, Guid? objectId, string userPrincipalName, SecurityInsightsIncidentOwnerType? ownerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,30 +67,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The email of the user the incident is assigned to.
-        /// Serialized Name: IncidentOwnerInfo.email
-        /// </summary>
+        /// <summary> The email of the user the incident is assigned to. </summary>
+        [WirePath("email")]
         public string Email { get; set; }
-        /// <summary>
-        /// The name of the user the incident is assigned to.
-        /// Serialized Name: IncidentOwnerInfo.assignedTo
-        /// </summary>
+        /// <summary> The name of the user the incident is assigned to. </summary>
+        [WirePath("assignedTo")]
         public string AssignedTo { get; set; }
-        /// <summary>
-        /// The object id of the user the incident is assigned to.
-        /// Serialized Name: IncidentOwnerInfo.objectId
-        /// </summary>
+        /// <summary> The object id of the user the incident is assigned to. </summary>
+        [WirePath("objectId")]
         public Guid? ObjectId { get; set; }
-        /// <summary>
-        /// The user principal name of the user the incident is assigned to.
-        /// Serialized Name: IncidentOwnerInfo.userPrincipalName
-        /// </summary>
+        /// <summary> The user principal name of the user the incident is assigned to. </summary>
+        [WirePath("userPrincipalName")]
         public string UserPrincipalName { get; set; }
-        /// <summary>
-        /// The type of the owner the incident is assigned to.
-        /// Serialized Name: IncidentOwnerInfo.ownerType
-        /// </summary>
+        /// <summary> The type of the owner the incident is assigned to. </summary>
+        [WirePath("ownerType")]
         public SecurityInsightsIncidentOwnerType? OwnerType { get; set; }
     }
 }

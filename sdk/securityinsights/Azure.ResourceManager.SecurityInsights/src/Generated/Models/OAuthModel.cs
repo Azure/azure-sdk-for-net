@@ -10,29 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Model for API authentication with OAuth2.
-    /// Serialized Name: OAuthModel
-    /// </summary>
+    /// <summary> Model for API authentication with OAuth2. </summary>
     public partial class OAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="OAuthModel"/>. </summary>
-        /// <param name="clientSecret">
-        /// The Application (client) secret that the OAuth provider assigned to your app.
-        /// Serialized Name: OAuthModel.clientSecret
-        /// </param>
-        /// <param name="clientId">
-        /// The Application (client) ID that the OAuth provider assigned to your app.
-        /// Serialized Name: OAuthModel.clientId
-        /// </param>
-        /// <param name="grantType">
-        /// The grant type, usually will be 'authorization code'.
-        /// Serialized Name: OAuthModel.grantType
-        /// </param>
-        /// <param name="tokenEndpoint">
-        /// The token endpoint. Defines the OAuth2 refresh token.
-        /// Serialized Name: OAuthModel.tokenEndpoint
-        /// </param>
+        /// <param name="clientSecret"> The Application (client) secret that the OAuth provider assigned to your app. </param>
+        /// <param name="clientId"> The Application (client) ID that the OAuth provider assigned to your app. </param>
+        /// <param name="grantType"> The grant type, usually will be 'authorization code'. </param>
+        /// <param name="tokenEndpoint"> The token endpoint. Defines the OAuth2 refresh token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientSecret"/>, <paramref name="clientId"/>, <paramref name="grantType"/> or <paramref name="tokenEndpoint"/> is null. </exception>
         public OAuthModel(string clientSecret, string clientId, string grantType, string tokenEndpoint)
         {
@@ -53,71 +38,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OAuthModel"/>. </summary>
-        /// <param name="authType">
-        /// The auth type
-        /// Serialized Name: CcpAuthConfig.type
-        /// </param>
+        /// <param name="authType"> The auth type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="authorizationCode">
-        /// The user's authorization code.
-        /// Serialized Name: OAuthModel.authorizationCode
-        /// </param>
-        /// <param name="clientSecret">
-        /// The Application (client) secret that the OAuth provider assigned to your app.
-        /// Serialized Name: OAuthModel.clientSecret
-        /// </param>
-        /// <param name="clientId">
-        /// The Application (client) ID that the OAuth provider assigned to your app.
-        /// Serialized Name: OAuthModel.clientId
-        /// </param>
-        /// <param name="isCredentialsInHeaders">
-        /// Indicating whether we want to send the clientId and clientSecret to token endpoint in the headers.
-        /// Serialized Name: OAuthModel.isCredentialsInHeaders
-        /// </param>
-        /// <param name="scope">
-        /// The Application (client) Scope that the OAuth provider assigned to your app.
-        /// Serialized Name: OAuthModel.scope
-        /// </param>
-        /// <param name="redirectUri">
-        /// The Application redirect url that the user config in the OAuth provider.
-        /// Serialized Name: OAuthModel.redirectUri
-        /// </param>
-        /// <param name="grantType">
-        /// The grant type, usually will be 'authorization code'.
-        /// Serialized Name: OAuthModel.grantType
-        /// </param>
-        /// <param name="tokenEndpoint">
-        /// The token endpoint. Defines the OAuth2 refresh token.
-        /// Serialized Name: OAuthModel.tokenEndpoint
-        /// </param>
-        /// <param name="tokenEndpointHeaders">
-        /// The token endpoint headers.
-        /// Serialized Name: OAuthModel.tokenEndpointHeaders
-        /// </param>
-        /// <param name="tokenEndpointQueryParameters">
-        /// The token endpoint query parameters.
-        /// Serialized Name: OAuthModel.tokenEndpointQueryParameters
-        /// </param>
-        /// <param name="authorizationEndpoint">
-        /// The authorization endpoint.
-        /// Serialized Name: OAuthModel.authorizationEndpoint
-        /// </param>
-        /// <param name="authorizationEndpointHeaders">
-        /// The authorization endpoint headers.
-        /// Serialized Name: OAuthModel.authorizationEndpointHeaders
-        /// </param>
-        /// <param name="authorizationEndpointQueryParameters">
-        /// The authorization endpoint query parameters.
-        /// Serialized Name: OAuthModel.authorizationEndpointQueryParameters
-        /// </param>
-        /// <param name="isJwtBearerFlow">
-        /// A value indicating whether it's a JWT flow.
-        /// Serialized Name: OAuthModel.isJwtBearerFlow
-        /// </param>
-        /// <param name="accessTokenPrepend">
-        /// Access token prepend. Default is 'Bearer'.
-        /// Serialized Name: OAuthModel.accessTokenPrepend
-        /// </param>
+        /// <param name="authorizationCode"> The user's authorization code. </param>
+        /// <param name="clientSecret"> The Application (client) secret that the OAuth provider assigned to your app. </param>
+        /// <param name="clientId"> The Application (client) ID that the OAuth provider assigned to your app. </param>
+        /// <param name="isCredentialsInHeaders"> Indicating whether we want to send the clientId and clientSecret to token endpoint in the headers. </param>
+        /// <param name="scope"> The Application (client) Scope that the OAuth provider assigned to your app. </param>
+        /// <param name="redirectUri"> The Application redirect url that the user config in the OAuth provider. </param>
+        /// <param name="grantType"> The grant type, usually will be 'authorization code'. </param>
+        /// <param name="tokenEndpoint"> The token endpoint. Defines the OAuth2 refresh token. </param>
+        /// <param name="tokenEndpointHeaders"> The token endpoint headers. </param>
+        /// <param name="tokenEndpointQueryParameters"> The token endpoint query parameters. </param>
+        /// <param name="authorizationEndpoint"> The authorization endpoint. </param>
+        /// <param name="authorizationEndpointHeaders"> The authorization endpoint headers. </param>
+        /// <param name="authorizationEndpointQueryParameters"> The authorization endpoint query parameters. </param>
+        /// <param name="isJwtBearerFlow"> A value indicating whether it's a JWT flow. </param>
+        /// <param name="accessTokenPrepend"> Access token prepend. Default is 'Bearer'. </param>
         internal OAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string authorizationCode, string clientSecret, string clientId, bool? isCredentialsInHeaders, string scope, Uri redirectUri, string grantType, string tokenEndpoint, IDictionary<string, string> tokenEndpointHeaders, IDictionary<string, string> tokenEndpointQueryParameters, string authorizationEndpoint, IDictionary<string, string> authorizationEndpointHeaders, IDictionary<string, string> authorizationEndpointQueryParameters, bool? isJwtBearerFlow, string accessTokenPrepend) : base(authType, serializedAdditionalRawData)
         {
             AuthorizationCode = authorizationCode;
@@ -143,80 +80,50 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The user's authorization code.
-        /// Serialized Name: OAuthModel.authorizationCode
-        /// </summary>
+        /// <summary> The user's authorization code. </summary>
+        [WirePath("authorizationCode")]
         public string AuthorizationCode { get; set; }
-        /// <summary>
-        /// The Application (client) secret that the OAuth provider assigned to your app.
-        /// Serialized Name: OAuthModel.clientSecret
-        /// </summary>
+        /// <summary> The Application (client) secret that the OAuth provider assigned to your app. </summary>
+        [WirePath("clientSecret")]
         public string ClientSecret { get; set; }
-        /// <summary>
-        /// The Application (client) ID that the OAuth provider assigned to your app.
-        /// Serialized Name: OAuthModel.clientId
-        /// </summary>
+        /// <summary> The Application (client) ID that the OAuth provider assigned to your app. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
-        /// <summary>
-        /// Indicating whether we want to send the clientId and clientSecret to token endpoint in the headers.
-        /// Serialized Name: OAuthModel.isCredentialsInHeaders
-        /// </summary>
+        /// <summary> Indicating whether we want to send the clientId and clientSecret to token endpoint in the headers. </summary>
+        [WirePath("isCredentialsInHeaders")]
         public bool? IsCredentialsInHeaders { get; set; }
-        /// <summary>
-        /// The Application (client) Scope that the OAuth provider assigned to your app.
-        /// Serialized Name: OAuthModel.scope
-        /// </summary>
+        /// <summary> The Application (client) Scope that the OAuth provider assigned to your app. </summary>
+        [WirePath("scope")]
         public string Scope { get; set; }
-        /// <summary>
-        /// The Application redirect url that the user config in the OAuth provider.
-        /// Serialized Name: OAuthModel.redirectUri
-        /// </summary>
+        /// <summary> The Application redirect url that the user config in the OAuth provider. </summary>
+        [WirePath("redirectUri")]
         public Uri RedirectUri { get; set; }
-        /// <summary>
-        /// The grant type, usually will be 'authorization code'.
-        /// Serialized Name: OAuthModel.grantType
-        /// </summary>
+        /// <summary> The grant type, usually will be 'authorization code'. </summary>
+        [WirePath("grantType")]
         public string GrantType { get; set; }
-        /// <summary>
-        /// The token endpoint. Defines the OAuth2 refresh token.
-        /// Serialized Name: OAuthModel.tokenEndpoint
-        /// </summary>
+        /// <summary> The token endpoint. Defines the OAuth2 refresh token. </summary>
+        [WirePath("tokenEndpoint")]
         public string TokenEndpoint { get; set; }
-        /// <summary>
-        /// The token endpoint headers.
-        /// Serialized Name: OAuthModel.tokenEndpointHeaders
-        /// </summary>
+        /// <summary> The token endpoint headers. </summary>
+        [WirePath("tokenEndpointHeaders")]
         public IDictionary<string, string> TokenEndpointHeaders { get; }
-        /// <summary>
-        /// The token endpoint query parameters.
-        /// Serialized Name: OAuthModel.tokenEndpointQueryParameters
-        /// </summary>
+        /// <summary> The token endpoint query parameters. </summary>
+        [WirePath("tokenEndpointQueryParameters")]
         public IDictionary<string, string> TokenEndpointQueryParameters { get; }
-        /// <summary>
-        /// The authorization endpoint.
-        /// Serialized Name: OAuthModel.authorizationEndpoint
-        /// </summary>
+        /// <summary> The authorization endpoint. </summary>
+        [WirePath("authorizationEndpoint")]
         public string AuthorizationEndpoint { get; set; }
-        /// <summary>
-        /// The authorization endpoint headers.
-        /// Serialized Name: OAuthModel.authorizationEndpointHeaders
-        /// </summary>
+        /// <summary> The authorization endpoint headers. </summary>
+        [WirePath("authorizationEndpointHeaders")]
         public IDictionary<string, string> AuthorizationEndpointHeaders { get; }
-        /// <summary>
-        /// The authorization endpoint query parameters.
-        /// Serialized Name: OAuthModel.authorizationEndpointQueryParameters
-        /// </summary>
+        /// <summary> The authorization endpoint query parameters. </summary>
+        [WirePath("authorizationEndpointQueryParameters")]
         public IDictionary<string, string> AuthorizationEndpointQueryParameters { get; }
-        /// <summary>
-        /// A value indicating whether it's a JWT flow.
-        /// Serialized Name: OAuthModel.isJwtBearerFlow
-        /// </summary>
+        /// <summary> A value indicating whether it's a JWT flow. </summary>
+        [WirePath("isJwtBearerFlow")]
         public bool? IsJwtBearerFlow { get; set; }
-        /// <summary>
-        /// Access token prepend. Default is 'Bearer'.
-        /// Serialized Name: OAuthModel.accessTokenPrepend
-        /// </summary>
+        /// <summary> Access token prepend. Default is 'Bearer'. </summary>
+        [WirePath("accessTokenPrepend")]
         public string AccessTokenPrepend { get; set; }
     }
 }

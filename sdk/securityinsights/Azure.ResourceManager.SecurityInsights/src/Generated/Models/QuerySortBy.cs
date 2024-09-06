@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Specifies how to sort the query results.
-    /// Serialized Name: QuerySortBy
-    /// </summary>
+    /// <summary> Specifies how to sort the query results. </summary>
     public partial class QuerySortBy
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QuerySortBy"/>. </summary>
-        /// <param name="direction">
-        /// The direction to sort the results by.
-        /// Serialized Name: QuerySortBy.direction
-        /// </param>
-        /// <param name="field">
-        /// Represents the field to sort the results by.
-        /// Serialized Name: QuerySortBy.field
-        /// </param>
+        /// <param name="direction"> The direction to sort the results by. </param>
+        /// <param name="field"> Represents the field to sort the results by. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QuerySortBy(SortingDirection? direction, string field, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The direction to sort the results by.
-        /// Serialized Name: QuerySortBy.direction
-        /// </summary>
+        /// <summary> The direction to sort the results by. </summary>
+        [WirePath("direction")]
         public SortingDirection? Direction { get; set; }
-        /// <summary>
-        /// Represents the field to sort the results by.
-        /// Serialized Name: QuerySortBy.field
-        /// </summary>
+        /// <summary> Represents the field to sort the results by. </summary>
+        [WirePath("field")]
         public string Field { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The status of the incident
-    /// Serialized Name: IncidentStatus
-    /// </summary>
+    /// <summary> The status of the incident. </summary>
     public readonly partial struct SecurityInsightsIncidentStatus : IEquatable<SecurityInsightsIncidentStatus>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ActiveValue = "Active";
         private const string ClosedValue = "Closed";
 
-        /// <summary>
-        /// An active incident which isn't being handled currently
-        /// Serialized Name: IncidentStatus.New
-        /// </summary>
+        /// <summary> An active incident which isn't being handled currently. </summary>
         public static SecurityInsightsIncidentStatus New { get; } = new SecurityInsightsIncidentStatus(NewValue);
-        /// <summary>
-        /// An active incident which is being handled
-        /// Serialized Name: IncidentStatus.Active
-        /// </summary>
+        /// <summary> An active incident which is being handled. </summary>
         public static SecurityInsightsIncidentStatus Active { get; } = new SecurityInsightsIncidentStatus(ActiveValue);
-        /// <summary>
-        /// A non-active incident
-        /// Serialized Name: IncidentStatus.Closed
-        /// </summary>
+        /// <summary> A non-active incident. </summary>
         public static SecurityInsightsIncidentStatus Closed { get; } = new SecurityInsightsIncidentStatus(ClosedValue);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentStatus left, SecurityInsightsIncidentStatus right) => left.Equals(right);

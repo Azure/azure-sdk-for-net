@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsOfficeConsent data model.
     /// Consent for Office365 tenant that already made.
-    /// Serialized Name: OfficeConsent
     /// </summary>
     public partial class SecurityInsightsOfficeConsentData : ResourceData
     {
@@ -61,14 +60,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tenantId">
-        /// The tenantId of the Office365 with the consent.
-        /// Serialized Name: OfficeConsent.properties.tenantId
-        /// </param>
-        /// <param name="consentId">
-        /// Help to easily cascade among the data layers.
-        /// Serialized Name: OfficeConsent.properties.consentId
-        /// </param>
+        /// <param name="tenantId"> The tenantId of the Office365 with the consent. </param>
+        /// <param name="consentId"> Help to easily cascade among the data layers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsOfficeConsentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string consentId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -77,15 +70,11 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The tenantId of the Office365 with the consent.
-        /// Serialized Name: OfficeConsent.properties.tenantId
-        /// </summary>
+        /// <summary> The tenantId of the Office365 with the consent. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
-        /// <summary>
-        /// Help to easily cascade among the data layers.
-        /// Serialized Name: OfficeConsent.properties.consentId
-        /// </summary>
+        /// <summary> Help to easily cascade among the data layers. </summary>
+        [WirePath("properties.consentId")]
         public string ConsentId { get; set; }
     }
 }

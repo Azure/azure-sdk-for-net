@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsEntityQueryTemplate data model.
     /// Specific entity query template.
-    /// Serialized Name: EntityQueryTemplate
     /// Please note <see cref="SecurityInsightsEntityQueryTemplateData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ActivityEntityQueryTemplate"/>.
     /// </summary>
@@ -64,10 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// the entity query template kind
-        /// Serialized Name: EntityQueryTemplate.kind
-        /// </param>
+        /// <param name="kind"> the entity query template kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsEntityQueryTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryTemplateKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -75,10 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// the entity query template kind
-        /// Serialized Name: EntityQueryTemplate.kind
-        /// </summary>
+        /// <summary> the entity query template kind. </summary>
         internal EntityQueryTemplateKind Kind { get; set; }
     }
 }

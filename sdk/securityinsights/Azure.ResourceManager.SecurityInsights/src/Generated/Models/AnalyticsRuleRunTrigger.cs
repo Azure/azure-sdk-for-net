@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Analytics Rule Run Trigger request
-    /// Serialized Name: AnalyticsRuleRunTrigger
-    /// </summary>
+    /// <summary> Analytics Rule Run Trigger request. </summary>
     public partial class AnalyticsRuleRunTrigger
     {
         /// <summary>
@@ -49,14 +46,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AnalyticsRuleRunTrigger"/>. </summary>
-        /// <param name="executeOn"> Serialized Name: AnalyticsRuleRunTrigger.properties.executionTimeUtc. </param>
+        /// <param name="executeOn"></param>
         public AnalyticsRuleRunTrigger(DateTimeOffset executeOn)
         {
             ExecuteOn = executeOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyticsRuleRunTrigger"/>. </summary>
-        /// <param name="executeOn"> Serialized Name: AnalyticsRuleRunTrigger.properties.executionTimeUtc. </param>
+        /// <param name="executeOn"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AnalyticsRuleRunTrigger(DateTimeOffset executeOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +66,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Serialized Name: AnalyticsRuleRunTrigger.properties.executionTimeUtc. </summary>
+        /// <summary> Gets the execute on. </summary>
+        [WirePath("properties.executionTimeUtc")]
         public DateTimeOffset ExecuteOn { get; }
     }
 }

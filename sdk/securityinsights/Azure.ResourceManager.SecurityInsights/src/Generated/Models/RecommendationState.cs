@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// State of recommendation.
-    /// Serialized Name: State
-    /// </summary>
+    /// <summary> State of recommendation. </summary>
     public readonly partial struct RecommendationState : IEquatable<RecommendationState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string CompletedByUserValue = "CompletedByUser";
         private const string CompletedBySystemValue = "CompletedBySystem";
 
-        /// <summary>
-        /// Recommendation is active.
-        /// Serialized Name: State.Active
-        /// </summary>
+        /// <summary> Recommendation is active. </summary>
         public static RecommendationState Active { get; } = new RecommendationState(ActiveValue);
-        /// <summary>
-        /// Recommendation is in progress.
-        /// Serialized Name: State.InProgress
-        /// </summary>
+        /// <summary> Recommendation is in progress. </summary>
         public static RecommendationState InProgress { get; } = new RecommendationState(InProgressValue);
-        /// <summary>
-        /// Recommendation has been dismissed.
-        /// Serialized Name: State.Dismissed
-        /// </summary>
+        /// <summary> Recommendation has been dismissed. </summary>
         public static RecommendationState Dismissed { get; } = new RecommendationState(DismissedValue);
-        /// <summary>
-        /// Recommendation has been completed by user.
-        /// Serialized Name: State.CompletedByUser
-        /// </summary>
+        /// <summary> Recommendation has been completed by user. </summary>
         public static RecommendationState CompletedByUser { get; } = new RecommendationState(CompletedByUserValue);
-        /// <summary>
-        /// Recommendation has been completed by the system.
-        /// Serialized Name: State.CompletedBySystem
-        /// </summary>
+        /// <summary> Recommendation has been completed by the system. </summary>
         public static RecommendationState CompletedBySystem { get; } = new RecommendationState(CompletedBySystemValue);
         /// <summary> Determines if two <see cref="RecommendationState"/> values are the same. </summary>
         public static bool operator ==(RecommendationState left, RecommendationState right) => left.Equals(right);

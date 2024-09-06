@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// alert rule template data sources
-    /// Serialized Name: AlertRuleTemplateDataSource
-    /// </summary>
+    /// <summary> alert rule template data sources. </summary>
     public partial class AlertRuleTemplateDataSource
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AlertRuleTemplateDataSource"/>. </summary>
-        /// <param name="connectorId">
-        /// The connector id that provides the following data types
-        /// Serialized Name: AlertRuleTemplateDataSource.connectorId
-        /// </param>
-        /// <param name="dataTypes">
-        /// The data types used by the alert rule template
-        /// Serialized Name: AlertRuleTemplateDataSource.dataTypes
-        /// </param>
+        /// <param name="connectorId"> The connector id that provides the following data types. </param>
+        /// <param name="dataTypes"> The data types used by the alert rule template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AlertRuleTemplateDataSource(string connectorId, IList<string> dataTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The connector id that provides the following data types
-        /// Serialized Name: AlertRuleTemplateDataSource.connectorId
-        /// </summary>
+        /// <summary> The connector id that provides the following data types. </summary>
+        [WirePath("connectorId")]
         public string ConnectorId { get; set; }
-        /// <summary>
-        /// The data types used by the alert rule template
-        /// Serialized Name: AlertRuleTemplateDataSource.dataTypes
-        /// </summary>
+        /// <summary> The data types used by the alert rule template. </summary>
+        [WirePath("dataTypes")]
         public IList<string> DataTypes { get; }
     }
 }

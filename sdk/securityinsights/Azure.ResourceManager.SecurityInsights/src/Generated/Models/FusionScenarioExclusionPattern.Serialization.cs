@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -93,6 +94,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new FusionScenarioExclusionPattern(exclusionPattern, dateAddedInUTC, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExclusionPattern), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exclusionPattern: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExclusionPattern))
+                {
+                    builder.Append("  exclusionPattern: ");
+                    if (ExclusionPattern.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ExclusionPattern}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ExclusionPattern}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DateAddedInUTC), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dateAddedInUTC: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DateAddedInUTC))
+                {
+                    builder.Append("  dateAddedInUTC: ");
+                    if (DateAddedInUTC.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DateAddedInUTC}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DateAddedInUTC}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FusionScenarioExclusionPattern>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FusionScenarioExclusionPattern>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +163,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FusionScenarioExclusionPattern)} does not support writing '{options.Format}' format.");
             }

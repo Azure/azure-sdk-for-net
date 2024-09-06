@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -244,6 +245,246 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiEndpoint))
+                {
+                    builder.Append("  apiEndpoint: ");
+                    if (ApiEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RateLimitQps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rateLimitQps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RateLimitQps))
+                {
+                    builder.Append("  rateLimitQps: ");
+                    builder.AppendLine($"{RateLimitQps.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryWindowInMin), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  queryWindowInMin: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  queryWindowInMin: ");
+                builder.AppendLine($"{QueryWindowInMin}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpMethod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  httpMethod: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpMethod))
+                {
+                    builder.Append("  httpMethod: ");
+                    if (HttpMethod.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HttpMethod}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HttpMethod}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryTimeFormat), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  queryTimeFormat: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueryTimeFormat))
+                {
+                    builder.Append("  queryTimeFormat: ");
+                    if (QueryTimeFormat.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{QueryTimeFormat}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{QueryTimeFormat}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  retryCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetryCount))
+                {
+                    builder.Append("  retryCount: ");
+                    builder.AppendLine($"{RetryCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeoutInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeoutInSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeoutInSeconds))
+                {
+                    builder.Append("  timeoutInSeconds: ");
+                    builder.AppendLine($"{TimeoutInSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Headers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  headers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Headers))
+                {
+                    builder.Append("  headers: ");
+                    builder.AppendLine($"'{Headers.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryParameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  queryParameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueryParameters))
+                {
+                    builder.Append("  queryParameters: ");
+                    builder.AppendLine($"'{QueryParameters.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryParametersTemplate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  queryParametersTemplate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueryParametersTemplate))
+                {
+                    builder.Append("  queryParametersTemplate: ");
+                    if (QueryParametersTemplate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{QueryParametersTemplate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{QueryParametersTemplate}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTimeAttributeName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startTimeAttributeName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartTimeAttributeName))
+                {
+                    builder.Append("  startTimeAttributeName: ");
+                    if (StartTimeAttributeName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StartTimeAttributeName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StartTimeAttributeName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTimeAttributeName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endTimeAttributeName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndTimeAttributeName))
+                {
+                    builder.Append("  endTimeAttributeName: ");
+                    if (EndTimeAttributeName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EndTimeAttributeName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EndTimeAttributeName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CodelessConnectorPollingRequestProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -252,6 +493,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CodelessConnectorPollingRequestProperties)} does not support writing '{options.Format}' format.");
             }

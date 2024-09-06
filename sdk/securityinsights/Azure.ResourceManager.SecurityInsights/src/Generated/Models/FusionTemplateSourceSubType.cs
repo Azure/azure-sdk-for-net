@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents a source subtype under a source signal consumed in Fusion detection.
-    /// Serialized Name: FusionTemplateSourceSubType
-    /// </summary>
+    /// <summary> Represents a source subtype under a source signal consumed in Fusion detection. </summary>
     public partial class FusionTemplateSourceSubType
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FusionTemplateSourceSubType"/>. </summary>
-        /// <param name="sourceSubTypeName">
-        /// The name of source subtype under a source signal consumed in Fusion detection.
-        /// Serialized Name: FusionTemplateSourceSubType.sourceSubTypeName
-        /// </param>
-        /// <param name="severityFilter">
-        /// Severity configuration available for a source subtype consumed in fusion detection.
-        /// Serialized Name: FusionTemplateSourceSubType.severityFilter
-        /// </param>
+        /// <param name="sourceSubTypeName"> The name of source subtype under a source signal consumed in Fusion detection. </param>
+        /// <param name="severityFilter"> Severity configuration available for a source subtype consumed in fusion detection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceSubTypeName"/> or <paramref name="severityFilter"/> is null. </exception>
         public FusionTemplateSourceSubType(string sourceSubTypeName, FusionTemplateSubTypeSeverityFilter severityFilter)
         {
@@ -68,18 +59,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FusionTemplateSourceSubType"/>. </summary>
-        /// <param name="sourceSubTypeName">
-        /// The name of source subtype under a source signal consumed in Fusion detection.
-        /// Serialized Name: FusionTemplateSourceSubType.sourceSubTypeName
-        /// </param>
-        /// <param name="sourceSubTypeDisplayName">
-        /// The display name of source subtype under a source signal consumed in Fusion detection.
-        /// Serialized Name: FusionTemplateSourceSubType.sourceSubTypeDisplayName
-        /// </param>
-        /// <param name="severityFilter">
-        /// Severity configuration available for a source subtype consumed in fusion detection.
-        /// Serialized Name: FusionTemplateSourceSubType.severityFilter
-        /// </param>
+        /// <param name="sourceSubTypeName"> The name of source subtype under a source signal consumed in Fusion detection. </param>
+        /// <param name="sourceSubTypeDisplayName"> The display name of source subtype under a source signal consumed in Fusion detection. </param>
+        /// <param name="severityFilter"> Severity configuration available for a source subtype consumed in fusion detection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FusionTemplateSourceSubType(string sourceSubTypeName, string sourceSubTypeDisplayName, FusionTemplateSubTypeSeverityFilter severityFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -94,20 +76,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The name of source subtype under a source signal consumed in Fusion detection.
-        /// Serialized Name: FusionTemplateSourceSubType.sourceSubTypeName
-        /// </summary>
+        /// <summary> The name of source subtype under a source signal consumed in Fusion detection. </summary>
+        [WirePath("sourceSubTypeName")]
         public string SourceSubTypeName { get; set; }
-        /// <summary>
-        /// The display name of source subtype under a source signal consumed in Fusion detection.
-        /// Serialized Name: FusionTemplateSourceSubType.sourceSubTypeDisplayName
-        /// </summary>
+        /// <summary> The display name of source subtype under a source signal consumed in Fusion detection. </summary>
+        [WirePath("sourceSubTypeDisplayName")]
         public string SourceSubTypeDisplayName { get; }
-        /// <summary>
-        /// Severity configuration available for a source subtype consumed in fusion detection.
-        /// Serialized Name: FusionTemplateSourceSubType.severityFilter
-        /// </summary>
+        /// <summary> Severity configuration available for a source subtype consumed in fusion detection. </summary>
+        [WirePath("severityFilter")]
         public FusionTemplateSubTypeSeverityFilter SeverityFilter { get; set; }
     }
 }

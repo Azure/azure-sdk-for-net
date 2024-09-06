@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List of all the template.
-    /// Serialized Name: TemplateList
-    /// </summary>
+    /// <summary> List of all the template. </summary>
     internal partial class TemplateList
     {
         /// <summary>
@@ -50,12 +47,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TemplateList"/>. </summary>
-        /// <param name="value">
-        /// Array of templates.
-        /// Serialized Name: TemplateList.value
-        /// </param>
+        /// <param name="value"> Array of templates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TemplateList(IEnumerable<TemplateModelData> value)
+        internal TemplateList(IEnumerable<SecurityInsightsTemplateData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TemplateList"/>. </summary>
-        /// <param name="value">
-        /// Array of templates.
-        /// Serialized Name: TemplateList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to fetch the next page of template.
-        /// Serialized Name: TemplateList.nextLink
-        /// </param>
+        /// <param name="value"> Array of templates. </param>
+        /// <param name="nextLink"> URL to fetch the next page of template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TemplateList(IReadOnlyList<TemplateModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TemplateList(IReadOnlyList<SecurityInsightsTemplateData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Array of templates.
-        /// Serialized Name: TemplateList.value
-        /// </summary>
-        public IReadOnlyList<TemplateModelData> Value { get; }
-        /// <summary>
-        /// URL to fetch the next page of template.
-        /// Serialized Name: TemplateList.nextLink
-        /// </summary>
+        /// <summary> Array of templates. </summary>
+        public IReadOnlyList<SecurityInsightsTemplateData> Value { get; }
+        /// <summary> URL to fetch the next page of template. </summary>
         public string NextLink { get; }
     }
 }

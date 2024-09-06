@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List all the watchlists.
-    /// Serialized Name: WatchlistList
-    /// </summary>
+    /// <summary> List all the watchlists. </summary>
     internal partial class WatchlistList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WatchlistList"/>. </summary>
-        /// <param name="value">
-        /// Array of watchlist.
-        /// Serialized Name: WatchlistList.value
-        /// </param>
+        /// <param name="value"> Array of watchlist. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WatchlistList(IEnumerable<SecurityInsightsWatchlistData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WatchlistList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of watchlists.
-        /// Serialized Name: WatchlistList.nextLink
-        /// </param>
-        /// <param name="value">
-        /// Array of watchlist.
-        /// Serialized Name: WatchlistList.value
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of watchlists. </param>
+        /// <param name="value"> Array of watchlist. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WatchlistList(string nextLink, IReadOnlyList<SecurityInsightsWatchlistData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of watchlists.
-        /// Serialized Name: WatchlistList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of watchlists. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Array of watchlist.
-        /// Serialized Name: WatchlistList.value
-        /// </summary>
+        /// <summary> Array of watchlist. </summary>
         public IReadOnlyList<SecurityInsightsWatchlistData> Value { get; }
     }
 }

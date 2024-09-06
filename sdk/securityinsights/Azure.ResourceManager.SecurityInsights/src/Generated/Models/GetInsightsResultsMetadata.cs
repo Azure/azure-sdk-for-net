@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Get Insights result metadata.
-    /// Serialized Name: GetInsightsResultsMetadata
-    /// </summary>
+    /// <summary> Get Insights result metadata. </summary>
     internal partial class GetInsightsResultsMetadata
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GetInsightsResultsMetadata"/>. </summary>
-        /// <param name="totalCount">
-        /// the total items found for the insights request
-        /// Serialized Name: GetInsightsResultsMetadata.totalCount
-        /// </param>
+        /// <param name="totalCount"> the total items found for the insights request. </param>
         internal GetInsightsResultsMetadata(int totalCount)
         {
             TotalCount = totalCount;
@@ -60,14 +54,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GetInsightsResultsMetadata"/>. </summary>
-        /// <param name="totalCount">
-        /// the total items found for the insights request
-        /// Serialized Name: GetInsightsResultsMetadata.totalCount
-        /// </param>
-        /// <param name="errors">
-        /// information about the failed queries
-        /// Serialized Name: GetInsightsResultsMetadata.errors
-        /// </param>
+        /// <param name="totalCount"> the total items found for the insights request. </param>
+        /// <param name="errors"> information about the failed queries. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GetInsightsResultsMetadata(int totalCount, IReadOnlyList<GetInsightsErrorKind> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,15 +69,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// the total items found for the insights request
-        /// Serialized Name: GetInsightsResultsMetadata.totalCount
-        /// </summary>
+        /// <summary> the total items found for the insights request. </summary>
+        [WirePath("totalCount")]
         public int TotalCount { get; }
-        /// <summary>
-        /// information about the failed queries
-        /// Serialized Name: GetInsightsResultsMetadata.errors
-        /// </summary>
+        /// <summary> information about the failed queries. </summary>
+        [WirePath("errors")]
         public IReadOnlyList<GetInsightsErrorKind> Errors { get; }
     }
 }

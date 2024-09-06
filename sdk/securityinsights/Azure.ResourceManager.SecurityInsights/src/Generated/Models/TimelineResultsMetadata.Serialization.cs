@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -128,6 +130,79 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new TimelineResultsMetadata(totalCount, aggregations, errors ?? new ChangeTrackingList<TimelineError>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  totalCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  totalCount: ");
+                builder.AppendLine($"{TotalCount}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Aggregations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aggregations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Aggregations))
+                {
+                    if (Aggregations.Any())
+                    {
+                        builder.Append("  aggregations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Aggregations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  aggregations: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Errors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  errors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Errors))
+                {
+                    if (Errors.Any())
+                    {
+                        builder.Append("  errors: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Errors)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  errors: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TimelineResultsMetadata>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TimelineResultsMetadata>)this).GetFormatFromOptions(options) : options.Format;
@@ -136,6 +211,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TimelineResultsMetadata)} does not support writing '{options.Format}' format.");
             }

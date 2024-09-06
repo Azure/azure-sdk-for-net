@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The CodelessUiConnectorConfigPropertiesInstructionStepsItem.
-    /// Serialized Name: CodelessUiConnectorConfigPropertiesInstructionStepsItem
-    /// </summary>
+    /// <summary> The CodelessUiConnectorConfigPropertiesInstructionStepsItem. </summary>
     public partial class CodelessUiConnectorConfigPropertiesInstructionStepsItem : InstructionSteps
     {
         /// <summary> Initializes a new instance of <see cref="CodelessUiConnectorConfigPropertiesInstructionStepsItem"/>. </summary>
@@ -22,18 +19,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CodelessUiConnectorConfigPropertiesInstructionStepsItem"/>. </summary>
-        /// <param name="title">
-        /// Instruction step title
-        /// Serialized Name: InstructionSteps.title
-        /// </param>
-        /// <param name="description">
-        /// Instruction step description
-        /// Serialized Name: InstructionSteps.description
-        /// </param>
-        /// <param name="instructions">
-        /// Instruction step details
-        /// Serialized Name: InstructionSteps.instructions
-        /// </param>
+        /// <param name="title"> Instruction step title. </param>
+        /// <param name="description"> Instruction step description. </param>
+        /// <param name="instructions"> Instruction step details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CodelessUiConnectorConfigPropertiesInstructionStepsItem(string title, string description, IList<InstructionStepsInstructionsItem> instructions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(title, description, instructions, serializedAdditionalRawData)
         {

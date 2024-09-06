@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents office data connector.
-    /// Serialized Name: OfficeDataConnector
-    /// </summary>
+    /// <summary> Represents office data connector. </summary>
     public partial class SecurityInsightsOfficeDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnector"/>. </summary>
@@ -29,23 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The data connector kind
-        /// Serialized Name: DataConnector.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId">
-        /// The tenant id to connect to, and get the data from.
-        /// Serialized Name: OfficeDataConnector.properties.tenantId
-        /// </param>
-        /// <param name="dataTypes">
-        /// The available data types for the connector.
-        /// Serialized Name: OfficeDataConnector.properties.dataTypes
-        /// </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="dataTypes"> The available data types for the connector. </param>
         internal SecurityInsightsOfficeDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, SecurityInsightsOfficeDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
@@ -53,15 +38,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The tenant id to connect to, and get the data from.
-        /// Serialized Name: OfficeDataConnector.properties.tenantId
-        /// </summary>
+        /// <summary> The tenant id to connect to, and get the data from. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
-        /// <summary>
-        /// The available data types for the connector.
-        /// Serialized Name: OfficeDataConnector.properties.dataTypes
-        /// </summary>
+        /// <summary> The available data types for the connector. </summary>
+        [WirePath("properties.dataTypes")]
         public SecurityInsightsOfficeDataConnectorDataTypes DataTypes { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Instruction step details, to be displayed in the Instructions steps section in the connector's page in Sentinel Portal.
-    /// Serialized Name: InstructionStepDetails
-    /// </summary>
+    /// <summary> Instruction step details, to be displayed in the Instructions steps section in the connector's page in Sentinel Portal. </summary>
     public partial class InstructionStepDetails
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="InstructionStepDetails"/>. </summary>
-        /// <param name="parameters">
-        /// Gets or sets the instruction type parameters settings.
-        /// Serialized Name: InstructionStepDetails.parameters
-        /// </param>
-        /// <param name="instructionStepDetailsType">
-        /// Gets or sets the instruction type name.
-        /// Serialized Name: InstructionStepDetails.type
-        /// </param>
+        /// <param name="parameters"> Gets or sets the instruction type parameters settings. </param>
+        /// <param name="instructionStepDetailsType"> Gets or sets the instruction type name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> or <paramref name="instructionStepDetailsType"/> is null. </exception>
         public InstructionStepDetails(BinaryData parameters, string instructionStepDetailsType)
         {
@@ -68,14 +59,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InstructionStepDetails"/>. </summary>
-        /// <param name="parameters">
-        /// Gets or sets the instruction type parameters settings.
-        /// Serialized Name: InstructionStepDetails.parameters
-        /// </param>
-        /// <param name="instructionStepDetailsType">
-        /// Gets or sets the instruction type name.
-        /// Serialized Name: InstructionStepDetails.type
-        /// </param>
+        /// <param name="parameters"> Gets or sets the instruction type parameters settings. </param>
+        /// <param name="instructionStepDetailsType"> Gets or sets the instruction type name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InstructionStepDetails(BinaryData parameters, string instructionStepDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,7 +76,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// Gets or sets the instruction type parameters settings.
-        /// Serialized Name: InstructionStepDetails.parameters
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -120,11 +104,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("parameters")]
         public BinaryData Parameters { get; set; }
-        /// <summary>
-        /// Gets or sets the instruction type name.
-        /// Serialized Name: InstructionStepDetails.type
-        /// </summary>
+        /// <summary> Gets or sets the instruction type name. </summary>
+        [WirePath("type")]
         public string InstructionStepDetailsType { get; set; }
     }
 }

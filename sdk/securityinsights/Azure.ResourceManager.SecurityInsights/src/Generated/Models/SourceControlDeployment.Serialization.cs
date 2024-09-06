@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -154,6 +155,105 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentId))
+                {
+                    builder.Append("  deploymentId: ");
+                    if (DeploymentId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeploymentId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeploymentId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentState))
+                {
+                    builder.Append("  deploymentState: ");
+                    builder.AppendLine($"'{DeploymentState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentResult), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentResult: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentResult))
+                {
+                    builder.Append("  deploymentResult: ");
+                    builder.AppendLine($"'{DeploymentResult.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentOn))
+                {
+                    builder.Append("  deploymentTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(DeploymentOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentLogsUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentLogsUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentLogsUri))
+                {
+                    builder.Append("  deploymentLogsUrl: ");
+                    builder.AppendLine($"'{DeploymentLogsUri.AbsoluteUri}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SourceControlDeployment>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlDeployment>)this).GetFormatFromOptions(options) : options.Format;
@@ -162,6 +262,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SourceControlDeployment)} does not support writing '{options.Format}' format.");
             }

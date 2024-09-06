@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List of all the entity query templates.
-    /// Serialized Name: EntityQueryTemplateList
-    /// </summary>
+    /// <summary> List of all the entity query templates. </summary>
     internal partial class EntityQueryTemplateList
     {
         /// <summary>
@@ -52,7 +49,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="EntityQueryTemplateList"/>. </summary>
         /// <param name="value">
         /// Array of entity query templates.
-        /// Serialized Name: EntityQueryTemplateList.value
         /// Please note <see cref="SecurityInsightsEntityQueryTemplateData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ActivityEntityQueryTemplate"/>.
         /// </param>
@@ -65,13 +61,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityQueryTemplateList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of entity query templates.
-        /// Serialized Name: EntityQueryTemplateList.nextLink
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of entity query templates. </param>
         /// <param name="value">
         /// Array of entity query templates.
-        /// Serialized Name: EntityQueryTemplateList.value
         /// Please note <see cref="SecurityInsightsEntityQueryTemplateData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ActivityEntityQueryTemplate"/>.
         /// </param>
@@ -88,14 +80,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of entity query templates.
-        /// Serialized Name: EntityQueryTemplateList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of entity query templates. </summary>
         public string NextLink { get; }
         /// <summary>
         /// Array of entity query templates.
-        /// Serialized Name: EntityQueryTemplateList.value
         /// Please note <see cref="SecurityInsightsEntityQueryTemplateData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ActivityEntityQueryTemplate"/>.
         /// </summary>

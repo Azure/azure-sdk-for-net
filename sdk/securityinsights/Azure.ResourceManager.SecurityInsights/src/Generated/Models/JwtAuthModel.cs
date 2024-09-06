@@ -10,25 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Model for API authentication with JWT. Simple exchange between user name + password to access token.
-    /// Serialized Name: JwtAuthModel
-    /// </summary>
+    /// <summary> Model for API authentication with JWT. Simple exchange between user name + password to access token. </summary>
     public partial class JwtAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="JwtAuthModel"/>. </summary>
-        /// <param name="tokenEndpoint">
-        /// Token endpoint to request JWT
-        /// Serialized Name: JwtAuthModel.tokenEndpoint
-        /// </param>
-        /// <param name="userName">
-        /// The user name. If user name and password sent in header request we only need to populate the `value` property with the user name (Same as basic auth). If user name and password sent in body request we need to specify the `Key` and `Value`.
-        /// Serialized Name: JwtAuthModel.userName
-        /// </param>
-        /// <param name="password">
-        /// The password
-        /// Serialized Name: JwtAuthModel.password
-        /// </param>
+        /// <param name="tokenEndpoint"> Token endpoint to request JWT. </param>
+        /// <param name="userName"> The user name. If user name and password sent in header request we only need to populate the `value` property with the user name (Same as basic auth). If user name and password sent in body request we need to specify the `Key` and `Value`. </param>
+        /// <param name="password"> The password. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tokenEndpoint"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public JwtAuthModel(string tokenEndpoint, IDictionary<string, string> userName, IDictionary<string, string> password)
         {
@@ -45,43 +33,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JwtAuthModel"/>. </summary>
-        /// <param name="authType">
-        /// The auth type
-        /// Serialized Name: CcpAuthConfig.type
-        /// </param>
+        /// <param name="authType"> The auth type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tokenEndpoint">
-        /// Token endpoint to request JWT
-        /// Serialized Name: JwtAuthModel.tokenEndpoint
-        /// </param>
-        /// <param name="userName">
-        /// The user name. If user name and password sent in header request we only need to populate the `value` property with the user name (Same as basic auth). If user name and password sent in body request we need to specify the `Key` and `Value`.
-        /// Serialized Name: JwtAuthModel.userName
-        /// </param>
-        /// <param name="password">
-        /// The password
-        /// Serialized Name: JwtAuthModel.password
-        /// </param>
-        /// <param name="queryParameters">
-        /// The custom query parameter we want to add once we send request to token endpoint.
-        /// Serialized Name: JwtAuthModel.queryParameters
-        /// </param>
-        /// <param name="headers">
-        /// The custom headers we want to add once we send request to token endpoint.
-        /// Serialized Name: JwtAuthModel.headers
-        /// </param>
-        /// <param name="isCredentialsInHeaders">
-        /// Flag indicating whether we want to send the user name and password to token endpoint in the headers.
-        /// Serialized Name: JwtAuthModel.isCredentialsInHeaders
-        /// </param>
-        /// <param name="isJsonRequest">
-        /// Flag indicating whether the body request is JSON (header Content-Type = application/json), meaning its a Form URL encoded request (header Content-Type = application/x-www-form-urlencoded).
-        /// Serialized Name: JwtAuthModel.isJsonRequest
-        /// </param>
-        /// <param name="requestTimeoutInSeconds">
-        /// Request timeout in seconds.
-        /// Serialized Name: JwtAuthModel.requestTimeoutInSeconds
-        /// </param>
+        /// <param name="tokenEndpoint"> Token endpoint to request JWT. </param>
+        /// <param name="userName"> The user name. If user name and password sent in header request we only need to populate the `value` property with the user name (Same as basic auth). If user name and password sent in body request we need to specify the `Key` and `Value`. </param>
+        /// <param name="password"> The password. </param>
+        /// <param name="queryParameters"> The custom query parameter we want to add once we send request to token endpoint. </param>
+        /// <param name="headers"> The custom headers we want to add once we send request to token endpoint. </param>
+        /// <param name="isCredentialsInHeaders"> Flag indicating whether we want to send the user name and password to token endpoint in the headers. </param>
+        /// <param name="isJsonRequest"> Flag indicating whether the body request is JSON (header Content-Type = application/json), meaning its a Form URL encoded request (header Content-Type = application/x-www-form-urlencoded). </param>
+        /// <param name="requestTimeoutInSeconds"> Request timeout in seconds. </param>
         internal JwtAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string tokenEndpoint, IDictionary<string, string> userName, IDictionary<string, string> password, IDictionary<string, string> queryParameters, IDictionary<string, string> headers, bool? isCredentialsInHeaders, bool? isJsonRequest, int? requestTimeoutInSeconds) : base(authType, serializedAdditionalRawData)
         {
             TokenEndpoint = tokenEndpoint;
@@ -100,45 +61,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Token endpoint to request JWT
-        /// Serialized Name: JwtAuthModel.tokenEndpoint
-        /// </summary>
+        /// <summary> Token endpoint to request JWT. </summary>
+        [WirePath("tokenEndpoint")]
         public string TokenEndpoint { get; set; }
-        /// <summary>
-        /// The user name. If user name and password sent in header request we only need to populate the `value` property with the user name (Same as basic auth). If user name and password sent in body request we need to specify the `Key` and `Value`.
-        /// Serialized Name: JwtAuthModel.userName
-        /// </summary>
+        /// <summary> The user name. If user name and password sent in header request we only need to populate the `value` property with the user name (Same as basic auth). If user name and password sent in body request we need to specify the `Key` and `Value`. </summary>
+        [WirePath("userName")]
         public IDictionary<string, string> UserName { get; }
-        /// <summary>
-        /// The password
-        /// Serialized Name: JwtAuthModel.password
-        /// </summary>
+        /// <summary> The password. </summary>
+        [WirePath("password")]
         public IDictionary<string, string> Password { get; }
-        /// <summary>
-        /// The custom query parameter we want to add once we send request to token endpoint.
-        /// Serialized Name: JwtAuthModel.queryParameters
-        /// </summary>
+        /// <summary> The custom query parameter we want to add once we send request to token endpoint. </summary>
+        [WirePath("queryParameters")]
         public IDictionary<string, string> QueryParameters { get; }
-        /// <summary>
-        /// The custom headers we want to add once we send request to token endpoint.
-        /// Serialized Name: JwtAuthModel.headers
-        /// </summary>
+        /// <summary> The custom headers we want to add once we send request to token endpoint. </summary>
+        [WirePath("headers")]
         public IDictionary<string, string> Headers { get; }
-        /// <summary>
-        /// Flag indicating whether we want to send the user name and password to token endpoint in the headers.
-        /// Serialized Name: JwtAuthModel.isCredentialsInHeaders
-        /// </summary>
+        /// <summary> Flag indicating whether we want to send the user name and password to token endpoint in the headers. </summary>
+        [WirePath("isCredentialsInHeaders")]
         public bool? IsCredentialsInHeaders { get; set; }
-        /// <summary>
-        /// Flag indicating whether the body request is JSON (header Content-Type = application/json), meaning its a Form URL encoded request (header Content-Type = application/x-www-form-urlencoded).
-        /// Serialized Name: JwtAuthModel.isJsonRequest
-        /// </summary>
+        /// <summary> Flag indicating whether the body request is JSON (header Content-Type = application/json), meaning its a Form URL encoded request (header Content-Type = application/x-www-form-urlencoded). </summary>
+        [WirePath("isJsonRequest")]
         public bool? IsJsonRequest { get; set; }
-        /// <summary>
-        /// Request timeout in seconds.
-        /// Serialized Name: JwtAuthModel.requestTimeoutInSeconds
-        /// </summary>
+        /// <summary> Request timeout in seconds. </summary>
+        [WirePath("requestTimeoutInSeconds")]
         public int? RequestTimeoutInSeconds { get; set; }
     }
 }

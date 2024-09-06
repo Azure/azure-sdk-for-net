@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes external reference
-    /// Serialized Name: ThreatIntelligenceExternalReference
-    /// </summary>
+    /// <summary> Describes external reference. </summary>
     public partial class ThreatIntelligenceExternalReference
     {
         /// <summary>
@@ -55,26 +52,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceExternalReference"/>. </summary>
-        /// <param name="description">
-        /// External reference description
-        /// Serialized Name: ThreatIntelligenceExternalReference.description
-        /// </param>
-        /// <param name="externalId">
-        /// External reference ID
-        /// Serialized Name: ThreatIntelligenceExternalReference.externalId
-        /// </param>
-        /// <param name="sourceName">
-        /// External reference source name
-        /// Serialized Name: ThreatIntelligenceExternalReference.sourceName
-        /// </param>
-        /// <param name="uri">
-        /// External reference URL
-        /// Serialized Name: ThreatIntelligenceExternalReference.url
-        /// </param>
-        /// <param name="hashes">
-        /// External reference hashes
-        /// Serialized Name: ThreatIntelligenceExternalReference.hashes
-        /// </param>
+        /// <param name="description"> External reference description. </param>
+        /// <param name="externalId"> External reference ID. </param>
+        /// <param name="sourceName"> External reference source name. </param>
+        /// <param name="uri"> External reference URL. </param>
+        /// <param name="hashes"> External reference hashes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceExternalReference(string description, string externalId, string sourceName, Uri uri, IDictionary<string, string> hashes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,30 +68,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// External reference description
-        /// Serialized Name: ThreatIntelligenceExternalReference.description
-        /// </summary>
+        /// <summary> External reference description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
-        /// <summary>
-        /// External reference ID
-        /// Serialized Name: ThreatIntelligenceExternalReference.externalId
-        /// </summary>
+        /// <summary> External reference ID. </summary>
+        [WirePath("externalId")]
         public string ExternalId { get; set; }
-        /// <summary>
-        /// External reference source name
-        /// Serialized Name: ThreatIntelligenceExternalReference.sourceName
-        /// </summary>
+        /// <summary> External reference source name. </summary>
+        [WirePath("sourceName")]
         public string SourceName { get; set; }
-        /// <summary>
-        /// External reference URL
-        /// Serialized Name: ThreatIntelligenceExternalReference.url
-        /// </summary>
+        /// <summary> External reference URL. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
-        /// <summary>
-        /// External reference hashes
-        /// Serialized Name: ThreatIntelligenceExternalReference.hashes
-        /// </summary>
+        /// <summary> External reference hashes. </summary>
+        [WirePath("hashes")]
         public IDictionary<string, string> Hashes { get; }
     }
 }

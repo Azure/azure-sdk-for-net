@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Status of the item publication
-    /// Serialized Name: PublicationStatus
-    /// </summary>
+    /// <summary> Status of the item publication. </summary>
     public readonly partial struct PublicationStatus : IEquatable<PublicationStatus>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string FailedValue = "Failed";
         private const string InProgressValue = "InProgress";
 
-        /// <summary>
-        /// The item publication succeeded
-        /// Serialized Name: PublicationStatus.Succeeded
-        /// </summary>
+        /// <summary> The item publication succeeded. </summary>
         public static PublicationStatus Succeeded { get; } = new PublicationStatus(SucceededValue);
-        /// <summary>
-        /// The item publication failed
-        /// Serialized Name: PublicationStatus.Failed
-        /// </summary>
+        /// <summary> The item publication failed. </summary>
         public static PublicationStatus Failed { get; } = new PublicationStatus(FailedValue);
-        /// <summary>
-        /// The item publication is in progress
-        /// Serialized Name: PublicationStatus.InProgress
-        /// </summary>
+        /// <summary> The item publication is in progress. </summary>
         public static PublicationStatus InProgress { get; } = new PublicationStatus(InProgressValue);
         /// <summary> Determines if two <see cref="PublicationStatus"/> values are the same. </summary>
         public static bool operator ==(PublicationStatus left, PublicationStatus right) => left.Equals(right);

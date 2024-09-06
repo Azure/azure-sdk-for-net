@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The severity of the alert
-    /// Serialized Name: AlertSeverity
-    /// </summary>
+    /// <summary> The severity of the alert. </summary>
     public readonly partial struct SecurityInsightsAlertSeverity : IEquatable<SecurityInsightsAlertSeverity>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string LowValue = "Low";
         private const string InformationalValue = "Informational";
 
-        /// <summary>
-        /// High severity
-        /// Serialized Name: AlertSeverity.High
-        /// </summary>
+        /// <summary> High severity. </summary>
         public static SecurityInsightsAlertSeverity High { get; } = new SecurityInsightsAlertSeverity(HighValue);
-        /// <summary>
-        /// Medium severity
-        /// Serialized Name: AlertSeverity.Medium
-        /// </summary>
+        /// <summary> Medium severity. </summary>
         public static SecurityInsightsAlertSeverity Medium { get; } = new SecurityInsightsAlertSeverity(MediumValue);
-        /// <summary>
-        /// Low severity
-        /// Serialized Name: AlertSeverity.Low
-        /// </summary>
+        /// <summary> Low severity. </summary>
         public static SecurityInsightsAlertSeverity Low { get; } = new SecurityInsightsAlertSeverity(LowValue);
-        /// <summary>
-        /// Informational severity
-        /// Serialized Name: AlertSeverity.Informational
-        /// </summary>
+        /// <summary> Informational severity. </summary>
         public static SecurityInsightsAlertSeverity Informational { get; } = new SecurityInsightsAlertSeverity(InformationalValue);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertSeverity"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertSeverity left, SecurityInsightsAlertSeverity right) => left.Equals(right);

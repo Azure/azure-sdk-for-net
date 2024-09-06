@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Specifies the data types to use when storing values in the registry, or identifies the data type of a value in the registry.
-    /// Serialized Name: RegistryValueKind
-    /// </summary>
+    /// <summary> Specifies the data types to use when storing values in the registry, or identifies the data type of a value in the registry. </summary>
     public readonly partial struct SecurityInsightsRegistryValueKind : IEquatable<SecurityInsightsRegistryValueKind>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string MultiStringValue = "MultiString";
         private const string QWordValue = "QWord";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: RegistryValueKind.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static SecurityInsightsRegistryValueKind None { get; } = new SecurityInsightsRegistryValueKind(NoneValue);
-        /// <summary>
-        /// Unknown value type
-        /// Serialized Name: RegistryValueKind.Unknown
-        /// </summary>
+        /// <summary> Unknown value type. </summary>
         public static SecurityInsightsRegistryValueKind Unknown { get; } = new SecurityInsightsRegistryValueKind(UnknownValue);
-        /// <summary>
-        /// String value type
-        /// Serialized Name: RegistryValueKind.String
-        /// </summary>
+        /// <summary> String value type. </summary>
         public static SecurityInsightsRegistryValueKind String { get; } = new SecurityInsightsRegistryValueKind(StringValue);
-        /// <summary>
-        /// ExpandString value type
-        /// Serialized Name: RegistryValueKind.ExpandString
-        /// </summary>
+        /// <summary> ExpandString value type. </summary>
         public static SecurityInsightsRegistryValueKind ExpandString { get; } = new SecurityInsightsRegistryValueKind(ExpandStringValue);
-        /// <summary>
-        /// Binary value type
-        /// Serialized Name: RegistryValueKind.Binary
-        /// </summary>
+        /// <summary> Binary value type. </summary>
         public static SecurityInsightsRegistryValueKind Binary { get; } = new SecurityInsightsRegistryValueKind(BinaryValue);
-        /// <summary>
-        /// DWord value type
-        /// Serialized Name: RegistryValueKind.DWord
-        /// </summary>
+        /// <summary> DWord value type. </summary>
         public static SecurityInsightsRegistryValueKind DWord { get; } = new SecurityInsightsRegistryValueKind(DWordValue);
-        /// <summary>
-        /// MultiString value type
-        /// Serialized Name: RegistryValueKind.MultiString
-        /// </summary>
+        /// <summary> MultiString value type. </summary>
         public static SecurityInsightsRegistryValueKind MultiString { get; } = new SecurityInsightsRegistryValueKind(MultiStringValue);
-        /// <summary>
-        /// QWord value type
-        /// Serialized Name: RegistryValueKind.QWord
-        /// </summary>
+        /// <summary> QWord value type. </summary>
         public static SecurityInsightsRegistryValueKind QWord { get; } = new SecurityInsightsRegistryValueKind(QWordValue);
         /// <summary> Determines if two <see cref="SecurityInsightsRegistryValueKind"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsRegistryValueKind left, SecurityInsightsRegistryValueKind right) => left.Equals(right);

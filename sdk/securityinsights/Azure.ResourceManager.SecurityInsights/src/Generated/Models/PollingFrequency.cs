@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The polling frequency for the TAXII server.
-    /// Serialized Name: PollingFrequency
-    /// </summary>
+    /// <summary> The polling frequency for the TAXII server. </summary>
     public readonly partial struct PollingFrequency : IEquatable<PollingFrequency>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string OnceAnHourValue = "OnceAnHour";
         private const string OnceADayValue = "OnceADay";
 
-        /// <summary>
-        /// Once a minute
-        /// Serialized Name: PollingFrequency.OnceAMinute
-        /// </summary>
+        /// <summary> Once a minute. </summary>
         public static PollingFrequency OnceAMinute { get; } = new PollingFrequency(OnceAMinuteValue);
-        /// <summary>
-        /// Once an hour
-        /// Serialized Name: PollingFrequency.OnceAnHour
-        /// </summary>
+        /// <summary> Once an hour. </summary>
         public static PollingFrequency OnceAnHour { get; } = new PollingFrequency(OnceAnHourValue);
-        /// <summary>
-        /// Once a day
-        /// Serialized Name: PollingFrequency.OnceADay
-        /// </summary>
+        /// <summary> Once a day. </summary>
         public static PollingFrequency OnceADay { get; } = new PollingFrequency(OnceADayValue);
         /// <summary> Determines if two <see cref="PollingFrequency"/> values are the same. </summary>
         public static bool operator ==(PollingFrequency left, PollingFrequency right) => left.Equals(right);

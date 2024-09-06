@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateInstallRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, TemplateModelData data)
+        internal RequestUriBuilder CreateInstallRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, SecurityInsightsTemplateData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateInstallRequest(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, TemplateModelData data)
+        internal HttpMessage CreateInstallRequest(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, SecurityInsightsTemplateData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="templateId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TemplateModelData>> InstallAsync(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, TemplateModelData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsTemplateData>> InstallAsync(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, SecurityInsightsTemplateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        TemplateModelData value = default;
+                        SecurityInsightsTemplateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TemplateModelData.DeserializeTemplateModelData(document.RootElement);
+                        value = SecurityInsightsTemplateData.DeserializeSecurityInsightsTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="templateId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TemplateModelData> Install(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, TemplateModelData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsTemplateData> Install(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, SecurityInsightsTemplateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        TemplateModelData value = default;
+                        SecurityInsightsTemplateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TemplateModelData.DeserializeTemplateModelData(document.RootElement);
+                        value = SecurityInsightsTemplateData.DeserializeSecurityInsightsTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="templateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TemplateModelData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsTemplateData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -209,13 +209,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        TemplateModelData value = default;
+                        SecurityInsightsTemplateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TemplateModelData.DeserializeTemplateModelData(document.RootElement);
+                        value = SecurityInsightsTemplateData.DeserializeSecurityInsightsTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TemplateModelData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsTemplateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="templateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TemplateModelData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsTemplateData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string templateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -247,13 +247,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        TemplateModelData value = default;
+                        SecurityInsightsTemplateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TemplateModelData.DeserializeTemplateModelData(document.RootElement);
+                        value = SecurityInsightsTemplateData.DeserializeSecurityInsightsTemplateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TemplateModelData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsTemplateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

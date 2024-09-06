@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -118,6 +119,75 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem(header, outputType, supportDeepLink, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Header), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  header: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Header))
+                {
+                    builder.Append("  header: ");
+                    if (Header.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Header}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Header}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  outputType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OutputType))
+                {
+                    builder.Append("  outputType: ");
+                    builder.AppendLine($"'{OutputType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDeepLinkSupported), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportDeepLink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDeepLinkSupported))
+                {
+                    builder.Append("  supportDeepLink: ");
+                    var boolValue = IsDeepLinkSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +196,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem)} does not support writing '{options.Format}' format.");
             }

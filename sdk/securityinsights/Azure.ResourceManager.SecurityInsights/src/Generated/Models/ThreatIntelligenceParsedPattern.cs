@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes parsed pattern entity
-    /// Serialized Name: ThreatIntelligenceParsedPattern
-    /// </summary>
+    /// <summary> Describes parsed pattern entity. </summary>
     public partial class ThreatIntelligenceParsedPattern
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceParsedPattern"/>. </summary>
-        /// <param name="patternTypeKey">
-        /// Pattern type key
-        /// Serialized Name: ThreatIntelligenceParsedPattern.patternTypeKey
-        /// </param>
-        /// <param name="patternTypeValues">
-        /// Pattern type keys
-        /// Serialized Name: ThreatIntelligenceParsedPattern.patternTypeValues
-        /// </param>
+        /// <param name="patternTypeKey"> Pattern type key. </param>
+        /// <param name="patternTypeValues"> Pattern type keys. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceParsedPattern(string patternTypeKey, IList<ThreatIntelligenceParsedPatternTypeValue> patternTypeValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Pattern type key
-        /// Serialized Name: ThreatIntelligenceParsedPattern.patternTypeKey
-        /// </summary>
+        /// <summary> Pattern type key. </summary>
+        [WirePath("patternTypeKey")]
         public string PatternTypeKey { get; set; }
-        /// <summary>
-        /// Pattern type keys
-        /// Serialized Name: ThreatIntelligenceParsedPattern.patternTypeValues
-        /// </summary>
+        /// <summary> Pattern type keys. </summary>
+        [WirePath("patternTypeValues")]
         public IList<ThreatIntelligenceParsedPatternTypeValue> PatternTypeValues { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -122,6 +123,69 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new RepositoryResourceInfo(webhook, gitHubResourceInfo, azureDevOpsResourceInfo, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Webhook), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  webhook: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Webhook))
+                {
+                    builder.Append("  webhook: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Webhook, options, 2, false, "  webhook: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("GitHubResourceInfoAppInstallationId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  gitHubResourceInfo: ");
+                builder.AppendLine("{");
+                builder.Append("    appInstallationId: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(GitHubResourceInfo))
+                {
+                    builder.Append("  gitHubResourceInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GitHubResourceInfo, options, 2, false, "  gitHubResourceInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureDevOpsResourceInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureDevOpsResourceInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureDevOpsResourceInfo))
+                {
+                    builder.Append("  azureDevOpsResourceInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureDevOpsResourceInfo, options, 2, false, "  azureDevOpsResourceInfo: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RepositoryResourceInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RepositoryResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +194,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RepositoryResourceInfo)} does not support writing '{options.Format}' format.");
             }

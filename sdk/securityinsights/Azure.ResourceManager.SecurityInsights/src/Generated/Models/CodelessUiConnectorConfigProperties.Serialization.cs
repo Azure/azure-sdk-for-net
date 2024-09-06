@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -239,6 +241,281 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Title), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  title: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Title))
+                {
+                    builder.Append("  title: ");
+                    if (Title.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Title}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Title}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Publisher), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  publisher: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Publisher))
+                {
+                    builder.Append("  publisher: ");
+                    if (Publisher.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Publisher}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Publisher}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DescriptionMarkdown), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  descriptionMarkdown: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DescriptionMarkdown))
+                {
+                    builder.Append("  descriptionMarkdown: ");
+                    if (DescriptionMarkdown.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DescriptionMarkdown}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DescriptionMarkdown}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomImage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customImage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomImage))
+                {
+                    builder.Append("  customImage: ");
+                    if (CustomImage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomImage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomImage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GraphQueriesTableName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  graphQueriesTableName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GraphQueriesTableName))
+                {
+                    builder.Append("  graphQueriesTableName: ");
+                    if (GraphQueriesTableName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GraphQueriesTableName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GraphQueriesTableName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GraphQueries), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  graphQueries: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(GraphQueries))
+                {
+                    if (GraphQueries.Any())
+                    {
+                        builder.Append("  graphQueries: ");
+                        builder.AppendLine("[");
+                        foreach (var item in GraphQueries)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  graphQueries: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SampleQueries), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sampleQueries: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SampleQueries))
+                {
+                    if (SampleQueries.Any())
+                    {
+                        builder.Append("  sampleQueries: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SampleQueries)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  sampleQueries: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataTypes))
+                {
+                    if (DataTypes.Any())
+                    {
+                        builder.Append("  dataTypes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DataTypes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dataTypes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectivityCriteria), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connectivityCriteria: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ConnectivityCriteria))
+                {
+                    if (ConnectivityCriteria.Any())
+                    {
+                        builder.Append("  connectivityCriteria: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ConnectivityCriteria)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  connectivityCriteria: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Availability), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  availability: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Availability))
+                {
+                    builder.Append("  availability: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Availability, options, 2, false, "  availability: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  permissions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Permissions))
+                {
+                    builder.Append("  permissions: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Permissions, options, 2, false, "  permissions: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstructionSteps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  instructionSteps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(InstructionSteps))
+                {
+                    if (InstructionSteps.Any())
+                    {
+                        builder.Append("  instructionSteps: ");
+                        builder.AppendLine("[");
+                        foreach (var item in InstructionSteps)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  instructionSteps: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CodelessUiConnectorConfigProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CodelessUiConnectorConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -247,6 +524,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CodelessUiConnectorConfigProperties)} does not support writing '{options.Format}' format.");
             }

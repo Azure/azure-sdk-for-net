@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Map identifiers of a single entity
-    /// Serialized Name: EntityFieldMapping
-    /// </summary>
+    /// <summary> Map identifiers of a single entity. </summary>
     public partial class EntityFieldMapping
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityFieldMapping"/>. </summary>
-        /// <param name="identifier">
-        /// Alert V3 identifier
-        /// Serialized Name: EntityFieldMapping.identifier
-        /// </param>
-        /// <param name="value">
-        /// The value of the identifier
-        /// Serialized Name: EntityFieldMapping.value
-        /// </param>
+        /// <param name="identifier"> Alert V3 identifier. </param>
+        /// <param name="value"> The value of the identifier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityFieldMapping(string identifier, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Alert V3 identifier
-        /// Serialized Name: EntityFieldMapping.identifier
-        /// </summary>
+        /// <summary> Alert V3 identifier. </summary>
+        [WirePath("identifier")]
         public string Identifier { get; set; }
-        /// <summary>
-        /// The value of the identifier
-        /// Serialized Name: EntityFieldMapping.value
-        /// </summary>
+        /// <summary> The value of the identifier. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

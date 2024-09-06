@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The kind of the alert rule
-    /// Serialized Name: AlertRuleKind
-    /// </summary>
+    /// <summary> The kind of the alert rule. </summary>
     internal readonly partial struct AlertRuleKind : IEquatable<AlertRuleKind>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ThreatIntelligenceValue = "ThreatIntelligence";
         private const string NRTValue = "NRT";
 
-        /// <summary>
-        /// Scheduled
-        /// Serialized Name: AlertRuleKind.Scheduled
-        /// </summary>
+        /// <summary> Scheduled. </summary>
         public static AlertRuleKind Scheduled { get; } = new AlertRuleKind(ScheduledValue);
-        /// <summary>
-        /// MicrosoftSecurityIncidentCreation
-        /// Serialized Name: AlertRuleKind.MicrosoftSecurityIncidentCreation
-        /// </summary>
+        /// <summary> MicrosoftSecurityIncidentCreation. </summary>
         public static AlertRuleKind MicrosoftSecurityIncidentCreation { get; } = new AlertRuleKind(MicrosoftSecurityIncidentCreationValue);
-        /// <summary>
-        /// Fusion
-        /// Serialized Name: AlertRuleKind.Fusion
-        /// </summary>
+        /// <summary> Fusion. </summary>
         public static AlertRuleKind Fusion { get; } = new AlertRuleKind(FusionValue);
-        /// <summary>
-        /// MLBehaviorAnalytics
-        /// Serialized Name: AlertRuleKind.MLBehaviorAnalytics
-        /// </summary>
+        /// <summary> MLBehaviorAnalytics. </summary>
         public static AlertRuleKind MLBehaviorAnalytics { get; } = new AlertRuleKind(MLBehaviorAnalyticsValue);
-        /// <summary>
-        /// ThreatIntelligence
-        /// Serialized Name: AlertRuleKind.ThreatIntelligence
-        /// </summary>
+        /// <summary> ThreatIntelligence. </summary>
         public static AlertRuleKind ThreatIntelligence { get; } = new AlertRuleKind(ThreatIntelligenceValue);
-        /// <summary>
-        /// NRT
-        /// Serialized Name: AlertRuleKind.NRT
-        /// </summary>
+        /// <summary> NRT. </summary>
         public static AlertRuleKind NRT { get; } = new AlertRuleKind(NRTValue);
         /// <summary> Determines if two <see cref="AlertRuleKind"/> values are the same. </summary>
         public static bool operator ==(AlertRuleKind left, AlertRuleKind right) => left.Equals(right);

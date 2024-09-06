@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The InsightsTableResultColumnsItem.
-    /// Serialized Name: InsightsTableResultColumnsItem
-    /// </summary>
+    /// <summary> The InsightsTableResultColumnsItem. </summary>
     public partial class InsightsTableResultColumnsItem
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InsightsTableResultColumnsItem"/>. </summary>
-        /// <param name="insightsTableResultColumnsItemType">
-        /// the type of the colum
-        /// Serialized Name: InsightsTableResultColumnsItem.type
-        /// </param>
-        /// <param name="name">
-        /// the name of the colum
-        /// Serialized Name: InsightsTableResultColumnsItem.name
-        /// </param>
+        /// <param name="insightsTableResultColumnsItemType"> the type of the colum. </param>
+        /// <param name="name"> the name of the colum. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InsightsTableResultColumnsItem(string insightsTableResultColumnsItemType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// the type of the colum
-        /// Serialized Name: InsightsTableResultColumnsItem.type
-        /// </summary>
+        /// <summary> the type of the colum. </summary>
+        [WirePath("type")]
         public string InsightsTableResultColumnsItemType { get; }
-        /// <summary>
-        /// the name of the colum
-        /// Serialized Name: InsightsTableResultColumnsItem.name
-        /// </summary>
+        /// <summary> the name of the colum. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

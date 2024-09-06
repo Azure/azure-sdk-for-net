@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents an network interface entity.
-    /// Serialized Name: NicEntity
-    /// </summary>
+    /// <summary> Represents an network interface entity. </summary>
     public partial class NicEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="NicEntity"/>. </summary>
@@ -31,31 +28,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the entity.
-        /// Serialized Name: Entity.kind
-        /// </param>
+        /// <param name="kind"> The kind of the entity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData">
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: NicEntity.properties.additionalData
-        /// </param>
-        /// <param name="friendlyName">
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: NicEntity.properties.friendlyName
-        /// </param>
-        /// <param name="macAddress">
-        /// The MAC address of this network interface
-        /// Serialized Name: NicEntity.properties.macAddress
-        /// </param>
-        /// <param name="ipAddressEntityId">
-        /// The IP entity id of this network interface
-        /// Serialized Name: NicEntity.properties.ipAddressEntityId
-        /// </param>
-        /// <param name="vlans">
-        /// A list of VLANs of the network interface entity.
-        /// Serialized Name: NicEntity.properties.vlans
-        /// </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
+        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
+        /// <param name="macAddress"> The MAC address of this network interface. </param>
+        /// <param name="ipAddressEntityId"> The IP entity id of this network interface. </param>
+        /// <param name="vlans"> A list of VLANs of the network interface entity. </param>
         internal NicEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string macAddress, string ipAddressEntityId, IReadOnlyList<string> vlans) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -68,7 +47,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: NicEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -97,26 +75,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary>
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: NicEntity.properties.friendlyName
-        /// </summary>
+        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
-        /// <summary>
-        /// The MAC address of this network interface
-        /// Serialized Name: NicEntity.properties.macAddress
-        /// </summary>
+        /// <summary> The MAC address of this network interface. </summary>
+        [WirePath("properties.macAddress")]
         public string MacAddress { get; }
-        /// <summary>
-        /// The IP entity id of this network interface
-        /// Serialized Name: NicEntity.properties.ipAddressEntityId
-        /// </summary>
+        /// <summary> The IP entity id of this network interface. </summary>
+        [WirePath("properties.ipAddressEntityId")]
         public string IPAddressEntityId { get; }
-        /// <summary>
-        /// A list of VLANs of the network interface entity.
-        /// Serialized Name: NicEntity.properties.vlans
-        /// </summary>
+        /// <summary> A list of VLANs of the network interface entity. </summary>
+        [WirePath("properties.vlans")]
         public IReadOnlyList<string> Vlans { get; }
     }
 }

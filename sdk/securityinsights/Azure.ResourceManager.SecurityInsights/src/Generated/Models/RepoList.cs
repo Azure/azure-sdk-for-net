@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List all the source controls.
-    /// Serialized Name: RepoList
-    /// </summary>
+    /// <summary> List all the source controls. </summary>
     internal partial class RepoList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RepoList"/>. </summary>
-        /// <param name="value">
-        /// Array of repositories.
-        /// Serialized Name: RepoList.value
-        /// </param>
+        /// <param name="value"> Array of repositories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RepoList(IEnumerable<SourceControlRepo> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RepoList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of repositories.
-        /// Serialized Name: RepoList.nextLink
-        /// </param>
-        /// <param name="value">
-        /// Array of repositories.
-        /// Serialized Name: RepoList.value
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of repositories. </param>
+        /// <param name="value"> Array of repositories. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RepoList(string nextLink, IReadOnlyList<SourceControlRepo> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of repositories.
-        /// Serialized Name: RepoList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of repositories. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Array of repositories.
-        /// Serialized Name: RepoList.value
-        /// </summary>
+        /// <summary> Array of repositories. </summary>
         public IReadOnlyList<SourceControlRepo> Value { get; }
     }
 }

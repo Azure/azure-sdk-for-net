@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -127,6 +129,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new EntityExpandResponseValue(entities ?? new ChangeTrackingList<SecurityInsightsEntity>(), edges ?? new ChangeTrackingList<EntityEdges>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Entities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  entities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Entities))
+                {
+                    if (Entities.Any())
+                    {
+                        builder.Append("  entities: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Entities)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  entities: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Edges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  edges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Edges))
+                {
+                    if (Edges.Any())
+                    {
+                        builder.Append("  edges: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Edges)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  edges: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EntityExpandResponseValue>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EntityExpandResponseValue>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,6 +198,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EntityExpandResponseValue)} does not support writing '{options.Format}' format.");
             }

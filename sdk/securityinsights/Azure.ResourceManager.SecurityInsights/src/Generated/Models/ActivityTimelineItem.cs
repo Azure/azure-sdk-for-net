@@ -10,41 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Activity timeline item.
-    /// Serialized Name: ActivityTimelineItem
-    /// </summary>
+    /// <summary> Represents Activity timeline item. </summary>
     public partial class ActivityTimelineItem : EntityTimelineItem
     {
         /// <summary> Initializes a new instance of <see cref="ActivityTimelineItem"/>. </summary>
-        /// <param name="queryId">
-        /// The activity query id.
-        /// Serialized Name: ActivityTimelineItem.queryId
-        /// </param>
-        /// <param name="bucketStartOn">
-        /// The grouping bucket start time.
-        /// Serialized Name: ActivityTimelineItem.bucketStartTimeUTC
-        /// </param>
-        /// <param name="bucketEndOn">
-        /// The grouping bucket end time.
-        /// Serialized Name: ActivityTimelineItem.bucketEndTimeUTC
-        /// </param>
-        /// <param name="firstActivityOn">
-        /// The time of the first activity in the grouping bucket.
-        /// Serialized Name: ActivityTimelineItem.firstActivityTimeUTC
-        /// </param>
-        /// <param name="lastActivityOn">
-        /// The time of the last activity in the grouping bucket.
-        /// Serialized Name: ActivityTimelineItem.lastActivityTimeUTC
-        /// </param>
-        /// <param name="content">
-        /// The activity timeline content.
-        /// Serialized Name: ActivityTimelineItem.content
-        /// </param>
-        /// <param name="title">
-        /// The activity timeline title.
-        /// Serialized Name: ActivityTimelineItem.title
-        /// </param>
+        /// <param name="queryId"> The activity query id. </param>
+        /// <param name="bucketStartOn"> The grouping bucket start time. </param>
+        /// <param name="bucketEndOn"> The grouping bucket end time. </param>
+        /// <param name="firstActivityOn"> The time of the first activity in the grouping bucket. </param>
+        /// <param name="lastActivityOn"> The time of the last activity in the grouping bucket. </param>
+        /// <param name="content"> The activity timeline content. </param>
+        /// <param name="title"> The activity timeline title. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/>, <paramref name="content"/> or <paramref name="title"/> is null. </exception>
         internal ActivityTimelineItem(string queryId, DateTimeOffset bucketStartOn, DateTimeOffset bucketEndOn, DateTimeOffset firstActivityOn, DateTimeOffset lastActivityOn, string content, string title)
         {
@@ -63,39 +39,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivityTimelineItem"/>. </summary>
-        /// <param name="kind">
-        /// The entity query kind type.
-        /// Serialized Name: EntityTimelineItem.kind
-        /// </param>
+        /// <param name="kind"> The entity query kind type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="queryId">
-        /// The activity query id.
-        /// Serialized Name: ActivityTimelineItem.queryId
-        /// </param>
-        /// <param name="bucketStartOn">
-        /// The grouping bucket start time.
-        /// Serialized Name: ActivityTimelineItem.bucketStartTimeUTC
-        /// </param>
-        /// <param name="bucketEndOn">
-        /// The grouping bucket end time.
-        /// Serialized Name: ActivityTimelineItem.bucketEndTimeUTC
-        /// </param>
-        /// <param name="firstActivityOn">
-        /// The time of the first activity in the grouping bucket.
-        /// Serialized Name: ActivityTimelineItem.firstActivityTimeUTC
-        /// </param>
-        /// <param name="lastActivityOn">
-        /// The time of the last activity in the grouping bucket.
-        /// Serialized Name: ActivityTimelineItem.lastActivityTimeUTC
-        /// </param>
-        /// <param name="content">
-        /// The activity timeline content.
-        /// Serialized Name: ActivityTimelineItem.content
-        /// </param>
-        /// <param name="title">
-        /// The activity timeline title.
-        /// Serialized Name: ActivityTimelineItem.title
-        /// </param>
+        /// <param name="queryId"> The activity query id. </param>
+        /// <param name="bucketStartOn"> The grouping bucket start time. </param>
+        /// <param name="bucketEndOn"> The grouping bucket end time. </param>
+        /// <param name="firstActivityOn"> The time of the first activity in the grouping bucket. </param>
+        /// <param name="lastActivityOn"> The time of the last activity in the grouping bucket. </param>
+        /// <param name="content"> The activity timeline content. </param>
+        /// <param name="title"> The activity timeline title. </param>
         internal ActivityTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string queryId, DateTimeOffset bucketStartOn, DateTimeOffset bucketEndOn, DateTimeOffset firstActivityOn, DateTimeOffset lastActivityOn, string content, string title) : base(kind, serializedAdditionalRawData)
         {
             QueryId = queryId;
@@ -113,40 +65,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The activity query id.
-        /// Serialized Name: ActivityTimelineItem.queryId
-        /// </summary>
+        /// <summary> The activity query id. </summary>
+        [WirePath("queryId")]
         public string QueryId { get; }
-        /// <summary>
-        /// The grouping bucket start time.
-        /// Serialized Name: ActivityTimelineItem.bucketStartTimeUTC
-        /// </summary>
+        /// <summary> The grouping bucket start time. </summary>
+        [WirePath("bucketStartTimeUTC")]
         public DateTimeOffset BucketStartOn { get; }
-        /// <summary>
-        /// The grouping bucket end time.
-        /// Serialized Name: ActivityTimelineItem.bucketEndTimeUTC
-        /// </summary>
+        /// <summary> The grouping bucket end time. </summary>
+        [WirePath("bucketEndTimeUTC")]
         public DateTimeOffset BucketEndOn { get; }
-        /// <summary>
-        /// The time of the first activity in the grouping bucket.
-        /// Serialized Name: ActivityTimelineItem.firstActivityTimeUTC
-        /// </summary>
+        /// <summary> The time of the first activity in the grouping bucket. </summary>
+        [WirePath("firstActivityTimeUTC")]
         public DateTimeOffset FirstActivityOn { get; }
-        /// <summary>
-        /// The time of the last activity in the grouping bucket.
-        /// Serialized Name: ActivityTimelineItem.lastActivityTimeUTC
-        /// </summary>
+        /// <summary> The time of the last activity in the grouping bucket. </summary>
+        [WirePath("lastActivityTimeUTC")]
         public DateTimeOffset LastActivityOn { get; }
-        /// <summary>
-        /// The activity timeline content.
-        /// Serialized Name: ActivityTimelineItem.content
-        /// </summary>
+        /// <summary> The activity timeline content. </summary>
+        [WirePath("content")]
         public string Content { get; }
-        /// <summary>
-        /// The activity timeline title.
-        /// Serialized Name: ActivityTimelineItem.title
-        /// </summary>
+        /// <summary> The activity timeline title. </summary>
+        [WirePath("title")]
         public string Title { get; }
     }
 }

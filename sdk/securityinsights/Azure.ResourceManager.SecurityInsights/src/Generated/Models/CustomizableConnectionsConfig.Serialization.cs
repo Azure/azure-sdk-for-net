@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -93,6 +94,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new CustomizableConnectionsConfig(templateSpecName, templateSpecVersion, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateSpecName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  templateSpecName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TemplateSpecName))
+                {
+                    builder.Append("  templateSpecName: ");
+                    if (TemplateSpecName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TemplateSpecName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TemplateSpecName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateSpecVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  templateSpecVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TemplateSpecVersion))
+                {
+                    builder.Append("  templateSpecVersion: ");
+                    if (TemplateSpecVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TemplateSpecVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TemplateSpecVersion}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CustomizableConnectionsConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectionsConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +163,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CustomizableConnectionsConfig)} does not support writing '{options.Format}' format.");
             }

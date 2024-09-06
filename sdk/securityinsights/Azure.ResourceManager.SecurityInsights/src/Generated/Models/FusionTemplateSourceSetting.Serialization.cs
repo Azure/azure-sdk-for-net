@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -110,6 +112,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new FusionTemplateSourceSetting(sourceName, sourceSubTypes ?? new ChangeTrackingList<FusionTemplateSourceSubType>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourceName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceName))
+                {
+                    builder.Append("  sourceName: ");
+                    if (SourceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceSubTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourceSubTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SourceSubTypes))
+                {
+                    if (SourceSubTypes.Any())
+                    {
+                        builder.Append("  sourceSubTypes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SourceSubTypes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  sourceSubTypes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FusionTemplateSourceSetting>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FusionTemplateSourceSetting>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,6 +181,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FusionTemplateSourceSetting)} does not support writing '{options.Format}' format.");
             }

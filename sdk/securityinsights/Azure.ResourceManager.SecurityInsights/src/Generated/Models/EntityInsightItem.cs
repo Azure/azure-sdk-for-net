@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Entity insight Item.
-    /// Serialized Name: EntityInsightItem
-    /// </summary>
+    /// <summary> Entity insight Item. </summary>
     public partial class EntityInsightItem
     {
         /// <summary>
@@ -55,22 +52,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityInsightItem"/>. </summary>
-        /// <param name="queryId">
-        /// The query id of the insight
-        /// Serialized Name: EntityInsightItem.queryId
-        /// </param>
-        /// <param name="queryTimeInterval">
-        /// The Time interval that the query actually executed on.
-        /// Serialized Name: EntityInsightItem.queryTimeInterval
-        /// </param>
-        /// <param name="tableQueryResults">
-        /// Query results for table insights query.
-        /// Serialized Name: EntityInsightItem.tableQueryResults
-        /// </param>
-        /// <param name="chartQueryResults">
-        /// Query results for table insights query.
-        /// Serialized Name: EntityInsightItem.chartQueryResults
-        /// </param>
+        /// <param name="queryId"> The query id of the insight. </param>
+        /// <param name="queryTimeInterval"> The Time interval that the query actually executed on. </param>
+        /// <param name="tableQueryResults"> Query results for table insights query. </param>
+        /// <param name="chartQueryResults"> Query results for table insights query. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityInsightItem(string queryId, EntityInsightItemQueryTimeInterval queryTimeInterval, InsightsTableResult tableQueryResults, IReadOnlyList<InsightsTableResult> chartQueryResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,25 +66,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The query id of the insight
-        /// Serialized Name: EntityInsightItem.queryId
-        /// </summary>
+        /// <summary> The query id of the insight. </summary>
+        [WirePath("queryId")]
         public string QueryId { get; }
-        /// <summary>
-        /// The Time interval that the query actually executed on.
-        /// Serialized Name: EntityInsightItem.queryTimeInterval
-        /// </summary>
+        /// <summary> The Time interval that the query actually executed on. </summary>
+        [WirePath("queryTimeInterval")]
         public EntityInsightItemQueryTimeInterval QueryTimeInterval { get; }
-        /// <summary>
-        /// Query results for table insights query.
-        /// Serialized Name: EntityInsightItem.tableQueryResults
-        /// </summary>
+        /// <summary> Query results for table insights query. </summary>
+        [WirePath("tableQueryResults")]
         public InsightsTableResult TableQueryResults { get; }
-        /// <summary>
-        /// Query results for table insights query.
-        /// Serialized Name: EntityInsightItem.chartQueryResults
-        /// </summary>
+        /// <summary> Query results for table insights query. </summary>
+        [WirePath("chartQueryResults")]
         public IReadOnlyList<InsightsTableResult> ChartQueryResults { get; }
     }
 }

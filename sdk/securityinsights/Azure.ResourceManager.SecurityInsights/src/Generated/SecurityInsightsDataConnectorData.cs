@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsDataConnector data model.
     /// Data connector
-    /// Serialized Name: DataConnector
     /// Please note <see cref="SecurityInsightsDataConnectorData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="AwsS3DataConnector"/>, <see cref="CodelessApiPollingDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="GCPDataConnector"/>, <see cref="CodelessUiDataConnector"/>, <see cref="IotDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="MicrosoftPurviewInformationProtectionDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="MTPDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficeATPDataConnector"/>, <see cref="OfficeIRMDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="RestApiPollerDataConnector"/>, <see cref="SecurityInsightsTIDataConnector"/> and <see cref="TiTaxiiDataConnector"/>.
     /// </summary>
@@ -64,14 +63,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The data connector kind
-        /// Serialized Name: DataConnector.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsDataConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -80,15 +73,10 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The data connector kind
-        /// Serialized Name: DataConnector.kind
-        /// </summary>
+        /// <summary> The data connector kind. </summary>
         internal DataConnectorKind Kind { get; set; }
-        /// <summary>
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </summary>
+        /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

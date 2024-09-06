@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Domain name to be enriched
-    /// Serialized Name: EnrichmentDomainBody
-    /// </summary>
+    /// <summary> Domain name to be enriched. </summary>
     public partial class EnrichmentDomainContent
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EnrichmentDomainContent"/>. </summary>
-        /// <param name="domain">
-        /// The domain name
-        /// Serialized Name: EnrichmentDomainBody.domain
-        /// </param>
+        /// <param name="domain"> The domain name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EnrichmentDomainContent(string domain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The domain name
-        /// Serialized Name: EnrichmentDomainBody.domain
-        /// </summary>
+        /// <summary> The domain name. </summary>
+        [WirePath("domain")]
         public string Domain { get; set; }
     }
 }

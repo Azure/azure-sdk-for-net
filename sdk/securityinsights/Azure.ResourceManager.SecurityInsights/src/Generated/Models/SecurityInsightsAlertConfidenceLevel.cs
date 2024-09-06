@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The confidence level of this alert.
-    /// Serialized Name: ConfidenceLevel
-    /// </summary>
+    /// <summary> The confidence level of this alert. </summary>
     public readonly partial struct SecurityInsightsAlertConfidenceLevel : IEquatable<SecurityInsightsAlertConfidenceLevel>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string LowValue = "Low";
         private const string HighValue = "High";
 
-        /// <summary>
-        /// Unknown confidence, the is the default value
-        /// Serialized Name: ConfidenceLevel.Unknown
-        /// </summary>
+        /// <summary> Unknown confidence, the is the default value. </summary>
         public static SecurityInsightsAlertConfidenceLevel Unknown { get; } = new SecurityInsightsAlertConfidenceLevel(UnknownValue);
-        /// <summary>
-        /// Low confidence, meaning we have some doubts this is indeed malicious or part of an attack
-        /// Serialized Name: ConfidenceLevel.Low
-        /// </summary>
+        /// <summary> Low confidence, meaning we have some doubts this is indeed malicious or part of an attack. </summary>
         public static SecurityInsightsAlertConfidenceLevel Low { get; } = new SecurityInsightsAlertConfidenceLevel(LowValue);
-        /// <summary>
-        /// High confidence that the alert is true positive malicious
-        /// Serialized Name: ConfidenceLevel.High
-        /// </summary>
+        /// <summary> High confidence that the alert is true positive malicious. </summary>
         public static SecurityInsightsAlertConfidenceLevel High { get; } = new SecurityInsightsAlertConfidenceLevel(HighValue);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertConfidenceLevel"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertConfidenceLevel left, SecurityInsightsAlertConfidenceLevel right) => left.Equals(right);

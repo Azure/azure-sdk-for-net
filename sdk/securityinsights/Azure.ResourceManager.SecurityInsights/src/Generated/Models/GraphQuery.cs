@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The graph query to show the volume of data arriving into the workspace over time.
-    /// Serialized Name: GraphQuery
-    /// </summary>
+    /// <summary> The graph query to show the volume of data arriving into the workspace over time. </summary>
     public partial class GraphQuery
     {
         /// <summary>
@@ -49,18 +46,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GraphQuery"/>. </summary>
-        /// <param name="metricName">
-        /// Gets or sets the metric name that the query is checking. For example: 'Total data receive'.
-        /// Serialized Name: GraphQuery.metricName
-        /// </param>
-        /// <param name="legend">
-        /// Gets or sets the legend for the graph.
-        /// Serialized Name: GraphQuery.legend
-        /// </param>
+        /// <param name="metricName"> Gets or sets the metric name that the query is checking. For example: 'Total data receive'. </param>
+        /// <param name="legend"> Gets or sets the legend for the graph. </param>
         /// <param name="baseQuery">
         /// Gets or sets the base query for the graph.
         /// The base query is wrapped by Sentinel UI infra with a KQL query, that measures the volume over time.
-        /// Serialized Name: GraphQuery.baseQuery
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricName"/>, <paramref name="legend"/> or <paramref name="baseQuery"/> is null. </exception>
         public GraphQuery(string metricName, string legend, string baseQuery)
@@ -75,18 +65,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GraphQuery"/>. </summary>
-        /// <param name="metricName">
-        /// Gets or sets the metric name that the query is checking. For example: 'Total data receive'.
-        /// Serialized Name: GraphQuery.metricName
-        /// </param>
-        /// <param name="legend">
-        /// Gets or sets the legend for the graph.
-        /// Serialized Name: GraphQuery.legend
-        /// </param>
+        /// <param name="metricName"> Gets or sets the metric name that the query is checking. For example: 'Total data receive'. </param>
+        /// <param name="legend"> Gets or sets the legend for the graph. </param>
         /// <param name="baseQuery">
         /// Gets or sets the base query for the graph.
         /// The base query is wrapped by Sentinel UI infra with a KQL query, that measures the volume over time.
-        /// Serialized Name: GraphQuery.baseQuery
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GraphQuery(string metricName, string legend, string baseQuery, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -102,21 +85,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Gets or sets the metric name that the query is checking. For example: 'Total data receive'.
-        /// Serialized Name: GraphQuery.metricName
-        /// </summary>
+        /// <summary> Gets or sets the metric name that the query is checking. For example: 'Total data receive'. </summary>
+        [WirePath("metricName")]
         public string MetricName { get; set; }
-        /// <summary>
-        /// Gets or sets the legend for the graph.
-        /// Serialized Name: GraphQuery.legend
-        /// </summary>
+        /// <summary> Gets or sets the legend for the graph. </summary>
+        [WirePath("legend")]
         public string Legend { get; set; }
         /// <summary>
         /// Gets or sets the base query for the graph.
         /// The base query is wrapped by Sentinel UI infra with a KQL query, that measures the volume over time.
-        /// Serialized Name: GraphQuery.baseQuery
         /// </summary>
+        [WirePath("baseQuery")]
         public string BaseQuery { get; set; }
     }
 }

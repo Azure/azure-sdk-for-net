@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="packageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductPackageModelData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string packageId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsProductPackageData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -94,13 +94,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        ProductPackageModelData value = default;
+                        SecurityInsightsProductPackageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProductPackageModelData.DeserializeProductPackageModelData(document.RootElement);
+                        value = SecurityInsightsProductPackageData.DeserializeSecurityInsightsProductPackageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProductPackageModelData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsProductPackageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="packageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductPackageModelData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string packageId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsProductPackageData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        ProductPackageModelData value = default;
+                        SecurityInsightsProductPackageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProductPackageModelData.DeserializeProductPackageModelData(document.RootElement);
+                        value = SecurityInsightsProductPackageData.DeserializeSecurityInsightsProductPackageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProductPackageModelData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsProductPackageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

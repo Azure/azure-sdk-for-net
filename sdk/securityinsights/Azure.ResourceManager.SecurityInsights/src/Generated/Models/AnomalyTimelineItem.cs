@@ -11,33 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents anomaly timeline item.
-    /// Serialized Name: AnomalyTimelineItem
-    /// </summary>
+    /// <summary> Represents anomaly timeline item. </summary>
     public partial class AnomalyTimelineItem : EntityTimelineItem
     {
         /// <summary> Initializes a new instance of <see cref="AnomalyTimelineItem"/>. </summary>
-        /// <param name="azureResourceId">
-        /// The anomaly azure resource id.
-        /// Serialized Name: AnomalyTimelineItem.azureResourceId
-        /// </param>
-        /// <param name="displayName">
-        /// The anomaly name.
-        /// Serialized Name: AnomalyTimelineItem.displayName
-        /// </param>
-        /// <param name="endOn">
-        /// The anomaly end time.
-        /// Serialized Name: AnomalyTimelineItem.endTimeUtc
-        /// </param>
-        /// <param name="startOn">
-        /// The anomaly start time.
-        /// Serialized Name: AnomalyTimelineItem.startTimeUtc
-        /// </param>
-        /// <param name="generatedOn">
-        /// The anomaly generated time.
-        /// Serialized Name: AnomalyTimelineItem.timeGenerated
-        /// </param>
+        /// <param name="azureResourceId"> The anomaly azure resource id. </param>
+        /// <param name="displayName"> The anomaly name. </param>
+        /// <param name="endOn"> The anomaly end time. </param>
+        /// <param name="startOn"> The anomaly start time. </param>
+        /// <param name="generatedOn"> The anomaly generated time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureResourceId"/> or <paramref name="displayName"/> is null. </exception>
         internal AnomalyTimelineItem(ResourceIdentifier azureResourceId, string displayName, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn)
         {
@@ -55,55 +37,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyTimelineItem"/>. </summary>
-        /// <param name="kind">
-        /// The entity query kind type.
-        /// Serialized Name: EntityTimelineItem.kind
-        /// </param>
+        /// <param name="kind"> The entity query kind type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureResourceId">
-        /// The anomaly azure resource id.
-        /// Serialized Name: AnomalyTimelineItem.azureResourceId
-        /// </param>
-        /// <param name="productName">
-        /// The anomaly product name.
-        /// Serialized Name: AnomalyTimelineItem.productName
-        /// </param>
-        /// <param name="description">
-        /// The anomaly description.
-        /// Serialized Name: AnomalyTimelineItem.description
-        /// </param>
-        /// <param name="displayName">
-        /// The anomaly name.
-        /// Serialized Name: AnomalyTimelineItem.displayName
-        /// </param>
-        /// <param name="endOn">
-        /// The anomaly end time.
-        /// Serialized Name: AnomalyTimelineItem.endTimeUtc
-        /// </param>
-        /// <param name="startOn">
-        /// The anomaly start time.
-        /// Serialized Name: AnomalyTimelineItem.startTimeUtc
-        /// </param>
-        /// <param name="generatedOn">
-        /// The anomaly generated time.
-        /// Serialized Name: AnomalyTimelineItem.timeGenerated
-        /// </param>
-        /// <param name="vendor">
-        /// The name of the anomaly vendor.
-        /// Serialized Name: AnomalyTimelineItem.vendor
-        /// </param>
-        /// <param name="intent">
-        /// The intent of the anomaly.
-        /// Serialized Name: AnomalyTimelineItem.intent
-        /// </param>
-        /// <param name="techniques">
-        /// The techniques of the anomaly.
-        /// Serialized Name: AnomalyTimelineItem.techniques
-        /// </param>
-        /// <param name="reasons">
-        /// The reasons that cause the anomaly.
-        /// Serialized Name: AnomalyTimelineItem.reasons
-        /// </param>
+        /// <param name="azureResourceId"> The anomaly azure resource id. </param>
+        /// <param name="productName"> The anomaly product name. </param>
+        /// <param name="description"> The anomaly description. </param>
+        /// <param name="displayName"> The anomaly name. </param>
+        /// <param name="endOn"> The anomaly end time. </param>
+        /// <param name="startOn"> The anomaly start time. </param>
+        /// <param name="generatedOn"> The anomaly generated time. </param>
+        /// <param name="vendor"> The name of the anomaly vendor. </param>
+        /// <param name="intent"> The intent of the anomaly. </param>
+        /// <param name="techniques"> The techniques of the anomaly. </param>
+        /// <param name="reasons"> The reasons that cause the anomaly. </param>
         internal AnomalyTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azureResourceId, string productName, string description, string displayName, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn, string vendor, string intent, IReadOnlyList<string> techniques, IReadOnlyList<string> reasons) : base(kind, serializedAdditionalRawData)
         {
             AzureResourceId = azureResourceId;
@@ -125,60 +71,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The anomaly azure resource id.
-        /// Serialized Name: AnomalyTimelineItem.azureResourceId
-        /// </summary>
+        /// <summary> The anomaly azure resource id. </summary>
+        [WirePath("azureResourceId")]
         public ResourceIdentifier AzureResourceId { get; }
-        /// <summary>
-        /// The anomaly product name.
-        /// Serialized Name: AnomalyTimelineItem.productName
-        /// </summary>
+        /// <summary> The anomaly product name. </summary>
+        [WirePath("productName")]
         public string ProductName { get; }
-        /// <summary>
-        /// The anomaly description.
-        /// Serialized Name: AnomalyTimelineItem.description
-        /// </summary>
+        /// <summary> The anomaly description. </summary>
+        [WirePath("description")]
         public string Description { get; }
-        /// <summary>
-        /// The anomaly name.
-        /// Serialized Name: AnomalyTimelineItem.displayName
-        /// </summary>
+        /// <summary> The anomaly name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
-        /// <summary>
-        /// The anomaly end time.
-        /// Serialized Name: AnomalyTimelineItem.endTimeUtc
-        /// </summary>
+        /// <summary> The anomaly end time. </summary>
+        [WirePath("endTimeUtc")]
         public DateTimeOffset EndOn { get; }
-        /// <summary>
-        /// The anomaly start time.
-        /// Serialized Name: AnomalyTimelineItem.startTimeUtc
-        /// </summary>
+        /// <summary> The anomaly start time. </summary>
+        [WirePath("startTimeUtc")]
         public DateTimeOffset StartOn { get; }
-        /// <summary>
-        /// The anomaly generated time.
-        /// Serialized Name: AnomalyTimelineItem.timeGenerated
-        /// </summary>
+        /// <summary> The anomaly generated time. </summary>
+        [WirePath("timeGenerated")]
         public DateTimeOffset GeneratedOn { get; }
-        /// <summary>
-        /// The name of the anomaly vendor.
-        /// Serialized Name: AnomalyTimelineItem.vendor
-        /// </summary>
+        /// <summary> The name of the anomaly vendor. </summary>
+        [WirePath("vendor")]
         public string Vendor { get; }
-        /// <summary>
-        /// The intent of the anomaly.
-        /// Serialized Name: AnomalyTimelineItem.intent
-        /// </summary>
+        /// <summary> The intent of the anomaly. </summary>
+        [WirePath("intent")]
         public string Intent { get; }
-        /// <summary>
-        /// The techniques of the anomaly.
-        /// Serialized Name: AnomalyTimelineItem.techniques
-        /// </summary>
+        /// <summary> The techniques of the anomaly. </summary>
+        [WirePath("techniques")]
         public IReadOnlyList<string> Techniques { get; }
-        /// <summary>
-        /// The reasons that cause the anomaly.
-        /// Serialized Name: AnomalyTimelineItem.reasons
-        /// </summary>
+        /// <summary> The reasons that cause the anomaly. </summary>
+        [WirePath("reasons")]
         public IReadOnlyList<string> Reasons { get; }
     }
 }

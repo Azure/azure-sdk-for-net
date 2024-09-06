@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Google Cloud Platform data connector.
-    /// Serialized Name: GCPDataConnector
-    /// </summary>
+    /// <summary> Represents Google Cloud Platform data connector. </summary>
     public partial class GCPDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="GCPDataConnector"/>. </summary>
@@ -29,31 +26,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The data connector kind
-        /// Serialized Name: DataConnector.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="connectorDefinitionName">
-        /// The name of the connector definition that represents the UI config.
-        /// Serialized Name: GCPDataConnector.properties.connectorDefinitionName
-        /// </param>
-        /// <param name="auth">
-        /// The auth section of the connector.
-        /// Serialized Name: GCPDataConnector.properties.auth
-        /// </param>
-        /// <param name="request">
-        /// The request section of the connector.
-        /// Serialized Name: GCPDataConnector.properties.request
-        /// </param>
-        /// <param name="dcrConfig">
-        /// The configuration of the destination of the data.
-        /// Serialized Name: GCPDataConnector.properties.dcrConfig
-        /// </param>
+        /// <param name="connectorDefinitionName"> The name of the connector definition that represents the UI config. </param>
+        /// <param name="auth"> The auth section of the connector. </param>
+        /// <param name="request"> The request section of the connector. </param>
+        /// <param name="dcrConfig"> The configuration of the destination of the data. </param>
         internal GCPDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectorDefinitionName, GCPAuthProperties auth, GCPRequestProperties request, DCRConfiguration dcrConfig) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             ConnectorDefinitionName = connectorDefinitionName;
@@ -63,25 +42,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The name of the connector definition that represents the UI config.
-        /// Serialized Name: GCPDataConnector.properties.connectorDefinitionName
-        /// </summary>
+        /// <summary> The name of the connector definition that represents the UI config. </summary>
+        [WirePath("properties.connectorDefinitionName")]
         public string ConnectorDefinitionName { get; set; }
-        /// <summary>
-        /// The auth section of the connector.
-        /// Serialized Name: GCPDataConnector.properties.auth
-        /// </summary>
+        /// <summary> The auth section of the connector. </summary>
+        [WirePath("properties.auth")]
         public GCPAuthProperties Auth { get; set; }
-        /// <summary>
-        /// The request section of the connector.
-        /// Serialized Name: GCPDataConnector.properties.request
-        /// </summary>
+        /// <summary> The request section of the connector. </summary>
+        [WirePath("properties.request")]
         public GCPRequestProperties Request { get; set; }
-        /// <summary>
-        /// The configuration of the destination of the data.
-        /// Serialized Name: GCPDataConnector.properties.dcrConfig
-        /// </summary>
+        /// <summary> The configuration of the destination of the data. </summary>
+        [WirePath("properties.dcrConfig")]
         public DCRConfiguration DcrConfig { get; set; }
     }
 }

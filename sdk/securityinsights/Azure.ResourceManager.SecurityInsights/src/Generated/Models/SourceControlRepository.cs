@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// metadata of a repository.
-    /// Serialized Name: Repository
-    /// </summary>
+    /// <summary> metadata of a repository. </summary>
     public partial class SourceControlRepository
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SourceControlRepository"/>. </summary>
-        /// <param name="uri">
-        /// Url of repository.
-        /// Serialized Name: Repository.url
-        /// </param>
-        /// <param name="branch">
-        /// Branch name of repository.
-        /// Serialized Name: Repository.branch
-        /// </param>
+        /// <param name="uri"> Url of repository. </param>
+        /// <param name="branch"> Branch name of repository. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="branch"/> is null. </exception>
         public SourceControlRepository(Uri uri, string branch)
         {
@@ -68,22 +59,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SourceControlRepository"/>. </summary>
-        /// <param name="uri">
-        /// Url of repository.
-        /// Serialized Name: Repository.url
-        /// </param>
-        /// <param name="branch">
-        /// Branch name of repository.
-        /// Serialized Name: Repository.branch
-        /// </param>
-        /// <param name="displayUri">
-        /// Display url of repository.
-        /// Serialized Name: Repository.displayUrl
-        /// </param>
-        /// <param name="deploymentLogsUri">
-        /// Url to access repository action logs.
-        /// Serialized Name: Repository.deploymentLogsUrl
-        /// </param>
+        /// <param name="uri"> Url of repository. </param>
+        /// <param name="branch"> Branch name of repository. </param>
+        /// <param name="displayUri"> Display url of repository. </param>
+        /// <param name="deploymentLogsUri"> Url to access repository action logs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SourceControlRepository(Uri uri, string branch, Uri displayUri, Uri deploymentLogsUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -99,25 +78,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Url of repository.
-        /// Serialized Name: Repository.url
-        /// </summary>
+        /// <summary> Url of repository. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
-        /// <summary>
-        /// Branch name of repository.
-        /// Serialized Name: Repository.branch
-        /// </summary>
+        /// <summary> Branch name of repository. </summary>
+        [WirePath("branch")]
         public string Branch { get; set; }
-        /// <summary>
-        /// Display url of repository.
-        /// Serialized Name: Repository.displayUrl
-        /// </summary>
+        /// <summary> Display url of repository. </summary>
+        [WirePath("displayUrl")]
         public Uri DisplayUri { get; set; }
-        /// <summary>
-        /// Url to access repository action logs.
-        /// Serialized Name: Repository.deploymentLogsUrl
-        /// </summary>
+        /// <summary> Url to access repository action logs. </summary>
+        [WirePath("deploymentLogsUrl")]
         public Uri DeploymentLogsUri { get; }
     }
 }

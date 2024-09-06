@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -132,6 +134,74 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new AutomationRulePropertyArrayValuesCondition(arrayType, arrayConditionType, itemConditions ?? new ChangeTrackingList<SecurityInsightsAutomationRuleCondition>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArrayType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  arrayType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArrayType))
+                {
+                    builder.Append("  arrayType: ");
+                    builder.AppendLine($"'{ArrayType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArrayConditionType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  arrayConditionType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArrayConditionType))
+                {
+                    builder.Append("  arrayConditionType: ");
+                    builder.AppendLine($"'{ArrayConditionType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ItemConditions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  itemConditions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ItemConditions))
+                {
+                    if (ItemConditions.Any())
+                    {
+                        builder.Append("  itemConditions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ItemConditions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  itemConditions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AutomationRulePropertyArrayValuesCondition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyArrayValuesCondition>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,6 +210,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AutomationRulePropertyArrayValuesCondition)} does not support writing '{options.Format}' format.");
             }

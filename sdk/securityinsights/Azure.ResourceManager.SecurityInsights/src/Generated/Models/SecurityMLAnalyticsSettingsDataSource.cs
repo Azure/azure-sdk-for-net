@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// security ml analytics settings data sources
-    /// Serialized Name: SecurityMLAnalyticsSettingsDataSource
-    /// </summary>
+    /// <summary> security ml analytics settings data sources. </summary>
     public partial class SecurityMLAnalyticsSettingsDataSource
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingsDataSource"/>. </summary>
-        /// <param name="connectorId">
-        /// The connector id that provides the following data types
-        /// Serialized Name: SecurityMLAnalyticsSettingsDataSource.connectorId
-        /// </param>
-        /// <param name="dataTypes">
-        /// The data types used by the security ml analytics settings
-        /// Serialized Name: SecurityMLAnalyticsSettingsDataSource.dataTypes
-        /// </param>
+        /// <param name="connectorId"> The connector id that provides the following data types. </param>
+        /// <param name="dataTypes"> The data types used by the security ml analytics settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityMLAnalyticsSettingsDataSource(string connectorId, IList<string> dataTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The connector id that provides the following data types
-        /// Serialized Name: SecurityMLAnalyticsSettingsDataSource.connectorId
-        /// </summary>
+        /// <summary> The connector id that provides the following data types. </summary>
+        [WirePath("connectorId")]
         public string ConnectorId { get; set; }
-        /// <summary>
-        /// The data types used by the security ml analytics settings
-        /// Serialized Name: SecurityMLAnalyticsSettingsDataSource.dataTypes
-        /// </summary>
+        /// <summary> The data types used by the security ml analytics settings. </summary>
+        [WirePath("dataTypes")]
         public IList<string> DataTypes { get; }
     }
 }

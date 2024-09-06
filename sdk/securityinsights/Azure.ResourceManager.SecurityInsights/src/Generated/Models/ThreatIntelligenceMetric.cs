@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes threat intelligence metric
-    /// Serialized Name: ThreatIntelligenceMetric
-    /// </summary>
+    /// <summary> Describes threat intelligence metric. </summary>
     public partial class ThreatIntelligenceMetric
     {
         /// <summary>
@@ -57,22 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetric"/>. </summary>
-        /// <param name="lastUpdatedOn">
-        /// Last updated indicator metric
-        /// Serialized Name: ThreatIntelligenceMetric.lastUpdatedTimeUtc
-        /// </param>
-        /// <param name="threatTypeMetrics">
-        /// Threat type metrics
-        /// Serialized Name: ThreatIntelligenceMetric.threatTypeMetrics
-        /// </param>
-        /// <param name="patternTypeMetrics">
-        /// Pattern type metrics
-        /// Serialized Name: ThreatIntelligenceMetric.patternTypeMetrics
-        /// </param>
-        /// <param name="sourceMetrics">
-        /// Source metrics
-        /// Serialized Name: ThreatIntelligenceMetric.sourceMetrics
-        /// </param>
+        /// <param name="lastUpdatedOn"> Last updated indicator metric. </param>
+        /// <param name="threatTypeMetrics"> Threat type metrics. </param>
+        /// <param name="patternTypeMetrics"> Pattern type metrics. </param>
+        /// <param name="sourceMetrics"> Source metrics. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceMetric(string lastUpdatedOn, IReadOnlyList<ThreatIntelligenceMetricEntity> threatTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> patternTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> sourceMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -83,25 +68,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Last updated indicator metric
-        /// Serialized Name: ThreatIntelligenceMetric.lastUpdatedTimeUtc
-        /// </summary>
+        /// <summary> Last updated indicator metric. </summary>
+        [WirePath("lastUpdatedTimeUtc")]
         public string LastUpdatedOn { get; }
-        /// <summary>
-        /// Threat type metrics
-        /// Serialized Name: ThreatIntelligenceMetric.threatTypeMetrics
-        /// </summary>
+        /// <summary> Threat type metrics. </summary>
+        [WirePath("threatTypeMetrics")]
         public IReadOnlyList<ThreatIntelligenceMetricEntity> ThreatTypeMetrics { get; }
-        /// <summary>
-        /// Pattern type metrics
-        /// Serialized Name: ThreatIntelligenceMetric.patternTypeMetrics
-        /// </summary>
+        /// <summary> Pattern type metrics. </summary>
+        [WirePath("patternTypeMetrics")]
         public IReadOnlyList<ThreatIntelligenceMetricEntity> PatternTypeMetrics { get; }
-        /// <summary>
-        /// Source metrics
-        /// Serialized Name: ThreatIntelligenceMetric.sourceMetrics
-        /// </summary>
+        /// <summary> Source metrics. </summary>
+        [WirePath("sourceMetrics")]
         public IReadOnlyList<ThreatIntelligenceMetricEntity> SourceMetrics { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Expansion result connected entities
-    /// Serialized Name: ConnectedEntity
-    /// </summary>
+    /// <summary> Expansion result connected entities. </summary>
     public partial class ConnectedEntity
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedEntity"/>. </summary>
-        /// <param name="targetEntityId">
-        /// Entity Id of the connected entity
-        /// Serialized Name: ConnectedEntity.targetEntityId
-        /// </param>
-        /// <param name="additionalData">
-        /// key-value pairs for a connected entity mapping
-        /// Serialized Name: ConnectedEntity.additionalData
-        /// </param>
+        /// <param name="targetEntityId"> Entity Id of the connected entity. </param>
+        /// <param name="additionalData"> key-value pairs for a connected entity mapping. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectedEntity(string targetEntityId, BinaryData additionalData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,14 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Entity Id of the connected entity
-        /// Serialized Name: ConnectedEntity.targetEntityId
-        /// </summary>
+        /// <summary> Entity Id of the connected entity. </summary>
+        [WirePath("targetEntityId")]
         public string TargetEntityId { get; }
         /// <summary>
         /// key-value pairs for a connected entity mapping
-        /// Serialized Name: ConnectedEntity.additionalData
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -106,6 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("additionalData")]
         public BinaryData AdditionalData { get; }
     }
 }

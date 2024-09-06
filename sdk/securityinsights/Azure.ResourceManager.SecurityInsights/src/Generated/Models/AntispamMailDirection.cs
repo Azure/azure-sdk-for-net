@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The directionality of this mail message
-    /// Serialized Name: AntispamMailDirection
-    /// </summary>
+    /// <summary> The directionality of this mail message. </summary>
     public readonly partial struct AntispamMailDirection : IEquatable<AntispamMailDirection>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string OutboundValue = "Outbound";
         private const string IntraorgValue = "Intraorg";
 
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: AntispamMailDirection.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static AntispamMailDirection Unknown { get; } = new AntispamMailDirection(UnknownValue);
-        /// <summary>
-        /// Inbound
-        /// Serialized Name: AntispamMailDirection.Inbound
-        /// </summary>
+        /// <summary> Inbound. </summary>
         public static AntispamMailDirection Inbound { get; } = new AntispamMailDirection(InboundValue);
-        /// <summary>
-        /// Outbound
-        /// Serialized Name: AntispamMailDirection.Outbound
-        /// </summary>
+        /// <summary> Outbound. </summary>
         public static AntispamMailDirection Outbound { get; } = new AntispamMailDirection(OutboundValue);
-        /// <summary>
-        /// Intraorg
-        /// Serialized Name: AntispamMailDirection.Intraorg
-        /// </summary>
+        /// <summary> Intraorg. </summary>
         public static AntispamMailDirection Intraorg { get; } = new AntispamMailDirection(IntraorgValue);
         /// <summary> Determines if two <see cref="AntispamMailDirection"/> values are the same. </summary>
         public static bool operator ==(AntispamMailDirection left, AntispamMailDirection right) => left.Equals(right);

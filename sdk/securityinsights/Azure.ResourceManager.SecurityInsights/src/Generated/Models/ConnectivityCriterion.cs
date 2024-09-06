@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary>
     /// The criteria by which we determine whether the connector is connected or not.
     /// For Example, use a KQL query to check if  the expected data type is flowing).
-    /// Serialized Name: ConnectivityCriterion
     /// </summary>
     public partial class ConnectivityCriterion
     {
@@ -50,10 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCriterion"/>. </summary>
-        /// <param name="connectivityCriterionType">
-        /// Gets or sets the type of connectivity.
-        /// Serialized Name: ConnectivityCriterion.type
-        /// </param>
+        /// <param name="connectivityCriterionType"> Gets or sets the type of connectivity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectivityCriterionType"/> is null. </exception>
         public ConnectivityCriterion(string connectivityCriterionType)
         {
@@ -64,14 +60,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCriterion"/>. </summary>
-        /// <param name="connectivityCriterionType">
-        /// Gets or sets the type of connectivity.
-        /// Serialized Name: ConnectivityCriterion.type
-        /// </param>
-        /// <param name="value">
-        /// Gets or sets the queries for checking connectivity.
-        /// Serialized Name: ConnectivityCriterion.value
-        /// </param>
+        /// <param name="connectivityCriterionType"> Gets or sets the type of connectivity. </param>
+        /// <param name="value"> Gets or sets the queries for checking connectivity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectivityCriterion(string connectivityCriterionType, IList<string> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,15 +75,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Gets or sets the type of connectivity.
-        /// Serialized Name: ConnectivityCriterion.type
-        /// </summary>
+        /// <summary> Gets or sets the type of connectivity. </summary>
+        [WirePath("type")]
         public string ConnectivityCriterionType { get; set; }
-        /// <summary>
-        /// Gets or sets the queries for checking connectivity.
-        /// Serialized Name: ConnectivityCriterion.value
-        /// </summary>
+        /// <summary> Gets or sets the queries for checking connectivity. </summary>
+        [WirePath("value")]
         public IList<string> Value { get; }
     }
 }

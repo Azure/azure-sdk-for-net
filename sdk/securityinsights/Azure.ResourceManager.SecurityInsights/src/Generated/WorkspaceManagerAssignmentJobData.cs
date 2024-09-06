@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the WorkspaceManagerAssignmentJob data model.
     /// The assignment job
-    /// Serialized Name: Job
     /// </summary>
     public partial class WorkspaceManagerAssignmentJobData : ResourceData
     {
@@ -63,30 +62,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="endOn">
-        /// The time the job completed
-        /// Serialized Name: Job.properties.endTime
-        /// </param>
-        /// <param name="items">
-        /// List of items published by the job
-        /// Serialized Name: Job.properties.items
-        /// </param>
-        /// <param name="provisioningState">
-        /// State of the job
-        /// Serialized Name: Job.properties.provisioningState
-        /// </param>
-        /// <param name="startOn">
-        /// The time the job started
-        /// Serialized Name: Job.properties.startTime
-        /// </param>
-        /// <param name="errorMessage">
-        /// Message to describe error, if an error exists
-        /// Serialized Name: Job.properties.errorMessage
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="endOn"> The time the job completed. </param>
+        /// <param name="items"> List of items published by the job. </param>
+        /// <param name="provisioningState"> State of the job. </param>
+        /// <param name="startOn"> The time the job started. </param>
+        /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkspaceManagerAssignmentJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? endOn, IList<JobItem> items, ProvisioningState? provisioningState, DateTimeOffset? startOn, string errorMessage, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -99,35 +80,23 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The time the job completed
-        /// Serialized Name: Job.properties.endTime
-        /// </summary>
+        /// <summary> The time the job completed. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// List of items published by the job
-        /// Serialized Name: Job.properties.items
-        /// </summary>
+        /// <summary> List of items published by the job. </summary>
+        [WirePath("properties.items")]
         public IList<JobItem> Items { get; }
-        /// <summary>
-        /// State of the job
-        /// Serialized Name: Job.properties.provisioningState
-        /// </summary>
+        /// <summary> State of the job. </summary>
+        [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The time the job started
-        /// Serialized Name: Job.properties.startTime
-        /// </summary>
+        /// <summary> The time the job started. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// Message to describe error, if an error exists
-        /// Serialized Name: Job.properties.errorMessage
-        /// </summary>
+        /// <summary> Message to describe error, if an error exists. </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
-        /// <summary>
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </summary>
+        /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

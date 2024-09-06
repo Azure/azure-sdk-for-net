@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Entity timeline Item.
-    /// Serialized Name: EntityTimelineItem
     /// Please note <see cref="EntityTimelineItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ActivityTimelineItem"/>, <see cref="AnomalyTimelineItem"/>, <see cref="BookmarkTimelineItem"/> and <see cref="SecurityAlertTimelineItem"/>.
     /// </summary>
@@ -56,10 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityTimelineItem"/>. </summary>
-        /// <param name="kind">
-        /// The entity query kind type.
-        /// Serialized Name: EntityTimelineItem.kind
-        /// </param>
+        /// <param name="kind"> The entity query kind type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The entity query kind type.
-        /// Serialized Name: EntityTimelineItem.kind
-        /// </summary>
+        /// <summary> The entity query kind type. </summary>
         internal EntityTimelineKind Kind { get; set; }
     }
 }
