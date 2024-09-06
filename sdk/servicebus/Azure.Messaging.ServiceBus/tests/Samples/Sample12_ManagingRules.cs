@@ -44,9 +44,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 ServiceBusMessage[] messages =
                 {
-                    new() { Subject = "Ford", ApplicationProperties = { { "Price", 25000 } } },
-                    new() { Subject = "Toyota", ApplicationProperties = { { "Price", 28000 } } },
-                    new() { Subject = "Honda", ApplicationProperties = { { "Price", 35000 } } }
+                    new ServiceBusMessage() { Subject = "Ford", ApplicationProperties = { { "Price", 25000 } } },
+                    new ServiceBusMessage() { Subject = "Toyota", ApplicationProperties = { { "Price", 28000 } } },
+                    new ServiceBusMessage() { Subject = "Honda", ApplicationProperties = { { "Price", 35000 } } }
                 };
 
                 // send the messages

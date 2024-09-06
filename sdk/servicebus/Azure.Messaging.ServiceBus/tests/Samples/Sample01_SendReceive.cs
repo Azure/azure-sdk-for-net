@@ -101,8 +101,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #region Snippet:ServiceBusSendAndReceiveBatch
                 IList<ServiceBusMessage> messages = new List<ServiceBusMessage>
                 {
-                    new("First"),
-                    new("Second")
+                    new ServiceBusMessage("First"),
+                    new ServiceBusMessage("Second")
                 };
                 // send the messages
                 await sender.SendMessagesAsync(messages);

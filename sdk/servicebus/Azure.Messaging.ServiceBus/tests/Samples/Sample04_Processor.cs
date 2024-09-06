@@ -32,8 +32,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // create a set of messages that we can send
                 ServiceBusMessage[] messages = new ServiceBusMessage[]
                 {
-                    new("First"),
-                    new("Second")
+                    new ServiceBusMessage("First"),
+                    new ServiceBusMessage("Second")
                 };
 
                 // send the message batch

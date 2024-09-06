@@ -218,8 +218,8 @@ The second way uses the `SendMessagesAsync` overload that accepts an IEnumerable
 ```C# Snippet:ServiceBusSendAndReceiveBatch
 IList<ServiceBusMessage> messages = new List<ServiceBusMessage>
 {
-    new("First"),
-    new("Second")
+    new ServiceBusMessage("First"),
+    new ServiceBusMessage("Second")
 };
 // send the messages
 await sender.SendMessagesAsync(messages);
@@ -339,8 +339,8 @@ ServiceBusSender sender = client.CreateSender(queueName);
 // create a set of messages that we can send
 ServiceBusMessage[] messages = new ServiceBusMessage[]
 {
-    new("First"),
-    new("Second")
+    new ServiceBusMessage("First"),
+    new ServiceBusMessage("Second")
 };
 
 // send the message batch

@@ -177,7 +177,7 @@
   "outputs": {
     "SERVICEBUS_FULLY_QUALIFIED_NAMESPACE": {
       "type": "string",
-      "value": "[concat(variables('serviceBusNamespace'), '.servicebus.windows.net')]"
+      "value": "[reference(resourceId('Microsoft.ServiceBus/namespaces', variables('serviceBusNamespace'))).serviceBusEndpoint]"
     },
     "SERVICEBUS_CONNECTION_STRING": {
       "type": "string",
@@ -185,11 +185,11 @@
     },
     "SERVICEBUS_SECONDARY_FULLY_QUALIFIED_NAMESPACE": {
       "type": "string",
-      "value": "[concat(variables('serviceBusSecondaryNamespace'), '.servicebus.windows.net')]"
+      "value": "[reference(resourceId('Microsoft.ServiceBus/namespaces', variables('serviceBusSecondaryNamespace'))).serviceBusEndpoint]"
     },
     "SERVICEBUS_PREMIUM_FULLY_QUALIFIED_NAMESPACE": {
       "type": "string",
-      "value": "[concat(variables('serviceBusPremiumNamespace'), '.servicebus.windows.net')]"
+      "value": "[reference(resourceId('Microsoft.ServiceBus/namespaces', variables('serviceBusPremiumNamespace'))).serviceBusEndpoint]"
     },
     "STORAGE_CLAIM_CHECK_ACCOUNT_NAME": {
       "type": "string",

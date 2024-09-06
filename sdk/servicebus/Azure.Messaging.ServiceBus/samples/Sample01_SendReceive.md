@@ -72,8 +72,8 @@ There are two ways of sending several messages at once. The first way uses the `
 ```C# Snippet:ServiceBusSendAndReceiveBatch
 IList<ServiceBusMessage> messages = new List<ServiceBusMessage>
 {
-    new("First"),
-    new("Second")
+    new ServiceBusMessage("First"),
+    new ServiceBusMessage("Second")
 };
 // send the messages
 await sender.SendMessagesAsync(messages);

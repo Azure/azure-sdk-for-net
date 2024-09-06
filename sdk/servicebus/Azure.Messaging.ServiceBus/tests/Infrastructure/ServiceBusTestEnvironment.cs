@@ -36,14 +36,6 @@ namespace Azure.Messaging.ServiceBus.Tests
             options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
 
         /// <summary>
-        ///   The name of the Service Bus namespace to be used for Live tests.
-        /// </summary>
-        ///
-        /// <value>The name will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
-        ///
-        public string ServiceBusNamespace => ParseServiceBusNamespace(FullyQualifiedNamespace).Name;
-
-        /// <summary>
         ///   The fully qualified namespace for the Service Bus namespace represented by this scope.
         /// </summary>
         ///
@@ -132,50 +124,6 @@ namespace Azure.Messaging.ServiceBus.Tests
             var signature = new SharedAccessSignature(signatureAudience, SharedAccessKeyName, SharedAccessKey,
                 TimeSpan.FromMinutes(validDurationMinutes));
             return $"Endpoint={ParsedConnectionString.Endpoint};EntityPath={entityName};SharedAccessSignature={signature.Value}";
-        }
-
-        /// <returns>The active Service Bus namespace for this test run.</returns>
-        ///
-        private NamespaceProperties ParseServiceBusNamespace(string fullyQualifiedNamespace)
-        {
-            int ending = ".servicebus.windows.net".Length;
-            string nameSpace = fullyQualifiedNamespace.Substring(0, fullyQualifiedNamespace.Length - ending);
-
-            return new NamespaceProperties(nameSpace, fullyQualifiedNamespace, false);
-        }
-
-        /// <summary>
-        ///   The key attributes for identifying and accessing a dynamically created Service Bus namespace,
-        ///   intended to serve as an ephemeral container for the entity instances used during a test run.
-        /// </summary>
-        ///
-        public struct NamespaceProperties
-        {
-            /// <summary>The name of the namespace.</summary>
-            public readonly string Name;
-
-            /// <summary>The fully qualified namespace.</summary>
-            public readonly string FullyQualifiedNamespace;
-
-            /// <summary>A flag indicating if the namespace was dynamically created by the test environment.</summary>
-            public readonly bool ShouldRemoveAtCompletion;
-
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="NamespaceProperties"/> struct.
-            /// </summary>
-            ///
-            /// <param name="name">The name of the namespace.</param>
-            /// <param name="fullyQualifiedNamespace">The fully qualified namespace.</param>
-            /// <param name="shouldRemoveAtCompletion">A flag indicating if the namespace should be removed when the test run has completed.</param>
-            ///
-            public NamespaceProperties(string name,
-                                       string fullyQualifiedNamespace,
-                                       bool shouldRemoveAtCompletion)
-            {
-                Name = name;
-                FullyQualifiedNamespace = fullyQualifiedNamespace;
-                ShouldRemoveAtCompletion = shouldRemoveAtCompletion;
-            }
         }
     }
 }
