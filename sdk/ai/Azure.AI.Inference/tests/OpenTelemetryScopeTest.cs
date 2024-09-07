@@ -16,7 +16,8 @@ namespace Azure.AI.Inference.Tests
         private readonly Uri endpoint = new Uri("https://int.api.azureml-test.ms/nexus");
 
         [SetUp]
-        public void setup() {
+        public void setup()
+        {
             requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
@@ -69,43 +70,13 @@ namespace Azure.AI.Inference.Tests
             listener.validateStartActivity(requestOptions, endpoint);
         }
 
-        [Test]
-        public void TestChatResponse()
+        [Test, Sequential]
+        public void TestChatResponse(
+            [Values(true, false)] bool modelChanged,
+            [Values("gpt-3000", "gpt-3000-2024-09-06")] string modelNameReturned
+            )
         {
-            CompletionsUsage usage = new(
-                promptTokens: 10,
-                completionTokens: 15,
-                totalTokens: 25
-            );
-            string[] messages = new string[]{
-                "You are helpful assistant.",
-                "What is a capital of France.",
-                "The capital of France is Paris."
-            };
-            ChatRole[] roles = new ChatRole[] {
-                ChatRole.System, ChatRole.User, ChatRole.Assistant
-            };
-            List<ChatChoice> choices = new();
-            for (int i = 0; i < 3; i++)
-            {
-                choices.Add(
-                    new ChatChoice(
-                    index: i,
-                    finishReason: i == 2 ? CompletionsFinishReason.Stopped : CompletionsFinishReason.ContentFiltered,
-                    message: new ChatResponseMessage(
-                        role: roles[i],
-                        content: messages[i]
-                    ),
-                    serializedAdditionalRawData: new Dictionary<string, BinaryData>()));
-            }
-
-            var completions = new ChatCompletions(
-                id: "4567",
-                created: DateTimeOffset.Now,
-                model: "gpt-3000",
-                usage: usage,
-                choices: choices,
-                serializedAdditionalRawData: new Dictionary<string, BinaryData>());
+            ChatCompletions completions = getChatCompletions(modelNameReturned);
             var response = new SingleRecordedResponse(completions);
             using (var actListener = new ValidatingActivityListener())
             {
@@ -117,10 +88,11 @@ namespace Azure.AI.Inference.Tests
                         Assert.True(scope.AreMetricsOn);
                         scope.RecordResponse(completions);
                     }
+                    requestOptions.Model = modelNameReturned;
                     actListener.validateStartActivity(requestOptions, endpoint);
                     actListener.validateResponseEvents(response);
-                    meterListener.ValidateTags("gpt-3000", endpoint, true);
-                    meterListener.VaidateDuration("gpt-3000", endpoint);
+                    meterListener.ValidateTags(modelNameReturned, endpoint, true);
+                    meterListener.VaidateDuration(modelNameReturned, endpoint);
                 }
             }
         }
@@ -203,6 +175,88 @@ namespace Azure.AI.Inference.Tests
                     JsonSerializer.SerializeToElement(dtToolCall)
                 )
             );
+        }
+
+        private ChatCompletions getChatCompletions(string model)
+        {
+            CompletionsUsage usage = new(
+                promptTokens: 10,
+                completionTokens: 15,
+                totalTokens: 25
+            );
+            string[] messages = new string[]{
+                "You are helpful assistant.",
+                "What is a capital of France.",
+                "The capital of France is Paris."
+            };
+            ChatRole[] roles = new ChatRole[] {
+                ChatRole.System, ChatRole.User, ChatRole.Assistant
+            };
+            List<ChatChoice> choices = new();
+            for (int i = 0; i < 3; i++)
+            {
+                choices.Add(
+                    new ChatChoice(
+                    index: i,
+                    finishReason: i == 2 ? CompletionsFinishReason.Stopped : CompletionsFinishReason.ContentFiltered,
+                    message: new ChatResponseMessage(
+                        role: roles[i],
+                        content: messages[i]
+                    ),
+                    serializedAdditionalRawData: new Dictionary<string, BinaryData>()));
+            }
+
+            return new ChatCompletions(
+                 id: "4567",
+                 created: DateTimeOffset.Now,
+                 model: model,
+                 usage: usage,
+                 choices: choices,
+                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
+        }
+
+        public enum RunType{
+            plane,
+            streaming,
+            error
+        };
+
+        [Test]
+        public void testSwitchedOffTelemetry(
+            [Values(RunType.plane, RunType.streaming, RunType.error)] RunType rtype
+            )
+        {
+            Environment.SetEnvironmentVariable(OpenTelemetryScope.ENABLE_ENV, "0");
+            using (var actListener = new ValidatingActivityListener())
+            {
+                using (var meterListener = new ValidatingMeterListener())
+                {
+                    using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
+                    {
+                        Assert.False(scope.IsEnabled);
+                        Assert.True(scope.AreMetricsOn);
+                        switch (rtype)
+                        {
+                            case RunType.plane:
+                                ChatCompletions completions = getChatCompletions("gpt-3000");
+                                scope.RecordResponse(completions);
+                                break;
+                            case RunType.streaming:
+                                scope.RecordStreamingResponse();
+                                scope.UpdateStreamResponse(getFuncPart("first", "func1", "{\"arg1\": 42}"));
+                                scope.UpdateStreamResponse(getFuncPart(" second", "func2", "{\"arg1\": 42,"));
+                                scope.UpdateStreamResponse(getFuncPart(" third", "func2", "\"arg2\": 43}"));
+                                break;
+                            case RunType.error:
+                                var ex = new Exception("Mock");
+                                scope.RecordError(ex);
+                                break;
+                        }
+                    }
+                    actListener.VaidateTelemetryIsOff();
+                    meterListener.VaidateMetricsAreOff();
+                }
+            }
         }
     }
 }

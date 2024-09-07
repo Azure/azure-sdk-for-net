@@ -176,5 +176,12 @@ namespace Azure.AI.Inference.Tests.Utilities
                 Assert.AreEqual(kv.Value, actual[kv.Key]);
             }
         }
+
+        public void VaidateMetricsAreOff()
+        {
+            Assert.That(m_instruments.IsEmpty);
+            Assert.That(m_measurements.IsEmpty);
+            Assert.That(m_measurementTags.IsEmpty);
+        }
     }
 }

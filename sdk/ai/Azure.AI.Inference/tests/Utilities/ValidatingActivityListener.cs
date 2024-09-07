@@ -8,24 +8,31 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using Azure.AI.Inference.Telemetry;
-using Castle.Core;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
 
 namespace Azure.AI.Inference.Tests.Utilities
 {
+    [NonParallelizable]
     internal class ValidatingActivityListener : IDisposable
     {
         private readonly ActivityListener m_activityListener;
         private readonly ConcurrentQueue<Activity> m_listeners = new();
 
+        private void activityStopped(Activity act)
+        {
+            // We have another activity, which is created when we start the http request.
+            // that is why we limit the stopped activities by.
+            if (act.DisplayName.StartsWith("Complete_"))
+                m_listeners.Enqueue(act);
+        }
+
         public ValidatingActivityListener()
         {
             m_activityListener = new ActivityListener()
             {
-                ActivityStopped = m_listeners.Enqueue,
+                ActivityStopped = activityStopped,
                 ShouldListenTo = s => s.Name == OpenTelemetryScope.ACTIVITY_NAME,
                 Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded
             };
@@ -49,9 +56,20 @@ namespace Azure.AI.Inference.Tests.Utilities
             validateTag(activity, GenAiOperationNameKey, "Complete");
             validateTag(activity, GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
             validateTag(activity, GenAiRequestTemperatureKey, requestOptions.Temperature);
-            validateTag(activity, GenAiRequestTopPKey, JsonSerializer.Deserialize<double?>(requestOptions.AdditionalProperties["top_p"]));
+            if (requestOptions.AdditionalProperties.TryGetValue("top_p", out BinaryData topP))
+                validateTag(activity, GenAiRequestTopPKey, JsonSerializer.Deserialize<double?>(topP));
             // Validate events
             validateChatMessageEvents(activity, requestOptions.Messages);
+        }
+
+        /// <summary>
+        /// Remove junk added adding string as a tag.
+        /// </summary>
+        /// <param name="value">The string to be cleaned.</param>
+        /// <returns></returns>
+        private static string cleanString(string value)
+        {
+            return value.Replace("\\u0022", "\"").Replace("\\\\n", "\\n").Replace("\\\\u", "\\u").Trim('\"');
         }
 
         public void validateResponseEvents(AbstractRecordedResponse response)
@@ -62,7 +80,11 @@ namespace Azure.AI.Inference.Tests.Utilities
             validateTag(activity, GenAiResponseFinishReasonKey, response.FinishReason);
             validateIntTag(activity, GenAiUsageOutputTokensKey, response.CompletionTokens);
             validateIntTag(activity, GenAiUsageInputTokensKey, response.PromptTokens);
-            var validChoices = new HashSet<string>(response.getSerializedCompletions());
+            var validChoices = new HashSet<string>();
+            foreach (string v in response.getSerializedCompletions())
+            {
+                validChoices.Add(cleanString(v));
+            }
             foreach (var evt in activity.Events)
             {
                 if (evt.Name != GenAiChoice)
@@ -71,7 +93,7 @@ namespace Azure.AI.Inference.Tests.Utilities
                 Assert.AreEqual(GenAiSystemKey, evt.Tags.ElementAt(0).Key);
                 Assert.AreEqual(GenAiSystemValue, evt.Tags.ElementAt(0).Value);
                 Assert.AreEqual(GenAiEventContent, evt.Tags.ElementAt(1).Key);
-                Assert.That(validChoices.Contains(evt.Tags.ElementAt(1).Value.ToString().Replace("\\u0022", "\"").Trim('\"')));
+                Assert.That(validChoices.Contains(cleanString(evt.Tags.ElementAt(1).Value.ToString())));
             }
             Assert.AreEqual(ActivityStatusCode.Ok, activity.Status);
         }
@@ -157,6 +179,11 @@ namespace Azure.AI.Inference.Tests.Utilities
                 Assert.That(tags.ContainsKey(actual.Key));
                 Assert.AreEqual(tags[actual.Key].ToString(), actual.Value.ToString());
             }
+        }
+
+        public void VaidateTelemetryIsOff()
+        {
+            Assert.That(m_listeners.IsEmpty);
         }
     }
 }
