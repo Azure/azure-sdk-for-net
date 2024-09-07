@@ -4,7 +4,6 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI.Assistants;
 
 namespace Azure.AI.OpenAI.Assistants;
 

@@ -48,23 +48,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionResourceArmPaginatedResult"/>. </summary>
         internal MarketplaceSubscriptionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<MarketplaceSubscriptionData>();
+            Value = new ChangeTrackingList<MachineLearningMarketplaceSubscriptionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionResourceArmPaginatedResult"/>. </summary>
-        /// <param name="nextLink"> The link to the next page of MarketplaceSubscription objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type MarketplaceSubscription. </param>
+        /// <param name="nextLink"> The link to the next page of MarketplaceSubscription objects. If null, there are no additional pages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSubscriptionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MarketplaceSubscriptionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplaceSubscriptionResourceArmPaginatedResult(IReadOnlyList<MachineLearningMarketplaceSubscriptionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> An array of objects of type MarketplaceSubscription. </summary>
+        public IReadOnlyList<MachineLearningMarketplaceSubscriptionData> Value { get; }
         /// <summary> The link to the next page of MarketplaceSubscription objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type MarketplaceSubscription. </summary>
-        public IReadOnlyList<MarketplaceSubscriptionData> Value { get; }
     }
 }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
@@ -113,18 +115,6 @@ namespace Azure.ResourceManager.MachineLearning
                 else
                 {
                     writer.WriteNull("managedResourceGroup");
-                }
-            }
-            if (Optional.IsDefined(ManagedResourceGroupSettings))
-            {
-                if (ManagedResourceGroupSettings != null)
-                {
-                    writer.WritePropertyName("managedResourceGroupSettings"u8);
-                    writer.WriteObjectValue(ManagedResourceGroupSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("managedResourceGroupSettings");
                 }
             }
             if (Optional.IsDefined(MlFlowRegistryUri))
@@ -236,7 +226,6 @@ namespace Azure.ResourceManager.MachineLearning
             Uri discoveryUrl = default;
             string intellectualPropertyPublisher = default;
             ArmResourceId managedResourceGroup = default;
-            ManagedResourceGroupSettings managedResourceGroupSettings = default;
             Uri mlFlowRegistryUri = default;
             IList<RegistryPrivateEndpointConnection> registryPrivateEndpointConnections = default;
             string publicNetworkAccess = default;
@@ -351,16 +340,6 @@ namespace Azure.ResourceManager.MachineLearning
                             managedResourceGroup = ArmResourceId.DeserializeArmResourceId(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("managedResourceGroupSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                managedResourceGroupSettings = null;
-                                continue;
-                            }
-                            managedResourceGroupSettings = ManagedResourceGroupSettings.DeserializeManagedResourceGroupSettings(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("mlFlowRegistryUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -433,12 +412,326 @@ namespace Azure.ResourceManager.MachineLearning
                 discoveryUrl,
                 intellectualPropertyPublisher,
                 managedResourceGroup,
-                managedResourceGroupSettings,
                 mlFlowRegistryUri,
                 registryPrivateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>(),
                 publicNetworkAccess,
                 regionDetails ?? new ChangeTrackingList<RegistryRegionArmDetails>(),
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  location: ");
+                builder.AppendLine($"'{Location.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sku: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sku))
+                {
+                    builder.Append("  sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiscoveryUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    discoveryUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiscoveryUri))
+                {
+                    builder.Append("    discoveryUrl: ");
+                    builder.AppendLine($"'{DiscoveryUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntellectualPropertyPublisher), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    intellectualPropertyPublisher: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IntellectualPropertyPublisher))
+                {
+                    builder.Append("    intellectualPropertyPublisher: ");
+                    if (IntellectualPropertyPublisher.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IntellectualPropertyPublisher}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IntellectualPropertyPublisher}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ManagedResourceId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    managedResourceGroup: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      managedResourceGroup: {");
+                builder.Append("        resourceId: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedResourceGroup))
+                {
+                    builder.Append("    managedResourceGroup: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ManagedResourceGroup, options, 4, false, "    managedResourceGroup: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MlFlowRegistryUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    mlFlowRegistryUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MlFlowRegistryUri))
+                {
+                    builder.Append("    mlFlowRegistryUri: ");
+                    builder.AppendLine($"'{MlFlowRegistryUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistryPrivateEndpointConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    registryPrivateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RegistryPrivateEndpointConnections))
+                {
+                    if (RegistryPrivateEndpointConnections.Any())
+                    {
+                        builder.Append("    registryPrivateEndpointConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RegistryPrivateEndpointConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    registryPrivateEndpointConnections: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
+                {
+                    builder.Append("    publicNetworkAccess: ");
+                    if (PublicNetworkAccess.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PublicNetworkAccess}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PublicNetworkAccess}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    regionDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RegionDetails))
+                {
+                    if (RegionDetails.Any())
+                    {
+                        builder.Append("    regionDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RegionDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    regionDetails: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningRegistryData>.Write(ModelReaderWriterOptions options)
@@ -449,6 +742,8 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support writing '{options.Format}' format.");
             }

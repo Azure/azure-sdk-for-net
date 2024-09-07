@@ -70,8 +70,9 @@ namespace Azure.Identity
 
         /// <summary>
         /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained
-        /// <see cref="AccessToken"/>. Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled
-        /// automatically. Where possible, reuse credential instances to optimize cache effectiveness.
+        /// <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the
+        /// credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to
+        /// optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -82,8 +83,9 @@ namespace Azure.Identity
 
         /// <summary>
         /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained
-        /// <see cref="AccessToken"/>. Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled
-        /// automatically. Where possible, reuse credential instances to optimize cache effectiveness.
+        /// <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the
+        /// credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to
+        /// optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -137,6 +138,87 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryPolicies(quarantinePolicy, trustPolicy, retentionPolicy, exportPolicy, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("QuarantineStatus", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  quarantinePolicy: ");
+                builder.AppendLine("{");
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(QuarantinePolicy))
+                {
+                    builder.Append("  quarantinePolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, QuarantinePolicy, options, 2, false, "  quarantinePolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrustPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  trustPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrustPolicy))
+                {
+                    builder.Append("  trustPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TrustPolicy, options, 2, false, "  trustPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  retentionPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionPolicy))
+                {
+                    builder.Append("  retentionPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RetentionPolicy, options, 2, false, "  retentionPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ExportStatus", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exportPolicy: ");
+                builder.AppendLine("{");
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ExportPolicy))
+                {
+                    builder.Append("  exportPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExportPolicy, options, 2, false, "  exportPolicy: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerRegistryPolicies>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPolicies>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +227,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryPolicies)} does not support writing '{options.Format}' format.");
             }
