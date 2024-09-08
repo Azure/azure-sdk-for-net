@@ -9,9 +9,9 @@ namespace Azure.ResourceManager.TestFramework
         {
             ExceptionList = new[]
             {
-                "Azure.ResourceManager.SecurityInsights.Models.PackageModelCollectionGetAllOptions",
-                "Azure.ResourceManager.SecurityInsights.Models.ProductTemplateModelCollectionGetAllOptions",
-                "Azure.ResourceManager.SecurityInsights.Models.TemplateModelCollectionGetAllOptions"
+                "Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsPackageCollectionGetAllOptions",
+                "Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsProductTemplateCollectionGetAllOptions",
+                "Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsTemplateCollectionGetAllOptions"
             };
         }
     }

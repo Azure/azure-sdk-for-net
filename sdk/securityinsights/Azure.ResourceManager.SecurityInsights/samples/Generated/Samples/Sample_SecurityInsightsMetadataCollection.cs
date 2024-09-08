@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
                 },
                 Dependencies = new MetadataDependencies()
                 {
-                    Operator = new ConditionClauseOperator("AND"),
+                    Operator = new ThreatIntelligenceQueryOperator("AND"),
                     Criteria =
 {
 new MetadataDependencies()
 {
-Operator = new ConditionClauseOperator("OR"),
+Operator = new ThreatIntelligenceQueryOperator("OR"),
 Criteria =
 {
 new MetadataDependencies()

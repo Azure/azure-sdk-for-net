@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string descriptionMarkdown = default;
             IList<GraphQuery> graphQueries = default;
             IList<ConnectorDataType> dataTypes = default;
-            IList<ConnectivityCriterion> connectivityCriteria = default;
+            IList<ConnectorConnectivityCriterion> connectivityCriteria = default;
             ConnectorDefinitionsAvailability availability = default;
             ConnectorDefinitionsPermissions permissions = default;
             IList<InstructionStep> instructionSteps = default;
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("connectivityCriteria"u8))
                 {
-                    List<ConnectivityCriterion> array = new List<ConnectivityCriterion>();
+                    List<ConnectorConnectivityCriterion> array = new List<ConnectorConnectivityCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityCriterion.DeserializeConnectivityCriterion(item, options));
+                        array.Add(ConnectorConnectivityCriterion.DeserializeConnectorConnectivityCriterion(item, options));
                     }
                     connectivityCriteria = array;
                     continue;

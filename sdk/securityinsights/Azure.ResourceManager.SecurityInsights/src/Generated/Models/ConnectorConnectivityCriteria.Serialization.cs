@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem : IUtf8JsonSerializable, IJsonModel<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>
+    public partial class ConnectorConnectivityCriteria : IUtf8JsonSerializable, IJsonModel<ConnectorConnectivityCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectorConnectivityCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectorConnectivityCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorConnectivityCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorConnectivityCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem IJsonModel<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConnectorConnectivityCriteria IJsonModel<ConnectorConnectivityCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorConnectivityCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorConnectivityCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCodelessUiConnectorConfigPropertiesConnectivityCriteriaItem(document.RootElement, options);
+            return DeserializeConnectorConnectivityCriteria(document.RootElement, options);
         }
 
-        internal static CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem DeserializeCodelessUiConnectorConfigPropertiesConnectivityCriteriaItem(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConnectorConnectivityCriteria DeserializeConnectorConnectivityCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            ConnectivityType? type = default;
+            ConnectorConnectivityType? type = default;
             IList<string> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    type = new ConnectivityType(property.Value.GetString());
+                    type = new ConnectorConnectivityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem(type, value ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ConnectorConnectivityCriteria(type, value ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConnectorConnectivityCriteria>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorConnectivityCriteria>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -196,26 +196,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorConnectivityCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem IPersistableModel<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConnectorConnectivityCriteria IPersistableModel<ConnectorConnectivityCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorConnectivityCriteria>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCodelessUiConnectorConfigPropertiesConnectivityCriteriaItem(document.RootElement, options);
+                        return DeserializeConnectorConnectivityCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorConnectivityCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectorConnectivityCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

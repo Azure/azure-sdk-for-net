@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> IP address (v4 or v6) to be enriched. </summary>
-    public partial class EnrichmentIPAddressBody
+    public partial class EnrichmentIPAddressContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EnrichmentIPAddressBody"/>. </summary>
-        public EnrichmentIPAddressBody()
+        /// <summary> Initializes a new instance of <see cref="EnrichmentIPAddressContent"/>. </summary>
+        public EnrichmentIPAddressContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnrichmentIPAddressBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnrichmentIPAddressContent"/>. </summary>
         /// <param name="ipAddress"> The dotted-decimal or colon-separated string representation of the IP address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnrichmentIPAddressBody(string ipAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnrichmentIPAddressContent(string ipAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddress = ipAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;

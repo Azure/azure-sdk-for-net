@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal BookmarkExpandResponseValue()
         {
             Entities = new ChangeTrackingList<SecurityInsightsEntity>();
-            Edges = new ChangeTrackingList<ConnectedEntity>();
+            Edges = new ChangeTrackingList<BookmarkConnectedEntity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BookmarkExpandResponseValue"/>. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </param>
         /// <param name="edges"> Array of expansion result connected entities. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BookmarkExpandResponseValue(IReadOnlyList<SecurityInsightsEntity> entities, IReadOnlyList<ConnectedEntity> edges, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BookmarkExpandResponseValue(IReadOnlyList<SecurityInsightsEntity> entities, IReadOnlyList<BookmarkConnectedEntity> edges, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Entities = entities;
             Edges = edges;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IReadOnlyList<SecurityInsightsEntity> Entities { get; }
         /// <summary> Array of expansion result connected entities. </summary>
         [WirePath("edges")]
-        public IReadOnlyList<ConnectedEntity> Edges { get; }
+        public IReadOnlyList<BookmarkConnectedEntity> Edges { get; }
     }
 }

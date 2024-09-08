@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             SystemData systemData = default;
             string awsRoleArn = default;
-            AwsCloudTrailDataConnectorDataTypesLogs logs = default;
+            DataConnectorDataTypeCommon logs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                     {
                                         continue;
                                     }
-                                    logs = AwsCloudTrailDataConnectorDataTypesLogs.DeserializeAwsCloudTrailDataConnectorDataTypesLogs(property1.Value, options);
+                                    logs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
                                     continue;
                                 }
                             }

@@ -105,9 +105,15 @@ rename-mapping:
   CcpResponseConfig.convertChildPropertiesToArray: IsConvertChildPropertiesToArray
   ClientInfo: SecurityInsightsClientInfo
   CloudApplicationEntity: SecurityInsightsCloudApplicationEntity
+  ConditionClause: ThreatIntelligenceQueryConditionClause
+  ConditionProperties: ThreatIntelligenceQueryConditionProperties
   ConfidenceLevel: SecurityInsightsAlertConfidenceLevel
   ConfidenceScoreStatus: SecurityInsightsAlertConfidenceScoreStatus
-  Connective: ClauseConnective
+  Connective: ThreatIntelligenceQueryConnective
+  ConnectivityCriteria: ConnectorConnectivityCriteria
+  ConnectivityCriterion: ConnectorConnectivityCriterion
+  ConnectivityType: ConnectorConnectivityType
+  ConnectedEntity: BookmarkConnectedEntity
   ContentType: SourceControlContentType
   CustomizableConnectorDefinition.properties.createdTimeUtc: CreatedOn
   CustomizableConnectorDefinition.properties.lastModifiedUtc: LastModifiedOn
@@ -131,6 +137,7 @@ rename-mapping:
   EnrichmentDomainBody: EnrichmentDomainContent
   EnrichmentDomainWhois.expires: ExpireOn
   EnrichmentDomainWhois.updated: UpdatedOn
+  EnrichmentIpAddressBody: EnrichmentIPAddressContent
   Entity: SecurityInsightsEntity
   EntityExpandResponse: EntityExpandResult
   EntityGetInsightsParameters.addDefaultExtendedTimeRange: IsDefaultExtendedTimeRangeAdded
@@ -244,7 +251,7 @@ rename-mapping:
   OfficeConsent: SecurityInsightsOfficeConsent
   OfficeDataConnector: SecurityInsightsOfficeDataConnector
   OfficeDataConnectorDataTypes: SecurityInsightsOfficeDataConnectorDataTypes
-  Operator: ConditionClauseOperator
+  Operator: ThreatIntelligenceQueryOperator
   OSFamily.IOS: Ios
   OSFamily: SecurityInsightsHostOSFamily
   OwnerType:  SecurityInsightsIncidentOwnerType
@@ -338,7 +345,6 @@ rename-mapping:
   TIObject.properties.firstIngestedTimeUtc: FirstIngestedOn
   TIObject.properties.lastIngestedTimeUtc: LastIngestedOn
   TIObject.properties.lastUpdatedDateTimeUtc: LastUpdatedOn
-  TiTaxiiDataConnectorDataTypesTaxiiClient: TiTaxiiDataConnectorDataTypes
   TriggeredAnalyticsRuleRun.properties.executionTimeUtc: ExecuteOn
   TriggerOperator: SecurityInsightsAlertRuleTriggerOperator
   Ueba: UebaSettings
@@ -512,4 +518,48 @@ directive:
     where: $.definitions.jobItem.properties.status
     transform: >
       $['x-ms-enum'].name = 'PublicationStatus';
+  # Remove all incorrect usage of `allOf`
+  - from: dataConnectors.json
+    where: $.definitions
+    transform: >
+      delete $.CodelessUiConnectorConfigProperties.properties.graphQueries.items.allOf;
+      $.CodelessUiConnectorConfigProperties.properties.graphQueries.items['$ref'] = '#/definitions/GraphQueries';
+      delete $.CodelessUiConnectorConfigProperties.properties.sampleQueries.items.allOf;
+      $.CodelessUiConnectorConfigProperties.properties.sampleQueries.items['$ref'] = '#/definitions/SampleQueries';
+      delete $.CodelessUiConnectorConfigProperties.properties.dataTypes.items.allOf;
+      $.CodelessUiConnectorConfigProperties.properties.dataTypes.items['$ref'] = '#/definitions/LastDataReceivedDataType';
+      delete $.CodelessUiConnectorConfigProperties.properties.connectivityCriteria.items.allOf;
+      $.CodelessUiConnectorConfigProperties.properties.connectivityCriteria.items['$ref'] = '#/definitions/ConnectivityCriteria';
+      delete $.CodelessUiConnectorConfigProperties.properties.instructionSteps.items.allOf;
+      $.CodelessUiConnectorConfigProperties.properties.instructionSteps.items['$ref'] = '#/definitions/InstructionSteps';
+      delete $.Permissions.properties.resourceProvider.items.allOf;
+      $.Permissions.properties.resourceProvider.items['$ref'] = '#/definitions/ResourceProvider';
+      delete $.Permissions.properties.customs.items.allOf;
+      $.Permissions.properties.customs.items['$ref'] = '#/definitions/Customs';
+      delete $.InstructionSteps.properties.instructions.items.allOf;
+      $.InstructionSteps.properties.instructions.items['$ref'] = '#/definitions/ConnectorInstructionModelBase';
+      delete $.MSTIDataConnectorDataTypes.properties.microsoftEmergingThreatFeed.allOf;
+      $.MSTIDataConnectorDataTypes.properties.microsoftEmergingThreatFeed['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
+      delete $.OfficeDataConnectorDataTypes.properties.exchange.allOf;
+      $.OfficeDataConnectorDataTypes.properties.exchange['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
+      delete $.OfficeDataConnectorDataTypes.properties.sharePoint.allOf;
+      $.OfficeDataConnectorDataTypes.properties.sharePoint['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
+      delete $.OfficeDataConnectorDataTypes.properties.teams.allOf;
+      $.OfficeDataConnectorDataTypes.properties.teams['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
+      delete $.TiTaxiiDataConnectorDataTypes.properties.taxiiClient.allOf;
+      $.TiTaxiiDataConnectorDataTypes.properties.taxiiClient['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
+      delete $.MTPDataConnectorDataTypes.properties.incidents.allOf;
+      $.MTPDataConnectorDataTypes.properties.incidents['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
+      delete $.MTPDataConnectorDataTypes.properties.alerts.allOf;
+      $.MTPDataConnectorDataTypes.properties.alerts['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
+      delete $.AwsCloudTrailDataConnectorDataTypes.properties.logs.allOf;
+      $.AwsCloudTrailDataConnectorDataTypes.properties.logs['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
+      delete $.AwsS3DataConnectorDataTypes.properties.logs.allOf;
+      $.AwsS3DataConnectorDataTypes.properties.logs['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
+      delete $.MicrosoftPurviewInformationProtectionConnectorDataTypes.properties.logs.allOf;
+      $.MicrosoftPurviewInformationProtectionConnectorDataTypes.properties.logs['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
+      delete $.Office365ProjectConnectorDataTypes.properties.logs.allOf;
+      $.Office365ProjectConnectorDataTypes.properties.logs['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
+      delete $.OfficePowerBIConnectorDataTypes.properties.logs.allOf;
+      $.OfficePowerBIConnectorDataTypes.properties.logs['$ref'] = '#/definitions/DataConnectorDataTypeCommon';
 ```

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="filteredProviders"> The available filtered providers for the connector. </param>
         /// <param name="incidents"> Incidents data type for Microsoft Threat Protection Platforms data connector. </param>
         /// <param name="alerts"> Alerts data type for Microsoft Threat Protection Platforms data connector. </param>
-        internal MTPDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, MtpFilteredProviders filteredProviders, MTPDataConnectorDataTypesIncidents incidents, MTPDataConnectorDataTypesAlerts alerts) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal MTPDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, MtpFilteredProviders filteredProviders, DataConnectorDataTypeCommon incidents, DataConnectorDataTypeCommon alerts) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
             FilteredProviders = filteredProviders;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Incidents data type for Microsoft Threat Protection Platforms data connector. </summary>
-        internal MTPDataConnectorDataTypesIncidents Incidents { get; set; }
+        internal DataConnectorDataTypeCommon Incidents { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         [WirePath("properties.incidents.state")]
         public SecurityInsightsDataTypeConnectionState? IncidentsState
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             get => Incidents is null ? default(SecurityInsightsDataTypeConnectionState?) : Incidents.State;
             set
             {
-                Incidents = value.HasValue ? new MTPDataConnectorDataTypesIncidents(value.Value) : null;
+                Incidents = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
             }
         }
 
         /// <summary> Alerts data type for Microsoft Threat Protection Platforms data connector. </summary>
-        internal MTPDataConnectorDataTypesAlerts Alerts { get; set; }
+        internal DataConnectorDataTypeCommon Alerts { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         [WirePath("properties.alerts.state")]
         public SecurityInsightsDataTypeConnectionState? AlertsState
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             get => Alerts is null ? default(SecurityInsightsDataTypeConnectionState?) : Alerts.State;
             set
             {
-                Alerts = value.HasValue ? new MTPDataConnectorDataTypesAlerts(value.Value) : null;
+                Alerts = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
             }
         }
     }

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SecurityInsightsKind? kind = default;
             string version = default;
             string name = default;
-            ConditionClauseOperator? @operator = default;
+            ThreatIntelligenceQueryOperator? @operator = default;
             IList<MetadataDependencies> criteria = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    @operator = new ConditionClauseOperator(property.Value.GetString());
+                    @operator = new ThreatIntelligenceQueryOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("criteria"u8))

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             IReadOnlyList<SecurityInsightsEntity> entities = default;
-            IReadOnlyList<ConnectedEntity> edges = default;
+            IReadOnlyList<BookmarkConnectedEntity> edges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<ConnectedEntity> array = new List<ConnectedEntity>();
+                    List<BookmarkConnectedEntity> array = new List<BookmarkConnectedEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedEntity.DeserializeConnectedEntity(item, options));
+                        array.Add(BookmarkConnectedEntity.DeserializeBookmarkConnectedEntity(item, options));
                     }
                     edges = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BookmarkExpandResponseValue(entities ?? new ChangeTrackingList<SecurityInsightsEntity>(), edges ?? new ChangeTrackingList<ConnectedEntity>(), serializedAdditionalRawData);
+            return new BookmarkExpandResponseValue(entities ?? new ChangeTrackingList<SecurityInsightsEntity>(), edges ?? new ChangeTrackingList<BookmarkConnectedEntity>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

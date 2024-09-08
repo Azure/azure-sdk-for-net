@@ -2230,18 +2230,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="enrichmentType"> Enrichment type. </param>
-        /// <param name="ipAddressBody"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipAddressBody"/> is null. </exception>
-        public virtual async Task<Response<WorkspaceEnrichmentIPGeodata>> GetGeodataByIPAsync(EnrichmentType enrichmentType, EnrichmentIPAddressBody ipAddressBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<WorkspaceEnrichmentIPGeodata>> GetGeodataByIPAsync(EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ipAddressBody, nameof(ipAddressBody));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("OperationalInsightsWorkspaceSecurityInsightsResource.GetGeodataByIP");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.ListGeodataByIPAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enrichmentType, ipAddressBody, cancellationToken).ConfigureAwait(false);
+                var response = await _defaultRestClient.ListGeodataByIPAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enrichmentType, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2269,18 +2269,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="enrichmentType"> Enrichment type. </param>
-        /// <param name="ipAddressBody"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipAddressBody"/> is null. </exception>
-        public virtual Response<WorkspaceEnrichmentIPGeodata> GetGeodataByIP(EnrichmentType enrichmentType, EnrichmentIPAddressBody ipAddressBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<WorkspaceEnrichmentIPGeodata> GetGeodataByIP(EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ipAddressBody, nameof(ipAddressBody));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("OperationalInsightsWorkspaceSecurityInsightsResource.GetGeodataByIP");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.ListGeodataByIP(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enrichmentType, ipAddressBody, cancellationToken);
+                var response = _defaultRestClient.ListGeodataByIP(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enrichmentType, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

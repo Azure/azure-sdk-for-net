@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="QueryCondition"/>. </summary>
         /// <param name="clauses"> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clauses"/> is null. </exception>
-        public QueryCondition(IEnumerable<ConditionClause> clauses)
+        public QueryCondition(IEnumerable<ThreatIntelligenceQueryConditionClause> clauses)
         {
             Argument.AssertNotNull(clauses, nameof(clauses));
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="clauses"> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </param>
         /// <param name="conditionConnective"> The top level connective operator for this condition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueryCondition(string stixObjectType, IList<ConditionClause> clauses, ClauseConnective? conditionConnective, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QueryCondition(string stixObjectType, IList<ThreatIntelligenceQueryConditionClause> clauses, ThreatIntelligenceQueryConnective? conditionConnective, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StixObjectType = stixObjectType;
             Clauses = clauses;
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string StixObjectType { get; set; }
         /// <summary> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </summary>
         [WirePath("clauses")]
-        public IList<ConditionClause> Clauses { get; }
+        public IList<ThreatIntelligenceQueryConditionClause> Clauses { get; }
         /// <summary> The top level connective operator for this condition. </summary>
         [WirePath("conditionConnective")]
-        public ClauseConnective? ConditionConnective { get; set; }
+        public ThreatIntelligenceQueryConnective? ConditionConnective { get; set; }
     }
 }

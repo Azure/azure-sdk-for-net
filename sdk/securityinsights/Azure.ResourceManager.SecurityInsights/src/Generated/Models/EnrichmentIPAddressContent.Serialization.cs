@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class EnrichmentIPAddressBody : IUtf8JsonSerializable, IJsonModel<EnrichmentIPAddressBody>
+    public partial class EnrichmentIPAddressContent : IUtf8JsonSerializable, IJsonModel<EnrichmentIPAddressContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnrichmentIPAddressBody>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnrichmentIPAddressContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EnrichmentIPAddressBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EnrichmentIPAddressContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPAddressBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPAddressContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnrichmentIPAddressBody)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EnrichmentIPAddressContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        EnrichmentIPAddressBody IJsonModel<EnrichmentIPAddressBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EnrichmentIPAddressContent IJsonModel<EnrichmentIPAddressContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPAddressBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPAddressContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnrichmentIPAddressBody)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EnrichmentIPAddressContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEnrichmentIPAddressBody(document.RootElement, options);
+            return DeserializeEnrichmentIPAddressContent(document.RootElement, options);
         }
 
-        internal static EnrichmentIPAddressBody DeserializeEnrichmentIPAddressBody(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EnrichmentIPAddressContent DeserializeEnrichmentIPAddressContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -85,38 +85,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EnrichmentIPAddressBody(ipAddress, serializedAdditionalRawData);
+            return new EnrichmentIPAddressContent(ipAddress, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EnrichmentIPAddressBody>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EnrichmentIPAddressContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPAddressBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPAddressContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnrichmentIPAddressBody)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnrichmentIPAddressContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EnrichmentIPAddressBody IPersistableModel<EnrichmentIPAddressBody>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EnrichmentIPAddressContent IPersistableModel<EnrichmentIPAddressContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPAddressBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPAddressContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEnrichmentIPAddressBody(document.RootElement, options);
+                        return DeserializeEnrichmentIPAddressContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnrichmentIPAddressBody)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnrichmentIPAddressContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EnrichmentIPAddressBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EnrichmentIPAddressContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

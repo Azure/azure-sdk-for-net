@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             string stixObjectType = default;
-            IList<ConditionClause> clauses = default;
-            ClauseConnective? conditionConnective = default;
+            IList<ThreatIntelligenceQueryConditionClause> clauses = default;
+            ThreatIntelligenceQueryConnective? conditionConnective = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("clauses"u8))
                 {
-                    List<ConditionClause> array = new List<ConditionClause>();
+                    List<ThreatIntelligenceQueryConditionClause> array = new List<ThreatIntelligenceQueryConditionClause>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConditionClause.DeserializeConditionClause(item, options));
+                        array.Add(ThreatIntelligenceQueryConditionClause.DeserializeThreatIntelligenceQueryConditionClause(item, options));
                     }
                     clauses = array;
                     continue;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    conditionConnective = new ClauseConnective(property.Value.GetString());
+                    conditionConnective = new ThreatIntelligenceQueryConnective(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

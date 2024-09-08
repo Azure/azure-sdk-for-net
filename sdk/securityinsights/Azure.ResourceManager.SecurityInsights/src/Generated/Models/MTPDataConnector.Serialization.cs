@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SystemData systemData = default;
             Guid? tenantId = default;
             MtpFilteredProviders filteredProviders = default;
-            MTPDataConnectorDataTypesIncidents incidents = default;
-            MTPDataConnectorDataTypesAlerts alerts = default;
+            DataConnectorDataTypeCommon incidents = default;
+            DataConnectorDataTypeCommon alerts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                     {
                                         continue;
                                     }
-                                    incidents = MTPDataConnectorDataTypesIncidents.DeserializeMTPDataConnectorDataTypesIncidents(property1.Value, options);
+                                    incidents = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
                                     continue;
                                 }
                                 if (property1.NameEquals("alerts"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                     {
                                         continue;
                                     }
-                                    alerts = MTPDataConnectorDataTypesAlerts.DeserializeMTPDataConnectorDataTypesAlerts(property1.Value, options);
+                                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
                                     continue;
                                 }
                             }

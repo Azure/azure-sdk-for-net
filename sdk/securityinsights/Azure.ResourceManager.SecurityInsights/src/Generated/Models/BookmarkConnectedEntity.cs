@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Expansion result connected entities. </summary>
-    public partial class ConnectedEntity
+    public partial class BookmarkConnectedEntity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedEntity"/>. </summary>
-        internal ConnectedEntity()
+        /// <summary> Initializes a new instance of <see cref="BookmarkConnectedEntity"/>. </summary>
+        internal BookmarkConnectedEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BookmarkConnectedEntity"/>. </summary>
         /// <param name="targetEntityId"> Entity Id of the connected entity. </param>
         /// <param name="additionalData"> key-value pairs for a connected entity mapping. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedEntity(string targetEntityId, BinaryData additionalData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BookmarkConnectedEntity(string targetEntityId, BinaryData additionalData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetEntityId = targetEntityId;
             AdditionalData = additionalData;

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a condition used to query for TI objects. </summary>
-    public partial class ConditionProperties
+    public partial class ThreatIntelligenceQueryConditionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConditionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceQueryConditionProperties"/>. </summary>
         /// <param name="clauses"> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clauses"/> is null. </exception>
-        public ConditionProperties(IEnumerable<ConditionClause> clauses)
+        public ThreatIntelligenceQueryConditionProperties(IEnumerable<ThreatIntelligenceQueryConditionClause> clauses)
         {
             Argument.AssertNotNull(clauses, nameof(clauses));
 
             Clauses = clauses.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConditionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceQueryConditionProperties"/>. </summary>
         /// <param name="stixObjectType"> The STIX type for the objects returned by this query. </param>
         /// <param name="clauses"> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </param>
         /// <param name="conditionConnective"> The top level connective operator for this condition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConditionProperties(string stixObjectType, IList<ConditionClause> clauses, ClauseConnective? conditionConnective, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThreatIntelligenceQueryConditionProperties(string stixObjectType, IList<ThreatIntelligenceQueryConditionClause> clauses, ThreatIntelligenceQueryConnective? conditionConnective, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StixObjectType = stixObjectType;
             Clauses = clauses;
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConditionProperties"/> for deserialization. </summary>
-        internal ConditionProperties()
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceQueryConditionProperties"/> for deserialization. </summary>
+        internal ThreatIntelligenceQueryConditionProperties()
         {
         }
 
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string StixObjectType { get; }
         /// <summary> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </summary>
         [WirePath("clauses")]
-        public IList<ConditionClause> Clauses { get; }
+        public IList<ThreatIntelligenceQueryConditionClause> Clauses { get; }
         /// <summary> The top level connective operator for this condition. </summary>
         [WirePath("conditionConnective")]
-        public ClauseConnective? ConditionConnective { get; set; }
+        public ThreatIntelligenceQueryConnective? ConditionConnective { get; set; }
     }
 }

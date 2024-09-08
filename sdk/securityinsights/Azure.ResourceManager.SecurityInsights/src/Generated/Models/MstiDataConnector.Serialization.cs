@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             SystemData systemData = default;
             Guid? tenantId = default;
-            MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed microsoftEmergingThreatFeed = default;
+            DataConnectorDataTypeCommon microsoftEmergingThreatFeed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                     {
                                         continue;
                                     }
-                                    microsoftEmergingThreatFeed = MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed.DeserializeMstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(property1.Value, options);
+                                    microsoftEmergingThreatFeed = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
                                     continue;
                                 }
                             }
@@ -329,11 +329,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
             builder.Append("    dataTypes:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftEmergingThreatFeed), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("MicrosoftEmergingThreatFeedState", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("      microsoftEmergingThreatFeed: ");
+                builder.AppendLine("{");
+                builder.AppendLine("        microsoftEmergingThreatFeed: {");
+                builder.Append("          state: ");
                 builder.AppendLine(propertyOverride);
+                builder.AppendLine("        }");
+                builder.AppendLine("      }");
             }
             else
             {

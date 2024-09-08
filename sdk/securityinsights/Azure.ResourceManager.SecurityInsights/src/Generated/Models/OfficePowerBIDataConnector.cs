@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="logs"> Logs data type. </param>
-        internal OfficePowerBIDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, OfficePowerBIConnectorDataTypesLogs logs) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal OfficePowerBIDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, DataConnectorDataTypeCommon logs) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
             Logs = logs;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> Logs data type. </summary>
-        internal OfficePowerBIConnectorDataTypesLogs Logs { get; set; }
+        internal DataConnectorDataTypeCommon Logs { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         [WirePath("properties.logs.state")]
         public SecurityInsightsDataTypeConnectionState? LogsState
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             get => Logs is null ? default(SecurityInsightsDataTypeConnectionState?) : Logs.State;
             set
             {
-                Logs = value.HasValue ? new OfficePowerBIConnectorDataTypesLogs(value.Value) : null;
+                Logs = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
             }
         }
     }

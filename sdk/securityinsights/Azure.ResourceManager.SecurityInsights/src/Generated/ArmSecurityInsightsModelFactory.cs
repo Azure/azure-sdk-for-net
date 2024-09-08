@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </param>
         /// <param name="edges"> Array of expansion result connected entities. </param>
         /// <returns> A new <see cref="Models.BookmarkExpandResponseValue"/> instance for mocking. </returns>
-        public static BookmarkExpandResponseValue BookmarkExpandResponseValue(IEnumerable<SecurityInsightsEntity> entities = null, IEnumerable<ConnectedEntity> edges = null)
+        public static BookmarkExpandResponseValue BookmarkExpandResponseValue(IEnumerable<SecurityInsightsEntity> entities = null, IEnumerable<BookmarkConnectedEntity> edges = null)
         {
             entities ??= new List<SecurityInsightsEntity>();
-            edges ??= new List<ConnectedEntity>();
+            edges ??= new List<BookmarkConnectedEntity>();
 
             return new BookmarkExpandResponseValue(entities?.ToList(), edges?.ToList(), serializedAdditionalRawData: null);
         }
@@ -326,13 +326,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectedEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BookmarkConnectedEntity"/>. </summary>
         /// <param name="targetEntityId"> Entity Id of the connected entity. </param>
         /// <param name="additionalData"> key-value pairs for a connected entity mapping. </param>
-        /// <returns> A new <see cref="Models.ConnectedEntity"/> instance for mocking. </returns>
-        public static ConnectedEntity ConnectedEntity(string targetEntityId = null, BinaryData additionalData = null)
+        /// <returns> A new <see cref="Models.BookmarkConnectedEntity"/> instance for mocking. </returns>
+        public static BookmarkConnectedEntity BookmarkConnectedEntity(string targetEntityId = null, BinaryData additionalData = null)
         {
-            return new ConnectedEntity(targetEntityId, additionalData, serializedAdditionalRawData: null);
+            return new BookmarkConnectedEntity(targetEntityId, additionalData, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsPackageData"/>. </summary>
@@ -2199,29 +2199,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new ThreatIntelligenceMetricEntity(metricName, metricValue, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConditionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceQueryConditionProperties"/>. </summary>
         /// <param name="stixObjectType"> The STIX type for the objects returned by this query. </param>
         /// <param name="clauses"> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </param>
         /// <param name="conditionConnective"> The top level connective operator for this condition. </param>
-        /// <returns> A new <see cref="Models.ConditionProperties"/> instance for mocking. </returns>
-        public static ConditionProperties ConditionProperties(string stixObjectType = null, IEnumerable<ConditionClause> clauses = null, ClauseConnective? conditionConnective = null)
+        /// <returns> A new <see cref="Models.ThreatIntelligenceQueryConditionProperties"/> instance for mocking. </returns>
+        public static ThreatIntelligenceQueryConditionProperties ThreatIntelligenceQueryConditionProperties(string stixObjectType = null, IEnumerable<ThreatIntelligenceQueryConditionClause> clauses = null, ThreatIntelligenceQueryConnective? conditionConnective = null)
         {
-            clauses ??= new List<ConditionClause>();
+            clauses ??= new List<ThreatIntelligenceQueryConditionClause>();
 
-            return new ConditionProperties(stixObjectType, clauses?.ToList(), conditionConnective, serializedAdditionalRawData: null);
+            return new ThreatIntelligenceQueryConditionProperties(stixObjectType, clauses?.ToList(), conditionConnective, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConditionClause"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceQueryConditionClause"/>. </summary>
         /// <param name="clauseConnective"> The connective used to join all values in this ConditionClause. </param>
         /// <param name="field"> The name of the field that is evaluated. </param>
         /// <param name="operator"> Represents an operator in a ConditionClause. </param>
         /// <param name="values"> The top level connective operator for this condition. </param>
-        /// <returns> A new <see cref="Models.ConditionClause"/> instance for mocking. </returns>
-        public static ConditionClause ConditionClause(ClauseConnective? clauseConnective = null, string field = null, ConditionClauseOperator @operator = default, IEnumerable<string> values = null)
+        /// <returns> A new <see cref="Models.ThreatIntelligenceQueryConditionClause"/> instance for mocking. </returns>
+        public static ThreatIntelligenceQueryConditionClause ThreatIntelligenceQueryConditionClause(ThreatIntelligenceQueryConnective? clauseConnective = null, string field = null, ThreatIntelligenceQueryOperator @operator = default, IEnumerable<string> values = null)
         {
             values ??= new List<string>();
 
-            return new ConditionClause(clauseConnective, field, @operator, values?.ToList(), serializedAdditionalRawData: null);
+            return new ThreatIntelligenceQueryConditionClause(clauseConnective, field, @operator, values?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceCount"/>. </summary>
@@ -4086,9 +4086,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="microsoftEmergingThreatFeed"> Data type for Microsoft Threat Intelligence Platforms data connector. </param>
+        /// <param name="microsoftEmergingThreatFeedState"> Data type for Microsoft Threat Intelligence Platforms data connector. </param>
         /// <returns> A new <see cref="Models.MstiDataConnector"/> instance for mocking. </returns>
-        public static MstiDataConnector MstiDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed microsoftEmergingThreatFeed = null)
+        public static MstiDataConnector MstiDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? microsoftEmergingThreatFeedState = null)
         {
             return new MstiDataConnector(
                 id,
@@ -4099,7 +4099,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 etag,
                 serializedAdditionalRawData: null,
                 tenantId,
-                microsoftEmergingThreatFeed);
+                microsoftEmergingThreatFeedState.HasValue ? new DataConnectorDataTypeCommon(microsoftEmergingThreatFeedState.Value, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MTPDataConnector"/>. </summary>
@@ -4127,8 +4127,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null,
                 tenantId,
                 filteredProvidersAlerts != null ? new MtpFilteredProviders(filteredProvidersAlerts?.ToList(), serializedAdditionalRawData: null) : null,
-                incidentsState.HasValue ? new MTPDataConnectorDataTypesIncidents(incidentsState.Value, serializedAdditionalRawData: null) : null,
-                alertsState.HasValue ? new MTPDataConnectorDataTypesAlerts(alertsState.Value, serializedAdditionalRawData: null) : null);
+                incidentsState.HasValue ? new DataConnectorDataTypeCommon(incidentsState.Value, serializedAdditionalRawData: null) : null,
+                alertsState.HasValue ? new DataConnectorDataTypeCommon(alertsState.Value, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAatpDataConnector"/>. </summary>
@@ -4197,7 +4197,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 etag,
                 serializedAdditionalRawData: null,
                 awsRoleArn,
-                logsState.HasValue ? new AwsCloudTrailDataConnectorDataTypesLogs(logsState.Value, serializedAdditionalRawData: null) : null);
+                logsState.HasValue ? new DataConnectorDataTypeCommon(logsState.Value, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AwsS3DataConnector"/>. </summary>
@@ -4226,7 +4226,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 destinationTable,
                 sqsUrls?.ToList(),
                 roleArn,
-                logsState.HasValue ? new AwsS3DataConnectorDataTypesLogs(logsState.Value, serializedAdditionalRawData: null) : null);
+                logsState.HasValue ? new DataConnectorDataTypeCommon(logsState.Value, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestApiPollerDataConnector"/>. </summary>
@@ -4388,7 +4388,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 etag,
                 serializedAdditionalRawData: null,
                 tenantId,
-                logsState.HasValue ? new MicrosoftPurviewInformationProtectionConnectorDataTypesLogs(logsState.Value, serializedAdditionalRawData: null) : null);
+                logsState.HasValue ? new DataConnectorDataTypeCommon(logsState.Value, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Office365ProjectDataConnector"/>. </summary>
@@ -4411,7 +4411,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 etag,
                 serializedAdditionalRawData: null,
                 tenantId,
-                logsState.HasValue ? new Office365ProjectConnectorDataTypesLogs(logsState.Value, serializedAdditionalRawData: null) : null);
+                logsState.HasValue ? new DataConnectorDataTypeCommon(logsState.Value, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OfficePowerBIDataConnector"/>. </summary>
@@ -4434,7 +4434,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 etag,
                 serializedAdditionalRawData: null,
                 tenantId,
-                logsState.HasValue ? new OfficePowerBIConnectorDataTypesLogs(logsState.Value, serializedAdditionalRawData: null) : null);
+                logsState.HasValue ? new DataConnectorDataTypeCommon(logsState.Value, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OfficeIRMDataConnector"/>. </summary>
@@ -4567,7 +4567,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 password,
                 taxiiLookbackPeriod,
                 pollingFrequency,
-                taxiiClientState.HasValue ? new TiTaxiiDataConnectorDataTypes(taxiiClientState.Value, serializedAdditionalRawData: null) : null);
+                taxiiClientState.HasValue ? new DataConnectorDataTypeCommon(taxiiClientState.Value, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotDataConnector"/>. </summary>

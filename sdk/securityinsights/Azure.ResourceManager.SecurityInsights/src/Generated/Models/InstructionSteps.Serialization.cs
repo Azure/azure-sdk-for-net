@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             string title = default;
             string description = default;
-            IList<InstructionStepsInstructionsItem> instructions = default;
+            IList<ConnectorInstructionModelBase> instructions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<InstructionStepsInstructionsItem> array = new List<InstructionStepsInstructionsItem>();
+                    List<ConnectorInstructionModelBase> array = new List<ConnectorInstructionModelBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstructionStepsInstructionsItem.DeserializeInstructionStepsInstructionsItem(item, options));
+                        array.Add(ConnectorInstructionModelBase.DeserializeConnectorInstructionModelBase(item, options));
                     }
                     instructions = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InstructionSteps(title, description, instructions ?? new ChangeTrackingList<InstructionStepsInstructionsItem>(), serializedAdditionalRawData);
+            return new InstructionSteps(title, description, instructions ?? new ChangeTrackingList<ConnectorInstructionModelBase>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

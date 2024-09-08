@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceCountQuery"/>. </summary>
         /// <param name="condition"> Represents a condition used to query for TI objects. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThreatIntelligenceCountQuery(ConditionProperties condition, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThreatIntelligenceCountQuery(ThreatIntelligenceQueryConditionProperties condition, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Condition = condition;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Represents a condition used to query for TI objects. </summary>
         [WirePath("properties.condition")]
-        public ConditionProperties Condition { get; set; }
+        public ThreatIntelligenceQueryConditionProperties Condition { get; set; }
     }
 }

@@ -15,24 +15,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ConnectivityCriteria : IUtf8JsonSerializable, IJsonModel<ConnectivityCriteria>
+    public partial class ConnectorConnectivityCriterion : IUtf8JsonSerializable, IJsonModel<ConnectorConnectivityCriterion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectorConnectivityCriterion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectivityCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectorConnectivityCriterion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorConnectivityCriterion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCriteria)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorConnectivityCriterion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectivityType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ConnectivityType.Value.ToString());
-            }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ConnectivityCriterionType);
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -61,19 +58,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        ConnectivityCriteria IJsonModel<ConnectivityCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConnectorConnectivityCriterion IJsonModel<ConnectorConnectivityCriterion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorConnectivityCriterion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCriteria)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorConnectivityCriterion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectivityCriteria(document.RootElement, options);
+            return DeserializeConnectorConnectivityCriterion(document.RootElement, options);
         }
 
-        internal static ConnectivityCriteria DeserializeConnectivityCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConnectorConnectivityCriterion DeserializeConnectorConnectivityCriterion(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +78,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            ConnectivityType? type = default;
+            string type = default;
             IList<string> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -89,11 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ConnectivityType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -116,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectivityCriteria(type, value ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ConnectorConnectivityCriterion(type, value ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -130,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectivityType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectivityCriterionType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -138,10 +131,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             else
             {
-                if (Optional.IsDefined(ConnectivityType))
+                if (Optional.IsDefined(ConnectivityCriterionType))
                 {
                     builder.Append("  type: ");
-                    builder.AppendLine($"'{ConnectivityType.Value.ToString()}'");
+                    if (ConnectivityCriterionType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConnectivityCriterionType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConnectivityCriterionType}'");
+                    }
                 }
             }
 
@@ -185,9 +186,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ConnectivityCriteria>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConnectorConnectivityCriterion>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorConnectivityCriterion>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -196,26 +197,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCriteria)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorConnectivityCriterion)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectivityCriteria IPersistableModel<ConnectivityCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConnectorConnectivityCriterion IPersistableModel<ConnectorConnectivityCriterion>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorConnectivityCriterion>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConnectivityCriteria(document.RootElement, options);
+                        return DeserializeConnectorConnectivityCriterion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCriteria)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorConnectivityCriterion)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectivityCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectorConnectivityCriterion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

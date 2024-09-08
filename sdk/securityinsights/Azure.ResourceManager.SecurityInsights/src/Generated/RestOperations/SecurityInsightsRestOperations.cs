@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListGeodataByIPRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentIPAddressBody ipAddressBody)
+        internal RequestUriBuilder CreateListGeodataByIPRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentIPAddressContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateListGeodataByIPRequest(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentIPAddressBody ipAddressBody)
+        internal HttpMessage CreateListGeodataByIPRequest(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentIPAddressContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.SecurityInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(ipAddressBody, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -85,18 +85,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="enrichmentType"> Enrichment type. </param>
-        /// <param name="ipAddressBody"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ipAddressBody"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceEnrichmentIPGeodata>> ListGeodataByIPAsync(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentIPAddressBody ipAddressBody, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceEnrichmentIPGeodata>> ListGeodataByIPAsync(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(ipAddressBody, nameof(ipAddressBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListGeodataByIPRequest(subscriptionId, resourceGroupName, workspaceName, enrichmentType, ipAddressBody);
+            using var message = CreateListGeodataByIPRequest(subscriptionId, resourceGroupName, workspaceName, enrichmentType, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -117,18 +117,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="enrichmentType"> Enrichment type. </param>
-        /// <param name="ipAddressBody"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ipAddressBody"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceEnrichmentIPGeodata> ListGeodataByIP(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentIPAddressBody ipAddressBody, CancellationToken cancellationToken = default)
+        public Response<WorkspaceEnrichmentIPGeodata> ListGeodataByIP(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(ipAddressBody, nameof(ipAddressBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListGeodataByIPRequest(subscriptionId, resourceGroupName, workspaceName, enrichmentType, ipAddressBody);
+            using var message = CreateListGeodataByIPRequest(subscriptionId, resourceGroupName, workspaceName, enrichmentType, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

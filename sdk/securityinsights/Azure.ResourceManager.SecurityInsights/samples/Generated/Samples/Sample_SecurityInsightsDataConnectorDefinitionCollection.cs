@@ -196,9 +196,9 @@ new GraphQuery("Total events received","GitHub audit log events","GitHubAuditLog
             }, new ConnectorDataType[]
             {
 new ConnectorDataType("GitHubAuditLogPolling_CL","GitHubAuditLogPolling_CL \n            | summarize Time = max(TimeGenerated)\n            | where isnotempty(Time)")
-            }, new ConnectivityCriterion[]
+            }, new ConnectorConnectivityCriterion[]
             {
-new ConnectivityCriterion("IsConnectedQuery")
+new ConnectorConnectivityCriterion("IsConnectedQuery")
 {
 Value =
 {

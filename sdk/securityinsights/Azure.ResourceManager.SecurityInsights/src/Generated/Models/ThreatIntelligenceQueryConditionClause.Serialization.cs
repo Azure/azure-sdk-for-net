@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ConditionClause : IUtf8JsonSerializable, IJsonModel<ConditionClause>
+    public partial class ThreatIntelligenceQueryConditionClause : IUtf8JsonSerializable, IJsonModel<ThreatIntelligenceQueryConditionClause>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConditionClause>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceQueryConditionClause>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConditionClause>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ThreatIntelligenceQueryConditionClause>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConditionClause>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceQueryConditionClause>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConditionClause)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceQueryConditionClause)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        ConditionClause IJsonModel<ConditionClause>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ThreatIntelligenceQueryConditionClause IJsonModel<ThreatIntelligenceQueryConditionClause>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConditionClause>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceQueryConditionClause>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConditionClause)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceQueryConditionClause)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConditionClause(document.RootElement, options);
+            return DeserializeThreatIntelligenceQueryConditionClause(document.RootElement, options);
         }
 
-        internal static ConditionClause DeserializeConditionClause(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ThreatIntelligenceQueryConditionClause DeserializeThreatIntelligenceQueryConditionClause(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            ClauseConnective? clauseConnective = default;
+            ThreatIntelligenceQueryConnective? clauseConnective = default;
             string field = default;
-            ConditionClauseOperator @operator = default;
+            ThreatIntelligenceQueryOperator @operator = default;
             IList<string> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    clauseConnective = new ClauseConnective(property.Value.GetString());
+                    clauseConnective = new ThreatIntelligenceQueryConnective(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("field"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("operator"u8))
                 {
-                    @operator = new ConditionClauseOperator(property.Value.GetString());
+                    @operator = new ThreatIntelligenceQueryOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("values"u8))
@@ -123,38 +123,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConditionClause(clauseConnective, field, @operator, values, serializedAdditionalRawData);
+            return new ThreatIntelligenceQueryConditionClause(clauseConnective, field, @operator, values, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConditionClause>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ThreatIntelligenceQueryConditionClause>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConditionClause>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceQueryConditionClause>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConditionClause)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceQueryConditionClause)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConditionClause IPersistableModel<ConditionClause>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ThreatIntelligenceQueryConditionClause IPersistableModel<ThreatIntelligenceQueryConditionClause>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConditionClause>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceQueryConditionClause>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConditionClause(document.RootElement, options);
+                        return DeserializeThreatIntelligenceQueryConditionClause(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConditionClause)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceQueryConditionClause)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConditionClause>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ThreatIntelligenceQueryConditionClause>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

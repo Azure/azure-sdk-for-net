@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="operator"> Operator used for list of dependencies in criteria array. </param>
         /// <param name="criteria"> This is the list of dependencies we must fulfill, according to the AND/OR operator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetadataDependencies(string contentId, SecurityInsightsKind? kind, string version, string name, ConditionClauseOperator? @operator, IList<MetadataDependencies> criteria, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MetadataDependencies(string contentId, SecurityInsightsKind? kind, string version, string name, ThreatIntelligenceQueryOperator? @operator, IList<MetadataDependencies> criteria, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContentId = contentId;
             Kind = kind;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Name { get; set; }
         /// <summary> Operator used for list of dependencies in criteria array. </summary>
         [WirePath("operator")]
-        public ConditionClauseOperator? Operator { get; set; }
+        public ThreatIntelligenceQueryOperator? Operator { get; set; }
         /// <summary> This is the list of dependencies we must fulfill, according to the AND/OR operator. </summary>
         [WirePath("criteria")]
         public IList<MetadataDependencies> Criteria { get; }

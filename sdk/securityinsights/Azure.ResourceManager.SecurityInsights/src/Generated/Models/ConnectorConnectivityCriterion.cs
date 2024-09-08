@@ -10,8 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Setting for the connector check connectivity. </summary>
-    public partial class ConnectivityCriteria
+    /// <summary>
+    /// The criteria by which we determine whether the connector is connected or not.
+    /// For Example, use a KQL query to check if  the expected data type is flowing).
+    /// </summary>
+    public partial class ConnectorConnectivityCriterion
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,29 +46,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectivityCriteria"/>. </summary>
-        public ConnectivityCriteria()
+        /// <summary> Initializes a new instance of <see cref="ConnectorConnectivityCriterion"/>. </summary>
+        /// <param name="connectivityCriterionType"> Gets or sets the type of connectivity. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectivityCriterionType"/> is null. </exception>
+        public ConnectorConnectivityCriterion(string connectivityCriterionType)
         {
+            Argument.AssertNotNull(connectivityCriterionType, nameof(connectivityCriterionType));
+
+            ConnectivityCriterionType = connectivityCriterionType;
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectivityCriteria"/>. </summary>
-        /// <param name="connectivityType"> type of connectivity. </param>
-        /// <param name="value"> Queries for checking connectivity. </param>
+        /// <summary> Initializes a new instance of <see cref="ConnectorConnectivityCriterion"/>. </summary>
+        /// <param name="connectivityCriterionType"> Gets or sets the type of connectivity. </param>
+        /// <param name="value"> Gets or sets the queries for checking connectivity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityCriteria(ConnectivityType? connectivityType, IList<string> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectorConnectivityCriterion(string connectivityCriterionType, IList<string> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConnectivityType = connectivityType;
+            ConnectivityCriterionType = connectivityCriterionType;
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> type of connectivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorConnectivityCriterion"/> for deserialization. </summary>
+        internal ConnectorConnectivityCriterion()
+        {
+        }
+
+        /// <summary> Gets or sets the type of connectivity. </summary>
         [WirePath("type")]
-        public ConnectivityType? ConnectivityType { get; set; }
-        /// <summary> Queries for checking connectivity. </summary>
+        public string ConnectivityCriterionType { get; set; }
+        /// <summary> Gets or sets the queries for checking connectivity. </summary>
         [WirePath("value")]
         public IList<string> Value { get; }
     }

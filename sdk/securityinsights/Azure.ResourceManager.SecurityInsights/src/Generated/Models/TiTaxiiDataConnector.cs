@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="taxiiLookbackPeriod"> The lookback period for the TAXII server. </param>
         /// <param name="pollingFrequency"> The polling frequency for the TAXII server. </param>
         /// <param name="taxiiClient"> Data type for TAXII connector. </param>
-        internal TiTaxiiDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, string workspaceId, string friendlyName, string taxiiServer, string collectionId, string userName, string password, DateTimeOffset? taxiiLookbackPeriod, PollingFrequency? pollingFrequency, TiTaxiiDataConnectorDataTypes taxiiClient) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal TiTaxiiDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, string workspaceId, string friendlyName, string taxiiServer, string collectionId, string userName, string password, DateTimeOffset? taxiiLookbackPeriod, PollingFrequency? pollingFrequency, DataConnectorDataTypeCommon taxiiClient) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
             WorkspaceId = workspaceId;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         [WirePath("properties.pollingFrequency")]
         public PollingFrequency? PollingFrequency { get; set; }
         /// <summary> Data type for TAXII connector. </summary>
-        internal TiTaxiiDataConnectorDataTypes TaxiiClient { get; set; }
+        internal DataConnectorDataTypeCommon TaxiiClient { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         [WirePath("properties.taxiiClient.state")]
         public SecurityInsightsDataTypeConnectionState? TaxiiClientState
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             get => TaxiiClient is null ? default(SecurityInsightsDataTypeConnectionState?) : TaxiiClient.State;
             set
             {
-                TaxiiClient = value.HasValue ? new TiTaxiiDataConnectorDataTypes(value.Value) : null;
+                TaxiiClient = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
             }
         }
     }

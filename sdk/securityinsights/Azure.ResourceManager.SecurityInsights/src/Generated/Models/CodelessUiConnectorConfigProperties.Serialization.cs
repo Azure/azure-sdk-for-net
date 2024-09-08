@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string descriptionMarkdown = default;
             string customImage = default;
             string graphQueriesTableName = default;
-            IList<CodelessUiConnectorConfigPropertiesGraphQueriesItem> graphQueries = default;
-            IList<CodelessUiConnectorConfigPropertiesSampleQueriesItem> sampleQueries = default;
-            IList<CodelessUiConnectorConfigPropertiesDataTypesItem> dataTypes = default;
-            IList<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem> connectivityCriteria = default;
+            IList<GraphQueries> graphQueries = default;
+            IList<SampleQueries> sampleQueries = default;
+            IList<LastDataReceivedDataType> dataTypes = default;
+            IList<ConnectorConnectivityCriteria> connectivityCriteria = default;
             ConnectorAvailability availability = default;
             ConnectorPermissions permissions = default;
-            IList<CodelessUiConnectorConfigPropertiesInstructionStepsItem> instructionSteps = default;
+            IList<InstructionSteps> instructionSteps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,40 +161,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("graphQueries"u8))
                 {
-                    List<CodelessUiConnectorConfigPropertiesGraphQueriesItem> array = new List<CodelessUiConnectorConfigPropertiesGraphQueriesItem>();
+                    List<GraphQueries> array = new List<GraphQueries>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CodelessUiConnectorConfigPropertiesGraphQueriesItem.DeserializeCodelessUiConnectorConfigPropertiesGraphQueriesItem(item, options));
+                        array.Add(Models.GraphQueries.DeserializeGraphQueries(item, options));
                     }
                     graphQueries = array;
                     continue;
                 }
                 if (property.NameEquals("sampleQueries"u8))
                 {
-                    List<CodelessUiConnectorConfigPropertiesSampleQueriesItem> array = new List<CodelessUiConnectorConfigPropertiesSampleQueriesItem>();
+                    List<SampleQueries> array = new List<SampleQueries>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CodelessUiConnectorConfigPropertiesSampleQueriesItem.DeserializeCodelessUiConnectorConfigPropertiesSampleQueriesItem(item, options));
+                        array.Add(Models.SampleQueries.DeserializeSampleQueries(item, options));
                     }
                     sampleQueries = array;
                     continue;
                 }
                 if (property.NameEquals("dataTypes"u8))
                 {
-                    List<CodelessUiConnectorConfigPropertiesDataTypesItem> array = new List<CodelessUiConnectorConfigPropertiesDataTypesItem>();
+                    List<LastDataReceivedDataType> array = new List<LastDataReceivedDataType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CodelessUiConnectorConfigPropertiesDataTypesItem.DeserializeCodelessUiConnectorConfigPropertiesDataTypesItem(item, options));
+                        array.Add(LastDataReceivedDataType.DeserializeLastDataReceivedDataType(item, options));
                     }
                     dataTypes = array;
                     continue;
                 }
                 if (property.NameEquals("connectivityCriteria"u8))
                 {
-                    List<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem> array = new List<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem>();
+                    List<ConnectorConnectivityCriteria> array = new List<ConnectorConnectivityCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem.DeserializeCodelessUiConnectorConfigPropertiesConnectivityCriteriaItem(item, options));
+                        array.Add(ConnectorConnectivityCriteria.DeserializeConnectorConnectivityCriteria(item, options));
                     }
                     connectivityCriteria = array;
                     continue;
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("instructionSteps"u8))
                 {
-                    List<CodelessUiConnectorConfigPropertiesInstructionStepsItem> array = new List<CodelessUiConnectorConfigPropertiesInstructionStepsItem>();
+                    List<InstructionSteps> array = new List<InstructionSteps>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CodelessUiConnectorConfigPropertiesInstructionStepsItem.DeserializeCodelessUiConnectorConfigPropertiesInstructionStepsItem(item, options));
+                        array.Add(Models.InstructionSteps.DeserializeInstructionSteps(item, options));
                     }
                     instructionSteps = array;
                     continue;

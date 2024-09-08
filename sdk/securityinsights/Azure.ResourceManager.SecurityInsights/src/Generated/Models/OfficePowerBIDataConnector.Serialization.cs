@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             SystemData systemData = default;
             Guid? tenantId = default;
-            OfficePowerBIConnectorDataTypesLogs logs = default;
+            DataConnectorDataTypeCommon logs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                     {
                                         continue;
                                     }
-                                    logs = OfficePowerBIConnectorDataTypesLogs.DeserializeOfficePowerBIConnectorDataTypesLogs(property1.Value, options);
+                                    logs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
                                     continue;
                                 }
                             }

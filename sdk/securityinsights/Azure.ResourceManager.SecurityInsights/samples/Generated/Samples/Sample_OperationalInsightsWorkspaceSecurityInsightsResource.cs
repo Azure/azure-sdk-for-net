@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
 
             // invoke the operation
             EnrichmentType enrichmentType = EnrichmentType.Main;
-            EnrichmentIPAddressBody ipAddressBody = new EnrichmentIPAddressBody()
+            EnrichmentIPAddressContent content = new EnrichmentIPAddressContent()
             {
                 IPAddress = "1.2.3.4",
             };
-            WorkspaceEnrichmentIPGeodata result = await operationalInsightsWorkspaceSecurityInsights.GetGeodataByIPAsync(enrichmentType, ipAddressBody);
+            WorkspaceEnrichmentIPGeodata result = await operationalInsightsWorkspaceSecurityInsights.GetGeodataByIPAsync(enrichmentType, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

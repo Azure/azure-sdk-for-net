@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ConnectedEntity : IUtf8JsonSerializable, IJsonModel<ConnectedEntity>
+    public partial class BookmarkConnectedEntity : IUtf8JsonSerializable, IJsonModel<BookmarkConnectedEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BookmarkConnectedEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectedEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BookmarkConnectedEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BookmarkConnectedEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectedEntity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BookmarkConnectedEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        ConnectedEntity IJsonModel<ConnectedEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BookmarkConnectedEntity IJsonModel<BookmarkConnectedEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BookmarkConnectedEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectedEntity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BookmarkConnectedEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectedEntity(document.RootElement, options);
+            return DeserializeBookmarkConnectedEntity(document.RootElement, options);
         }
 
-        internal static ConnectedEntity DeserializeConnectedEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BookmarkConnectedEntity DeserializeBookmarkConnectedEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectedEntity(targetEntityId, additionalData, serializedAdditionalRawData);
+            return new BookmarkConnectedEntity(targetEntityId, additionalData, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ConnectedEntity>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BookmarkConnectedEntity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BookmarkConnectedEntity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -175,26 +175,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedEntity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BookmarkConnectedEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectedEntity IPersistableModel<ConnectedEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BookmarkConnectedEntity IPersistableModel<BookmarkConnectedEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BookmarkConnectedEntity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConnectedEntity(document.RootElement, options);
+                        return DeserializeBookmarkConnectedEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedEntity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BookmarkConnectedEntity)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectedEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BookmarkConnectedEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

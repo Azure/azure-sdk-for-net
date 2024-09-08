@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="InstructionSteps"/>. </summary>
         public InstructionSteps()
         {
-            Instructions = new ChangeTrackingList<InstructionStepsInstructionsItem>();
+            Instructions = new ChangeTrackingList<ConnectorInstructionModelBase>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InstructionSteps"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="description"> Instruction step description. </param>
         /// <param name="instructions"> Instruction step details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstructionSteps(string title, string description, IList<InstructionStepsInstructionsItem> instructions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InstructionSteps(string title, string description, IList<ConnectorInstructionModelBase> instructions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Description = description;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Description { get; set; }
         /// <summary> Instruction step details. </summary>
         [WirePath("instructions")]
-        public IList<InstructionStepsInstructionsItem> Instructions { get; }
+        public IList<ConnectorInstructionModelBase> Instructions { get; }
     }
 }

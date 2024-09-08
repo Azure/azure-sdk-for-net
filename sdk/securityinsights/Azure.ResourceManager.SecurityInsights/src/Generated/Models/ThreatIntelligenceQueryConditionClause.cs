@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a single clause to be evaluated by a NormalizedCondition. </summary>
-    public partial class ConditionClause
+    public partial class ThreatIntelligenceQueryConditionClause
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConditionClause"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceQueryConditionClause"/>. </summary>
         /// <param name="field"> The name of the field that is evaluated. </param>
         /// <param name="operator"> Represents an operator in a ConditionClause. </param>
         /// <param name="values"> The top level connective operator for this condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="field"/> or <paramref name="values"/> is null. </exception>
-        public ConditionClause(string field, ConditionClauseOperator @operator, IEnumerable<string> values)
+        public ThreatIntelligenceQueryConditionClause(string field, ThreatIntelligenceQueryOperator @operator, IEnumerable<string> values)
         {
             Argument.AssertNotNull(field, nameof(field));
             Argument.AssertNotNull(values, nameof(values));
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConditionClause"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceQueryConditionClause"/>. </summary>
         /// <param name="clauseConnective"> The connective used to join all values in this ConditionClause. </param>
         /// <param name="field"> The name of the field that is evaluated. </param>
         /// <param name="operator"> Represents an operator in a ConditionClause. </param>
         /// <param name="values"> The top level connective operator for this condition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConditionClause(ClauseConnective? clauseConnective, string field, ConditionClauseOperator @operator, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThreatIntelligenceQueryConditionClause(ThreatIntelligenceQueryConnective? clauseConnective, string field, ThreatIntelligenceQueryOperator @operator, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClauseConnective = clauseConnective;
             Field = field;
@@ -76,20 +76,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConditionClause"/> for deserialization. </summary>
-        internal ConditionClause()
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceQueryConditionClause"/> for deserialization. </summary>
+        internal ThreatIntelligenceQueryConditionClause()
         {
         }
 
         /// <summary> The connective used to join all values in this ConditionClause. </summary>
         [WirePath("clauseConnective")]
-        public ClauseConnective? ClauseConnective { get; set; }
+        public ThreatIntelligenceQueryConnective? ClauseConnective { get; set; }
         /// <summary> The name of the field that is evaluated. </summary>
         [WirePath("field")]
         public string Field { get; }
         /// <summary> Represents an operator in a ConditionClause. </summary>
         [WirePath("operator")]
-        public ConditionClauseOperator Operator { get; }
+        public ThreatIntelligenceQueryOperator Operator { get; }
         /// <summary> The top level connective operator for this condition. </summary>
         [WirePath("values")]
         public IList<string> Values { get; }
