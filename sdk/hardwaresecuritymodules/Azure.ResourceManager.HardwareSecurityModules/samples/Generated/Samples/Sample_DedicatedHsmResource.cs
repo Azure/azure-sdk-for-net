@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             DedicatedHsmResource dedicatedHsm = client.GetDedicatedHsmResource(dedicatedHsmResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (OutboundEnvironmentEndpoint item in dedicatedHsm.GetOutboundNetworkDependenciesEndpointsAsync())
+            await foreach (DedicatedHsmEgressEndpoint item in dedicatedHsm.GetOutboundNetworkDependenciesEndpointsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

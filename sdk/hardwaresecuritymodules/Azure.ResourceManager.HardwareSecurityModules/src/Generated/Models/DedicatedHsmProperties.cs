@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Properties of the dedicated hsm. </summary>
+    /// <summary>
+    /// Properties of the dedicated hsm
+    /// Serialized Name: DedicatedHsmProperties
+    /// </summary>
     public partial class DedicatedHsmProperties
     {
         /// <summary>
@@ -51,13 +54,28 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmProperties"/>. </summary>
-        /// <param name="networkProfile"> Specifies the network interfaces of the dedicated hsm. </param>
-        /// <param name="managementNetworkProfile"> Specifies the management network interfaces of the dedicated hsm. </param>
-        /// <param name="stampId"> This field will be used when RP does not support Availability zones. </param>
-        /// <param name="statusMessage"> Resource Status Message. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="networkProfile">
+        /// Specifies the network interfaces of the dedicated hsm.
+        /// Serialized Name: DedicatedHsmProperties.networkProfile
+        /// </param>
+        /// <param name="managementNetworkProfile">
+        /// Specifies the management network interfaces of the dedicated hsm.
+        /// Serialized Name: DedicatedHsmProperties.managementNetworkProfile
+        /// </param>
+        /// <param name="stampId">
+        /// This field will be used when RP does not support Availability zones.
+        /// Serialized Name: DedicatedHsmProperties.stampId
+        /// </param>
+        /// <param name="statusMessage">
+        /// Resource Status Message.
+        /// Serialized Name: DedicatedHsmProperties.statusMessage
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state.
+        /// Serialized Name: DedicatedHsmProperties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHsmProperties(NetworkProfile networkProfile, NetworkProfile managementNetworkProfile, string stampId, string statusMessage, JsonWebKeyType? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DedicatedHsmProperties(DedicatedHsmNetworkProfile networkProfile, DedicatedHsmNetworkProfile managementNetworkProfile, string stampId, string statusMessage, DedicatedHsmJsonWebKeyType? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkProfile = networkProfile;
             ManagementNetworkProfile = managementNetworkProfile;
@@ -67,15 +85,30 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the network interfaces of the dedicated hsm. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
-        /// <summary> Specifies the management network interfaces of the dedicated hsm. </summary>
-        public NetworkProfile ManagementNetworkProfile { get; set; }
-        /// <summary> This field will be used when RP does not support Availability zones. </summary>
+        /// <summary>
+        /// Specifies the network interfaces of the dedicated hsm.
+        /// Serialized Name: DedicatedHsmProperties.networkProfile
+        /// </summary>
+        public DedicatedHsmNetworkProfile NetworkProfile { get; set; }
+        /// <summary>
+        /// Specifies the management network interfaces of the dedicated hsm.
+        /// Serialized Name: DedicatedHsmProperties.managementNetworkProfile
+        /// </summary>
+        public DedicatedHsmNetworkProfile ManagementNetworkProfile { get; set; }
+        /// <summary>
+        /// This field will be used when RP does not support Availability zones.
+        /// Serialized Name: DedicatedHsmProperties.stampId
+        /// </summary>
         public string StampId { get; set; }
-        /// <summary> Resource Status Message. </summary>
+        /// <summary>
+        /// Resource Status Message.
+        /// Serialized Name: DedicatedHsmProperties.statusMessage
+        /// </summary>
         public string StatusMessage { get; }
-        /// <summary> Provisioning state. </summary>
-        public JsonWebKeyType? ProvisioningState { get; }
+        /// <summary>
+        /// Provisioning state.
+        /// Serialized Name: DedicatedHsmProperties.provisioningState
+        /// </summary>
+        public DedicatedHsmJsonWebKeyType? ProvisioningState { get; }
     }
 }

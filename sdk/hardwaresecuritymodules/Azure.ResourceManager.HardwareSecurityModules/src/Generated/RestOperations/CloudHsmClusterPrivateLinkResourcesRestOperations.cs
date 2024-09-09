@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HardwareSecurityModulesPrivateLinkResourceListResult>> ListByCloudHsmClusterAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudHsmClusterPrivateLinkResourceListResult>> ListByCloudHsmClusterAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 case 200:
                     {
-                        HardwareSecurityModulesPrivateLinkResourceListResult value = default;
+                        CloudHsmClusterPrivateLinkResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HardwareSecurityModulesPrivateLinkResourceListResult.DeserializeHardwareSecurityModulesPrivateLinkResourceListResult(document.RootElement);
+                        value = CloudHsmClusterPrivateLinkResourceListResult.DeserializeCloudHsmClusterPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HardwareSecurityModulesPrivateLinkResourceListResult> ListByCloudHsmCluster(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
+        public Response<CloudHsmClusterPrivateLinkResourceListResult> ListByCloudHsmCluster(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 case 200:
                     {
-                        HardwareSecurityModulesPrivateLinkResourceListResult value = default;
+                        CloudHsmClusterPrivateLinkResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HardwareSecurityModulesPrivateLinkResourceListResult.DeserializeHardwareSecurityModulesPrivateLinkResourceListResult(document.RootElement);
+                        value = CloudHsmClusterPrivateLinkResourceListResult.DeserializeCloudHsmClusterPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HardwareSecurityModulesPrivateLinkResourceListResult>> ListByCloudHsmClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudHsmClusterPrivateLinkResourceListResult>> ListByCloudHsmClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 case 200:
                     {
-                        HardwareSecurityModulesPrivateLinkResourceListResult value = default;
+                        CloudHsmClusterPrivateLinkResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HardwareSecurityModulesPrivateLinkResourceListResult.DeserializeHardwareSecurityModulesPrivateLinkResourceListResult(document.RootElement);
+                        value = CloudHsmClusterPrivateLinkResourceListResult.DeserializeCloudHsmClusterPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HardwareSecurityModulesPrivateLinkResourceListResult> ListByCloudHsmClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
+        public Response<CloudHsmClusterPrivateLinkResourceListResult> ListByCloudHsmClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 case 200:
                     {
-                        HardwareSecurityModulesPrivateLinkResourceListResult value = default;
+                        CloudHsmClusterPrivateLinkResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HardwareSecurityModulesPrivateLinkResourceListResult.DeserializeHardwareSecurityModulesPrivateLinkResourceListResult(document.RootElement);
+                        value = CloudHsmClusterPrivateLinkResourceListResult.DeserializeCloudHsmClusterPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

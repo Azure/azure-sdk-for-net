@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            NetworkProfile networkProfile = default;
-            NetworkProfile managementNetworkProfile = default;
+            DedicatedHsmNetworkProfile networkProfile = default;
+            DedicatedHsmNetworkProfile managementNetworkProfile = default;
             string stampId = default;
             string statusMessage = default;
-            JsonWebKeyType? provisioningState = default;
+            DedicatedHsmJsonWebKeyType? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfile.DeserializeNetworkProfile(property.Value, options);
+                    networkProfile = DedicatedHsmNetworkProfile.DeserializeDedicatedHsmNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managementNetworkProfile"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    managementNetworkProfile = NetworkProfile.DeserializeNetworkProfile(property.Value, options);
+                    managementNetworkProfile = DedicatedHsmNetworkProfile.DeserializeDedicatedHsmNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stampId"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    provisioningState = new JsonWebKeyType(property.Value.GetString());
+                    provisioningState = new DedicatedHsmJsonWebKeyType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

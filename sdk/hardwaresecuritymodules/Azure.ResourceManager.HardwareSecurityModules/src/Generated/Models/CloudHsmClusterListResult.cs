@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> List of Cloud HSM Clusters. </summary>
+    /// <summary>
+    /// List of Cloud HSM Clusters
+    /// Serialized Name: CloudHsmClusterListResult
+    /// </summary>
     internal partial class CloudHsmClusterListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterListResult"/>. </summary>
-        /// <param name="value"> The list of Cloud HSM Clusters. </param>
-        /// <param name="nextLink"> The URL to get the next set of Cloud HSM Clusters. </param>
+        /// <param name="value">
+        /// The list of Cloud HSM Clusters.
+        /// Serialized Name: CloudHsmClusterListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of Cloud HSM Clusters.
+        /// Serialized Name: CloudHsmClusterListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmClusterListResult(IReadOnlyList<CloudHsmClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of Cloud HSM Clusters. </summary>
+        /// <summary>
+        /// The list of Cloud HSM Clusters.
+        /// Serialized Name: CloudHsmClusterListResult.value
+        /// </summary>
         public IReadOnlyList<CloudHsmClusterData> Value { get; }
-        /// <summary> The URL to get the next set of Cloud HSM Clusters. </summary>
+        /// <summary>
+        /// The URL to get the next set of Cloud HSM Clusters.
+        /// Serialized Name: CloudHsmClusterListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

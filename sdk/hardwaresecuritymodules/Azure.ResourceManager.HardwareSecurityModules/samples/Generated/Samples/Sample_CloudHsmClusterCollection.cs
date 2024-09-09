@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
                 Properties = new CloudHsmClusterProperties()
                 {
                     FipsApprovedMode = false,
-                    PublicNetworkAccess = PublicNetworkAccess.Disabled,
+                    PublicNetworkAccess = CloudHsmClusterPublicNetworkAccess.Disabled,
                 },
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {

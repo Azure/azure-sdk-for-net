@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     /// <summary>
     /// A class representing the CloudHsmCluster data model.
     /// Resource information with extended details.
+    /// Serialized Name: CloudHsmCluster
     /// </summary>
     public partial class CloudHsmClusterData : TrackedResourceData
     {
@@ -64,9 +65,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Properties of the Cloud HSM Cluster. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="sku"> SKU details. </param>
+        /// <param name="properties">
+        /// Properties of the Cloud HSM Cluster
+        /// Serialized Name: CloudHsmCluster.properties
+        /// </param>
+        /// <param name="identity">
+        /// Managed service identity (system assigned and/or user assigned identities)
+        /// Serialized Name: CloudHsmClusterResource.identity
+        /// </param>
+        /// <param name="sku">
+        /// SKU details
+        /// Serialized Name: CloudHsmClusterResource.sku
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CloudHsmClusterProperties properties, ManagedServiceIdentity identity, CloudHsmClusterSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -81,11 +91,20 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
         }
 
-        /// <summary> Properties of the Cloud HSM Cluster. </summary>
+        /// <summary>
+        /// Properties of the Cloud HSM Cluster
+        /// Serialized Name: CloudHsmCluster.properties
+        /// </summary>
         public CloudHsmClusterProperties Properties { get; set; }
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        /// <summary>
+        /// Managed service identity (system assigned and/or user assigned identities)
+        /// Serialized Name: CloudHsmClusterResource.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> SKU details. </summary>
+        /// <summary>
+        /// SKU details
+        /// Serialized Name: CloudHsmClusterResource.sku
+        /// </summary>
         public CloudHsmClusterSku Sku { get; set; }
     }
 }

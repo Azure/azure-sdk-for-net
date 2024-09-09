@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Patchable properties of the dedicated HSM. </summary>
+    /// <summary>
+    /// Patchable properties of the dedicated HSM
+    /// Serialized Name: DedicatedHsmPatchParameters
+    /// </summary>
     public partial class DedicatedHsmPatch
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="tags">
+        /// Resource tags
+        /// Serialized Name: DedicatedHsmPatchParameters.tags
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DedicatedHsmPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags
+        /// Serialized Name: DedicatedHsmPatchParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

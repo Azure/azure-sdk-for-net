@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Sku family of the Cloud HSM Cluster. </summary>
+    /// <summary>
+    /// Sku family of the Cloud HSM Cluster
+    /// Serialized Name: CloudHsmClusterSkuFamily
+    /// </summary>
     public readonly partial struct CloudHsmClusterSkuFamily : IEquatable<CloudHsmClusterSkuFamily>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         private const string BValue = "B";
 
-        /// <summary> B. </summary>
+        /// <summary>
+        /// B
+        /// Serialized Name: CloudHsmClusterSkuFamily.B
+        /// </summary>
         public static CloudHsmClusterSkuFamily B { get; } = new CloudHsmClusterSkuFamily(BValue);
         /// <summary> Determines if two <see cref="CloudHsmClusterSkuFamily"/> values are the same. </summary>
         public static bool operator ==(CloudHsmClusterSkuFamily left, CloudHsmClusterSkuFamily right) => left.Equals(right);

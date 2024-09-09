@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Patchable properties of the Cloud HSM Cluster. </summary>
+    /// <summary>
+    /// Patchable properties of the Cloud HSM Cluster
+    /// Serialized Name: CloudHsmClusterPatchParameters
+    /// </summary>
     public partial class CloudHsmClusterPatch
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPatch"/>. </summary>
-        /// <param name="tags"> The Cloud HSM Cluster's tags. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="tags">
+        /// The Cloud HSM Cluster's tags
+        /// Serialized Name: CloudHsmClusterPatchParameters.tags
+        /// </param>
+        /// <param name="identity">
+        /// Managed service identity (system assigned and/or user assigned identities)
+        /// Serialized Name: CloudHsmClusterPatchParameters.identity
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmClusterPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +72,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Cloud HSM Cluster's tags. </summary>
+        /// <summary>
+        /// The Cloud HSM Cluster's tags
+        /// Serialized Name: CloudHsmClusterPatchParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        /// <summary>
+        /// Managed service identity (system assigned and/or user assigned identities)
+        /// Serialized Name: CloudHsmClusterPatchParameters.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

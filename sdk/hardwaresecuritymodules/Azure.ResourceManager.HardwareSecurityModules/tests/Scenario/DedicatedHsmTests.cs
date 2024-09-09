@@ -37,31 +37,31 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
             VirtualNetworkResource vnetResource = await CreateVnet();
             subnetID = vnetResource.Data.Subnets[0].Id;
 
-            HardwareSecurityModulesSku sku = new HardwareSecurityModulesSku()
+            DedicatedHsmSku sku = new DedicatedHsmSku()
             {
-                Name = HardwareSecurityModulesSkuName.PayShield10KLMK1CPS60
+                Name = DedicatedHsmSkuName.PayShield10KLmk1Cps60
             };
 
             DedicatedHsmProperties properties = new DedicatedHsmProperties()
             {
-                NetworkProfile = new NetworkProfile()
+                NetworkProfile = new DedicatedHsmNetworkProfile()
                 {
                     SubnetResourceId = subnetID,
                     NetworkInterfaces = {
-                        new NetworkInterface() {
+                        new DedicatedHsmNetworkInterface() {
                             PrivateIPAddress = "10.0.0.4"
                         },
-                        new NetworkInterface() {
+                        new DedicatedHsmNetworkInterface() {
                             PrivateIPAddress = "10.0.0.5"
                         }
                     }
                 },
 
-                ManagementNetworkProfile = new NetworkProfile()
+                ManagementNetworkProfile = new DedicatedHsmNetworkProfile()
                 {
                     SubnetResourceId = subnetID,
                     NetworkInterfaces = {
-                        new NetworkInterface() {
+                        new DedicatedHsmNetworkInterface() {
                             PrivateIPAddress = "10.0.0.6"
                         }
                     }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
                 ResourceGroupResource.Data.Name,
                 resourceName,
                 Location.Name,
-                HardwareSecurityModulesSkuName.PayShield10KLMK1CPS60.ToString(),
+                DedicatedHsmSkuName.PayShield10KLmk1Cps60.ToString(),
                 new Dictionary<string, string>(dedicatedHsmData.Tags));
 
             var getOperation = await collection.GetAsync(resourceName);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
                 ResourceGroupResource.Data.Name,
                 resourceName,
                 Location.Name,
-                HardwareSecurityModulesSkuName.PayShield10KLMK1CPS60.ToString(),
+                DedicatedHsmSkuName.PayShield10KLmk1Cps60.ToString(),
                 new Dictionary<string, string>(getOperation.Value.Data.Tags));
 
             var getAllOperation = collection.GetAllAsync();

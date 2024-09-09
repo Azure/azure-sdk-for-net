@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> The Cloud HSM Properties. </summary>
+    /// <summary>
+    /// The Cloud HSM Properties
+    /// Serialized Name: CloudHsmProperties
+    /// </summary>
     public partial class CloudHsmProperties
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmProperties"/>. </summary>
-        /// <param name="fqdn"> FQDN of the Cloud HSM. </param>
-        /// <param name="state"> The Cloud HSM State. Values are: Deploying, ConfiguringSlb, Starting, Starting, Failed, Failed, Deleting, DeletingSlbEntry, InitialProvisioning, Updating. </param>
-        /// <param name="stateMessage"> The Cloud HSM State message. </param>
+        /// <param name="fqdn">
+        /// FQDN of the Cloud HSM
+        /// Serialized Name: CloudHsmProperties.fqdn
+        /// </param>
+        /// <param name="state">
+        /// The Cloud HSM State. Values are: Deploying, ConfiguringSlb, Starting, Starting, Failed, Failed, Deleting, DeletingSlbEntry, InitialProvisioning, Updating
+        /// Serialized Name: CloudHsmProperties.state
+        /// </param>
+        /// <param name="stateMessage">
+        /// The Cloud HSM State message
+        /// Serialized Name: CloudHsmProperties.stateMessage
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmProperties(string fqdn, string state, string stateMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> FQDN of the Cloud HSM. </summary>
+        /// <summary>
+        /// FQDN of the Cloud HSM
+        /// Serialized Name: CloudHsmProperties.fqdn
+        /// </summary>
         public string Fqdn { get; }
-        /// <summary> The Cloud HSM State. Values are: Deploying, ConfiguringSlb, Starting, Starting, Failed, Failed, Deleting, DeletingSlbEntry, InitialProvisioning, Updating. </summary>
+        /// <summary>
+        /// The Cloud HSM State. Values are: Deploying, ConfiguringSlb, Starting, Starting, Failed, Failed, Deleting, DeletingSlbEntry, InitialProvisioning, Updating
+        /// Serialized Name: CloudHsmProperties.state
+        /// </summary>
         public string State { get; }
-        /// <summary> The Cloud HSM State message. </summary>
+        /// <summary>
+        /// The Cloud HSM State message
+        /// Serialized Name: CloudHsmProperties.stateMessage
+        /// </summary>
         public string StateMessage { get; }
     }
 }

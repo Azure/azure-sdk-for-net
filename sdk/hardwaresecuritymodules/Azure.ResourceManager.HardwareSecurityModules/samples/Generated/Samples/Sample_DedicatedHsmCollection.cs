@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new HardwareSecurityModulesSku()
+            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku()
             {
-                Name = HardwareSecurityModulesSkuName.SafeNetLunaNetworkHSMA790,
+                Name = new DedicatedHsmSkuName("SafeNet Luna Network HSM A790"),
             }, new DedicatedHsmProperties()
             {
-                NetworkProfile = new NetworkProfile()
+                NetworkProfile = new DedicatedHsmNetworkProfile()
                 {
                     SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
-new NetworkInterface()
+new DedicatedHsmNetworkInterface()
 {
 PrivateIPAddress = "1.0.0.1",
 }
@@ -101,17 +101,17 @@ PrivateIPAddress = "1.0.0.1",
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new HardwareSecurityModulesSku()
+            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku()
             {
-                Name = HardwareSecurityModulesSkuName.PayShield10KLMK1CPS60,
+                Name = DedicatedHsmSkuName.PayShield10KLmk1Cps60,
             }, new DedicatedHsmProperties()
             {
-                NetworkProfile = new NetworkProfile()
+                NetworkProfile = new DedicatedHsmNetworkProfile()
                 {
                     SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
-new NetworkInterface()
+new DedicatedHsmNetworkInterface()
 {
 PrivateIPAddress = "1.0.0.1",
 }
@@ -161,28 +161,28 @@ PrivateIPAddress = "1.0.0.1",
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new HardwareSecurityModulesSku()
+            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku()
             {
-                Name = HardwareSecurityModulesSkuName.PayShield10KLMK1CPS60,
+                Name = DedicatedHsmSkuName.PayShield10KLmk1Cps60,
             }, new DedicatedHsmProperties()
             {
-                NetworkProfile = new NetworkProfile()
+                NetworkProfile = new DedicatedHsmNetworkProfile()
                 {
                     SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
-new NetworkInterface()
+new DedicatedHsmNetworkInterface()
 {
 PrivateIPAddress = "1.0.0.1",
 }
 },
                 },
-                ManagementNetworkProfile = new NetworkProfile()
+                ManagementNetworkProfile = new DedicatedHsmNetworkProfile()
                 {
                     SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
-new NetworkInterface()
+new DedicatedHsmNetworkInterface()
 {
 PrivateIPAddress = "1.0.0.2",
 }

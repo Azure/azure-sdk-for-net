@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 return null;
             }
-            HardwareSecurityModulesSku sku = default;
+            DedicatedHsmSku sku = default;
             IList<string> zones = default;
             DedicatedHsmProperties properties = default;
             IDictionary<string, string> tags = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = HardwareSecurityModulesSku.DeserializeHardwareSecurityModulesSku(property.Value, options);
+                    sku = DedicatedHsmSku.DeserializeDedicatedHsmSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
