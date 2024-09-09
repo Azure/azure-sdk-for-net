@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Access rule in a network security perimeter configuration profile. </summary>
-    public partial class AccessRule
+    public partial class BatchAccessRule
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
-        internal AccessRule()
+        /// <summary> Initializes a new instance of <see cref="BatchAccessRule"/>. </summary>
+        internal BatchAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"> Properties of Access Rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRule(string name, AccessRuleProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchAccessRule(string name, BatchAccessRuleProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Properties = properties;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Name of the access rule. </summary>
         public string Name { get; }
         /// <summary> Properties of Access Rule. </summary>
-        public AccessRuleProperties Properties { get; }
+        public BatchAccessRuleProperties Properties { get; }
     }
 }

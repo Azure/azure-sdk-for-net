@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
-    public partial class ProvisioningIssue
+    public partial class BatchProvisioningIssue
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
-        internal ProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="BatchProvisioningIssue"/>. </summary>
+        internal BatchProvisioningIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssue(string name, ProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchProvisioningIssue(string name, BatchProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Properties = properties;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Name of the issue. </summary>
         public string Name { get; }
         /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
-        public ProvisioningIssueProperties Properties { get; }
+        public BatchProvisioningIssueProperties Properties { get; }
     }
 }
