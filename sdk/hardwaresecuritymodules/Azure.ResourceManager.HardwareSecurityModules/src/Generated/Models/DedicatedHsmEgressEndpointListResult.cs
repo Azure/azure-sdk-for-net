@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Collection of OutboundEnvironmentEndpoint
-    /// Serialized Name: OutboundEnvironmentEndpointCollection
-    /// </summary>
+    /// <summary> Collection of OutboundEnvironmentEndpoint. </summary>
     internal partial class DedicatedHsmEgressEndpointListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmEgressEndpointListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: OutboundEnvironmentEndpointCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DedicatedHsmEgressEndpointListResult(IEnumerable<DedicatedHsmEgressEndpoint> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmEgressEndpointListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: OutboundEnvironmentEndpointCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: OutboundEnvironmentEndpointCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DedicatedHsmEgressEndpointListResult(IReadOnlyList<DedicatedHsmEgressEndpoint> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         {
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: OutboundEnvironmentEndpointCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<DedicatedHsmEgressEndpoint> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: OutboundEnvironmentEndpointCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

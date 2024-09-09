@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Sku name of the Cloud HSM Cluster
-    /// Serialized Name: CloudHsmClusterSkuName
-    /// </summary>
+    /// <summary> Sku name of the Cloud HSM Cluster. </summary>
     public enum CloudHsmClusterSkuName
     {
-        /// <summary>
-        /// Standard_B1
-        /// Serialized Name: CloudHsmClusterSkuName.Standard_B1
-        /// </summary>
+        /// <summary> Standard_B1. </summary>
         StandardB1,
-        /// <summary>
-        /// Standard B10
-        /// Serialized Name: CloudHsmClusterSkuName.Standard B10
-        /// </summary>
+        /// <summary> Standard B10. </summary>
         StandardB10
     }
 }

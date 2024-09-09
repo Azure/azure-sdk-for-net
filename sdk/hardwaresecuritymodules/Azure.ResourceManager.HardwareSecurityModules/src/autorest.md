@@ -19,9 +19,11 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
+use-write-core: true
 
-mgmt-debug:
-  show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'

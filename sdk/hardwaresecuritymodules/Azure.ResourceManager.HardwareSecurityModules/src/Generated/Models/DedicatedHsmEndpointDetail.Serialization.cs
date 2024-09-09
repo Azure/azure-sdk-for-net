@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         void IJsonModel<DedicatedHsmEndpointDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
@@ -61,7 +70,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DedicatedHsmEndpointDetail IJsonModel<DedicatedHsmEndpointDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -125,6 +133,105 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             return new DedicatedHsmEndpointDetail(ipAddress, port, protocol, description, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPAddress))
+                {
+                    builder.Append("  ipAddress: ");
+                    if (IPAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  port: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
+                {
+                    builder.Append("  port: ");
+                    builder.AppendLine($"{Port.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  protocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Protocol))
+                {
+                    builder.Append("  protocol: ");
+                    if (Protocol.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Protocol}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Protocol}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DedicatedHsmEndpointDetail>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +240,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support writing '{options.Format}' format.");
             }

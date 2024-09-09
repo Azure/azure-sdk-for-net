@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// SKU of the dedicated HSM
-    /// Serialized Name: SkuName
-    /// </summary>
+    /// <summary> SKU of the dedicated HSM. </summary>
     public readonly partial struct DedicatedHsmSkuName : IEquatable<DedicatedHsmSkuName>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private const string PayShield10KLmk2Cps250Value = "payShield10K_LMK2_CPS250";
         private const string PayShield10KLmk2Cps2500Value = "payShield10K_LMK2_CPS2500";
 
-        /// <summary>
-        /// The dedicated HSM is a Safenet Luna Network HSM A790 device.
-        /// Serialized Name: SkuName.SafeNet_Luna_Network_HSM_A790
-        /// </summary>
+        /// <summary> The dedicated HSM is a Safenet Luna Network HSM A790 device. </summary>
         public static DedicatedHsmSkuName SafeNetLunaNetworkHsmA790 { get; } = new DedicatedHsmSkuName(SafeNetLunaNetworkHsmA790Value);
-        /// <summary>
-        /// The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 60 calls per second.
-        /// Serialized Name: SkuName.payShield10K_LMK1_CPS60
-        /// </summary>
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 60 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk1Cps60 { get; } = new DedicatedHsmSkuName(PayShield10KLmk1Cps60Value);
-        /// <summary>
-        /// The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 250 calls per second.
-        /// Serialized Name: SkuName.payShield10K_LMK1_CPS250
-        /// </summary>
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 250 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk1Cps250 { get; } = new DedicatedHsmSkuName(PayShield10KLmk1Cps250Value);
-        /// <summary>
-        /// The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 2500 calls per second.
-        /// Serialized Name: SkuName.payShield10K_LMK1_CPS2500
-        /// </summary>
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 2500 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk1Cps2500 { get; } = new DedicatedHsmSkuName(PayShield10KLmk1Cps2500Value);
-        /// <summary>
-        /// The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 60 calls per second.
-        /// Serialized Name: SkuName.payShield10K_LMK2_CPS60
-        /// </summary>
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 60 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk2Cps60 { get; } = new DedicatedHsmSkuName(PayShield10KLmk2Cps60Value);
-        /// <summary>
-        /// The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 250 calls per second.
-        /// Serialized Name: SkuName.payShield10K_LMK2_CPS250
-        /// </summary>
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 250 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk2Cps250 { get; } = new DedicatedHsmSkuName(PayShield10KLmk2Cps250Value);
-        /// <summary>
-        /// The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 2500 calls per second.
-        /// Serialized Name: SkuName.payShield10K_LMK2_CPS2500
-        /// </summary>
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 2500 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk2Cps2500 { get; } = new DedicatedHsmSkuName(PayShield10KLmk2Cps2500Value);
         /// <summary> Determines if two <see cref="DedicatedHsmSkuName"/> values are the same. </summary>
         public static bool operator ==(DedicatedHsmSkuName left, DedicatedHsmSkuName right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// The current provisioning state.
-    /// Serialized Name: PrivateEndpointConnectionProvisioningState
-    /// </summary>
+    /// <summary> The current provisioning state. </summary>
     public readonly partial struct CloudHsmClusterPrivateEndpointConnectionProvisioningState : IEquatable<CloudHsmClusterPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private const string InternalErrorValue = "InternalError";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Succeeded { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Creating { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Deleting { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Failed { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(FailedValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Updating { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(UpdatingValue);
-        /// <summary>
-        /// InternalError
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.InternalError
-        /// </summary>
+        /// <summary> InternalError. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState InternalError { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(InternalErrorValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Canceled { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="CloudHsmClusterPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CloudHsmClusterPrivateEndpointConnectionProvisioningState left, CloudHsmClusterPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

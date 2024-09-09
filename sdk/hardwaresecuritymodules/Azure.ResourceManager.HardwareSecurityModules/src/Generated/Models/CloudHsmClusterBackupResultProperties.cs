@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Properties of the Cloud HSM Cluster
-    /// Serialized Name: BackupResultProperties
-    /// </summary>
+    /// <summary> Properties of the Cloud HSM Cluster. </summary>
     public partial class CloudHsmClusterBackupResultProperties : BackupRestoreBaseResultProperties
     {
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterBackupResultProperties"/>. </summary>
@@ -22,54 +19,26 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterBackupResultProperties"/>. </summary>
-        /// <param name="status">
-        /// Status of the backup/restore operation
-        /// Serialized Name: BackupRestoreBaseResultProperties.status
-        /// </param>
-        /// <param name="statusDetails">
-        /// The status details of backup/restore operation
-        /// Serialized Name: BackupRestoreBaseResultProperties.statusDetails
-        /// </param>
-        /// <param name="error">
-        /// Error encountered, if any, during the backup/restore operation.
-        /// Serialized Name: BackupRestoreBaseResultProperties.error
-        /// </param>
-        /// <param name="startOn">
-        /// The start time of the backup/restore operation in UTC
-        /// Serialized Name: BackupRestoreBaseResultProperties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time of the backup/restore operation in UTC
-        /// Serialized Name: BackupRestoreBaseResultProperties.endTime
-        /// </param>
-        /// <param name="jobId">
-        /// Identifier for the backup/restore operation.
-        /// Serialized Name: BackupRestoreBaseResultProperties.jobId
-        /// </param>
+        /// <param name="status"> Status of the backup/restore operation. </param>
+        /// <param name="statusDetails"> The status details of backup/restore operation. </param>
+        /// <param name="error"> Error encountered, if any, during the backup/restore operation. </param>
+        /// <param name="startOn"> The start time of the backup/restore operation in UTC. </param>
+        /// <param name="endOn"> The end time of the backup/restore operation in UTC. </param>
+        /// <param name="jobId"> Identifier for the backup/restore operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureStorageBlobContainerUri">
-        /// The Azure blob storage container Uri which contains the backup
-        /// Serialized Name: BackupResultProperties.azureStorageBlobContainerUri
-        /// </param>
-        /// <param name="backupId">
-        /// The ID of the backup.
-        /// Serialized Name: BackupResultProperties.backupId
-        /// </param>
+        /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the backup. </param>
+        /// <param name="backupId"> The ID of the backup. </param>
         internal CloudHsmClusterBackupResultProperties(BackupRestoreOperationStatus? status, string statusDetails, ResponseError error, DateTimeOffset? startOn, DateTimeOffset? endOn, string jobId, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri azureStorageBlobContainerUri, string backupId) : base(status, statusDetails, error, startOn, endOn, jobId, serializedAdditionalRawData)
         {
             AzureStorageBlobContainerUri = azureStorageBlobContainerUri;
             BackupId = backupId;
         }
 
-        /// <summary>
-        /// The Azure blob storage container Uri which contains the backup
-        /// Serialized Name: BackupResultProperties.azureStorageBlobContainerUri
-        /// </summary>
+        /// <summary> The Azure blob storage container Uri which contains the backup. </summary>
+        [WirePath("azureStorageBlobContainerUri")]
         public Uri AzureStorageBlobContainerUri { get; }
-        /// <summary>
-        /// The ID of the backup.
-        /// Serialized Name: BackupResultProperties.backupId
-        /// </summary>
+        /// <summary> The ID of the backup. </summary>
+        [WirePath("backupId")]
         public string BackupId { get; }
     }
 }

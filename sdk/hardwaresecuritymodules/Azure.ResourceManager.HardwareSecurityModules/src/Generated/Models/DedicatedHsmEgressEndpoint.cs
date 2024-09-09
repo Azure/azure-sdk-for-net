@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Egress endpoints which dedicated hsm service connects to for common purpose.
-    /// Serialized Name: OutboundEnvironmentEndpoint
-    /// </summary>
+    /// <summary> Egress endpoints which dedicated hsm service connects to for common purpose. </summary>
     public partial class DedicatedHsmEgressEndpoint
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmEgressEndpoint"/>. </summary>
-        /// <param name="category">
-        /// The category of endpoints accessed by the dedicated hsm service, e.g. azure-resource-management, apiserver, etc.
-        /// Serialized Name: OutboundEnvironmentEndpoint.category
-        /// </param>
-        /// <param name="endpoints">
-        /// The endpoints that dedicated hsm service connects to
-        /// Serialized Name: OutboundEnvironmentEndpoint.endpoints
-        /// </param>
+        /// <param name="category"> The category of endpoints accessed by the dedicated hsm service, e.g. azure-resource-management, apiserver, etc. </param>
+        /// <param name="endpoints"> The endpoints that dedicated hsm service connects to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DedicatedHsmEgressEndpoint(string category, IReadOnlyList<DedicatedHsmEndpointDependency> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The category of endpoints accessed by the dedicated hsm service, e.g. azure-resource-management, apiserver, etc.
-        /// Serialized Name: OutboundEnvironmentEndpoint.category
-        /// </summary>
+        /// <summary> The category of endpoints accessed by the dedicated hsm service, e.g. azure-resource-management, apiserver, etc. </summary>
+        [WirePath("category")]
         public string Category { get; }
-        /// <summary>
-        /// The endpoints that dedicated hsm service connects to
-        /// Serialized Name: OutboundEnvironmentEndpoint.endpoints
-        /// </summary>
+        /// <summary> The endpoints that dedicated hsm service connects to. </summary>
+        [WirePath("endpoints")]
         public IReadOnlyList<DedicatedHsmEndpointDependency> Endpoints { get; }
     }
 }

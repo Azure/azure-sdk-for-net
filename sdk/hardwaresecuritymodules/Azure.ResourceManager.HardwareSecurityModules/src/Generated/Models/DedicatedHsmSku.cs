@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// SKU of the dedicated HSM
-    /// Serialized Name: Sku
-    /// </summary>
+    /// <summary> SKU of the dedicated HSM. </summary>
     public partial class DedicatedHsmSku
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmSku"/>. </summary>
-        /// <param name="name">
-        /// SKU of the dedicated HSM
-        /// Serialized Name: Sku.name
-        /// </param>
+        /// <param name="name"> SKU of the dedicated HSM. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DedicatedHsmSku(DedicatedHsmSkuName? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// SKU of the dedicated HSM
-        /// Serialized Name: Sku.name
-        /// </summary>
+        /// <summary> SKU of the dedicated HSM. </summary>
+        [WirePath("name")]
         public DedicatedHsmSkuName? Name { get; set; }
     }
 }

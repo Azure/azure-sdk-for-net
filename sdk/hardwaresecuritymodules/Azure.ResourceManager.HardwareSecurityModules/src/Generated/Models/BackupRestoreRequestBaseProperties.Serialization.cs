@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         void IJsonModel<BackupRestoreRequestBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreRequestBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupRestoreRequestBaseProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("azureStorageBlobContainerUri"u8);
             writer.WriteStringValue(AzureStorageBlobContainerUri.AbsoluteUri);
             if (Optional.IsDefined(Token))
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BackupRestoreRequestBaseProperties IJsonModel<BackupRestoreRequestBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

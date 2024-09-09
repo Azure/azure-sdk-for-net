@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     /// <summary>
     /// A class representing the CloudHsmClusterPrivateEndpointConnection data model.
     /// The private endpoint connection resource.
-    /// Serialized Name: PrivateEndpointConnection
     /// </summary>
     public partial class CloudHsmClusterPrivateEndpointConnectionData : ResourceData
     {
@@ -62,14 +61,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Resource properties.
-        /// Serialized Name: PrivateEndpointConnection.properties
-        /// </param>
-        /// <param name="etag">
-        /// Modified whenever there is a change in the state of private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnection.etag
-        /// </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmClusterPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudHsmClusterPrivateEndpointConnectionProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -78,15 +71,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource properties.
-        /// Serialized Name: PrivateEndpointConnection.properties
-        /// </summary>
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         public CloudHsmClusterPrivateEndpointConnectionProperties Properties { get; set; }
-        /// <summary>
-        /// Modified whenever there is a change in the state of private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnection.etag
-        /// </summary>
+        /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

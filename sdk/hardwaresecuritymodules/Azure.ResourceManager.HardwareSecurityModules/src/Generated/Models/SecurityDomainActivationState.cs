@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// State of security domain activation
-    /// Serialized Name: ActivationState
-    /// </summary>
+    /// <summary> State of security domain activation. </summary>
     public readonly partial struct SecurityDomainActivationState : IEquatable<SecurityDomainActivationState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private const string FailedValue = "Failed";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// NotDefined
-        /// Serialized Name: ActivationState.NotDefined
-        /// </summary>
+        /// <summary> NotDefined. </summary>
         public static SecurityDomainActivationState NotDefined { get; } = new SecurityDomainActivationState(NotDefinedValue);
-        /// <summary>
-        /// NotActivated
-        /// Serialized Name: ActivationState.NotActivated
-        /// </summary>
+        /// <summary> NotActivated. </summary>
         public static SecurityDomainActivationState NotActivated { get; } = new SecurityDomainActivationState(NotActivatedValue);
-        /// <summary>
-        /// Active
-        /// Serialized Name: ActivationState.Active
-        /// </summary>
+        /// <summary> Active. </summary>
         public static SecurityDomainActivationState Active { get; } = new SecurityDomainActivationState(ActiveValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ActivationState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static SecurityDomainActivationState Failed { get; } = new SecurityDomainActivationState(FailedValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: ActivationState.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static SecurityDomainActivationState Unknown { get; } = new SecurityDomainActivationState(UnknownValue);
         /// <summary> Determines if two <see cref="SecurityDomainActivationState"/> values are the same. </summary>
         public static bool operator ==(SecurityDomainActivationState left, SecurityDomainActivationState right) => left.Equals(right);

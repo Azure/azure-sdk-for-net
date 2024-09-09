@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Backup properties
-    /// Serialized Name: BackupRequestProperties
-    /// </summary>
+    /// <summary> Backup properties. </summary>
     public partial class CloudHsmClusterBackupContent : BackupRestoreRequestBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterBackupContent"/>. </summary>
-        /// <param name="azureStorageBlobContainerUri">
-        /// The Azure blob storage container Uri which contains the backup
-        /// Serialized Name: BackupRestoreRequestBaseProperties.azureStorageBlobContainerUri
-        /// </param>
+        /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageBlobContainerUri"/> is null. </exception>
         public CloudHsmClusterBackupContent(Uri azureStorageBlobContainerUri) : base(azureStorageBlobContainerUri)
         {
@@ -28,14 +22,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterBackupContent"/>. </summary>
-        /// <param name="azureStorageBlobContainerUri">
-        /// The Azure blob storage container Uri which contains the backup
-        /// Serialized Name: BackupRestoreRequestBaseProperties.azureStorageBlobContainerUri
-        /// </param>
-        /// <param name="token">
-        /// The SAS token pointing to an Azure blob storage container. This property is reserved for Azure Backup Service.
-        /// Serialized Name: BackupRestoreRequestBaseProperties.token
-        /// </param>
+        /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the backup. </param>
+        /// <param name="token"> The SAS token pointing to an Azure blob storage container. This property is reserved for Azure Backup Service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmClusterBackupContent(Uri azureStorageBlobContainerUri, string token, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(azureStorageBlobContainerUri, token, serializedAdditionalRawData)
         {

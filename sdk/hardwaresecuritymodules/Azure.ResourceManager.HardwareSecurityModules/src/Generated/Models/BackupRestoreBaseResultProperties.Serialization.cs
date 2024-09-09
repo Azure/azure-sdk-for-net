@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         void IJsonModel<BackupRestoreBaseResultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreBaseResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupRestoreBaseResultProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -78,7 +87,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BackupRestoreBaseResultProperties IJsonModel<BackupRestoreBaseResultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -174,6 +182,129 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  statusDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StatusDetails))
+                {
+                    builder.Append("  statusDetails: ");
+                    if (StatusDetails.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StatusDetails}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StatusDetails}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  error: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    builder.Append("  error: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Error, options, 2, false, "  error: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("  startTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    builder.Append("  endTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobId))
+                {
+                    builder.Append("  jobId: ");
+                    if (JobId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JobId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JobId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<BackupRestoreBaseResultProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreBaseResultProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,6 +313,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackupRestoreBaseResultProperties)} does not support writing '{options.Format}' format.");
             }

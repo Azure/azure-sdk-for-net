@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// A domain name that dedicated hsm services are reaching at.
-    /// Serialized Name: EndpointDependency
-    /// </summary>
+    /// <summary> A domain name that dedicated hsm services are reaching at. </summary>
     public partial class DedicatedHsmEndpointDependency
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmEndpointDependency"/>. </summary>
-        /// <param name="domainName">
-        /// The domain name of the dependency.
-        /// Serialized Name: EndpointDependency.domainName
-        /// </param>
-        /// <param name="endpointDetails">
-        /// The Ports and Protocols used when connecting to domainName.
-        /// Serialized Name: EndpointDependency.endpointDetails
-        /// </param>
+        /// <param name="domainName"> The domain name of the dependency. </param>
+        /// <param name="endpointDetails"> The Ports and Protocols used when connecting to domainName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DedicatedHsmEndpointDependency(string domainName, IReadOnlyList<DedicatedHsmEndpointDetail> endpointDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The domain name of the dependency.
-        /// Serialized Name: EndpointDependency.domainName
-        /// </summary>
+        /// <summary> The domain name of the dependency. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; }
-        /// <summary>
-        /// The Ports and Protocols used when connecting to domainName.
-        /// Serialized Name: EndpointDependency.endpointDetails
-        /// </summary>
+        /// <summary> The Ports and Protocols used when connecting to domainName. </summary>
+        [WirePath("endpointDetails")]
         public IReadOnlyList<DedicatedHsmEndpointDetail> EndpointDetails { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Cloud Hsm Cluster SKU information
-    /// Serialized Name: CloudHsmClusterSku
-    /// </summary>
+    /// <summary> Cloud Hsm Cluster SKU information. </summary>
     public partial class CloudHsmClusterSku
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSku"/>. </summary>
-        /// <param name="family">
-        /// Sku family of the Cloud HSM Cluster
-        /// Serialized Name: CloudHsmClusterSku.family
-        /// </param>
-        /// <param name="name">
-        /// Sku name of the Cloud HSM Cluster
-        /// Serialized Name: CloudHsmClusterSku.name
-        /// </param>
+        /// <param name="family"> Sku family of the Cloud HSM Cluster. </param>
+        /// <param name="name"> Sku name of the Cloud HSM Cluster. </param>
         public CloudHsmClusterSku(CloudHsmClusterSkuFamily family, CloudHsmClusterSkuName name)
         {
             Family = family;
@@ -64,18 +55,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSku"/>. </summary>
-        /// <param name="family">
-        /// Sku family of the Cloud HSM Cluster
-        /// Serialized Name: CloudHsmClusterSku.family
-        /// </param>
-        /// <param name="name">
-        /// Sku name of the Cloud HSM Cluster
-        /// Serialized Name: CloudHsmClusterSku.name
-        /// </param>
-        /// <param name="capacity">
-        /// Sku capacity
-        /// Serialized Name: CloudHsmClusterSku.capacity
-        /// </param>
+        /// <param name="family"> Sku family of the Cloud HSM Cluster. </param>
+        /// <param name="name"> Sku name of the Cloud HSM Cluster. </param>
+        /// <param name="capacity"> Sku capacity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmClusterSku(CloudHsmClusterSkuFamily family, CloudHsmClusterSkuName name, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,20 +72,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         {
         }
 
-        /// <summary>
-        /// Sku family of the Cloud HSM Cluster
-        /// Serialized Name: CloudHsmClusterSku.family
-        /// </summary>
+        /// <summary> Sku family of the Cloud HSM Cluster. </summary>
+        [WirePath("family")]
         public CloudHsmClusterSkuFamily Family { get; set; }
-        /// <summary>
-        /// Sku name of the Cloud HSM Cluster
-        /// Serialized Name: CloudHsmClusterSku.name
-        /// </summary>
+        /// <summary> Sku name of the Cloud HSM Cluster. </summary>
+        [WirePath("name")]
         public CloudHsmClusterSkuName Name { get; set; }
-        /// <summary>
-        /// Sku capacity
-        /// Serialized Name: CloudHsmClusterSku.capacity
-        /// </summary>
+        /// <summary> Sku capacity. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

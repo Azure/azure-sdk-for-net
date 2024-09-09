@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Provisioning state.
-    /// Serialized Name: JsonWebKeyType
-    /// </summary>
+    /// <summary> Provisioning state. </summary>
     public readonly partial struct DedicatedHsmJsonWebKeyType : IEquatable<DedicatedHsmJsonWebKeyType>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private const string CheckingQuotaValue = "CheckingQuota";
         private const string DeletingValue = "Deleting";
 
-        /// <summary>
-        /// The dedicated HSM has been fully provisioned.
-        /// Serialized Name: JsonWebKeyType.Succeeded
-        /// </summary>
+        /// <summary> The dedicated HSM has been fully provisioned. </summary>
         public static DedicatedHsmJsonWebKeyType Succeeded { get; } = new DedicatedHsmJsonWebKeyType(SucceededValue);
-        /// <summary>
-        /// The dedicated HSM is currently being provisioned.
-        /// Serialized Name: JsonWebKeyType.Provisioning
-        /// </summary>
+        /// <summary> The dedicated HSM is currently being provisioned. </summary>
         public static DedicatedHsmJsonWebKeyType Provisioning { get; } = new DedicatedHsmJsonWebKeyType(ProvisioningValue);
-        /// <summary>
-        /// A device is currently being allocated for the dedicated HSM resource.
-        /// Serialized Name: JsonWebKeyType.Allocating
-        /// </summary>
+        /// <summary> A device is currently being allocated for the dedicated HSM resource. </summary>
         public static DedicatedHsmJsonWebKeyType Allocating { get; } = new DedicatedHsmJsonWebKeyType(AllocatingValue);
-        /// <summary>
-        /// The dedicated HSM is being connected to the virtual network.
-        /// Serialized Name: JsonWebKeyType.Connecting
-        /// </summary>
+        /// <summary> The dedicated HSM is being connected to the virtual network. </summary>
         public static DedicatedHsmJsonWebKeyType Connecting { get; } = new DedicatedHsmJsonWebKeyType(ConnectingValue);
-        /// <summary>
-        /// Provisioning of the dedicated HSM has failed.
-        /// Serialized Name: JsonWebKeyType.Failed
-        /// </summary>
+        /// <summary> Provisioning of the dedicated HSM has failed. </summary>
         public static DedicatedHsmJsonWebKeyType Failed { get; } = new DedicatedHsmJsonWebKeyType(FailedValue);
-        /// <summary>
-        /// Validating the subscription has sufficient quota to allocate a dedicated HSM device.
-        /// Serialized Name: JsonWebKeyType.CheckingQuota
-        /// </summary>
+        /// <summary> Validating the subscription has sufficient quota to allocate a dedicated HSM device. </summary>
         public static DedicatedHsmJsonWebKeyType CheckingQuota { get; } = new DedicatedHsmJsonWebKeyType(CheckingQuotaValue);
-        /// <summary>
-        /// The dedicated HSM is currently being deleted.
-        /// Serialized Name: JsonWebKeyType.Deleting
-        /// </summary>
+        /// <summary> The dedicated HSM is currently being deleted. </summary>
         public static DedicatedHsmJsonWebKeyType Deleting { get; } = new DedicatedHsmJsonWebKeyType(DeletingValue);
         /// <summary> Determines if two <see cref="DedicatedHsmJsonWebKeyType"/> values are the same. </summary>
         public static bool operator ==(DedicatedHsmJsonWebKeyType left, DedicatedHsmJsonWebKeyType right) => left.Equals(right);

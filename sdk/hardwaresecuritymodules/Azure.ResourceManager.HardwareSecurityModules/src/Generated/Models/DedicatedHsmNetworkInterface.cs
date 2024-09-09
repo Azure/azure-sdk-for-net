@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// The network interface definition.
-    /// Serialized Name: NetworkInterface
-    /// </summary>
+    /// <summary> The network interface definition. </summary>
     public partial class DedicatedHsmNetworkInterface
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmNetworkInterface"/>. </summary>
-        /// <param name="resourceId">
-        /// The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
-        /// Serialized Name: NetworkInterface.resourceId
-        /// </param>
-        /// <param name="privateIPAddress">
-        /// Private Ip address of the interface
-        /// Serialized Name: NetworkInterface.privateIpAddress
-        /// </param>
+        /// <param name="resourceId"> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <param name="privateIPAddress"> Private Ip address of the interface. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DedicatedHsmNetworkInterface(ResourceIdentifier resourceId, string privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
-        /// Serialized Name: NetworkInterface.resourceId
-        /// </summary>
+        /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
-        /// <summary>
-        /// Private Ip address of the interface
-        /// Serialized Name: NetworkInterface.privateIpAddress
-        /// </summary>
+        /// <summary> Private Ip address of the interface. </summary>
+        [WirePath("privateIpAddress")]
         public string PrivateIPAddress { get; set; }
     }
 }

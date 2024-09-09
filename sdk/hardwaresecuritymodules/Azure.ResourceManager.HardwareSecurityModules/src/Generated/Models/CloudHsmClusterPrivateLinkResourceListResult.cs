@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// A list of private link resources.
-    /// Serialized Name: PrivateLinkResourceListResult
-    /// </summary>
+    /// <summary> A list of private link resources. </summary>
     internal partial class CloudHsmClusterPrivateLinkResourceListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value">
-        /// Array of private link resources
-        /// Serialized Name: PrivateLinkResourceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of operation list results (if there are any).
-        /// Serialized Name: PrivateLinkResourceListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of private link resources. </param>
+        /// <param name="nextLink"> URL to get the next set of operation list results (if there are any). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmClusterPrivateLinkResourceListResult(IReadOnlyList<CloudHsmClusterPrivateLinkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Array of private link resources
-        /// Serialized Name: PrivateLinkResourceListResult.value
-        /// </summary>
+        /// <summary> Array of private link resources. </summary>
         public IReadOnlyList<CloudHsmClusterPrivateLinkData> Value { get; }
-        /// <summary>
-        /// URL to get the next set of operation list results (if there are any).
-        /// Serialized Name: PrivateLinkResourceListResult.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of operation list results (if there are any). </summary>
         public Uri NextLink { get; }
     }
 }

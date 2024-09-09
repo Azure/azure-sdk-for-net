@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// The Cloud HSM Cluster's provisioningState
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The Cloud HSM Cluster's provisioningState. </summary>
     public readonly partial struct CloudHsmClusterProvisioningState : IEquatable<CloudHsmClusterProvisioningState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private const string DeletingValue = "Deleting";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// Provisioning
-        /// Serialized Name: ProvisioningState.Provisioning
-        /// </summary>
+        /// <summary> Provisioning. </summary>
         public static CloudHsmClusterProvisioningState Provisioning { get; } = new CloudHsmClusterProvisioningState(ProvisioningValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static CloudHsmClusterProvisioningState Succeeded { get; } = new CloudHsmClusterProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static CloudHsmClusterProvisioningState Failed { get; } = new CloudHsmClusterProvisioningState(FailedValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static CloudHsmClusterProvisioningState Deleting { get; } = new CloudHsmClusterProvisioningState(DeletingValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static CloudHsmClusterProvisioningState Canceled { get; } = new CloudHsmClusterProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="CloudHsmClusterProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CloudHsmClusterProvisioningState left, CloudHsmClusterProvisioningState right) => left.Equals(right);

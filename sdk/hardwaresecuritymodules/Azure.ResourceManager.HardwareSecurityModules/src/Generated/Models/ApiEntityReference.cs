@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// The API entity reference.
-    /// Serialized Name: ApiEntityReference
-    /// </summary>
+    /// <summary> The API entity reference. </summary>
     internal partial class ApiEntityReference
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
-        /// <param name="resourceId">
-        /// The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
-        /// Serialized Name: ApiEntityReference.resourceId
-        /// </param>
+        /// <param name="resourceId"> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiEntityReference(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
-        /// Serialized Name: ApiEntityReference.resourceId
-        /// </summary>
+        /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
     }
 }

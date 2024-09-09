@@ -19,38 +19,24 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         void IJsonModel<CloudHsmClusterRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudHsmClusterRestoreContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("backupId"u8);
             writer.WriteStringValue(BackupId);
-            writer.WritePropertyName("azureStorageBlobContainerUri"u8);
-            writer.WriteStringValue(AzureStorageBlobContainerUri.AbsoluteUri);
-            if (Optional.IsDefined(Token))
-            {
-                writer.WritePropertyName("token"u8);
-                writer.WriteStringValue(Token);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         CloudHsmClusterRestoreContent IJsonModel<CloudHsmClusterRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

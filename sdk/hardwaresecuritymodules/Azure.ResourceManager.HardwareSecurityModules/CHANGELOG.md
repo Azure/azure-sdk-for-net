@@ -8,6 +8,7 @@
 - Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 - Added experimental Bicep serialization.
+- Exposed JsonModelWriteCore for model serialization procedure.
 
 ### Breaking Changes
 

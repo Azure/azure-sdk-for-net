@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// List of dedicated HSMs
-    /// Serialized Name: DedicatedHsmListResult
-    /// </summary>
+    /// <summary> List of dedicated HSMs. </summary>
     internal partial class DedicatedHsmListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmListResult"/>. </summary>
-        /// <param name="value">
-        /// The list of dedicated HSMs.
-        /// Serialized Name: DedicatedHsmListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of dedicated hsms.
-        /// Serialized Name: DedicatedHsmListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of dedicated HSMs. </param>
+        /// <param name="nextLink"> The URL to get the next set of dedicated hsms. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DedicatedHsmListResult(IReadOnlyList<DedicatedHsmData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The list of dedicated HSMs.
-        /// Serialized Name: DedicatedHsmListResult.value
-        /// </summary>
+        /// <summary> The list of dedicated HSMs. </summary>
         public IReadOnlyList<DedicatedHsmData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of dedicated hsms.
-        /// Serialized Name: DedicatedHsmListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of dedicated hsms. </summary>
         public string NextLink { get; }
     }
 }

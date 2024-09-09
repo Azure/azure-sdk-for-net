@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// The Cloud HSM Cluster public network access
-    /// Serialized Name: PublicNetworkAccess
-    /// </summary>
+    /// <summary> The Cloud HSM Cluster public network access. </summary>
     public readonly partial struct CloudHsmClusterPublicNetworkAccess : IEquatable<CloudHsmClusterPublicNetworkAccess>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: PublicNetworkAccess.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static CloudHsmClusterPublicNetworkAccess Disabled { get; } = new CloudHsmClusterPublicNetworkAccess(DisabledValue);
         /// <summary> Determines if two <see cref="CloudHsmClusterPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(CloudHsmClusterPublicNetworkAccess left, CloudHsmClusterPublicNetworkAccess right) => left.Equals(right);

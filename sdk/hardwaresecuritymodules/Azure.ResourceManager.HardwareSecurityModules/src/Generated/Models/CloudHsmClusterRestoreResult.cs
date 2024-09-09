@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Restore operation properties
-    /// Serialized Name: RestoreResult
-    /// </summary>
+    /// <summary> Restore operation properties. </summary>
     public partial class CloudHsmClusterRestoreResult
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterRestoreResult"/>. </summary>
-        /// <param name="properties">
-        /// Backup and Restore operation common properties
-        /// Serialized Name: RestoreResult.properties
-        /// </param>
+        /// <param name="properties"> Backup and Restore operation common properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmClusterRestoreResult(BackupRestoreBaseResultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Backup and Restore operation common properties
-        /// Serialized Name: RestoreResult.properties
-        /// </summary>
+        /// <summary> Backup and Restore operation common properties. </summary>
+        [WirePath("properties")]
         public BackupRestoreBaseResultProperties Properties { get; }
     }
 }

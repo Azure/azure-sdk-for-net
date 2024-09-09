@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Backup and Restore operation common properties
-    /// Serialized Name: BackupRestoreBaseResultProperties
-    /// </summary>
+    /// <summary> Backup and Restore operation common properties. </summary>
     public partial class BackupRestoreBaseResultProperties
     {
         /// <summary>
@@ -54,30 +51,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupRestoreBaseResultProperties"/>. </summary>
-        /// <param name="status">
-        /// Status of the backup/restore operation
-        /// Serialized Name: BackupRestoreBaseResultProperties.status
-        /// </param>
-        /// <param name="statusDetails">
-        /// The status details of backup/restore operation
-        /// Serialized Name: BackupRestoreBaseResultProperties.statusDetails
-        /// </param>
-        /// <param name="error">
-        /// Error encountered, if any, during the backup/restore operation.
-        /// Serialized Name: BackupRestoreBaseResultProperties.error
-        /// </param>
-        /// <param name="startOn">
-        /// The start time of the backup/restore operation in UTC
-        /// Serialized Name: BackupRestoreBaseResultProperties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time of the backup/restore operation in UTC
-        /// Serialized Name: BackupRestoreBaseResultProperties.endTime
-        /// </param>
-        /// <param name="jobId">
-        /// Identifier for the backup/restore operation.
-        /// Serialized Name: BackupRestoreBaseResultProperties.jobId
-        /// </param>
+        /// <param name="status"> Status of the backup/restore operation. </param>
+        /// <param name="statusDetails"> The status details of backup/restore operation. </param>
+        /// <param name="error"> Error encountered, if any, during the backup/restore operation. </param>
+        /// <param name="startOn"> The start time of the backup/restore operation in UTC. </param>
+        /// <param name="endOn"> The end time of the backup/restore operation in UTC. </param>
+        /// <param name="jobId"> Identifier for the backup/restore operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackupRestoreBaseResultProperties(BackupRestoreOperationStatus? status, string statusDetails, ResponseError error, DateTimeOffset? startOn, DateTimeOffset? endOn, string jobId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,35 +69,23 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Status of the backup/restore operation
-        /// Serialized Name: BackupRestoreBaseResultProperties.status
-        /// </summary>
+        /// <summary> Status of the backup/restore operation. </summary>
+        [WirePath("status")]
         public BackupRestoreOperationStatus? Status { get; }
-        /// <summary>
-        /// The status details of backup/restore operation
-        /// Serialized Name: BackupRestoreBaseResultProperties.statusDetails
-        /// </summary>
+        /// <summary> The status details of backup/restore operation. </summary>
+        [WirePath("statusDetails")]
         public string StatusDetails { get; }
-        /// <summary>
-        /// Error encountered, if any, during the backup/restore operation.
-        /// Serialized Name: BackupRestoreBaseResultProperties.error
-        /// </summary>
+        /// <summary> Error encountered, if any, during the backup/restore operation. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
-        /// <summary>
-        /// The start time of the backup/restore operation in UTC
-        /// Serialized Name: BackupRestoreBaseResultProperties.startTime
-        /// </summary>
+        /// <summary> The start time of the backup/restore operation in UTC. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// The end time of the backup/restore operation in UTC
-        /// Serialized Name: BackupRestoreBaseResultProperties.endTime
-        /// </summary>
+        /// <summary> The end time of the backup/restore operation in UTC. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Identifier for the backup/restore operation.
-        /// Serialized Name: BackupRestoreBaseResultProperties.jobId
-        /// </summary>
+        /// <summary> Identifier for the backup/restore operation. </summary>
+        [WirePath("jobId")]
         public string JobId { get; }
     }
 }

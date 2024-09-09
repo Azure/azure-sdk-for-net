@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// A private link resource.
-    /// Serialized Name: PrivateLinkResource
-    /// </summary>
+    /// <summary> A private link resource. </summary>
     public partial class CloudHsmClusterPrivateLinkData : ResourceData
     {
         /// <summary>
@@ -60,10 +57,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Resource properties.
-        /// Serialized Name: PrivateLinkResource.properties
-        /// </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmClusterPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudHsmClusterPrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,10 +65,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource properties.
-        /// Serialized Name: PrivateLinkResource.properties
-        /// </summary>
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         public CloudHsmClusterPrivateLinkResourceProperties Properties { get; set; }
     }
 }

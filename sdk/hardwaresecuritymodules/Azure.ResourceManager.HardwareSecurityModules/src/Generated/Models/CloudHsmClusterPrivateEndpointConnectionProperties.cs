@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Properties of the private endpoint connection.
-    /// Serialized Name: PrivateEndpointConnectionProperties
-    /// </summary>
+    /// <summary> Properties of the private endpoint connection. </summary>
     public partial class CloudHsmClusterPrivateEndpointConnectionProperties
     {
         /// <summary>
@@ -51,10 +48,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnectionProperties"/>. </summary>
-        /// <param name="connectionState">
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: PrivateEndpointConnectionProperties.privateLinkServiceConnectionState
-        /// </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public CloudHsmClusterPrivateEndpointConnectionProperties(CloudHsmClusterPrivateLinkServiceConnectionState connectionState)
         {
@@ -65,22 +59,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnectionProperties"/>. </summary>
-        /// <param name="privateEndpoint">
-        /// The private endpoint resource.
-        /// Serialized Name: PrivateEndpointConnectionProperties.privateEndpoint
-        /// </param>
-        /// <param name="connectionState">
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: PrivateEndpointConnectionProperties.privateLinkServiceConnectionState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the private endpoint connection resource.
-        /// Serialized Name: PrivateEndpointConnectionProperties.provisioningState
-        /// </param>
-        /// <param name="groupIds">
-        /// The group ids for the private endpoint resource.
-        /// Serialized Name: PrivateEndpointConnectionProperties.groupIds
-        /// </param>
+        /// <param name="privateEndpoint"> The private endpoint resource. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmClusterPrivateEndpointConnectionProperties(SubResource privateEndpoint, CloudHsmClusterPrivateLinkServiceConnectionState connectionState, CloudHsmClusterPrivateEndpointConnectionProvisioningState? provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -96,31 +78,23 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         {
         }
 
-        /// <summary>
-        /// The private endpoint resource.
-        /// Serialized Name: PrivateEndpointConnectionProperties.privateEndpoint
-        /// </summary>
+        /// <summary> The private endpoint resource. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
+        [WirePath("privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
-        /// <summary>
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: PrivateEndpointConnectionProperties.privateLinkServiceConnectionState
-        /// </summary>
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public CloudHsmClusterPrivateLinkServiceConnectionState ConnectionState { get; set; }
-        /// <summary>
-        /// The provisioning state of the private endpoint connection resource.
-        /// Serialized Name: PrivateEndpointConnectionProperties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("provisioningState")]
         public CloudHsmClusterPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The group ids for the private endpoint resource.
-        /// Serialized Name: PrivateEndpointConnectionProperties.groupIds
-        /// </summary>
+        /// <summary> The group ids for the private endpoint resource. </summary>
+        [WirePath("groupIds")]
         public IReadOnlyList<string> GroupIds { get; }
     }
 }

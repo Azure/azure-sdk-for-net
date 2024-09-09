@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Backup and Restore Common properties
-    /// Serialized Name: BackupRestoreRequestBaseProperties
-    /// </summary>
+    /// <summary> Backup and Restore Common properties. </summary>
     public partial class BackupRestoreRequestBaseProperties
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackupRestoreRequestBaseProperties"/>. </summary>
-        /// <param name="azureStorageBlobContainerUri">
-        /// The Azure blob storage container Uri which contains the backup
-        /// Serialized Name: BackupRestoreRequestBaseProperties.azureStorageBlobContainerUri
-        /// </param>
+        /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageBlobContainerUri"/> is null. </exception>
         public BackupRestoreRequestBaseProperties(Uri azureStorageBlobContainerUri)
         {
@@ -62,14 +56,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupRestoreRequestBaseProperties"/>. </summary>
-        /// <param name="azureStorageBlobContainerUri">
-        /// The Azure blob storage container Uri which contains the backup
-        /// Serialized Name: BackupRestoreRequestBaseProperties.azureStorageBlobContainerUri
-        /// </param>
-        /// <param name="token">
-        /// The SAS token pointing to an Azure blob storage container. This property is reserved for Azure Backup Service.
-        /// Serialized Name: BackupRestoreRequestBaseProperties.token
-        /// </param>
+        /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the backup. </param>
+        /// <param name="token"> The SAS token pointing to an Azure blob storage container. This property is reserved for Azure Backup Service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackupRestoreRequestBaseProperties(Uri azureStorageBlobContainerUri, string token, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -83,15 +71,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         {
         }
 
-        /// <summary>
-        /// The Azure blob storage container Uri which contains the backup
-        /// Serialized Name: BackupRestoreRequestBaseProperties.azureStorageBlobContainerUri
-        /// </summary>
+        /// <summary> The Azure blob storage container Uri which contains the backup. </summary>
+        [WirePath("azureStorageBlobContainerUri")]
         public Uri AzureStorageBlobContainerUri { get; }
-        /// <summary>
-        /// The SAS token pointing to an Azure blob storage container. This property is reserved for Azure Backup Service.
-        /// Serialized Name: BackupRestoreRequestBaseProperties.token
-        /// </summary>
+        /// <summary> The SAS token pointing to an Azure blob storage container. This property is reserved for Azure Backup Service. </summary>
+        [WirePath("token")]
         public string Token { get; set; }
     }
 }

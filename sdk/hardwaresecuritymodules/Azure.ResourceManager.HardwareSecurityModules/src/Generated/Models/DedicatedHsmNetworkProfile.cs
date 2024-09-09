@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// The network profile definition.
-    /// Serialized Name: NetworkProfile
-    /// </summary>
+    /// <summary> The network profile definition. </summary>
     public partial class DedicatedHsmNetworkProfile
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmNetworkProfile"/>. </summary>
-        /// <param name="subnet">
-        /// Specifies the identifier of the subnet.
-        /// Serialized Name: NetworkProfile.subnet
-        /// </param>
-        /// <param name="networkInterfaces">
-        /// Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM.
-        /// Serialized Name: NetworkProfile.networkInterfaces
-        /// </param>
+        /// <param name="subnet"> Specifies the identifier of the subnet. </param>
+        /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DedicatedHsmNetworkProfile(ApiEntityReference subnet, IList<DedicatedHsmNetworkInterface> networkInterfaces, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +63,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Specifies the identifier of the subnet.
-        /// Serialized Name: NetworkProfile.subnet
-        /// </summary>
+        /// <summary> Specifies the identifier of the subnet. </summary>
         internal ApiEntityReference Subnet { get; set; }
-        /// <summary>
-        /// The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
-        /// Serialized Name: ApiEntityReference.resourceId
-        /// </summary>
+        /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        [WirePath("subnet.resourceId")]
         public ResourceIdentifier SubnetResourceId
         {
             get => Subnet is null ? default : Subnet.ResourceId;
@@ -92,10 +78,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
-        /// <summary>
-        /// Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM.
-        /// Serialized Name: NetworkProfile.networkInterfaces
-        /// </summary>
+        /// <summary> Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM. </summary>
+        [WirePath("networkInterfaces")]
         public IList<DedicatedHsmNetworkInterface> NetworkInterfaces { get; }
     }
 }

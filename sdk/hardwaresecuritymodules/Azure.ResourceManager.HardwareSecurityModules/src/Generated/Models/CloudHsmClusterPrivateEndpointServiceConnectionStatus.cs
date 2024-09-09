@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// The private endpoint connection status.
-    /// Serialized Name: PrivateEndpointServiceConnectionStatus
-    /// </summary>
+    /// <summary> The private endpoint connection status. </summary>
     public readonly partial struct CloudHsmClusterPrivateEndpointServiceConnectionStatus : IEquatable<CloudHsmClusterPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary>
-        /// Pending
-        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static CloudHsmClusterPrivateEndpointServiceConnectionStatus Pending { get; } = new CloudHsmClusterPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary>
-        /// Approved
-        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static CloudHsmClusterPrivateEndpointServiceConnectionStatus Approved { get; } = new CloudHsmClusterPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary>
-        /// Rejected
-        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Rejected
-        /// </summary>
+        /// <summary> Rejected. </summary>
         public static CloudHsmClusterPrivateEndpointServiceConnectionStatus Rejected { get; } = new CloudHsmClusterPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="CloudHsmClusterPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(CloudHsmClusterPrivateEndpointServiceConnectionStatus left, CloudHsmClusterPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// Status of the backup/restore operation
-    /// Serialized Name: BackupRestoreOperationStatus
-    /// </summary>
+    /// <summary> Status of the backup/restore operation. </summary>
     public readonly partial struct BackupRestoreOperationStatus : IEquatable<BackupRestoreOperationStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private const string FailedValue = "Failed";
         private const string CancelledValue = "Cancelled";
 
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: BackupRestoreOperationStatus.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static BackupRestoreOperationStatus InProgress { get; } = new BackupRestoreOperationStatus(InProgressValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: BackupRestoreOperationStatus.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static BackupRestoreOperationStatus Succeeded { get; } = new BackupRestoreOperationStatus(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: BackupRestoreOperationStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static BackupRestoreOperationStatus Failed { get; } = new BackupRestoreOperationStatus(FailedValue);
-        /// <summary>
-        /// Cancelled
-        /// Serialized Name: BackupRestoreOperationStatus.Cancelled
-        /// </summary>
+        /// <summary> Cancelled. </summary>
         public static BackupRestoreOperationStatus Cancelled { get; } = new BackupRestoreOperationStatus(CancelledValue);
         /// <summary> Determines if two <see cref="BackupRestoreOperationStatus"/> values are the same. </summary>
         public static bool operator ==(BackupRestoreOperationStatus left, BackupRestoreOperationStatus right) => left.Equals(right);

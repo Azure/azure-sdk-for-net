@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary>
-    /// List of private endpoint connections associated with the specified resource.
-    /// Serialized Name: PrivateEndpointConnectionListResult
-    /// </summary>
+    /// <summary> List of private endpoint connections associated with the specified resource. </summary>
     internal partial class CloudHsmClusterPrivateEndpointConnectionListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value">
-        /// Array of private endpoint connections.
-        /// Serialized Name: PrivateEndpointConnectionListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of private endpoint connections.
-        /// Serialized Name: PrivateEndpointConnectionListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of private endpoint connections. </param>
+        /// <param name="nextLink"> The URL to get the next set of private endpoint connections. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmClusterPrivateEndpointConnectionListResult(IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Array of private endpoint connections.
-        /// Serialized Name: PrivateEndpointConnectionListResult.value
-        /// </summary>
+        /// <summary> Array of private endpoint connections. </summary>
         public IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of private endpoint connections.
-        /// Serialized Name: PrivateEndpointConnectionListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of private endpoint connections. </summary>
         public string NextLink { get; }
     }
 }
