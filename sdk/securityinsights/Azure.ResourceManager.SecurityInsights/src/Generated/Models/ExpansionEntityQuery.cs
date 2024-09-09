@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             DataSources = new ChangeTrackingList<string>();
             InputFields = new ChangeTrackingList<string>();
-            OutputEntityTypes = new ChangeTrackingList<EntityType>();
+            OutputEntityTypes = new ChangeTrackingList<SecurityInsightsEntityType>();
             Kind = EntityQueryKind.Expansion;
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="inputFields"> List of the fields of the source entity that are required to run the query. </param>
         /// <param name="outputEntityTypes"> List of the desired output types to be constructed from the result. </param>
         /// <param name="queryTemplate"> The template query string to be parsed and formatted. </param>
-        internal ExpansionEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> dataSources, string displayName, EntityType? inputEntityType, IList<string> inputFields, IList<EntityType> outputEntityTypes, string queryTemplate) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal ExpansionEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> dataSources, string displayName, SecurityInsightsEntityType? inputEntityType, IList<string> inputFields, IList<SecurityInsightsEntityType> outputEntityTypes, string queryTemplate) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             DataSources = dataSources;
             DisplayName = displayName;
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string DisplayName { get; set; }
         /// <summary> The type of the query's source entity. </summary>
         [WirePath("properties.inputEntityType")]
-        public EntityType? InputEntityType { get; set; }
+        public SecurityInsightsEntityType? InputEntityType { get; set; }
         /// <summary> List of the fields of the source entity that are required to run the query. </summary>
         [WirePath("properties.inputFields")]
         public IList<string> InputFields { get; }
         /// <summary> List of the desired output types to be constructed from the result. </summary>
         [WirePath("properties.outputEntityTypes")]
-        public IList<EntityType> OutputEntityTypes { get; }
+        public IList<SecurityInsightsEntityType> OutputEntityTypes { get; }
         /// <summary> The template query string to be parsed and formatted. </summary>
         [WirePath("properties.queryTemplate")]
         public string QueryTemplate { get; set; }

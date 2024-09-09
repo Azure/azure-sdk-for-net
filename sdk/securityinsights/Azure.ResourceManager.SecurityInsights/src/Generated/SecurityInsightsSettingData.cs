@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// A class representing the SecurityInsightsSetting data model.
     /// The Setting.
     /// Please note <see cref="SecurityInsightsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="EntityAnalytics"/>, <see cref="EyesOn"/> and <see cref="UebaSettings"/>.
+    /// The available derived classes include <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="EntityAnalytics"/>, <see cref="SecurityInsightsEyesOn"/> and <see cref="UebaSettings"/>.
     /// </summary>
     public abstract partial class SecurityInsightsSettingData : ResourceData
     {

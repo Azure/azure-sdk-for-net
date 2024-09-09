@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectorInstructionModelBase"/>. </summary>
         /// <param name="settingType"> The kind of the setting. </param>
-        public ConnectorInstructionModelBase(SettingType settingType)
+        public ConnectorInstructionModelBase(ConnectorSettingType settingType)
         {
             SettingType = settingType;
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="parameters"> The parameters for the setting. </param>
         /// <param name="settingType"> The kind of the setting. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectorInstructionModelBase(BinaryData parameters, SettingType settingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectorInstructionModelBase(BinaryData parameters, ConnectorSettingType settingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Parameters = parameters;
             SettingType = settingType;
@@ -102,6 +102,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public BinaryData Parameters { get; set; }
         /// <summary> The kind of the setting. </summary>
         [WirePath("type")]
-        public SettingType SettingType { get; set; }
+        public ConnectorSettingType SettingType { get; set; }
     }
 }

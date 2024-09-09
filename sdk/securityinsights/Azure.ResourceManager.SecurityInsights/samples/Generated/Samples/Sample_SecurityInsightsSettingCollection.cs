@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
 
             // invoke the operation
             string settingsName = "EyesOn";
-            SecurityInsightsSettingData data = new EyesOn()
+            SecurityInsightsSettingData data = new SecurityInsightsEyesOn()
             {
                 ETag = new ETag("\"0300bf09-0000-0000-0000-5c37296e0000\""),
             };

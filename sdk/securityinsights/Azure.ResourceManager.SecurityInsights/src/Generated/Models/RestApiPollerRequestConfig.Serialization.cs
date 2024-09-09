@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string apiEndpoint = default;
             int? rateLimitQPS = default;
             int? queryWindowInMin = default;
-            HttpMethodVerb? httpMethod = default;
+            ConnectorHttpMethodVerb? httpMethod = default;
             string queryTimeFormat = default;
             int? retryCount = default;
             int? timeoutInSeconds = default;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    httpMethod = new HttpMethodVerb(property.Value.GetString());
+                    httpMethod = new ConnectorHttpMethodVerb(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("queryTimeFormat"u8))

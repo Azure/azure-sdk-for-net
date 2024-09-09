@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileImportData"/>. </summary>
         public SecurityInsightsFileImportData()
         {
-            ErrorsPreview = new ChangeTrackingList<ValidationError>();
+            ErrorsPreview = new ChangeTrackingList<SecurityInsightsFileValidationError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileImportData"/>. </summary>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="filesValidUntil"> The time the files associated with this import are deleted from the storage account. </param>
         /// <param name="importValidUntil"> The time the file import record is soft deleted from the database and history. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsFileImportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IngestionMode? ingestionMode, FileImportContentType? contentType, DateTimeOffset? createdOn, FileMetadata errorFile, IReadOnlyList<ValidationError> errorsPreview, FileMetadata importFile, int? ingestedRecordCount, string source, FileImportState? state, int? totalRecordCount, int? validRecordCount, DateTimeOffset? filesValidUntil, DateTimeOffset? importValidUntil, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsFileImportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IngestionMode? ingestionMode, SecurityInsightsFileImportContentType? contentType, DateTimeOffset? createdOn, SecurityInsightsFileMetadata errorFile, IReadOnlyList<SecurityInsightsFileValidationError> errorsPreview, SecurityInsightsFileMetadata importFile, int? ingestedRecordCount, string source, SecurityInsightsFileImportState? state, int? totalRecordCount, int? validRecordCount, DateTimeOffset? filesValidUntil, DateTimeOffset? importValidUntil, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IngestionMode = ingestionMode;
             ContentType = contentType;
@@ -99,19 +99,19 @@ namespace Azure.ResourceManager.SecurityInsights
         public IngestionMode? IngestionMode { get; set; }
         /// <summary> The content type of this file. </summary>
         [WirePath("properties.contentType")]
-        public FileImportContentType? ContentType { get; set; }
+        public SecurityInsightsFileImportContentType? ContentType { get; set; }
         /// <summary> The time the file was imported. </summary>
         [WirePath("properties.createdTimeUTC")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Represents the error file (if the import was ingested with errors or failed the validation). </summary>
         [WirePath("properties.errorFile")]
-        public FileMetadata ErrorFile { get; }
+        public SecurityInsightsFileMetadata ErrorFile { get; }
         /// <summary> An ordered list of some of the errors that were encountered during validation. </summary>
         [WirePath("properties.errorsPreview")]
-        public IReadOnlyList<ValidationError> ErrorsPreview { get; }
+        public IReadOnlyList<SecurityInsightsFileValidationError> ErrorsPreview { get; }
         /// <summary> Represents the imported file. </summary>
         [WirePath("properties.importFile")]
-        public FileMetadata ImportFile { get; set; }
+        public SecurityInsightsFileMetadata ImportFile { get; set; }
         /// <summary> The number of records that have been successfully ingested. </summary>
         [WirePath("properties.ingestedRecordCount")]
         public int? IngestedRecordCount { get; }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public string Source { get; set; }
         /// <summary> The state of the file import. </summary>
         [WirePath("properties.state")]
-        public FileImportState? State { get; }
+        public SecurityInsightsFileImportState? State { get; }
         /// <summary> The number of records in the file. </summary>
         [WirePath("properties.totalRecordCount")]
         public int? TotalRecordCount { get; }

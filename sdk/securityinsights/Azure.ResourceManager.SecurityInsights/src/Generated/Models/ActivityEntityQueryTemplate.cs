@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="inputEntityType"> The type of the query's source entity. </param>
         /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
         /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
-        internal ActivityEntityQueryTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryTemplateKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, string content, string description, ActivityEntityQueryDefinition queryDefinitions, IList<DataTypeDefinitions> dataTypes, EntityType? inputEntityType, IList<IList<string>> requiredInputFieldsSets, IDictionary<string, IList<string>> entitiesFilter) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        internal ActivityEntityQueryTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryTemplateKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, string content, string description, ActivityEntityQueryDefinition queryDefinitions, IList<DataTypeDefinitions> dataTypes, SecurityInsightsEntityType? inputEntityType, IList<IList<string>> requiredInputFieldsSets, IDictionary<string, IList<string>> entitiesFilter) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             Title = title;
             Content = content;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IList<DataTypeDefinitions> DataTypes { get; }
         /// <summary> The type of the query's source entity. </summary>
         [WirePath("properties.inputEntityType")]
-        public EntityType? InputEntityType { get; set; }
+        public SecurityInsightsEntityType? InputEntityType { get; set; }
         /// <summary> List of the fields of the source entity that are required to run the query. </summary>
         [WirePath("properties.requiredInputFieldsSets")]
         public IList<IList<string>> RequiredInputFieldsSets { get; }

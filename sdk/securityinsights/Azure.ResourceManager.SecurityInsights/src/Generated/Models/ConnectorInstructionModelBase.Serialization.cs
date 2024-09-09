@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             BinaryData parameters = default;
-            SettingType type = default;
+            ConnectorSettingType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new SettingType(property.Value.GetString());
+                    type = new ConnectorSettingType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

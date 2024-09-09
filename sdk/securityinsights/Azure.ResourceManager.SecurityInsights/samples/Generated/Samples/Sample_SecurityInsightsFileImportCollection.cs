@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
             SecurityInsightsFileImportData data = new SecurityInsightsFileImportData()
             {
                 IngestionMode = IngestionMode.IngestAnyValidRecords,
-                ContentType = FileImportContentType.StixIndicator,
-                ImportFile = new FileMetadata()
+                ContentType = SecurityInsightsFileImportContentType.StixIndicator,
+                ImportFile = new SecurityInsightsFileMetadata()
                 {
-                    FileFormat = FileFormat.Json,
+                    FileFormat = SecurityInsightsFileFormat.Json,
                     FileName = "myFile.json",
                     FileSize = 4653,
                 },

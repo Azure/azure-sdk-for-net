@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
 
             // invoke the operation
             string sourceControlId = "789e0c1f-4a3d-43ad-809c-e713b677b04a";
-            SecurityInsightsSourceControlData data = new SecurityInsightsSourceControlData("My Source Control", RepoType.Github, new SourceControlContentType[]
+            SecurityInsightsSourceControlData data = new SecurityInsightsSourceControlData("My Source Control", SourceControlRepoType.Github, new SourceControlContentType[]
             {
 new SourceControlContentType("AnalyticRules"),SourceControlContentType.Workbook
             }, new SourceControlRepository(new Uri("https://github.com/user/repo"), "master")

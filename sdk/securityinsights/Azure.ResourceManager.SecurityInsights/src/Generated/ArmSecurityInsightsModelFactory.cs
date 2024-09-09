@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsPackageData"/> instance for mocking. </returns>
-        public static SecurityInsightsPackageData SecurityInsightsPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, PackageKind? contentKind = null, string contentSchemaVersion = null, MetadataFlag? isNew = null, MetadataFlag? isPreview = null, MetadataFlag? isFeatured = null, MetadataFlag? isDeprecated = null, string version = null, string displayName = null, string description = null, string publisherDisplayName = null, MetadataSource source = null, MetadataAuthor author = null, MetadataSupport support = null, MetadataDependencies dependencies = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, MetadataCategories categories = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, string icon = null, ETag? etag = null)
+        public static SecurityInsightsPackageData SecurityInsightsPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, SecurityInsightsMetadataPackageKind? contentKind = null, string contentSchemaVersion = null, SecurityInsightsMetadataFlag? isNew = null, SecurityInsightsMetadataFlag? isPreview = null, SecurityInsightsMetadataFlag? isFeatured = null, SecurityInsightsMetadataFlag? isDeprecated = null, string version = null, string displayName = null, string description = null, string publisherDisplayName = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, string icon = null, ETag? etag = null)
         {
             providers ??= new List<string>();
             threatAnalysisTactics ??= new List<string>();
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="packagedContent"> The json of the ARM template to deploy. Expandable. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsProductPackageData"/> instance for mocking. </returns>
-        public static SecurityInsightsProductPackageData SecurityInsightsProductPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, PackageKind? contentKind = null, string contentSchemaVersion = null, MetadataFlag? isNew = null, MetadataFlag? isPreview = null, MetadataFlag? isFeatured = null, MetadataFlag? isDeprecated = null, string version = null, string displayName = null, string description = null, string publisherDisplayName = null, MetadataSource source = null, MetadataAuthor author = null, MetadataSupport support = null, MetadataDependencies dependencies = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, MetadataCategories categories = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, string icon = null, string installedVersion = null, ResourceIdentifier metadataResourceId = null, BinaryData packagedContent = null, ETag? etag = null)
+        public static SecurityInsightsProductPackageData SecurityInsightsProductPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, SecurityInsightsMetadataPackageKind? contentKind = null, string contentSchemaVersion = null, SecurityInsightsMetadataFlag? isNew = null, SecurityInsightsMetadataFlag? isPreview = null, SecurityInsightsMetadataFlag? isFeatured = null, SecurityInsightsMetadataFlag? isDeprecated = null, string version = null, string displayName = null, string description = null, string publisherDisplayName = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, string icon = null, string installedVersion = null, ResourceIdentifier metadataResourceId = null, BinaryData packagedContent = null, ETag? etag = null)
         {
             providers ??= new List<string>();
             threatAnalysisTactics ??= new List<string>();
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="packagedContent"> The json of the ARM template to deploy. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsProductTemplateData"/> instance for mocking. </returns>
-        public static SecurityInsightsProductTemplateData SecurityInsightsProductTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, MetadataSource source = null, MetadataAuthor author = null, MetadataSupport support = null, MetadataDependencies dependencies = null, MetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, PackageKind? packageKind = null, string packageName = null, MetadataFlag? isDeprecated = null, BinaryData packagedContent = null, ETag? etag = null)
+        public static SecurityInsightsProductTemplateData SecurityInsightsProductTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, SecurityInsightsMetadataPackageKind? packageKind = null, string packageName = null, SecurityInsightsMetadataFlag? isDeprecated = null, BinaryData packagedContent = null, ETag? etag = null)
         {
             providers ??= new List<string>();
             threatAnalysisTactics ??= new List<string>();
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="packageName"> the name of the package contains this template. </param>
         /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
         /// <returns> A new <see cref="Models.TemplateBaseProperties"/> instance for mocking. </returns>
-        public static TemplateBaseProperties TemplateBaseProperties(string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, MetadataSource source = null, MetadataAuthor author = null, MetadataSupport support = null, MetadataDependencies dependencies = null, MetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, PackageKind? packageKind = null, string packageName = null, MetadataFlag? isDeprecated = null)
+        public static TemplateBaseProperties TemplateBaseProperties(string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, SecurityInsightsMetadataPackageKind? packageKind = null, string packageName = null, SecurityInsightsMetadataFlag? isDeprecated = null)
         {
             providers ??= new List<string>();
             threatAnalysisTactics ??= new List<string>();
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsTemplateData"/> instance for mocking. </returns>
-        public static SecurityInsightsTemplateData SecurityInsightsTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, MetadataSource source = null, MetadataAuthor author = null, MetadataSupport support = null, MetadataDependencies dependencies = null, MetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, PackageKind? packageKind = null, string packageName = null, MetadataFlag? isDeprecated = null, BinaryData mainTemplate = null, IEnumerable<TemplateProperties> dependantTemplates = null, ETag? etag = null)
+        public static SecurityInsightsTemplateData SecurityInsightsTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, SecurityInsightsMetadataPackageKind? packageKind = null, string packageName = null, SecurityInsightsMetadataFlag? isDeprecated = null, BinaryData mainTemplate = null, IEnumerable<TemplateProperties> dependantTemplates = null, ETag? etag = null)
         {
             providers ??= new List<string>();
             threatAnalysisTactics ??= new List<string>();
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="mainTemplate"> The JSON of the ARM template to deploy active content. Expandable. </param>
         /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
         /// <returns> A new <see cref="Models.TemplateProperties"/> instance for mocking. </returns>
-        public static TemplateProperties TemplateProperties(string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, MetadataSource source = null, MetadataAuthor author = null, MetadataSupport support = null, MetadataDependencies dependencies = null, MetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, PackageKind? packageKind = null, string packageName = null, MetadataFlag? isDeprecated = null, BinaryData mainTemplate = null, IEnumerable<TemplateProperties> dependantTemplates = null)
+        public static TemplateProperties TemplateProperties(string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, SecurityInsightsMetadataPackageKind? packageKind = null, string packageName = null, SecurityInsightsMetadataFlag? isDeprecated = null, BinaryData mainTemplate = null, IEnumerable<TemplateProperties> dependantTemplates = null)
         {
             providers ??= new List<string>();
             threatAnalysisTactics ??= new List<string>();
@@ -1146,9 +1146,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="filesValidUntil"> The time the files associated with this import are deleted from the storage account. </param>
         /// <param name="importValidUntil"> The time the file import record is soft deleted from the database and history. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsFileImportData"/> instance for mocking. </returns>
-        public static SecurityInsightsFileImportData SecurityInsightsFileImportData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IngestionMode? ingestionMode = null, FileImportContentType? contentType = null, DateTimeOffset? createdOn = null, FileMetadata errorFile = null, IEnumerable<ValidationError> errorsPreview = null, FileMetadata importFile = null, int? ingestedRecordCount = null, string source = null, FileImportState? state = null, int? totalRecordCount = null, int? validRecordCount = null, DateTimeOffset? filesValidUntil = null, DateTimeOffset? importValidUntil = null)
+        public static SecurityInsightsFileImportData SecurityInsightsFileImportData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IngestionMode? ingestionMode = null, SecurityInsightsFileImportContentType? contentType = null, DateTimeOffset? createdOn = null, SecurityInsightsFileMetadata errorFile = null, IEnumerable<SecurityInsightsFileValidationError> errorsPreview = null, SecurityInsightsFileMetadata importFile = null, int? ingestedRecordCount = null, string source = null, SecurityInsightsFileImportState? state = null, int? totalRecordCount = null, int? validRecordCount = null, DateTimeOffset? filesValidUntil = null, DateTimeOffset? importValidUntil = null)
         {
-            errorsPreview ??= new List<ValidationError>();
+            errorsPreview ??= new List<SecurityInsightsFileValidationError>();
 
             return new SecurityInsightsFileImportData(
                 id,
@@ -1171,16 +1171,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FileMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsFileMetadata"/>. </summary>
         /// <param name="fileFormat"> The format of the file. </param>
         /// <param name="fileName"> The name of the file. </param>
         /// <param name="fileSize"> The size of the file. </param>
         /// <param name="fileContentUri"> A URI with a valid SAS token to allow uploading / downloading the file. </param>
         /// <param name="deleteStatus"> Indicates whether the file was deleted from the storage account. </param>
-        /// <returns> A new <see cref="Models.FileMetadata"/> instance for mocking. </returns>
-        public static FileMetadata FileMetadata(FileFormat? fileFormat = null, string fileName = null, int? fileSize = null, Uri fileContentUri = null, DeleteStatus? deleteStatus = null)
+        /// <returns> A new <see cref="Models.SecurityInsightsFileMetadata"/> instance for mocking. </returns>
+        public static SecurityInsightsFileMetadata SecurityInsightsFileMetadata(SecurityInsightsFileFormat? fileFormat = null, string fileName = null, int? fileSize = null, Uri fileContentUri = null, SecurityInsightsFileDeleteStatus? deleteStatus = null)
         {
-            return new FileMetadata(
+            return new SecurityInsightsFileMetadata(
                 fileFormat,
                 fileName,
                 fileSize,
@@ -1189,15 +1189,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ValidationError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsFileValidationError"/>. </summary>
         /// <param name="recordIndex"> The number of the record that has the error. </param>
         /// <param name="errorMessages"> A list of descriptions of the error. </param>
-        /// <returns> A new <see cref="Models.ValidationError"/> instance for mocking. </returns>
-        public static ValidationError ValidationError(int? recordIndex = null, IEnumerable<string> errorMessages = null)
+        /// <returns> A new <see cref="Models.SecurityInsightsFileValidationError"/> instance for mocking. </returns>
+        public static SecurityInsightsFileValidationError SecurityInsightsFileValidationError(int? recordIndex = null, IEnumerable<string> errorMessages = null)
         {
             errorMessages ??= new List<string>();
 
-            return new ValidationError(recordIndex, errorMessages?.ToList(), serializedAdditionalRawData: null);
+            return new SecurityInsightsFileValidationError(recordIndex, errorMessages?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsHuntData"/>. </summary>
@@ -1643,7 +1643,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsMetadataData"/> instance for mocking. </returns>
-        public static SecurityInsightsMetadataData SecurityInsightsMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string parentId = null, string version = null, string kind = null, MetadataSource source = null, MetadataAuthor author = null, MetadataSupport support = null, MetadataDependencies dependencies = null, MetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, ETag? etag = null)
+        public static SecurityInsightsMetadataData SecurityInsightsMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string parentId = null, string version = null, string kind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, ETag? etag = null)
         {
             providers ??= new List<string>();
             threatAnalysisTactics ??= new List<string>();
@@ -1705,7 +1705,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsMetadataPatch"/> instance for mocking. </returns>
-        public static SecurityInsightsMetadataPatch SecurityInsightsMetadataPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string parentId = null, string version = null, string kind = null, MetadataSource source = null, MetadataAuthor author = null, MetadataSupport support = null, MetadataDependencies dependencies = null, MetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, ETag? etag = null)
+        public static SecurityInsightsMetadataPatch SecurityInsightsMetadataPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string parentId = null, string version = null, string kind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, ETag? etag = null)
         {
             providers ??= new List<string>();
             threatAnalysisTactics ??= new List<string>();
@@ -1922,7 +1922,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="pullRequest"> Information regarding the pull request of the source control. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsSourceControlData"/> instance for mocking. </returns>
-        public static SecurityInsightsSourceControlData SecurityInsightsSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? sourceControlId = null, SourceControlVersion? version = null, string displayName = null, string description = null, RepoType repoType = default, IEnumerable<SourceControlContentType> contentTypes = null, SourceControlRepository repository = null, SourceControlServicePrincipal servicePrincipal = null, RepositoryAccess repositoryAccess = null, RepositoryResourceInfo repositoryResourceInfo = null, SourceControlDeploymentInfo lastDeploymentInfo = null, PullRequestInfo pullRequest = null, ETag? etag = null)
+        public static SecurityInsightsSourceControlData SecurityInsightsSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? sourceControlId = null, SourceControlVersion? version = null, string displayName = null, string description = null, SourceControlRepoType repoType = default, IEnumerable<SourceControlContentType> contentTypes = null, SourceControlRepository repository = null, SourceControlServicePrincipal servicePrincipal = null, RepositoryAccess repositoryAccess = null, RepositoryResourceInfo repositoryResourceInfo = null, SourceControlDeploymentInfo lastDeploymentInfo = null, PullRequestInfo pullRequest = null, ETag? etag = null)
         {
             contentTypes ??= new List<SourceControlContentType>();
 
@@ -2036,24 +2036,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new PullRequestInfo(uri, state, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResponseWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SourceControlOperationWarning"/>. </summary>
         /// <param name="warning"> Warning data. </param>
-        /// <returns> A new <see cref="Models.ResponseWarning"/> instance for mocking. </returns>
-        public static ResponseWarning ResponseWarning(WarningBody warning = null)
+        /// <returns> A new <see cref="Models.SourceControlOperationWarning"/> instance for mocking. </returns>
+        public static SourceControlOperationWarning SourceControlOperationWarning(SourceControlOperationWarningBody warning = null)
         {
-            return new ResponseWarning(warning, serializedAdditionalRawData: null);
+            return new SourceControlOperationWarning(warning, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WarningBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SourceControlOperationWarningBody"/>. </summary>
         /// <param name="code"> An identifier for the warning. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the warning, intended to be suitable for display in a user interface. </param>
         /// <param name="details"></param>
-        /// <returns> A new <see cref="Models.WarningBody"/> instance for mocking. </returns>
-        public static WarningBody WarningBody(WarningCode? code = null, string message = null, IEnumerable<WarningBody> details = null)
+        /// <returns> A new <see cref="Models.SourceControlOperationWarningBody"/> instance for mocking. </returns>
+        public static SourceControlOperationWarningBody SourceControlOperationWarningBody(SourceControlOperationWarningCode? code = null, string message = null, IEnumerable<SourceControlOperationWarningBody> details = null)
         {
-            details ??= new List<WarningBody>();
+            details ??= new List<SourceControlOperationWarningBody>();
 
-            return new WarningBody(code, message, details?.ToList(), serializedAdditionalRawData: null);
+            return new SourceControlOperationWarningBody(code, message, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData"/>. </summary>
@@ -2232,7 +2232,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new ThreatIntelligenceCount(count, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TIObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceObject"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2248,8 +2248,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
         /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
         /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
-        /// <returns> A new <see cref="Models.TIObject"/> instance for mocking. </returns>
-        public static TIObject TIObject(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
+        /// <returns> A new <see cref="Models.ThreatIntelligenceObject"/> instance for mocking. </returns>
+        public static ThreatIntelligenceObject ThreatIntelligenceObject(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
         {
             data ??= new Dictionary<string, BinaryData>();
             relationshipHints ??= new List<RelationshipHint>();
@@ -2304,7 +2304,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="ruleRunAdditionalData"> Dictionary of &lt;any&gt;. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.TriggeredAnalyticsRuleRunData"/> instance for mocking. </returns>
-        public static TriggeredAnalyticsRuleRunData TriggeredAnalyticsRuleRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset executeOn = default, string ruleId = null, string triggeredAnalyticsRuleRunId = null, ProvisioningState provisioningState = default, IDictionary<string, BinaryData> ruleRunAdditionalData = null, ETag? etag = null)
+        public static TriggeredAnalyticsRuleRunData TriggeredAnalyticsRuleRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset executeOn = default, string ruleId = null, string triggeredAnalyticsRuleRunId = null, TriggeredAnalyticsRuleRunProvisioningState provisioningState = default, IDictionary<string, BinaryData> ruleRunAdditionalData = null, ETag? etag = null)
         {
             ruleRunAdditionalData ??= new Dictionary<string, BinaryData>();
 
@@ -2350,7 +2350,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="uploadStatus"> The status of the Watchlist upload : New, InProgress or Complete. Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsWatchlistData"/> instance for mocking. </returns>
-        public static SecurityInsightsWatchlistData SecurityInsightsWatchlistData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? watchlistId = null, string displayName = null, string provider = null, string sourceString = null, SourceType? sourceType = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, string description = null, string watchlistType = null, string watchlistAlias = null, bool? isDeleted = null, IEnumerable<string> labels = null, TimeSpan? defaultDuration = null, Guid? tenantId = null, int? numberOfLinesToSkip = null, string rawContent = null, string itemsSearchKey = null, string contentType = null, string uploadStatus = null, ETag? etag = null)
+        public static SecurityInsightsWatchlistData SecurityInsightsWatchlistData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? watchlistId = null, string displayName = null, string provider = null, string sourceString = null, WatchlistSourceType? sourceType = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, string description = null, string watchlistType = null, string watchlistAlias = null, bool? isDeleted = null, IEnumerable<string> labels = null, TimeSpan? defaultDuration = null, Guid? tenantId = null, int? numberOfLinesToSkip = null, string rawContent = null, string itemsSearchKey = null, string contentType = null, string uploadStatus = null, ETag? etag = null)
         {
             labels ??= new List<string>();
 
@@ -2436,7 +2436,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="items"> List of resources included in this workspace manager assignment. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerAssignmentData"/> instance for mocking. </returns>
-        public static WorkspaceManagerAssignmentData WorkspaceManagerAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string targetResourceName = null, DateTimeOffset? lastJobEndOn = null, ProvisioningState? lastJobProvisioningState = null, IEnumerable<WorkspaceManagerAssignmentItem> items = null, ETag? etag = null)
+        public static WorkspaceManagerAssignmentData WorkspaceManagerAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string targetResourceName = null, DateTimeOffset? lastJobEndOn = null, TriggeredAnalyticsRuleRunProvisioningState? lastJobProvisioningState = null, IEnumerable<WorkspaceManagerAssignmentItem> items = null, ETag? etag = null)
         {
             items ??= new List<WorkspaceManagerAssignmentItem>();
 
@@ -2465,7 +2465,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerAssignmentJobData"/> instance for mocking. </returns>
-        public static WorkspaceManagerAssignmentJobData WorkspaceManagerAssignmentJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? endOn = null, IEnumerable<JobItem> items = null, ProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, string errorMessage = null, ETag? etag = null)
+        public static WorkspaceManagerAssignmentJobData WorkspaceManagerAssignmentJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? endOn = null, IEnumerable<JobItem> items = null, TriggeredAnalyticsRuleRunProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, string errorMessage = null, ETag? etag = null)
         {
             items ??= new List<JobItem>();
 
@@ -3362,7 +3362,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="requiredInputFieldsSets"> Data types for template. </param>
         /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
         /// <returns> A new <see cref="Models.EntityQueryItemProperties"/> instance for mocking. </returns>
-        public static EntityQueryItemProperties EntityQueryItemProperties(IEnumerable<EntityQueryItemPropertiesDataTypesItem> dataTypes = null, EntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, BinaryData entitiesFilter = null)
+        public static EntityQueryItemProperties EntityQueryItemProperties(IEnumerable<EntityQueryItemPropertiesDataTypesItem> dataTypes = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, BinaryData entitiesFilter = null)
         {
             dataTypes ??= new List<EntityQueryItemPropertiesDataTypesItem>();
             requiredInputFieldsSets ??= new List<IList<string>>();
@@ -3411,7 +3411,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="defaultTimeRange"> The insight chart query. </param>
         /// <param name="beforeRange"> The insight chart query. </param>
         /// <returns> A new <see cref="Models.InsightQueryItemProperties"/> instance for mocking. </returns>
-        public static InsightQueryItemProperties InsightQueryItemProperties(IEnumerable<EntityQueryItemPropertiesDataTypesItem> dataTypes = null, EntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, BinaryData entitiesFilter = null, string displayName = null, string description = null, string baseQuery = null, InsightQueryItemPropertiesTableQuery tableQuery = null, BinaryData chartQuery = null, InsightQueryItemPropertiesAdditionalQuery additionalQuery = null, InsightQueryItemPropertiesDefaultTimeRange defaultTimeRange = null, string beforeRange = null)
+        public static InsightQueryItemProperties InsightQueryItemProperties(IEnumerable<EntityQueryItemPropertiesDataTypesItem> dataTypes = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, BinaryData entitiesFilter = null, string displayName = null, string description = null, string baseQuery = null, InsightQueryItemPropertiesTableQuery tableQuery = null, BinaryData chartQuery = null, InsightQueryItemPropertiesAdditionalQuery additionalQuery = null, InsightQueryItemPropertiesDefaultTimeRange defaultTimeRange = null, string beforeRange = null)
         {
             dataTypes ??= new List<EntityQueryItemPropertiesDataTypesItem>();
             requiredInputFieldsSets ??= new List<IList<string>>();
@@ -3449,7 +3449,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="outputType"> Insights Column type. </param>
         /// <param name="isDeepLinkSupported"> Is query supports deep-link. </param>
         /// <returns> A new <see cref="Models.InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem"/> instance for mocking. </returns>
-        public static InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem(string header = null, OutputType? outputType = null, bool? isDeepLinkSupported = null)
+        public static InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem(string header = null, InsightsColumnOutputType? outputType = null, bool? isDeepLinkSupported = null)
         {
             return new InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem(header, outputType, isDeepLinkSupported, serializedAdditionalRawData: null);
         }
@@ -3540,11 +3540,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="outputEntityTypes"> List of the desired output types to be constructed from the result. </param>
         /// <param name="queryTemplate"> The template query string to be parsed and formatted. </param>
         /// <returns> A new <see cref="Models.ExpansionEntityQuery"/> instance for mocking. </returns>
-        public static ExpansionEntityQuery ExpansionEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IEnumerable<string> dataSources = null, string displayName = null, EntityType? inputEntityType = null, IEnumerable<string> inputFields = null, IEnumerable<EntityType> outputEntityTypes = null, string queryTemplate = null)
+        public static ExpansionEntityQuery ExpansionEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IEnumerable<string> dataSources = null, string displayName = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<string> inputFields = null, IEnumerable<SecurityInsightsEntityType> outputEntityTypes = null, string queryTemplate = null)
         {
             dataSources ??= new List<string>();
             inputFields ??= new List<string>();
-            outputEntityTypes ??= new List<EntityType>();
+            outputEntityTypes ??= new List<SecurityInsightsEntityType>();
 
             return new ExpansionEntityQuery(
                 id,
@@ -3580,7 +3580,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="createdOn"> The time the activity was created. </param>
         /// <param name="lastModifiedOn"> The last time the activity was updated. </param>
         /// <returns> A new <see cref="Models.ActivityEntityQuery"/> instance for mocking. </returns>
-        public static ActivityEntityQuery ActivityEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string title = null, string content = null, string description = null, string query = null, EntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null, string templateName = null, bool? isEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null)
+        public static ActivityEntityQuery ActivityEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string title = null, string content = null, string description = null, string query = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null, string templateName = null, bool? isEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null)
         {
             requiredInputFieldsSets ??= new List<IList<string>>();
             entitiesFilter ??= new Dictionary<string, IList<string>>();
@@ -3624,7 +3624,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="createdOn"> The time the activity was created. </param>
         /// <param name="lastModifiedOn"> The last time the activity was updated. </param>
         /// <returns> A new <see cref="Models.ActivityCustomEntityQuery"/> instance for mocking. </returns>
-        public static ActivityCustomEntityQuery ActivityCustomEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string title = null, string content = null, string description = null, string query = null, EntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null, string templateName = null, bool? isEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null)
+        public static ActivityCustomEntityQuery ActivityCustomEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string title = null, string content = null, string description = null, string query = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null, string templateName = null, bool? isEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null)
         {
             requiredInputFieldsSets ??= new List<IList<string>>();
             entitiesFilter ??= new Dictionary<string, IList<string>>();
@@ -3664,7 +3664,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
         /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
         /// <returns> A new <see cref="Models.ActivityEntityQueryTemplate"/> instance for mocking. </returns>
-        public static ActivityEntityQueryTemplate ActivityEntityQueryTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string content = null, string description = null, ActivityEntityQueryDefinition queryDefinitions = null, IEnumerable<DataTypeDefinitions> dataTypes = null, EntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null)
+        public static ActivityEntityQueryTemplate ActivityEntityQueryTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string content = null, string description = null, ActivityEntityQueryDefinition queryDefinitions = null, IEnumerable<DataTypeDefinitions> dataTypes = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null)
         {
             dataTypes ??= new List<DataTypeDefinitions>();
             requiredInputFieldsSets ??= new List<IList<string>>();
@@ -3759,17 +3759,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 isEnabled);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EyesOn"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsEyesOn"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="isEnabled"> Determines whether the setting is enable or disabled. </param>
-        /// <returns> A new <see cref="Models.EyesOn"/> instance for mocking. </returns>
-        public static EyesOn EyesOn(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, bool? isEnabled = null)
+        /// <returns> A new <see cref="Models.SecurityInsightsEyesOn"/> instance for mocking. </returns>
+        public static SecurityInsightsEyesOn SecurityInsightsEyesOn(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, bool? isEnabled = null)
         {
-            return new EyesOn(
+            return new SecurityInsightsEyesOn(
                 id,
                 name,
                 resourceType,
@@ -3826,7 +3826,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 dataSources?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TiObjectKindThreatActor"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceThreatActor"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3841,13 +3841,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
         /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
         /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
-        /// <returns> A new <see cref="Models.TiObjectKindThreatActor"/> instance for mocking. </returns>
-        public static TiObjectKindThreatActor TiObjectKindThreatActor(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
+        /// <returns> A new <see cref="Models.ThreatIntelligenceThreatActor"/> instance for mocking. </returns>
+        public static ThreatIntelligenceThreatActor ThreatIntelligenceThreatActor(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
         {
             data ??= new Dictionary<string, BinaryData>();
             relationshipHints ??= new List<RelationshipHint>();
 
-            return new TiObjectKindThreatActor(
+            return new ThreatIntelligenceThreatActor(
                 id,
                 name,
                 resourceType,
@@ -3866,7 +3866,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TiObjectKindAttackPattern"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceAttackPattern"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3881,13 +3881,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
         /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
         /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
-        /// <returns> A new <see cref="Models.TiObjectKindAttackPattern"/> instance for mocking. </returns>
-        public static TiObjectKindAttackPattern TiObjectKindAttackPattern(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
+        /// <returns> A new <see cref="Models.ThreatIntelligenceAttackPattern"/> instance for mocking. </returns>
+        public static ThreatIntelligenceAttackPattern ThreatIntelligenceAttackPattern(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
         {
             data ??= new Dictionary<string, BinaryData>();
             relationshipHints ??= new List<RelationshipHint>();
 
-            return new TiObjectKindAttackPattern(
+            return new ThreatIntelligenceAttackPattern(
                 id,
                 name,
                 resourceType,
@@ -3906,7 +3906,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TiObjectKindIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceIdentity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3921,13 +3921,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
         /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
         /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
-        /// <returns> A new <see cref="Models.TiObjectKindIdentity"/> instance for mocking. </returns>
-        public static TiObjectKindIdentity TiObjectKindIdentity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
+        /// <returns> A new <see cref="Models.ThreatIntelligenceIdentity"/> instance for mocking. </returns>
+        public static ThreatIntelligenceIdentity ThreatIntelligenceIdentity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
         {
             data ??= new Dictionary<string, BinaryData>();
             relationshipHints ??= new List<RelationshipHint>();
 
-            return new TiObjectKindIdentity(
+            return new ThreatIntelligenceIdentity(
                 id,
                 name,
                 resourceType,
@@ -3946,7 +3946,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TiObjectKindRelationship"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceRelationship"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3961,13 +3961,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
         /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
         /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
-        /// <returns> A new <see cref="Models.TiObjectKindRelationship"/> instance for mocking. </returns>
-        public static TiObjectKindRelationship TiObjectKindRelationship(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
+        /// <returns> A new <see cref="Models.ThreatIntelligenceRelationship"/> instance for mocking. </returns>
+        public static ThreatIntelligenceRelationship ThreatIntelligenceRelationship(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
         {
             data ??= new Dictionary<string, BinaryData>();
             relationshipHints ??= new List<RelationshipHint>();
 
-            return new TiObjectKindRelationship(
+            return new ThreatIntelligenceRelationship(
                 id,
                 name,
                 resourceType,
@@ -3986,7 +3986,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TiObjectKindIndicator"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceIndicator"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -4002,14 +4002,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
         /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
         /// <param name="observables"> The observables of this indicator. </param>
-        /// <returns> A new <see cref="Models.TiObjectKindIndicator"/> instance for mocking. </returns>
-        public static TiObjectKindIndicator TiObjectKindIndicator(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null, IEnumerable<IndicatorObservablesItem> observables = null)
+        /// <returns> A new <see cref="Models.ThreatIntelligenceIndicator"/> instance for mocking. </returns>
+        public static ThreatIntelligenceIndicator ThreatIntelligenceIndicator(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null, IEnumerable<IndicatorObservablesItem> observables = null)
         {
             data ??= new Dictionary<string, BinaryData>();
             relationshipHints ??= new List<RelationshipHint>();
             observables ??= new List<IndicatorObservablesItem>();
 
-            return new TiObjectKindIndicator(
+            return new ThreatIntelligenceIndicator(
                 id,
                 name,
                 resourceType,
@@ -4102,7 +4102,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 microsoftEmergingThreatFeedState.HasValue ? new DataConnectorDataTypeCommon(microsoftEmergingThreatFeedState.Value, serializedAdditionalRawData: null) : null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MTPDataConnector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MtpDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -4112,12 +4112,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="filteredProvidersAlerts"> The available filtered providers for the connector. </param>
         /// <param name="incidentsState"> Incidents data type for Microsoft Threat Protection Platforms data connector. </param>
         /// <param name="alertsState"> Alerts data type for Microsoft Threat Protection Platforms data connector. </param>
-        /// <returns> A new <see cref="Models.MTPDataConnector"/> instance for mocking. </returns>
-        public static MTPDataConnector MTPDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, IEnumerable<MtpProvider> filteredProvidersAlerts = null, SecurityInsightsDataTypeConnectionState? incidentsState = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        /// <returns> A new <see cref="Models.MtpDataConnector"/> instance for mocking. </returns>
+        public static MtpDataConnector MtpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, IEnumerable<MtpProvider> filteredProvidersAlerts = null, SecurityInsightsDataTypeConnectionState? incidentsState = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
         {
             filteredProvidersAlerts ??= new List<MtpProvider>();
 
-            return new MTPDataConnector(
+            return new MtpDataConnector(
                 id,
                 name,
                 resourceType,
@@ -4239,7 +4239,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="auth">
         /// The a authentication model.
         /// Please note <see cref="CcpAuthConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AwsAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
+        /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AwsAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GcpAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
         /// </param>
         /// <param name="request"> The request configuration. </param>
         /// <param name="dcrConfig"> The DCR related properties. </param>
@@ -4272,7 +4272,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 addOnAttributes);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GCPDataConnector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GcpDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -4282,10 +4282,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="auth"> The auth section of the connector. </param>
         /// <param name="request"> The request section of the connector. </param>
         /// <param name="dcrConfig"> The configuration of the destination of the data. </param>
-        /// <returns> A new <see cref="Models.GCPDataConnector"/> instance for mocking. </returns>
-        public static GCPDataConnector GCPDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string connectorDefinitionName = null, GCPAuthProperties auth = null, GCPRequestProperties request = null, DcrConfiguration dcrConfig = null)
+        /// <returns> A new <see cref="Models.GcpDataConnector"/> instance for mocking. </returns>
+        public static GcpDataConnector GcpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string connectorDefinitionName = null, GcpAuthProperties auth = null, GcpRequestProperties request = null, DcrConfiguration dcrConfig = null)
         {
-            return new GCPDataConnector(
+            return new GcpDataConnector(
                 id,
                 name,
                 resourceType,
@@ -4345,7 +4345,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 dynamics365CdsActivitiesState.HasValue ? new Dynamics365DataConnectorDataTypesDynamics365CdsActivities(dynamics365CdsActivitiesState.Value, serializedAdditionalRawData: null) : null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OfficeATPDataConnector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OfficeAtpDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -4353,10 +4353,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="alertsState"> Alerts data type connection. </param>
-        /// <returns> A new <see cref="Models.OfficeATPDataConnector"/> instance for mocking. </returns>
-        public static OfficeATPDataConnector OfficeATPDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        /// <returns> A new <see cref="Models.OfficeAtpDataConnector"/> instance for mocking. </returns>
+        public static OfficeAtpDataConnector OfficeAtpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
         {
-            return new OfficeATPDataConnector(
+            return new OfficeAtpDataConnector(
                 id,
                 name,
                 resourceType,
@@ -4437,7 +4437,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 logsState.HasValue ? new DataConnectorDataTypeCommon(logsState.Value, serializedAdditionalRawData: null) : null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OfficeIRMDataConnector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OfficeIrmDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -4445,10 +4445,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="alertsState"> Alerts data type connection. </param>
-        /// <returns> A new <see cref="Models.OfficeIRMDataConnector"/> instance for mocking. </returns>
-        public static OfficeIRMDataConnector OfficeIRMDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        /// <returns> A new <see cref="Models.OfficeIrmDataConnector"/> instance for mocking. </returns>
+        public static OfficeIrmDataConnector OfficeIrmDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
         {
-            return new OfficeIRMDataConnector(
+            return new OfficeIrmDataConnector(
                 id,
                 name,
                 resourceType,
@@ -4531,7 +4531,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 indicatorsState.HasValue ? new TIDataConnectorDataTypesIndicators(indicatorsState.Value, serializedAdditionalRawData: null) : null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TiTaxiiDataConnector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceTaxiiDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -4547,10 +4547,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="taxiiLookbackPeriod"> The lookback period for the TAXII server. </param>
         /// <param name="pollingFrequency"> The polling frequency for the TAXII server. </param>
         /// <param name="taxiiClientState"> Data type for TAXII connector. </param>
-        /// <returns> A new <see cref="Models.TiTaxiiDataConnector"/> instance for mocking. </returns>
-        public static TiTaxiiDataConnector TiTaxiiDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, string workspaceId = null, string friendlyName = null, string taxiiServer = null, string collectionId = null, string userName = null, string password = null, DateTimeOffset? taxiiLookbackPeriod = null, PollingFrequency? pollingFrequency = null, SecurityInsightsDataTypeConnectionState? taxiiClientState = null)
+        /// <returns> A new <see cref="Models.ThreatIntelligenceTaxiiDataConnector"/> instance for mocking. </returns>
+        public static ThreatIntelligenceTaxiiDataConnector ThreatIntelligenceTaxiiDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, string workspaceId = null, string friendlyName = null, string taxiiServer = null, string collectionId = null, string userName = null, string password = null, DateTimeOffset? taxiiLookbackPeriod = null, PollingFrequency? pollingFrequency = null, SecurityInsightsDataTypeConnectionState? taxiiClientState = null)
         {
-            return new TiTaxiiDataConnector(
+            return new ThreatIntelligenceTaxiiDataConnector(
                 id,
                 name,
                 resourceType,

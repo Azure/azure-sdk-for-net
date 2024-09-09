@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentId, string contentProductId, string packageVersion, string version, string displayName, SecurityInsightsKind? contentKind, MetadataSource source, MetadataAuthor author, MetadataSupport support, MetadataDependencies dependencies, MetadataCategories categories, IList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, string customVersion, string contentSchemaVersion, string icon, IList<string> threatAnalysisTactics, IList<string> threatAnalysisTechniques, IList<string> previewImages, IList<string> previewImagesDark, string packageId, PackageKind? packageKind, string packageName, MetadataFlag? isDeprecated, BinaryData mainTemplate, IReadOnlyList<TemplateProperties> dependantTemplates, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentId, string contentProductId, string packageVersion, string version, string displayName, SecurityInsightsKind? contentKind, SecurityInsightsMetadataSource source, SecurityInsightsMetadataAuthor author, SecurityInsightsMetadataSupport support, SecurityInsightsMetadataDependencies dependencies, SecurityInsightsMetadataCategories categories, IList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, string customVersion, string contentSchemaVersion, string icon, IList<string> threatAnalysisTactics, IList<string> threatAnalysisTechniques, IList<string> previewImages, IList<string> previewImagesDark, string packageId, SecurityInsightsMetadataPackageKind? packageKind, string packageName, SecurityInsightsMetadataFlag? isDeprecated, BinaryData mainTemplate, IReadOnlyList<TemplateProperties> dependantTemplates, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ContentId = contentId;
             ContentProductId = contentProductId;
@@ -149,19 +149,19 @@ namespace Azure.ResourceManager.SecurityInsights
         public SecurityInsightsKind? ContentKind { get; set; }
         /// <summary> Source of the content.  This is where/how it was created. </summary>
         [WirePath("properties.source")]
-        public MetadataSource Source { get; set; }
+        public SecurityInsightsMetadataSource Source { get; set; }
         /// <summary> The creator of the content item. </summary>
         [WirePath("properties.author")]
-        public MetadataAuthor Author { get; set; }
+        public SecurityInsightsMetadataAuthor Author { get; set; }
         /// <summary> Support information for the template - type, name, contact information. </summary>
         [WirePath("properties.support")]
-        public MetadataSupport Support { get; set; }
+        public SecurityInsightsMetadataSupport Support { get; set; }
         /// <summary> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </summary>
         [WirePath("properties.dependencies")]
-        public MetadataDependencies Dependencies { get; set; }
+        public SecurityInsightsMetadataDependencies Dependencies { get; set; }
         /// <summary> Categories for the item. </summary>
         [WirePath("properties.categories")]
-        public MetadataCategories Categories { get; set; }
+        public SecurityInsightsMetadataCategories Categories { get; set; }
         /// <summary> Providers for the content item. </summary>
         [WirePath("properties.providers")]
         public IList<string> Providers { get; }
@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.SecurityInsights
         public string PackageId { get; set; }
         /// <summary> the packageKind of the package contains this template. </summary>
         [WirePath("properties.packageKind")]
-        public PackageKind? PackageKind { get; set; }
+        public SecurityInsightsMetadataPackageKind? PackageKind { get; set; }
         /// <summary> the name of the package contains this template. </summary>
         [WirePath("properties.packageName")]
         public string PackageName { get; set; }
         /// <summary> Flag indicates if this template is deprecated. </summary>
         [WirePath("properties.isDeprecated")]
-        public MetadataFlag? IsDeprecated { get; }
+        public SecurityInsightsMetadataFlag? IsDeprecated { get; }
         /// <summary>
         /// The JSON of the ARM template to deploy active content. Expandable.
         /// <para>

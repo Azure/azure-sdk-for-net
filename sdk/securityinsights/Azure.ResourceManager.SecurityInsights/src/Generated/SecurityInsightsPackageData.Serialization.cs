@@ -233,24 +233,24 @@ namespace Azure.ResourceManager.SecurityInsights
             SystemData systemData = default;
             string contentId = default;
             string contentProductId = default;
-            PackageKind? contentKind = default;
+            SecurityInsightsMetadataPackageKind? contentKind = default;
             string contentSchemaVersion = default;
-            MetadataFlag? isNew = default;
-            MetadataFlag? isPreview = default;
-            MetadataFlag? isFeatured = default;
-            MetadataFlag? isDeprecated = default;
+            SecurityInsightsMetadataFlag? isNew = default;
+            SecurityInsightsMetadataFlag? isPreview = default;
+            SecurityInsightsMetadataFlag? isFeatured = default;
+            SecurityInsightsMetadataFlag? isDeprecated = default;
             string version = default;
             string displayName = default;
             string description = default;
             string publisherDisplayName = default;
-            MetadataSource source = default;
-            MetadataAuthor author = default;
-            MetadataSupport support = default;
-            MetadataDependencies dependencies = default;
+            SecurityInsightsMetadataSource source = default;
+            SecurityInsightsMetadataAuthor author = default;
+            SecurityInsightsMetadataSupport support = default;
+            SecurityInsightsMetadataDependencies dependencies = default;
             IList<string> providers = default;
             DateTimeOffset? firstPublishDate = default;
             DateTimeOffset? lastPublishDate = default;
-            MetadataCategories categories = default;
+            SecurityInsightsMetadataCategories categories = default;
             IList<string> threatAnalysisTactics = default;
             IList<string> threatAnalysisTechniques = default;
             string icon = default;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            contentKind = new PackageKind(property0.Value.GetString());
+                            contentKind = new SecurityInsightsMetadataPackageKind(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("contentSchemaVersion"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            isNew = new MetadataFlag(property0.Value.GetString());
+                            isNew = new SecurityInsightsMetadataFlag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("isPreview"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            isPreview = new MetadataFlag(property0.Value.GetString());
+                            isPreview = new SecurityInsightsMetadataFlag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("isFeatured"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            isFeatured = new MetadataFlag(property0.Value.GetString());
+                            isFeatured = new SecurityInsightsMetadataFlag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("isDeprecated"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            isDeprecated = new MetadataFlag(property0.Value.GetString());
+                            isDeprecated = new SecurityInsightsMetadataFlag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("version"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            source = MetadataSource.DeserializeMetadataSource(property0.Value, options);
+                            source = SecurityInsightsMetadataSource.DeserializeSecurityInsightsMetadataSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("author"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            author = MetadataAuthor.DeserializeMetadataAuthor(property0.Value, options);
+                            author = SecurityInsightsMetadataAuthor.DeserializeSecurityInsightsMetadataAuthor(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("support"u8))
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            support = MetadataSupport.DeserializeMetadataSupport(property0.Value, options);
+                            support = SecurityInsightsMetadataSupport.DeserializeSecurityInsightsMetadataSupport(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dependencies"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            dependencies = MetadataDependencies.DeserializeMetadataDependencies(property0.Value, options);
+                            dependencies = SecurityInsightsMetadataDependencies.DeserializeSecurityInsightsMetadataDependencies(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("providers"u8))
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            categories = MetadataCategories.DeserializeMetadataCategories(property0.Value, options);
+                            categories = SecurityInsightsMetadataCategories.DeserializeSecurityInsightsMetadataCategories(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("threatAnalysisTactics"u8))

@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "MicrosoftThreatIntelligence": return MstiCheckRequirements.DeserializeMstiCheckRequirements(element, options);
                     case "MicrosoftThreatProtection": return MtpCheckRequirements.DeserializeMtpCheckRequirements(element, options);
                     case "Office365Project": return Office365ProjectCheckRequirements.DeserializeOffice365ProjectCheckRequirements(element, options);
-                    case "OfficeATP": return OfficeATPCheckRequirements.DeserializeOfficeATPCheckRequirements(element, options);
-                    case "OfficeIRM": return OfficeIRMCheckRequirements.DeserializeOfficeIRMCheckRequirements(element, options);
+                    case "OfficeATP": return OfficeAtpCheckRequirements.DeserializeOfficeAtpCheckRequirements(element, options);
+                    case "OfficeIRM": return OfficeIrmCheckRequirements.DeserializeOfficeIrmCheckRequirements(element, options);
                     case "OfficePowerBI": return OfficePowerBICheckRequirements.DeserializeOfficePowerBICheckRequirements(element, options);
-                    case "ThreatIntelligence": return TICheckRequirements.DeserializeTICheckRequirements(element, options);
-                    case "ThreatIntelligenceTaxii": return TiTaxiiCheckRequirements.DeserializeTiTaxiiCheckRequirements(element, options);
+                    case "ThreatIntelligence": return ThreatIntelligenceCheckRequirements.DeserializeThreatIntelligenceCheckRequirements(element, options);
+                    case "ThreatIntelligenceTaxii": return ThreatIntelligenceTaxiiCheckRequirements.DeserializeThreatIntelligenceTaxiiCheckRequirements(element, options);
                 }
             }
             return UnknownDataConnectorsCheckRequirements.DeserializeUnknownDataConnectorsCheckRequirements(element, options);

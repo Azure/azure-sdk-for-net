@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="triggeredAnalyticsRuleRunId"></param>
         /// <param name="provisioningState"> The triggered analytics rule run provisioning state. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="triggeredAnalyticsRuleRunId"/> is null. </exception>
-        public TriggeredAnalyticsRuleRunData(DateTimeOffset executeOn, string ruleId, string triggeredAnalyticsRuleRunId, ProvisioningState provisioningState)
+        public TriggeredAnalyticsRuleRunData(DateTimeOffset executeOn, string ruleId, string triggeredAnalyticsRuleRunId, TriggeredAnalyticsRuleRunProvisioningState provisioningState)
         {
             Argument.AssertNotNull(ruleId, nameof(ruleId));
             Argument.AssertNotNull(triggeredAnalyticsRuleRunId, nameof(triggeredAnalyticsRuleRunId));
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="ruleRunAdditionalData"> Dictionary of &lt;any&gt;. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredAnalyticsRuleRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset executeOn, string ruleId, string triggeredAnalyticsRuleRunId, ProvisioningState provisioningState, IDictionary<string, BinaryData> ruleRunAdditionalData, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TriggeredAnalyticsRuleRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset executeOn, string ruleId, string triggeredAnalyticsRuleRunId, TriggeredAnalyticsRuleRunProvisioningState provisioningState, IDictionary<string, BinaryData> ruleRunAdditionalData, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExecuteOn = executeOn;
             RuleId = ruleId;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public string TriggeredAnalyticsRuleRunId { get; set; }
         /// <summary> The triggered analytics rule run provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public ProvisioningState ProvisioningState { get; set; }
+        public TriggeredAnalyticsRuleRunProvisioningState ProvisioningState { get; set; }
         /// <summary>
         /// Dictionary of &lt;any&gt;
         /// <para>

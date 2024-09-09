@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityInsights
             DateTimeOffset executionTimeUtc = default;
             string ruleId = default;
             string triggeredAnalyticsRuleRunId = default;
-            ProvisioningState provisioningState = default;
+            TriggeredAnalyticsRuleRunProvisioningState provisioningState = default;
             IDictionary<string, BinaryData> ruleRunAdditionalData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityInsights
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new TriggeredAnalyticsRuleRunProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ruleRunAdditionalData"u8))

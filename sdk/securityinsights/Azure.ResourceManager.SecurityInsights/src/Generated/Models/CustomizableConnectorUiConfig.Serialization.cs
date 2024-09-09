@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string title = default;
             string publisher = default;
             string descriptionMarkdown = default;
-            IList<GraphQuery> graphQueries = default;
+            IList<ConnectorGraphQuery> graphQueries = default;
             IList<ConnectorDataType> dataTypes = default;
             IList<ConnectorConnectivityCriterion> connectivityCriteria = default;
             ConnectorDefinitionsAvailability availability = default;
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("graphQueries"u8))
                 {
-                    List<GraphQuery> array = new List<GraphQuery>();
+                    List<ConnectorGraphQuery> array = new List<ConnectorGraphQuery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GraphQuery.DeserializeGraphQuery(item, options));
+                        array.Add(ConnectorGraphQuery.DeserializeConnectorGraphQuery(item, options));
                     }
                     graphQueries = array;
                     continue;

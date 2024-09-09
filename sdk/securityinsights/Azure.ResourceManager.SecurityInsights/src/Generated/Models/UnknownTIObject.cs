@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Unknown version of TIObject. </summary>
-    internal partial class UnknownTIObject : TIObject
+    internal partial class UnknownTIObject : ThreatIntelligenceObject
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTIObject"/>. </summary>
         /// <param name="id"> The id. </param>

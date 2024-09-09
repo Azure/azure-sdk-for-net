@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityInsights
             SourceControlVersion? version = default;
             string displayName = default;
             string description = default;
-            RepoType repoType = default;
+            SourceControlRepoType repoType = default;
             IList<SourceControlContentType> contentTypes = default;
             SourceControlRepository repository = default;
             SourceControlServicePrincipal servicePrincipal = default;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.SecurityInsights
                         }
                         if (property0.NameEquals("repoType"u8))
                         {
-                            repoType = new RepoType(property0.Value.GetString());
+                            repoType = new SourceControlRepoType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("contentTypes"u8))

@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string content = default;
             string description = default;
             ActivityEntityQueriesPropertiesQueryDefinitions queryDefinitions = default;
-            EntityType? inputEntityType = default;
+            SecurityInsightsEntityType? inputEntityType = default;
             IList<IList<string>> requiredInputFieldsSets = default;
             IDictionary<string, IList<string>> entitiesFilter = default;
             string templateName = default;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            inputEntityType = new EntityType(property0.Value.GetString());
+                            inputEntityType = new SecurityInsightsEntityType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("requiredInputFieldsSets"u8))

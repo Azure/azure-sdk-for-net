@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="outputType"> Insights Column type. </param>
         /// <param name="isDeepLinkSupported"> Is query supports deep-link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem(string header, OutputType? outputType, bool? isDeepLinkSupported, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem(string header, InsightsColumnOutputType? outputType, bool? isDeepLinkSupported, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Header = header;
             OutputType = outputType;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Header { get; }
         /// <summary> Insights Column type. </summary>
         [WirePath("outputType")]
-        public OutputType? OutputType { get; }
+        public InsightsColumnOutputType? OutputType { get; }
         /// <summary> Is query supports deep-link. </summary>
         [WirePath("supportDeepLink")]
         public bool? IsDeepLinkSupported { get; }

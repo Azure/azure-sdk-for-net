@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="repositoryAccess"> The repository access credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repositoryAccess"/> is null. </exception>
-        public virtual async Task<Response<ResponseWarning>> DeleteAsync(RepositoryAccessProperties repositoryAccess, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SourceControlOperationWarning>> DeleteAsync(RepositoryAccessProperties repositoryAccess, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(repositoryAccess, nameof(repositoryAccess));
 
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="repositoryAccess"> The repository access credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repositoryAccess"/> is null. </exception>
-        public virtual Response<ResponseWarning> Delete(RepositoryAccessProperties repositoryAccess, CancellationToken cancellationToken = default)
+        public virtual Response<SourceControlOperationWarning> Delete(RepositoryAccessProperties repositoryAccess, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(repositoryAccess, nameof(repositoryAccess));
 

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="items"> List of resources included in this workspace manager assignment. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceManagerAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string targetResourceName, DateTimeOffset? lastJobEndOn, ProvisioningState? lastJobProvisioningState, IList<WorkspaceManagerAssignmentItem> items, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkspaceManagerAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string targetResourceName, DateTimeOffset? lastJobEndOn, TriggeredAnalyticsRuleRunProvisioningState? lastJobProvisioningState, IList<WorkspaceManagerAssignmentItem> items, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TargetResourceName = targetResourceName;
             LastJobEndOn = lastJobEndOn;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public DateTimeOffset? LastJobEndOn { get; }
         /// <summary> State of the last job associated to this assignment. </summary>
         [WirePath("properties.lastJobProvisioningState")]
-        public ProvisioningState? LastJobProvisioningState { get; }
+        public TriggeredAnalyticsRuleRunProvisioningState? LastJobProvisioningState { get; }
         /// <summary> List of resources included in this workspace manager assignment. </summary>
         [WirePath("properties.items")]
         public IList<WorkspaceManagerAssignmentItem> Items { get; }

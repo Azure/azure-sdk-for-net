@@ -221,7 +221,7 @@ SortOrder = ThreatIntelligenceSortingOrder.Descending,
             OperationalInsightsWorkspaceSecurityInsightsResource operationalInsightsWorkspaceSecurityInsights = client.GetOperationalInsightsWorkspaceSecurityInsightsResource(operationalInsightsWorkspaceSecurityInsightsResourceId);
 
             // invoke the operation
-            TiType tiType = TiType.Main;
+            ThreatIntelligenceType tiType = ThreatIntelligenceType.Main;
             ThreatIntelligenceCountQuery query = new ThreatIntelligenceCountQuery();
             ThreatIntelligenceCount result = await operationalInsightsWorkspaceSecurityInsights.CountThreatIntelligenceAsync(tiType, query: query);
 
@@ -622,7 +622,7 @@ SortOrder = ThreatIntelligenceSortingOrder.Descending,
             OperationalInsightsWorkspaceSecurityInsightsResource operationalInsightsWorkspaceSecurityInsights = client.GetOperationalInsightsWorkspaceSecurityInsightsResource(operationalInsightsWorkspaceSecurityInsightsResourceId);
 
             // invoke the operation
-            DataConnectorsCheckRequirements dataConnectorsCheckRequirements = new OfficeATPCheckRequirements()
+            DataConnectorsCheckRequirements dataConnectorsCheckRequirements = new OfficeAtpCheckRequirements()
             {
                 TenantId = Guid.Parse("2070ecc9-b4d5-4ae4-adaa-936fa1954fa8"),
             };
@@ -653,7 +653,7 @@ SortOrder = ThreatIntelligenceSortingOrder.Descending,
             OperationalInsightsWorkspaceSecurityInsightsResource operationalInsightsWorkspaceSecurityInsights = client.GetOperationalInsightsWorkspaceSecurityInsightsResource(operationalInsightsWorkspaceSecurityInsightsResourceId);
 
             // invoke the operation
-            DataConnectorsCheckRequirements dataConnectorsCheckRequirements = new OfficeIRMCheckRequirements()
+            DataConnectorsCheckRequirements dataConnectorsCheckRequirements = new OfficeIrmCheckRequirements()
             {
                 TenantId = Guid.Parse("2070ecc9-b4d5-4ae4-adaa-936fa1954fa8"),
             };
@@ -715,7 +715,7 @@ SortOrder = ThreatIntelligenceSortingOrder.Descending,
             OperationalInsightsWorkspaceSecurityInsightsResource operationalInsightsWorkspaceSecurityInsights = client.GetOperationalInsightsWorkspaceSecurityInsightsResource(operationalInsightsWorkspaceSecurityInsightsResourceId);
 
             // invoke the operation
-            DataConnectorsCheckRequirements dataConnectorsCheckRequirements = new TiTaxiiCheckRequirements()
+            DataConnectorsCheckRequirements dataConnectorsCheckRequirements = new ThreatIntelligenceTaxiiCheckRequirements()
             {
                 TenantId = Guid.Parse("2070ecc9-b4d5-4ae4-adaa-936fa1954fa8"),
             };
@@ -746,7 +746,7 @@ SortOrder = ThreatIntelligenceSortingOrder.Descending,
             OperationalInsightsWorkspaceSecurityInsightsResource operationalInsightsWorkspaceSecurityInsights = client.GetOperationalInsightsWorkspaceSecurityInsightsResource(operationalInsightsWorkspaceSecurityInsightsResourceId);
 
             // invoke the operation
-            DataConnectorsCheckRequirements dataConnectorsCheckRequirements = new TICheckRequirements()
+            DataConnectorsCheckRequirements dataConnectorsCheckRequirements = new ThreatIntelligenceCheckRequirements()
             {
                 TenantId = Guid.Parse("2070ecc9-b4d5-4ae4-adaa-936fa1954fa8"),
             };

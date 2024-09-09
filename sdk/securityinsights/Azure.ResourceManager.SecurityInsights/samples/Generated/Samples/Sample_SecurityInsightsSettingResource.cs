@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
             SecurityInsightsSettingResource securityInsightsSetting = client.GetSecurityInsightsSettingResource(securityInsightsSettingResourceId);
 
             // invoke the operation
-            SecurityInsightsSettingData data = new EyesOn()
+            SecurityInsightsSettingData data = new SecurityInsightsEyesOn()
             {
                 ETag = new ETag("\"0300bf09-0000-0000-0000-5c37296e0000\""),
             };

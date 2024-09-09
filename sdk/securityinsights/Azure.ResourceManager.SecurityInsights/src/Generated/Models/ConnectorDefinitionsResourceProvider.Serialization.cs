@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string permissionsDisplayText = default;
             string providerDisplayName = default;
             ProviderPermissionsScope scope = default;
-            ResourceProviderRequiredPermissions requiredPermissions = default;
+            ConnectorResourceProviderRequiredPermissions requiredPermissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("requiredPermissions"u8))
                 {
-                    requiredPermissions = ResourceProviderRequiredPermissions.DeserializeResourceProviderRequiredPermissions(property.Value, options);
+                    requiredPermissions = ConnectorResourceProviderRequiredPermissions.DeserializeConnectorResourceProviderRequiredPermissions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

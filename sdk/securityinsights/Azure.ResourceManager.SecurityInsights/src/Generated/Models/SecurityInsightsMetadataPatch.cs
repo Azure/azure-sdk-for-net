@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsMetadataPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentId, string parentId, string version, string kind, MetadataSource source, MetadataAuthor author, MetadataSupport support, MetadataDependencies dependencies, MetadataCategories categories, IList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, string customVersion, string contentSchemaVersion, string icon, IList<string> threatAnalysisTactics, IList<string> threatAnalysisTechniques, IList<string> previewImages, IList<string> previewImagesDark, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsMetadataPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentId, string parentId, string version, string kind, SecurityInsightsMetadataSource source, SecurityInsightsMetadataAuthor author, SecurityInsightsMetadataSupport support, SecurityInsightsMetadataDependencies dependencies, SecurityInsightsMetadataCategories categories, IList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, string customVersion, string contentSchemaVersion, string icon, IList<string> threatAnalysisTactics, IList<string> threatAnalysisTechniques, IList<string> previewImages, IList<string> previewImagesDark, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ContentId = contentId;
             ParentId = parentId;
@@ -122,19 +122,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Kind { get; set; }
         /// <summary> Source of the content.  This is where/how it was created. </summary>
         [WirePath("properties.source")]
-        public MetadataSource Source { get; set; }
+        public SecurityInsightsMetadataSource Source { get; set; }
         /// <summary> The creator of the content item. </summary>
         [WirePath("properties.author")]
-        public MetadataAuthor Author { get; set; }
+        public SecurityInsightsMetadataAuthor Author { get; set; }
         /// <summary> Support information for the metadata - type, name, contact information. </summary>
         [WirePath("properties.support")]
-        public MetadataSupport Support { get; set; }
+        public SecurityInsightsMetadataSupport Support { get; set; }
         /// <summary> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </summary>
         [WirePath("properties.dependencies")]
-        public MetadataDependencies Dependencies { get; set; }
+        public SecurityInsightsMetadataDependencies Dependencies { get; set; }
         /// <summary> Categories for the solution content item. </summary>
         [WirePath("properties.categories")]
-        public MetadataCategories Categories { get; set; }
+        public SecurityInsightsMetadataCategories Categories { get; set; }
         /// <summary> Providers for the solution content item. </summary>
         [WirePath("properties.providers")]
         public IList<string> Providers { get; }

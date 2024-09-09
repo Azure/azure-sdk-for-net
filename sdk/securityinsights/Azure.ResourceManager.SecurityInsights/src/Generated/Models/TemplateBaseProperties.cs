@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="packageName"> the name of the package contains this template. </param>
         /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TemplateBaseProperties(string contentId, string contentProductId, string packageVersion, string version, string displayName, SecurityInsightsKind? contentKind, MetadataSource source, MetadataAuthor author, MetadataSupport support, MetadataDependencies dependencies, MetadataCategories categories, IReadOnlyList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, string customVersion, string contentSchemaVersion, string icon, IReadOnlyList<string> threatAnalysisTactics, IReadOnlyList<string> threatAnalysisTechniques, IReadOnlyList<string> previewImages, IReadOnlyList<string> previewImagesDark, string packageId, PackageKind? packageKind, string packageName, MetadataFlag? isDeprecated, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TemplateBaseProperties(string contentId, string contentProductId, string packageVersion, string version, string displayName, SecurityInsightsKind? contentKind, SecurityInsightsMetadataSource source, SecurityInsightsMetadataAuthor author, SecurityInsightsMetadataSupport support, SecurityInsightsMetadataDependencies dependencies, SecurityInsightsMetadataCategories categories, IReadOnlyList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, string customVersion, string contentSchemaVersion, string icon, IReadOnlyList<string> threatAnalysisTactics, IReadOnlyList<string> threatAnalysisTechniques, IReadOnlyList<string> previewImages, IReadOnlyList<string> previewImagesDark, string packageId, SecurityInsightsMetadataPackageKind? packageKind, string packageName, SecurityInsightsMetadataFlag? isDeprecated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContentId = contentId;
             ContentProductId = contentProductId;
@@ -132,19 +132,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public SecurityInsightsKind? ContentKind { get; }
         /// <summary> Source of the content.  This is where/how it was created. </summary>
         [WirePath("source")]
-        public MetadataSource Source { get; }
+        public SecurityInsightsMetadataSource Source { get; }
         /// <summary> The creator of the content item. </summary>
         [WirePath("author")]
-        public MetadataAuthor Author { get; }
+        public SecurityInsightsMetadataAuthor Author { get; }
         /// <summary> Support information for the template - type, name, contact information. </summary>
         [WirePath("support")]
-        public MetadataSupport Support { get; }
+        public SecurityInsightsMetadataSupport Support { get; }
         /// <summary> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </summary>
         [WirePath("dependencies")]
-        public MetadataDependencies Dependencies { get; }
+        public SecurityInsightsMetadataDependencies Dependencies { get; }
         /// <summary> Categories for the item. </summary>
         [WirePath("categories")]
-        public MetadataCategories Categories { get; }
+        public SecurityInsightsMetadataCategories Categories { get; }
         /// <summary> Providers for the content item. </summary>
         [WirePath("providers")]
         public IReadOnlyList<string> Providers { get; }
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string PackageId { get; }
         /// <summary> the packageKind of the package contains this template. </summary>
         [WirePath("packageKind")]
-        public PackageKind? PackageKind { get; }
+        public SecurityInsightsMetadataPackageKind? PackageKind { get; }
         /// <summary> the name of the package contains this template. </summary>
         [WirePath("packageName")]
         public string PackageName { get; }
         /// <summary> Flag indicates if this template is deprecated. </summary>
         [WirePath("isDeprecated")]
-        public MetadataFlag? IsDeprecated { get; }
+        public SecurityInsightsMetadataFlag? IsDeprecated { get; }
     }
 }

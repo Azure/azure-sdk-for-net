@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="requiredInputFieldsSets"> Data types for template. </param>
         /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EntityQueryItemProperties(IReadOnlyList<EntityQueryItemPropertiesDataTypesItem> dataTypes, EntityType? inputEntityType, IReadOnlyList<IList<string>> requiredInputFieldsSets, BinaryData entitiesFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EntityQueryItemProperties(IReadOnlyList<EntityQueryItemPropertiesDataTypesItem> dataTypes, SecurityInsightsEntityType? inputEntityType, IReadOnlyList<IList<string>> requiredInputFieldsSets, BinaryData entitiesFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataTypes = dataTypes;
             InputEntityType = inputEntityType;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IReadOnlyList<EntityQueryItemPropertiesDataTypesItem> DataTypes { get; }
         /// <summary> The type of the entity. </summary>
         [WirePath("inputEntityType")]
-        public EntityType? InputEntityType { get; }
+        public SecurityInsightsEntityType? InputEntityType { get; }
         /// <summary> Data types for template. </summary>
         [WirePath("requiredInputFieldsSets")]
         public IReadOnlyList<IList<string>> RequiredInputFieldsSets { get; }

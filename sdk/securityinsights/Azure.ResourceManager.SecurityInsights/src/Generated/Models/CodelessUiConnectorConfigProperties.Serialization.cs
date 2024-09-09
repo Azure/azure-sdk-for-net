@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string descriptionMarkdown = default;
             string customImage = default;
             string graphQueriesTableName = default;
-            IList<GraphQueries> graphQueries = default;
-            IList<SampleQueries> sampleQueries = default;
+            IList<ConnectorGraphQueries> graphQueries = default;
+            IList<SourceControlSampleQueries> sampleQueries = default;
             IList<LastDataReceivedDataType> dataTypes = default;
             IList<ConnectorConnectivityCriteria> connectivityCriteria = default;
             ConnectorAvailability availability = default;
@@ -161,20 +161,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("graphQueries"u8))
                 {
-                    List<GraphQueries> array = new List<GraphQueries>();
+                    List<ConnectorGraphQueries> array = new List<ConnectorGraphQueries>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.GraphQueries.DeserializeGraphQueries(item, options));
+                        array.Add(ConnectorGraphQueries.DeserializeConnectorGraphQueries(item, options));
                     }
                     graphQueries = array;
                     continue;
                 }
                 if (property.NameEquals("sampleQueries"u8))
                 {
-                    List<SampleQueries> array = new List<SampleQueries>();
+                    List<SourceControlSampleQueries> array = new List<SourceControlSampleQueries>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.SampleQueries.DeserializeSampleQueries(item, options));
+                        array.Add(SourceControlSampleQueries.DeserializeSourceControlSampleQueries(item, options));
                     }
                     sampleQueries = array;
                     continue;

@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            QueryCondition condition = default;
-            QuerySortBy sortBy = default;
+            ThreatIntelligenceQueryCondition condition = default;
+            ThreatIntelligenceQuerySortBy sortBy = default;
             int? maxPageSize = default;
             int? minPageSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    condition = QueryCondition.DeserializeQueryCondition(property.Value, options);
+                    condition = ThreatIntelligenceQueryCondition.DeserializeThreatIntelligenceQueryCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sortBy"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    sortBy = QuerySortBy.DeserializeQuerySortBy(property.Value, options);
+                    sortBy = ThreatIntelligenceQuerySortBy.DeserializeThreatIntelligenceQuerySortBy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxPageSize"u8))

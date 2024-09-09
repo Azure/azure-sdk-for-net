@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
             // invoke the operation
             SecurityInsightsMetadataPatch patch = new SecurityInsightsMetadataPatch()
             {
-                Author = new MetadataAuthor()
+                Author = new SecurityInsightsMetadataAuthor()
                 {
                     Name = "User Name",
                     Email = "email@microsoft.com",

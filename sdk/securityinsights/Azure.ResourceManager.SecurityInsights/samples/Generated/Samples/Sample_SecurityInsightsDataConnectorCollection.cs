@@ -2588,17 +2588,17 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
             string dataConnectorId = "316ec55e-7138-4d63-ab18-90c8a60fd1c8";
             SecurityInsightsDataConnectorData data = new CodelessApiPollingDataConnector()
             {
-                ConnectorUiConfig = new CodelessUiConnectorConfigProperties("GitHub Enterprise Audit Log", "GitHub", "The GitHub audit log connector provides the capability to ingest GitHub logs into Azure Sentinel. By connecting GitHub audit logs into Azure Sentinel, you can view this data in workbooks, use it to create custom alerts, and improve your investigation process.", "GitHubAuditLogPolling_CL", new GraphQueries[]
+                ConnectorUiConfig = new CodelessUiConnectorConfigProperties("GitHub Enterprise Audit Log", "GitHub", "The GitHub audit log connector provides the capability to ingest GitHub logs into Azure Sentinel. By connecting GitHub audit logs into Azure Sentinel, you can view this data in workbooks, use it to create custom alerts, and improve your investigation process.", "GitHubAuditLogPolling_CL", new ConnectorGraphQueries[]
             {
-new GraphQueries()
+new ConnectorGraphQueries()
 {
 MetricName = "Total events received",
 Legend = "GitHub audit log events",
 BaseQuery = "{{graphQueriesTableName}}",
 }
-            }, new SampleQueries[]
+            }, new SourceControlSampleQueries[]
             {
-new SampleQueries()
+new SourceControlSampleQueries()
 {
 Description = "All logs",
 Query = "{{graphQueriesTableName}}\n | take 10 <change>",
@@ -2627,13 +2627,13 @@ Value =
             {
                 ResourceProvider =
             {
-new ResourceProvider()
+new ConnectorResourceProvider()
 {
-Provider = ProviderName.MicrosoftOperationalInsightsWorkspaces,
+Provider = ConnectorProviderName.MicrosoftOperationalInsightsWorkspaces,
 PermissionsDisplayText = "read and write permissions are required.",
 ProviderDisplayName = "Workspace",
 Scope = PermissionProviderScope.Workspace,
-RequiredPermissions = new RequiredPermissions()
+RequiredPermissions = new ConnectorRequiredPermissions()
 {
 IsWriteAction = true,
 IsReadAction = true,
@@ -2643,7 +2643,7 @@ IsDeleteAction = true,
             },
                 Customs =
             {
-new CustomsPermission()
+new ConnectorCustoms()
 {
 Name = "GitHub API personal token Key",
 Description = "You need access to GitHub personal token, the key should have 'admin:org' scope",
@@ -2657,7 +2657,7 @@ Title = "Connect GitHub Enterprise Audit Log to Azure Sentinel",
 Description = "Enable GitHub audit Logs. \n Follow [this](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) to create or find your personal key",
 Instructions =
 {
-new ConnectorInstructionModelBase(new SettingType("APIKey"))
+new ConnectorInstructionModelBase(new ConnectorSettingType("APIKey"))
 {
 Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
@@ -2780,11 +2780,11 @@ Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // invoke the operation
             string dataConnectorId = "GCP_fce27b90-d6f5-4d30-991a-af509a2b50a1";
-            SecurityInsightsDataConnectorData data = new GCPDataConnector()
+            SecurityInsightsDataConnectorData data = new GcpDataConnector()
             {
                 ConnectorDefinitionName = "GcpConnector",
-                Auth = new GCPAuthProperties("sentinel-service-account@project-id.iam.gserviceaccount.com", "123456789012", "sentinel-identity-provider"),
-                Request = new GCPRequestProperties("project-id", new string[]
+                Auth = new GcpAuthProperties("sentinel-service-account@project-id.iam.gserviceaccount.com", "123456789012", "sentinel-identity-provider"),
+                Request = new GcpRequestProperties("project-id", new string[]
             {
 "sentinel-subscription"
             }),
@@ -2828,17 +2828,17 @@ Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             string dataConnectorId = "316ec55e-7138-4d63-ab18-90c8a60fd1c8";
             SecurityInsightsDataConnectorData data = new CodelessUiDataConnector()
             {
-                ConnectorUiConfig = new CodelessUiConnectorConfigProperties("Qualys Vulnerability Management (CCP DEMO)", "Qualys", "The [Qualys Vulnerability Management (VM)](https://www.qualys.com/apps/vulnerability-management/) data connector provides the capability to ingest vulnerability host detection data into Azure Sentinel through the Qualys API. The connector provides visibility into host detection data from vulerability scans. This connector provides Azure Sentinel the capability to view dashboards, create custom alerts, and improve investigation ", "QualysHostDetection_CL", new GraphQueries[]
+                ConnectorUiConfig = new CodelessUiConnectorConfigProperties("Qualys Vulnerability Management (CCP DEMO)", "Qualys", "The [Qualys Vulnerability Management (VM)](https://www.qualys.com/apps/vulnerability-management/) data connector provides the capability to ingest vulnerability host detection data into Azure Sentinel through the Qualys API. The connector provides visibility into host detection data from vulerability scans. This connector provides Azure Sentinel the capability to view dashboards, create custom alerts, and improve investigation ", "QualysHostDetection_CL", new ConnectorGraphQueries[]
             {
-new GraphQueries()
+new ConnectorGraphQueries()
 {
 MetricName = "Total data received",
 Legend = "{{graphQueriesTableName}}",
 BaseQuery = "{{graphQueriesTableName}}",
 }
-            }, new SampleQueries[]
+            }, new SourceControlSampleQueries[]
             {
-new SampleQueries()
+new SourceControlSampleQueries()
 {
 Description = "Top 10 Vulerabilities detected",
 Query = "{{graphQueriesTableName}}\n | mv-expand todynamic(Detections_s)\n | extend Vulnerability = tostring(Detections_s.Results)\n | summarize count() by Vulnerability\n | top 10 by count_",
@@ -2868,25 +2868,25 @@ Value =
             {
                 ResourceProvider =
             {
-new ResourceProvider()
+new ConnectorResourceProvider()
 {
-Provider = ProviderName.MicrosoftOperationalInsightsWorkspaces,
+Provider = ConnectorProviderName.MicrosoftOperationalInsightsWorkspaces,
 PermissionsDisplayText = "read and write permissions on the workspace are required.",
 ProviderDisplayName = "Workspace",
 Scope = PermissionProviderScope.Workspace,
-RequiredPermissions = new RequiredPermissions()
+RequiredPermissions = new ConnectorRequiredPermissions()
 {
 IsWriteAction = true,
 IsReadAction = true,
 IsDeleteAction = true,
 },
-},new ResourceProvider()
+},new ConnectorResourceProvider()
 {
-Provider = ProviderName.MicrosoftOperationalInsightsWorkspacesSharedKeys,
+Provider = ConnectorProviderName.MicrosoftOperationalInsightsWorkspacesSharedKeys,
 PermissionsDisplayText = "read permissions to shared keys for the workspace are required. [See the documentation to learn more about workspace keys](https://docs.microsoft.com/azure/azure-monitor/platform/agent-windows#obtain-workspace-id-and-key).",
 ProviderDisplayName = "Keys",
 Scope = PermissionProviderScope.Workspace,
-RequiredPermissions = new RequiredPermissions()
+RequiredPermissions = new ConnectorRequiredPermissions()
 {
 IsCustomAction = true,
 },
@@ -2894,11 +2894,11 @@ IsCustomAction = true,
             },
                 Customs =
             {
-new CustomsPermission()
+new ConnectorCustoms()
 {
 Name = "Microsoft.Web/sites permissions",
 Description = "Read and write permissions to Azure Functions to create a Function App is required. [See the documentation to learn more about Azure Functions](https://docs.microsoft.com/azure/azure-functions/).",
-},new CustomsPermission()
+},new ConnectorCustoms()
 {
 Name = "Qualys API Key",
 Description = "A Qualys VM API username and password is required. [See the documentation to learn more about Qualys VM API](https://www.qualys.com/docs/qualys-api-vmpc-user-guide.pdf).",
@@ -2924,13 +2924,13 @@ Title = "",
 Description = "**STEP 2 - Choose ONE from the following two deployment options to deploy the connector and the associated Azure Function**\n\n>**IMPORTANT:** Before deploying the Qualys VM connector, have the Workspace ID and Workspace Primary Key (can be copied from the following), as well as the Qualys VM API Authorization Key(s), readily available.",
 Instructions =
 {
-new ConnectorInstructionModelBase(SettingType.CopyableLabel)
+new ConnectorInstructionModelBase(ConnectorSettingType.CopyableLabel)
 {
 Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
 ["fillWith"] = new object[] { "WorkspaceId" },
 ["label"] = "Workspace ID"}),
-},new ConnectorInstructionModelBase(SettingType.CopyableLabel)
+},new ConnectorInstructionModelBase(ConnectorSettingType.CopyableLabel)
 {
 Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
@@ -3042,7 +3042,7 @@ Description = "**4. Configure the host.json**.\n\nDue to the potentially large a
 
             // invoke the operation
             string dataConnectorId = "73e01a99-5cd7-4139-a149-9f2736ff2ab5";
-            SecurityInsightsDataConnectorData data = new MTPDataConnector()
+            SecurityInsightsDataConnectorData data = new MtpDataConnector()
             {
                 TenantId = Guid.Parse("178265c4-3136-4ff6-8ed1-b5b62b4cb5f5"),
                 FilteredProvidersAlerts =
@@ -3089,7 +3089,7 @@ MtpProvider.MicrosoftDefenderForCloudApps
 
             // invoke the operation
             string dataConnectorId = "73e01a99-5cd7-4139-a149-9f2736ff2ab5";
-            SecurityInsightsDataConnectorData data = new TiTaxiiDataConnector()
+            SecurityInsightsDataConnectorData data = new ThreatIntelligenceTaxiiDataConnector()
             {
                 TenantId = Guid.Parse("06b3ccb8-1384-4bcc-aec7-852f6d57161b"),
                 WorkspaceId = "dd124572-4962-4495-9bd2-9dade12314b4",

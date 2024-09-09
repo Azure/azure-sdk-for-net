@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// For more information about the permissions see &lt;see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format"&gt;here&lt;/see&gt;.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="permissionsDisplayText"/>, <paramref name="providerDisplayName"/> or <paramref name="requiredPermissions"/> is null. </exception>
-        public ConnectorDefinitionsResourceProvider(string provider, string permissionsDisplayText, string providerDisplayName, ProviderPermissionsScope scope, ResourceProviderRequiredPermissions requiredPermissions)
+        public ConnectorDefinitionsResourceProvider(string provider, string permissionsDisplayText, string providerDisplayName, ProviderPermissionsScope scope, ConnectorResourceProviderRequiredPermissions requiredPermissions)
         {
             Argument.AssertNotNull(provider, nameof(provider));
             Argument.AssertNotNull(permissionsDisplayText, nameof(permissionsDisplayText));
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// For more information about the permissions see &lt;see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format"&gt;here&lt;/see&gt;.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectorDefinitionsResourceProvider(string provider, string permissionsDisplayText, string providerDisplayName, ProviderPermissionsScope scope, ResourceProviderRequiredPermissions requiredPermissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectorDefinitionsResourceProvider(string provider, string permissionsDisplayText, string providerDisplayName, ProviderPermissionsScope scope, ConnectorResourceProviderRequiredPermissions requiredPermissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Provider = provider;
             PermissionsDisplayText = permissionsDisplayText;
@@ -114,6 +114,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// For more information about the permissions see &lt;see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format"&gt;here&lt;/see&gt;.
         /// </summary>
         [WirePath("requiredPermissions")]
-        public ResourceProviderRequiredPermissions RequiredPermissions { get; set; }
+        public ConnectorResourceProviderRequiredPermissions RequiredPermissions { get; set; }
     }
 }

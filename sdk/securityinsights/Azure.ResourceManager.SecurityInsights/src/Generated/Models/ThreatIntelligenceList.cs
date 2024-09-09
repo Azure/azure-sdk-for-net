@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceList"/>. </summary>
         /// <param name="value">
         /// Array of threat intelligence objects on the workspace that match the provided query.
-        /// Please note <see cref="TIObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TiObjectKindAttackPattern"/>, <see cref="TiObjectKindIdentity"/>, <see cref="TiObjectKindIndicator"/>, <see cref="TiObjectKindRelationship"/> and <see cref="TiObjectKindThreatActor"/>.
+        /// Please note <see cref="ThreatIntelligenceObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ThreatIntelligenceAttackPattern"/>, <see cref="ThreatIntelligenceIdentity"/>, <see cref="ThreatIntelligenceIndicator"/>, <see cref="ThreatIntelligenceRelationship"/> and <see cref="ThreatIntelligenceThreatActor"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ThreatIntelligenceList(IEnumerable<TIObject> value)
+        internal ThreatIntelligenceList(IEnumerable<ThreatIntelligenceObject> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="nextLink"> URL to fetch the next set of threat intelligence objects. </param>
         /// <param name="value">
         /// Array of threat intelligence objects on the workspace that match the provided query.
-        /// Please note <see cref="TIObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TiObjectKindAttackPattern"/>, <see cref="TiObjectKindIdentity"/>, <see cref="TiObjectKindIndicator"/>, <see cref="TiObjectKindRelationship"/> and <see cref="TiObjectKindThreatActor"/>.
+        /// Please note <see cref="ThreatIntelligenceObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ThreatIntelligenceAttackPattern"/>, <see cref="ThreatIntelligenceIdentity"/>, <see cref="ThreatIntelligenceIndicator"/>, <see cref="ThreatIntelligenceRelationship"/> and <see cref="ThreatIntelligenceThreatActor"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThreatIntelligenceList(string nextLink, IReadOnlyList<TIObject> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThreatIntelligenceList(string nextLink, IReadOnlyList<ThreatIntelligenceObject> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string NextLink { get; }
         /// <summary>
         /// Array of threat intelligence objects on the workspace that match the provided query.
-        /// Please note <see cref="TIObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TiObjectKindAttackPattern"/>, <see cref="TiObjectKindIdentity"/>, <see cref="TiObjectKindIndicator"/>, <see cref="TiObjectKindRelationship"/> and <see cref="TiObjectKindThreatActor"/>.
+        /// Please note <see cref="ThreatIntelligenceObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ThreatIntelligenceAttackPattern"/>, <see cref="ThreatIntelligenceIdentity"/>, <see cref="ThreatIntelligenceIndicator"/>, <see cref="ThreatIntelligenceRelationship"/> and <see cref="ThreatIntelligenceThreatActor"/>.
         /// </summary>
-        public IReadOnlyList<TIObject> Value { get; }
+        public IReadOnlyList<ThreatIntelligenceObject> Value { get; }
     }
 }

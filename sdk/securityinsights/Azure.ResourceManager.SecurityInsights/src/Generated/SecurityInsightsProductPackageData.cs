@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="packagedContent"> The json of the ARM template to deploy. Expandable. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsProductPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentId, string contentProductId, PackageKind? contentKind, string contentSchemaVersion, MetadataFlag? isNew, MetadataFlag? isPreview, MetadataFlag? isFeatured, MetadataFlag? isDeprecated, string version, string displayName, string description, string publisherDisplayName, MetadataSource source, MetadataAuthor author, MetadataSupport support, MetadataDependencies dependencies, IList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, MetadataCategories categories, IList<string> threatAnalysisTactics, IList<string> threatAnalysisTechniques, string icon, string installedVersion, ResourceIdentifier metadataResourceId, BinaryData packagedContent, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsProductPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentId, string contentProductId, SecurityInsightsMetadataPackageKind? contentKind, string contentSchemaVersion, SecurityInsightsMetadataFlag? isNew, SecurityInsightsMetadataFlag? isPreview, SecurityInsightsMetadataFlag? isFeatured, SecurityInsightsMetadataFlag? isDeprecated, string version, string displayName, string description, string publisherDisplayName, SecurityInsightsMetadataSource source, SecurityInsightsMetadataAuthor author, SecurityInsightsMetadataSupport support, SecurityInsightsMetadataDependencies dependencies, IList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, SecurityInsightsMetadataCategories categories, IList<string> threatAnalysisTactics, IList<string> threatAnalysisTechniques, string icon, string installedVersion, ResourceIdentifier metadataResourceId, BinaryData packagedContent, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ContentId = contentId;
             ContentProductId = contentProductId;
@@ -132,22 +132,22 @@ namespace Azure.ResourceManager.SecurityInsights
         public string ContentProductId { get; set; }
         /// <summary> The package kind. </summary>
         [WirePath("properties.contentKind")]
-        public PackageKind? ContentKind { get; set; }
+        public SecurityInsightsMetadataPackageKind? ContentKind { get; set; }
         /// <summary> The version of the content schema. </summary>
         [WirePath("properties.contentSchemaVersion")]
         public string ContentSchemaVersion { get; set; }
         /// <summary> Flag indicates if this is a newly published package. </summary>
         [WirePath("properties.isNew")]
-        public MetadataFlag? IsNew { get; set; }
+        public SecurityInsightsMetadataFlag? IsNew { get; set; }
         /// <summary> Flag indicates if this package is in preview. </summary>
         [WirePath("properties.isPreview")]
-        public MetadataFlag? IsPreview { get; set; }
+        public SecurityInsightsMetadataFlag? IsPreview { get; set; }
         /// <summary> Flag indicates if this package is among the featured list. </summary>
         [WirePath("properties.isFeatured")]
-        public MetadataFlag? IsFeatured { get; set; }
+        public SecurityInsightsMetadataFlag? IsFeatured { get; set; }
         /// <summary> Flag indicates if this template is deprecated. </summary>
         [WirePath("properties.isDeprecated")]
-        public MetadataFlag? IsDeprecated { get; set; }
+        public SecurityInsightsMetadataFlag? IsDeprecated { get; set; }
         /// <summary> the latest version number of the package. </summary>
         [WirePath("properties.version")]
         public string Version { get; set; }
@@ -162,16 +162,16 @@ namespace Azure.ResourceManager.SecurityInsights
         public string PublisherDisplayName { get; set; }
         /// <summary> The source of the package. </summary>
         [WirePath("properties.source")]
-        public MetadataSource Source { get; set; }
+        public SecurityInsightsMetadataSource Source { get; set; }
         /// <summary> The author of the package. </summary>
         [WirePath("properties.author")]
-        public MetadataAuthor Author { get; set; }
+        public SecurityInsightsMetadataAuthor Author { get; set; }
         /// <summary> The support tier of the package. </summary>
         [WirePath("properties.support")]
-        public MetadataSupport Support { get; set; }
+        public SecurityInsightsMetadataSupport Support { get; set; }
         /// <summary> The support tier of the package. </summary>
         [WirePath("properties.dependencies")]
-        public MetadataDependencies Dependencies { get; set; }
+        public SecurityInsightsMetadataDependencies Dependencies { get; set; }
         /// <summary> Providers for the package item. </summary>
         [WirePath("properties.providers")]
         public IList<string> Providers { get; }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public DateTimeOffset? LastPublishOn { get; set; }
         /// <summary> The categories of the package. </summary>
         [WirePath("properties.categories")]
-        public MetadataCategories Categories { get; set; }
+        public SecurityInsightsMetadataCategories Categories { get; set; }
         /// <summary> the tactics the resource covers. </summary>
         [WirePath("properties.threatAnalysisTactics")]
         public IList<string> ThreatAnalysisTactics { get; }

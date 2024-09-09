@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     case "Anomalies": return SecurityInsightsSettingAnomaliesKind.DeserializeSecurityInsightsSettingAnomaliesKind(element, options);
                     case "EntityAnalytics": return EntityAnalytics.DeserializeEntityAnalytics(element, options);
-                    case "EyesOn": return EyesOn.DeserializeEyesOn(element, options);
+                    case "EyesOn": return SecurityInsightsEyesOn.DeserializeSecurityInsightsEyesOn(element, options);
                     case "Ueba": return UebaSettings.DeserializeUebaSettings(element, options);
                 }
             }

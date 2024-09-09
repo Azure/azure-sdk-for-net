@@ -88,24 +88,24 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
                 Version = "1.0.1",
                 DisplayName = "API Protection workbook template",
                 ContentKind = SecurityInsightsKind.AnalyticsRule,
-                Source = new MetadataSource(SourceKind.Solution)
+                Source = new SecurityInsightsMetadataSource(SecurityInsightsSourceKind.Solution)
                 {
                     Name = "str",
                     SourceId = "str.azure-sentinel-solution-str",
                 },
-                Author = new MetadataAuthor()
+                Author = new SecurityInsightsMetadataAuthor()
                 {
                     Name = "Microsoft",
                     Email = "support@microsoft.com",
                 },
-                Support = new MetadataSupport(SupportTier.Microsoft)
+                Support = new SecurityInsightsMetadataSupport(SecurityInsightsSupportTier.Microsoft)
                 {
                     Name = "Microsoft Corporation",
                     Email = "support@microsoft.com",
                     Link = "https://support.microsoft.com/",
                 },
                 PackageId = "str.azure-sentinel-solution-str",
-                PackageKind = PackageKind.Solution,
+                PackageKind = SecurityInsightsMetadataPackageKind.Solution,
                 PackageName = "str",
                 MainTemplate = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {

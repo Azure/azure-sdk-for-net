@@ -150,9 +150,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SystemData systemData = default;
             IList<string> dataSources = default;
             string displayName = default;
-            EntityType? inputEntityType = default;
+            SecurityInsightsEntityType? inputEntityType = default;
             IList<string> inputFields = default;
-            IList<EntityType> outputEntityTypes = default;
+            IList<SecurityInsightsEntityType> outputEntityTypes = default;
             string queryTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            inputEntityType = new EntityType(property0.Value.GetString());
+                            inputEntityType = new SecurityInsightsEntityType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("inputFields"u8))
@@ -253,10 +253,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            List<EntityType> array = new List<EntityType>();
+                            List<SecurityInsightsEntityType> array = new List<SecurityInsightsEntityType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new EntityType(item.GetString()));
+                                array.Add(new SecurityInsightsEntityType(item.GetString()));
                             }
                             outputEntityTypes = array;
                             continue;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 displayName,
                 inputEntityType,
                 inputFields ?? new ChangeTrackingList<string>(),
-                outputEntityTypes ?? new ChangeTrackingList<EntityType>(),
+                outputEntityTypes ?? new ChangeTrackingList<SecurityInsightsEntityType>(),
                 queryTemplate);
         }
 

@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SecurityInsights
             string displayName = default;
             string provider = default;
             string source = default;
-            SourceType? sourceType = default;
+            WatchlistSourceType? sourceType = default;
             DateTimeOffset? created = default;
             DateTimeOffset? updated = default;
             SecurityInsightsUserInfo createdBy = default;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            sourceType = new SourceType(property0.Value.GetString());
+                            sourceType = new WatchlistSourceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("created"u8))

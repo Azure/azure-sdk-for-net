@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityInsights
             SystemData systemData = default;
             DateTimeOffset? endTime = default;
             IList<JobItem> items = default;
-            ProvisioningState? provisioningState = default;
+            TriggeredAnalyticsRuleRunProvisioningState? provisioningState = default;
             DateTimeOffset? startTime = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new TriggeredAnalyticsRuleRunProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"u8))

@@ -230,61 +230,61 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
                 ParentId = "/subscriptions/2e1dc338-d04d-4443-b721-037eff4fdcac/resourceGroups/myRg/providers/Microsoft.OperationalInsights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/alertRules/ruleName",
                 Version = "1.0.0.0",
                 Kind = "AnalyticsRule",
-                Source = new MetadataSource(SourceKind.Solution)
+                Source = new SecurityInsightsMetadataSource(SecurityInsightsSourceKind.Solution)
                 {
                     Name = "Contoso Solution 1.0",
                     SourceId = "b688a130-76f4-4a07-bf57-762222a3cadf",
                 },
-                Author = new MetadataAuthor()
+                Author = new SecurityInsightsMetadataAuthor()
                 {
                     Name = "User Name",
                     Email = "email@microsoft.com",
                 },
-                Support = new MetadataSupport(SupportTier.Partner)
+                Support = new SecurityInsightsMetadataSupport(SecurityInsightsSupportTier.Partner)
                 {
                     Name = "Microsoft",
                     Email = "support@microsoft.com",
                     Link = "https://support.microsoft.com/",
                 },
-                Dependencies = new MetadataDependencies()
+                Dependencies = new SecurityInsightsMetadataDependencies()
                 {
                     Operator = new ThreatIntelligenceQueryOperator("AND"),
                     Criteria =
 {
-new MetadataDependencies()
+new SecurityInsightsMetadataDependencies()
 {
 Operator = new ThreatIntelligenceQueryOperator("OR"),
 Criteria =
 {
-new MetadataDependencies()
+new SecurityInsightsMetadataDependencies()
 {
 ContentId = "045d06d0-ee72-4794-aba4-cf5646e4c756",
 Kind = SecurityInsightsKind.DataConnector,
 Name = "Microsoft Defender for Endpoint",
-},new MetadataDependencies()
+},new SecurityInsightsMetadataDependencies()
 {
 ContentId = "dbfcb2cc-d782-40ef-8d94-fe7af58a6f2d",
 Kind = SecurityInsightsKind.DataConnector,
-},new MetadataDependencies()
+},new SecurityInsightsMetadataDependencies()
 {
 ContentId = "de4dca9b-eb37-47d6-a56f-b8b06b261593",
 Kind = SecurityInsightsKind.DataConnector,
 Version = "2.0",
 }
 },
-},new MetadataDependencies()
+},new SecurityInsightsMetadataDependencies()
 {
 ContentId = "31ee11cc-9989-4de8-b176-5e0ef5c4dbab",
 Kind = SecurityInsightsKind.Playbook,
 Version = "1.0",
-},new MetadataDependencies()
+},new SecurityInsightsMetadataDependencies()
 {
 ContentId = "21ba424a-9438-4444-953a-7059539a7a1b",
 Kind = SecurityInsightsKind.Parser,
 }
 },
                 },
-                Categories = new MetadataCategories()
+                Categories = new SecurityInsightsMetadataCategories()
                 {
                     Domains =
 {

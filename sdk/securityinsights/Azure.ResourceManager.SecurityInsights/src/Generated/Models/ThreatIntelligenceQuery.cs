@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="maxPageSize"> Represents the maximum size of the page that will be returned from the query API. </param>
         /// <param name="minPageSize"> Represents the minimum size of the page that will be returned from the query API. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThreatIntelligenceQuery(QueryCondition condition, QuerySortBy sortBy, int? maxPageSize, int? minPageSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThreatIntelligenceQuery(ThreatIntelligenceQueryCondition condition, ThreatIntelligenceQuerySortBy sortBy, int? maxPageSize, int? minPageSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Condition = condition;
             SortBy = sortBy;
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Represents a condition used to query for TI objects. </summary>
         [WirePath("condition")]
-        public QueryCondition Condition { get; set; }
+        public ThreatIntelligenceQueryCondition Condition { get; set; }
         /// <summary> Specifies how to sort the query results. </summary>
         [WirePath("sortBy")]
-        public QuerySortBy SortBy { get; set; }
+        public ThreatIntelligenceQuerySortBy SortBy { get; set; }
         /// <summary> Represents the maximum size of the page that will be returned from the query API. </summary>
         [WirePath("maxPageSize")]
         public int? MaxPageSize { get; set; }

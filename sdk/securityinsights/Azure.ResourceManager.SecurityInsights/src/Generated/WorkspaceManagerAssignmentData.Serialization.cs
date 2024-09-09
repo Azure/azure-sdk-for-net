@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityInsights
             SystemData systemData = default;
             string targetResourceName = default;
             DateTimeOffset? lastJobEndTime = default;
-            ProvisioningState? lastJobProvisioningState = default;
+            TriggeredAnalyticsRuleRunProvisioningState? lastJobProvisioningState = default;
             IList<WorkspaceManagerAssignmentItem> items = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            lastJobProvisioningState = new ProvisioningState(property0.Value.GetString());
+                            lastJobProvisioningState = new TriggeredAnalyticsRuleRunProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("items"u8))

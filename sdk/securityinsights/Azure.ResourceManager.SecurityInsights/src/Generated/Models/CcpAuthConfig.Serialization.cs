@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "APIKey": return SecurityInsightsApiKeyAuthModel.DeserializeSecurityInsightsApiKeyAuthModel(element, options);
                     case "AWS": return AwsAuthModel.DeserializeAwsAuthModel(element, options);
                     case "Basic": return BasicAuthModel.DeserializeBasicAuthModel(element, options);
-                    case "GCP": return GCPAuthModel.DeserializeGCPAuthModel(element, options);
+                    case "GCP": return GcpAuthModel.DeserializeGcpAuthModel(element, options);
                     case "GitHub": return GitHubAuthModel.DeserializeGitHubAuthModel(element, options);
                     case "JwtToken": return JwtAuthModel.DeserializeJwtAuthModel(element, options);
                     case "None": return NoneAuthModel.DeserializeNoneAuthModel(element, options);

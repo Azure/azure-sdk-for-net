@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             IReadOnlyList<EntityQueryItemPropertiesDataTypesItem> dataTypes = default;
-            EntityType? inputEntityType = default;
+            SecurityInsightsEntityType? inputEntityType = default;
             IReadOnlyList<IList<string>> requiredInputFieldsSets = default;
             BinaryData entitiesFilter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    inputEntityType = new EntityType(property.Value.GetString());
+                    inputEntityType = new SecurityInsightsEntityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("requiredInputFieldsSets"u8))

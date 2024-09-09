@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            IList<ResourceProvider> resourceProvider = default;
-            IList<CustomsPermission> customs = default;
+            IList<ConnectorResourceProvider> resourceProvider = default;
+            IList<ConnectorCustoms> customs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<ResourceProvider> array = new List<ResourceProvider>();
+                    List<ConnectorResourceProvider> array = new List<ConnectorResourceProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceProvider.DeserializeResourceProvider(item, options));
+                        array.Add(ConnectorResourceProvider.DeserializeConnectorResourceProvider(item, options));
                     }
                     resourceProvider = array;
                     continue;
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<CustomsPermission> array = new List<CustomsPermission>();
+                    List<ConnectorCustoms> array = new List<ConnectorCustoms>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomsPermission.DeserializeCustomsPermission(item, options));
+                        array.Add(ConnectorCustoms.DeserializeConnectorCustoms(item, options));
                     }
                     customs = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectorPermissions(resourceProvider ?? new ChangeTrackingList<ResourceProvider>(), customs ?? new ChangeTrackingList<CustomsPermission>(), serializedAdditionalRawData);
+            return new ConnectorPermissions(resourceProvider ?? new ChangeTrackingList<ConnectorResourceProvider>(), customs ?? new ChangeTrackingList<ConnectorCustoms>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

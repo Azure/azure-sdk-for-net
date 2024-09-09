@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="isEnabled"> Determines whether this activity is enabled or disabled. </param>
         /// <param name="createdOn"> The time the activity was created. </param>
         /// <param name="lastModifiedOn"> The last time the activity was updated. </param>
-        internal ActivityEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, string content, string description, ActivityEntityQueriesPropertiesQueryDefinitions queryDefinitions, EntityType? inputEntityType, IList<IList<string>> requiredInputFieldsSets, IDictionary<string, IList<string>> entitiesFilter, string templateName, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal ActivityEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, string content, string description, ActivityEntityQueriesPropertiesQueryDefinitions queryDefinitions, SecurityInsightsEntityType? inputEntityType, IList<IList<string>> requiredInputFieldsSets, IDictionary<string, IList<string>> entitiesFilter, string templateName, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Title = title;
             Content = content;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The type of the query's source entity. </summary>
         [WirePath("properties.inputEntityType")]
-        public EntityType? InputEntityType { get; set; }
+        public SecurityInsightsEntityType? InputEntityType { get; set; }
         /// <summary> List of the fields of the source entity that are required to run the query. </summary>
         [WirePath("properties.requiredInputFieldsSets")]
         public IList<IList<string>> RequiredInputFieldsSets { get; }

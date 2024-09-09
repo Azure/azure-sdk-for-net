@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string parentId = default;
             string version = default;
             string kind = default;
-            MetadataSource source = default;
-            MetadataAuthor author = default;
-            MetadataSupport support = default;
-            MetadataDependencies dependencies = default;
-            MetadataCategories categories = default;
+            SecurityInsightsMetadataSource source = default;
+            SecurityInsightsMetadataAuthor author = default;
+            SecurityInsightsMetadataSupport support = default;
+            SecurityInsightsMetadataDependencies dependencies = default;
+            SecurityInsightsMetadataCategories categories = default;
             IList<string> providers = default;
             DateTimeOffset? firstPublishDate = default;
             DateTimeOffset? lastPublishDate = default;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            source = MetadataSource.DeserializeMetadataSource(property0.Value, options);
+                            source = SecurityInsightsMetadataSource.DeserializeSecurityInsightsMetadataSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("author"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            author = MetadataAuthor.DeserializeMetadataAuthor(property0.Value, options);
+                            author = SecurityInsightsMetadataAuthor.DeserializeSecurityInsightsMetadataAuthor(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("support"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            support = MetadataSupport.DeserializeMetadataSupport(property0.Value, options);
+                            support = SecurityInsightsMetadataSupport.DeserializeSecurityInsightsMetadataSupport(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dependencies"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            dependencies = MetadataDependencies.DeserializeMetadataDependencies(property0.Value, options);
+                            dependencies = SecurityInsightsMetadataDependencies.DeserializeSecurityInsightsMetadataDependencies(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("categories"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            categories = MetadataCategories.DeserializeMetadataCategories(property0.Value, options);
+                            categories = SecurityInsightsMetadataCategories.DeserializeSecurityInsightsMetadataCategories(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("providers"u8))

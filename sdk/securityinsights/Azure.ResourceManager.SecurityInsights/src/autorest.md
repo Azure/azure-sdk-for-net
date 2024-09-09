@@ -77,7 +77,7 @@ rename-mapping:
   ASCDataConnector: SecurityInsightsAscDataConnector
   AssignmentItem: WorkspaceManagerAssignmentItem
   AssignmentItem.resourceId: -|arm-id
-  AttackPattern: TiObjectKindAttackPattern
+  AttackPattern: ThreatIntelligenceAttackPattern
   AttackTactic: SecurityInsightsAttackTactic
   AutomationRule.properties.createdTimeUtc: CreatedOn
   AutomationRule.properties.lastModifiedTimeUtc: LastModifiedOn
@@ -118,13 +118,14 @@ rename-mapping:
   CustomizableConnectorDefinition.properties.createdTimeUtc: CreatedOn
   CustomizableConnectorDefinition.properties.lastModifiedUtc: LastModifiedOn
   CustomizableConnectorDefinition: CustomizableConnectorDefinitionData
-  Customs: CustomsPermission
-  CustomsPermission: CustomsPermissionProperties
+  Customs: ConnectorCustoms
+  CustomsPermission: ConnectorCustomsPermission
   DataConnector: SecurityInsightsDataConnector
   DataConnectorConnectBody: DataConnectorConnectContent
   DataConnectorDefinition: SecurityInsightsDataConnectorDefinition
   DataTypeState: SecurityInsightsDataTypeConnectionState
   DCRConfiguration: DcrConfiguration
+  DeleteStatus: SecurityInsightsFileDeleteStatus
   DeliveryAction: SecurityInsightsMailMessageDeliveryAction
   DeliveryLocation: SecurityInsightsMailMessageDeliveryLocation
   Deployment: SourceControlDeployment
@@ -151,10 +152,14 @@ rename-mapping:
   EntityMappingType: SecurityInsightsAlertRuleEntityMappingType
   EntityQuery: SecurityInsightsEntityQuery
   EntityQueryTemplate: SecurityInsightsEntityQueryTemplate
+  EntityType: SecurityInsightsEntityType
   Enum22: EntityTemplateQueryKind
   Error: PublicationFailedError
+  EyesOn: SecurityInsightsEyesOn
   FieldMapping: SecurityInsightsFieldMapping
   FileEntity: SecurityInsightsFileEntity
+  FileFormat: SecurityInsightsFileFormat
+  FileFormat.CSV: Csv
   FileHashAlgorithm.SHA1: Sha1
   FileHashAlgorithm.SHA256: Sha256
   FileHashAlgorithm.SHA256AC: Sha256AC
@@ -164,7 +169,10 @@ rename-mapping:
   FileImport.properties.filesValidUntilTimeUTC: FilesValidUntil
   FileImport.properties.importValidUntilTimeUTC: ImportValidUntil
   FileImport: SecurityInsightsFileImport
-  Flag: MetadataFlag
+  FileImportContentType: SecurityInsightsFileImportContentType
+  FileImportState: SecurityInsightsFileImportState
+  FileMetadata: SecurityInsightsFileMetadata
+  Flag: SecurityInsightsMetadataFlag
   FusionAlertRule.properties.enabled: IsEnabled
   FusionAlertRule.properties.lastModifiedUtc: LastModifiedOn
   FusionAlertRule: SecurityInsightsFusionAlertRule
@@ -174,12 +182,19 @@ rename-mapping:
   FusionSourceSettings.enabled: IsEnabled
   FusionSourceSubTypeSetting.enabled: IsEnabled
   FusionSubTypeSeverityFiltersItem.enabled: IsEnabled
+  GCPAuthModel: GcpAuthModel
+  GCPAuthProperties: GcpAuthProperties
+  GCPDataConnector: GcpDataConnector
+  GCPRequestProperties: GcpRequestProperties
   GeoLocation: SecurityInsightsIPEntityGeoLocation
   GroupingConfiguration.enabled: IsEnabled
   GroupingConfiguration.reopenClosedIncident: IsClosedIncidentReopened
   GroupingConfiguration: SecurityInsightsGroupingConfiguration
   HostEntity.properties.azureID: -|arm-id
   HostEntity: SecurityInsightsHostEntity
+  HttpMethodVerb: ConnectorHttpMethodVerb
+  HttpMethodVerb.GET: Get
+  HttpMethodVerb.PUT: Put
   Hunt: SecurityInsightsHunt
   HuntComment: SecurityInsightsHuntComment
   HuntingBookmark.properties.created: CreatedOn
@@ -189,7 +204,7 @@ rename-mapping:
   HuntOwner: SecurityInsightsHuntOwner
   HuntRelation.properties.relatedResourceId: -|arm-id
   HuntRelation: SecurityInsightsHuntRelation
-  Identity: TiObjectKindIdentity
+  Identity: ThreatIntelligenceIdentity
   Incident.properties.additionalData: AdditionalInfo
   Incident.properties.createdTimeUtc: CreatedOn
   Incident.properties.firstActivityTimeUtc: FirstActivityOn
@@ -218,7 +233,7 @@ rename-mapping:
   IncidentTask.properties.createdTimeUtc: CreatedOn
   IncidentTask.properties.lastModifiedTimeUtc: LastModifiedOn
   IncidentTask: SecurityInsightsIncidentTask
-  Indicator: TiObjectKindIndicator
+  Indicator: ThreatIntelligenceIndicator
   InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.supportDeepLink: IsDeepLinkSupported
   IoTDeviceEntity: SecurityInsightsIotDeviceEntity
   IpEntity.properties.address: -|ip-address
@@ -233,6 +248,11 @@ rename-mapping:
   MailMessageEntity: SecurityInsightsMailMessageEntity
   MalwareEntity: SecurityInsightsMalwareEntity
   MatchingMethod: SecurityInsightsGroupingMatchingMethod
+  MetadataAuthor: SecurityInsightsMetadataAuthor
+  MetadataCategories: SecurityInsightsMetadataCategories
+  MetadataDependencies: SecurityInsightsMetadataDependencies
+  MetadataSource: SecurityInsightsMetadataSource
+  MetadataSupport: SecurityInsightsMetadataSupport
   MetadataModel: SecurityInsightsMetadata
   MicrosoftSecurityIncidentCreationAlertRule.properties.enabled: IsEnabled
   MicrosoftSecurityIncidentCreationAlertRule.properties.lastModifiedUtc: LastModifiedOn
@@ -243,6 +263,7 @@ rename-mapping:
   MLBehaviorAnalyticsAlertRuleTemplate.properties.createdDateUTC: CreatedOn
   MLBehaviorAnalyticsAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
   Mode: WorkspaceManagerConfigurationMode
+  MTPDataConnector: MtpDataConnector
   NrtAlertRule.properties.enabled: IsEnabled
   NrtAlertRule.properties.lastModifiedUtc: LastModifiedOn
   NrtAlertRule.properties.suppressionEnabled: IsSuppressionEnabled
@@ -254,7 +275,9 @@ rename-mapping:
   Operator: ThreatIntelligenceQueryOperator
   OSFamily.IOS: Ios
   OSFamily: SecurityInsightsHostOSFamily
+  OutputType: InsightsColumnOutputType
   OwnerType:  SecurityInsightsIncidentOwnerType
+  PackageKind: SecurityInsightsMetadataPackageKind
   PackageModel: SecurityInsightsPackage
   Permissions: ConnectorPermissions
   PlaybookActionProperties.logicAppResourceId: -|arm-id
@@ -266,7 +289,17 @@ rename-mapping:
   PropertyArrayChangedConditionProperties: SecurityInsightsPropertyArrayChangedConditionProperties
   PropertyChangedConditionProperties: SecurityInsightsPropertyChangedConditionProperties
   PropertyConditionProperties: SecurityInsightsPropertyConditionProperties
+  ProviderName: ConnectorProviderName
+  ProvisioningState: TriggeredAnalyticsRuleRunProvisioningState
   PullRequest: PullRequestInfo
+  GraphQueries: ConnectorGraphQueries
+  GraphQuery: ConnectorGraphQuery
+  OfficeATPCheckRequirements: OfficeAtpCheckRequirements
+  OfficeATPDataConnector: OfficeAtpDataConnector
+  OfficeIRMCheckRequirements: OfficeIrmCheckRequirements
+  OfficeIRMDataConnector: OfficeIrmDataConnector
+  QueryCondition: ThreatIntelligenceQueryCondition
+  QuerySortBy: ThreatIntelligenceQuerySortBy
   Recommendation.properties.creationTimeUtc: CreatedOn
   Recommendation.properties.lastEvaluatedTimeUtc: LastEvaluatedOn
   Recommendation.properties.lastModifiedTimeUtc: LastModifiedOn
@@ -280,17 +313,22 @@ rename-mapping:
   Relation.properties.relatedResourceId: -|arm-id
   Relation.properties.relatedResourceType: -|resource-type
   Relation: SecurityInsightsIncidentRelation
-  Relationship: TiObjectKindRelationship
+  Relationship: ThreatIntelligenceRelationship
   Repo: SourceControlRepo
+  RepoType: SourceControlRepoType
   Repository: SourceControlRepository
+  RequiredPermissions: ConnectorRequiredPermissions
   RequiredPermissions.action: IsCustomAction
   RequiredPermissions.delete: IsDeleteAction
   RequiredPermissions.read: IsReadAction
   RequiredPermissions.write: IsWriteAction
+  ResourceProvider: ConnectorResourceProvider
+  ResourceProviderRequiredPermissions: ConnectorResourceProviderRequiredPermissions
   ResourceProviderRequiredPermissions.action: IsCustomAction
   ResourceProviderRequiredPermissions.delete: IsDeleteAction
   ResourceProviderRequiredPermissions.read: IsReadAction
   ResourceProviderRequiredPermissions.write: IsWriteAction
+  SampleQueries: SourceControlSampleQueries
   ScheduledAlertRule.properties.enabled: IsEnabled
   ScheduledAlertRule.properties.lastModifiedUtc: LastModifiedOn
   ScheduledAlertRule.properties.suppressionEnabled: IsSuppressionEnabled
@@ -311,16 +349,21 @@ rename-mapping:
   SettingList: SecurityInsightsSettingList
   Settings: SecurityInsightsSettings
   SettingsStatus: AnomalySecurityMLAnalyticsSettingsStatus
+  SettingType: ConnectorSettingType
+  SortingDirection: ThreatIntelligenceQuerySortingDirection
   SourceControl: SecurityInsightsSourceControl
   SourceControl.properties.id: SourceControlId | uuid
+  SourceKind: SecurityInsightsSourceKind
+  SourceType: WatchlistSourceType
   State: RecommendationState
   SubmissionMailEntity.properties.senderIp: -|ip-address
   SubmissionMailEntity.properties.submissionDate: SubmitOn
   SubmissionMailEntity.properties.timestamp: MessageReceivedOn
   SubmissionMailEntity: SecurityInsightsSubmissionMailEntity
+  SupportTier: SecurityInsightsSupportTier
   TemplateModel: SecurityInsightsTemplate
   TemplateStatus: SecurityInsightsAlertRuleTemplateStatus
-  ThreatActor: TiObjectKindThreatActor
+  ThreatActor: ThreatIntelligenceThreatActor
   ThreatIntelligence: SecurityInsightsThreatIntelligence
   ThreatIntelligenceAlertRule.properties.enabled: IsEnabled
   ThreatIntelligenceAlertRule.properties.lastModifiedUtc: LastModifiedOn
@@ -340,18 +383,26 @@ rename-mapping:
   ThreatIntelligenceIndicatorModel: SecurityInsightsThreatIntelligenceIndicatorData
   ThreatIntelligenceInformation: SecurityInsightsThreatIntelligenceIndicatorBase
   ThreatIntelligenceMetric.lastUpdatedTimeUtc: LastUpdatedOn
+  TICheckRequirements: ThreatIntelligenceCheckRequirements
   TIDataConnector.properties.tipLookbackPeriod: TipLookbackOn
   TIDataConnector: SecurityInsightsTIDataConnector
+  TIObject: ThreatIntelligenceObject
   TIObject.properties.firstIngestedTimeUtc: FirstIngestedOn
   TIObject.properties.lastIngestedTimeUtc: LastIngestedOn
   TIObject.properties.lastUpdatedDateTimeUtc: LastUpdatedOn
+  TiTaxiiCheckRequirements: ThreatIntelligenceTaxiiCheckRequirements
+  TiTaxiiDataConnector: ThreatIntelligenceTaxiiDataConnector
+  TiType: ThreatIntelligenceType
   TriggeredAnalyticsRuleRun.properties.executionTimeUtc: ExecuteOn
   TriggerOperator: SecurityInsightsAlertRuleTriggerOperator
   Ueba: UebaSettings
   UrlEntity: SecurityInsightsUriEntity
   UserInfo: SecurityInsightsUserInfo
+  ValidationError: SecurityInsightsFileValidationError
   Version: SourceControlVersion
-  Warning: ResponseWarning
+  Warning: SourceControlOperationWarning
+  WarningBody: SourceControlOperationWarningBody
+  WarningCode: SourceControlOperationWarningCode
   Watchlist.properties.created: CreatedOn
   Watchlist.properties.source: SourceString   # Added property renaming due to api compat check with property breaking chang to string type in 2024-01-01-preview version
   Watchlist.properties.updated: UpdatedOn

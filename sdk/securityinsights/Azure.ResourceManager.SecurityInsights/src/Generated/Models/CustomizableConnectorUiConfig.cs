@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="permissions"> The required Permissions for the connector. </param>
         /// <param name="instructionSteps"> Gets or sets the instruction steps to enable the connector. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/>, <paramref name="publisher"/>, <paramref name="descriptionMarkdown"/>, <paramref name="graphQueries"/>, <paramref name="dataTypes"/>, <paramref name="connectivityCriteria"/>, <paramref name="permissions"/> or <paramref name="instructionSteps"/> is null. </exception>
-        public CustomizableConnectorUiConfig(string title, string publisher, string descriptionMarkdown, IEnumerable<GraphQuery> graphQueries, IEnumerable<ConnectorDataType> dataTypes, IEnumerable<ConnectorConnectivityCriterion> connectivityCriteria, ConnectorDefinitionsPermissions permissions, IEnumerable<InstructionStep> instructionSteps)
+        public CustomizableConnectorUiConfig(string title, string publisher, string descriptionMarkdown, IEnumerable<ConnectorGraphQuery> graphQueries, IEnumerable<ConnectorDataType> dataTypes, IEnumerable<ConnectorConnectivityCriterion> connectivityCriteria, ConnectorDefinitionsPermissions permissions, IEnumerable<InstructionStep> instructionSteps)
         {
             Argument.AssertNotNull(title, nameof(title));
             Argument.AssertNotNull(publisher, nameof(publisher));
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </param>
         /// <param name="isConnectivityCriteriasMatchSome"> Gets or sets a value indicating whether to use 'OR'(SOME) or 'AND' between ConnectivityCriteria items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomizableConnectorUiConfig(string id, string title, string publisher, string descriptionMarkdown, IList<GraphQuery> graphQueries, IList<ConnectorDataType> dataTypes, IList<ConnectorConnectivityCriterion> connectivityCriteria, ConnectorDefinitionsAvailability availability, ConnectorDefinitionsPermissions permissions, IList<InstructionStep> instructionSteps, string logo, bool? isConnectivityCriteriasMatchSome, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomizableConnectorUiConfig(string id, string title, string publisher, string descriptionMarkdown, IList<ConnectorGraphQuery> graphQueries, IList<ConnectorDataType> dataTypes, IList<ConnectorConnectivityCriterion> connectivityCriteria, ConnectorDefinitionsAvailability availability, ConnectorDefinitionsPermissions permissions, IList<InstructionStep> instructionSteps, string logo, bool? isConnectivityCriteriasMatchSome, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Title = title;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string DescriptionMarkdown { get; set; }
         /// <summary> Gets or sets the graph queries to show the current data volume over time. </summary>
         [WirePath("graphQueries")]
-        public IList<GraphQuery> GraphQueries { get; }
+        public IList<ConnectorGraphQuery> GraphQueries { get; }
         /// <summary> Gets or sets the data types to check for last data received. </summary>
         [WirePath("dataTypes")]
         public IList<ConnectorDataType> DataTypes { get; }

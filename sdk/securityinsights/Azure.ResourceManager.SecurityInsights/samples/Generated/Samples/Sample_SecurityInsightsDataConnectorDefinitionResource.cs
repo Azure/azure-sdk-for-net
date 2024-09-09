@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
             // invoke the operation
             SecurityInsightsDataConnectorDefinitionData data = new CustomizableConnectorDefinitionData()
             {
-                ConnectorUiConfig = new CustomizableConnectorUiConfig("GitHub Enterprise Audit Log", "GitHub", "The GitHub audit log connector provides the capability to ingest GitHub logs into Azure Sentinel. By connecting GitHub audit logs into Azure Sentinel, you can view this data in workbooks, use it to create custom alerts, and improve your investigation process.", new GraphQuery[]
+                ConnectorUiConfig = new CustomizableConnectorUiConfig("GitHub Enterprise Audit Log", "GitHub", "The GitHub audit log connector provides the capability to ingest GitHub logs into Azure Sentinel. By connecting GitHub audit logs into Azure Sentinel, you can view this data in workbooks, use it to create custom alerts, and improve your investigation process.", new ConnectorGraphQuery[]
             {
-new GraphQuery("Total events received","GitHub audit log events","GitHubAuditLogPolling_CL")
+new ConnectorGraphQuery("Total events received","GitHub audit log events","GitHubAuditLogPolling_CL")
             }, new ConnectorDataType[]
             {
 new ConnectorDataType("GitHubAuditLogPolling_CL","GitHubAuditLogPolling_CL \n            | summarize Time = max(TimeGenerated)\n            | where isnotempty(Time)")
@@ -92,7 +92,7 @@ Value =
             {
                 ResourceProvider =
             {
-new ConnectorDefinitionsResourceProvider("Microsoft.OperationalInsights/workspaces","read and write permissions are required.","Workspace",ProviderPermissionsScope.Workspace,new ResourceProviderRequiredPermissions()
+new ConnectorDefinitionsResourceProvider("Microsoft.OperationalInsights/workspaces","read and write permissions are required.","Workspace",ProviderPermissionsScope.Workspace,new ConnectorResourceProviderRequiredPermissions()
 {
 IsReadAction = false,
 IsWriteAction = true,

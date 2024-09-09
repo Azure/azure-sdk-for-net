@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
             SecurityInsightsSourceControlResource securityInsightsSourceControl = client.GetSecurityInsightsSourceControlResource(securityInsightsSourceControlResourceId);
 
             // invoke the operation
-            SecurityInsightsSourceControlData data = new SecurityInsightsSourceControlData("My Source Control", RepoType.Github, new SourceControlContentType[]
+            SecurityInsightsSourceControlData data = new SecurityInsightsSourceControlData("My Source Control", SourceControlRepoType.Github, new SourceControlContentType[]
             {
 new SourceControlContentType("AnalyticRules"),SourceControlContentType.Workbook
             }, new SourceControlRepository(new Uri("https://github.com/user/repo"), "master")
@@ -126,7 +126,7 @@ new SourceControlContentType("AnalyticRules"),SourceControlContentType.Workbook
                 State = "state",
                 ClientId = "54b3c2c0-1f48-4a1c-af9f-6399c3240b73",
             };
-            ResponseWarning result = await securityInsightsSourceControl.DeleteAsync(repositoryAccess);
+            SourceControlOperationWarning result = await securityInsightsSourceControl.DeleteAsync(repositoryAccess);
 
             Console.WriteLine($"Succeeded: {result}");
         }

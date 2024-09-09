@@ -16,16 +16,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class UnknownTIObject : IUtf8JsonSerializable, IJsonModel<TIObject>
+    internal partial class UnknownTIObject : IUtf8JsonSerializable, IJsonModel<ThreatIntelligenceObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TIObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TIObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ThreatIntelligenceObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TIObject>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TIObject)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceObject)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -145,16 +145,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        TIObject IJsonModel<TIObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ThreatIntelligenceObject IJsonModel<ThreatIntelligenceObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TIObject>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TIObject)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceObject)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTIObject(document.RootElement, options);
+            return DeserializeThreatIntelligenceObject(document.RootElement, options);
         }
 
         internal static UnknownTIObject DeserializeUnknownTIObject(JsonElement element, ModelReaderWriterOptions options = null)
@@ -623,9 +623,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<TIObject>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ThreatIntelligenceObject>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TIObject>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceObject>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -634,26 +634,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TIObject)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceObject)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TIObject IPersistableModel<TIObject>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ThreatIntelligenceObject IPersistableModel<ThreatIntelligenceObject>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TIObject>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceObject>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTIObject(document.RootElement, options);
+                        return DeserializeThreatIntelligenceObject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TIObject)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceObject)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TIObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ThreatIntelligenceObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

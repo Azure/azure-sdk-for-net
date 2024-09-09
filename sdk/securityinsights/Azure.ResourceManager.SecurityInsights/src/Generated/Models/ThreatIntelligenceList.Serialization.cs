@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<TIObject> value = default;
+            IReadOnlyList<ThreatIntelligenceObject> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    List<TIObject> array = new List<TIObject>();
+                    List<ThreatIntelligenceObject> array = new List<ThreatIntelligenceObject>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TIObject.DeserializeTIObject(item, options));
+                        array.Add(ThreatIntelligenceObject.DeserializeThreatIntelligenceObject(item, options));
                     }
                     value = array;
                     continue;

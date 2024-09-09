@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="permissions"> Permissions required for the connector. </param>
         /// <param name="instructionSteps"> Instruction steps to enable the connector. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/>, <paramref name="publisher"/>, <paramref name="descriptionMarkdown"/>, <paramref name="graphQueriesTableName"/>, <paramref name="graphQueries"/>, <paramref name="sampleQueries"/>, <paramref name="dataTypes"/>, <paramref name="connectivityCriteria"/>, <paramref name="availability"/>, <paramref name="permissions"/> or <paramref name="instructionSteps"/> is null. </exception>
-        public CodelessUiConnectorConfigProperties(string title, string publisher, string descriptionMarkdown, string graphQueriesTableName, IEnumerable<GraphQueries> graphQueries, IEnumerable<SampleQueries> sampleQueries, IEnumerable<LastDataReceivedDataType> dataTypes, IEnumerable<ConnectorConnectivityCriteria> connectivityCriteria, ConnectorAvailability availability, ConnectorPermissions permissions, IEnumerable<InstructionSteps> instructionSteps)
+        public CodelessUiConnectorConfigProperties(string title, string publisher, string descriptionMarkdown, string graphQueriesTableName, IEnumerable<ConnectorGraphQueries> graphQueries, IEnumerable<SourceControlSampleQueries> sampleQueries, IEnumerable<LastDataReceivedDataType> dataTypes, IEnumerable<ConnectorConnectivityCriteria> connectivityCriteria, ConnectorAvailability availability, ConnectorPermissions permissions, IEnumerable<InstructionSteps> instructionSteps)
         {
             Argument.AssertNotNull(title, nameof(title));
             Argument.AssertNotNull(publisher, nameof(publisher));
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="permissions"> Permissions required for the connector. </param>
         /// <param name="instructionSteps"> Instruction steps to enable the connector. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CodelessUiConnectorConfigProperties(string title, string publisher, string descriptionMarkdown, string customImage, string graphQueriesTableName, IList<GraphQueries> graphQueries, IList<SampleQueries> sampleQueries, IList<LastDataReceivedDataType> dataTypes, IList<ConnectorConnectivityCriteria> connectivityCriteria, ConnectorAvailability availability, ConnectorPermissions permissions, IList<InstructionSteps> instructionSteps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CodelessUiConnectorConfigProperties(string title, string publisher, string descriptionMarkdown, string customImage, string graphQueriesTableName, IList<ConnectorGraphQueries> graphQueries, IList<SourceControlSampleQueries> sampleQueries, IList<LastDataReceivedDataType> dataTypes, IList<ConnectorConnectivityCriteria> connectivityCriteria, ConnectorAvailability availability, ConnectorPermissions permissions, IList<InstructionSteps> instructionSteps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Publisher = publisher;
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string GraphQueriesTableName { get; set; }
         /// <summary> The graph query to show the current data status. </summary>
         [WirePath("graphQueries")]
-        public IList<GraphQueries> GraphQueries { get; }
+        public IList<ConnectorGraphQueries> GraphQueries { get; }
         /// <summary> The sample queries for the connector. </summary>
         [WirePath("sampleQueries")]
-        public IList<SampleQueries> SampleQueries { get; }
+        public IList<SourceControlSampleQueries> SampleQueries { get; }
         /// <summary> Data types to check for last data received. </summary>
         [WirePath("dataTypes")]
         public IList<LastDataReceivedDataType> DataTypes { get; }

@@ -222,11 +222,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string version = default;
             string displayName = default;
             SecurityInsightsKind? contentKind = default;
-            MetadataSource source = default;
-            MetadataAuthor author = default;
-            MetadataSupport support = default;
-            MetadataDependencies dependencies = default;
-            MetadataCategories categories = default;
+            SecurityInsightsMetadataSource source = default;
+            SecurityInsightsMetadataAuthor author = default;
+            SecurityInsightsMetadataSupport support = default;
+            SecurityInsightsMetadataDependencies dependencies = default;
+            SecurityInsightsMetadataCategories categories = default;
             IReadOnlyList<string> providers = default;
             DateTimeOffset? firstPublishDate = default;
             DateTimeOffset? lastPublishDate = default;
@@ -238,9 +238,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IReadOnlyList<string> previewImages = default;
             IReadOnlyList<string> previewImagesDark = default;
             string packageId = default;
-            PackageKind? packageKind = default;
+            SecurityInsightsMetadataPackageKind? packageKind = default;
             string packageName = default;
-            MetadataFlag? isDeprecated = default;
+            SecurityInsightsMetadataFlag? isDeprecated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    source = MetadataSource.DeserializeMetadataSource(property.Value, options);
+                    source = SecurityInsightsMetadataSource.DeserializeSecurityInsightsMetadataSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("author"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    author = MetadataAuthor.DeserializeMetadataAuthor(property.Value, options);
+                    author = SecurityInsightsMetadataAuthor.DeserializeSecurityInsightsMetadataAuthor(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("support"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    support = MetadataSupport.DeserializeMetadataSupport(property.Value, options);
+                    support = SecurityInsightsMetadataSupport.DeserializeSecurityInsightsMetadataSupport(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dependencies"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    dependencies = MetadataDependencies.DeserializeMetadataDependencies(property.Value, options);
+                    dependencies = SecurityInsightsMetadataDependencies.DeserializeSecurityInsightsMetadataDependencies(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("categories"u8))
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    categories = MetadataCategories.DeserializeMetadataCategories(property.Value, options);
+                    categories = SecurityInsightsMetadataCategories.DeserializeSecurityInsightsMetadataCategories(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providers"u8))
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    packageKind = new PackageKind(property.Value.GetString());
+                    packageKind = new SecurityInsightsMetadataPackageKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("packageName"u8))
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    isDeprecated = new MetadataFlag(property.Value.GetString());
+                    isDeprecated = new SecurityInsightsMetadataFlag(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

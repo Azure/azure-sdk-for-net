@@ -166,14 +166,14 @@ namespace Azure.ResourceManager.SecurityInsights
             ResourceType type = default;
             SystemData systemData = default;
             IngestionMode? ingestionMode = default;
-            FileImportContentType? contentType = default;
+            SecurityInsightsFileImportContentType? contentType = default;
             DateTimeOffset? createdTimeUTC = default;
-            FileMetadata errorFile = default;
-            IReadOnlyList<ValidationError> errorsPreview = default;
-            FileMetadata importFile = default;
+            SecurityInsightsFileMetadata errorFile = default;
+            IReadOnlyList<SecurityInsightsFileValidationError> errorsPreview = default;
+            SecurityInsightsFileMetadata importFile = default;
             int? ingestedRecordCount = default;
             string source = default;
-            FileImportState? state = default;
+            SecurityInsightsFileImportState? state = default;
             int? totalRecordCount = default;
             int? validRecordCount = default;
             DateTimeOffset? filesValidUntilTimeUTC = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            contentType = new FileImportContentType(property0.Value.GetString());
+                            contentType = new SecurityInsightsFileImportContentType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("createdTimeUTC"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            errorFile = FileMetadata.DeserializeFileMetadata(property0.Value, options);
+                            errorFile = SecurityInsightsFileMetadata.DeserializeSecurityInsightsFileMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("errorsPreview"u8))
@@ -257,10 +257,10 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            List<ValidationError> array = new List<ValidationError>();
+                            List<SecurityInsightsFileValidationError> array = new List<SecurityInsightsFileValidationError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ValidationError.DeserializeValidationError(item, options));
+                                array.Add(SecurityInsightsFileValidationError.DeserializeSecurityInsightsFileValidationError(item, options));
                             }
                             errorsPreview = array;
                             continue;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            importFile = FileMetadata.DeserializeFileMetadata(property0.Value, options);
+                            importFile = SecurityInsightsFileMetadata.DeserializeSecurityInsightsFileMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ingestedRecordCount"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            state = new FileImportState(property0.Value.GetString());
+                            state = new SecurityInsightsFileImportState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("totalRecordCount"u8))
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 contentType,
                 createdTimeUTC,
                 errorFile,
-                errorsPreview ?? new ChangeTrackingList<ValidationError>(),
+                errorsPreview ?? new ChangeTrackingList<SecurityInsightsFileValidationError>(),
                 importFile,
                 ingestedRecordCount,
                 source,

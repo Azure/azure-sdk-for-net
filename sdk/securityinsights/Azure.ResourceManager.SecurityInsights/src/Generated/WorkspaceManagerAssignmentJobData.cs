@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceManagerAssignmentJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? endOn, IList<JobItem> items, ProvisioningState? provisioningState, DateTimeOffset? startOn, string errorMessage, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkspaceManagerAssignmentJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? endOn, IList<JobItem> items, TriggeredAnalyticsRuleRunProvisioningState? provisioningState, DateTimeOffset? startOn, string errorMessage, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             EndOn = endOn;
             Items = items;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public IList<JobItem> Items { get; }
         /// <summary> State of the job. </summary>
         [WirePath("properties.provisioningState")]
-        public ProvisioningState? ProvisioningState { get; }
+        public TriggeredAnalyticsRuleRunProvisioningState? ProvisioningState { get; }
         /// <summary> The time the job started. </summary>
         [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }

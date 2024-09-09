@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.SecurityInsights.Samples
             {
                 ContentId = "str.azure-sentinel-solution-str",
                 ContentProductId = "str.azure-sentinel-solution-str-sl-igl6jawr4gwmu",
-                ContentKind = PackageKind.Solution,
+                ContentKind = SecurityInsightsMetadataPackageKind.Solution,
                 Version = "2.0.0",
                 DisplayName = "str",
             };

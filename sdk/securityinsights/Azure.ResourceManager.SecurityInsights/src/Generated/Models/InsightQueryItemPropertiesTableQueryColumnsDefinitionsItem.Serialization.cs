@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             string header = default;
-            OutputType? outputType = default;
+            InsightsColumnOutputType? outputType = default;
             bool? supportDeepLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    outputType = new OutputType(property.Value.GetString());
+                    outputType = new InsightsColumnOutputType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("supportDeepLink"u8))

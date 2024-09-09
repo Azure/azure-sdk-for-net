@@ -2558,7 +2558,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="tiType"> TI type. </param>
         /// <param name="query"> The query to run on the TI objects in the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ThreatIntelligenceCount>> CountThreatIntelligenceAsync(TiType tiType, ThreatIntelligenceCountQuery query = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreatIntelligenceCount>> CountThreatIntelligenceAsync(ThreatIntelligenceType tiType, ThreatIntelligenceCountQuery query = null, CancellationToken cancellationToken = default)
         {
             using var scope = _threatIntelligenceClientDiagnostics.CreateScope("OperationalInsightsWorkspaceSecurityInsightsResource.CountThreatIntelligence");
             scope.Start();
@@ -2594,7 +2594,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="tiType"> TI type. </param>
         /// <param name="query"> The query to run on the TI objects in the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ThreatIntelligenceCount> CountThreatIntelligence(TiType tiType, ThreatIntelligenceCountQuery query = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreatIntelligenceCount> CountThreatIntelligence(ThreatIntelligenceType tiType, ThreatIntelligenceCountQuery query = null, CancellationToken cancellationToken = default)
         {
             using var scope = _threatIntelligenceClientDiagnostics.CreateScope("OperationalInsightsWorkspaceSecurityInsightsResource.CountThreatIntelligence");
             scope.Start();
@@ -2630,12 +2630,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="tiType"> TI type. </param>
         /// <param name="query"> The query to run on the TI objects in the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TIObject"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TIObject> QueryThreatIntelligencesAsync(TiType tiType, ThreatIntelligenceQuery query = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ThreatIntelligenceObject"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ThreatIntelligenceObject> QueryThreatIntelligencesAsync(ThreatIntelligenceType tiType, ThreatIntelligenceQuery query = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceRestClient.CreateQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tiType, query);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _threatIntelligenceRestClient.CreateQueryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tiType, query);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TIObject.DeserializeTIObject(e), _threatIntelligenceClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.QueryThreatIntelligences", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ThreatIntelligenceObject.DeserializeThreatIntelligenceObject(e), _threatIntelligenceClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.QueryThreatIntelligences", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2658,12 +2658,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="tiType"> TI type. </param>
         /// <param name="query"> The query to run on the TI objects in the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TIObject"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TIObject> QueryThreatIntelligences(TiType tiType, ThreatIntelligenceQuery query = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ThreatIntelligenceObject"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ThreatIntelligenceObject> QueryThreatIntelligences(ThreatIntelligenceType tiType, ThreatIntelligenceQuery query = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceRestClient.CreateQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tiType, query);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _threatIntelligenceRestClient.CreateQueryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tiType, query);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TIObject.DeserializeTIObject(e), _threatIntelligenceClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.QueryThreatIntelligences", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ThreatIntelligenceObject.DeserializeThreatIntelligenceObject(e), _threatIntelligenceClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.QueryThreatIntelligences", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

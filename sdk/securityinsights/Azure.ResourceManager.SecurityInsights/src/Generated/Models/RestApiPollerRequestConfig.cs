@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="queryTimeIntervalPrepend"> The string prepend to the value of the query parameter in `queryTimeIntervalAttributeName`. </param>
         /// <param name="queryTimeIntervalDelimiter"> The delimiter string between 2 QueryTimeFormat in the query parameter `queryTimeIntervalAttributeName`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestApiPollerRequestConfig(string apiEndpoint, int? rateLimitQPS, int? queryWindowInMin, HttpMethodVerb? httpMethod, string queryTimeFormat, int? retryCount, int? timeoutInSeconds, bool? isPostPayloadJson, IDictionary<string, string> headers, IDictionary<string, BinaryData> queryParameters, string queryParametersTemplate, string startTimeAttributeName, string endTimeAttributeName, string queryTimeIntervalAttributeName, string queryTimeIntervalPrepend, string queryTimeIntervalDelimiter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RestApiPollerRequestConfig(string apiEndpoint, int? rateLimitQPS, int? queryWindowInMin, ConnectorHttpMethodVerb? httpMethod, string queryTimeFormat, int? retryCount, int? timeoutInSeconds, bool? isPostPayloadJson, IDictionary<string, string> headers, IDictionary<string, BinaryData> queryParameters, string queryParametersTemplate, string startTimeAttributeName, string endTimeAttributeName, string queryTimeIntervalAttributeName, string queryTimeIntervalPrepend, string queryTimeIntervalDelimiter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApiEndpoint = apiEndpoint;
             RateLimitQPS = rateLimitQPS;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public int? QueryWindowInMin { get; set; }
         /// <summary> The HTTP method, default value GET. </summary>
         [WirePath("httpMethod")]
-        public HttpMethodVerb? HttpMethod { get; set; }
+        public ConnectorHttpMethodVerb? HttpMethod { get; set; }
         /// <summary> The query time format. A remote server can have a query to pull data from range 'start' to 'end'. This property indicate what is the expected time format the remote server know to parse. </summary>
         [WirePath("queryTimeFormat")]
         public string QueryTimeFormat { get; set; }

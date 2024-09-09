@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="value">
         /// Array of settings.
         /// Please note <see cref="SecurityInsightsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="EntityAnalytics"/>, <see cref="EyesOn"/> and <see cref="UebaSettings"/>.
+        /// The available derived classes include <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="EntityAnalytics"/>, <see cref="SecurityInsightsEyesOn"/> and <see cref="UebaSettings"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SecurityInsightsSettingList(IEnumerable<SecurityInsightsSettingData> value)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="value">
         /// Array of settings.
         /// Please note <see cref="SecurityInsightsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="EntityAnalytics"/>, <see cref="EyesOn"/> and <see cref="UebaSettings"/>.
+        /// The available derived classes include <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="EntityAnalytics"/>, <see cref="SecurityInsightsEyesOn"/> and <see cref="UebaSettings"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsSettingList(IReadOnlyList<SecurityInsightsSettingData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary>
         /// Array of settings.
         /// Please note <see cref="SecurityInsightsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="EntityAnalytics"/>, <see cref="EyesOn"/> and <see cref="UebaSettings"/>.
+        /// The available derived classes include <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="EntityAnalytics"/>, <see cref="SecurityInsightsEyesOn"/> and <see cref="UebaSettings"/>.
         /// </summary>
         [WirePath("value")]
         public IReadOnlyList<SecurityInsightsSettingData> Value { get; }
