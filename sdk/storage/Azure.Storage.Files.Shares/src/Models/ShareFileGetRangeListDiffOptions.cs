@@ -35,7 +35,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// changed between target file and previous snapshot.  Changed ranges
         /// include both updated and cleared ranges. The target file may be a
         /// snapshot, as long as the snapshot specified by
-        /// previousSnapshot is the older of the two.
+        /// <see cref="PreviousSnapshot"/> is the older of the two.
+        /// For more information on working with share snapshots,
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-share">
+        /// Create a snapshot of a share</see>.
         /// </summary>
         public string PreviousSnapshot { get; set; }
 
