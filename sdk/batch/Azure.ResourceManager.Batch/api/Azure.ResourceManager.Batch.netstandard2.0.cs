@@ -1575,6 +1575,24 @@ namespace Azure.ResourceManager.Batch.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchResourceFile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchResourceFile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchSecurityEncryptionType : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchSecurityEncryptionType(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType NonPersistedTPM { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType VmGuestStateOnly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType left, Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType left, Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class BatchSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchSecurityProfile>
     {
         public BatchSecurityProfile() { }
@@ -1854,7 +1872,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class ManagedDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ManagedDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.ManagedDisk>
     {
         public ManagedDisk() { }
-        public Azure.ResourceManager.Batch.Models.SecurityEncryptionType? SecurityEncryptionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType? SecurityEncryptionType { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchStorageAccountType? StorageAccountType { get { throw null; } set { } }
         Azure.ResourceManager.Batch.Models.ManagedDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ManagedDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ManagedDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1965,24 +1983,6 @@ namespace Azure.ResourceManager.Batch.Models
         Azure.ResourceManager.Batch.Models.RollingUpgradePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.RollingUpgradePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.RollingUpgradePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.RollingUpgradePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SecurityEncryptionType : System.IEquatable<Azure.ResourceManager.Batch.Models.SecurityEncryptionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SecurityEncryptionType(string value) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.SecurityEncryptionType NonPersistedTPM { get { throw null; } }
-        public static Azure.ResourceManager.Batch.Models.SecurityEncryptionType VmGuestStateOnly { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Batch.Models.SecurityEncryptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Batch.Models.SecurityEncryptionType left, Azure.ResourceManager.Batch.Models.SecurityEncryptionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.SecurityEncryptionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Batch.Models.SecurityEncryptionType left, Azure.ResourceManager.Batch.Models.SecurityEncryptionType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public enum UpgradeMode
     {
