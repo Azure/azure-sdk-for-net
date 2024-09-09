@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -59,16 +61,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ChangeableIsolationModes))
-            {
-                writer.WritePropertyName("changeableIsolationModes"u8);
-                writer.WriteStartArray();
-                foreach (var item in ChangeableIsolationModes)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -111,7 +103,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string networkId = default;
             IDictionary<string, MachineLearningOutboundRule> outboundRules = default;
             ManagedNetworkProvisionStatus status = default;
-            IReadOnlyList<IsolationMode> changeableIsolationModes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,33 +145,105 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     status = ManagedNetworkProvisionStatus.DeserializeManagedNetworkProvisionStatus(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("changeableIsolationModes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<IsolationMode> array = new List<IsolationMode>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new IsolationMode(item.GetString()));
-                    }
-                    changeableIsolationModes = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedNetworkSettings(
-                isolationMode,
-                networkId,
-                outboundRules ?? new ChangeTrackingDictionary<string, MachineLearningOutboundRule>(),
-                status,
-                changeableIsolationModes ?? new ChangeTrackingList<IsolationMode>(),
-                serializedAdditionalRawData);
+            return new ManagedNetworkSettings(isolationMode, networkId, outboundRules ?? new ChangeTrackingDictionary<string, MachineLearningOutboundRule>(), status, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsolationMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isolationMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsolationMode))
+                {
+                    builder.Append("  isolationMode: ");
+                    builder.AppendLine($"'{IsolationMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkId))
+                {
+                    builder.Append("  networkId: ");
+                    if (NetworkId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NetworkId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NetworkId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutboundRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  outboundRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(OutboundRules))
+                {
+                    if (OutboundRules.Any())
+                    {
+                        builder.Append("  outboundRules: ");
+                        builder.AppendLine("{");
+                        foreach (var item in OutboundRules)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  outboundRules: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Status, options, 2, false, "  status: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ManagedNetworkSettings>.Write(ModelReaderWriterOptions options)
@@ -191,6 +254,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support writing '{options.Format}' format.");
             }

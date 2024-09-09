@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -28,6 +29,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
+            writer.WritePropertyName("jobInputType"u8);
+            writer.WriteStringValue(JobInputType.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -40,8 +43,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            writer.WritePropertyName("jobInputType"u8);
-            writer.WriteStringValue(JobInputType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string value = default;
-            string description = default;
             JobInputType jobInputType = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,6 +91,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("jobInputType"u8))
+                {
+                    jobInputType = new JobInputType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -102,18 +108,86 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobInputType"u8))
-                {
-                    jobInputType = new JobInputType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningLiteralJobInput(description, jobInputType, serializedAdditionalRawData, value);
+            return new MachineLearningLiteralJobInput(jobInputType, description, serializedAdditionalRawData, value);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Value))
+                {
+                    builder.Append("  value: ");
+                    if (Value.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Value}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Value}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobInputType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobInputType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  jobInputType: ");
+                builder.AppendLine($"'{JobInputType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningLiteralJobInput>.Write(ModelReaderWriterOptions options)
@@ -124,6 +198,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningLiteralJobInput)} does not support writing '{options.Format}' format.");
             }
