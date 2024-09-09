@@ -17,112 +17,48 @@ namespace Azure.ResourceManager.Resources.Tests
         {
         }
 
-        /* RG Scoped Deployment Stack Tests */
+        [TestCase]
+        [RecordedTest]
+        public async Task PutDataBoundary()
+        {
+            var dataBoundaryData = CreateDataBoundary();
+            var dataBoundary = (await GetTenantDataBoundary().CreateOrUpdateAsync(WaitUntil.Completed, dataBoundaryData)).Value;
+
+            Assert.AreEqual("EU", dataBoundary.Data.DataBoundary);
+
+            await dataBoundary.DeleteAsync(WaitUntil.Completed);
+        }
 
         [TestCase]
         [RecordedTest]
-        public async Task DeleteRG()
+        public async Task GetDataBoundaryTenant()
+        {
+            var dataBoundaryData = CreateDataBoundary();
+            var dataBoundary = (await GetTenantDataBoundary().CreateOrUpdateAsync(WaitUntil.Completed, dataBoundaryData)).Value;
+
+            var dataBoundaryTenantGet = (await GetTenantDataBoundaryAsync()).Value;
+
+            Assert.AreEqual("EU", dataBoundaryTenantGet.Data.DataBoundary);
+            Assert.AreEqual("Created", dataBoundaryTenantGet.Data.ProvisioningState);
+
+            await dataBoundary.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetDataBoundaryScoped()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
 
-            string rgName = Recording.GenerateAssetName("testRg-1-");
-            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS);
-            ResourceGroupResource rg = (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData)).Value;
+            var dataBoundaryData = CreateDataBoundary();
+            var dataBoundary = (await GetTenantDataBoundary().CreateOrUpdateAsync(WaitUntil.Completed, dataBoundaryData)).Value;
 
-            string deploymentStackName = Recording.GenerateAssetName("deployStackRG-Delete-");
-            var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
-            DeploymentStackResource deploymentStack = (await rg.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
-            await deploymentStack.DeleteAsync(WaitUntil.Completed);
+            var dataBoundaryTenantGet = (await GetScopedDataBoundaryAsync(subscription)).Value;
 
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deploymentStack.GetAsync());
-            Assert.AreEqual(404, ex.Status);
-            await rg.DeleteAsync(WaitUntil.Completed);
-        }
+            Assert.AreEqual("EU", dataBoundaryTenantGet.Data.DataBoundary);
+            Assert.AreEqual("Created", dataBoundaryTenantGet.Data.ProvisioningState);
 
-        [TestCase]
-        [RecordedTest]
-        public async Task ValidateRG()
-        {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-
-            string rgName = Recording.GenerateAssetName("testRg-1-");
-            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS);
-            ResourceGroupResource rg = (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData)).Value;
-
-            string deploymentStackName = Recording.GenerateAssetName("deployStackRG-Validate-");
-            var deploymentStackId = new ResourceIdentifier(rg.Id + "/providers/Microsoft.Resources/deploymentStacks/" + deploymentStackName);
-            var deploymentStack = Client.GetDeploymentStackResource(deploymentStackId);
-
-            var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
-            DeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
-
-            Assert.IsNotNull(deploymentStackValidateResult);
-            await rg.DeleteAsync(WaitUntil.Completed);
-        }
-
-        /* Sub Scoped Deployment Stack Tests */
-
-        [TestCase]
-        [RecordedTest]
-        public async Task DeleteSub()
-        {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-
-            string deploymentStackName = Recording.GenerateAssetName("deployStackSub-Delete-");
-            var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            DeploymentStackResource deploymentStack = (await subscription.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
-            await deploymentStack.DeleteAsync(WaitUntil.Completed);
-
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deploymentStack.GetAsync());
-            Assert.AreEqual(404, ex.Status);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task DeleteMG()
-        {
-            ManagementGroupResource managementGroup = Client.GetManagementGroupResource(ManagementGroupResource.CreateResourceIdentifier("StacksSDKTest"));
-
-            string deploymentStackName = Recording.GenerateAssetName("deployStackMG-Delete-");
-            var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            DeploymentStackResource deploymentStack = (await managementGroup.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
-            await deploymentStack.DeleteAsync(WaitUntil.Completed);
-
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deploymentStack.GetAsync());
-            Assert.AreEqual(404, ex.Status);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task ExportMG()
-        {
-            ManagementGroupResource managementGroup = Client.GetManagementGroupResource(ManagementGroupResource.CreateResourceIdentifier("StacksSDKTest"));
-
-            string deploymentStackName = Recording.GenerateAssetName("deployStackMG-Export-");
-            var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            DeploymentStackResource deploymentStack = (await managementGroup.GetDeploymentStacks().CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
-            var deploymentStackTemplate = (await deploymentStack.ExportTemplateAsync()).Value;
-            Assert.IsNotNull(deploymentStackTemplate);
-
-            // TODO: Output is off by a little and may be how the template is being read.
-            //Assert.AreEqual(deploymentStackTemplate.Template, deploymentStackData.Template);
-
-            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task ValidateMG()
-        {
-            ManagementGroupResource managementGroup = Client.GetManagementGroupResource(ManagementGroupResource.CreateResourceIdentifier("StacksSDKTest"));
-
-            string deploymentStackName = Recording.GenerateAssetName("deployStackMG-Validate-");
-            var deploymentStackId = new ResourceIdentifier(managementGroup.Id + "/providers/Microsoft.Resources/deploymentStacks/" + deploymentStackName);
-            var deploymentStack = Client.GetDeploymentStackResource(deploymentStackId);
-
-            var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            DeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
-            Assert.IsNotNull(deploymentStackValidateResult);
+            await dataBoundary.DeleteAsync(WaitUntil.Completed);
         }
     }
 }
