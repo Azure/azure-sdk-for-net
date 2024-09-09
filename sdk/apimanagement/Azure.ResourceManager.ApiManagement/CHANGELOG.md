@@ -1,14 +1,16 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2024-09-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2022-08' to 'package-preview-2023-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/apimanagement/resource-manager/readme.md.
+    - Added supportablity for SkuV2 CRUD operations.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.40.0 to 1.42.0
+- Upgraded Azure.ResourceManager from 1.12.0 to 1.13.0
 
 ## 1.2.0 (2024-07-05)
 
@@ -19,7 +21,7 @@
 
 ### Bugs Fixed
 
-- fix bugs caused by applying to the lastest 'require url' for opeartion_Id_:ContentType_CreateOrUpdate and ContentItem_CreateOrUpdate in apimcontenttypes.json
+- Fixed bugs caused by applying to the lastest 'require url' for opeartion_Id_:ContentType_CreateOrUpdate and ContentItem_CreateOrUpdate in apimcontenttypes.json
 
 ### Other Changes
 
