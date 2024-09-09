@@ -190,7 +190,7 @@ namespace Azure.Identity.Broker.Tests
         internal static class AuthorizationChallengeParser
     {
         /// <summary>
-        /// Parses the specified parameter from a challenge hearder found in the specified <see cref="Response"/>.
+        /// Parses the specified parameter from a challenge header found in the specified <see cref="Response"/>.
         /// </summary>
         /// <param name="response">The <see cref="Response"/> to parse.</param>
         /// <param name="challengeScheme">The challenge scheme containing the <paramref name="challengeParameter"/>. For example: "Bearer"</param>

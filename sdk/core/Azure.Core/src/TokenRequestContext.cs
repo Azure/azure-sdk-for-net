@@ -83,7 +83,7 @@ namespace Azure.Core
         /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
         /// <param name="isProofOfPossessionEnabled">Indicates whether to enable Proof of Possession (PoP) for the requested token.</param>
         /// <param name="proofOfPossessionNonce">The nonce value required for PoP token requests.</param>
-        /// <param name="requestUri">The resource request Uri to be authorized with a PoP token.</param>
+        /// <param name="requestUri">The resource request URI to be authorized with a PoP token.</param>
         /// <param name="requestMethod">The HTTP request method name of the resource request (e.g. GET, POST, etc.).</param>
         public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = default, Uri? requestUri = default, string? requestMethod = default)
         {
@@ -134,7 +134,7 @@ namespace Azure.Core
         public bool IsProofOfPossessionEnabled { get; }
 
         /// <summary>
-        /// The nonce value required for PoP token requests. This is typically retrieved from teh WWW-Authenticate header of a 401 challenge response.
+        /// The nonce value required for PoP token requests. This is typically retrieved from the WWW-Authenticate header of a 401 challenge response.
         /// This is used in combination with <see cref="ResourceRequestUri"/> and <see cref="ResourceRequestMethod"/> to generate the PoP token.
         /// </summary>
         public string? ProofOfPossessionNonce { get; }
