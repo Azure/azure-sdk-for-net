@@ -1,7 +1,7 @@
 trigger: none
 
 variables:
-  nugetMultiFeedWarnLevel: warn
+- template: /eng/pipelines/templates/variables/image.yml
 
 extends:
   template: /eng/common/pipelines/templates/jobs/prepare-pipelines.yml
