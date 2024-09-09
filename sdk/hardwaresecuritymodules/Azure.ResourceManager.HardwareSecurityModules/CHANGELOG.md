@@ -10,12 +10,6 @@
 - Added experimental Bicep serialization.
 - Exposed JsonModelWriteCore for model serialization procedure.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.2 (2023-12-30)
 
 ### Features Added
