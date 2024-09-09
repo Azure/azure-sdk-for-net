@@ -138,6 +138,7 @@ rename-mapping:
   UpdateClusterIdentityCertificateParameters: HDInsightClusterUpdateIdentityCertificateContent
   PrivateLink: HDInsightPrivateLinkState
   NetworkProperties: HDInsightClusterNetworkProperties
+  IpTag: HDInsightClusterIPTag
   LinuxOperatingSystemProfile: HDInsightLinuxOSProfile
   OsProfile.linuxOperatingSystemProfile: LinuxProfile
   HostInfo: HDInsightClusterHostInfo

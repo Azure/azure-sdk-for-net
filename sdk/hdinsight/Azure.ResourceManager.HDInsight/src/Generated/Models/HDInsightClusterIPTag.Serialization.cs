@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class IPTag : IUtf8JsonSerializable, IJsonModel<IPTag>
+    public partial class HDInsightClusterIPTag : IUtf8JsonSerializable, IJsonModel<HDInsightClusterIPTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPTag>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterIPTag>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HDInsightClusterIPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPTag)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterIPTag)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteEndObject();
         }
 
-        IPTag IJsonModel<IPTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HDInsightClusterIPTag IJsonModel<HDInsightClusterIPTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPTag)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterIPTag)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPTag(document.RootElement, options);
+            return DeserializeHDInsightClusterIPTag(document.RootElement, options);
         }
 
-        internal static IPTag DeserializeIPTag(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HDInsightClusterIPTag DeserializeHDInsightClusterIPTag(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -90,38 +90,38 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IPTag(ipTagType, tag, serializedAdditionalRawData);
+            return new HDInsightClusterIPTag(ipTagType, tag, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IPTag>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HDInsightClusterIPTag>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPTag)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterIPTag)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IPTag IPersistableModel<IPTag>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HDInsightClusterIPTag IPersistableModel<HDInsightClusterIPTag>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIPTag(document.RootElement, options);
+                        return DeserializeHDInsightClusterIPTag(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPTag)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterIPTag)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IPTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HDInsightClusterIPTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

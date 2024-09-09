@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             OutboundDependenciesManagedType? outboundDependenciesManagedType = default;
             HDInsightResourceProviderConnection? resourceProviderConnection = default;
             HDInsightPrivateLinkState? privateLink = default;
-            IPTag publicIPTag = default;
+            HDInsightClusterIPTag publicIPTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    publicIPTag = IPTag.DeserializeIPTag(property.Value, options);
+                    publicIPTag = HDInsightClusterIPTag.DeserializeHDInsightClusterIPTag(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

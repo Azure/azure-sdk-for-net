@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="privateLink"> Indicates whether or not private link is enabled. </param>
         /// <param name="publicIPTag"> Gets or sets the IP tag for the public IPs created along with the HDInsight Clusters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterNetworkProperties(OutboundDependenciesManagedType? outboundDependenciesManagedType, HDInsightResourceProviderConnection? resourceProviderConnection, HDInsightPrivateLinkState? privateLink, IPTag publicIPTag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HDInsightClusterNetworkProperties(OutboundDependenciesManagedType? outboundDependenciesManagedType, HDInsightResourceProviderConnection? resourceProviderConnection, HDInsightPrivateLinkState? privateLink, HDInsightClusterIPTag publicIPTag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OutboundDependenciesManagedType = outboundDependenciesManagedType;
             ResourceProviderConnection = resourceProviderConnection;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Indicates whether or not private link is enabled. </summary>
         public HDInsightPrivateLinkState? PrivateLink { get; set; }
         /// <summary> Gets or sets the IP tag for the public IPs created along with the HDInsight Clusters. </summary>
-        public IPTag PublicIPTag { get; set; }
+        public HDInsightClusterIPTag PublicIPTag { get; set; }
     }
 }

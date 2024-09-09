@@ -6,15 +6,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.HDInsight.Models;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using NUnit.Framework;
-using Azure.Core;
-using IPTag = Azure.ResourceManager.HDInsight.Models.IPTag;
 
 namespace Azure.ResourceManager.HDInsight.Tests
 {
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             {
                 ResourceProviderConnection = HDInsightResourceProviderConnection.Outbound,
                 PrivateLink = HDInsightPrivateLinkState.Enabled,
-                PublicIPTag = new IPTag("FirstPartyUsage","HDInsight")
+                PublicIPTag = new HDInsightClusterIPTag("FirstPartyUsage","HDInsight")
             };
 
             foreach (var role in properties.ComputeProfile.Roles)
@@ -583,7 +582,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.StorageAccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName);
             properties.NetworkProperties = new HDInsightClusterNetworkProperties()
             {
-                PublicIPTag = new IPTag("FirstPartyUsage","/HDInsight")
+                PublicIPTag = new HDInsightClusterIPTag("FirstPartyUsage","/HDInsight")
             };
 
             var data = new HDInsightClusterCreateOrUpdateContent()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> Contains the IpTag associated with the public IP address. </summary>
-    public partial class IPTag
+    public partial class HDInsightClusterIPTag
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterIPTag"/>. </summary>
         /// <param name="ipTagType"> Gets or sets the ipTag type: Example FirstPartyUsage. </param>
         /// <param name="tag"> Gets or sets value of the IpTag associated with the public IP. Example HDInsight, SQL, Storage etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipTagType"/> or <paramref name="tag"/> is null. </exception>
-        public IPTag(string ipTagType, string tag)
+        public HDInsightClusterIPTag(string ipTagType, string tag)
         {
             Argument.AssertNotNull(ipTagType, nameof(ipTagType));
             Argument.AssertNotNull(tag, nameof(tag));
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.HDInsight.Models
             Tag = tag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterIPTag"/>. </summary>
         /// <param name="ipTagType"> Gets or sets the ipTag type: Example FirstPartyUsage. </param>
         /// <param name="tag"> Gets or sets value of the IpTag associated with the public IP. Example HDInsight, SQL, Storage etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPTag(string ipTagType, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HDInsightClusterIPTag(string ipTagType, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPTagType = ipTagType;
             Tag = tag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPTag"/> for deserialization. </summary>
-        internal IPTag()
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterIPTag"/> for deserialization. </summary>
+        internal HDInsightClusterIPTag()
         {
         }
 

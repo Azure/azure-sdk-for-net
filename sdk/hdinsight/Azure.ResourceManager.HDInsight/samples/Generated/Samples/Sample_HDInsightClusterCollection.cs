@@ -1594,7 +1594,7 @@ EnableSecureChannel = true,
                     {
                         ResourceProviderConnection = HDInsightResourceProviderConnection.Outbound,
                         PrivateLink = HDInsightPrivateLinkState.Enabled,
-                        PublicIPTag = new IPTag("FirstPartyUsage", "/<TagName>"),
+                        PublicIPTag = new HDInsightClusterIPTag("FirstPartyUsage", "/<TagName>"),
                     },
                 },
             };
