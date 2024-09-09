@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -126,6 +128,86 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterAddonProfile(enabled, config ?? new ChangeTrackingDictionary<string, string>(), identity, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  enabled: ");
+                var boolValue = IsEnabled == true ? "true" : "false";
+                builder.AppendLine($"{boolValue}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Config), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  config: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Config))
+                {
+                    if (Config.Any())
+                    {
+                        builder.Append("  config: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Config)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedClusterAddonProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAddonProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -134,6 +216,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support writing '{options.Format}' format.");
             }

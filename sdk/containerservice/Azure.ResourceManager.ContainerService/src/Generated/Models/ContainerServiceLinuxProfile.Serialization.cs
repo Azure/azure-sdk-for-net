@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -93,6 +94,62 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ContainerServiceLinuxProfile(adminUsername, ssh, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminUsername), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  adminUsername: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdminUsername))
+                {
+                    builder.Append("  adminUsername: ");
+                    if (AdminUsername.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdminUsername}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdminUsername}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SshPublicKeys", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ssh: ");
+                builder.AppendLine("{");
+                builder.Append("    publicKeys: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Ssh))
+                {
+                    builder.Append("  ssh: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Ssh, options, 2, false, "  ssh: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerServiceLinuxProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceLinuxProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +158,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceLinuxProfile)} does not support writing '{options.Format}' format.");
             }

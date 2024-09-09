@@ -22,26 +22,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningTargetUtilizationScaleSettings"/>. </summary>
         /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="maxInstances"> The maximum number of instances that the deployment can scale to. The quota will be reserved for max_instances. </param>
-        /// <param name="minInstances"> The minimum number of instances to always be present. </param>
         /// <param name="pollingInterval"> The polling interval in ISO 8691 format. Only supports duration with precision as low as Seconds. </param>
         /// <param name="targetUtilizationPercentage"> Target CPU usage for the autoscaler. </param>
-        internal MachineLearningTargetUtilizationScaleSettings(ScaleType scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxInstances, int? minInstances, TimeSpan? pollingInterval, int? targetUtilizationPercentage) : base(scaleType, serializedAdditionalRawData)
+        /// <param name="minInstances"> The minimum number of instances to always be present. </param>
+        /// <param name="maxInstances"> The maximum number of instances that the deployment can scale to. The quota will be reserved for max_instances. </param>
+        internal MachineLearningTargetUtilizationScaleSettings(ScaleType scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan? pollingInterval, int? targetUtilizationPercentage, int? minInstances, int? maxInstances) : base(scaleType, serializedAdditionalRawData)
         {
-            MaxInstances = maxInstances;
-            MinInstances = minInstances;
             PollingInterval = pollingInterval;
             TargetUtilizationPercentage = targetUtilizationPercentage;
+            MinInstances = minInstances;
+            MaxInstances = maxInstances;
             ScaleType = scaleType;
         }
 
-        /// <summary> The maximum number of instances that the deployment can scale to. The quota will be reserved for max_instances. </summary>
-        public int? MaxInstances { get; set; }
-        /// <summary> The minimum number of instances to always be present. </summary>
-        public int? MinInstances { get; set; }
         /// <summary> The polling interval in ISO 8691 format. Only supports duration with precision as low as Seconds. </summary>
+        [WirePath("pollingInterval")]
         public TimeSpan? PollingInterval { get; set; }
         /// <summary> Target CPU usage for the autoscaler. </summary>
+        [WirePath("targetUtilizationPercentage")]
         public int? TargetUtilizationPercentage { get; set; }
+        /// <summary> The minimum number of instances to always be present. </summary>
+        [WirePath("minInstances")]
+        public int? MinInstances { get; set; }
+        /// <summary> The maximum number of instances that the deployment can scale to. The quota will be reserved for max_instances. </summary>
+        [WirePath("maxInstances")]
+        public int? MaxInstances { get; set; }
     }
 }

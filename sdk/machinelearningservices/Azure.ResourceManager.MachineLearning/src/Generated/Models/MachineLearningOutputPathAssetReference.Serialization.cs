@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,18 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobId))
-            {
-                if (JobId != null)
-                {
-                    writer.WritePropertyName("jobId"u8);
-                    writer.WriteStringValue(JobId);
-                }
-                else
-                {
-                    writer.WriteNull("jobId");
-                }
-            }
             if (Optional.IsDefined(Path))
             {
                 if (Path != null)
@@ -48,6 +37,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("path");
+                }
+            }
+            if (Optional.IsDefined(JobId))
+            {
+                if (JobId != null)
+                {
+                    writer.WritePropertyName("jobId"u8);
+                    writer.WriteStringValue(JobId);
+                }
+                else
+                {
+                    writer.WriteNull("jobId");
                 }
             }
             writer.WritePropertyName("referenceType"u8);
@@ -90,23 +91,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            ResourceIdentifier jobId = default;
             string path = default;
+            ResourceIdentifier jobId = default;
             ReferenceType referenceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        jobId = null;
-                        continue;
-                    }
-                    jobId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("path"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,6 +106,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     path = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("jobId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        jobId = null;
+                        continue;
+                    }
+                    jobId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("referenceType"u8))
@@ -128,7 +129,72 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningOutputPathAssetReference(referenceType, serializedAdditionalRawData, jobId, path);
+            return new MachineLearningOutputPathAssetReference(referenceType, serializedAdditionalRawData, path, jobId);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  path: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Path))
+                {
+                    builder.Append("  path: ");
+                    if (Path.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Path}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Path}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobId))
+                {
+                    builder.Append("  jobId: ");
+                    builder.AppendLine($"'{JobId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReferenceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  referenceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  referenceType: ");
+                builder.AppendLine($"'{ReferenceType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningOutputPathAssetReference>.Write(ModelReaderWriterOptions options)
@@ -139,6 +205,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support writing '{options.Format}' format.");
             }

@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> The configuration settings of the platform of ContainerApp Service Authentication/Authorization. </summary>
+        [WirePath("properties.platform")]
         public ContainerAppAuthPlatform Platform { get; set; }
         /// <summary> The configuration settings that determines the validation flow of users using  Service Authentication/Authorization. </summary>
+        [WirePath("properties.globalValidation")]
         public ContainerAppGlobalValidation GlobalValidation { get; set; }
         /// <summary> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </summary>
+        [WirePath("properties.identityProviders")]
         public ContainerAppIdentityProvidersConfiguration IdentityProviders { get; set; }
         /// <summary> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </summary>
+        [WirePath("properties.login")]
         public ContainerAppLogin Login { get; set; }
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization. </summary>
+        [WirePath("properties.httpSettings")]
         public ContainerAppHttpSettings HttpSettings { get; set; }
         /// <summary> The configuration settings of the secrets references of encryption key and signing key for ContainerApp Service Authentication/Authorization. </summary>
+        [WirePath("properties.encryptionSettings")]
         public EncryptionSettings EncryptionSettings { get; set; }
     }
 }

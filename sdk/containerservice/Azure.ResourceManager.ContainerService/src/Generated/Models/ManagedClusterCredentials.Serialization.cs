@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -102,6 +104,44 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterCredentials(kubeconfigs ?? new ChangeTrackingList<ManagedClusterCredential>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kubeconfigs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kubeconfigs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Kubeconfigs))
+                {
+                    if (Kubeconfigs.Any())
+                    {
+                        builder.Append("  kubeconfigs: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Kubeconfigs)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  kubeconfigs: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedClusterCredentials>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterCredentials>)this).GetFormatFromOptions(options) : options.Format;
@@ -110,6 +150,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterCredentials)} does not support writing '{options.Format}' format.");
             }

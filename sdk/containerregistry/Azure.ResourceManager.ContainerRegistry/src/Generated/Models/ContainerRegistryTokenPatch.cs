@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The resource ID of the scope map to which the token will be associated with. </summary>
+        [WirePath("properties.scopeMapId")]
         public ResourceIdentifier ScopeMapId { get; set; }
         /// <summary> The status of the token example enabled or disabled. </summary>
+        [WirePath("properties.status")]
         public ContainerRegistryTokenStatus? Status { get; set; }
         /// <summary> The credentials that can be used for authenticating the token. </summary>
+        [WirePath("properties.credentials")]
         public ContainerRegistryTokenCredentials Credentials { get; set; }
     }
 }

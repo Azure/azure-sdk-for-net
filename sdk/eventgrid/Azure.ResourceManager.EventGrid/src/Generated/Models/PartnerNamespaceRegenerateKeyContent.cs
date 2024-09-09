@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Key name to regenerate (key1 or key2). </summary>
+        [WirePath("keyName")]
         public string KeyName { get; }
     }
 }

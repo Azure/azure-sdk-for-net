@@ -31,8 +31,8 @@ steps:
         inputs:
           filePath: ${{ parameters.ScriptDirectory }}/Save-Package-Properties.ps1
           arguments: >
-            -PrDiff ${{ parameters.DiffDirectory }}/diff.json
-            -OutDirectory ${{ parameters.PackageInfoDirectory }}
+            -PrDiff '${{ parameters.DiffDirectory }}/diff.json'
+            -OutDirectory '${{ parameters.PackageInfoDirectory }}'
           pwsh: true
   - ${{ else }}:
       - task: Powershell@2
@@ -40,7 +40,7 @@ steps:
         inputs:
           filePath: ${{ parameters.ScriptDirectory }}/Save-Package-Properties.ps1
           arguments: >
-            -ServiceDirectory ${{parameters.ServiceDirectory}}
-            -OutDirectory ${{ parameters.PackageInfoDirectory }}
+            -ServiceDirectory '${{parameters.ServiceDirectory}}'
+            -OutDirectory '${{ parameters.PackageInfoDirectory }}'
             -AddDevVersion:$${{ eq(variables['SetDevVersion'],'true') }}
           pwsh: true
