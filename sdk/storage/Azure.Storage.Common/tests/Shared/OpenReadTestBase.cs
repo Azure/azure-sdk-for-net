@@ -662,25 +662,30 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             byte[] data0 = GetRandomBuffer(size);
             byte[] data1 = GetRandomBuffer(size);
-            byte[] expectedData = new byte[2 * size];
-            Array.Copy(data0, 0, expectedData, 0, size);
-            Array.Copy(data1, 0, expectedData, size, size);
+            byte[] expectedDataBeforeModify = new byte[size];
+            byte[] expectedDataAfterModify = new byte[size];
+            Array.Copy(data0, 0, expectedDataBeforeModify, 0, size);
+            Array.Copy(data1, 0, expectedDataAfterModify, 0, size);
 
             TResourceClient client = GetResourceClient(disposingContainer.Container);
             await StageDataAsync(client, new MemoryStream(data0));
 
             // Act
             Stream outputStream = await OpenReadAsyncOverload(client, allowModifications: true);
-            byte[] outputBytes = new byte[2 * size];
-            await outputStream.ReadAsync(outputBytes, 0, size);
+            byte[] outputBytesBeforeModify = new byte[size];
+            await outputStream.ReadAsync(outputBytesBeforeModify, 0, size);
 
             // Modify the blob.
             await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
 
-            await outputStream.ReadAsync(outputBytes, size, size);
+            byte[] outputBytesAfterModify = new byte[size];
+            byte[] emptyBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
 
             // Assert
-            TestHelper.AssertSequenceEqual(expectedData, outputBytes);
+            TestHelper.AssertSequenceEqual(expectedDataBeforeModify, outputBytesBeforeModify);
+            TestHelper.AssertSequenceEqual(expectedDataAfterModify, outputBytesAfterModify);
+            Assert.AreNotEqual(emptyBytes, outputBytesAfterModify);
         }
 
         [RecordedTest]
@@ -692,25 +697,30 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             byte[] data0 = GetRandomBuffer(size);
             byte[] data1 = GetRandomBuffer(size);
-            byte[] expectedData = new byte[2 * size];
-            Array.Copy(data0, 0, expectedData, 0, size);
-            Array.Copy(data1, 0, expectedData, size, size);
+            byte[] expectedDataBeforeModify = new byte[size];
+            byte[] expectedDataAfterModify = new byte[size];
+            Array.Copy(data0, 0, expectedDataBeforeModify, 0, size);
+            Array.Copy(data1, 0, expectedDataAfterModify, 0, size);
 
             TResourceClient client = GetResourceClient(disposingContainer.Container);
             await StageDataAsync(client, new MemoryStream(data0));
 
             // Act
             Stream outputStream = await OpenReadAsyncOverload(client, allowModifications: false);
-            byte[] outputBytes = new byte[2 * size];
-            await outputStream.ReadAsync(outputBytes, 0, size);
+            byte[] outputBytesBeforeModify = new byte[size];
+            await outputStream.ReadAsync(outputBytesBeforeModify, 0, size);
 
             // Modify the blob.
             await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
 
-            await outputStream.ReadAsync(outputBytes, size, size);
+            byte[] outputBytesAfterModify = new byte[size];
+            byte[] emptyBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
 
             // Assert
-            Assert.AreNotEqual(expectedData, outputBytes);
+            TestHelper.AssertSequenceEqual(expectedDataBeforeModify, outputBytesBeforeModify);
+            Assert.AreNotEqual(expectedDataAfterModify, outputBytesAfterModify);
+            TestHelper.AssertSequenceEqual(emptyBytes, outputBytesAfterModify);
         }
     }
 }
