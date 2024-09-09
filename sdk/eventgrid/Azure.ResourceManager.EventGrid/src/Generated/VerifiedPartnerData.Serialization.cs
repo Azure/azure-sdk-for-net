@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -235,6 +236,183 @@ namespace Azure.ResourceManager.EventGrid
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerRegistrationImmutableId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerRegistrationImmutableId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerRegistrationImmutableId))
+                {
+                    builder.Append("    partnerRegistrationImmutableId: ");
+                    builder.AppendLine($"'{PartnerRegistrationImmutableId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OrganizationName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    organizationName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OrganizationName))
+                {
+                    builder.Append("    organizationName: ");
+                    if (OrganizationName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OrganizationName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OrganizationName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerDisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerDisplayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerDisplayName))
+                {
+                    builder.Append("    partnerDisplayName: ");
+                    if (PartnerDisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PartnerDisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PartnerDisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerTopicDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerTopicDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerTopicDetails))
+                {
+                    builder.Append("    partnerTopicDetails: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PartnerTopicDetails, options, 4, false, "    partnerTopicDetails: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerDestinationDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerDestinationDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerDestinationDetails))
+                {
+                    builder.Append("    partnerDestinationDetails: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PartnerDestinationDetails, options, 4, false, "    partnerDestinationDetails: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<VerifiedPartnerData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VerifiedPartnerData>)this).GetFormatFromOptions(options) : options.Format;
@@ -243,6 +421,8 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VerifiedPartnerData)} does not support writing '{options.Format}' format.");
             }

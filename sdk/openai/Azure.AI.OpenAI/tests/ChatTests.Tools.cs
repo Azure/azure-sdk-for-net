@@ -1,12 +1,14 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Chat;
-using Azure.Core.TestFramework;
 using OpenAI.Chat;
+using OpenAI.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests
 {
@@ -40,8 +42,8 @@ namespace Azure.AI.OpenAI.Tests
 
         private class TemperatureFunctionRequestArguments
         {
-            public string LocationName { get; set; }
-            public string Date { get; set; }
+            public string? LocationName { get; set; }
+            public string? Date { get; set; }
         }
 
         public enum ToolChoiceTestType
@@ -129,7 +131,8 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(toolCall.Kind, Is.EqualTo(ChatToolCallKind.Function));
             Assert.That(toolCall.FunctionName, Is.EqualTo(TOOL_TEMPERATURE.FunctionName));
             Assert.That(toolCall.FunctionArguments, Is.Not.Null);
-            var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(toolCall.FunctionArguments, SERIALIZER_OPTIONS);
+            var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(toolCall.FunctionArguments, SERIALIZER_OPTIONS)!;
+            Assert.That(parsedArgs, Is.Not.Null);
             Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
             Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
 
@@ -179,8 +182,8 @@ namespace Azure.AI.OpenAI.Tests
             StringBuilder content = new();
             bool foundPromptFilter = false;
             bool foundResponseFilter = false;
-            string toolId = null;
-            string toolName = null;
+            string? toolId = null;
+            string? toolName = null;
             StringBuilder toolArgs = new();
 
             ChatClient client = GetTestClient();
@@ -251,9 +254,7 @@ namespace Azure.AI.OpenAI.Tests
                 }
             };
 
-            AsyncCollectionResult<StreamingChatCompletionUpdate> response = SyncOrAsync(client,
-                c => c.CompleteChatStreaming(messages, requestOptions),
-                c => c.CompleteChatStreamingAsync(messages, requestOptions));
+            AsyncCollectionResult<StreamingChatCompletionUpdate> response = client.CompleteChatStreamingAsync(messages, requestOptions);
             Assert.That(response, Is.Not.Null);
 
             await foreach (StreamingChatCompletionUpdate update in response)
@@ -269,7 +270,8 @@ namespace Azure.AI.OpenAI.Tests
                 Assert.That(toolId, Is.Not.Null);
                 Assert.That(toolName, Is.Not.Null);
                 Assert.That(toolArgs, Has.Length.GreaterThan(0));
-                var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(toolArgs.ToString(), SERIALIZER_OPTIONS);
+                var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(toolArgs.ToString(), SERIALIZER_OPTIONS)!;
+                Assert.That(parsedArgs, Is.Not.Null);
                 Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
                 Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
 
@@ -304,9 +306,7 @@ namespace Azure.AI.OpenAI.Tests
                 toolName = null;
                 toolArgs.Clear();
 
-                response = SyncOrAsync(client,
-                    c => c.CompleteChatStreaming(messages, requestOptions),
-                    c => c.CompleteChatStreamingAsync(messages, requestOptions));
+                response = client.CompleteChatStreamingAsync(messages, requestOptions);
                 Assert.That(response, Is.Not.Null);
 
                 await foreach (StreamingChatCompletionUpdate update in response)

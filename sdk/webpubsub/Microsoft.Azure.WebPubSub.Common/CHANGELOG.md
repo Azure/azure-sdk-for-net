@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2024-09-04)
+
+### Features Added
+- Support MQTT event handlers.
+- Add `Content` field in `WebPubSubClientCertificate` to carry over client certificate content.
 
 ## 1.2.0 (2022-10-31)
 

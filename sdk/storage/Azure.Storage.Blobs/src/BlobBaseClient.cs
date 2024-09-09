@@ -2994,11 +2994,14 @@ namespace Azure.Storage.Blobs.Specialized
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => OpenRead(
-                    position,
-                    bufferSize,
-                    allowBlobModifications ? new BlobRequestConditions() : null,
-                    cancellationToken);
+                => OpenReadInternal(
+                    position: position,
+                    bufferSize: bufferSize,
+                    conditions: allowBlobModifications ? new BlobRequestConditions() : null,
+                    allowModifications: allowBlobModifications,
+                    transferValidationOverride: default,
+                    async: false,
+                    cancellationToken: cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Opens a stream for reading from the blob.  The stream will only download
@@ -3072,12 +3075,14 @@ namespace Azure.Storage.Blobs.Specialized
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => await OpenReadAsync(
-                    position,
-                    bufferSize,
-                    allowBlobModifications ? new BlobRequestConditions() : null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                => await OpenReadInternal(
+                    position: position,
+                    bufferSize: bufferSize,
+                    conditions: allowBlobModifications ? new BlobRequestConditions() : null,
+                    allowModifications: allowBlobModifications,
+                    transferValidationOverride: default,
+                    async: true,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Opens a stream for reading from the blob.  The stream will only download

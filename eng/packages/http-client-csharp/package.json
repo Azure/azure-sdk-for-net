@@ -1,0 +1,43 @@
+{
+  "name": "@azure-typespec/http-client-csharp",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/emitter/index.js",
+  "exports": {
+    ".": "./dist/emitter/index.js"
+  },
+  "scripts": {
+    "clean": "rimraf ./dist ./emitter/temp && dotnet clean ./generator",
+    "build:emitter": "tsc -p ./emitter/tsconfig.build.json",
+    "build:generator": "dotnet build ./generator",
+    "build": "npm run build:emitter && npm run build:generator && copyfiles -u 5 ./node_modules/@typespec/http-client-csharp/dist/generator/Microsoft.Generator.CSharp.runtimeconfig.json ./dist/generator",
+    "test:emitter": "vitest run -c ./emitter/vitest.config.ts",
+    "test:generator": "dotnet test ./generator",
+    "test": "npm run test:emitter && npm run test:generator",
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix",
+    "prettier:fix": "prettier --write --config .prettierrc.json ./**/*.ts",
+    "prettier": "prettier --check --config .prettierrc.json ./**/*.ts"
+  },
+  "files": [
+    "dist/**"
+  ],
+  "dependencies": {
+    "@typespec/http-client-csharp": "latest"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "@types/node": "~18.13.0",
+    "@types/prettier": "^2.6.3",
+    "@vitest/coverage-v8": "^1.4.0",
+    "@vitest/ui": "^1.4.0",
+    "c8": "^9.1.0",
+    "rimraf": "~5.0.5",
+    "typescript": "~5.4.3",
+    "vitest": "^1.4.0",
+    "copyfiles": "^2.4.1",
+    "eslint": "^8.57.0",
+    "prettier": "~3.0.3",
+    "typescript-eslint": "^7.8.0"
+  }
+}

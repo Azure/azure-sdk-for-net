@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Mesh revision profile properties for a mesh. </summary>
         internal MeshRevisionProfileProperties Properties { get; set; }
         /// <summary> Gets the mesh revisions. </summary>
+        [WirePath("properties.meshRevisions")]
         public IList<MeshRevision> MeshRevisions
         {
             get

@@ -5,12 +5,13 @@
       Azure OpenAI's official extension package for using OpenAI's .NET library with the Azure OpenAI Service.
     </Description>
     <AssemblyTitle>Azure.AI.OpenAI Client Library</AssemblyTitle>
-    <Version>2.0.0-beta.4</Version>
+    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionSuffix>beta.5</VersionSuffix>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001</NoWarn>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>preview</LangVersion>
     <Nullable>disable</Nullable>
@@ -56,7 +57,7 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="OpenAI" VersionOverride="2.0.0-beta.9" />
+        <PackageReference Include="OpenAI" VersionOverride="2.0.0-beta.11" />
       </ItemGroup>
     </Otherwise>
   </Choose>

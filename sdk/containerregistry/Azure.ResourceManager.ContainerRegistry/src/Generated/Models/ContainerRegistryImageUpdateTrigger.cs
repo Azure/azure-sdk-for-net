@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The unique ID of the trigger. </summary>
+        [WirePath("id")]
         public Guid? Id { get; set; }
         /// <summary> The timestamp when the image update happened. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; set; }
         /// <summary> The list of image updates that caused the build. </summary>
+        [WirePath("images")]
         public IList<ContainerRegistryImageDescriptor> Images { get; }
     }
 }

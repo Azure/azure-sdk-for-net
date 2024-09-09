@@ -83,6 +83,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Hub { get { throw null; } set { } }
+        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
+        public string UserId { get { throw null; } set { } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public partial class SocketIONegotiationResult

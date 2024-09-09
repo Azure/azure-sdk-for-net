@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Name of the user. </summary>
+        [WirePath("userName")]
         public string UserName { get; }
         /// <summary> Uniquely identifies user' Azure Active Directory organization. </summary>
+        [WirePath("userOrgId")]
         public string UserOrgId { get; }
         /// <summary> Uniquely identifies the user within his/her organization. </summary>
+        [WirePath("userId")]
         public string UserId { get; }
     }
 }

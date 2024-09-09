@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics;
 
@@ -297,6 +298,23 @@ public static class CollectionExtensions
         await foreach (T item in asyncEnumerable.WithCancellation(token))
         {
             list.Add(item);
+        }
+        return list;
+    }
+
+    /// <summary>
+    /// Converts an async enumerable of pages to a <see cref="List{T}"/> asynchronously.
+    /// </summary>
+    /// <typeparam name="T">The type of the elements in the enumerable.</typeparam>
+    /// <param name="pageAsyncEnumerable">The <see cref="IAsyncEnumerable{T}"/> to convert.</param>
+    /// <param name="token">The cancellation token.</param>
+    /// <returns>Asynchronous task to do the conversion.</returns>
+    public static async Task<List<T>> ToListAsync<T>(this IAsyncEnumerable<PageResult<T>> pageAsyncEnumerable, CancellationToken token = default)
+    {
+        List<T> list = new List<T>();
+        await foreach(PageResult<T> page in pageAsyncEnumerable.WithCancellation(token))
+        {
+            list.AddRange(page.Values);
         }
         return list;
     }

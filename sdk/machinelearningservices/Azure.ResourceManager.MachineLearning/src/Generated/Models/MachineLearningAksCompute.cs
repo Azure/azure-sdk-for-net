@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> AKS properties. </summary>
+        [WirePath("properties")]
         public MachineLearningAksComputeProperties Properties { get; set; }
     }
 }
