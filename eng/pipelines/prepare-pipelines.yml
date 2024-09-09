@@ -5,3 +5,5 @@ variables:
 
 extends:
   template: /eng/common/pipelines/templates/jobs/prepare-pipelines.yml
+  parameters:
+    Repository: Azure/azure-sdk-for-net
