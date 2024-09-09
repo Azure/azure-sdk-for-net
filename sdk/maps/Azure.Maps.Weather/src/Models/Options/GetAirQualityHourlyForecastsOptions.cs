@@ -16,7 +16,7 @@ namespace Azure.Maps.Weather.Models.Options
         public WeatherLanguage Language { get; set; }
         /// <summary> Specifies for how long the responses are returned. </summary>
         public int? Duration { get; set; }
-        /// <summary> tmp </summary>
+        /// <summary> Boolean value that returns detailed information about each pollutant. </summary>
         public bool? IncludePollutantDetails { get; set; }
     }
 }

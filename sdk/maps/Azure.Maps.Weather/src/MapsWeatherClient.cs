@@ -188,7 +188,7 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> Get hourly forecast options to use. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -224,9 +224,8 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> Get Minute forecast options to use. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// 
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<MinuteForecastResult>> GetMinuteForecastAsync(GetMinuteForecastOptions options, CancellationToken cancellationToken = default)
@@ -261,9 +260,8 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> Get Minute forecast options to use. </param>
+        /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// 
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response<MinuteForecastResult> GetMinuteForecast(GetMinuteForecastOptions options, CancellationToken cancellationToken = default)
@@ -387,7 +385,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetCurrentConditionsAsync("json", coord, options.Unit, options.Details ? "true" : "false", options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
+                return await restClient.GetCurrentConditionsAsync("json", coord, options.Unit, options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -423,7 +421,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetCurrentConditions("json", coord, options.Unit, options.Details ? "true" : "false", options.Duration, options.Language.ToString(), cancellationToken);
+                return restClient.GetCurrentConditions("json", coord, options.Unit, options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), options.Duration, options.Language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -629,7 +627,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetSevereWeatherAlertsAsync("json", coord, options.Language.ToString(), options.Details ? "true" : "false", cancellationToken).ConfigureAwait(false);
+                return await restClient.GetSevereWeatherAlertsAsync("json", coord, options.Language.ToString(), options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -665,7 +663,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetSevereWeatherAlerts("json", coord, options.Language.ToString(), options.Details ? "true" : "false", cancellationToken);
+                return restClient.GetSevereWeatherAlerts("json", coord, options.Language.ToString(), options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), cancellationToken);
             }
             catch (Exception e)
             {

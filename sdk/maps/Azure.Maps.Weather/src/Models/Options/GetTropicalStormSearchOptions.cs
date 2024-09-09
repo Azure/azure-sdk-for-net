@@ -10,11 +10,11 @@ namespace Azure.Maps.Weather.Models.Options
     /// <summary> Options. </summary>
     public class GetTropicalStormSearchOptions
     {
-        /// <summary> tmp </summary>
+        /// <summary> Year of the cyclone(s). </summary>
         public int Year { get; set; }
-        /// <summary> tmp </summary>
+        /// <summary> Basin identifier. Allowed values: "AL" | "EP" | "SI" | "NI" | "CP" | "NP" | "SP". </summary>
         public string BasinId { get; set; }
-        /// <summary> tmp </summary>
-        public int? GovernmentStormId { get; set; }
+        /// <summary> Government storm Id. </summary>
+        public int GovernmentStormId { get; set; }
     }
 }

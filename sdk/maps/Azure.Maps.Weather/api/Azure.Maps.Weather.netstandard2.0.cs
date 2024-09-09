@@ -1242,7 +1242,7 @@ namespace Azure.Maps.Weather.Models.Options
     {
         public GetCurrentConditionsOptions() { }
         public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
-        public bool Details { get { throw null; } set { } }
+        public bool? Details { get { throw null; } set { } }
         public int? Duration { get { throw null; } set { } }
         public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
         public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
@@ -1302,7 +1302,6 @@ namespace Azure.Maps.Weather.Models.Options
         public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
         public int? Interval { get { throw null; } set { } }
         public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
-        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
     }
     public partial class GetQuarterDayForecastOptions
     {
@@ -1316,7 +1315,7 @@ namespace Azure.Maps.Weather.Models.Options
     {
         public GetSevereWeatherAlertsOptions() { }
         public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
-        public bool Details { get { throw null; } set { } }
+        public bool? Details { get { throw null; } set { } }
         public Azure.Maps.Weather.WeatherLanguage Language { get { throw null; } set { } }
     }
     public partial class GetTropicalStormForecastOptions
@@ -1345,7 +1344,7 @@ namespace Azure.Maps.Weather.Models.Options
     {
         public GetTropicalStormSearchOptions() { }
         public string BasinId { get { throw null; } set { } }
-        public int? GovernmentStormId { get { throw null; } set { } }
+        public int GovernmentStormId { get { throw null; } set { } }
         public int Year { get { throw null; } set { } }
     }
 }
