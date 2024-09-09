@@ -114,60 +114,88 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Sysctl setting net.core.somaxconn. </summary>
+        [WirePath("netCoreSomaxconn")]
         public int? NetCoreSomaxconn { get; set; }
         /// <summary> Sysctl setting net.core.netdev_max_backlog. </summary>
+        [WirePath("netCoreNetdevMaxBacklog")]
         public int? NetCoreNetdevMaxBacklog { get; set; }
         /// <summary> Sysctl setting net.core.rmem_default. </summary>
+        [WirePath("netCoreRmemDefault")]
         public int? NetCoreRmemDefault { get; set; }
         /// <summary> Sysctl setting net.core.rmem_max. </summary>
+        [WirePath("netCoreRmemMax")]
         public int? NetCoreRmemMax { get; set; }
         /// <summary> Sysctl setting net.core.wmem_default. </summary>
+        [WirePath("netCoreWmemDefault")]
         public int? NetCoreWmemDefault { get; set; }
         /// <summary> Sysctl setting net.core.wmem_max. </summary>
+        [WirePath("netCoreWmemMax")]
         public int? NetCoreWmemMax { get; set; }
         /// <summary> Sysctl setting net.core.optmem_max. </summary>
+        [WirePath("netCoreOptmemMax")]
         public int? NetCoreOptmemMax { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_max_syn_backlog. </summary>
+        [WirePath("netIpv4TcpMaxSynBacklog")]
         public int? NetIPv4TcpMaxSynBacklog { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_max_tw_buckets. </summary>
+        [WirePath("netIpv4TcpMaxTwBuckets")]
         public int? NetIPv4TcpMaxTwBuckets { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_fin_timeout. </summary>
+        [WirePath("netIpv4TcpFinTimeout")]
         public int? NetIPv4TcpFinTimeout { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_keepalive_time. </summary>
+        [WirePath("netIpv4TcpKeepaliveTime")]
         public int? NetIPv4TcpKeepaliveTime { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_keepalive_probes. </summary>
+        [WirePath("netIpv4TcpKeepaliveProbes")]
         public int? NetIPv4TcpKeepaliveProbes { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_keepalive_intvl. </summary>
+        [WirePath("netIpv4TcpkeepaliveIntvl")]
         public int? NetIPv4TcpKeepaliveIntvl { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_tw_reuse. </summary>
+        [WirePath("netIpv4TcpTwReuse")]
         public bool? NetIPv4TcpTwReuse { get; set; }
         /// <summary> Sysctl setting net.ipv4.ip_local_port_range. </summary>
+        [WirePath("netIpv4IpLocalPortRange")]
         public string NetIPv4IPLocalPortRange { get; set; }
         /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </summary>
+        [WirePath("netIpv4NeighDefaultGcThresh1")]
         public int? NetIPv4NeighDefaultGcThresh1 { get; set; }
         /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh2. </summary>
+        [WirePath("netIpv4NeighDefaultGcThresh2")]
         public int? NetIPv4NeighDefaultGcThresh2 { get; set; }
         /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh3. </summary>
+        [WirePath("netIpv4NeighDefaultGcThresh3")]
         public int? NetIPv4NeighDefaultGcThresh3 { get; set; }
         /// <summary> Sysctl setting net.netfilter.nf_conntrack_max. </summary>
+        [WirePath("netNetfilterNfConntrackMax")]
         public int? NetNetfilterNfConntrackMax { get; set; }
         /// <summary> Sysctl setting net.netfilter.nf_conntrack_buckets. </summary>
+        [WirePath("netNetfilterNfConntrackBuckets")]
         public int? NetNetfilterNfConntrackBuckets { get; set; }
         /// <summary> Sysctl setting fs.inotify.max_user_watches. </summary>
+        [WirePath("fsInotifyMaxUserWatches")]
         public int? FsInotifyMaxUserWatches { get; set; }
         /// <summary> Sysctl setting fs.file-max. </summary>
+        [WirePath("fsFileMax")]
         public int? FsFileMax { get; set; }
         /// <summary> Sysctl setting fs.aio-max-nr. </summary>
+        [WirePath("fsAioMaxNr")]
         public int? FsAioMaxNr { get; set; }
         /// <summary> Sysctl setting fs.nr_open. </summary>
+        [WirePath("fsNrOpen")]
         public int? FsNrOpen { get; set; }
         /// <summary> Sysctl setting kernel.threads-max. </summary>
+        [WirePath("kernelThreadsMax")]
         public int? KernelThreadsMax { get; set; }
         /// <summary> Sysctl setting vm.max_map_count. </summary>
+        [WirePath("vmMaxMapCount")]
         public int? VmMaxMapCount { get; set; }
         /// <summary> Sysctl setting vm.swappiness. </summary>
+        [WirePath("vmSwappiness")]
         public int? VmSwappiness { get; set; }
         /// <summary> Sysctl setting vm.vfs_cache_pressure. </summary>
+        [WirePath("vmVfsCachePressure")]
         public int? VmVfsCachePressure { get; set; }
     }
 }

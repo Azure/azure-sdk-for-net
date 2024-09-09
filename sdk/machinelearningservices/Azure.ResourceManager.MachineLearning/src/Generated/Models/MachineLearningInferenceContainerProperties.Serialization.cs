@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -122,6 +123,66 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningInferenceContainerProperties(livenessRoute, readinessRoute, scoringRoute, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LivenessRoute), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  livenessRoute: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LivenessRoute))
+                {
+                    builder.Append("  livenessRoute: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LivenessRoute, options, 2, false, "  livenessRoute: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReadinessRoute), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  readinessRoute: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReadinessRoute))
+                {
+                    builder.Append("  readinessRoute: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ReadinessRoute, options, 2, false, "  readinessRoute: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScoringRoute), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scoringRoute: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScoringRoute))
+                {
+                    builder.Append("  scoringRoute: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ScoringRoute, options, 2, false, "  scoringRoute: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningInferenceContainerProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningInferenceContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +191,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support writing '{options.Format}' format.");
             }

@@ -10,15 +10,5 @@ namespace Azure.AI.OpenAI.Chat
     /// <summary> The PineconeChatDataSource. </summary>
     public partial class PineconeChatDataSource : AzureChatDataSource
     {
-        /// <summary> Initializes a new instance of <see cref="PineconeChatDataSource"/>. </summary>
-        /// <param name="internalParameters"> The parameter information to control the use of the Pinecone data source. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="internalParameters"/> is null. </exception>
-        internal PineconeChatDataSource(InternalPineconeChatDataSourceParameters internalParameters)
-        {
-            Argument.AssertNotNull(internalParameters, nameof(internalParameters));
-
-            Type = "pinecone";
-            InternalParameters = internalParameters;
-        }
     }
 }

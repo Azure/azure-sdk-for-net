@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentConfiguration"/>. </summary>
         /// <param name="scaleUnits"> Scale units will contains list of deployment data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scaleUnits"/> is null. </exception>
-        public HciClusterDeploymentConfiguration(IEnumerable<HciClusterScaleUnits> scaleUnits)
+        public HciClusterDeploymentConfiguration(IEnumerable<DeploymentSettingScaleUnits> scaleUnits)
         {
             Argument.AssertNotNull(scaleUnits, nameof(scaleUnits));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="version"> deployment template version. </param>
         /// <param name="scaleUnits"> Scale units will contains list of deployment data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterDeploymentConfiguration(string version, IList<HciClusterScaleUnits> scaleUnits, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciClusterDeploymentConfiguration(string version, IList<DeploymentSettingScaleUnits> scaleUnits, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             ScaleUnits = scaleUnits;
@@ -77,6 +77,6 @@ namespace Azure.ResourceManager.Hci.Models
         public string Version { get; set; }
         /// <summary> Scale units will contains list of deployment data. </summary>
         [WirePath("scaleUnits")]
-        public IList<HciClusterScaleUnits> ScaleUnits { get; }
+        public IList<DeploymentSettingScaleUnits> ScaleUnits { get; }
     }
 }

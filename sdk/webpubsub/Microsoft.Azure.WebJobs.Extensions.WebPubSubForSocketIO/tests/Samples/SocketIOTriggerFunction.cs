@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests.Samples
             ILogger log)
         {
             log.LogInformation("Running trigger for: new message");
-            await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "new message", new[] { new { message = request.Parameters } }, new[] { request.SocketId }));
+            await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("new message", new[] { new { message = request.Parameters } }, new[] { request.SocketId }));
         }
     }
     #endregion

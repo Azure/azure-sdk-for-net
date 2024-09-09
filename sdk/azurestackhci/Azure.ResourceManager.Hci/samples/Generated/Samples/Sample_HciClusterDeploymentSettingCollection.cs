@@ -195,9 +195,9 @@ new ResourceIdentifier("/subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/reso
 },
                 DeploymentMode = EceDeploymentMode.Deploy,
                 OperationType = HciClusterOperationType.ClusterProvisioning,
-                DeploymentConfiguration = new HciClusterDeploymentConfiguration(new HciClusterScaleUnits[]
+                DeploymentConfiguration = new HciClusterDeploymentConfiguration(new DeploymentSettingScaleUnits[]
             {
-new HciClusterScaleUnits(new HciClusterDeploymentInfo()
+new DeploymentSettingScaleUnits(new HciClusterDeploymentInfo()
 {
 SecuritySettings = new HciClusterDeploymentSecuritySettings()
 {
@@ -212,7 +212,7 @@ IsBitlockerBootVolumeEnabled = true,
 AreBitlockerDataVolumesEnabled = true,
 IsWdacEnforced = true,
 },
-Observability = new HciClusterObservability()
+Observability = new DeploymentSettingObservability()
 {
 IsStreamingDataClientEnabled = true,
 IsEULocation = false,
@@ -231,13 +231,13 @@ NamingPrefix = "ms169",
 DomainFqdn = "ASZ1PLab8.nttest.microsoft.com",
 InfrastructureNetwork =
 {
-new HciClusterInfrastructureNetwork()
+new DeploymentSettingInfrastructureNetwork()
 {
 SubnetMask = "255.255.248.0",
 Gateway = "255.255.248.0",
 IPPools =
 {
-new HciClusterIPPools()
+new DeploymentSettingIPPools()
 {
 StartingAddress = "10.57.48.60",
 EndingAddress = "10.57.48.66",
@@ -251,21 +251,21 @@ DnsServers =
 },
 PhysicalNodes =
 {
-new HciClusterPhysicalNodes()
+new DeploymentSettingPhysicalNodes()
 {
 Name = "ms169host",
 IPv4Address = "10.57.51.224",
-},new HciClusterPhysicalNodes()
+},new DeploymentSettingPhysicalNodes()
 {
 Name = "ms154host",
 IPv4Address = "10.57.53.236",
 }
 },
-HostNetwork = new HciClusterHostNetwork()
+HostNetwork = new DeploymentSettingHostNetwork()
 {
 Intents =
 {
-new HciClusterIntents()
+new DeploymentSettingIntents()
 {
 Name = "Compute_Management",
 TrafficType =
@@ -277,20 +277,20 @@ Adapter =
 "Port2"
 },
 OverrideVirtualSwitchConfiguration = false,
-VirtualSwitchConfigurationOverrides = new VirtualSwitchConfigurationOverrides()
+VirtualSwitchConfigurationOverrides = new DeploymentSettingVirtualSwitchConfigurationOverrides()
 {
 EnableIov = "True",
 LoadBalancingAlgorithm = "HyperVPort",
 },
 OverrideQosPolicy = false,
-QosPolicyOverrides = new HciClusterQosPolicyOverrides()
+QosPolicyOverrides = new DeploymentSettingQosPolicyOverrides()
 {
 PriorityValue8021ActionCluster = "7",
 PriorityValue8021ActionSmb = "3",
 BandwidthPercentageSmb = "50",
 },
 OverrideAdapterProperty = false,
-AdapterPropertyOverrides = new AdapterPropertyOverrides()
+AdapterPropertyOverrides = new DeploymentSettingAdapterPropertyOverrides()
 {
 JumboPacket = "1514",
 NetworkDirect = "Enabled",
@@ -300,14 +300,14 @@ NetworkDirectTechnology = "iWARP",
 },
 StorageNetworks =
 {
-new HciClusterStorageNetworks()
+new DeploymentSettingStorageNetworks()
 {
 Name = "Storage1Network",
 NetworkAdapterName = "Port3",
 VlanId = "5",
 StorageAdapterIPInfo =
 {
-new HciClusterStorageAdapterIPInfo()
+new DeploymentSettingStorageAdapterIPInfo()
 {
 PhysicalNode = "string",
 IPv4Address = "10.57.48.60",
@@ -319,7 +319,7 @@ SubnetMask = "255.255.248.0",
 StorageConnectivitySwitchless = true,
 EnableStorageAutoIP = false,
 },
-SdnIntegrationNetworkController = new HciClusterNetworkController()
+SdnIntegrationNetworkController = new DeploymentSettingNetworkController()
 {
 MacAddressPoolStart = "00-0D-3A-1B-C7-21",
 MacAddressPoolStop = "00-0D-3A-1B-C7-29",

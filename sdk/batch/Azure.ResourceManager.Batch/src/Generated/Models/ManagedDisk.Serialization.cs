@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class ManagedDisk : IUtf8JsonSerializable, IJsonModel<ManagedDisk>
+    public partial class ManagedDisk : IUtf8JsonSerializable, IJsonModel<ManagedDisk>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,6 +75,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchStorageAccountType? storageAccountType = default;
+            VmDiskSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,13 +89,22 @@ namespace Azure.ResourceManager.Batch.Models
                     storageAccountType = property.Value.GetString().ToBatchStorageAccountType();
                     continue;
                 }
+                if (property.NameEquals("securityProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityProfile = VmDiskSecurityProfile.DeserializeVmDiskSecurityProfile(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedDisk(storageAccountType, serializedAdditionalRawData);
+            return new ManagedDisk(storageAccountType, securityProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDisk>.Write(ModelReaderWriterOptions options)

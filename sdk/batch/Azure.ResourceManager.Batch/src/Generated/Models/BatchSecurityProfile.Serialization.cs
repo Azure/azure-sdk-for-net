@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
-                writer.WriteStringValue(SecurityType.Value.ToString());
+                writer.WriteStringValue(SecurityType.Value.ToSerialString());
             }
             if (Optional.IsDefined(EncryptionAtHost))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    securityType = new BatchSecurityType(property.Value.GetString());
+                    securityType = property.Value.GetString().ToBatchSecurityType();
                     continue;
                 }
                 if (property.NameEquals("encryptionAtHost"u8))

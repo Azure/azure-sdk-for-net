@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -103,6 +104,59 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new CustomDomainIdentity(type, userAssignedIdentity, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{IdentityType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userAssignedIdentity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserAssignedIdentity))
+                {
+                    builder.Append("  userAssignedIdentity: ");
+                    if (UserAssignedIdentity.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserAssignedIdentity}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserAssignedIdentity}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CustomDomainIdentity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomDomainIdentity>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +165,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CustomDomainIdentity)} does not support writing '{options.Format}' format.");
             }

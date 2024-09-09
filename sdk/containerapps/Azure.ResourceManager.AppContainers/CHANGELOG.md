@@ -1,14 +1,16 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2024-09-09)
 
 ### Features Added
 
-### Breaking Changes
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
-### Bugs Fixed
+## 1.3.0-beta.1 (2024-09-06)
 
-### Other Changes
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.2.0 (2024-06-28)
 

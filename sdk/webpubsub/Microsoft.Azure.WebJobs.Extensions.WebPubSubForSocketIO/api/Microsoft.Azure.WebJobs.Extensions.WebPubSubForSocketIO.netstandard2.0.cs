@@ -4,7 +4,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
     public partial class AddSocketToRoomAction : Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.SocketIOAction
     {
         public AddSocketToRoomAction() { }
-        public string Namespace { get { throw null; } set { } }
         public string Room { get { throw null; } set { } }
         public string SocketId { get { throw null; } set { } }
     }
@@ -12,14 +11,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
     public partial class DisconnectSocketsAction : Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.SocketIOAction
     {
         public DisconnectSocketsAction() { }
-        public string Namespace { get { throw null; } set { } }
+        public bool CloseUnderlyingConnection { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Rooms { get { throw null; } set { } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public partial class RemoveSocketFromRoomAction : Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.SocketIOAction
     {
         public RemoveSocketFromRoomAction() { }
-        public string Namespace { get { throw null; } set { } }
         public string Room { get { throw null; } set { } }
         public string SocketId { get { throw null; } set { } }
     }
@@ -29,7 +27,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         public SendToNamespaceAction() { }
         public string EventName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ExceptRooms { get { throw null; } set { } }
-        public string Namespace { get { throw null; } set { } }
         public System.Collections.Generic.IList<object> Parameters { get { throw null; } set { } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
@@ -38,7 +35,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         public SendToRoomsAction() { }
         public string EventName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ExceptRooms { get { throw null; } set { } }
-        public string Namespace { get { throw null; } set { } }
         public System.Collections.Generic.IList<object> Parameters { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Rooms { get { throw null; } set { } }
     }
@@ -47,7 +43,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
     {
         public SendToSocketAction() { }
         public string EventName { get { throw null; } set { } }
-        public string Namespace { get { throw null; } set { } }
         public System.Collections.Generic.IList<object> Parameters { get { throw null; } set { } }
         public string SocketId { get { throw null; } set { } }
     }
@@ -55,12 +50,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
     public abstract partial class SocketIOAction
     {
         protected SocketIOAction() { }
-        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.AddSocketToRoomAction CreateAddSocketToRoomAction(string @namespace, string socketId, string room) { throw null; }
-        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.DisconnectSocketsAction CreateDisconnectSocketsAction(string @namespace, System.Collections.Generic.IEnumerable<string> rooms) { throw null; }
-        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.RemoveSocketFromRoomAction CreateRemoveSocketFromRoomAction(string @namespace, string socketId, string room) { throw null; }
-        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.SendToNamespaceAction CreateSendToNamespaceAction(string @namespace, string eventName, System.Collections.Generic.IEnumerable<object> parameters, System.Collections.Generic.IList<string> exceptRooms = null) { throw null; }
-        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.SendToRoomsAction CreateSendToRoomsAction(string @namespace, System.Collections.Generic.IEnumerable<string> rooms, string eventName, System.Collections.Generic.IEnumerable<object> parameters, System.Collections.Generic.IList<string> exceptRooms = null) { throw null; }
-        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.SendToSocketAction CreateSendToSocketAction(string @namespace, string socketId, string eventName, System.Collections.Generic.IEnumerable<object> parameters) { throw null; }
+        public string Namespace { get { throw null; } set { } }
+        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.AddSocketToRoomAction CreateAddSocketToRoomAction(string socketId, string room, string @namespace = "/") { throw null; }
+        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.DisconnectSocketsAction CreateDisconnectSocketsAction(System.Collections.Generic.IEnumerable<string> rooms, bool closeUnderlyingConnection = false, string @namespace = "/") { throw null; }
+        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.RemoveSocketFromRoomAction CreateRemoveSocketFromRoomAction(string socketId, string room, string @namespace = "/") { throw null; }
+        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.SendToNamespaceAction CreateSendToNamespaceAction(string eventName, System.Collections.Generic.IEnumerable<object> parameters, System.Collections.Generic.IList<string> exceptRooms = null, string @namespace = "/") { throw null; }
+        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.SendToRoomsAction CreateSendToRoomsAction(System.Collections.Generic.IEnumerable<string> rooms, string eventName, System.Collections.Generic.IEnumerable<object> parameters, System.Collections.Generic.IList<string> exceptRooms = null, string @namespace = "/") { throw null; }
+        public static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.SendToSocketAction CreateSendToSocketAction(string socketId, string eventName, System.Collections.Generic.IEnumerable<object> parameters, string @namespace = "/") { throw null; }
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter | System.AttributeTargets.ReturnValue)]
@@ -87,6 +83,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Hub { get { throw null; } set { } }
+        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
+        public string UserId { get { throw null; } set { } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public partial class SocketIONegotiationResult
@@ -185,7 +183,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Trigger.Model
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class SocketIOMessageRequest : Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Trigger.Model.SocketIOEventHandlerRequest
     {
-        public SocketIOMessageRequest(string @namespace, string socketId, string payload, System.Collections.Generic.IList<object> arguments) : base (default(string), default(string)) { }
+        public SocketIOMessageRequest(string @namespace, string socketId, string payload, string eventName, System.Collections.Generic.IList<object> arguments) : base (default(string), default(string)) { }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="eventName")]
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("eventName")]
+        public string EventName { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="parameters")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("parameters")]
         public System.Collections.Generic.IList<object> Parameters { get { throw null; } }

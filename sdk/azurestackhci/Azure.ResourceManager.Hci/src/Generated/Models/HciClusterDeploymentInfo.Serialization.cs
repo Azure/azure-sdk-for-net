@@ -152,14 +152,14 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             HciClusterDeploymentSecuritySettings securitySettings = default;
-            HciClusterObservability observability = default;
+            DeploymentSettingObservability observability = default;
             HciDeploymentCluster cluster = default;
-            HciClusterStorage storage = default;
+            DeploymentSettingStorage storage = default;
             string namingPrefix = default;
             string domainFqdn = default;
-            IList<HciClusterInfrastructureNetwork> infrastructureNetwork = default;
-            IList<HciClusterPhysicalNodes> physicalNodes = default;
-            HciClusterHostNetwork hostNetwork = default;
+            IList<DeploymentSettingInfrastructureNetwork> infrastructureNetwork = default;
+            IList<DeploymentSettingPhysicalNodes> physicalNodes = default;
+            DeploymentSettingHostNetwork hostNetwork = default;
             SdnIntegration sdnIntegration = default;
             string adouPath = default;
             string secretsLocation = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    observability = HciClusterObservability.DeserializeHciClusterObservability(property.Value, options);
+                    observability = DeploymentSettingObservability.DeserializeDeploymentSettingObservability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cluster"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    storage = HciClusterStorage.DeserializeHciClusterStorage(property.Value, options);
+                    storage = DeploymentSettingStorage.DeserializeDeploymentSettingStorage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("namingPrefix"u8))
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<HciClusterInfrastructureNetwork> array = new List<HciClusterInfrastructureNetwork>();
+                    List<DeploymentSettingInfrastructureNetwork> array = new List<DeploymentSettingInfrastructureNetwork>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HciClusterInfrastructureNetwork.DeserializeHciClusterInfrastructureNetwork(item, options));
+                        array.Add(DeploymentSettingInfrastructureNetwork.DeserializeDeploymentSettingInfrastructureNetwork(item, options));
                     }
                     infrastructureNetwork = array;
                     continue;
@@ -235,10 +235,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<HciClusterPhysicalNodes> array = new List<HciClusterPhysicalNodes>();
+                    List<DeploymentSettingPhysicalNodes> array = new List<DeploymentSettingPhysicalNodes>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HciClusterPhysicalNodes.DeserializeHciClusterPhysicalNodes(item, options));
+                        array.Add(DeploymentSettingPhysicalNodes.DeserializeDeploymentSettingPhysicalNodes(item, options));
                     }
                     physicalNodes = array;
                     continue;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    hostNetwork = HciClusterHostNetwork.DeserializeHciClusterHostNetwork(property.Value, options);
+                    hostNetwork = DeploymentSettingHostNetwork.DeserializeDeploymentSettingHostNetwork(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sdnIntegration"u8))
@@ -307,8 +307,8 @@ namespace Azure.ResourceManager.Hci.Models
                 storage,
                 namingPrefix,
                 domainFqdn,
-                infrastructureNetwork ?? new ChangeTrackingList<HciClusterInfrastructureNetwork>(),
-                physicalNodes ?? new ChangeTrackingList<HciClusterPhysicalNodes>(),
+                infrastructureNetwork ?? new ChangeTrackingList<DeploymentSettingInfrastructureNetwork>(),
+                physicalNodes ?? new ChangeTrackingList<DeploymentSettingPhysicalNodes>(),
                 hostNetwork,
                 sdnIntegration,
                 adouPath,

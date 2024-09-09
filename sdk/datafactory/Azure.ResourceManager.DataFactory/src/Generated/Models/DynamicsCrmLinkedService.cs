@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="DynamicsCrmLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalCredential"> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal DynamicsCrmLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> deploymentType, DataFactoryElement<string> hostName, DataFactoryElement<int> port, DataFactoryElement<string> serviceUri, DataFactoryElement<string> organizationName, DataFactoryElement<string> authenticationType, DataFactoryElement<string> domain, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalCredential, DataFactoryCredentialReference credential, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal DynamicsCrmLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> deploymentType, DataFactoryElement<string> hostName, DataFactoryElement<int> port, DataFactoryElement<string> serviceUri, DataFactoryElement<string> organizationName, DataFactoryElement<string> authenticationType, DataFactoryElement<string> domain, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalCredential, DataFactoryCredentialReference credential, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             DeploymentType = deploymentType;
             HostName = hostName;

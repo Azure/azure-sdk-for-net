@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Information about the delivery configuration of the event subscription. </summary>
+        [WirePath("properties.deliveryConfiguration")]
         public DeliveryConfiguration DeliveryConfiguration { get; set; }
         /// <summary> The event delivery schema for the event subscription. </summary>
+        [WirePath("properties.eventDeliverySchema")]
         public DeliverySchema? EventDeliverySchema { get; set; }
         /// <summary> Information about the filter for the event subscription. </summary>
+        [WirePath("properties.filtersConfiguration")]
         public FiltersConfiguration FiltersConfiguration { get; set; }
         /// <summary> Expiration time of the event subscription. </summary>
+        [WirePath("properties.expirationTimeUtc")]
         public DateTimeOffset? ExpireOn { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -198,6 +199,141 @@ namespace Azure.ResourceManager.EventGrid.Models
                 dataVersion);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InputSchemaMappingType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  inputSchemaMappingType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  inputSchemaMappingType: ");
+                builder.AppendLine($"'{InputSchemaMappingType.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IdSourceField", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    id: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      id: {");
+                builder.Append("        sourceField: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("    id: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Id, options, 4, false, "    id: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("TopicSourceField", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    topic: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      topic: {");
+                builder.Append("        sourceField: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Topic))
+                {
+                    builder.Append("    topic: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Topic, options, 4, false, "    topic: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("EventTimeSourceField", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    eventTime: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      eventTime: {");
+                builder.Append("        sourceField: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(EventTime))
+                {
+                    builder.Append("    eventTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, EventTime, options, 4, false, "    eventTime: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    eventType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EventType))
+                {
+                    builder.Append("    eventType: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, EventType, options, 4, false, "    eventType: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subject), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    subject: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Subject))
+                {
+                    builder.Append("    subject: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Subject, options, 4, false, "    subject: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    dataVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataVersion))
+                {
+                    builder.Append("    dataVersion: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DataVersion, options, 4, false, "    dataVersion: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EventGridJsonInputSchemaMapping>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventGridJsonInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -206,6 +342,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support writing '{options.Format}' format.");
             }

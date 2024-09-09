@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Id used to verify domain name ownership. </summary>
+        [WirePath("customDomainVerificationId")]
         public string CustomDomainVerificationId { get; }
         /// <summary> Dns suffix for the environment domain. </summary>
+        [WirePath("dnsSuffix")]
         public string DnsSuffix { get; set; }
         /// <summary> PFX or PEM blob. </summary>
+        [WirePath("certificateValue")]
         public byte[] CertificateValue { get; set; }
         /// <summary> Certificate password. </summary>
+        [WirePath("certificatePassword")]
         public string CertificatePassword { get; set; }
         /// <summary> Certificate expiration date. </summary>
+        [WirePath("expirationDate")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Certificate thumbprint. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; }
         /// <summary> Subject name of the certificate. </summary>
+        [WirePath("subjectName")]
         public string SubjectName { get; }
     }
 }

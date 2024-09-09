@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,11 +27,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -69,17 +67,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            SecurityInsightsDataTypeConnectionState? state = default;
+            SecurityInsightsDataTypeConnectionState state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = new SecurityInsightsDataTypeConnectionState(property.Value.GetString());
                     continue;
                 }
@@ -92,6 +86,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new TIDataConnectorDataTypesIndicators(state, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  state: ");
+                builder.AppendLine($"'{State.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TIDataConnectorDataTypesIndicators>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TIDataConnectorDataTypesIndicators>)this).GetFormatFromOptions(options) : options.Format;
@@ -100,6 +121,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TIDataConnectorDataTypesIndicators)} does not support writing '{options.Format}' format.");
             }

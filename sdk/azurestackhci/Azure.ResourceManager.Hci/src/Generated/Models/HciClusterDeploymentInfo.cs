@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentInfo"/>. </summary>
         public HciClusterDeploymentInfo()
         {
-            InfrastructureNetwork = new ChangeTrackingList<HciClusterInfrastructureNetwork>();
-            PhysicalNodes = new ChangeTrackingList<HciClusterPhysicalNodes>();
+            InfrastructureNetwork = new ChangeTrackingList<DeploymentSettingInfrastructureNetwork>();
+            PhysicalNodes = new ChangeTrackingList<DeploymentSettingPhysicalNodes>();
             Secrets = new ChangeTrackingList<EceDeploymentSecrets>();
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="secrets"> secrets used for cloud deployment. </param>
         /// <param name="optionalServices"> OptionalServices config to deploy AzureStackHCI Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterDeploymentInfo(HciClusterDeploymentSecuritySettings securitySettings, HciClusterObservability observability, HciDeploymentCluster cluster, HciClusterStorage storage, string namingPrefix, string domainFqdn, IList<HciClusterInfrastructureNetwork> infrastructureNetwork, IList<HciClusterPhysicalNodes> physicalNodes, HciClusterHostNetwork hostNetwork, SdnIntegration sdnIntegration, string adouPath, string secretsLocation, IList<EceDeploymentSecrets> secrets, OptionalServices optionalServices, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciClusterDeploymentInfo(HciClusterDeploymentSecuritySettings securitySettings, DeploymentSettingObservability observability, HciDeploymentCluster cluster, DeploymentSettingStorage storage, string namingPrefix, string domainFqdn, IList<DeploymentSettingInfrastructureNetwork> infrastructureNetwork, IList<DeploymentSettingPhysicalNodes> physicalNodes, DeploymentSettingHostNetwork hostNetwork, SdnIntegration sdnIntegration, string adouPath, string secretsLocation, IList<EceDeploymentSecrets> secrets, OptionalServices optionalServices, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecuritySettings = securitySettings;
             Observability = observability;
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.Hci.Models
         public HciClusterDeploymentSecuritySettings SecuritySettings { get; set; }
         /// <summary> Observability config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("observability")]
-        public HciClusterObservability Observability { get; set; }
+        public DeploymentSettingObservability Observability { get; set; }
         /// <summary> Observability config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("cluster")]
         public HciDeploymentCluster Cluster { get; set; }
         /// <summary> Storage config to deploy AzureStackHCI Cluster. </summary>
-        internal HciClusterStorage Storage { get; set; }
+        internal DeploymentSettingStorage Storage { get; set; }
         /// <summary> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </summary>
         [WirePath("storage.configurationMode")]
         public string StorageConfigurationMode
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Hci.Models
             set
             {
                 if (Storage is null)
-                    Storage = new HciClusterStorage();
+                    Storage = new DeploymentSettingStorage();
                 Storage.ConfigurationMode = value;
             }
         }
@@ -120,18 +120,18 @@ namespace Azure.ResourceManager.Hci.Models
         public string DomainFqdn { get; set; }
         /// <summary> InfrastructureNetwork config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("infrastructureNetwork")]
-        public IList<HciClusterInfrastructureNetwork> InfrastructureNetwork { get; }
+        public IList<DeploymentSettingInfrastructureNetwork> InfrastructureNetwork { get; }
         /// <summary> list of physical nodes config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("physicalNodes")]
-        public IList<HciClusterPhysicalNodes> PhysicalNodes { get; }
+        public IList<DeploymentSettingPhysicalNodes> PhysicalNodes { get; }
         /// <summary> HostNetwork config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("hostNetwork")]
-        public HciClusterHostNetwork HostNetwork { get; set; }
+        public DeploymentSettingHostNetwork HostNetwork { get; set; }
         /// <summary> SDN Integration config to deploy AzureStackHCI Cluster. </summary>
         internal SdnIntegration SdnIntegration { get; set; }
         /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
         [WirePath("sdnIntegration.networkController")]
-        public HciClusterNetworkController SdnIntegrationNetworkController
+        public DeploymentSettingNetworkController SdnIntegrationNetworkController
         {
             get => SdnIntegration is null ? default : SdnIntegration.NetworkController;
             set

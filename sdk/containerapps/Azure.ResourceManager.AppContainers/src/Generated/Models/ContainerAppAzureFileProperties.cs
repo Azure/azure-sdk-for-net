@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Storage account name for azure file. </summary>
+        [WirePath("accountName")]
         public string AccountName { get; set; }
         /// <summary> Storage account key for azure file. </summary>
+        [WirePath("accountKey")]
         public string AccountKey { get; set; }
         /// <summary> Access mode for storage. </summary>
+        [WirePath("accessMode")]
         public ContainerAppAccessMode? AccessMode { get; set; }
         /// <summary> Azure file share name. </summary>
+        [WirePath("shareName")]
         public string ShareName { get; set; }
     }
 }

@@ -88,10 +88,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the configuration parameters used while performing a
         /// rolling upgrade.
         /// </summary>
-        /// <remarks>
-        /// This property is only supported on Pools with the
-        /// virtualMachineConfiguration property.
-        /// </remarks>
         [JsonProperty(PropertyName = "rollingUpgradePolicy")]
         public RollingUpgradePolicy RollingUpgradePolicy { get; set; }
 

@@ -141,9 +141,15 @@ A `KeyVaultAccessControlClient` provides both synchronous and asynchronous opera
 
 A `KeyVaultBackupClient` provides both synchronous and asynchronous operations for performing full key backups, full key restores, and selective key restores.
 
+### PreBackupOperation
+A `PreBackupOperation` represents a long-running operation that checks if it is possible to perform a full key backup.
+
 ### BackupOperation
 
 A `BackupOperation` represents a long running operation for a full key backup.
+
+### PreRestoreOperation
+A `PreRestoreOperation` represents a long-running operation that checks if it is possible to perform a full key restore from a backup.
 
 ### RestoreOperation
 

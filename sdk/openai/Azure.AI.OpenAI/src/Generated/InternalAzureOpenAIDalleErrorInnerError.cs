@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="InternalAzureOpenAIDalleErrorInnerError"/>. </summary>
         internal InternalAzureOpenAIDalleErrorInnerError()
         {
@@ -52,16 +51,16 @@ namespace Azure.AI.OpenAI
         /// <param name="revisedPrompt"> If applicable, the modified prompt used for generation. </param>
         /// <param name="contentFilterResults"> The content filter result details associated with the inner error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAzureOpenAIDalleErrorInnerError(string code, string revisedPrompt, ImageContentFilterResultForPrompt contentFilterResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalAzureOpenAIDalleErrorInnerError(InternalAzureOpenAIDalleErrorInnerErrorCode? code, string revisedPrompt, ImageContentFilterResultForPrompt contentFilterResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             RevisedPrompt = revisedPrompt;
             ContentFilterResults = contentFilterResults;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The code associated with the inner error. </summary>
-        internal string Code { get; set; }
+        internal InternalAzureOpenAIDalleErrorInnerErrorCode? Code { get; set; }
         /// <summary> If applicable, the modified prompt used for generation. </summary>
         internal string RevisedPrompt { get; set; }
         /// <summary> The content filter result details associated with the inner error. </summary>

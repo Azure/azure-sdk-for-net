@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The VolumeOptions. </summary>
+    /// <summary> Describes the volume options for the container. </summary>
     internal partial class VolumeOptions
     {
         /// <summary>
@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Indicate whether volume is nocopy. </summary>
+        [WirePath("nocopy")]
         public bool? Nocopy { get; set; }
     }
 }

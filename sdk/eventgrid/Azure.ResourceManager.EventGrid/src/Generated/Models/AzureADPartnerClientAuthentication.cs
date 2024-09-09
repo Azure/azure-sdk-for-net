@@ -32,8 +32,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The Azure Active Directory Tenant ID to get the access token that will be included as the bearer token in delivery requests. </summary>
+        [WirePath("properties.azureActiveDirectoryTenantId")]
         public string AzureActiveDirectoryTenantId { get; set; }
         /// <summary> The Azure Active Directory Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
+        [WirePath("properties.azureActiveDirectoryApplicationIdOrUri")]
         public Uri AzureActiveDirectoryApplicationIdOrUri { get; set; }
     }
 }
