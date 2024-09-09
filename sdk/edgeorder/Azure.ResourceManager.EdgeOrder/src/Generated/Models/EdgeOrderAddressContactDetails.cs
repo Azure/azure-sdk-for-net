@@ -8,45 +8,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Contact Details. </summary>
     public partial class EdgeOrderAddressContactDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressContactDetails"/>. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderAddressContactDetails. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
@@ -62,26 +31,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EmailList = emailList.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressContactDetails"/>. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderAddressContactDetails. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="phoneExtension"> Phone extension number of the contact person. </param>
         /// <param name="mobile"> Mobile number of the contact person. </param>
         /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderAddressContactDetails(string contactName, string phone, string phoneExtension, string mobile, IList<string> emailList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderAddressContactDetails(string contactName, string phone, string phoneExtension, string mobile, IList<string> emailList)
         {
             ContactName = contactName;
             Phone = phone;
             PhoneExtension = phoneExtension;
             Mobile = mobile;
             EmailList = emailList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressContactDetails"/> for deserialization. </summary>
-        internal EdgeOrderAddressContactDetails()
-        {
         }
 
         /// <summary> Contact name of the person. </summary>

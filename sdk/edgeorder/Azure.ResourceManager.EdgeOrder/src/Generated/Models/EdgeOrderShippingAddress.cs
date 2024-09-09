@@ -6,46 +6,14 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Shipping address where customer wishes to receive the device. </summary>
     public partial class EdgeOrderShippingAddress
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="EdgeOrderShippingAddress"/>. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderShippingAddress. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="country"> Name of the Country. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streetAddress1"/> or <paramref name="country"/> is null. </exception>
@@ -58,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Country = country;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeOrderShippingAddress"/>. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderShippingAddress. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="streetAddress2"> Street Address line 2. </param>
         /// <param name="streetAddress3"> Street Address line 3. </param>
@@ -69,8 +37,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="zipExtendedCode"> Extended Zip Code. </param>
         /// <param name="companyName"> Name of the company. </param>
         /// <param name="addressType"> Type of address. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, EdgeOrderAddressType? addressType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, EdgeOrderAddressType? addressType)
         {
             StreetAddress1 = streetAddress1;
             StreetAddress2 = streetAddress2;
@@ -82,12 +49,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ZipExtendedCode = zipExtendedCode;
             CompanyName = companyName;
             AddressType = addressType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeOrderShippingAddress"/> for deserialization. </summary>
-        internal EdgeOrderShippingAddress()
-        {
         }
 
         /// <summary> Street Address line 1. </summary>

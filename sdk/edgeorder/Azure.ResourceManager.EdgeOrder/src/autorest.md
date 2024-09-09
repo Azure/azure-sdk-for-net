@@ -8,16 +8,12 @@ azure-arm: true
 csharp: true
 library-name: EdgeOrder
 namespace: Azure.ResourceManager.EdgeOrder
-require: https://github.com/Azure/azure-rest-api-specs/blob/58891380ba22c3565ca884dee3831445f638b545/specification/edgeorder/resource-manager/readme.md
+require: "C:\\azure-rest-api-specs-pr\\specification\\edgeorder\\resource-manager\\readme.md"
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
-sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
-  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-use-model-reader-writer: true
 
 list-exception:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}
@@ -29,7 +25,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-acronym-mapping:
+rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -103,6 +99,8 @@ rename-mapping:
   LengthHeightUnit: ProductLengthHeightWidthUnit
   WeightMeasurementUnit: ProductWeightMeasurementUnit
   LinkType: ProductLinkType
+  TokenResponse: TokenResult
+  UploadArtifactsResponse : UploadArtifactsResult
 
 directive:
   - remove-operation: ListOperations

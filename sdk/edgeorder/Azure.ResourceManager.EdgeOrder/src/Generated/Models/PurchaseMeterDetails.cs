@@ -5,29 +5,25 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Billing type Purchase meter details. </summary>
     public partial class PurchaseMeterDetails : EdgeOrderProductMeterDetails
     {
-        /// <summary> Initializes a new instance of <see cref="PurchaseMeterDetails"/>. </summary>
+        /// <summary> Initializes a new instance of PurchaseMeterDetails. </summary>
         internal PurchaseMeterDetails()
         {
             BillingType = BillingType.Purchase;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PurchaseMeterDetails"/>. </summary>
+        /// <summary> Initializes a new instance of PurchaseMeterDetails. </summary>
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="productId"> Product Id. </param>
         /// <param name="skuId"> Sku Id. </param>
         /// <param name="termId"> Term Id. </param>
-        internal PurchaseMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType, IDictionary<string, BinaryData> serializedAdditionalRawData, string productId, string skuId, string termId) : base(billingType, multiplier, chargingType, serializedAdditionalRawData)
+        internal PurchaseMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType, string productId, string skuId, string termId) : base(billingType, multiplier, chargingType)
         {
             ProductId = productId;
             SkuId = skuId;

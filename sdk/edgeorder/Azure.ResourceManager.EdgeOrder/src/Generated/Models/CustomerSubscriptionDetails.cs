@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Holds Customer subscription details. Clients can display available products to unregistered customers by explicitly passing subscription details. </summary>
     public partial class CustomerSubscriptionDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="CustomerSubscriptionDetails"/>. </summary>
+        /// <summary> Initializes a new instance of CustomerSubscriptionDetails. </summary>
         /// <param name="quotaId"> Quota ID of a subscription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaId"/> is null. </exception>
         public CustomerSubscriptionDetails(string quotaId)
@@ -54,24 +23,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             RegisteredFeatures = new ChangeTrackingList<CustomerSubscriptionRegisteredFeatures>();
             QuotaId = quotaId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomerSubscriptionDetails"/>. </summary>
-        /// <param name="registeredFeatures"> List of registered feature flags for subscription. </param>
-        /// <param name="locationPlacementId"> Location placement Id of a subscription. </param>
-        /// <param name="quotaId"> Quota ID of a subscription. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomerSubscriptionDetails(IList<CustomerSubscriptionRegisteredFeatures> registeredFeatures, string locationPlacementId, string quotaId, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            RegisteredFeatures = registeredFeatures;
-            LocationPlacementId = locationPlacementId;
-            QuotaId = quotaId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomerSubscriptionDetails"/> for deserialization. </summary>
-        internal CustomerSubscriptionDetails()
-        {
         }
 
         /// <summary> List of registered feature flags for subscription. </summary>

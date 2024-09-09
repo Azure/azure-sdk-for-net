@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         private const string PurchaseValue = "Purchase";
         private const string RentalValue = "Rental";
+        private const string ExternalValue = "External";
 
         /// <summary> Purchase OrderItem. </summary>
         public static OrderItemType Purchase { get; } = new OrderItemType(PurchaseValue);
         /// <summary> Rental OrderItem. </summary>
         public static OrderItemType Rental { get; } = new OrderItemType(RentalValue);
+        /// <summary> Orders placed outside of azure. </summary>
+        public static OrderItemType External { get; } = new OrderItemType(ExternalValue);
         /// <summary> Determines if two <see cref="OrderItemType"/> values are the same. </summary>
         public static bool operator ==(OrderItemType left, OrderItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrderItemType"/> values are not the same. </summary>
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -5,84 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    internal partial class ProductConfigurations : IUtf8JsonSerializable, IJsonModel<ProductConfigurations>
+    internal partial class ProductConfigurations
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductConfigurations>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ProductConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static ProductConfigurations DeserializeProductConfigurations(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductConfigurations>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ProductConfigurations)} does not support writing '{format}' format.");
-            }
-
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
-        }
-
-        ProductConfigurations IJsonModel<ProductConfigurations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductConfigurations>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ProductConfigurations)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProductConfigurations(document.RootElement, options);
-        }
-
-        internal static ProductConfigurations DeserializeProductConfigurations(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<ProductConfiguration> value = default;
-            string nextLink = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Optional<IReadOnlyList<ProductConfiguration>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -94,7 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ProductConfiguration> array = new List<ProductConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductConfiguration.DeserializeProductConfiguration(item, options));
+                        array.Add(ProductConfiguration.DeserializeProductConfiguration(item));
                     }
                     value = array;
                     continue;
@@ -104,44 +42,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ProductConfigurations(value ?? new ChangeTrackingList<ProductConfiguration>(), nextLink, serializedAdditionalRawData);
+            return new ProductConfigurations(Optional.ToList(value), nextLink.Value);
         }
-
-        BinaryData IPersistableModel<ProductConfigurations>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductConfigurations>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(ProductConfigurations)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ProductConfigurations IPersistableModel<ProductConfigurations>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductConfigurations>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProductConfigurations(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProductConfigurations)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ProductConfigurations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

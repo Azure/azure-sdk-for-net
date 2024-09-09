@@ -5,27 +5,18 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Unknown version of MeterDetails. </summary>
+    /// <summary> The UnknownMeterDetails. </summary>
     internal partial class UnknownMeterDetails : EdgeOrderProductMeterDetails
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMeterDetails"/>. </summary>
+        /// <summary> Initializes a new instance of UnknownMeterDetails. </summary>
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(billingType, multiplier, chargingType, serializedAdditionalRawData)
+        internal UnknownMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType) : base(billingType, multiplier, chargingType)
         {
             BillingType = billingType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownMeterDetails"/> for deserialization. </summary>
-        internal UnknownMeterDetails()
-        {
         }
     }
 }

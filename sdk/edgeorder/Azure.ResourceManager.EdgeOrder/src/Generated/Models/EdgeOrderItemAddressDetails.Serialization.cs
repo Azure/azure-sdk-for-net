@@ -5,81 +5,34 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderItemAddressDetails : IUtf8JsonSerializable, IJsonModel<EdgeOrderItemAddressDetails>
+    public partial class EdgeOrderItemAddressDetails : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemAddressDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<EdgeOrderItemAddressDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(EdgeOrderItemAddressDetails)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             writer.WritePropertyName("forwardAddress"u8);
-            writer.WriteObjectValue(ForwardAddress, options);
-            if (options.Format != "W" && Optional.IsDefined(ReturnAddress))
-            {
-                writer.WritePropertyName("returnAddress"u8);
-                writer.WriteObjectValue(ReturnAddress, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            writer.WriteObjectValue(ForwardAddress);
             writer.WriteEndObject();
         }
 
-        EdgeOrderItemAddressDetails IJsonModel<EdgeOrderItemAddressDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static EdgeOrderItemAddressDetails DeserializeEdgeOrderItemAddressDetails(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(EdgeOrderItemAddressDetails)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEdgeOrderItemAddressDetails(document.RootElement, options);
-        }
-
-        internal static EdgeOrderItemAddressDetails DeserializeEdgeOrderItemAddressDetails(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             EdgeOrderItemAddressProperties forwardAddress = default;
-            EdgeOrderItemAddressProperties returnAddress = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Optional<EdgeOrderItemAddressProperties> returnAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("forwardAddress"u8))
                 {
-                    forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value, options);
+                    forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("returnAddress"u8))
@@ -88,47 +41,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    returnAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value, options);
+                    returnAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress, serializedAdditionalRawData);
+            return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress.Value);
         }
-
-        BinaryData IPersistableModel<EdgeOrderItemAddressDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemAddressDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EdgeOrderItemAddressDetails IPersistableModel<EdgeOrderItemAddressDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEdgeOrderItemAddressDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemAddressDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EdgeOrderItemAddressDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

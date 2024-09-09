@@ -5,26 +5,15 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class ProductFamiliesContent : IUtf8JsonSerializable, IJsonModel<ProductFamiliesContent>
+    public partial class ProductFamiliesContent : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductFamiliesContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ProductFamiliesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductFamiliesContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ProductFamiliesContent)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             writer.WritePropertyName("filterableProperties"u8);
             writer.WriteStartObject();
@@ -39,7 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item0 in item.Value)
                 {
-                    writer.WriteObjectValue(item0, options);
+                    writer.WriteObjectValue(item0);
                 }
                 writer.WriteEndArray();
             }
@@ -47,121 +36,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
-                writer.WriteObjectValue(CustomerSubscriptionDetails, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WriteObjectValue(CustomerSubscriptionDetails);
             }
             writer.WriteEndObject();
         }
-
-        ProductFamiliesContent IJsonModel<ProductFamiliesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductFamiliesContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ProductFamiliesContent)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProductFamiliesContent(document.RootElement, options);
-        }
-
-        internal static ProductFamiliesContent DeserializeProductFamiliesContent(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            IDictionary<string, IList<FilterableProperty>> filterableProperties = default;
-            CustomerSubscriptionDetails customerSubscriptionDetails = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("filterableProperties"u8))
-                {
-                    Dictionary<string, IList<FilterableProperty>> dictionary = new Dictionary<string, IList<FilterableProperty>>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            List<FilterableProperty> array = new List<FilterableProperty>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(FilterableProperty.DeserializeFilterableProperty(item, options));
-                            }
-                            dictionary.Add(property0.Name, array);
-                        }
-                    }
-                    filterableProperties = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("customerSubscriptionDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    customerSubscriptionDetails = CustomerSubscriptionDetails.DeserializeCustomerSubscriptionDetails(property.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ProductFamiliesContent(filterableProperties, customerSubscriptionDetails, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<ProductFamiliesContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductFamiliesContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(ProductFamiliesContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ProductFamiliesContent IPersistableModel<ProductFamiliesContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductFamiliesContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProductFamiliesContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProductFamiliesContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ProductFamiliesContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

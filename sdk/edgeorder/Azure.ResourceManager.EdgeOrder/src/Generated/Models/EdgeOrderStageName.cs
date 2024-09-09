@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         private const string ReadyToShipValue = "ReadyToShip";
         private const string ShippedValue = "Shipped";
         private const string DeliveredValue = "Delivered";
+        private const string ReadyToSetupValue = "ReadyToSetup";
         private const string InUseValue = "InUse";
         private const string ReturnInitiatedValue = "ReturnInitiated";
         private const string ReturnPickedUpValue = "ReturnPickedUp";
@@ -47,13 +48,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderStageName Shipped { get; } = new EdgeOrderStageName(ShippedValue);
         /// <summary> Order is delivered to customer. </summary>
         public static EdgeOrderStageName Delivered { get; } = new EdgeOrderStageName(DeliveredValue);
+        /// <summary> Order is ready to get cloud connected. </summary>
+        public static EdgeOrderStageName ReadyToSetup { get; } = new EdgeOrderStageName(ReadyToSetupValue);
         /// <summary> Order is in use at customer site. </summary>
         public static EdgeOrderStageName InUse { get; } = new EdgeOrderStageName(InUseValue);
         /// <summary> Return has been initiated by customer. </summary>
         public static EdgeOrderStageName ReturnInitiated { get; } = new EdgeOrderStageName(ReturnInitiatedValue);
-        /// <summary> Order is in transit from customer to microsoft. </summary>
+        /// <summary> Order is in transit from customer to Microsoft. </summary>
         public static EdgeOrderStageName ReturnPickedUp { get; } = new EdgeOrderStageName(ReturnPickedUpValue);
-        /// <summary> Order has been received back to microsoft. </summary>
+        /// <summary> Order has been received back to Microsoft. </summary>
         public static EdgeOrderStageName ReturnedToMicrosoft { get; } = new EdgeOrderStageName(ReturnedToMicrosoftValue);
         /// <summary> Return has now completed. </summary>
         public static EdgeOrderStageName ReturnCompleted { get; } = new EdgeOrderStageName(ReturnCompletedValue);
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

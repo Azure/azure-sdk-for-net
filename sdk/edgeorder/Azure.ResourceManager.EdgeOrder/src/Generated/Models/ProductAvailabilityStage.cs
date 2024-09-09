@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Current availability stage of the product. Availability stage. </summary>
+    /// <summary> Current availability stage of the product. </summary>
     public readonly partial struct ProductAvailabilityStage : IEquatable<ProductAvailabilityStage>
     {
         private readonly string _value;
@@ -23,24 +23,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         private const string AvailableValue = "Available";
-        private const string ComingSoonValue = "ComingSoon";
         private const string PreviewValue = "Preview";
-        private const string DeprecatedValue = "Deprecated";
         private const string SignUpValue = "Signup";
+        private const string DiscoverableValue = "Discoverable";
+        private const string ComingSoonValue = "ComingSoon";
         private const string UnavailableValue = "Unavailable";
+        private const string DeprecatedValue = "Deprecated";
 
         /// <summary> Product is available. </summary>
         public static ProductAvailabilityStage Available { get; } = new ProductAvailabilityStage(AvailableValue);
-        /// <summary> Product is coming soon. </summary>
-        public static ProductAvailabilityStage ComingSoon { get; } = new ProductAvailabilityStage(ComingSoonValue);
         /// <summary> Product is in preview. </summary>
         public static ProductAvailabilityStage Preview { get; } = new ProductAvailabilityStage(PreviewValue);
-        /// <summary> Product is deprecated. </summary>
-        public static ProductAvailabilityStage Deprecated { get; } = new ProductAvailabilityStage(DeprecatedValue);
         /// <summary> Product is available only on signup. </summary>
         public static ProductAvailabilityStage SignUp { get; } = new ProductAvailabilityStage(SignUpValue);
+        /// <summary> Product is not available in our service but can be discovered from other sources. </summary>
+        public static ProductAvailabilityStage Discoverable { get; } = new ProductAvailabilityStage(DiscoverableValue);
+        /// <summary> Product is coming soon. </summary>
+        public static ProductAvailabilityStage ComingSoon { get; } = new ProductAvailabilityStage(ComingSoonValue);
         /// <summary> Product is not available. </summary>
         public static ProductAvailabilityStage Unavailable { get; } = new ProductAvailabilityStage(UnavailableValue);
+        /// <summary> Product is deprecated. </summary>
+        public static ProductAvailabilityStage Deprecated { get; } = new ProductAvailabilityStage(DeprecatedValue);
         /// <summary> Determines if two <see cref="ProductAvailabilityStage"/> values are the same. </summary>
         public static bool operator ==(ProductAvailabilityStage left, ProductAvailabilityStage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProductAvailabilityStage"/> values are not the same. </summary>
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,64 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Configuration object. </summary>
     public partial class ProductConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="ProductConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of ProductConfiguration. </summary>
         internal ProductConfiguration()
         {
             ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
             FilterableProperties = new ChangeTrackingList<FilterableProperty>();
             Specifications = new ChangeTrackingList<ProductSpecification>();
+            ChildConfigurationTypes = new ChangeTrackingList<ChildConfigurationType>();
+            GroupedChildConfigurations = new ChangeTrackingList<GroupedChildConfigurations>();
+            SupportedTermCommitmentDurations = new ChangeTrackingList<TimeSpan>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProductConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of ProductConfiguration. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
         /// <param name="costInformation"> Cost information for the product system. </param>
         /// <param name="availabilityInformation"> Availability information of the product system. </param>
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="fulfilledBy"> The entity responsible for fulfillment of the item at the given hierarchy level. </param>
+        /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="specifications"> Specifications of the configuration. </param>
         /// <param name="dimensions"> Dimensions of the configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductConfiguration(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="childConfigurationTypes"> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </param>
+        /// <param name="groupedChildConfigurations"> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </param>
+        /// <param name="supportedTermCommitmentDurations"> The Term Commitment Durations that are supported for a configuration. </param>
+        internal ProductConfiguration(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, FulfillmentType? fulfilledBy, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, IReadOnlyList<ChildConfigurationType> childConfigurationTypes, IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations, IReadOnlyList<TimeSpan> supportedTermCommitmentDurations)
         {
             DisplayName = displayName;
             Description = description;
@@ -72,10 +47,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             CostInformation = costInformation;
             AvailabilityInformation = availabilityInformation;
             HierarchyInformation = hierarchyInformation;
+            FulfilledBy = fulfilledBy;
             FilterableProperties = filterableProperties;
             Specifications = specifications;
             Dimensions = dimensions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ChildConfigurationTypes = childConfigurationTypes;
+            GroupedChildConfigurations = groupedChildConfigurations;
+            SupportedTermCommitmentDurations = supportedTermCommitmentDurations;
         }
 
         /// <summary> Display Name for the product system. </summary>
@@ -90,11 +68,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public ProductAvailabilityInformation AvailabilityInformation { get; }
         /// <summary> Hierarchy information of a product. </summary>
         public HierarchyInformation HierarchyInformation { get; }
-        /// <summary> list of filters supported for a product. </summary>
+        /// <summary> The entity responsible for fulfillment of the item at the given hierarchy level. </summary>
+        public FulfillmentType? FulfilledBy { get; }
+        /// <summary> List of filters supported for a product. </summary>
         public IReadOnlyList<FilterableProperty> FilterableProperties { get; }
         /// <summary> Specifications of the configuration. </summary>
         public IReadOnlyList<ProductSpecification> Specifications { get; }
         /// <summary> Dimensions of the configuration. </summary>
         public ProductDimensions Dimensions { get; }
+        /// <summary> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </summary>
+        public IReadOnlyList<ChildConfigurationType> ChildConfigurationTypes { get; }
+        /// <summary> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </summary>
+        public IReadOnlyList<GroupedChildConfigurations> GroupedChildConfigurations { get; }
+        /// <summary> The Term Commitment Durations that are supported for a configuration. </summary>
+        public IReadOnlyList<TimeSpan> SupportedTermCommitmentDurations { get; }
     }
 }

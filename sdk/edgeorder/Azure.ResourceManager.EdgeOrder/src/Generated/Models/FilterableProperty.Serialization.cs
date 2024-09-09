@@ -5,26 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class FilterableProperty : IUtf8JsonSerializable, IJsonModel<FilterableProperty>
+    public partial class FilterableProperty : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilterableProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<FilterableProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FilterableProperty>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(FilterableProperty)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SupportedFilterType.ToString());
@@ -35,48 +25,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        FilterableProperty IJsonModel<FilterableProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static FilterableProperty DeserializeFilterableProperty(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FilterableProperty>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(FilterableProperty)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFilterableProperty(document.RootElement, options);
-        }
-
-        internal static FilterableProperty DeserializeFilterableProperty(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SupportedFilterType type = default;
             IList<string> supportedValues = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -94,44 +53,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     supportedValues = array;
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FilterableProperty(type, supportedValues, serializedAdditionalRawData);
+            return new FilterableProperty(type, supportedValues);
         }
-
-        BinaryData IPersistableModel<FilterableProperty>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FilterableProperty>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(FilterableProperty)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FilterableProperty IPersistableModel<FilterableProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FilterableProperty>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFilterableProperty(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FilterableProperty)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FilterableProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

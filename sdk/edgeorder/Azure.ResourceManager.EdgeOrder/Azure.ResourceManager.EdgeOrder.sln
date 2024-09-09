@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.32002.185
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.EdgeOrder", "src\Azure.ResourceManager.EdgeOrder.csproj", "{71033091-375D-4BA2-B60B-B8918E6510EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.EdgeOrder.Tests", "tests\Azure.ResourceManager.EdgeOrder.Tests.csproj", "{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{8BAF18E1-C7C2-4D44-BA67-48301CA9914C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.EdgeOrder.Samples", "samples\Azure.ResourceManager.EdgeOrder.Samples.csproj", "{8EDFEDE2-CB48-4683-BAFE-55AAA38FA87C}"
@@ -33,18 +31,6 @@ Global
 		{71033091-375D-4BA2-B60B-B8918E6510EE}.Release|x64.Build.0 = Release|Any CPU
 		{71033091-375D-4BA2-B60B-B8918E6510EE}.Release|x86.ActiveCfg = Release|Any CPU
 		{71033091-375D-4BA2-B60B-B8918E6510EE}.Release|x86.Build.0 = Release|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Debug|x64.Build.0 = Debug|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Debug|x86.Build.0 = Debug|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Release|x64.ActiveCfg = Release|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Release|x64.Build.0 = Release|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Release|x86.ActiveCfg = Release|Any CPU
-		{3E6C5FFF-9307-4D3A-905A-655DE9F3DED7}.Release|x86.Build.0 = Release|Any CPU
 		{8BAF18E1-C7C2-4D44-BA67-48301CA9914C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8BAF18E1-C7C2-4D44-BA67-48301CA9914C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BAF18E1-C7C2-4D44-BA67-48301CA9914C}.Debug|x64.ActiveCfg = Debug|Any CPU

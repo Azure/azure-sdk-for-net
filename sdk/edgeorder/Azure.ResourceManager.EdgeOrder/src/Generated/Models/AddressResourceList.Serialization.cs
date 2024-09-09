@@ -5,84 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    internal partial class AddressResourceList : IUtf8JsonSerializable, IJsonModel<AddressResourceList>
+    internal partial class AddressResourceList
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddressResourceList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<AddressResourceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static AddressResourceList DeserializeAddressResourceList(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressResourceList>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AddressResourceList)} does not support writing '{format}' format.");
-            }
-
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
-        }
-
-        AddressResourceList IJsonModel<AddressResourceList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressResourceList>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AddressResourceList)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAddressResourceList(document.RootElement, options);
-        }
-
-        internal static AddressResourceList DeserializeAddressResourceList(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<EdgeOrderAddressData> value = default;
-            string nextLink = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Optional<IReadOnlyList<EdgeOrderAddress>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -91,10 +29,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    List<EdgeOrderAddressData> array = new List<EdgeOrderAddressData>();
+                    List<EdgeOrderAddress> array = new List<EdgeOrderAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderAddressData.DeserializeEdgeOrderAddressData(item, options));
+                        array.Add(EdgeOrderAddress.DeserializeEdgeOrderAddress(item));
                     }
                     value = array;
                     continue;
@@ -104,44 +42,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AddressResourceList(value ?? new ChangeTrackingList<EdgeOrderAddressData>(), nextLink, serializedAdditionalRawData);
+            return new AddressResourceList(Optional.ToList(value), nextLink.Value);
         }
-
-        BinaryData IPersistableModel<AddressResourceList>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressResourceList>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(AddressResourceList)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AddressResourceList IPersistableModel<AddressResourceList>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressResourceList>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAddressResourceList(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AddressResourceList)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AddressResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,31 +8,24 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    internal class EdgeOrderAddressOperationSource : IOperationSource<EdgeOrderAddressResource>
+    internal class EdgeOrderAddressOperationSource : IOperationSource<EdgeOrderAddress>
     {
-        private readonly ArmClient _client;
-
-        internal EdgeOrderAddressOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        EdgeOrderAddressResource IOperationSource<EdgeOrderAddressResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EdgeOrderAddress IOperationSource<EdgeOrderAddress>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = EdgeOrderAddressData.DeserializeEdgeOrderAddressData(document.RootElement);
-            return new EdgeOrderAddressResource(_client, data);
+            return EdgeOrderAddress.DeserializeEdgeOrderAddress(document.RootElement);
         }
 
-        async ValueTask<EdgeOrderAddressResource> IOperationSource<EdgeOrderAddressResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EdgeOrderAddress> IOperationSource<EdgeOrderAddress>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = EdgeOrderAddressData.DeserializeEdgeOrderAddressData(document.RootElement);
-            return new EdgeOrderAddressResource(_client, data);
+            return EdgeOrderAddress.DeserializeEdgeOrderAddress(document.RootElement);
         }
     }
 }

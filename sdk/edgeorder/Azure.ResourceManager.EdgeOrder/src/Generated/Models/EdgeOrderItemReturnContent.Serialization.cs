@@ -5,31 +5,20 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderItemReturnContent : IUtf8JsonSerializable, IJsonModel<EdgeOrderItemReturnContent>
+    public partial class EdgeOrderItemReturnContent : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemReturnContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<EdgeOrderItemReturnContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemReturnContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             if (Optional.IsDefined(ReturnAddress))
             {
                 writer.WritePropertyName("returnAddress"u8);
-                writer.WriteObjectValue(ReturnAddress, options);
+                writer.WriteObjectValue(ReturnAddress);
             }
             writer.WritePropertyName("returnReason"u8);
             writer.WriteStringValue(ReturnReason);
@@ -43,118 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("shippingBoxRequired"u8);
                 writer.WriteBooleanValue(IsShippingBoxRequired.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
-
-        EdgeOrderItemReturnContent IJsonModel<EdgeOrderItemReturnContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemReturnContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEdgeOrderItemReturnContent(document.RootElement, options);
-        }
-
-        internal static EdgeOrderItemReturnContent DeserializeEdgeOrderItemReturnContent(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            EdgeOrderItemAddressProperties returnAddress = default;
-            string returnReason = default;
-            string serviceTag = default;
-            bool? shippingBoxRequired = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("returnAddress"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    returnAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("returnReason"u8))
-                {
-                    returnReason = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serviceTag"u8))
-                {
-                    serviceTag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("shippingBoxRequired"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    shippingBoxRequired = property.Value.GetBoolean();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EdgeOrderItemReturnContent(returnAddress, returnReason, serviceTag, shippingBoxRequired, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<EdgeOrderItemReturnContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemReturnContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EdgeOrderItemReturnContent IPersistableModel<EdgeOrderItemReturnContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemReturnContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEdgeOrderItemReturnContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EdgeOrderItemReturnContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
