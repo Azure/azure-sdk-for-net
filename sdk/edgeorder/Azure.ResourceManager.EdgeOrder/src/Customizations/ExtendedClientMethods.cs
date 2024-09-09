@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     public static partial class EdgeOrderExtensions
     {
+        private static string orderItemFilter = "Properties.OrderItemDetails.OrderItemType eq 'External'";
         private static void ValidateValidSiteKeyObject(SiteKey siteKeyObject)
         {
             Argument.AssertNotNullOrWhiteSpace(siteKeyObject.ResourceId, nameof(siteKeyObject.ResourceId));
@@ -44,10 +45,11 @@ namespace Azure.ResourceManager.EdgeOrder
             TenantResourceGetOrderItemsByResourceGroupOptions tenantResourceGetOrderItemsByResourceGroupOptions = new TenantResourceGetOrderItemsByResourceGroupOptions(new Guid(siteResource.SubscriptionId), siteResource.ResourceGroupName)
             {
                 Top = top,
-                SkipToken = skipToken
+                SkipToken = skipToken,
+                Filter = orderItemFilter
             };
             var tenantResource = armClient.GetTenants().First();
-            Pageable<EdgeOrderItem> edgeOrderItem = EdgeOrderExtensions.GetOrderItemsByResourceGroup(tenantResource, tenantResourceGetOrderItemsByResourceGroupOptions);
+            Pageable<EdgeOrderItem> edgeOrderItem = GetOrderItemsByResourceGroup(tenantResource, tenantResourceGetOrderItemsByResourceGroupOptions);
 
             EdgeOrderDeviceResponse edgeOrderDeviceResponse = new EdgeOrderDeviceResponse();
             var EdgeOrderDevice = new List<EdgeOrderDevice>();
@@ -56,15 +58,59 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 EdgeOrderDevice edgeOrderDevice = new EdgeOrderDevice();
                 edgeOrderDevice.OrderItemId = item.Id;
+                edgeOrderDevice.Manufacturer = item.OrderItemDetails.ProductDetails?.ParentProvisioningDetails?.VendorName;
                 edgeOrderDevice.SerialNumber = item.OrderItemDetails.ProductDetails?.ParentProvisioningDetails?.SerialNumber;
                 edgeOrderDevice.ModelName = item.OrderItemDetails.ProductDetails?.HierarchyInformation?.ConfigurationIdDisplayName;
-                edgeOrderDevice.DeviceConfigurations = item.OrderItemDetails.ProductDetails?.ParentProvisioningDetails?.DeviceConfigurations;
+                edgeOrderDevice.DeviceConfiguration = GetDeviceConfigurationFromOrderItem(item.OrderItemDetails.ProductDetails?.ParentProvisioningDetails?.DeviceConfigurations);
                 EdgeOrderDevice.Add(edgeOrderDevice);
             }
             edgeOrderDeviceResponse.EdgeOrderDevice = EdgeOrderDevice;
             edgeOrderDeviceResponse.SkipToken = skipToken;
 
             return edgeOrderDeviceResponse;
+        }
+
+        private static DeviceConfiguration GetDeviceConfigurationFromOrderItem(DeviceConfigurations deviceConfigurations)
+        {
+            DeviceConfiguration deviceConfiguration = new DeviceConfiguration();
+
+            //Setting up Network Configurations
+            Models.NetworkConfiguration networkConfiguration = deviceConfigurations.NetworkConfigurations.FirstOrDefault();
+            Enum.TryParse(networkConfiguration?.Properties?.IPAssignments.IPAssignmentType, out IPAssignmentType ipAssignmentType);
+            deviceConfiguration.Network = new Customizations.Models.NetworkConfiguration
+            {
+                IpAssignmentType = ipAssignmentType,
+                Gateway = networkConfiguration?.Properties?.IPAssignments?.IPv4?.DefaultGateway,
+                IpAddress = networkConfiguration?.Properties?.IPAssignments?.IPv4?.IPAddress,
+                IpAddressRange = new IPAddressRange {
+                   StartIp = networkConfiguration?.Properties?.IPAssignments?.IPv4?.AddressRange?.StartIP,
+                   EndIp = networkConfiguration?.Properties?.IPAssignments?.IPv4?.AddressRange?.EndIP
+                },
+                SubnetMask = networkConfiguration?.Properties?.IPAssignments?.IPv4?.SubnetMask,
+                DnsAddressArray = networkConfiguration?.Properties?.IPAssignments?.IPv4?.DnsServers,
+                VlanId = networkConfiguration?.Properties?.IPAssignments?.IPv4?.VLanId.ToString()
+            };
+
+            // Host name config
+            deviceConfiguration.HostName = deviceConfigurations?.HostName;
+
+            // Web proxy setup
+            deviceConfiguration.WebProxy = new WebProxyConfiguration
+            {
+                ConnectionUri = deviceConfigurations?.ConnectivityConfiguration?.Properties?.ProxyConfiguration?.Uri.AbsoluteUri,
+                Port = deviceConfigurations?.ConnectivityConfiguration?.Properties?.ProxyConfiguration?.Port.ToString(),
+                BypassList = deviceConfigurations?.ConnectivityConfiguration?.Properties?.ProxyConfiguration.ByPassUrls
+            };
+
+            // Time server settings
+            deviceConfiguration.Time = new TimeConfiguration
+            {
+                PrimaryTimeServer = deviceConfigurations?.TimeServerConfiguration?.Properties?.Timezone,
+                SecondaryTimeServer = deviceConfigurations?.TimeServerConfiguration?.Properties?.Timezone,
+                TimeZone = deviceConfigurations?.TimeServerConfiguration?.Properties?.Timezone
+            };
+
+            return deviceConfiguration;
         }
     }
 }

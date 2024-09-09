@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.EdgeOrder.Customizations.Models
         /// <summary>
         /// Device Configuration
         /// </summary>
-        public DeviceConfigurations DeviceConfigurations { get; set; }
+        public DeviceConfiguration DeviceConfiguration { get; set; }
     }
 }

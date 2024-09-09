@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Device configurations for the OS Provisioning. </summary>
     public partial class DeviceConfigurations
     {
-        /// <summary> Initializes a new instance of DeviceConfigurations. </summary>
+        /// <summary> Initializes a new instance of DeviceConfiguration. </summary>
         public DeviceConfigurations()
         {
             NetworkConfigurations = new ChangeTrackingList<NetworkConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of DeviceConfigurations. </summary>
+        /// <summary> Initializes a new instance of DeviceConfiguration. </summary>
         /// <param name="hostName"> Host name of the device to be set. </param>
         /// <param name="networkConfigurations"> Network configurations for the OS Provisioning. </param>
         /// <param name="timeServerConfiguration"> TimeServer configuration for the OS Provisioning. </param>
