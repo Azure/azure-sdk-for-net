@@ -14,16 +14,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class AccessRuleProperties : IUtf8JsonSerializable, IJsonModel<AccessRuleProperties>
+    public partial class BatchAccessRuleProperties : IUtf8JsonSerializable, IJsonModel<BatchAccessRuleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessRuleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccessRuleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchAccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRuleProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccessRuleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -110,19 +110,19 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteEndObject();
         }
 
-        AccessRuleProperties IJsonModel<AccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchAccessRuleProperties IJsonModel<BatchAccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRuleProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccessRuleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccessRuleProperties(document.RootElement, options);
+            return DeserializeBatchAccessRuleProperties(document.RootElement, options);
         }
 
-        internal static AccessRuleProperties DeserializeAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchAccessRuleProperties DeserializeBatchAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            AccessRuleDirection? direction = default;
+            BatchAccessRuleDirection? direction = default;
             IReadOnlyList<string> addressPrefixes = default;
             IReadOnlyList<SubResource> subscriptions = default;
             IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    direction = new AccessRuleDirection(property.Value.GetString());
+                    direction = new BatchAccessRuleDirection(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("addressPrefixes"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccessRuleProperties(
+            return new BatchAccessRuleProperties(
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 subscriptions ?? new ChangeTrackingList<SubResource>(),
@@ -251,35 +251,35 @@ namespace Azure.ResourceManager.Batch.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AccessRuleProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchAccessRuleProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccessRuleProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccessRuleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AccessRuleProperties IPersistableModel<AccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchAccessRuleProperties IPersistableModel<BatchAccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAccessRuleProperties(document.RootElement, options);
+                        return DeserializeBatchAccessRuleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessRuleProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccessRuleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AccessRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchAccessRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

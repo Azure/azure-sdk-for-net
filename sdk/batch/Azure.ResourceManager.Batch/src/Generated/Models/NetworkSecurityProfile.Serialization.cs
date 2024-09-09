@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string name = default;
             int? accessRulesVersion = default;
-            IReadOnlyList<AccessRule> accessRules = default;
+            IReadOnlyList<BatchAccessRule> accessRules = default;
             int? diagnosticSettingsVersion = default;
             IReadOnlyList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    List<AccessRule> array = new List<AccessRule>();
+                    List<BatchAccessRule> array = new List<BatchAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessRule.DeserializeAccessRule(item, options));
+                        array.Add(BatchAccessRule.DeserializeBatchAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new NetworkSecurityProfile(
                 name,
                 accessRulesVersion,
-                accessRules ?? new ChangeTrackingList<AccessRule>(),
+                accessRules ?? new ChangeTrackingList<BatchAccessRule>(),
                 diagnosticSettingsVersion,
                 enabledLogCategories ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

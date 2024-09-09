@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of <see cref="VmDiskSecurityProfile"/>. </summary>
         /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. **Note**: It can be set for only Confidential VMs and required when using Confidential VMs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmDiskSecurityProfile(SecurityEncryptionType? securityEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VmDiskSecurityProfile(BatchSecurityEncryptionType? securityEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecurityEncryptionType = securityEncryptionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. **Note**: It can be set for only Confidential VMs and required when using Confidential VMs. </summary>
-        public SecurityEncryptionType? SecurityEncryptionType { get; set; }
+        public BatchSecurityEncryptionType? SecurityEncryptionType { get; set; }
     }
 }
