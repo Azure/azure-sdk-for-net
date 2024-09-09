@@ -19,8 +19,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Optionally specifies the share snapshot to retrieve ranges
         /// information from. For more information on working with share snapshots,
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-share">
-        /// Create a snapshot of a share</see>.
+        /// <see href="https://learn.microsoft.com/en-us/azure/storage/files/storage-snapshots-files">
+        /// Overview of share snapshots</see>.
         /// </summary>
         public string Snapshot { get; set; }
 
@@ -37,8 +37,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// snapshot, as long as the snapshot specified by
         /// <see cref="PreviousSnapshot"/> is the older of the two.
         /// For more information on working with share snapshots,
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-share">
-        /// Create a snapshot of a share</see>.
+        /// <see href="https://learn.microsoft.com/en-us/azure/storage/files/storage-snapshots-files">
+        /// Overview of share snapshots</see>.
         /// </summary>
         public string PreviousSnapshot { get; set; }
 
