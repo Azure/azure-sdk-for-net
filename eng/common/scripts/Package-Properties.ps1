@@ -119,7 +119,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     foreach ($pkg in $allPackageProperties)
     {
         $pkgDirectory = Resolve-Path "$($pkg.DirectoryPath)"
-        $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").SubString(1)
+        $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").TrimStart('\/')
         $lookup[$lookupKey] = $pkg
 
         foreach ($file in $targetedFiles)
@@ -132,12 +132,15 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                 if ($pkg.AdditionalValidationPackages) {
                     $additionalValidationPackages += $pkg.AdditionalValidationPackages
                 }
+
+                # avoid adding the same package multiple times
+                break
             }
         }
     }
 
     foreach ($addition in $additionalValidationPackages) {
-        $key = $addition.Replace($RepoRoot, "").SubString(1)
+        $key = $addition.Replace($RepoRoot, "").TrimStart('\/')
 
         if ($lookup[$key]) {
             $packagesWithChanges += $lookup[$key]

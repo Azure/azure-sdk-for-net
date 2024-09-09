@@ -78,16 +78,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// This is the private endpoint connection name created on SRP
         /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/registryPrivateEndpointConnections/{peConnectionName}
         /// </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> Same as workspace location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The group ids. </summary>
+        [WirePath("properties.groupIds")]
         public IList<string> GroupIds { get; set; }
         /// <summary> The PE network resource that is linked to this PE connection. </summary>
+        [WirePath("properties.privateEndpoint")]
         public RegistryPrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> The connection state. </summary>
+        [WirePath("properties.registryPrivateLinkServiceConnectionState")]
         public RegistryPrivateLinkServiceConnectionState RegistryPrivateLinkServiceConnectionState { get; set; }
         /// <summary> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; set; }
     }
 }

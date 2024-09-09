@@ -52,19 +52,21 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingSubscriptionMoveContent"/>. </summary>
-        /// <param name="destinationEnrollmentAccountId"> The destination enrollment account id. </param>
         /// <param name="destinationInvoiceSectionId"> The destination invoice section id. </param>
+        /// <param name="destinationEnrollmentAccountId"> The destination enrollment account id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingSubscriptionMoveContent(string destinationEnrollmentAccountId, ResourceIdentifier destinationInvoiceSectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingSubscriptionMoveContent(ResourceIdentifier destinationInvoiceSectionId, string destinationEnrollmentAccountId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DestinationEnrollmentAccountId = destinationEnrollmentAccountId;
             DestinationInvoiceSectionId = destinationInvoiceSectionId;
+            DestinationEnrollmentAccountId = destinationEnrollmentAccountId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The destination enrollment account id. </summary>
-        public string DestinationEnrollmentAccountId { get; set; }
         /// <summary> The destination invoice section id. </summary>
+        [WirePath("destinationInvoiceSectionId")]
         public ResourceIdentifier DestinationInvoiceSectionId { get; set; }
+        /// <summary> The destination enrollment account id. </summary>
+        [WirePath("destinationEnrollmentAccountId")]
+        public string DestinationEnrollmentAccountId { get; set; }
     }
 }

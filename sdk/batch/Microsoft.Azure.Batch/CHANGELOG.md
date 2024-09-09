@@ -1,6 +1,6 @@
 # Release History
 
-## 16.3.0-beta.1 (Unreleased)
+## 16.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,35 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 16.3.0 (2024-07-01)
+
+### Features Added
+
+- Compute node start/deallocate support.
+  - Added `Start` and `StartAsync` to ComputeNode
+  - Added `Deallocate` and `DeallocateAsync` to ComputeNode
+
+- Force delete/terminate job/jobSchedule.
+  - Added `force` of type Boolean to type `JobDeleteOptions`, `JobTerminateOptions`, `JobScheduleTerminateOptions`, and `JobScheduleDeleteOptions`.
+
+- Improved patch for pool/job
+  - Added `DisplayName`, `VmSize`, `TaskSlotsPerNode`, `TaskSchedulingPolicy`, `EnableInterNodeCommunication`, `VirtualMachineConfiguration`, `NetworkConfiguration`, `UserAccounts`, `MountConfiguration`, `UpgradePolicy`, and `ResourceTags` to type `PoolPatchParameter`.
+  - Added `JobNetworkConfiguration` to type `JobPatchParameter`.
+
+- Confidential VM support.
+  - Added `ConfidentialVM` value to type `SecurityTypes`.
+  - Added `securityProfile` of type `VMDiskSecurityProfile` to type `ManagedDisk`.
+
+- Added `sharedGalleryImageId` and `communityGalleryImageId` of type string to type `ImageReference`.
+
+### Breaking Changes
+- Removed `CloudServiceConfiguration` from pool models and operations, `VirtualMachineConfiguration` is the only supported pool configuration.
+- Removed `ApplicationLicenses` from pool models and operations.
+
+- Removed `GetRDPFile()` method, use `GetRemoteLoginSettings()` instead.
+  - Removed `GetRDPFile` and `GetRDPFileAsync` from PoolOperations 
+  - Removed `GetRDPFile` and `GetRDPFileAsync` from ComputeNode
 
 ## 16.2.0 (2024-02-29)
 

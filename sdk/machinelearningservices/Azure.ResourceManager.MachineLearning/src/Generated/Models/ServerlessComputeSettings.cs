@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The resource ID of an existing virtual network subnet in which serverless compute nodes should be deployed. </summary>
+        [WirePath("serverlessComputeCustomSubnet")]
         public ResourceIdentifier ServerlessComputeCustomSubnet { get; set; }
         /// <summary> The flag to signal if serverless compute nodes deployed in custom vNet would have no public IP addresses for a workspace with private endpoint. </summary>
+        [WirePath("serverlessComputeNoPublicIP")]
         public bool? HasNoPublicIP { get; set; }
     }
 }

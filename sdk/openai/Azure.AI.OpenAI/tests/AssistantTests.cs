@@ -81,14 +81,9 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
         Assert.That(modifiedAssistant.Id, Is.EqualTo(assistant.Id));
         AsyncPageCollection<Assistant> recentAssistants = client.GetAssistantsAsync();
-        Assistant recentAssistant = null;
-        await foreach (Assistant asyncAssistant in recentAssistants.GetAllValuesAsync())
-        {
-            recentAssistant = asyncAssistant;
-            break;
-        }
-        Assert.That(recentAssistant, Is.Not.Null);
-        Assert.That(recentAssistant.Metadata.TryGetValue("testkey", out string newMetadataValue) && newMetadataValue == "goodbye!");
+        Assistant firstAssistant = await recentAssistants.GetAllValuesAsync().FirstOrDefaultAsync();
+        Assert.That(firstAssistant, Is.Not.Null);
+        Assert.That(firstAssistant.Metadata.TryGetValue("testkey", out string newMetadataValue) && newMetadataValue == "goodbye!");
     }
 
     [RecordedTest]
@@ -579,11 +574,15 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
 
         AsyncPageCollection<ThreadMessage> messages = client.GetMessagesAsync(thread, new() { Order = ListOrder.NewestFirst });
-        bool hasAtLeastOne = false;
+        int numPages = 0;
+        int numThreads = 0;
         bool hasCake = false;
-        await foreach (ThreadMessage message in messages.GetAllValuesAsync())
+        await foreach (PageResult<ThreadMessage> page in messages)
         {
-            hasAtLeastOne = true;
+            numPages++;
+            foreach (ThreadMessage message in page.Values)
+            {
+                numThreads++;
             foreach (MessageContent content in message.Content)
             {
                 Console.WriteLine(content.Text);
@@ -594,7 +593,10 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
                 }
             }
         }
-        Assert.That(hasAtLeastOne, Is.True);
+        }
+
+        Assert.That(numPages, Is.GreaterThan(0));
+        Assert.That(numThreads, Is.GreaterThan(0));
         Assert.That(hasCake, Is.True);
     }
 

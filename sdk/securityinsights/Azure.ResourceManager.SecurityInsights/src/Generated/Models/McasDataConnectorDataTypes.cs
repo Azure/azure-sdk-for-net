@@ -14,8 +14,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class McasDataConnectorDataTypes : SecurityInsightsAlertsDataTypeOfDataConnector
     {
         /// <summary> Initializes a new instance of <see cref="McasDataConnectorDataTypes"/>. </summary>
-        public McasDataConnectorDataTypes()
+        /// <param name="alerts"> Alerts data type connection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alerts"/> is null. </exception>
+        public McasDataConnectorDataTypes(DataConnectorDataTypeCommon alerts) : base(alerts)
         {
+            Argument.AssertNotNull(alerts, nameof(alerts));
         }
 
         /// <summary> Initializes a new instance of <see cref="McasDataConnectorDataTypes"/>. </summary>
@@ -30,14 +33,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Discovery log data type connection. </summary>
         internal DataConnectorDataTypeCommon DiscoveryLogs { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        [WirePath("discoveryLogs.state")]
         public SecurityInsightsDataTypeConnectionState? DiscoveryLogsState
         {
-            get => DiscoveryLogs is null ? default : DiscoveryLogs.State;
+            get => DiscoveryLogs is null ? default(SecurityInsightsDataTypeConnectionState?) : DiscoveryLogs.State;
             set
             {
-                if (DiscoveryLogs is null)
-                    DiscoveryLogs = new DataConnectorDataTypeCommon();
-                DiscoveryLogs.State = value;
+                DiscoveryLogs = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
             }
         }
     }

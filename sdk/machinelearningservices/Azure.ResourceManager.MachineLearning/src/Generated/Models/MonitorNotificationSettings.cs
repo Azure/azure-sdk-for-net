@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The AML notification email settings. </summary>
         internal MonitorEmailNotificationSettings EmailNotificationSettings { get; set; }
         /// <summary> The email recipient list which has a limitation of 499 characters in total. </summary>
+        [WirePath("emailNotificationSettings.emails")]
         public IList<string> Emails
         {
             get => EmailNotificationSettings is null ? default : EmailNotificationSettings.Emails;

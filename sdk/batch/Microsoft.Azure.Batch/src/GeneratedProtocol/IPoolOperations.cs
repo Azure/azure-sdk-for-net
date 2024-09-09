@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<PoolAddHeaders>> AddWithHttpMessagesAsync(PoolAddParameter pool, PoolAddOptions poolAddOptions = default(PoolAddOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the Pools in the specified Account.
+        /// Lists all of the Pools which be mounted
         /// </summary>
         /// <param name='poolListOptions'>
         /// Additional parameters for the operation
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// automatic scaling on a Pool'. For more information about specifying
         /// this formula, see Automatically scale Compute Nodes in an Azure
         /// Batch Pool
-        /// (https://azure.microsoft.com/en-us/documentation/articles/batch-automatic-scaling).
+        /// (https://azure.microsoft.com/documentation/articles/batch-automatic-scaling).
         /// </param>
         /// <param name='poolEvaluateAutoScaleOptions'>
         /// Additional parameters for the operation
@@ -484,7 +484,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationResponse<IPage<PoolUsageMetrics>,PoolListUsageMetricsHeaders>> ListUsageMetricsNextWithHttpMessagesAsync(string nextPageLink, PoolListUsageMetricsNextOptions poolListUsageMetricsNextOptions = default(PoolListUsageMetricsNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the Pools in the specified Account.
+        /// Lists all of the Pools which be mounted
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
