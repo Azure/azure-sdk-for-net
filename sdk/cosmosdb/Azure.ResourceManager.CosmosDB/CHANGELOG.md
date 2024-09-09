@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-preview-2024-05' to 'package-preview-2024-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f22c4d30d70728c698c9ec423f359abd50456a3d/specification/cosmos-db/resource-manager/readme.md
+- Upgraded api-version tag from 'package-preview-2024-05' to 'package-preview-2024-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4d065866a422257746306b352cb34fd5c98d5754/specification/cosmos-db/resource-manager/readme.md
 
 ## 1.4.0-beta.10 (2024-06-25)
 
