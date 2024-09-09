@@ -662,38 +662,6 @@ namespace Azure.AI.DocumentIntelligence
             return new AnalyzeBatchOperationDetail(status, sourceUrl, resultUrl, error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BuildDocumentModelContent"/>. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="description"> Document model description. </param>
-        /// <param name="buildMode"> Custom document model build mode. </param>
-        /// <param name="azureBlobSource">
-        /// Azure Blob Storage location containing the training data.  Either
-        /// azureBlobSource or azureBlobFileListSource must be specified.
-        /// </param>
-        /// <param name="azureBlobFileListSource">
-        /// Azure Blob Storage file list specifying the training data.  Either
-        /// azureBlobSource or azureBlobFileListSource must be specified.
-        /// </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="maxTrainingHours"> Max number of V100-equivalent GPU hours to use for model training.  Default=0.5. </param>
-        /// <param name="allowOverwrite"> Allow overwriting an existing model with the same name. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.BuildDocumentModelContent"/> instance for mocking. </returns>
-        public static BuildDocumentModelContent BuildDocumentModelContent(string modelId = null, string description = null, DocumentBuildMode buildMode = default, AzureBlobContentSource azureBlobSource = null, AzureBlobFileListContentSource azureBlobFileListSource = null, IDictionary<string, string> tags = null, float? maxTrainingHours = null, bool? allowOverwrite = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new BuildDocumentModelContent(
-                modelId,
-                description,
-                buildMode,
-                azureBlobSource,
-                azureBlobFileListSource,
-                tags,
-                maxTrainingHours,
-                allowOverwrite,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelDetails"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
@@ -740,35 +708,36 @@ namespace Azure.AI.DocumentIntelligence
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/>. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
-        /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BuildDocumentModelContent"/>. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="description"> Document model description. </param>
+        /// <param name="buildMode"> Custom document model build mode. </param>
+        /// <param name="azureBlobSource">
+        /// Azure Blob Storage location containing the training data.  Either
+        /// azureBlobSource or azureBlobFileListSource must be specified.
+        /// </param>
+        /// <param name="azureBlobFileListSource">
+        /// Azure Blob Storage file list specifying the training data.  Either
+        /// azureBlobSource or azureBlobFileListSource must be specified.
+        /// </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="error"> Encountered error. </param>
-        /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        /// <param name="maxTrainingHours"> Max number of V100-equivalent GPU hours to use for model training.  Default=0.5. </param>
+        /// <param name="allowOverwrite"> Allow overwriting an existing model with the same name. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.BuildDocumentModelContent"/> instance for mocking. </returns>
+        public static BuildDocumentModelContent BuildDocumentModelContent(string modelId = null, string description = null, DocumentBuildMode buildMode = default, AzureBlobContentSource azureBlobSource = null, AzureBlobFileListContentSource azureBlobFileListSource = null, IDictionary<string, string> tags = null, float? maxTrainingHours = null, bool? allowOverwrite = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelBuildOperationDetails(
-                operationId,
-                status,
-                percentCompleted,
-                createdOn,
-                lastUpdatedOn,
-                OperationKind.DocumentModelBuild,
-                resourceLocation,
-                apiVersion,
+            return new BuildDocumentModelContent(
+                modelId,
+                description,
+                buildMode,
+                azureBlobSource,
+                azureBlobFileListSource,
                 tags,
-                error,
-                serializedAdditionalRawData: null,
-                result);
+                maxTrainingHours,
+                allowOverwrite,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.OperationDetails"/>. </summary>
@@ -799,6 +768,37 @@ namespace Azure.AI.DocumentIntelligence
                 tags,
                 error,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/>. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentModelBuildOperationDetails(
+                operationId,
+                status,
+                percentCompleted,
+                createdOn,
+                lastUpdatedOn,
+                OperationKind.DocumentModelBuild,
+                resourceLocation,
+                apiVersion,
+                tags,
+                error,
+                serializedAdditionalRawData: null,
+                result);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/>. </summary>
@@ -952,6 +952,23 @@ namespace Azure.AI.DocumentIntelligence
                 result);
         }
 
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.ResourceDetails"/>. </summary>
+        /// <param name="customDocumentModels"> Details regarding custom document models. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.ResourceDetails"/> instance for mocking. </returns>
+        public static ResourceDetails ResourceDetails(CustomDocumentModelsDetails customDocumentModels = null)
+        {
+            return new ResourceDetails(customDocumentModels, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/>. </summary>
+        /// <param name="count"> Number of custom document models in the current resource. </param>
+        /// <param name="limit"> Maximum number of custom document models supported in the current resource. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/> instance for mocking. </returns>
+        public static CustomDocumentModelsDetails CustomDocumentModelsDetails(int count = default, int limit = default)
+        {
+            return new CustomDocumentModelsDetails(count, limit, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.ComposeDocumentModelContent"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
@@ -985,23 +1002,6 @@ namespace Azure.AI.DocumentIntelligence
             tags ??= new Dictionary<string, string>();
 
             return new AuthorizeCopyContent(modelId, description, tags, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.ResourceDetails"/>. </summary>
-        /// <param name="customDocumentModels"> Details regarding custom document models. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.ResourceDetails"/> instance for mocking. </returns>
-        public static ResourceDetails ResourceDetails(CustomDocumentModelsDetails customDocumentModels = null)
-        {
-            return new ResourceDetails(customDocumentModels, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/>. </summary>
-        /// <param name="count"> Number of custom document models in the current resource. </param>
-        /// <param name="limit"> Maximum number of custom document models supported in the current resource. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/> instance for mocking. </returns>
-        public static CustomDocumentModelsDetails CustomDocumentModelsDetails(int count = default, int limit = default)
-        {
-            return new CustomDocumentModelsDetails(count, limit, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BuildDocumentClassifierContent"/>. </summary>

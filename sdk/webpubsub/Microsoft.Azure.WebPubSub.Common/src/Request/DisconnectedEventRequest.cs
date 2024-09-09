@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     [DataContract]
     [JsonConverter(typeof(DisconnectedEventRequestJsonConverter))]
-    public sealed class DisconnectedEventRequest : WebPubSubEventRequest
+    public class DisconnectedEventRequest : WebPubSubEventRequest
     {
         internal const string ReasonProperty = "reason";
 

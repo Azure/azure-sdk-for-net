@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Dto object representing index column. </summary>
+    /// <summary> DTO object representing index column. </summary>
     public partial class IndexColumn
     {
         /// <summary>
@@ -51,19 +51,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IndexColumn"/>. </summary>
-        /// <param name="columnName"> Specifies the column name. </param>
         /// <param name="dataType"> Specifies the data type. </param>
+        /// <param name="columnName"> Specifies the column name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IndexColumn(string columnName, FeatureDataType? dataType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IndexColumn(FeatureDataType? dataType, string columnName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ColumnName = columnName;
             DataType = dataType;
+            ColumnName = columnName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the column name. </summary>
-        public string ColumnName { get; set; }
         /// <summary> Specifies the data type. </summary>
+        [WirePath("dataType")]
         public FeatureDataType? DataType { get; set; }
+        /// <summary> Specifies the column name. </summary>
+        [WirePath("columnName")]
+        public string ColumnName { get; set; }
     }
 }

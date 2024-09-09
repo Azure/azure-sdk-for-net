@@ -168,8 +168,8 @@
   {
    "$id": "22",
    "Kind": "enum",
-   "Name": "Versions",
-   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
+   "Name": "MessageTemplateStatus",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
    "ValueType": {
     "$id": "23",
     "Kind": "string",
@@ -180,53 +180,27 @@
    "Values": [
     {
      "$id": "24",
-     "Name": "c2024_02_01",
-     "Value": "2024-02-01",
-     "Description": "Azure Communication Messages 2024-02-01 api version",
-     "Decorators": []
-    }
-   ],
-   "Description": "Azure Communication Messages Versions",
-   "IsExtensible": false,
-   "Usage": "ApiVersionEnum",
-   "Decorators": []
-  },
-  {
-   "$id": "25",
-   "Kind": "enum",
-   "Name": "MessageTemplateStatus",
-   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
-   "ValueType": {
-    "$id": "26",
-    "Kind": "string",
-    "Name": "string",
-    "CrossLanguageDefinitionId": "TypeSpec.string",
-    "Decorators": []
-   },
-   "Values": [
-    {
-     "$id": "27",
      "Name": "approved",
      "Value": "approved",
      "Description": "Message template is approved.",
      "Decorators": []
     },
     {
-     "$id": "28",
+     "$id": "25",
      "Name": "rejected",
      "Value": "rejected",
      "Description": "Message template is rejected.",
      "Decorators": []
     },
     {
-     "$id": "29",
+     "$id": "26",
      "Name": "pending",
      "Value": "pending",
      "Description": "Message template is pending.",
      "Decorators": []
     },
     {
-     "$id": "30",
+     "$id": "27",
      "Name": "paused",
      "Value": "paused",
      "Description": "Message template is paused.",
@@ -239,10 +213,36 @@
    "Decorators": []
   },
   {
-   "$id": "31",
+   "$id": "28",
    "Kind": "enum",
    "Name": "CommunicationMessagesChannel",
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.CommunicationMessagesChannel",
+   "ValueType": {
+    "$id": "29",
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
+   },
+   "Values": [
+    {
+     "$id": "30",
+     "Name": "whatsApp",
+     "Value": "whatsApp",
+     "Description": "The WhatsApp communication messages channel type.",
+     "Decorators": []
+    }
+   ],
+   "Description": "The type of the communication messages channel.",
+   "IsExtensible": true,
+   "Usage": "Output,Json",
+   "Decorators": []
+  },
+  {
+   "$id": "31",
+   "Kind": "enum",
+   "Name": "Versions",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
    "ValueType": {
     "$id": "32",
     "Kind": "string",
@@ -253,15 +253,15 @@
    "Values": [
     {
      "$id": "33",
-     "Name": "whatsApp",
-     "Value": "whatsApp",
-     "Description": "The WhatsApp communication messages channel type.",
+     "Name": "c2024_02_01",
+     "Value": "2024-02-01",
+     "Description": "Azure Communication Messages 2024-02-01 api version",
      "Decorators": []
     }
    ],
-   "Description": "The type of the communication messages channel.",
-   "IsExtensible": true,
-   "Usage": "Output,Json",
+   "Description": "Azure Communication Messages Versions",
+   "IsExtensible": false,
+   "Usage": "ApiVersionEnum",
    "Decorators": []
   },
   {
@@ -1480,7 +1480,7 @@
     "SerializedName": "kind",
     "Description": "The type discriminator describing a template type.",
     "Type": {
-     "$ref": "31"
+     "$ref": "28"
     },
     "IsRequired": true,
     "IsReadOnly": false,
@@ -1526,7 +1526,7 @@
      "SerializedName": "status",
      "Description": "The aggregated template status.",
      "Type": {
-      "$ref": "25"
+      "$ref": "22"
      },
      "IsRequired": true,
      "IsReadOnly": false,
@@ -1713,7 +1713,8 @@
         },
         "Value": "2024-02-01"
        },
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "193",
@@ -1734,7 +1735,8 @@
        "Explode": false,
        "IsRequired": false,
        "Kind": "Method",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "195",
@@ -1763,7 +1765,8 @@
        "Explode": false,
        "IsRequired": false,
        "Kind": "Method",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "198",
@@ -1791,7 +1794,8 @@
        "Explode": false,
        "IsRequired": false,
        "Kind": "Method",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "201",
@@ -1818,7 +1822,8 @@
        "Explode": false,
        "IsRequired": true,
        "Kind": "Constant",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "204",
@@ -1844,7 +1849,8 @@
        "Explode": false,
        "IsRequired": true,
        "Kind": "Constant",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "207",
@@ -1861,7 +1867,8 @@
        "Explode": false,
        "IsRequired": true,
        "Kind": "Method",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       }
      ],
      "Responses": [
@@ -1963,7 +1970,8 @@
         },
         "Value": "2024-02-01"
        },
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "218",
@@ -1984,7 +1992,8 @@
        "Explode": false,
        "IsRequired": true,
        "Kind": "Method",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "220",
@@ -2012,7 +2021,8 @@
        "Explode": false,
        "IsRequired": false,
        "Kind": "Method",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "223",
@@ -2038,7 +2048,8 @@
        "Explode": false,
        "IsRequired": true,
        "Kind": "Constant",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       }
      ],
      "Responses": [
@@ -2185,7 +2196,8 @@
         },
         "Value": "2024-02-01"
        },
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "243",
@@ -2213,7 +2225,8 @@
        "Explode": false,
        "IsRequired": true,
        "Kind": "Method",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "246",
@@ -2234,7 +2247,8 @@
        "Explode": false,
        "IsRequired": false,
        "Kind": "Method",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "248",
@@ -2262,7 +2276,8 @@
        "Explode": false,
        "IsRequired": false,
        "Kind": "Method",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       },
       {
        "$id": "251",
@@ -2288,7 +2303,8 @@
        "Explode": false,
        "IsRequired": true,
        "Kind": "Constant",
-       "Decorators": []
+       "Decorators": [],
+       "SkipUrlEncoding": false
       }
      ],
      "Responses": [

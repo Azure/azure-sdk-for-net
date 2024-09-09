@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -137,6 +138,82 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningComputeInstanceLastOperation(operationName, operationTime, operationStatus, operationTrigger, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operationName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationName))
+                {
+                    builder.Append("  operationName: ");
+                    builder.AppendLine($"'{OperationName.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operationTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationOn))
+                {
+                    builder.Append("  operationTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(OperationOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operationStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationStatus))
+                {
+                    builder.Append("  operationStatus: ");
+                    builder.AppendLine($"'{OperationStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationTrigger), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operationTrigger: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationTrigger))
+                {
+                    builder.Append("  operationTrigger: ");
+                    builder.AppendLine($"'{OperationTrigger.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningComputeInstanceLastOperation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceLastOperation>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +222,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningComputeInstanceLastOperation)} does not support writing '{options.Format}' format.");
             }

@@ -11,8 +11,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageBlobTierChangedEventData
     {
         /// <summary> Initializes a new instance of <see cref="StorageBlobTierChangedEventData"/>. </summary>
-        internal StorageBlobTierChangedEventData()
+        /// <param name="accessTier"> The current tier of the blob. </param>
+        /// <param name="previousTier"> The previous tier of the blob. </param>
+        internal StorageBlobTierChangedEventData(StorageBlobAccessTier accessTier, StorageBlobAccessTier previousTier)
         {
+            AccessTier = accessTier;
+            PreviousTier = previousTier;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageBlobTierChangedEventData"/>. </summary>
@@ -22,11 +26,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="contentType"> The content type of the blob. This is the same as what would be returned in the Content-Type header from the blob. </param>
         /// <param name="contentLength"> The size of the blob in bytes. This is the same as what would be returned in the Content-Length header from the blob. </param>
         /// <param name="blobType"> The type of blob. </param>
+        /// <param name="accessTier"> The current tier of the blob. </param>
+        /// <param name="previousTier"> The previous tier of the blob. </param>
         /// <param name="url"> The path to the blob. </param>
         /// <param name="sequencer"> An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name. </param>
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
-        internal StorageBlobTierChangedEventData(string api, string clientRequestId, string requestId, string contentType, long? contentLength, string blobType, string url, string sequencer, string identity, object storageDiagnostics)
+        internal StorageBlobTierChangedEventData(string api, string clientRequestId, string requestId, string contentType, long? contentLength, string blobType, StorageBlobAccessTier accessTier, StorageBlobAccessTier previousTier, string url, string sequencer, string identity, object storageDiagnostics)
         {
             Api = api;
             ClientRequestId = clientRequestId;
@@ -34,6 +40,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ContentType = contentType;
             ContentLength = contentLength;
             BlobType = blobType;
+            AccessTier = accessTier;
+            PreviousTier = previousTier;
             Url = url;
             Sequencer = sequencer;
             Identity = identity;
@@ -52,6 +60,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public long? ContentLength { get; }
         /// <summary> The type of blob. </summary>
         public string BlobType { get; }
+        /// <summary> The current tier of the blob. </summary>
+        public StorageBlobAccessTier AccessTier { get; }
+        /// <summary> The previous tier of the blob. </summary>
+        public StorageBlobAccessTier PreviousTier { get; }
         /// <summary> The path to the blob. </summary>
         public string Url { get; }
         /// <summary> An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name. </summary>

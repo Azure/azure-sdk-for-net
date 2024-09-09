@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -31,6 +32,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
+            if (Optional.IsDefined(SuccessThreshold))
+            {
+                writer.WritePropertyName("successThreshold"u8);
+                writer.WriteNumberValue(SuccessThreshold.Value);
+            }
+            if (Optional.IsDefined(Timeout))
+            {
+                writer.WritePropertyName("timeout"u8);
+                writer.WriteStringValue(Timeout.Value, "P");
+            }
+            if (Optional.IsDefined(Period))
+            {
+                writer.WritePropertyName("period"u8);
+                writer.WriteStringValue(Period.Value, "P");
+            }
             if (Optional.IsDefined(InitialDelay))
             {
                 if (InitialDelay != null)
@@ -42,21 +58,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("initialDelay");
                 }
-            }
-            if (Optional.IsDefined(Period))
-            {
-                writer.WritePropertyName("period"u8);
-                writer.WriteStringValue(Period.Value, "P");
-            }
-            if (Optional.IsDefined(SuccessThreshold))
-            {
-                writer.WritePropertyName("successThreshold"u8);
-                writer.WriteNumberValue(SuccessThreshold.Value);
-            }
-            if (Optional.IsDefined(Timeout))
-            {
-                writer.WritePropertyName("timeout"u8);
-                writer.WriteStringValue(Timeout.Value, "P");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -97,10 +98,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             int? failureThreshold = default;
-            TimeSpan? initialDelay = default;
-            TimeSpan? period = default;
             int? successThreshold = default;
             TimeSpan? timeout = default;
+            TimeSpan? period = default;
+            TimeSpan? initialDelay = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,25 +113,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     failureThreshold = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("initialDelay"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        initialDelay = null;
-                        continue;
-                    }
-                    initialDelay = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("period"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    period = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("successThreshold"u8))
@@ -151,6 +133,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("period"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    period = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("initialDelay"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        initialDelay = null;
+                        continue;
+                    }
+                    initialDelay = property.Value.GetTimeSpan("P");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -159,11 +160,104 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningProbeSettings(
                 failureThreshold,
-                initialDelay,
-                period,
                 successThreshold,
                 timeout,
+                period,
+                initialDelay,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailureThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failureThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailureThreshold))
+                {
+                    builder.Append("  failureThreshold: ");
+                    builder.AppendLine($"{FailureThreshold.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  successThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SuccessThreshold))
+                {
+                    builder.Append("  successThreshold: ");
+                    builder.AppendLine($"{SuccessThreshold.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timeout))
+                {
+                    builder.Append("  timeout: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(Timeout.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Period), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  period: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Period))
+                {
+                    builder.Append("  period: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(Period.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitialDelay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  initialDelay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InitialDelay))
+                {
+                    builder.Append("  initialDelay: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(InitialDelay.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningProbeSettings>.Write(ModelReaderWriterOptions options)
@@ -174,6 +268,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support writing '{options.Format}' format.");
             }

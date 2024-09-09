@@ -41,6 +41,7 @@ trigger:
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
+    - sdk/computefleet/Azure.ResourceManager.ComputeFleet
     - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger
     - sdk/confluent/Azure.ResourceManager.Confluent
     - sdk/connectedvmwarevsphere/Azure.ResourceManager.ConnectedVMwarevSphere
@@ -125,6 +126,7 @@ trigger:
     - sdk/migrationdiscoverysap/Azure.ResourceManager.MigrationDiscoverySap
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
+    - sdk/mongocluster/Azure.ResourceManager.MongoCluster
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
@@ -240,6 +242,7 @@ pr:
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
+    - sdk/computefleet/Azure.ResourceManager.ComputeFleet
     - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger
     - sdk/confluent/Azure.ResourceManager.Confluent
     - sdk/connectedvmwarevsphere/Azure.ResourceManager.ConnectedVMwarevSphere
@@ -324,6 +327,7 @@ pr:
     - sdk/migrationdiscoverysap/Azure.ResourceManager.MigrationDiscoverySap
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
+    - sdk/mongocluster/Azure.ResourceManager.MongoCluster
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp

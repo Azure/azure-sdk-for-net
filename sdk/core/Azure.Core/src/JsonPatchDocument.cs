@@ -58,7 +58,7 @@ namespace Azure
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="JsonPatchDocument"/> using an existing UTF8-encoded JSON Patch document.
+        /// Appends an "add" operation to this <see cref="JsonPatchDocument"/>.
         /// </summary>
         /// <param name="path">The path to apply the addition to.</param>
         /// <param name="rawJsonValue">The raw JSON value to add to the path.</param>

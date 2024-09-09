@@ -49,14 +49,17 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The URL that represents the endpoint of the partner destination. </summary>
+        [WirePath("properties.endpointUrl")]
         public Uri EndpointUri { get; set; }
         /// <summary> The base URL that represents the endpoint of the partner destination. </summary>
+        [WirePath("properties.endpointBaseUrl")]
         public Uri EndpointBaseUri { get; set; }
         /// <summary>
         /// Partner client authentication
         /// Please note <see cref="PartnerClientAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureADPartnerClientAuthentication"/>.
         /// </summary>
+        [WirePath("properties.clientAuthentication")]
         public PartnerClientAuthentication ClientAuthentication { get; set; }
     }
 }
