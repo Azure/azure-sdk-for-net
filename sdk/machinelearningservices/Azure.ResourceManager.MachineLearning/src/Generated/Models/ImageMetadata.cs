@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies the current operating system image version this compute instance is running on. </summary>
+        [WirePath("currentImageVersion")]
         public string CurrentImageVersion { get; }
         /// <summary> Specifies the latest available operating system image version. </summary>
+        [WirePath("latestImageVersion")]
         public string LatestImageVersion { get; }
         /// <summary> Specifies whether this compute instance is running on the latest operating system image. </summary>
+        [WirePath("isLatestOsImageVersion")]
         public bool? IsLatestOSImageVersion { get; }
     }
 }

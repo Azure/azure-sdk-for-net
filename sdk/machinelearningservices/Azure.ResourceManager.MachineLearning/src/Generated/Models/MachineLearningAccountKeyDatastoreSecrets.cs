@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Storage account key. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
     }
 }

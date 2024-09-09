@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
@@ -346,6 +348,335 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepositoryUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    repositoryUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RepositoryUri))
+                {
+                    builder.Append("    repositoryUrl: ");
+                    builder.AppendLine($"'{RepositoryUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperatorNamespace), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    operatorNamespace: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperatorNamespace))
+                {
+                    builder.Append("    operatorNamespace: ");
+                    if (OperatorNamespace.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OperatorNamespace}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OperatorNamespace}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperatorInstanceName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    operatorInstanceName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperatorInstanceName))
+                {
+                    builder.Append("    operatorInstanceName: ");
+                    if (OperatorInstanceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OperatorInstanceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OperatorInstanceName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperatorType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    operatorType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperatorType))
+                {
+                    builder.Append("    operatorType: ");
+                    builder.AppendLine($"'{OperatorType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperatorParams), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    operatorParams: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperatorParams))
+                {
+                    builder.Append("    operatorParams: ");
+                    if (OperatorParams.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OperatorParams}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OperatorParams}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationProtectedSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    configurationProtectedSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+                {
+                    if (ConfigurationProtectedSettings.Any())
+                    {
+                        builder.Append("    configurationProtectedSettings: ");
+                        builder.AppendLine("{");
+                        foreach (var item in ConfigurationProtectedSettings)
+                        {
+                            builder.Append($"        '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("    }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperatorScope), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    operatorScope: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperatorScope))
+                {
+                    builder.Append("    operatorScope: ");
+                    builder.AppendLine($"'{OperatorScope.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepositoryPublicKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    repositoryPublicKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RepositoryPublicKey))
+                {
+                    builder.Append("    repositoryPublicKey: ");
+                    if (RepositoryPublicKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RepositoryPublicKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RepositoryPublicKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SshKnownHostsContents), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sshKnownHostsContents: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SshKnownHostsContents))
+                {
+                    builder.Append("    sshKnownHostsContents: ");
+                    if (SshKnownHostsContents.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SshKnownHostsContents}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SshKnownHostsContents}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHelmOperatorEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableHelmOperator: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsHelmOperatorEnabled))
+                {
+                    builder.Append("    enableHelmOperator: ");
+                    var boolValue = IsHelmOperatorEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HelmOperatorProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    helmOperatorProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HelmOperatorProperties))
+                {
+                    builder.Append("    helmOperatorProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HelmOperatorProperties, options, 4, false, "    helmOperatorProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComplianceStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    complianceStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ComplianceStatus))
+                {
+                    builder.Append("    complianceStatus: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ComplianceStatus, options, 4, false, "    complianceStatus: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KubernetesSourceControlConfigurationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesSourceControlConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -354,6 +685,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesSourceControlConfigurationData)} does not support writing '{options.Format}' format.");
             }

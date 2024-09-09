@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string AutoMLValue = "AutoML";
         private const string CommandValue = "Command";
-        private const string LabelingValue = "Labeling";
         private const string SweepValue = "Sweep";
         private const string PipelineValue = "Pipeline";
         private const string SparkValue = "Spark";
@@ -33,8 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static JobType AutoML { get; } = new JobType(AutoMLValue);
         /// <summary> Command. </summary>
         public static JobType Command { get; } = new JobType(CommandValue);
-        /// <summary> Labeling. </summary>
-        public static JobType Labeling { get; } = new JobType(LabelingValue);
         /// <summary> Sweep. </summary>
         public static JobType Sweep { get; } = new JobType(SweepValue);
         /// <summary> Pipeline. </summary>

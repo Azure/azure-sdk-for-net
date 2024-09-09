@@ -1,12 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.ResourceManager.Dns.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.ResourceManager.Resources" />
   </ItemGroup>
   <ItemGroup>

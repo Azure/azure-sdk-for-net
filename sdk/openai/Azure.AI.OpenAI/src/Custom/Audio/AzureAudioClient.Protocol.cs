@@ -41,14 +41,14 @@ internal partial class AzureAudioClient : AudioClient
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ClientResult GenerateSpeechFromText(BinaryContent content, RequestOptions options = null)
+    public override ClientResult GenerateSpeech(BinaryContent content, RequestOptions options = null)
     {
         using PipelineMessage message = CreateGenerateSpeechFromTextRequestMessage(content, options);
         return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override async Task<ClientResult> GenerateSpeechFromTextAsync(BinaryContent content, RequestOptions options = null)
+    public override async Task<ClientResult> GenerateSpeechAsync(BinaryContent content, RequestOptions options = null)
     {
         using PipelineMessage message = CreateGenerateSpeechFromTextRequestMessage(content, options);
         PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);

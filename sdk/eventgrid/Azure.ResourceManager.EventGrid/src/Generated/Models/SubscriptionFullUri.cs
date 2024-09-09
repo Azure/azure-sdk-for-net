@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The URL that represents the endpoint of the destination of an event subscription. </summary>
+        [WirePath("endpointUrl")]
         public Uri EndpointUri { get; }
     }
 }

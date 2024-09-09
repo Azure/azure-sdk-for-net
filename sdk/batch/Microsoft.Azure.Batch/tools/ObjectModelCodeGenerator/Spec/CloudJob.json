@@ -285,7 +285,7 @@
             "Name": "NetworkConfiguration",
             "SummaryComment": "The network configuration for the job.",
             "RemarksComment": null,
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": null

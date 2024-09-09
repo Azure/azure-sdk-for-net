@@ -92,38 +92,55 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Valid values are 'true' and 'false'. </summary>
+        [WirePath("balance-similar-node-groups")]
         public string BalanceSimilarNodeGroups { get; set; }
         /// <summary> If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </summary>
+        [WirePath("expander")]
         public AutoScaleExpander? Expander { get; set; }
         /// <summary> The default is 10. </summary>
+        [WirePath("max-empty-bulk-delete")]
         public string MaxEmptyBulkDelete { get; set; }
         /// <summary> The default is 600. </summary>
+        [WirePath("max-graceful-termination-sec")]
         public string MaxGracefulTerminationSec { get; set; }
         /// <summary> The default is '15m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
+        [WirePath("max-node-provision-time")]
         public string MaxNodeProvisionTime { get; set; }
         /// <summary> The default is 45. The maximum is 100 and the minimum is 0. </summary>
+        [WirePath("max-total-unready-percentage")]
         public string MaxTotalUnreadyPercentage { get; set; }
         /// <summary> For scenarios like burst/batch scale where you don't want CA to act before the kubernetes scheduler could schedule all the pods, you can tell CA to ignore unscheduled pods before they're a certain age. The default is '0s'. Values must be an integer followed by a unit ('s' for seconds, 'm' for minutes, 'h' for hours, etc). </summary>
+        [WirePath("new-pod-scale-up-delay")]
         public string NewPodScaleUpDelay { get; set; }
         /// <summary> This must be an integer. The default is 3. </summary>
+        [WirePath("ok-total-unready-count")]
         public string OkTotalUnreadyCount { get; set; }
         /// <summary> The default is '10'. Values must be an integer number of seconds. </summary>
+        [WirePath("scan-interval")]
         public string ScanIntervalInSeconds { get; set; }
         /// <summary> The default is '10m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
+        [WirePath("scale-down-delay-after-add")]
         public string ScaleDownDelayAfterAdd { get; set; }
         /// <summary> The default is the scan-interval. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
+        [WirePath("scale-down-delay-after-delete")]
         public string ScaleDownDelayAfterDelete { get; set; }
         /// <summary> The default is '3m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
+        [WirePath("scale-down-delay-after-failure")]
         public string ScaleDownDelayAfterFailure { get; set; }
         /// <summary> The default is '10m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
+        [WirePath("scale-down-unneeded-time")]
         public string ScaleDownUnneededTime { get; set; }
         /// <summary> The default is '20m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
+        [WirePath("scale-down-unready-time")]
         public string ScaleDownUnreadyTime { get; set; }
         /// <summary> The default is '0.5'. </summary>
+        [WirePath("scale-down-utilization-threshold")]
         public string ScaleDownUtilizationThreshold { get; set; }
         /// <summary> The default is true. </summary>
+        [WirePath("skip-nodes-with-local-storage")]
         public string SkipNodesWithLocalStorage { get; set; }
         /// <summary> The default is true. </summary>
+        [WirePath("skip-nodes-with-system-pods")]
         public string SkipNodesWithSystemPods { get; set; }
     }
 }

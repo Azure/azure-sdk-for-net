@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchWindowsUserConfiguration"/>. </summary>
-        /// <param name="loginMode"> Specifies login mode for the user. The default value for VirtualMachineConfiguration pools is interactive mode and for CloudServiceConfiguration pools is batch mode. </param>
+        /// <param name="loginMode"> Specifies login mode for the user. The default value is Interactive. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BatchWindowsUserConfiguration(BatchWindowsLoginMode? loginMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies login mode for the user. The default value for VirtualMachineConfiguration pools is interactive mode and for CloudServiceConfiguration pools is batch mode. </summary>
+        /// <summary> Specifies login mode for the user. The default value is Interactive. </summary>
         public BatchWindowsLoginMode? LoginMode { get; set; }
     }
 }

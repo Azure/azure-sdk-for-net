@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> The revision number of the last released object change. </summary>
+        [WirePath("lastRevisionApplied")]
         public long? LastRevisionApplied { get; }
         /// <summary> The reference to the HelmChart object used as the source to this HelmRelease. </summary>
+        [WirePath("helmChartRef")]
         public KubernetesObjectReference HelmChartRef { get; }
         /// <summary> Total number of times that the HelmRelease failed to install or upgrade. </summary>
+        [WirePath("failureCount")]
         public long? FailureCount { get; }
         /// <summary> Number of times that the HelmRelease failed to install. </summary>
+        [WirePath("installFailureCount")]
         public long? InstallFailureCount { get; }
         /// <summary> Number of times that the HelmRelease failed to upgrade. </summary>
+        [WirePath("upgradeFailureCount")]
         public long? UpgradeFailureCount { get; }
     }
 }
