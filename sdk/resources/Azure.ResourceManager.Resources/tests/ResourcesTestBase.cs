@@ -136,6 +136,32 @@ namespace Azure.ResourceManager.Resources.Tests
             Location = location
         };
 
+        protected static DeploymentStackData CreateRGDeploymentStackDataWithTemplate()
+        {
+            var data = new DeploymentStackData();
+
+            data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    "Scenario",
+                    "DeploymentTemplates",
+                    $"rg-stack-template.json")));
+
+            data.DenySettings = new DenySettings(DenySettingsMode.None);
+
+            data.ActionOnUnmanage = new ActionOnUnmanage()
+            {
+                Resources = DeploymentStacksDeleteDetachEnum.Detach,
+                ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
+                ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
+            };
+
+            data.BypassStackOutOfSyncError = false;
+
+            data.Parameters.Add("templateSpecName", new DeploymentParameter { Value = BinaryData.FromString("\"stacksTestTemplate4321\"") });
+
+            return data;
+        }
+
         protected static DeploymentStackData CreateSubDeploymentStackDataWithTemplate(AzureLocation location) {
             var data = new DeploymentStackData();
 
