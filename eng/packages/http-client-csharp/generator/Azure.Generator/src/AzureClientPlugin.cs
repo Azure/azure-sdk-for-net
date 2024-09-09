@@ -27,4 +27,12 @@ public class AzureClientPlugin : ClientModelPlugin
     public override void Configure()
     {
     }
+
+    /// <summary>
+    /// Customize the license string for Azure client SDK.
+    /// </summary>
+    public override string LicenseString => """
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+""";
 }
