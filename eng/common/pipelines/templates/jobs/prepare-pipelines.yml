@@ -5,22 +5,6 @@ parameters:
   - name: RepositoryPath
     type: string
     default: 'sdk'
-## TODO Remove these convention options once all language repos are updated to remove the usages
-  - name: Prefix
-    type: string
-    default: ''
-  - name: CIConventionOptions
-    type: string
-    default: ''
-  - name: UPConventionOptions
-    type: string
-    default: ''
-  - name: TestsConventionOptions
-    type: string
-    default: ''
-  - name: GenerateUnifiedWeekly
-    type: boolean
-    default: false
 
 jobs:
 - job:
