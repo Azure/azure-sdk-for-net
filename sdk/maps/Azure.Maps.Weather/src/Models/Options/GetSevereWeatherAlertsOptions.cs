@@ -8,12 +8,8 @@ using Azure.Maps.Weather;
 namespace Azure.Maps.Weather.Models.Options
 {
     /// <summary> Options. </summary>
-    public class GetSevereWeatherAlertsOptions
+    public class GetSevereWeatherAlertsOptions : WeatherBaseOptions
     {
-        /// <summary> Specifies the coordinates. </summary>
-        public GeoPosition Coordinates { get; set; }
-        /// <summary> Specifies the language code in which the timezone names should be returned. Please refer to <see href="https://docs.microsoft.com/azure/azure-maps/supported-languages">Supported Languages</see> </summary>
-        public WeatherLanguage Language { get; set; }
         /// <summary> Return full details for the current conditions. </summary>
         public bool? Details { get; set; }
     }

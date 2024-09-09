@@ -512,7 +512,6 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
         /// <param name="query">
         /// Coordinates through which the route is calculated, separated by colon (:) and entered in chronological order. A minimum of two waypoints is required. A single API call may contain up to 60 waypoints.
         /// A waypoint indicates location, ETA, and optional heading: latitude,longitude,ETA,heading, where
@@ -529,20 +528,18 @@ namespace Azure.Maps.Weather
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="query"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<WeatherAlongRouteResult>> GetWeatherAlongRouteAsync(string format, string query, string language, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WeatherAlongRouteResult>> GetWeatherAlongRouteAsync(string query, WeatherLanguage language, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(query, nameof(query));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetWeatherAlongRoute");
             scope.Start();
             try
             {
-                return await restClient.GetWeatherAlongRouteAsync(format, query, language, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetWeatherAlongRouteAsync("json", query, language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -561,7 +558,6 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
         /// <param name="query">
         /// Coordinates through which the route is calculated, separated by colon (:) and entered in chronological order. A minimum of two waypoints is required. A single API call may contain up to 60 waypoints.
         /// A waypoint indicates location, ETA, and optional heading: latitude,longitude,ETA,heading, where
@@ -578,20 +574,18 @@ namespace Azure.Maps.Weather
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="query"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<WeatherAlongRouteResult> GetWeatherAlongRoute(string format, string query, string language, CancellationToken cancellationToken = default)
+        public virtual Response<WeatherAlongRouteResult> GetWeatherAlongRoute(string query, WeatherLanguage language, CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(query, nameof(query));
 
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetWeatherAlongRoute");
             scope.Start();
             try
             {
-                return restClient.GetWeatherAlongRoute(format, query, language, cancellationToken);
+                return restClient.GetWeatherAlongRoute("json", query, language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -754,21 +748,16 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<ActiveStormResult>> GetTropicalStormActiveAsync(string format, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ActiveStormResult>> GetTropicalStormActiveAsync(CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormActive");
             scope.Start();
             try
             {
-                return await restClient.GetTropicalStormActiveAsync(format, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetTropicalStormActiveAsync("json", cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -787,21 +776,16 @@ namespace Azure.Maps.Weather
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<ActiveStormResult> GetTropicalStormActive(string format, CancellationToken cancellationToken = default)
+        public virtual Response<ActiveStormResult> GetTropicalStormActive(CancellationToken cancellationToken = default)
         {
-            Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
-
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormActive");
             scope.Start();
             try
             {
-                return restClient.GetTropicalStormActive(format, cancellationToken);
+                return restClient.GetTropicalStormActive("json", cancellationToken);
             }
             catch (Exception e)
             {
