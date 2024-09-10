@@ -15,16 +15,16 @@ using Azure.ResourceManager.StandbyPool.Models;
 
 namespace Azure.ResourceManager.StandbyPool
 {
-    public partial class StandbyVirtualMachinePoolRuntimeViewResourceData : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachinePoolRuntimeViewResourceData>
+    public partial class StandbyVirtualMachinePoolRuntimeViewData : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachinePoolRuntimeViewData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachinePoolRuntimeViewResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachinePoolRuntimeViewData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StandbyVirtualMachinePoolRuntimeViewResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StandbyVirtualMachinePoolRuntimeViewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolRuntimeViewResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolRuntimeViewData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolRuntimeViewResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolRuntimeViewData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.StandbyPool
             writer.WriteEndObject();
         }
 
-        StandbyVirtualMachinePoolRuntimeViewResourceData IJsonModel<StandbyVirtualMachinePoolRuntimeViewResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StandbyVirtualMachinePoolRuntimeViewData IJsonModel<StandbyVirtualMachinePoolRuntimeViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolRuntimeViewResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolRuntimeViewData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolRuntimeViewResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolRuntimeViewData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStandbyVirtualMachinePoolRuntimeViewResourceData(document.RootElement, options);
+            return DeserializeStandbyVirtualMachinePoolRuntimeViewData(document.RootElement, options);
         }
 
-        internal static StandbyVirtualMachinePoolRuntimeViewResourceData DeserializeStandbyVirtualMachinePoolRuntimeViewResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StandbyVirtualMachinePoolRuntimeViewData DeserializeStandbyVirtualMachinePoolRuntimeViewData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 return null;
             }
-            StandbyVirtualMachinePoolRuntimeViewResourceProperties properties = default;
+            StandbyVirtualMachinePoolRuntimeViewProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StandbyPool
                     {
                         continue;
                     }
-                    properties = StandbyVirtualMachinePoolRuntimeViewResourceProperties.DeserializeStandbyVirtualMachinePoolRuntimeViewResourceProperties(property.Value, options);
+                    properties = StandbyVirtualMachinePoolRuntimeViewProperties.DeserializeStandbyVirtualMachinePoolRuntimeViewProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StandbyPool
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StandbyVirtualMachinePoolRuntimeViewResourceData(
+            return new StandbyVirtualMachinePoolRuntimeViewData(
                 id,
                 name,
                 type,
@@ -148,35 +148,35 @@ namespace Azure.ResourceManager.StandbyPool
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StandbyVirtualMachinePoolRuntimeViewResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StandbyVirtualMachinePoolRuntimeViewData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolRuntimeViewResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolRuntimeViewData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolRuntimeViewResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolRuntimeViewData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StandbyVirtualMachinePoolRuntimeViewResourceData IPersistableModel<StandbyVirtualMachinePoolRuntimeViewResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StandbyVirtualMachinePoolRuntimeViewData IPersistableModel<StandbyVirtualMachinePoolRuntimeViewData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolRuntimeViewResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolRuntimeViewData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeStandbyVirtualMachinePoolRuntimeViewResourceData(document.RootElement, options);
+                        return DeserializeStandbyVirtualMachinePoolRuntimeViewData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolRuntimeViewResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolRuntimeViewData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StandbyVirtualMachinePoolRuntimeViewResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StandbyVirtualMachinePoolRuntimeViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

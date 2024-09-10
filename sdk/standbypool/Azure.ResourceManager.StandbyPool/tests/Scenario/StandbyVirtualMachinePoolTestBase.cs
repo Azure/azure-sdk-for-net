@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         protected async Task<StandbyVirtualMachinePoolResource> CreateStandbyVirtualMachinePoolResource(ResourceGroupResource resourceGroup, string standbyVirtualMachinePoolName, long maxReadyCapacity, AzureLocation location, ResourceIdentifier vmssId, string virtualMachineState = "Running", long minReadyCapacity = 1)
         {
-            StandbyVirtualMachinePoolResourceProperties properties = new StandbyVirtualMachinePoolResourceProperties()
+            StandbyVirtualMachinePoolProperties properties = new StandbyVirtualMachinePoolProperties()
             {
                 VirtualMachineState = virtualMachineState,
                 ElasticityProfile = new Models.StandbyVirtualMachinePoolElasticityProfile()

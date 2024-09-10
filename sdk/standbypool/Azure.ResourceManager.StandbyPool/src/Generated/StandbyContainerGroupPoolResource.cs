@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.StandbyPool
 
         /// <summary> Gets a collection of StandbyContainerGroupPoolRuntimeViewResources in the StandbyContainerGroupPool. </summary>
         /// <returns> An object representing collection of StandbyContainerGroupPoolRuntimeViewResources and their operations over a StandbyContainerGroupPoolRuntimeViewResource. </returns>
-        public virtual StandbyContainerGroupPoolRuntimeViewResourceCollection GetStandbyContainerGroupPoolRuntimeViewResources()
+        public virtual StandbyContainerGroupPoolRuntimeViewCollection GetStandbyContainerGroupPoolRuntimeViews()
         {
-            return GetCachedClient(client => new StandbyContainerGroupPoolRuntimeViewResourceCollection(client, Id));
+            return GetCachedClient(client => new StandbyContainerGroupPoolRuntimeViewCollection(client, Id));
         }
 
         /// <summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StandbyContainerGroupPoolRuntimeViewResource>> GetStandbyContainerGroupPoolRuntimeViewResourceAsync(string runtimeView, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StandbyContainerGroupPoolRuntimeViewResource>> GetStandbyContainerGroupPoolRuntimeViewAsync(string runtimeView, CancellationToken cancellationToken = default)
         {
-            return await GetStandbyContainerGroupPoolRuntimeViewResources().GetAsync(runtimeView, cancellationToken).ConfigureAwait(false);
+            return await GetStandbyContainerGroupPoolRuntimeViews().GetAsync(runtimeView, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StandbyContainerGroupPoolRuntimeViewResource> GetStandbyContainerGroupPoolRuntimeViewResource(string runtimeView, CancellationToken cancellationToken = default)
+        public virtual Response<StandbyContainerGroupPoolRuntimeViewResource> GetStandbyContainerGroupPoolRuntimeView(string runtimeView, CancellationToken cancellationToken = default)
         {
-            return GetStandbyContainerGroupPoolRuntimeViewResources().Get(runtimeView, cancellationToken);
+            return GetStandbyContainerGroupPoolRuntimeViews().Get(runtimeView, cancellationToken);
         }
 
         /// <summary>

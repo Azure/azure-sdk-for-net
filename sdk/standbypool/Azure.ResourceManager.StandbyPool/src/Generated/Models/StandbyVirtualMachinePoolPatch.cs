@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolPatch(IDictionary<string, string> tags, StandbyVirtualMachinePoolResourceUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachinePoolPatch(IDictionary<string, string> tags, StandbyVirtualMachinePoolUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Properties = properties;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
-        public StandbyVirtualMachinePoolResourceUpdateProperties Properties { get; set; }
+        public StandbyVirtualMachinePoolUpdateProperties Properties { get; set; }
     }
 }

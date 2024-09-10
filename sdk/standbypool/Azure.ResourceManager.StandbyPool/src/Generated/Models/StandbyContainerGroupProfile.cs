@@ -8,16 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.StandbyPool.Models;
 
-namespace Azure.ResourceManager.StandbyPool
+namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary>
-    /// A class representing the StandbyVirtualMachinePoolRuntimeViewResource data model.
-    /// Contains information about a standby virtual machine pool as last known by the StandbyPool resource provider.
-    /// </summary>
-    public partial class StandbyVirtualMachinePoolRuntimeViewResourceData : ResourceData
+    /// <summary> Details of the ContainerGroupProfile. </summary>
+    public partial class StandbyContainerGroupProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +46,35 @@ namespace Azure.ResourceManager.StandbyPool
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolRuntimeViewResourceData"/>. </summary>
-        internal StandbyVirtualMachinePoolRuntimeViewResourceData()
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupProfile"/>. </summary>
+        /// <param name="id"> Specifies container group profile id of standby container groups. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public StandbyContainerGroupProfile(ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
+            Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolRuntimeViewResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupProfile"/>. </summary>
+        /// <param name="id"> Specifies container group profile id of standby container groups. </param>
+        /// <param name="revision"> Specifies revision of container group profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolRuntimeViewResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StandbyVirtualMachinePoolRuntimeViewResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StandbyContainerGroupProfile(ResourceIdentifier id, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            Id = id;
+            Revision = revision;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public StandbyVirtualMachinePoolRuntimeViewResourceProperties Properties { get; }
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupProfile"/> for deserialization. </summary>
+        internal StandbyContainerGroupProfile()
+        {
+        }
+
+        /// <summary> Specifies container group profile id of standby container groups. </summary>
+        public ResourceIdentifier Id { get; set; }
+        /// <summary> Specifies revision of container group profile. </summary>
+        public long? Revision { get; set; }
     }
 }

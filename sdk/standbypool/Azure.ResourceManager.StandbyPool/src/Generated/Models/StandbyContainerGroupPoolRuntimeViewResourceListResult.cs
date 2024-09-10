@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewResourceListResult"/>. </summary>
         /// <param name="value"> The StandbyContainerGroupPoolRuntimeViewResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal StandbyContainerGroupPoolRuntimeViewResourceListResult(IEnumerable<StandbyContainerGroupPoolRuntimeViewResourceData> value)
+        internal StandbyContainerGroupPoolRuntimeViewResourceListResult(IEnumerable<StandbyContainerGroupPoolRuntimeViewData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="value"> The StandbyContainerGroupPoolRuntimeViewResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolRuntimeViewResourceListResult(IReadOnlyList<StandbyContainerGroupPoolRuntimeViewResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolRuntimeViewResourceListResult(IReadOnlyList<StandbyContainerGroupPoolRuntimeViewData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         }
 
         /// <summary> The StandbyContainerGroupPoolRuntimeViewResource items on this page. </summary>
-        public IReadOnlyList<StandbyContainerGroupPoolRuntimeViewResourceData> Value { get; }
+        public IReadOnlyList<StandbyContainerGroupPoolRuntimeViewData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

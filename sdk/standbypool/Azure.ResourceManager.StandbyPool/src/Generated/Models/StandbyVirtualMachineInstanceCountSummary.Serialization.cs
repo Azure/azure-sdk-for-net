@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    public partial class VirtualMachineInstanceCountSummary : IUtf8JsonSerializable, IJsonModel<VirtualMachineInstanceCountSummary>
+    public partial class StandbyVirtualMachineInstanceCountSummary : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachineInstanceCountSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInstanceCountSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachineInstanceCountSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VirtualMachineInstanceCountSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StandbyVirtualMachineInstanceCountSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceCountSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineInstanceCountSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstanceCountSummary)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyVirtualMachineInstanceCountSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.StandbyPool.Models
             writer.WriteEndObject();
         }
 
-        VirtualMachineInstanceCountSummary IJsonModel<VirtualMachineInstanceCountSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StandbyVirtualMachineInstanceCountSummary IJsonModel<StandbyVirtualMachineInstanceCountSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceCountSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineInstanceCountSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstanceCountSummary)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyVirtualMachineInstanceCountSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineInstanceCountSummary(document.RootElement, options);
+            return DeserializeStandbyVirtualMachineInstanceCountSummary(document.RootElement, options);
         }
 
-        internal static VirtualMachineInstanceCountSummary DeserializeVirtualMachineInstanceCountSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StandbyVirtualMachineInstanceCountSummary DeserializeStandbyVirtualMachineInstanceCountSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualMachineInstanceCountSummary(zone, instanceCountsByState, serializedAdditionalRawData);
+            return new StandbyVirtualMachineInstanceCountSummary(zone, instanceCountsByState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VirtualMachineInstanceCountSummary>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StandbyVirtualMachineInstanceCountSummary>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceCountSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineInstanceCountSummary>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstanceCountSummary)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachineInstanceCountSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VirtualMachineInstanceCountSummary IPersistableModel<VirtualMachineInstanceCountSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StandbyVirtualMachineInstanceCountSummary IPersistableModel<StandbyVirtualMachineInstanceCountSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceCountSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineInstanceCountSummary>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeVirtualMachineInstanceCountSummary(document.RootElement, options);
+                        return DeserializeStandbyVirtualMachineInstanceCountSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstanceCountSummary)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachineInstanceCountSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VirtualMachineInstanceCountSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StandbyVirtualMachineInstanceCountSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

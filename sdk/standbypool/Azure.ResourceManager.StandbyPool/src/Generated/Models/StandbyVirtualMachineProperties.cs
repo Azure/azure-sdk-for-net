@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.StandbyPool.Models
 {
     /// <summary> Details of the StandbyVirtualMachine. </summary>
-    public partial class StandbyVirtualMachineResourceProperties
+    public partial class StandbyVirtualMachineProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,35 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineProperties"/>. </summary>
         /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineResourceId"/> is null. </exception>
-        internal StandbyVirtualMachineResourceProperties(ResourceIdentifier virtualMachineResourceId)
+        internal StandbyVirtualMachineProperties(ResourceIdentifier virtualMachineResourceId)
         {
             Argument.AssertNotNull(virtualMachineResourceId, nameof(virtualMachineResourceId));
 
             VirtualMachineResourceId = virtualMachineResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineProperties"/>. </summary>
         /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachineResourceProperties(ResourceIdentifier virtualMachineResourceId, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachineProperties(ResourceIdentifier virtualMachineResourceId, StandbyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualMachineResourceId = virtualMachineResourceId;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResourceProperties"/> for deserialization. </summary>
-        internal StandbyVirtualMachineResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineProperties"/> for deserialization. </summary>
+        internal StandbyVirtualMachineProperties()
         {
         }
 
         /// <summary> Resource id of the virtual machine. </summary>
         public ResourceIdentifier VirtualMachineResourceId { get; }
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public StandbyProvisioningState? ProvisioningState { get; }
     }
 }

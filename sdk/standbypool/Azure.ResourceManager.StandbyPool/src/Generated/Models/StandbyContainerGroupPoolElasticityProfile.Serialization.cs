@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             long maxReadyCapacity = default;
-            RefillPolicy? refillPolicy = default;
+            StandbyRefillPolicy? refillPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    refillPolicy = new RefillPolicy(property.Value.GetString());
+                    refillPolicy = new StandbyRefillPolicy(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

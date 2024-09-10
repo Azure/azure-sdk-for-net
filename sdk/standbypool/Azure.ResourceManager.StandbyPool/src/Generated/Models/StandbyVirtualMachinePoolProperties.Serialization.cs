@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    public partial class StandbyVirtualMachinePoolResourceUpdateProperties : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachinePoolResourceUpdateProperties>
+    public partial class StandbyVirtualMachinePoolProperties : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachinePoolProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachinePoolResourceUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachinePoolProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StandbyVirtualMachinePoolResourceUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StandbyVirtualMachinePoolProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolResourceUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,15 +31,17 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 writer.WritePropertyName("elasticityProfile"u8);
                 writer.WriteObjectValue(ElasticityProfile, options);
             }
-            if (Optional.IsDefined(VirtualMachineState))
-            {
-                writer.WritePropertyName("virtualMachineState"u8);
-                writer.WriteStringValue(VirtualMachineState.Value.ToString());
-            }
+            writer.WritePropertyName("virtualMachineState"u8);
+            writer.WriteStringValue(VirtualMachineState.ToString());
             if (Optional.IsDefined(AttachedVirtualMachineScaleSetId))
             {
                 writer.WritePropertyName("attachedVirtualMachineScaleSetId"u8);
                 writer.WriteStringValue(AttachedVirtualMachineScaleSetId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,19 +61,19 @@ namespace Azure.ResourceManager.StandbyPool.Models
             writer.WriteEndObject();
         }
 
-        StandbyVirtualMachinePoolResourceUpdateProperties IJsonModel<StandbyVirtualMachinePoolResourceUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StandbyVirtualMachinePoolProperties IJsonModel<StandbyVirtualMachinePoolProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolResourceUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStandbyVirtualMachinePoolResourceUpdateProperties(document.RootElement, options);
+            return DeserializeStandbyVirtualMachinePoolProperties(document.RootElement, options);
         }
 
-        internal static StandbyVirtualMachinePoolResourceUpdateProperties DeserializeStandbyVirtualMachinePoolResourceUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StandbyVirtualMachinePoolProperties DeserializeStandbyVirtualMachinePoolProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,8 +82,9 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             StandbyVirtualMachinePoolElasticityProfile elasticityProfile = default;
-            VirtualMachineState? virtualMachineState = default;
+            StandbyVirtualMachineState virtualMachineState = default;
             ResourceIdentifier attachedVirtualMachineScaleSetId = default;
+            StandbyProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,11 +100,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
                 if (property.NameEquals("virtualMachineState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    virtualMachineState = new VirtualMachineState(property.Value.GetString());
+                    virtualMachineState = new StandbyVirtualMachineState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("attachedVirtualMachineScaleSetId"u8))
@@ -113,44 +112,53 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     attachedVirtualMachineScaleSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new StandbyProvisioningState(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StandbyVirtualMachinePoolResourceUpdateProperties(elasticityProfile, virtualMachineState, attachedVirtualMachineScaleSetId, serializedAdditionalRawData);
+            return new StandbyVirtualMachinePoolProperties(elasticityProfile, virtualMachineState, attachedVirtualMachineScaleSetId, provisioningState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StandbyVirtualMachinePoolResourceUpdateProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StandbyVirtualMachinePoolProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolResourceUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StandbyVirtualMachinePoolResourceUpdateProperties IPersistableModel<StandbyVirtualMachinePoolResourceUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StandbyVirtualMachinePoolProperties IPersistableModel<StandbyVirtualMachinePoolProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeStandbyVirtualMachinePoolResourceUpdateProperties(document.RootElement, options);
+                        return DeserializeStandbyVirtualMachinePoolProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolResourceUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StandbyVirtualMachinePoolResourceUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StandbyVirtualMachinePoolProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

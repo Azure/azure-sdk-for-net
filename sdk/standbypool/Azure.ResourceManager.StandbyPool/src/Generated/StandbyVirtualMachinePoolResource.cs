@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.StandbyPool
 
         /// <summary> Gets a collection of StandbyVirtualMachinePoolRuntimeViewResources in the StandbyVirtualMachinePool. </summary>
         /// <returns> An object representing collection of StandbyVirtualMachinePoolRuntimeViewResources and their operations over a StandbyVirtualMachinePoolRuntimeViewResource. </returns>
-        public virtual StandbyVirtualMachinePoolRuntimeViewResourceCollection GetStandbyVirtualMachinePoolRuntimeViewResources()
+        public virtual StandbyVirtualMachinePoolRuntimeViewCollection GetStandbyVirtualMachinePoolRuntimeViews()
         {
-            return GetCachedClient(client => new StandbyVirtualMachinePoolRuntimeViewResourceCollection(client, Id));
+            return GetCachedClient(client => new StandbyVirtualMachinePoolRuntimeViewCollection(client, Id));
         }
 
         /// <summary>
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StandbyVirtualMachinePoolRuntimeViewResource>> GetStandbyVirtualMachinePoolRuntimeViewResourceAsync(string runtimeView, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StandbyVirtualMachinePoolRuntimeViewResource>> GetStandbyVirtualMachinePoolRuntimeViewAsync(string runtimeView, CancellationToken cancellationToken = default)
         {
-            return await GetStandbyVirtualMachinePoolRuntimeViewResources().GetAsync(runtimeView, cancellationToken).ConfigureAwait(false);
+            return await GetStandbyVirtualMachinePoolRuntimeViews().GetAsync(runtimeView, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StandbyVirtualMachinePoolRuntimeViewResource> GetStandbyVirtualMachinePoolRuntimeViewResource(string runtimeView, CancellationToken cancellationToken = default)
+        public virtual Response<StandbyVirtualMachinePoolRuntimeViewResource> GetStandbyVirtualMachinePoolRuntimeView(string runtimeView, CancellationToken cancellationToken = default)
         {
-            return GetStandbyVirtualMachinePoolRuntimeViewResources().Get(runtimeView, cancellationToken);
+            return GetStandbyVirtualMachinePoolRuntimeViews().Get(runtimeView, cancellationToken);
         }
 
         /// <summary>

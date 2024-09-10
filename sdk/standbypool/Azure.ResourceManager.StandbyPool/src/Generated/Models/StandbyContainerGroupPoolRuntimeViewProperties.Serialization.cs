@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    public partial class StandbyContainerGroupPoolRuntimeViewResourceProperties : IUtf8JsonSerializable, IJsonModel<StandbyContainerGroupPoolRuntimeViewResourceProperties>
+    public partial class StandbyContainerGroupPoolRuntimeViewProperties : IUtf8JsonSerializable, IJsonModel<StandbyContainerGroupPoolRuntimeViewProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPoolRuntimeViewResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPoolRuntimeViewProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StandbyContainerGroupPoolRuntimeViewResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StandbyContainerGroupPoolRuntimeViewProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolRuntimeViewResourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolRuntimeViewProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.StandbyPool.Models
             writer.WriteEndObject();
         }
 
-        StandbyContainerGroupPoolRuntimeViewResourceProperties IJsonModel<StandbyContainerGroupPoolRuntimeViewResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StandbyContainerGroupPoolRuntimeViewProperties IJsonModel<StandbyContainerGroupPoolRuntimeViewProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolRuntimeViewResourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyContainerGroupPoolRuntimeViewProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStandbyContainerGroupPoolRuntimeViewResourceProperties(document.RootElement, options);
+            return DeserializeStandbyContainerGroupPoolRuntimeViewProperties(document.RootElement, options);
         }
 
-        internal static StandbyContainerGroupPoolRuntimeViewResourceProperties DeserializeStandbyContainerGroupPoolRuntimeViewResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StandbyContainerGroupPoolRuntimeViewProperties DeserializeStandbyContainerGroupPoolRuntimeViewProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             IReadOnlyList<ContainerGroupInstanceCountSummary> instanceCountSummary = default;
-            ProvisioningState? provisioningState = default;
+            StandbyProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new StandbyProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -110,38 +110,38 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StandbyContainerGroupPoolRuntimeViewResourceProperties(instanceCountSummary, provisioningState, serializedAdditionalRawData);
+            return new StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary, provisioningState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StandbyContainerGroupPoolRuntimeViewResourceProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StandbyContainerGroupPoolRuntimeViewProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolRuntimeViewResourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolRuntimeViewProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StandbyContainerGroupPoolRuntimeViewResourceProperties IPersistableModel<StandbyContainerGroupPoolRuntimeViewResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StandbyContainerGroupPoolRuntimeViewProperties IPersistableModel<StandbyContainerGroupPoolRuntimeViewProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeStandbyContainerGroupPoolRuntimeViewResourceProperties(document.RootElement, options);
+                        return DeserializeStandbyContainerGroupPoolRuntimeViewProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolRuntimeViewResourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolRuntimeViewProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StandbyContainerGroupPoolRuntimeViewResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StandbyContainerGroupPoolRuntimeViewProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 return null;
             }
-            StandbyContainerGroupPoolResourceProperties properties = default;
+            StandbyContainerGroupPoolProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StandbyPool
                     {
                         continue;
                     }
-                    properties = StandbyContainerGroupPoolResourceProperties.DeserializeStandbyContainerGroupPoolResourceProperties(property.Value, options);
+                    properties = StandbyContainerGroupPoolProperties.DeserializeStandbyContainerGroupPoolProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.StandbyPool
     /// <summary>
     /// A class representing a collection of <see cref="StandbyVirtualMachinePoolRuntimeViewResource"/> and their operations.
     /// Each <see cref="StandbyVirtualMachinePoolRuntimeViewResource"/> in the collection will belong to the same instance of <see cref="StandbyVirtualMachinePoolResource"/>.
-    /// To get a <see cref="StandbyVirtualMachinePoolRuntimeViewResourceCollection"/> instance call the GetStandbyVirtualMachinePoolRuntimeViewResources method from an instance of <see cref="StandbyVirtualMachinePoolResource"/>.
+    /// To get a <see cref="StandbyVirtualMachinePoolRuntimeViewCollection"/> instance call the GetStandbyVirtualMachinePoolRuntimeViews method from an instance of <see cref="StandbyVirtualMachinePoolResource"/>.
     /// </summary>
-    public partial class StandbyVirtualMachinePoolRuntimeViewResourceCollection : ArmCollection, IEnumerable<StandbyVirtualMachinePoolRuntimeViewResource>, IAsyncEnumerable<StandbyVirtualMachinePoolRuntimeViewResource>
+    public partial class StandbyVirtualMachinePoolRuntimeViewCollection : ArmCollection, IEnumerable<StandbyVirtualMachinePoolRuntimeViewResource>, IAsyncEnumerable<StandbyVirtualMachinePoolRuntimeViewResource>
     {
-        private readonly ClientDiagnostics _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsClientDiagnostics;
-        private readonly StandbyVirtualMachinePoolRuntimeViewsRestOperations _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient;
+        private readonly ClientDiagnostics _standbyVirtualMachinePoolRuntimeViewClientDiagnostics;
+        private readonly StandbyVirtualMachinePoolRuntimeViewsRestOperations _standbyVirtualMachinePoolRuntimeViewRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyVirtualMachinePoolRuntimeViewResourceCollection"/> class for mocking. </summary>
-        protected StandbyVirtualMachinePoolRuntimeViewResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="StandbyVirtualMachinePoolRuntimeViewCollection"/> class for mocking. </summary>
+        protected StandbyVirtualMachinePoolRuntimeViewCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyVirtualMachinePoolRuntimeViewResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StandbyVirtualMachinePoolRuntimeViewCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal StandbyVirtualMachinePoolRuntimeViewResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StandbyVirtualMachinePoolRuntimeViewCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyVirtualMachinePoolRuntimeViewResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(StandbyVirtualMachinePoolRuntimeViewResource.ResourceType, out string standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsApiVersion);
-            _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient = new StandbyVirtualMachinePoolRuntimeViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsApiVersion);
+            _standbyVirtualMachinePoolRuntimeViewClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyVirtualMachinePoolRuntimeViewResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(StandbyVirtualMachinePoolRuntimeViewResource.ResourceType, out string standbyVirtualMachinePoolRuntimeViewApiVersion);
+            _standbyVirtualMachinePoolRuntimeViewRestClient = new StandbyVirtualMachinePoolRuntimeViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyVirtualMachinePoolRuntimeViewApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewResourceCollection.Get");
+            using var scope = _standbyVirtualMachinePoolRuntimeViewClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewCollection.Get");
             scope.Start();
             try
             {
-                var response = await _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken).ConfigureAwait(false);
+                var response = await _standbyVirtualMachinePoolRuntimeViewRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StandbyVirtualMachinePoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewResourceCollection.Get");
+            using var scope = _standbyVirtualMachinePoolRuntimeViewClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewCollection.Get");
             scope.Start();
             try
             {
-                var response = _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken);
+                var response = _standbyVirtualMachinePoolRuntimeViewRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StandbyVirtualMachinePoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <returns> An async collection of <see cref="StandbyVirtualMachinePoolRuntimeViewResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StandbyVirtualMachinePoolRuntimeViewResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient.CreateListByStandbyPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient.CreateListByStandbyPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyVirtualMachinePoolRuntimeViewResource(Client, StandbyVirtualMachinePoolRuntimeViewResourceData.DeserializeStandbyVirtualMachinePoolRuntimeViewResourceData(e)), _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsClientDiagnostics, Pipeline, "StandbyVirtualMachinePoolRuntimeViewResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyVirtualMachinePoolRuntimeViewRestClient.CreateListByStandbyPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyVirtualMachinePoolRuntimeViewRestClient.CreateListByStandbyPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyVirtualMachinePoolRuntimeViewResource(Client, StandbyVirtualMachinePoolRuntimeViewData.DeserializeStandbyVirtualMachinePoolRuntimeViewData(e)), _standbyVirtualMachinePoolRuntimeViewClientDiagnostics, Pipeline, "StandbyVirtualMachinePoolRuntimeViewCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <returns> A collection of <see cref="StandbyVirtualMachinePoolRuntimeViewResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StandbyVirtualMachinePoolRuntimeViewResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient.CreateListByStandbyPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient.CreateListByStandbyPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyVirtualMachinePoolRuntimeViewResource(Client, StandbyVirtualMachinePoolRuntimeViewResourceData.DeserializeStandbyVirtualMachinePoolRuntimeViewResourceData(e)), _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsClientDiagnostics, Pipeline, "StandbyVirtualMachinePoolRuntimeViewResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyVirtualMachinePoolRuntimeViewRestClient.CreateListByStandbyPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyVirtualMachinePoolRuntimeViewRestClient.CreateListByStandbyPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyVirtualMachinePoolRuntimeViewResource(Client, StandbyVirtualMachinePoolRuntimeViewData.DeserializeStandbyVirtualMachinePoolRuntimeViewData(e)), _standbyVirtualMachinePoolRuntimeViewClientDiagnostics, Pipeline, "StandbyVirtualMachinePoolRuntimeViewCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewResourceCollection.Exists");
+            using var scope = _standbyVirtualMachinePoolRuntimeViewClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _standbyVirtualMachinePoolRuntimeViewRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewResourceCollection.Exists");
+            using var scope = _standbyVirtualMachinePoolRuntimeViewClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewCollection.Exists");
             scope.Start();
             try
             {
-                var response = _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken);
+                var response = _standbyVirtualMachinePoolRuntimeViewRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,11 +316,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewResourceCollection.GetIfExists");
+            using var scope = _standbyVirtualMachinePoolRuntimeViewClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _standbyVirtualMachinePoolRuntimeViewRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<StandbyVirtualMachinePoolRuntimeViewResource>(response.GetRawResponse());
                 return Response.FromValue(new StandbyVirtualMachinePoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewResourceCollection.GetIfExists");
+            using var scope = _standbyVirtualMachinePoolRuntimeViewClientDiagnostics.CreateScope("StandbyVirtualMachinePoolRuntimeViewCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _standbyVirtualMachinePoolRuntimeViewResourceStandbyVirtualMachinePoolRuntimeViewsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken);
+                var response = _standbyVirtualMachinePoolRuntimeViewRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<StandbyVirtualMachinePoolRuntimeViewResource>(response.GetRawResponse());
                 return Response.FromValue(new StandbyVirtualMachinePoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());

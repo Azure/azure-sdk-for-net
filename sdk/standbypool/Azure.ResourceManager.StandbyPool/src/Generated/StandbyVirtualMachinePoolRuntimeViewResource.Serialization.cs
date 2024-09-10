@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StandbyPool
 {
-    public partial class StandbyVirtualMachinePoolRuntimeViewResource : IJsonModel<StandbyVirtualMachinePoolRuntimeViewResourceData>
+    public partial class StandbyVirtualMachinePoolRuntimeViewResource : IJsonModel<StandbyVirtualMachinePoolRuntimeViewData>
     {
-        void IJsonModel<StandbyVirtualMachinePoolRuntimeViewResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StandbyVirtualMachinePoolRuntimeViewResourceData>)Data).Write(writer, options);
+        void IJsonModel<StandbyVirtualMachinePoolRuntimeViewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StandbyVirtualMachinePoolRuntimeViewData>)Data).Write(writer, options);
 
-        StandbyVirtualMachinePoolRuntimeViewResourceData IJsonModel<StandbyVirtualMachinePoolRuntimeViewResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StandbyVirtualMachinePoolRuntimeViewResourceData>)Data).Create(ref reader, options);
+        StandbyVirtualMachinePoolRuntimeViewData IJsonModel<StandbyVirtualMachinePoolRuntimeViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StandbyVirtualMachinePoolRuntimeViewData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StandbyVirtualMachinePoolRuntimeViewResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StandbyVirtualMachinePoolRuntimeViewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        StandbyVirtualMachinePoolRuntimeViewResourceData IPersistableModel<StandbyVirtualMachinePoolRuntimeViewResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StandbyVirtualMachinePoolRuntimeViewResourceData>(data, options);
+        StandbyVirtualMachinePoolRuntimeViewData IPersistableModel<StandbyVirtualMachinePoolRuntimeViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StandbyVirtualMachinePoolRuntimeViewData>(data, options);
 
-        string IPersistableModel<StandbyVirtualMachinePoolRuntimeViewResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StandbyVirtualMachinePoolRuntimeViewResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StandbyVirtualMachinePoolRuntimeViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StandbyVirtualMachinePoolRuntimeViewData>)Data).GetFormatFromOptions(options);
     }
 }

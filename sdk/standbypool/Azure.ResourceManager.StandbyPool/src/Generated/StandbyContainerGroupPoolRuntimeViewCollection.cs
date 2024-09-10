@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.StandbyPool
     /// <summary>
     /// A class representing a collection of <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> and their operations.
     /// Each <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> in the collection will belong to the same instance of <see cref="StandbyContainerGroupPoolResource"/>.
-    /// To get a <see cref="StandbyContainerGroupPoolRuntimeViewResourceCollection"/> instance call the GetStandbyContainerGroupPoolRuntimeViewResources method from an instance of <see cref="StandbyContainerGroupPoolResource"/>.
+    /// To get a <see cref="StandbyContainerGroupPoolRuntimeViewCollection"/> instance call the GetStandbyContainerGroupPoolRuntimeViews method from an instance of <see cref="StandbyContainerGroupPoolResource"/>.
     /// </summary>
-    public partial class StandbyContainerGroupPoolRuntimeViewResourceCollection : ArmCollection, IEnumerable<StandbyContainerGroupPoolRuntimeViewResource>, IAsyncEnumerable<StandbyContainerGroupPoolRuntimeViewResource>
+    public partial class StandbyContainerGroupPoolRuntimeViewCollection : ArmCollection, IEnumerable<StandbyContainerGroupPoolRuntimeViewResource>, IAsyncEnumerable<StandbyContainerGroupPoolRuntimeViewResource>
     {
-        private readonly ClientDiagnostics _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsClientDiagnostics;
-        private readonly StandbyContainerGroupPoolRuntimeViewsRestOperations _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient;
+        private readonly ClientDiagnostics _standbyContainerGroupPoolRuntimeViewClientDiagnostics;
+        private readonly StandbyContainerGroupPoolRuntimeViewsRestOperations _standbyContainerGroupPoolRuntimeViewRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyContainerGroupPoolRuntimeViewResourceCollection"/> class for mocking. </summary>
-        protected StandbyContainerGroupPoolRuntimeViewResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="StandbyContainerGroupPoolRuntimeViewCollection"/> class for mocking. </summary>
+        protected StandbyContainerGroupPoolRuntimeViewCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyContainerGroupPoolRuntimeViewResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StandbyContainerGroupPoolRuntimeViewCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal StandbyContainerGroupPoolRuntimeViewResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StandbyContainerGroupPoolRuntimeViewCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyContainerGroupPoolRuntimeViewResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(StandbyContainerGroupPoolRuntimeViewResource.ResourceType, out string standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsApiVersion);
-            _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient = new StandbyContainerGroupPoolRuntimeViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsApiVersion);
+            _standbyContainerGroupPoolRuntimeViewClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyContainerGroupPoolRuntimeViewResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(StandbyContainerGroupPoolRuntimeViewResource.ResourceType, out string standbyContainerGroupPoolRuntimeViewApiVersion);
+            _standbyContainerGroupPoolRuntimeViewRestClient = new StandbyContainerGroupPoolRuntimeViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyContainerGroupPoolRuntimeViewApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewResourceCollection.Get");
+            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Get");
             scope.Start();
             try
             {
-                var response = await _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken).ConfigureAwait(false);
+                var response = await _standbyContainerGroupPoolRuntimeViewRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StandbyContainerGroupPoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewResourceCollection.Get");
+            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Get");
             scope.Start();
             try
             {
-                var response = _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken);
+                var response = _standbyContainerGroupPoolRuntimeViewRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StandbyContainerGroupPoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <returns> An async collection of <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StandbyContainerGroupPoolRuntimeViewResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient.CreateListByStandbyPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient.CreateListByStandbyPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolRuntimeViewResource(Client, StandbyContainerGroupPoolRuntimeViewResourceData.DeserializeStandbyContainerGroupPoolRuntimeViewResourceData(e)), _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsClientDiagnostics, Pipeline, "StandbyContainerGroupPoolRuntimeViewResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyContainerGroupPoolRuntimeViewRestClient.CreateListByStandbyPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyContainerGroupPoolRuntimeViewRestClient.CreateListByStandbyPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolRuntimeViewResource(Client, StandbyContainerGroupPoolRuntimeViewData.DeserializeStandbyContainerGroupPoolRuntimeViewData(e)), _standbyContainerGroupPoolRuntimeViewClientDiagnostics, Pipeline, "StandbyContainerGroupPoolRuntimeViewCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.StandbyPool
         /// <returns> A collection of <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StandbyContainerGroupPoolRuntimeViewResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient.CreateListByStandbyPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient.CreateListByStandbyPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolRuntimeViewResource(Client, StandbyContainerGroupPoolRuntimeViewResourceData.DeserializeStandbyContainerGroupPoolRuntimeViewResourceData(e)), _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsClientDiagnostics, Pipeline, "StandbyContainerGroupPoolRuntimeViewResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyContainerGroupPoolRuntimeViewRestClient.CreateListByStandbyPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyContainerGroupPoolRuntimeViewRestClient.CreateListByStandbyPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolRuntimeViewResource(Client, StandbyContainerGroupPoolRuntimeViewData.DeserializeStandbyContainerGroupPoolRuntimeViewData(e)), _standbyContainerGroupPoolRuntimeViewClientDiagnostics, Pipeline, "StandbyContainerGroupPoolRuntimeViewCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewResourceCollection.Exists");
+            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _standbyContainerGroupPoolRuntimeViewRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewResourceCollection.Exists");
+            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Exists");
             scope.Start();
             try
             {
-                var response = _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken);
+                var response = _standbyContainerGroupPoolRuntimeViewRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,11 +316,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewResourceCollection.GetIfExists");
+            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _standbyContainerGroupPoolRuntimeViewRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<StandbyContainerGroupPoolRuntimeViewResource>(response.GetRawResponse());
                 return Response.FromValue(new StandbyContainerGroupPoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.StandbyPool
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewResourceCollection.GetIfExists");
+            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _standbyContainerGroupPoolRuntimeViewResourceStandbyContainerGroupPoolRuntimeViewsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken);
+                var response = _standbyContainerGroupPoolRuntimeViewRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<StandbyContainerGroupPoolRuntimeViewResource>(response.GetRawResponse());
                 return Response.FromValue(new StandbyContainerGroupPoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());

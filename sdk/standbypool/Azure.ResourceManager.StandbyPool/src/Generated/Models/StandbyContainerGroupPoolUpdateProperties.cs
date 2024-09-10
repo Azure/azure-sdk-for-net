@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> Details of the StandbyContainerGroupPool. </summary>
-    public partial class StandbyContainerGroupPoolResourceProperties
+    /// <summary> The updatable properties of the StandbyContainerGroupPoolResource. </summary>
+    public partial class StandbyContainerGroupPoolUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,42 +45,25 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolResourceProperties"/>. </summary>
-        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
-        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticityProfile"/> or <paramref name="containerGroupProperties"/> is null. </exception>
-        public StandbyContainerGroupPoolResourceProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, ContainerGroupProperties containerGroupProperties)
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
+        public StandbyContainerGroupPoolUpdateProperties()
         {
-            Argument.AssertNotNull(elasticityProfile, nameof(elasticityProfile));
-            Argument.AssertNotNull(containerGroupProperties, nameof(containerGroupProperties));
-
-            ElasticityProfile = elasticityProfile;
-            ContainerGroupProperties = containerGroupProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
         /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
         /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolResourceProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, ContainerGroupProperties containerGroupProperties, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolUpdateProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ElasticityProfile = elasticityProfile;
             ContainerGroupProperties = containerGroupProperties;
-            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolResourceProperties"/> for deserialization. </summary>
-        internal StandbyContainerGroupPoolResourceProperties()
-        {
         }
 
         /// <summary> Specifies elasticity profile of standby container group pools. </summary>
         public StandbyContainerGroupPoolElasticityProfile ElasticityProfile { get; set; }
         /// <summary> Specifies container group properties of standby container group pools. </summary>
-        public ContainerGroupProperties ContainerGroupProperties { get; set; }
-        /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public StandbyContainerGroupProperties ContainerGroupProperties { get; set; }
     }
 }

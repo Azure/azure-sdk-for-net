@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.StandbyPool.Models
 {
     /// <summary> Details of the StandbyVirtualMachinePool. </summary>
-    public partial class StandbyVirtualMachinePoolResourceProperties
+    public partial class StandbyVirtualMachinePoolProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,20 +46,20 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolProperties"/>. </summary>
         /// <param name="virtualMachineState"> Specifies the desired state of virtual machines in the pool. </param>
-        public StandbyVirtualMachinePoolResourceProperties(VirtualMachineState virtualMachineState)
+        public StandbyVirtualMachinePoolProperties(StandbyVirtualMachineState virtualMachineState)
         {
             VirtualMachineState = virtualMachineState;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolProperties"/>. </summary>
         /// <param name="elasticityProfile"> Specifies the elasticity profile of the standby virtual machine pools. </param>
         /// <param name="virtualMachineState"> Specifies the desired state of virtual machines in the pool. </param>
         /// <param name="attachedVirtualMachineScaleSetId"> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolResourceProperties(StandbyVirtualMachinePoolElasticityProfile elasticityProfile, VirtualMachineState virtualMachineState, ResourceIdentifier attachedVirtualMachineScaleSetId, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachinePoolProperties(StandbyVirtualMachinePoolElasticityProfile elasticityProfile, StandbyVirtualMachineState virtualMachineState, ResourceIdentifier attachedVirtualMachineScaleSetId, StandbyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ElasticityProfile = elasticityProfile;
             VirtualMachineState = virtualMachineState;
@@ -68,18 +68,18 @@ namespace Azure.ResourceManager.StandbyPool.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceProperties"/> for deserialization. </summary>
-        internal StandbyVirtualMachinePoolResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolProperties"/> for deserialization. </summary>
+        internal StandbyVirtualMachinePoolProperties()
         {
         }
 
         /// <summary> Specifies the elasticity profile of the standby virtual machine pools. </summary>
         public StandbyVirtualMachinePoolElasticityProfile ElasticityProfile { get; set; }
         /// <summary> Specifies the desired state of virtual machines in the pool. </summary>
-        public VirtualMachineState VirtualMachineState { get; set; }
+        public StandbyVirtualMachineState VirtualMachineState { get; set; }
         /// <summary> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </summary>
         public ResourceIdentifier AttachedVirtualMachineScaleSetId { get; set; }
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public StandbyProvisioningState? ProvisioningState { get; }
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> The updatable properties of the StandbyContainerGroupPoolResource. </summary>
-    public partial class StandbyContainerGroupPoolResourceUpdateProperties
+    /// <summary> The updatable properties of the StandbyVirtualMachinePoolResource. </summary>
+    public partial class StandbyVirtualMachinePoolUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +46,29 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolResourceUpdateProperties"/>. </summary>
-        public StandbyContainerGroupPoolResourceUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolUpdateProperties"/>. </summary>
+        public StandbyVirtualMachinePoolUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolResourceUpdateProperties"/>. </summary>
-        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
-        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolUpdateProperties"/>. </summary>
+        /// <param name="elasticityProfile"> Specifies the elasticity profile of the standby virtual machine pools. </param>
+        /// <param name="virtualMachineState"> Specifies the desired state of virtual machines in the pool. </param>
+        /// <param name="attachedVirtualMachineScaleSetId"> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolResourceUpdateProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, ContainerGroupProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachinePoolUpdateProperties(StandbyVirtualMachinePoolElasticityProfile elasticityProfile, StandbyVirtualMachineState? virtualMachineState, ResourceIdentifier attachedVirtualMachineScaleSetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ElasticityProfile = elasticityProfile;
-            ContainerGroupProperties = containerGroupProperties;
+            VirtualMachineState = virtualMachineState;
+            AttachedVirtualMachineScaleSetId = attachedVirtualMachineScaleSetId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies elasticity profile of standby container group pools. </summary>
-        public StandbyContainerGroupPoolElasticityProfile ElasticityProfile { get; set; }
-        /// <summary> Specifies container group properties of standby container group pools. </summary>
-        public ContainerGroupProperties ContainerGroupProperties { get; set; }
+        /// <summary> Specifies the elasticity profile of the standby virtual machine pools. </summary>
+        public StandbyVirtualMachinePoolElasticityProfile ElasticityProfile { get; set; }
+        /// <summary> Specifies the desired state of virtual machines in the pool. </summary>
+        public StandbyVirtualMachineState? VirtualMachineState { get; set; }
+        /// <summary> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </summary>
+        public ResourceIdentifier AttachedVirtualMachineScaleSetId { get; set; }
     }
 }

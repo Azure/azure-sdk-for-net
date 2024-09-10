@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StandbyVirtualMachineResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StandbyVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StandbyVirtualMachineProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public StandbyVirtualMachineResourceProperties Properties { get; }
+        public StandbyVirtualMachineProperties Properties { get; }
     }
 }

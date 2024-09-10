@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            IReadOnlyList<StandbyVirtualMachinePoolRuntimeViewResourceData> value = default;
+            IReadOnlyList<StandbyVirtualMachinePoolRuntimeViewData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<StandbyVirtualMachinePoolRuntimeViewResourceData> array = new List<StandbyVirtualMachinePoolRuntimeViewResourceData>();
+                    List<StandbyVirtualMachinePoolRuntimeViewData> array = new List<StandbyVirtualMachinePoolRuntimeViewData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StandbyVirtualMachinePoolRuntimeViewResourceData.DeserializeStandbyVirtualMachinePoolRuntimeViewResourceData(item, options));
+                        array.Add(StandbyVirtualMachinePoolRuntimeViewData.DeserializeStandbyVirtualMachinePoolRuntimeViewData(item, options));
                     }
                     value = array;
                     continue;

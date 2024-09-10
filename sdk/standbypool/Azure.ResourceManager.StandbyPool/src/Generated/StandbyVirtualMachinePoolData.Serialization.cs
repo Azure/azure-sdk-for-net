@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 return null;
             }
-            StandbyVirtualMachinePoolResourceProperties properties = default;
+            StandbyVirtualMachinePoolProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StandbyPool
                     {
                         continue;
                     }
-                    properties = StandbyVirtualMachinePoolResourceProperties.DeserializeStandbyVirtualMachinePoolResourceProperties(property.Value, options);
+                    properties = StandbyVirtualMachinePoolProperties.DeserializeStandbyVirtualMachinePoolProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

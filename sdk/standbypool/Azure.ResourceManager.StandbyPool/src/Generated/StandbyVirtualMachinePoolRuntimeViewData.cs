@@ -14,10 +14,10 @@ using Azure.ResourceManager.StandbyPool.Models;
 namespace Azure.ResourceManager.StandbyPool
 {
     /// <summary>
-    /// A class representing the StandbyContainerGroupPoolRuntimeViewResource data model.
-    /// Contains information about a standby container group pool as last known by the StandbyPool resource provider.
+    /// A class representing the StandbyVirtualMachinePoolRuntimeView data model.
+    /// Contains information about a standby virtual machine pool as last known by the StandbyPool resource provider.
     /// </summary>
-    public partial class StandbyContainerGroupPoolRuntimeViewResourceData : ResourceData
+    public partial class StandbyVirtualMachinePoolRuntimeViewData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +51,25 @@ namespace Azure.ResourceManager.StandbyPool
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewResourceData"/>. </summary>
-        internal StandbyContainerGroupPoolRuntimeViewResourceData()
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolRuntimeViewData"/>. </summary>
+        internal StandbyVirtualMachinePoolRuntimeViewData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolRuntimeViewData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolRuntimeViewResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StandbyContainerGroupPoolRuntimeViewResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StandbyVirtualMachinePoolRuntimeViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StandbyVirtualMachinePoolRuntimeViewProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public StandbyContainerGroupPoolRuntimeViewResourceProperties Properties { get; }
+        public StandbyVirtualMachinePoolRuntimeViewProperties Properties { get; }
     }
 }

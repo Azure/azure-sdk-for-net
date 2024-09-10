@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.StandbyPool.Models
 {
     /// <summary> Contains information about a standby pool as last known by the StandbyPool resource provider. </summary>
-    public partial class StandbyContainerGroupPoolRuntimeViewResourceProperties
+    public partial class StandbyContainerGroupPoolRuntimeViewProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,32 +46,32 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewProperties"/>. </summary>
         /// <param name="instanceCountSummary"> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </param>
-        internal StandbyContainerGroupPoolRuntimeViewResourceProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary)
+        internal StandbyContainerGroupPoolRuntimeViewProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary)
         {
             InstanceCountSummary = instanceCountSummary.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewProperties"/>. </summary>
         /// <param name="instanceCountSummary"> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </param>
         /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolRuntimeViewResourceProperties(IReadOnlyList<ContainerGroupInstanceCountSummary> instanceCountSummary, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolRuntimeViewProperties(IReadOnlyList<ContainerGroupInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceCountSummary = instanceCountSummary;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewResourceProperties"/> for deserialization. </summary>
-        internal StandbyContainerGroupPoolRuntimeViewResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewProperties"/> for deserialization. </summary>
+        internal StandbyContainerGroupPoolRuntimeViewProperties()
         {
         }
 
         /// <summary> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </summary>
         public IReadOnlyList<ContainerGroupInstanceCountSummary> InstanceCountSummary { get; }
         /// <summary> Displays the provisioning state of the standby pool. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public StandbyProvisioningState? ProvisioningState { get; }
     }
 }

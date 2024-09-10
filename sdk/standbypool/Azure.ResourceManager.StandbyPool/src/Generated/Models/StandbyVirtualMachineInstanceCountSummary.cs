@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
     /// Note: any updates to pool resources outside of StandbyPoolRP (i.e deleting a VM through portal) are not reflected here.
     /// Note: any resources in the Running state may still be installing extensions / not fully provisioned.
     /// </summary>
-    public partial class VirtualMachineInstanceCountSummary
+    public partial class StandbyVirtualMachineInstanceCountSummary
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,29 +50,29 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceCountSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineInstanceCountSummary"/>. </summary>
         /// <param name="instanceCountsByState"> The count of pooled resources in each state for the given zone. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceCountsByState"/> is null. </exception>
-        internal VirtualMachineInstanceCountSummary(IEnumerable<PoolResourceStateCount> instanceCountsByState)
+        internal StandbyVirtualMachineInstanceCountSummary(IEnumerable<PoolResourceStateCount> instanceCountsByState)
         {
             Argument.AssertNotNull(instanceCountsByState, nameof(instanceCountsByState));
 
             InstanceCountsByState = instanceCountsByState.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceCountSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineInstanceCountSummary"/>. </summary>
         /// <param name="zone"> The zone that the provided counts are in. This is null if zones are not enabled on the attached VMSS. </param>
         /// <param name="instanceCountsByState"> The count of pooled resources in each state for the given zone. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstanceCountSummary(long? zone, IReadOnlyList<PoolResourceStateCount> instanceCountsByState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachineInstanceCountSummary(long? zone, IReadOnlyList<PoolResourceStateCount> instanceCountsByState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zone = zone;
             InstanceCountsByState = instanceCountsByState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceCountSummary"/> for deserialization. </summary>
-        internal VirtualMachineInstanceCountSummary()
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineInstanceCountSummary"/> for deserialization. </summary>
+        internal StandbyVirtualMachineInstanceCountSummary()
         {
         }
 

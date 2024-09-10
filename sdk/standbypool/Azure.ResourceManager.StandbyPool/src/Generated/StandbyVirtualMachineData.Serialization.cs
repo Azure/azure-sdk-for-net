@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 return null;
             }
-            StandbyVirtualMachineResourceProperties properties = default;
+            StandbyVirtualMachineProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StandbyPool
                     {
                         continue;
                     }
-                    properties = StandbyVirtualMachineResourceProperties.DeserializeStandbyVirtualMachineResourceProperties(property.Value, options);
+                    properties = StandbyVirtualMachineProperties.DeserializeStandbyVirtualMachineProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

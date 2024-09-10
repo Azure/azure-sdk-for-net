@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            IReadOnlyList<StandbyContainerGroupPoolRuntimeViewResourceData> value = default;
+            IReadOnlyList<StandbyContainerGroupPoolRuntimeViewData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<StandbyContainerGroupPoolRuntimeViewResourceData> array = new List<StandbyContainerGroupPoolRuntimeViewResourceData>();
+                    List<StandbyContainerGroupPoolRuntimeViewData> array = new List<StandbyContainerGroupPoolRuntimeViewData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StandbyContainerGroupPoolRuntimeViewResourceData.DeserializeStandbyContainerGroupPoolRuntimeViewResourceData(item, options));
+                        array.Add(StandbyContainerGroupPoolRuntimeViewData.DeserializeStandbyContainerGroupPoolRuntimeViewData(item, options));
                     }
                     value = array;
                     continue;

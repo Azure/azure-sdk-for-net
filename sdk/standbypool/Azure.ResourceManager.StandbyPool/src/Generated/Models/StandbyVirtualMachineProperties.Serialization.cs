@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    public partial class StandbyVirtualMachineResourceProperties : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachineResourceProperties>
+    public partial class StandbyVirtualMachineProperties : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachineProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachineResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachineProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StandbyVirtualMachineResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StandbyVirtualMachineProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyVirtualMachineProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.StandbyPool.Models
             writer.WriteEndObject();
         }
 
-        StandbyVirtualMachineResourceProperties IJsonModel<StandbyVirtualMachineResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StandbyVirtualMachineProperties IJsonModel<StandbyVirtualMachineProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StandbyVirtualMachineProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStandbyVirtualMachineResourceProperties(document.RootElement, options);
+            return DeserializeStandbyVirtualMachineProperties(document.RootElement, options);
         }
 
-        internal static StandbyVirtualMachineResourceProperties DeserializeStandbyVirtualMachineResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StandbyVirtualMachineProperties DeserializeStandbyVirtualMachineProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             ResourceIdentifier virtualMachineResourceId = default;
-            ProvisioningState? provisioningState = default;
+            StandbyProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new StandbyProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StandbyVirtualMachineResourceProperties(virtualMachineResourceId, provisioningState, serializedAdditionalRawData);
+            return new StandbyVirtualMachineProperties(virtualMachineResourceId, provisioningState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StandbyVirtualMachineResourceProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StandbyVirtualMachineProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachineProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StandbyVirtualMachineResourceProperties IPersistableModel<StandbyVirtualMachineResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StandbyVirtualMachineProperties IPersistableModel<StandbyVirtualMachineProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeStandbyVirtualMachineResourceProperties(document.RootElement, options);
+                        return DeserializeStandbyVirtualMachineProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StandbyVirtualMachineResourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachineProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StandbyVirtualMachineResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StandbyVirtualMachineProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

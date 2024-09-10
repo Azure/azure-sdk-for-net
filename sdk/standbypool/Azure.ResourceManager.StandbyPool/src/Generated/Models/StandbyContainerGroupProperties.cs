@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.StandbyPool.Models
 {
     /// <summary> Details of the ContainerGroupProperties. </summary>
-    public partial class ContainerGroupProperties
+    public partial class StandbyContainerGroupProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupProperties"/>. </summary>
         /// <param name="containerGroupProfile"> Specifies container group profile of standby container groups. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupProfile"/> is null. </exception>
-        public ContainerGroupProperties(ContainerGroupProfile containerGroupProfile)
+        public StandbyContainerGroupProperties(StandbyContainerGroupProfile containerGroupProfile)
         {
             Argument.AssertNotNull(containerGroupProfile, nameof(containerGroupProfile));
 
@@ -57,24 +57,24 @@ namespace Azure.ResourceManager.StandbyPool.Models
             SubnetIds = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupProperties"/>. </summary>
         /// <param name="containerGroupProfile"> Specifies container group profile of standby container groups. </param>
         /// <param name="subnetIds"> Specifies subnet Ids for container group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupProperties(ContainerGroupProfile containerGroupProfile, IList<WritableSubResource> subnetIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupProperties(StandbyContainerGroupProfile containerGroupProfile, IList<WritableSubResource> subnetIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerGroupProfile = containerGroupProfile;
             SubnetIds = subnetIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupProperties"/> for deserialization. </summary>
-        internal ContainerGroupProperties()
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupProperties"/> for deserialization. </summary>
+        internal StandbyContainerGroupProperties()
         {
         }
 
         /// <summary> Specifies container group profile of standby container groups. </summary>
-        public ContainerGroupProfile ContainerGroupProfile { get; set; }
+        public StandbyContainerGroupProfile ContainerGroupProfile { get; set; }
         /// <summary> Specifies subnet Ids for container group. </summary>
         public IList<WritableSubResource> SubnetIds { get; }
     }

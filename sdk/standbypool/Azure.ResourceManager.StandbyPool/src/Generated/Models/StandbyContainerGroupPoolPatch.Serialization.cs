@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            StandbyContainerGroupPoolResourceUpdateProperties properties = default;
+            StandbyContainerGroupPoolUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    properties = StandbyContainerGroupPoolResourceUpdateProperties.DeserializeStandbyContainerGroupPoolResourceUpdateProperties(property.Value, options);
+                    properties = StandbyContainerGroupPoolUpdateProperties.DeserializeStandbyContainerGroupPoolUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
