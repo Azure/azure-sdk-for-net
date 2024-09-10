@@ -109,6 +109,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("database"u8);
                 JsonSerializer.Serialize(writer, Database);
             }
+            if (Optional.IsDefined(SslMode))
+            {
+                writer.WritePropertyName("sslMode"u8);
+                JsonSerializer.Serialize(writer, SslMode);
+            }
+            if (Optional.IsDefined(UseSystemTrustStore))
+            {
+                writer.WritePropertyName("useSystemTrustStore"u8);
+                JsonSerializer.Serialize(writer, UseSystemTrustStore);
+            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
@@ -167,6 +177,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<int> port = default;
             DataFactoryElement<string> username = default;
             DataFactoryElement<string> database = default;
+            DataFactoryElement<int> sslMode = default;
+            DataFactoryElement<int> useSystemTrustStore = default;
             DataFactoryKeyVaultSecret password = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -295,6 +307,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                             database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("sslMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sslMode = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("useSystemTrustStore"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useSystemTrustStore = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("password"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -329,6 +359,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 port,
                 username,
                 database,
+                sslMode,
+                useSystemTrustStore,
                 password,
                 encryptedCredential);
         }
