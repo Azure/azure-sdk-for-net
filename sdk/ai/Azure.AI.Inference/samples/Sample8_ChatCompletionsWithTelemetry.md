@@ -1,6 +1,6 @@
 # Using telemetry with Azure.AI.Inference
 
-In this example we will demonstrate how [OpenTelemetry](https://learn.microsoft.com/en-us/dotnet/core/diagnostics/observability-with-otel) library can be leveraged to diagnose the issues in the Chat completion request.
+In this example we will demonstrate how [OpenTelemetry](https://learn.microsoft.com/dotnet/core/diagnostics/observability-with-otel) library can be leveraged to diagnose the issues in the Chat completion request.
 
 ## Project creation and dependency installation.
 First, we will create the console application project and add `Azure.AI.Inference` as a dependency. The first command will create the project called `TelemetryDemo.csproj`. The ` dotnet add package <…>` command will modify project file and in future we will need to run `dotnet restore` to install all dependencies, if we will remove the installed ones.
@@ -41,7 +41,7 @@ var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariabl
 var model = System.Environment.GetEnvironmentVariable("MODEL_NAME");
 ```
 
-Next, we will define the constant, which defines, what [Activity](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.activity?view=net-8.0) and [Meter](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.meter?view=net-8.0) do we want to listen to. In Azure.AI.Inferencecase they are both named `Azure.AI.Inference.ChatCompletionsClient`.
+Next, we will define the constant, which defines, what [Activity](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity) and [Meter](https://learn.microsoft.com/dotnet/api/system.diagnostics.metrics.meter) do we want to listen to. In Azure.AI.Inferencecase they are both named `Azure.AI.Inference.ChatCompletionsClient`.
 
 ```c#
 const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
@@ -77,7 +77,7 @@ using var meterProvider = Sdk.CreateMeterProviderBuilder()
 ```
 
 Please note that if we will only create `tracerProvider` is required for both metrics and activity exports, but to export metrics we also need to define `meterProvider`.
-After we have initialized the providers, we will use simple completions example from [Sample1](./Sample1_ChatCompletions.md).
+After we have initialized the providers, we will use simple completions example from [Sample1](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample1_ChatCompletions.md).
 ```c#
 // Set up the parameters.
 var client = new ChatCompletionsClient(
