@@ -16,16 +16,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Continuation token for pagination. </summary>
+        [WirePath("skip")]
         public string Skip { get; set; }
         /// <summary> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </summary>
+        [WirePath("tags")]
         public string Tags { get; set; }
         /// <summary> feature name. </summary>
+        [WirePath("featureName")]
         public string FeatureName { get; set; }
         /// <summary> Description of the featureset. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </summary>
+        [WirePath("listViewType")]
         public MachineLearningListViewType? ListViewType { get; set; }
         /// <summary> Page size. </summary>
+        [WirePath("pageSize")]
         public int? PageSize { get; set; }
     }
 }

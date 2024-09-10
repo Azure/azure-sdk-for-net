@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,6 +27,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("webhookType"u8);
+            writer.WriteStringValue(WebhookType.ToString());
             if (Optional.IsDefined(EventType))
             {
                 if (EventType != null)
@@ -38,8 +41,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("eventType");
                 }
             }
-            writer.WritePropertyName("webhookType"u8);
-            writer.WriteStringValue(WebhookType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -78,12 +79,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string eventType = default;
             MachineLearningWebhookType webhookType = "Unknown";
+            string eventType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("webhookType"u8))
+                {
+                    webhookType = new MachineLearningWebhookType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("eventType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -94,18 +100,63 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     eventType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("webhookType"u8))
-                {
-                    webhookType = new MachineLearningWebhookType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownWebhook(eventType, webhookType, serializedAdditionalRawData);
+            return new UnknownWebhook(webhookType, eventType, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebhookType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  webhookType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  webhookType: ");
+                builder.AppendLine($"'{WebhookType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  eventType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EventType))
+                {
+                    builder.Append("  eventType: ");
+                    if (EventType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EventType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EventType}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningWebhook>.Write(ModelReaderWriterOptions options)
@@ -116,6 +167,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningWebhook)} does not support writing '{options.Format}' format.");
             }

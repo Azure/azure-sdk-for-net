@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -138,6 +139,74 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new PendingUploadResponseDto(blobReferenceForConsumption, pendingUploadId, pendingUploadType, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobReferenceForConsumption), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  blobReferenceForConsumption: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BlobReferenceForConsumption))
+                {
+                    builder.Append("  blobReferenceForConsumption: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BlobReferenceForConsumption, options, 2, false, "  blobReferenceForConsumption: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PendingUploadId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pendingUploadId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PendingUploadId))
+                {
+                    builder.Append("  pendingUploadId: ");
+                    if (PendingUploadId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PendingUploadId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PendingUploadId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PendingUploadType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pendingUploadType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PendingUploadType))
+                {
+                    builder.Append("  pendingUploadType: ");
+                    builder.AppendLine($"'{PendingUploadType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PendingUploadResponseDto>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PendingUploadResponseDto>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,6 +215,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support writing '{options.Format}' format.");
             }

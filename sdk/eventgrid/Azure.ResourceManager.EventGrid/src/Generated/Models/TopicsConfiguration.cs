@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The hostname for the topics configuration. This is a read-only property. </summary>
+        [WirePath("hostname")]
         public string Hostname { get; }
         /// <summary> List of custom domain configurations for the namespace. </summary>
+        [WirePath("customDomains")]
         public IList<CustomDomainConfiguration> CustomDomains { get; }
     }
 }
