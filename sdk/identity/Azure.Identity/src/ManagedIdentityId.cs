@@ -28,23 +28,23 @@ namespace Azure.Identity
         /// <summary>
         /// Create an instance of <see cref="ManagedIdentityId"/> for a user-assigned managed identity.
         /// </summary>
-        /// <param name="clientId">The client ID of the user-assigned managed identity.</param>
-        public static ManagedIdentityId FromUserAssignedClientId(string clientId) =>
-            new ManagedIdentityId(ManagedIdentityIdType.ClientId, clientId);
+        /// <param name="id">The client ID of the user-assigned managed identity.</param>
+        public static ManagedIdentityId FromUserAssignedClientId(string id) =>
+            new ManagedIdentityId(ManagedIdentityIdType.ClientId, id);
 
         /// <summary>
         /// Create an instance of <see cref="ManagedIdentityId"/> for a user-assigned managed identity.
         /// </summary>
-        /// <param name="resourceIdentifier">The resource identifier of the user-assigned managed identity.</param>
-        public static ManagedIdentityId FromUserAssignedResourceId(ResourceIdentifier resourceIdentifier) =>
-            new ManagedIdentityId(ManagedIdentityIdType.ResourceId, resourceIdentifier.ToString());
+        /// <param name="id">The resource identifier of the user-assigned managed identity.</param>
+        public static ManagedIdentityId FromUserAssignedResourceId(ResourceIdentifier id) =>
+            new ManagedIdentityId(ManagedIdentityIdType.ResourceId, id.ToString());
 
         /// <summary>
         /// Create an instance of <see cref="ManagedIdentityId"/> for a user-assigned managed identity.
         /// </summary>
-        /// <param name="objectId">The object ID of the user-assigned managed identity.</param>
-        public static ManagedIdentityId FromUserAssignedObjectId(string objectId) =>
-            new ManagedIdentityId(ManagedIdentityIdType.ObjectId, objectId);
+        /// <param name="id">The object ID of the user-assigned managed identity.</param>
+        public static ManagedIdentityId FromUserAssignedObjectId(string id) =>
+            new ManagedIdentityId(ManagedIdentityIdType.ObjectId, id);
     }
 
     internal enum ManagedIdentityIdType
