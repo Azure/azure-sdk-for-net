@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
@@ -573,6 +575,475 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysOfWeek), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    daysOfWeek: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DaysOfWeek))
+                {
+                    if (DaysOfWeek.Any())
+                    {
+                        builder.Append("    daysOfWeek: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DaysOfWeek)
+                        {
+                            builder.AppendLine($"      '{item.ToSerialString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpStartTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampUpStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampUpStartTime))
+                {
+                    builder.Append("    rampUpStartTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RampUpStartTime, options, 4, false, "    rampUpStartTime: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpAutoStartHosts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampUpAutoStartHosts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampUpAutoStartHosts))
+                {
+                    builder.Append("    rampUpAutoStartHosts: ");
+                    builder.AppendLine($"'{RampUpAutoStartHosts.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpStartVmOnConnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampUpStartVMOnConnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampUpStartVmOnConnect))
+                {
+                    builder.Append("    rampUpStartVMOnConnect: ");
+                    builder.AppendLine($"'{RampUpStartVmOnConnect.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpActionOnDisconnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampUpActionOnDisconnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampUpActionOnDisconnect))
+                {
+                    builder.Append("    rampUpActionOnDisconnect: ");
+                    builder.AppendLine($"'{RampUpActionOnDisconnect.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpMinutesToWaitOnDisconnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampUpMinutesToWaitOnDisconnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampUpMinutesToWaitOnDisconnect))
+                {
+                    builder.Append("    rampUpMinutesToWaitOnDisconnect: ");
+                    builder.AppendLine($"{RampUpMinutesToWaitOnDisconnect.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpActionOnLogoff), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampUpActionOnLogoff: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampUpActionOnLogoff))
+                {
+                    builder.Append("    rampUpActionOnLogoff: ");
+                    builder.AppendLine($"'{RampUpActionOnLogoff.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpMinutesToWaitOnLogoff), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampUpMinutesToWaitOnLogoff: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampUpMinutesToWaitOnLogoff))
+                {
+                    builder.Append("    rampUpMinutesToWaitOnLogoff: ");
+                    builder.AppendLine($"{RampUpMinutesToWaitOnLogoff.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeakStartTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peakStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeakStartTime))
+                {
+                    builder.Append("    peakStartTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PeakStartTime, options, 4, false, "    peakStartTime: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeakStartVmOnConnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peakStartVMOnConnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeakStartVmOnConnect))
+                {
+                    builder.Append("    peakStartVMOnConnect: ");
+                    builder.AppendLine($"'{PeakStartVmOnConnect.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeakActionOnDisconnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peakActionOnDisconnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeakActionOnDisconnect))
+                {
+                    builder.Append("    peakActionOnDisconnect: ");
+                    builder.AppendLine($"'{PeakActionOnDisconnect.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeakMinutesToWaitOnDisconnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peakMinutesToWaitOnDisconnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeakMinutesToWaitOnDisconnect))
+                {
+                    builder.Append("    peakMinutesToWaitOnDisconnect: ");
+                    builder.AppendLine($"{PeakMinutesToWaitOnDisconnect.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeakActionOnLogoff), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peakActionOnLogoff: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeakActionOnLogoff))
+                {
+                    builder.Append("    peakActionOnLogoff: ");
+                    builder.AppendLine($"'{PeakActionOnLogoff.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeakMinutesToWaitOnLogoff), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peakMinutesToWaitOnLogoff: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeakMinutesToWaitOnLogoff))
+                {
+                    builder.Append("    peakMinutesToWaitOnLogoff: ");
+                    builder.AppendLine($"{PeakMinutesToWaitOnLogoff.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownStartTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownStartTime))
+                {
+                    builder.Append("    rampDownStartTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RampDownStartTime, options, 4, false, "    rampDownStartTime: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownStartVmOnConnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownStartVMOnConnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownStartVmOnConnect))
+                {
+                    builder.Append("    rampDownStartVMOnConnect: ");
+                    builder.AppendLine($"'{RampDownStartVmOnConnect.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownActionOnDisconnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownActionOnDisconnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownActionOnDisconnect))
+                {
+                    builder.Append("    rampDownActionOnDisconnect: ");
+                    builder.AppendLine($"'{RampDownActionOnDisconnect.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownMinutesToWaitOnDisconnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownMinutesToWaitOnDisconnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownMinutesToWaitOnDisconnect))
+                {
+                    builder.Append("    rampDownMinutesToWaitOnDisconnect: ");
+                    builder.AppendLine($"{RampDownMinutesToWaitOnDisconnect.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownActionOnLogoff), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownActionOnLogoff: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownActionOnLogoff))
+                {
+                    builder.Append("    rampDownActionOnLogoff: ");
+                    builder.AppendLine($"'{RampDownActionOnLogoff.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownMinutesToWaitOnLogoff), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownMinutesToWaitOnLogoff: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownMinutesToWaitOnLogoff))
+                {
+                    builder.Append("    rampDownMinutesToWaitOnLogoff: ");
+                    builder.AppendLine($"{RampDownMinutesToWaitOnLogoff.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OffPeakStartTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    offPeakStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OffPeakStartTime))
+                {
+                    builder.Append("    offPeakStartTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, OffPeakStartTime, options, 4, false, "    offPeakStartTime: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OffPeakStartVmOnConnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    offPeakStartVMOnConnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OffPeakStartVmOnConnect))
+                {
+                    builder.Append("    offPeakStartVMOnConnect: ");
+                    builder.AppendLine($"'{OffPeakStartVmOnConnect.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OffPeakActionOnDisconnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    offPeakActionOnDisconnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OffPeakActionOnDisconnect))
+                {
+                    builder.Append("    offPeakActionOnDisconnect: ");
+                    builder.AppendLine($"'{OffPeakActionOnDisconnect.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OffPeakMinutesToWaitOnDisconnect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    offPeakMinutesToWaitOnDisconnect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OffPeakMinutesToWaitOnDisconnect))
+                {
+                    builder.Append("    offPeakMinutesToWaitOnDisconnect: ");
+                    builder.AppendLine($"{OffPeakMinutesToWaitOnDisconnect.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OffPeakActionOnLogoff), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    offPeakActionOnLogoff: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OffPeakActionOnLogoff))
+                {
+                    builder.Append("    offPeakActionOnLogoff: ");
+                    builder.AppendLine($"'{OffPeakActionOnLogoff.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OffPeakMinutesToWaitOnLogoff), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    offPeakMinutesToWaitOnLogoff: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OffPeakMinutesToWaitOnLogoff))
+                {
+                    builder.Append("    offPeakMinutesToWaitOnLogoff: ");
+                    builder.AppendLine($"{OffPeakMinutesToWaitOnLogoff.Value}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ScalingPlanPersonalScheduleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPersonalScheduleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -581,6 +1052,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScalingPlanPersonalScheduleData)} does not support writing '{options.Format}' format.");
             }
