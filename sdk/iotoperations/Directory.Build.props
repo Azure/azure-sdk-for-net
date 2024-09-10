@@ -1,0 +1,43 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+    <RepoEngPath>$(MSBuildThisFileDirectory)eng</RepoEngPath>
+    <RepoSrcPath>$(RepoRoot)src</RepoSrcPath>
+    <RepoSdkPath>$(RepoRoot)src/SDKs</RepoSdkPath>
+    <IsLegacyMgmtProject Condition="'$(IsLegacyMgmtProject)' == '' and $(MSBuildProjectName.Contains('.Management.'))">true</IsLegacyMgmtProject>
+    <ProjectStartsWithStandardName Condition="$(MSBuildProjectName.StartsWith('Azure.')) or $(MSBuildProjectName.StartsWith('Microsoft.'))">true</ProjectStartsWithStandardName>
+    <ImportRepoCommonSettings Condition="'$(ImportRepoCommonSettings)' == '' and '$(ProjectStartsWithStandardName)' == 'true' and '$(IsLegacyMgmtProject)' != 'true'">true</ImportRepoCommonSettings>
+  </PropertyGroup>
+
+  <!-- Setup default project properties -->
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
+    <PlatformName Condition="'$(PlatformName)' == ''">$(Platform)</PlatformName>
+  </PropertyGroup>
+
+  <!-- Setup common output paths -->
+  <PropertyGroup>
+    <ArtifactsDir Condition="'$(ArtifactsDir)' == ''">$(RepoRoot)artifacts\</ArtifactsDir>
+    <ArtifactsObjDir>$(ArtifactsDir)obj\</ArtifactsObjDir>
+    <ArtifactsBinDir>$(ArtifactsDir)bin\</ArtifactsBinDir>
+    <ArtifactsPackagesDir>$(ArtifactsDir)packages\$(Configuration)\</ArtifactsPackagesDir>
+
+    <OutDirName Condition="'$(OutDirName)' == ''">$(MSBuildProjectName)</OutDirName>
+
+    <BaseOutputPath Condition="'$(BaseOutputPath)' == ''">$([System.IO.Path]::GetFullPath('$(ArtifactsBinDir)$(OutDirName)\'))</BaseOutputPath>
+    <OutputPath Condition="'$(PlatformName)' == 'AnyCPU'">$(BaseOutputPath)$(Configuration)\</OutputPath>
+    <OutputPath Condition="'$(PlatformName)' != 'AnyCPU'">$(BaseOutputPath)$(PlatformName)\$(Configuration)\</OutputPath>
+
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">$([System.IO.Path]::GetFullPath('$(ArtifactsObjDir)$(OutDirName)\'))</BaseIntermediateOutputPath>
+    <IntermediateOutputPath Condition="'$(PlatformName)' == 'AnyCPU'">$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
+    <IntermediateOutputPath Condition="'$(PlatformName)' != 'AnyCPU'">$(BaseIntermediateOutputPath)$(PlatformName)\$(Configuration)\</IntermediateOutputPath>
+
+    <PackageOutputPath>$(ArtifactsPackagesDir)/$(MSBuildProjectName)</PackageOutputPath>
+
+    <!-- Used to help catch projects that use this property but don't end up importing our props below -->
+    <RequiredTargetFrameworks>import-required-properties</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="$(RepoEngPath)\Directory.Build.Common.props" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
+</Project>
