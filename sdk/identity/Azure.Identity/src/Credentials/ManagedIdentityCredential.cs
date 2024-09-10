@@ -67,7 +67,7 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of <see cref="ManagedIdentityCredential"/> capable of authenticating using the specified <see cref="ManagedIdentityId"/>.
         /// </summary>
-        /// <param name="id">The <see cref="ManagedIdentityId"/> specifying which manageed identity will be configured.</param>
+        /// <param name="id">The <see cref="ManagedIdentityId"/> specifying which managed identity will be configured.</param>
         public ManagedIdentityCredential(ManagedIdentityId id)
             : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ManagedIdentityId = id, Pipeline = CredentialPipeline.GetInstance(null, IsManagedIdentityCredential: true), Options = null }))
         {

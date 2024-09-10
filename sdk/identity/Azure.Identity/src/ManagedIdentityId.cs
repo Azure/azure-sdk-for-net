@@ -35,7 +35,7 @@ namespace Azure.Identity
         /// <summary>
         /// Create an instance of <see cref="ManagedIdentityId"/> for a user-assigned managed identity.
         /// </summary>
-        /// <param name="id">The resource identifier of the user-assigned managed identity.</param>
+        /// <param name="id">The resource ID of the user-assigned managed identity.</param>
         public static ManagedIdentityId FromUserAssignedResourceId(ResourceIdentifier id) =>
             new ManagedIdentityId(ManagedIdentityIdType.ResourceId, id.ToString());
 

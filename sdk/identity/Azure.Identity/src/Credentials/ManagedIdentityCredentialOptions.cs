@@ -14,7 +14,7 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of <see cref="ManagedIdentityCredentialOptions"/>.
         /// </summary>
-        /// <param name="managedIdentityId">The <see cref="ManagedIdentityId"/> specifying which manageed identity will be configured. By default, <see cref="ManagedIdentityId.SystemAssigned"/> will be configured.</param>
+        /// <param name="managedIdentityId">The <see cref="ManagedIdentityId"/> specifying which managed identity will be configured. By default, <see cref="ManagedIdentityId.SystemAssigned"/> will be configured.</param>
         public ManagedIdentityCredentialOptions(ManagedIdentityId managedIdentityId = null)
         {
             ManagedIdentityId = managedIdentityId ?? ManagedIdentityId.SystemAssigned;
