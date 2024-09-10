@@ -6,7 +6,7 @@ using Azure.Maps.Weather;
 
 namespace Azure.Maps.Weather.Tests
 {
-    public class WeatherClientLiveTestsBase : RecordedTestBase
+    public class WeatherClientLiveTestsBase : RecordedTestBase<WeatherClientTestEnvironment>
     {
         public WeatherClientLiveTestsBase(bool isAsync) : base(isAsync)
         {
@@ -15,7 +15,8 @@ namespace Azure.Maps.Weather.Tests
         protected MapsWeatherClient CreateClient()
         {
             return InstrumentClient(new MapsWeatherClient(
-                credential: new AzureKeyCredential("<My Subscription Key>"),
+                credential: TestEnvironment.Credential,
+                clientId: TestEnvironment.MapAccountClientId,
                 options: InstrumentClientOptions(new MapsWeatherClientOptions())
             ));
         }

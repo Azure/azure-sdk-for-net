@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 using System;
 using System.Threading.Tasks;
-using Azure.Maps.Weather.Models;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Collections.Generic;
+using Azure.Core.TestFramework;
 using Azure.Core.GeoJson;
+using Azure.Maps.Weather.Models;
 using Azure.Maps.Weather.Models.Options;
-using System.Drawing.Drawing2D;
-using System.Linq.Expressions;
 
 namespace Azure.Maps.Weather.Tests
 {
