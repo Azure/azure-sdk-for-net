@@ -160,9 +160,9 @@ These examples demonstrate authenticating `SecretClient` from the [Azure.Securit
 
 #### Authenticate with a user-assigned managed identity
 
-To authenticate with a user-assigned managed identity, you must specify an ID for the managed identity.
+To authenticate with a user-assigned managed identity, you must specify one of the following IDs for the managed identity.
 
-The following example demonstrates authenticating with a user-assigned managed identity using the client ID:
+**Client ID**
 
 ```C# Snippet:AuthenticatingWithManagedIdentityCredentialUserAssigned
 string userAssignedClientId = "some client ID";
@@ -172,7 +172,7 @@ var credential = new ManagedIdentityCredential(
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
-The following example demonstrates authenticating with a user-assigned managed identity using its resource ID:
+**Resource ID**
 
 ```C# Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedResourceId
 ResourceIdentifier userAssignedResourceId = new ResourceIdentifier(
@@ -183,7 +183,7 @@ var credential = new ManagedIdentityCredential(
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
-The following example demonstrates authenticating with a user-assigned managed identity using its object ID:
+**Object ID**
 
 ```C# Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedObjectId
 string userAssignedObjectId = "some object ID";
@@ -214,7 +214,7 @@ var credential = new DefaultAzureCredential(
     });
 ```
 
-    [AzureAuthorityHosts](https://learn.microsoft.com/dotnet/api/azure.identity.azureauthorityhosts?view=azure-dotnet) defines authorities for well-known clouds.
+[AzureAuthorityHosts](https://learn.microsoft.com/dotnet/api/azure.identity.azureauthorityhosts?view=azure-dotnet) defines authorities for well-known clouds.
 
 2. Set the `AZURE_AUTHORITY_HOST` environment variable to the appropriate authority host URL. For example, `https://login.microsoftonline.us/`. Note that this setting affects all credentials in the environment. Use the previous solution to set the authority host on a specific credential.
 

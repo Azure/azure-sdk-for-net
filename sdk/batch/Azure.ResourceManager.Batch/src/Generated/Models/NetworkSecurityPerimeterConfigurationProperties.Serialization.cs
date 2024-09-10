@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default;
-            IReadOnlyList<ProvisioningIssue> provisioningIssues = default;
+            IReadOnlyList<BatchProvisioningIssue> provisioningIssues = default;
             NetworkSecurityPerimeter networkSecurityPerimeter = default;
-            ResourceAssociation resourceAssociation = default;
+            BatchResourceAssociation resourceAssociation = default;
             NetworkSecurityProfile profile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    List<ProvisioningIssue> array = new List<ProvisioningIssue>();
+                    List<BatchProvisioningIssue> array = new List<BatchProvisioningIssue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisioningIssue.DeserializeProvisioningIssue(item, options));
+                        array.Add(BatchProvisioningIssue.DeserializeBatchProvisioningIssue(item, options));
                     }
                     provisioningIssues = array;
                     continue;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    resourceAssociation = ResourceAssociation.DeserializeResourceAssociation(property.Value, options);
+                    resourceAssociation = BatchResourceAssociation.DeserializeBatchResourceAssociation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("profile"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Batch.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new NetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
-                provisioningIssues ?? new ChangeTrackingList<ProvisioningIssue>(),
+                provisioningIssues ?? new ChangeTrackingList<BatchProvisioningIssue>(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,
