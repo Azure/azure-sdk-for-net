@@ -132,7 +132,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.Throws<FormatException>(() => ModelReaderWriter.Write((object)ModelInstance, options));
             Assert.Throws<FormatException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
-            if (ModelInstance is IJsonModel<T> jsonModel && !typeof(T).IsValueType)
+            if (ModelInstance is IJsonModel<T> jsonModel)
             {
                 Assert.Throws<FormatException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), options));
                 Assert.Throws<FormatException>(() => ((IJsonModel<object>)jsonModel).Write(new Utf8JsonWriter(new MemoryStream()), options));
