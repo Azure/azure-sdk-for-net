@@ -167,6 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "HiveObject": return HiveObjectDataset.DeserializeHiveObjectDataset(element, options);
                     case "HttpFile": return DataFactoryHttpDataset.DeserializeDataFactoryHttpDataset(element, options);
                     case "HubspotObject": return HubspotObjectDataset.DeserializeHubspotObjectDataset(element, options);
+                    case "Iceberg": return IcebergDataset.DeserializeIcebergDataset(element, options);
                     case "ImpalaObject": return ImpalaObjectDataset.DeserializeImpalaObjectDataset(element, options);
                     case "InformixTable": return InformixTableDataset.DeserializeInformixTableDataset(element, options);
                     case "JiraObject": return JiraObjectDataset.DeserializeJiraObjectDataset(element, options);
