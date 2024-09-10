@@ -137,16 +137,16 @@ public class ModelReaderWriterOptions
     /// <summary>
     /// Gets the <see cref="IJsonModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
     /// </summary>
-    /// <param name="proxiedModel"> The <see cref="IJsonModel{T}"/> model to proxy. </param>
+    /// <param name="model"> The <see cref="IJsonModel{T}"/> model to proxy. </param>
     /// <returns> The <see cref="IJsonModel{T}"/> proxy to use. </returns>
-    public IJsonModel<T> ResolveProxy<T>(IJsonModel<T> proxiedModel)
+    public IJsonModel<T> ResolveProxy<T>(IJsonModel<T> model)
     {
-        if (_proxies is null || !_proxies.TryGetValue(proxiedModel.GetType(), out object? result) || result is not IJsonModel<T> jsonResult)
+        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out object? result) || result is not IJsonModel<T> jsonResult)
         {
-            return proxiedModel;
+            return model;
         }
 
-        ProxiedModel = proxiedModel;
+        ProxiedModel = model;
         return jsonResult;
     }
 }
