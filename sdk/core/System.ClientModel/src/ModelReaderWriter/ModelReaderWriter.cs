@@ -63,16 +63,7 @@ public static partial class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        IPersistableModel<object>? iModel;
-        if (model.GetType().IsValueType)
-        {
-            var wrapper = typeof(StructWrapper<>).MakeGenericType(model.GetType());
-            iModel = (IPersistableModel<object>)Activator.CreateInstance(wrapper, model)!;
-        }
-        else
-        {
-            iModel = model as IPersistableModel<object>;
-        }
+        IPersistableModel<object>? iModel = model as IPersistableModel<object>;
 
         if (iModel is null)
         {
@@ -165,22 +156,13 @@ public static partial class ModelReaderWriter
             IPersistableModel<object> readerToUse = options.TryGetProxy(returnType, out IPersistableModel<object>? proxy) ? proxy : model;
             obj = readerToUse.Create(data, options);
         }
-        return obj is StructWrapper wrapper ? wrapper.Value : obj;
+        return obj;
     }
 
     private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
     {
         var model = GetObjectInstance(returnType);
-        IPersistableModel<object>? iModel;
-        if (model.GetType().IsValueType)
-        {
-            var wrapper = typeof(StructWrapper<>).MakeGenericType(model.GetType());
-            iModel = (IPersistableModel<object>)Activator.CreateInstance(wrapper, model)!;
-        }
-        else
-        {
-            iModel = model as IPersistableModel<object>;
-        }
+        IPersistableModel<object>? iModel = model as IPersistableModel<object>;
 
         if (iModel is null)
         {

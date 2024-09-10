@@ -51,16 +51,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithModelInterfaceNonGeneric(string format)
-        {
-            if (typeof(T).IsValueType)
-            {
-                Assert.Ignore("object based interface is not supported for value types.");
-            }
-            else
-            {
-                RoundTripTest(format, new ModelInterfaceAsObjectStrategy<T>());
-            }
-        }
+            => RoundTripTest(format, new ModelInterfaceAsObjectStrategy<T>());
 
         protected void RoundTripTest(string format, RoundTripStrategy<T> strategy)
         {
