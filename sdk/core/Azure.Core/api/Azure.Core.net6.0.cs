@@ -781,8 +781,11 @@ namespace Azure.Core
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public TokenRequestContext(string[] scopes, string? parentRequestId) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId, bool isCaeEnabled) { throw null; }
         public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = null, System.Uri? requestUri = null, string? requestMethod = null) { throw null; }
         public string? Claims { get { throw null; } }

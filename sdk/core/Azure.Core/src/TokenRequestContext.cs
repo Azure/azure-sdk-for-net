@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Net.Http;
 
 namespace Azure.Core
@@ -33,6 +34,7 @@ namespace Azure.Core
         /// <param name="scopes">The scopes required for the token.</param>
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims)
         {
             Scopes = scopes;
@@ -48,6 +50,7 @@ namespace Azure.Core
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId)
         {
             Scopes = scopes;
@@ -64,6 +67,7 @@ namespace Azure.Core
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request.</param>
         /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId, bool isCaeEnabled)
         {
             Scopes = scopes;
