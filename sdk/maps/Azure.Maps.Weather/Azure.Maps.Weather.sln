@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Maps.Weather", "src\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Maps.Weather.Tests", "tests\Azure.Maps.Weather.Tests.csproj", "{47DEA0AC-0636-45D6-98A1-2D1A3EE6A821}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{62FA3256-BAC9-4D3D-8D22-9C328983824D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{47DEA0AC-0636-45D6-98A1-2D1A3EE6A821}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47DEA0AC-0636-45D6-98A1-2D1A3EE6A821}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47DEA0AC-0636-45D6-98A1-2D1A3EE6A821}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62FA3256-BAC9-4D3D-8D22-9C328983824D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62FA3256-BAC9-4D3D-8D22-9C328983824D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62FA3256-BAC9-4D3D-8D22-9C328983824D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62FA3256-BAC9-4D3D-8D22-9C328983824D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

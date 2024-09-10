@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.Maps.TimeZone.csproj" />
+    <ProjectReference Include="..\src\Azure.Maps.Weather.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Azure.Maps.Common\src\Azure.Maps.Common.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Azure.ResourceManager.Maps\src\Azure.ResourceManager.Maps.csproj" />
   </ItemGroup>
