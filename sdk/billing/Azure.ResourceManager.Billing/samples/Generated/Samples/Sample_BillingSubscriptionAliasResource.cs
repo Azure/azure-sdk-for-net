@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingSubscriptionAliasResource
     {
-        // BillingSubscriptionAlias
+        // BillingSubscriptionAliasGet
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_BillingSubscriptionAlias()
+        public async Task Get_BillingSubscriptionAliasGet()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/BillingSubscriptionAlias.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionAliasGet.json
             // this example is just showing the usage of "BillingSubscriptionsAliases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // this example assumes you already have this BillingSubscriptionAliasResource created on azure
             // for more information of creating BillingSubscriptionAliasResource, please refer to the document of BillingSubscriptionAliasResource
-            string billingAccountName = "{billingAccountName}";
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
             string aliasName = "c356b7c7-7545-4686-b843-c1a49cf853fc";
             ResourceIdentifier billingSubscriptionAliasResourceId = BillingSubscriptionAliasResource.CreateResourceIdentifier(billingAccountName, aliasName);
             BillingSubscriptionAliasResource billingSubscriptionAlias = client.GetBillingSubscriptionAliasResource(billingSubscriptionAliasResourceId);
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PutBillingSubscription
+        // BillingSubscriptionAliasCreateOrUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_PutBillingSubscription()
+        public async Task Update_BillingSubscriptionAliasCreateOrUpdate()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/PutBillingSubscriptionAlias.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionAliasCreateOrUpdate.json
             // this example is just showing the usage of "BillingSubscriptionsAliases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // this example assumes you already have this BillingSubscriptionAliasResource created on azure
             // for more information of creating BillingSubscriptionAliasResource, please refer to the document of BillingSubscriptionAliasResource
-            string billingAccountName = "{billingAccountName}";
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
             string aliasName = "c356b7c7-7545-4686-b843-c1a49cf853fc";
             ResourceIdentifier billingSubscriptionAliasResourceId = BillingSubscriptionAliasResource.CreateResourceIdentifier(billingAccountName, aliasName);
             BillingSubscriptionAliasResource billingSubscriptionAlias = client.GetBillingSubscriptionAliasResource(billingSubscriptionAliasResourceId);
@@ -69,14 +69,10 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingSubscriptionAliasData data = new BillingSubscriptionAliasData()
             {
                 BillingFrequency = "P1M",
-                BillingProfileId = new ResourceIdentifier("/providers/Microsoft.Billing/BillingAccounts/{billingAccountName}/billingProfiles/2b72f936-0166-47d6-91a3-ef9f84f36664"),
-                CustomerId = "e259ec08-fc9f-481c-a052-8b0c83a3a051",
                 DisplayName = "Subscription 3",
-                InvoiceSectionId = new ResourceIdentifier("/providers/Microsoft.Billing/BillingAccounts/{billingAccountName}/billingProfiles/2b72f936-0166-47d6-91a3-ef9f84f36664/5c562559-e31b-4bfe-b608-f8b5b3fbd073"),
-                ProductTypeId = "CFQ7TTC0LDPB",
-                Quantity = 4,
+                Quantity = 1,
                 SkuId = "0001",
-                TermDuration = XmlConvert.ToTimeSpan("P1Y"),
+                TermDuration = XmlConvert.ToTimeSpan("P1M"),
             };
             ArmOperation<BillingSubscriptionAliasResource> lro = await billingSubscriptionAlias.UpdateAsync(WaitUntil.Completed, data);
             BillingSubscriptionAliasResource result = lro.Value;

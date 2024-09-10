@@ -91,7 +91,7 @@ namespace Azure.AI.Language.Text
             RequestStatistics statistics = default;
             string projectName = default;
             string deploymentName = default;
-            IReadOnlyList<CustomHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> documents = default;
+            IReadOnlyList<CustomHealthcareActionResult> documents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,10 +127,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("documents"u8))
                 {
-                    List<CustomHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> array = new List<CustomHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>();
+                    List<CustomHealthcareActionResult> array = new List<CustomHealthcareActionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage.DeserializeCustomHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(item, options));
+                        array.Add(CustomHealthcareActionResult.DeserializeCustomHealthcareActionResult(item, options));
                     }
                     documents = array;
                     continue;

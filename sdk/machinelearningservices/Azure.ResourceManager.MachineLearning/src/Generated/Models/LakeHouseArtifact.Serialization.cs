@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("artifactName"u8);
-            writer.WriteStringValue(ArtifactName);
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
+            writer.WritePropertyName("artifactName"u8);
+            writer.WriteStringValue(ArtifactName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -68,20 +69,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string artifactName = default;
             OneLakeArtifactType artifactType = default;
+            string artifactName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("artifactName"u8))
-                {
-                    artifactName = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("artifactType"u8))
                 {
                     artifactType = new OneLakeArtifactType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("artifactName"u8))
+                {
+                    artifactName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +91,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LakeHouseArtifact(artifactName, artifactType, serializedAdditionalRawData);
+            return new LakeHouseArtifact(artifactType, artifactName, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  artifactType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  artifactType: ");
+                builder.AppendLine($"'{ArtifactType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  artifactName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArtifactName))
+                {
+                    builder.Append("  artifactName: ");
+                    if (ArtifactName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ArtifactName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ArtifactName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<LakeHouseArtifact>.Write(ModelReaderWriterOptions options)
@@ -101,6 +152,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LakeHouseArtifact)} does not support writing '{options.Format}' format.");
             }

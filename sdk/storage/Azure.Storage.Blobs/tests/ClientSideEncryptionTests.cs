@@ -73,7 +73,9 @@ namespace Azure.Storage.Blobs.Test
             var result = new Span<byte>(new byte[encryptedDataLength]);
 
             long nonceCounter = 1;
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#if NET8_0_OR_GREATER
+            using var gcm = new AesGcm(key, V2.TagSize);
+#elif NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
             using var gcm = new AesGcm(key);
 #else
             using var gcm = new Azure.Storage.Shared.AesGcm.AesGcmWindows(key);

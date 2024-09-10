@@ -7,6 +7,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug where copying a Azure Storage Blob to a Share File would not be able to convert Content Language and Content Encoding to the `string[]` type.
+- Fixed bug where LastWrittenOn property was not being preserved when copying a Share File to another Share File.
 
 ### Other Changes
 

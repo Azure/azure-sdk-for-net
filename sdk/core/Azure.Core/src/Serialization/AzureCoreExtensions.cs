@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,6 +63,8 @@ namespace Azure
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.  Please see https://aka.ms/azsdk/net/dynamiccontent for details.
         /// </summary>
+        [RequiresUnreferencedCode(DynamicData.SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(DynamicData.SerializationRequiresUnreferencedCode)]
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
             DynamicDataOptions options = new DynamicDataOptions();
@@ -79,6 +82,8 @@ namespace Azure
         /// see <see href="https://learn.microsoft.com/dotnet/standard/base-types/standard-date-and-time-format-strings">https://learn.microsoft.com/dotnet/standard/base-types/standard-date-and-time-format-strings#table-of-format-specifiers</see> for other well known values.
         /// </paramref>
         /// </summary>
+        [RequiresUnreferencedCode(DynamicData.SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(DynamicData.SerializationRequiresUnreferencedCode)]
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
             DynamicDataOptions options = new DynamicDataOptions()
@@ -93,6 +98,8 @@ namespace Azure
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
+        [RequiresUnreferencedCode(DynamicData.SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(DynamicData.SerializationRequiresUnreferencedCode)]
         internal static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataOptions options)
         {
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicDataOptions.ToSerializerOptions(options));

@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> The sentiment analysis results for each document in the input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
-        internal SentimentResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<SentimentDocumentResultWithDetectedLanguage> documents)
+        internal SentimentResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<SentimentActionResult> documents)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> The sentiment analysis results for each document in the input. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SentimentResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IReadOnlyList<SentimentDocumentResultWithDetectedLanguage> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SentimentResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IReadOnlyList<SentimentActionResult> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
             Statistics = statistics;
@@ -89,6 +89,6 @@ namespace Azure.AI.Language.Text
         /// <summary> This field indicates which model is used for scoring. </summary>
         public string ModelVersion { get; }
         /// <summary> The sentiment analysis results for each document in the input. </summary>
-        public IReadOnlyList<SentimentDocumentResultWithDetectedLanguage> Documents { get; }
+        public IReadOnlyList<SentimentActionResult> Documents { get; }
     }
 }

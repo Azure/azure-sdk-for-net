@@ -86,7 +86,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
-                    foreach (AbstractiveSummaryDocumentResultWithDetectedLanguage extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)
+                    foreach (AbstractiveSummaryActionResult extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)
                     {
                         Console.WriteLine($"Result for document with Id = \"{extractedSummaryDocument.Id}\":");
                         Console.WriteLine($"  Produced the following abstractive summaries:");

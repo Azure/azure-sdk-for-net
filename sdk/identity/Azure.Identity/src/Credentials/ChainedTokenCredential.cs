@@ -11,14 +11,14 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Provides a <see cref="TokenCredential"/> implementation which chains multiple <see cref="TokenCredential"/> implementations to be tried in order
-    /// until one of the getToken methods returns a non-default <see cref="AccessToken"/>.
+    /// Provides a <see cref="TokenCredential"/> implementation which chains multiple <see cref="TokenCredential"/> implementations
+    /// to be tried in order until one of the GetToken methods returns a non-default <see cref="AccessToken"/>. For more information,
+    /// see <see href="https://aka.ms/azsdk/net/identity/credential-chains#chainedtokencredential-overview">ChainedTokenCredential overview</see>.
     /// </summary>
     /// <example>
     /// <para>
-    /// The ChainedTokenCredential class provides the ability to link together multiple credential instances to be tried sequentially when authenticating.
-    /// The following example demonstrates creating a credential which will attempt to authenticate using managed identity, and fall back to Azure CLI for authentication
-    /// if a managed identity is unavailable in the current environment.
+    /// The following example demonstrates creating a credential which will attempt to authenticate using managed identity and fall
+    /// back to Azure CLI for authentication if a managed identity is unavailable in the current environment.
     /// </para>
     /// <code snippet="Snippet:CustomChainedTokenCredential" language="csharp">
     /// // Authenticate using managed identity if it is available; otherwise use the Azure CLI to authenticate.
@@ -70,8 +70,9 @@ namespace Azure.Identity
 
         /// <summary>
         /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained
-        /// <see cref="AccessToken"/>. Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled
-        /// automatically. Where possible, reuse credential instances to optimize cache effectiveness.
+        /// <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the
+        /// credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to
+        /// optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -82,8 +83,9 @@ namespace Azure.Identity
 
         /// <summary>
         /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained
-        /// <see cref="AccessToken"/>. Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled
-        /// automatically. Where possible, reuse credential instances to optimize cache effectiveness.
+        /// <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the
+        /// credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to
+        /// optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

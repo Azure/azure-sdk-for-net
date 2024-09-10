@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Text
             IReadOnlyList<DocumentError> errors = default;
             RequestStatistics statistics = default;
             string modelVersion = default;
-            IReadOnlyList<EntityLinkingResultWithDetectedLanguage> documents = default;
+            IReadOnlyList<EntityLinkingActionResult> documents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,10 +119,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("documents"u8))
                 {
-                    List<EntityLinkingResultWithDetectedLanguage> array = new List<EntityLinkingResultWithDetectedLanguage>();
+                    List<EntityLinkingActionResult> array = new List<EntityLinkingActionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityLinkingResultWithDetectedLanguage.DeserializeEntityLinkingResultWithDetectedLanguage(item, options));
+                        array.Add(EntityLinkingActionResult.DeserializeEntityLinkingActionResult(item, options));
                     }
                     documents = array;
                     continue;

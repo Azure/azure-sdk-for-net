@@ -50,7 +50,33 @@ A secure, keyless authentication approach is to use Microsoft Entra ID (formerly
 AzureOpenAIClient azureClient = new(
     new Uri("https://your-azure-openai-resource.com"),
     new DefaultAzureCredential());
-ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
+ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
+```
+
+##### Configure client for Azure sovereign cloud**
+
+If your Microsoft Entra credentials are issued by an entity other than Azure Public Cloud, you can set the `Audience` property on `OpenAIClientOptions` to modify the token authorization scope used for requests.
+
+For example, the following will configure the client to authenticate tokens via Azure Government Cloud, using `https://cognitiveservices.azure.us/.default` as the authorization scope:
+
+```C# Snippet:ConfigureClient:GovernmentAudience
+AzureOpenAIClientOptions options = new()
+{
+    Audience = AzureOpenAIAudience.AzureGovernment,
+};
+AzureOpenAIClient azureClient = new(
+    new Uri("https://your-azure-openai-resource.com"),
+    new DefaultAzureCredential());
+ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
+```
+
+For a custom or non-enumerated value, the authorization scope can be provided directly as the value for `Audience`:
+
+```C# Snippet:ConfigureClient:CustomAudience
+AzureOpenAIClientOptions optionsWithCustomAudience = new()
+{
+    Audience = "https://cognitiveservices.azure.com/.default",
+};
 ```
 
 #### Create client with an API key
@@ -143,7 +169,7 @@ Console.WriteLine($"{completion.Role}: {completion.Content[0].Text}");
 
 ### Stream chat messages
 
-Streaming chat completions use the `CompleteChatStreaming` and `CompleteChatStreamingAsync` method, which return a `ResultCollection<StreamingChatCompletionUpdate>` or `AsyncResultCollection<StreamingChatCompletionUpdate>` instead of a `ClientResult<ChatCompletion>`. These result collections can be iterated over using `foreach` or `await foreach`, with each update arriving as new data is available from the streamed response.
+Streaming chat completions use the `CompleteChatStreaming` and `CompleteChatStreamingAsync` method, which return a `ResultCollection<StreamingChatCompletionUpdate>` or `AsyncCollectionResult<StreamingChatCompletionUpdate>` instead of a `ClientResult<ChatCompletion>`. These result collections can be iterated over using `foreach` or `await foreach`, with each update arriving as new data is available from the streamed response.
 
 ```C# Snippet:StreamChatMessages
 AzureOpenAIClient azureClient = new(
@@ -151,7 +177,7 @@ AzureOpenAIClient azureClient = new(
     new DefaultAzureCredential());
 ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
 
-ResultCollection<StreamingChatCompletionUpdate> completionUpdates = chatClient.CompleteChatStreaming(
+CollectionResult<StreamingChatCompletionUpdate> completionUpdates = chatClient.CompleteChatStreaming(
     [
         new SystemChatMessage("You are a helpful assistant that talks like a pirate."),
         new UserChatMessage("Hi, can you help me?"),

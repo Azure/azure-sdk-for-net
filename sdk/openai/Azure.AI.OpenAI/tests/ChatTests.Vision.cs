@@ -1,10 +1,13 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.ClientModel;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using OpenAI.Chat;
+using OpenAI.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests
 {
@@ -114,9 +117,7 @@ namespace Azure.AI.OpenAI.Tests
                 MaxTokens = 2048,
             };
 
-            AsyncResultCollection<StreamingChatCompletionUpdate> response = SyncOrAsync(client,
-                c => c.CompleteChatStreaming(messages, options),
-                c => c.CompleteChatStreamingAsync(messages, options));
+            AsyncCollectionResult<StreamingChatCompletionUpdate> response = client.CompleteChatStreamingAsync(messages, options);
             Assert.That(response, Is.Not.Null);
 
             await foreach (StreamingChatCompletionUpdate update in response)

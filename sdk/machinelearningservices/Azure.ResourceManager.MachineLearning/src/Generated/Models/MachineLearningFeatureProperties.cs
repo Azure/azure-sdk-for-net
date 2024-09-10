@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Dto object representing feature. </summary>
+    /// <summary> DTO object representing feature. </summary>
     public partial class MachineLearningFeatureProperties : MachineLearningResourceBase
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureProperties"/>. </summary>
@@ -20,20 +20,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="dataType"> Specifies type. </param>
         /// <param name="featureName"> Specifies name. </param>
-        internal MachineLearningFeatureProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, FeatureDataType? dataType, string featureName) : base(description, properties, tags, serializedAdditionalRawData)
+        /// <param name="dataType"> Specifies type. </param>
+        internal MachineLearningFeatureProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, string featureName, FeatureDataType? dataType) : base(description, tags, properties, serializedAdditionalRawData)
         {
-            DataType = dataType;
             FeatureName = featureName;
+            DataType = dataType;
         }
 
-        /// <summary> Specifies type. </summary>
-        public FeatureDataType? DataType { get; set; }
         /// <summary> Specifies name. </summary>
+        [WirePath("featureName")]
         public string FeatureName { get; set; }
+        /// <summary> Specifies type. </summary>
+        [WirePath("dataType")]
+        public FeatureDataType? DataType { get; set; }
     }
 }

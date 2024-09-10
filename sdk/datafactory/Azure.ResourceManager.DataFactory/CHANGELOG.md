@@ -1,24 +1,31 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0 (2024-09-10)
+
+### Features Added
+- Added support for Iceberg format as a sink.
+- Enabled sslMode and useSystemTrustStore options for MariaDB.
+
+## 1.3.0 (2024-08-16)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Enhanced Swagger to support Vertica V2 integration in Azure Data Factory.
+- Added Managed Identity (MI) authentication support for Azure Files.
+- Introduced versioning property for better version control.
+- Implemented Service Principal Certificate Authentication in RestService and SharePointOnlineList Linked Services.
 
 ## 1.2.0 (2024-07-26)
 
 ### Features Added
+
 - Security enhancement feature snowflake support storage integration.
-- Support 'domain' Property In Dynamics Family.
-- Enable UAMI auth for Data Factory Sql Server connector.
-- Support managed identity for Data Factory Azure Table connector.
+- Supported 'domain' Property In Dynamics Family.
+- Enabled UAMI auth for Data Factory Sql Server connector.
+- Supported managed identity for Data Factory Azure Table connector.
 
 ### Bugs Fixed
+
 - Added missing continuation settings for execute dataflow activity.
 
 ## 1.1.0 (2024-05-31)
@@ -29,14 +36,16 @@
 - Added query property for Salesforce V2.
 - Added lakehouse table dataset schema property.
 - Added credential property in DynamicsCrm for new feature.
-- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Bugs Fixed
+
 - Fixed headers schema issue.
 - Corrected Swagger definitions for SPN, UAMI, and SAMI credentials.
 
 ### Other Changes
+
 - Updated Python configuration.
 - Changed ScriptActivityScriptBlock type property to support parameterization.
 - Updated Swagger for ServiceNowV2 expression app model.
@@ -65,15 +74,15 @@ This release is the first stable release of the Data Factory Management client l
 
 ### Features Added
 
-  - Added warehouse linkedService, dataSet
-  - Added snowflake v2 linkedService, dataSet
-  - Added SalesforceV2 and SalesforceCloudServiceV2 linkedService, dataSet
-  - Update MySql & Mariadb LinkedService.json with new properties.
+- Added warehouse linkedService, dataSet
+- Added snowflake v2 linkedService, dataSet
+- Added SalesforceV2 and SalesforceCloudServiceV2 linkedService, dataSet
+- Update MySql & Mariadb LinkedService.json with new properties.
 
 ### Bugs Fixed
 
-  - Fixed headers and schema definition bug for Azure Function activity and Web Activity.
-  - Added metadata Into StoreWriteSettings For Bug Fixed.
+- Fixed headers and schema definition bug for Azure Function activity and Web Activity.
+- Added metadata Into StoreWriteSettings For Bug Fixed.
 
 ## 1.0.0-beta.5 (2023-11-16)
 
@@ -81,7 +90,7 @@ This release is the first stable release of the Data Factory Management client l
 
 - Upgraded API version.
   - Added Some Properties on GoogleAds Connector.
-  - Added Support LakeHouse Connector In ADF.
+  - Added Supported LakeHouse Connector In ADF.
 - Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ## 1.0.0-beta.4 (2023-09-26)
@@ -142,11 +151,11 @@ The package name has been changed from `Microsoft.Azure.Management.DataFactory` 
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
-    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
-    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+    - Supported MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+    - Supported [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
     - HTTP pipeline with custom policies.
     - Better error-handling.
-    - Support uniform telemetry across all languages.
+    - Supported uniform telemetry across all languages.
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 

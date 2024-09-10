@@ -1,16 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Trigger.Model;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
@@ -18,6 +8,15 @@ using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 {
@@ -33,6 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         internal const string ClientCertificatesBindingName = "ClientCertificates";
         internal const string SocketIdBindingName = "SocketId";
         internal const string NamespaceBindingName = "Namespace";
+        internal const string UserIdName = "UserId";
 
         private readonly ParameterInfo _parameterInfo;
         private readonly SocketIOTriggerAttribute _attribute;
@@ -63,12 +63,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                 {
                     if (triggerEvent.Request is not SocketIOMessageRequest eventReq)
                     {
-                        throw new ArgumentException();
+                        throw new InvalidDataException($"Expect incoming event to be {nameof(SocketIOMessageRequest)}, but it's {triggerEvent.Request.GetType()}");
                     }
 
                     if (eventReq.Parameters == null || eventReq.Parameters.Count != _attribute.ParameterNames.Length)
                     {
-                        throw new ArgumentException();
+                        throw new ArgumentException($"Parameter length of incoming data dismatch. Expected to be {_attribute.ParameterNames.Length}, but actually {eventReq.Parameters.Count}. Update the {nameof(SocketIOTriggerAttribute.ParameterNames)} to match the actual data");
                     }
 
                     // Add binding data for arguments
@@ -120,6 +120,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             bindingData.Add(ConnectionContextBindingName, triggerEvent.ConnectionContext);
             bindingData.Add(SocketIdBindingName, triggerEvent.Request.SocketId);
             bindingData.Add(NamespaceBindingName, triggerEvent.Request.Namespace);
+            if (!string.IsNullOrEmpty(triggerEvent.ConnectionContext.UserId))
+            {
+                bindingData.Add(UserIdName, triggerEvent.ConnectionContext.UserId);
+            }
 
             if (triggerEvent.Request is SocketIOConnectRequest connectEventRequest)
             {
@@ -192,6 +196,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             SafeAddContract(() => contract.Add(ClientCertificatesBindingName, typeof(WebPubSubClientCertificate[])));
             SafeAddContract(() => contract.Add(SocketIdBindingName, typeof(string)));
             SafeAddContract(() => contract.Add(NamespaceBindingName, typeof(string)));
+            SafeAddContract(() => contract.Add(UserIdName, typeof(string)));
 
             return contract;
         }

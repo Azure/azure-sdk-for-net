@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,12 +369,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DedicatedHsmEgressEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DedicatedHsmEgressEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(e), _dedicatedHsmClientDiagnostics, Pipeline, "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DedicatedHsmEgressEndpoint.DeserializeDedicatedHsmEgressEndpoint(e), _dedicatedHsmClientDiagnostics, Pipeline, "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -399,12 +399,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DedicatedHsmEgressEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DedicatedHsmEgressEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(e), _dedicatedHsmClientDiagnostics, Pipeline, "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DedicatedHsmEgressEndpoint.DeserializeDedicatedHsmEgressEndpoint(e), _dedicatedHsmClientDiagnostics, Pipeline, "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

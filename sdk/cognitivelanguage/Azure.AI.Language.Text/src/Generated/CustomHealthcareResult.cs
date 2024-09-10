@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Text
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> List of custom healthcare results for the document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="documents"/> is null. </exception>
-        internal CustomHealthcareResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> documents)
+        internal CustomHealthcareResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomHealthcareActionResult> documents)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(projectName, nameof(projectName));
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Text
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> List of custom healthcare results for the document. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomHealthcareResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IReadOnlyList<CustomHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomHealthcareResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IReadOnlyList<CustomHealthcareActionResult> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
             Statistics = statistics;
@@ -96,6 +96,6 @@ namespace Azure.AI.Language.Text
         /// <summary> This field indicates the deployment name for the model. </summary>
         public string DeploymentName { get; }
         /// <summary> List of custom healthcare results for the document. </summary>
-        public IReadOnlyList<CustomHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> Documents { get; }
+        public IReadOnlyList<CustomHealthcareActionResult> Documents { get; }
     }
 }

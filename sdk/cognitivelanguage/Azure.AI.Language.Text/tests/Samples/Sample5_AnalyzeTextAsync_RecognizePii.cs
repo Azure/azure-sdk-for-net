@@ -54,7 +54,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
             AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-            foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
+            foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
             {
                 Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
                 Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");

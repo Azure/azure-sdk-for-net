@@ -5,15 +5,10 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Identity;
-using OpenAI.Audio;
 using OpenAI.Chat;
 
 namespace Azure.AI.OpenAI.Samples;
@@ -51,7 +46,7 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
 
-        ResultCollection<StreamingChatCompletionUpdate> completionUpdates = chatClient.CompleteChatStreaming(
+        CollectionResult<StreamingChatCompletionUpdate> completionUpdates = chatClient.CompleteChatStreaming(
             [
                 new SystemChatMessage("You are a helpful assistant that talks like a pirate."),
                 new UserChatMessage("Hi, can you help me?"),

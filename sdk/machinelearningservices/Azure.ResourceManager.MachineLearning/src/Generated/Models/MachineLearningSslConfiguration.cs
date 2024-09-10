@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Enable or disable ssl for scoring. </summary>
+        [WirePath("status")]
         public MachineLearningSslConfigStatus? Status { get; set; }
         /// <summary> Cert data. </summary>
+        [WirePath("cert")]
         public string Cert { get; set; }
         /// <summary> Key data. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
         /// <summary> CNAME of the cert. </summary>
+        [WirePath("cname")]
         public string Cname { get; set; }
         /// <summary> Leaf domain label of public endpoint. </summary>
+        [WirePath("leafDomainLabel")]
         public string LeafDomainLabel { get; set; }
         /// <summary> Indicates whether to overwrite existing domain label. </summary>
+        [WirePath("overwriteExistingDomain")]
         public bool? OverwriteExistingDomain { get; set; }
     }
 }

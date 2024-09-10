@@ -2,39 +2,142 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using Azure.Provisioning.Expressions;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning
+namespace Azure.Provisioning;
+
+/// <summary>
+/// Collect resources and other constructs like parameters together.
+/// </summary>
+/// <param name="name"></param>
+public class Infrastructure(string name) : Provisionable
 {
     /// <summary>
-    /// A class representing a set of <see cref="IConstruct"/> that make up the Azure infrastructure.
+    /// A friendly name that can also be used if compiling to a module.
     /// </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Infrastructure : Construct
-#pragma warning restore AZC0012 // Avoid single word type names
+    public string Name { get; private set; } = name;
+
+    /// <summary>
+    /// Optional target scope for the infrastructure.  If left empty, then
+    /// <c>resourcegroup</c> is assumed.
+    /// </summary>
+    public string? TargetScope { get; set; }
+
+    // Placeholder until we get module splitting handled
+    private Infrastructure? _parent = null;
+
+    // TODO: Figure out the right way to expose ethis publicly
+    protected internal override IEnumerable<Provisionable> GetResources() => _resources;
+    private readonly List<Provisionable> _resources = [];
+
+    public virtual void Add(Provisionable resource)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Infrastructure"/> class.
-        /// </summary>
-        /// <param name="constructScope">The <see cref="ConstructScope"/> to use for the root <see cref="IConstruct"/>.</param>
-        /// <param name="tenantId">The tenant id to use.  If not passed in will try to load from AZURE_TENANT_ID environment variable.</param>
-        /// <param name="subscriptionId">The subscription id to use.  If not passed, the subscription will be loaded from the deployment context.</param>
-        /// <param name="envName">The environment name to use.  If not passed in will try to load from AZURE_ENV_NAME environment variable.</param>
-        /// <param name="configuration">The configuration for the infrastructure.</param>
-        public Infrastructure(ConstructScope constructScope = ConstructScope.Subscription, Guid? tenantId = null, Guid? subscriptionId = null, string? envName = null, Configuration? configuration = null)
-            : base(null, "default", constructScope, tenantId, subscriptionId, envName ?? Environment.GetEnvironmentVariable("AZURE_ENV_NAME") ?? throw new Exception("No environment variable found named 'AZURE_ENV_NAME'"), resourceGroup: null)
+        if (resource is ProvisioningConstruct construct &&
+            construct.ParentInfrastructure != this)
         {
-            Configuration = configuration;
-        }
+            // Don't parent expression references
+            if (construct.ExpressionOverride is not null) { return; }
 
-        /// <summary>
-        /// Converts the infrastructure to Bicep files.
-        /// </summary>
-        /// <param name="outputPath">Path to put the files.</param>
-        public void Build(string? outputPath = null)
+            // Remove it from any existing Infrastructure first
+            construct.ParentInfrastructure?.Remove(this);
+
+            // Add and associate the resource
+            _resources.Add(construct);
+            construct.ParentInfrastructure = this;
+        }
+        else if (resource is Infrastructure nested &&
+            nested._parent != this)
         {
-            var moduleInfrastructure = new ModuleInfrastructure(this);
+            // Remove it from any existing Infrastructure first
+            nested._parent?.Remove(this);
 
-            moduleInfrastructure.Write(outputPath);
+            // Add and associate the resource
+            _resources.Add(nested);
+            nested._parent = this;
         }
+    }
+
+    public virtual void Remove(Provisionable resource)
+    {
+        if (resource is ProvisioningConstruct construct &&
+            construct.ParentInfrastructure == this)
+        {
+            construct.ParentInfrastructure = null;
+            _resources.Remove(construct);
+        }
+        else if (resource is Infrastructure nested &&
+            nested._parent == this)
+        {
+            nested._parent = null;
+            _resources.Remove(nested);
+        }
+    }
+
+    protected internal override void Validate(ProvisioningContext? context = null)
+    {
+        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        base.Validate(context);
+        foreach (Provisionable resource in GetResources()) { resource.Validate(context); }
+    }
+
+    protected internal override void Resolve(ProvisioningContext? context = default)
+    {
+        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        base.Resolve(context);
+
+        Provisionable[] cached = [.. GetResources()]; // Copy so Resolve can mutate
+        foreach (Provisionable resource in cached) { resource.Resolve(context); }
+    }
+
+    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
+    {
+        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        List<Statement> statements = [];
+        if (TargetScope is not null)
+        {
+            statements.Add(new TargetScopeStatement(TargetScope));
+        }
+        foreach (Provisionable resource in GetResources())
+        {
+            if (resource is ProvisioningConstruct construct)
+            {
+                statements.AddRange(construct.Compile(context));
+            }
+            else if (resource is Infrastructure nested)
+            {
+                // We'll eventually add support for auto module splitting and
+                // be able to do smart things here.  We're going to intentionally
+                // fail for now though so we have more flexibility in the future.
+                // We fail here instead of Add so folks have a chance to move it
+                // around between different Infrastructure classes if they want
+                throw new NotSupportedException($"Nested {nameof(Infrastructure)} is not currently supported.  Please build them separately and use {nameof(ModuleImport)} to link them together.");
+            }
+        }
+        return statements;
+    }
+
+    protected internal IDictionary<string, IEnumerable<Statement>> CompileModules(ProvisioningContext? context = default)
+    {
+        // This API shape will eventually help us grow into compiling multiple
+        // modules at once and automatically splitting resources across them.
+        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        Dictionary<string, IEnumerable<Statement>> modules = [];
+        modules.Add(Name, Compile(context));
+        return modules;
+    }
+
+    public virtual ProvisioningPlan Build(ProvisioningContext? context = default)
+    {
+        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        Resolve(context);
+        Validate(context);
+
+        // Reset the default infrastructure so the context can continue to be
+        // used for additional provisioning.
+        context.DefaultInfrastructure = context.DefaultInfrastructureProvider();
+
+        return new ProvisioningPlan(this, context);
     }
 }

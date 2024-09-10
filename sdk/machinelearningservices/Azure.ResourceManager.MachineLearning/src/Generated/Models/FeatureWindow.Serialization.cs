@@ -26,18 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FeatureWindowEnd))
-            {
-                if (FeatureWindowEnd != null)
-                {
-                    writer.WritePropertyName("featureWindowEnd"u8);
-                    writer.WriteStringValue(FeatureWindowEnd.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("featureWindowEnd");
-                }
-            }
             if (Optional.IsDefined(FeatureWindowStart))
             {
                 if (FeatureWindowStart != null)
@@ -48,6 +36,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("featureWindowStart");
+                }
+            }
+            if (Optional.IsDefined(FeatureWindowEnd))
+            {
+                if (FeatureWindowEnd != null)
+                {
+                    writer.WritePropertyName("featureWindowEnd"u8);
+                    writer.WriteStringValue(FeatureWindowEnd.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("featureWindowEnd");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,22 +88,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            DateTimeOffset? featureWindowEnd = default;
             DateTimeOffset? featureWindowStart = default;
+            DateTimeOffset? featureWindowEnd = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("featureWindowEnd"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        featureWindowEnd = null;
-                        continue;
-                    }
-                    featureWindowEnd = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("featureWindowStart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -114,13 +104,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     featureWindowStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("featureWindowEnd"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        featureWindowEnd = null;
+                        continue;
+                    }
+                    featureWindowEnd = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FeatureWindow(featureWindowEnd, featureWindowStart, serializedAdditionalRawData);
+            return new FeatureWindow(featureWindowStart, featureWindowEnd, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureWindow>.Write(ModelReaderWriterOptions options)

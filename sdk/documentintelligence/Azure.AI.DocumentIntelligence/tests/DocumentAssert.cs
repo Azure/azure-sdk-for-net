@@ -119,7 +119,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             }
         }
 
-        public static void AreEquivalent(IReadOnlyDictionary<string, DocumentFieldSchema> expected, IReadOnlyDictionary<string, DocumentFieldSchema> actual)
+        public static void AreEquivalent(IDictionary<string, DocumentFieldSchema> expected, IDictionary<string, DocumentFieldSchema> actual)
         {
             Assert.That(actual.Count, Is.EqualTo(expected.Count));
 
