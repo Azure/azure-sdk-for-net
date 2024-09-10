@@ -1,5 +1,10 @@
 # Release History
 
+## 2.0.0 (2024-10-11)
+
+### Features Added
+- Upgraded api-version tag from 'package-2024-01' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/738879cc6e1c5569b01130fd69a2587388fc34b3/specification/network/resource-manager/readme.md
+
 ## 1.9.0 (2024-07-10)
 
 ### Features Added
