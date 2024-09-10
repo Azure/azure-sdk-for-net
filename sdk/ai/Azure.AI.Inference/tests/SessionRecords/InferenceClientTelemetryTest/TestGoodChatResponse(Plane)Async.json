@@ -6,11 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "Content-Length": "209",
+        "Content-Length": "181",
         "Content-Type": "application/json",
-        "extra-parameters": "pass-through",
-        "traceparent": "00-cae711faa2faa083fbda83a7280d8b71-a280b93a8803dd92-01",
+        "traceparent": "00-d323c429647d20e7c9713d064f3fcc36-15838b241bfc06c0-01",
         "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240909.1 (.NET Framework 4.8.9261.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -28,30 +26,29 @@
         ],
         "max_tokens": 10,
         "temperature": 1,
-        "model": "gpt-4o",
-        "top_p": 0.90000000000000002
+        "model": "gpt-4o"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "599dc023-8665-49f7-affd-9b6faa66033d",
-        "azureml-model-session": "d119-20240903080628",
+        "apim-request-id": "d408e3b9-e6c1-40ea-b427-5486bc470d81",
+        "azureml-model-session": "d077-20240814132435",
         "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Tue, 10 Sep 2024 00:31:14 GMT",
+        "Date": "Tue, 10 Sep 2024 18:11:12 GMT",
         "request-context": "appId=",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "Vary": "Accept-Encoding",
         "x-aml-cluster": "int-02",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "279",
+        "x-envoy-upstream-service-time": "202",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
         "x-ms-region": "East US",
         "x-ratelimit-remaining-requests": "29",
-        "x-ratelimit-remaining-tokens": "29974",
-        "X-Request-ID": "30f6bfc3-cc26-44f6-a956-9fcf935168f3",
-        "x-request-time": "0.994"
+        "x-ratelimit-remaining-tokens": "29948",
+        "X-Request-ID": "92341ad5-4f6e-41b4-804a-5c6b00be762d",
+        "x-request-time": "0.627"
       },
       "ResponseBody": {
         "choices": [
@@ -83,8 +80,8 @@
             }
           }
         ],
-        "created": 1725928274,
-        "id": "chatcmpl-A5j4kGrUFg1Uh4UOggMXseJrJjOCp",
+        "created": 1725991872,
+        "id": "chatcmpl-A5zcWMK6r7lfTkqgsXGotgeIU3Hd6",
         "model": "gpt-4o-2024-05-13",
         "object": "chat.completion",
         "prompt_filter_results": [
@@ -122,6 +119,6 @@
   "Variables": {
     "AZUREAI_GITHUB_TOKEN": "Sanitized",
     "AZUREAI_GITHUB_URL": "https://int.api.azureml-test.ms/nexus",
-    "RandomSeed": "1251389377"
+    "RandomSeed": "1489816213"
   }
 }

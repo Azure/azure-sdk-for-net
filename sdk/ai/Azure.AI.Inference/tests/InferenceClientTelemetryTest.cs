@@ -30,8 +30,7 @@ namespace Azure.AI.Inference.Tests
                 },
                 Model = "gpt-4o",
                 Temperature = 1,
-                MaxTokens = 10,
-                AdditionalProperties = { { "top_p", BinaryData.FromObjectAsJson(0.9) } }
+                MaxTokens = 10
             };
             m_requestStreamingOptions = new ChatCompletionsOptions()
             {
@@ -151,9 +150,6 @@ namespace Azure.AI.Inference.Tests
             catch (Exception ex)
             {
                 Assert.That(ex is RequestFailedException, $"The exception was of wrong type {ex.GetType()}");
-                // Our recrding infrastructure interpret the error as 500, while
-                // it will be shown as AggregationException if we will run
-                // on pure Client.
                 actListener.validateErrorTag("400", ex.Message);
             }
         }
