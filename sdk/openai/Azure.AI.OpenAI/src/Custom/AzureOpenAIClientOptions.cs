@@ -100,4 +100,22 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
     }
 
     private const ServiceVersion LatestVersion = ServiceVersion.V2024_07_01_Preview;
+
+    // CUSTOM: Add custom header and key support for use with Azure API Management
+    public Dictionary<string, string> CustomHeaders { get; private set; } = new Dictionary<string, string>();
+
+    /// <summary>
+    /// Adds a custom header to be included in all requests.
+    /// </summary>
+    /// <param name="headerKey">The header key (name).</param>
+    /// <param name="headerValue">The header value.</param>
+    public void AddCustomHeader(string headerKey, string headerValue)
+    {
+        if (string.IsNullOrEmpty(headerKey) || string.IsNullOrEmpty(headerValue))
+        {
+            throw new ArgumentException("Header key and value must not be null or empty.");
+        }
+
+        CustomHeaders[headerKey] = headerValue;
+    }
 }

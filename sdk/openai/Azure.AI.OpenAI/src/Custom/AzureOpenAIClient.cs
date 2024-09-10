@@ -276,6 +276,8 @@ public partial class AzureOpenAIClient : OpenAIClient
             [
                 CreateAddUserAgentHeaderPolicy(options),
                 CreateAddClientRequestIdHeaderPolicy(),
+                //CUSTOM: Add custom header support
+                CreateAddCustomHeaderPolicy(options),
             ],
             perTryPolicies:
             [
@@ -306,6 +308,29 @@ public partial class AzureOpenAIClient : OpenAIClient
                 if (request?.Headers?.TryGetValue(s_userAgentHeaderKey, out string _) == false)
                 {
                     request.Headers.Set(s_userAgentHeaderKey, telemetryDetails.ToString());
+                }
+            });
+    }
+    // CUSTOM Add Authentication Header support for Azure OpenAI Instances behind API Management
+    private static PipelinePolicy CreateAddCustomHeaderPolicy(AzureOpenAIClientOptions options = null)
+    {
+        return new GenericActionPipelinePolicy(
+            requestAction: request =>
+            {
+                // If options is null or no custom headers are provided, return early
+                if (options?.CustomHeaders == null || options.CustomHeaders.Count == 0)
+                {
+                    return;
+                }
+
+                // Add each custom header to the request
+                foreach (var header in options.CustomHeaders)
+                {
+                    // Add or update the header in the request
+                    if (request?.Headers?.TryGetValue(header.Key, out string _) == false)
+                    {
+                        request.Headers.Set(header.Key, header.Value);
+                    }
                 }
             });
     }
