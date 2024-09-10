@@ -41,7 +41,7 @@ public static partial class ModelReaderWriter
         }
         else
         {
-            return options.GetProxy(model).Write(options);
+            return options.ResolveProxy(model).Write(options);
         }
     }
 
@@ -88,7 +88,7 @@ public static partial class ModelReaderWriter
         }
         else
         {
-            return options.GetProxy(iModel).Write(options);
+            return options.ResolveProxy(iModel).Write(options);
         }
     }
 
@@ -116,11 +116,13 @@ public static partial class ModelReaderWriter
         if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
         {
             Utf8JsonReader reader = new Utf8JsonReader(data);
-            return options.GetProxy(jsonModel).Create(ref reader, options);
+            IJsonModel<T> readerToUse = options.TryGetProxy(out IJsonModel<T>? jsonModelProxy) ? jsonModelProxy : jsonModel;
+            return readerToUse.Create(ref reader, options);
         }
         else
         {
-            return options.GetProxy(model).Create(data, options);
+            IPersistableModel<T> readerToUse = options.TryGetProxy(out IPersistableModel<T>? proxy) ? proxy : model;
+            return readerToUse.Create(data, options);
         }
     }
 
@@ -155,11 +157,13 @@ public static partial class ModelReaderWriter
         if (ShouldWriteAsJson(model, options, out IJsonModel<object>? jsonModel))
         {
             Utf8JsonReader reader = new Utf8JsonReader(data);
-            obj = options.GetProxy(jsonModel).Create(ref reader, options);
+            IJsonModel<object> readerToUse = options.TryGetProxy(returnType, out IJsonModel<object>? jsonModelProxy) ? jsonModelProxy : jsonModel;
+            obj = readerToUse.Create(ref reader, options);
         }
         else
         {
-            obj = options.GetProxy(model).Create(data, options);
+            IPersistableModel<object> readerToUse = options.TryGetProxy(returnType, out IPersistableModel<object>? proxy) ? proxy : model;
+            obj = readerToUse.Create(data, options);
         }
         return obj is StructWrapper wrapper ? wrapper.Value : obj;
     }
@@ -237,7 +241,10 @@ public static partial class ModelReaderWriter
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
-        => options.Format == "J" || (options.Format == "W" && options.GetProxy(model).GetFormatFromOptions(options) == "J");
+    {
+        var format = options.TryGetProxy(out IPersistableModel<T>? proxy) ? proxy.GetFormatFromOptions(options) : model.GetFormatFromOptions(options);
+        return options.Format == "J" || (options.Format == "W" && format == "J");
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested(IPersistableModel<object> model, ModelReaderWriterOptions options)

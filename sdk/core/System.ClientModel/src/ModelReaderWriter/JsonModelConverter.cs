@@ -70,6 +70,6 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     public override void Write(Utf8JsonWriter writer, IJsonModel<object> value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        _options.GetProxy(value).Write(writer, _options);
+        _options.ResolveProxy(value).Write(writer, _options);
     }
 }
