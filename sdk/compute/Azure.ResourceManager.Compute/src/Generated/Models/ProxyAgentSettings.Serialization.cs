@@ -31,15 +31,20 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
             if (Optional.IsDefined(KeyIncarnationId))
             {
                 writer.WritePropertyName("keyIncarnationId"u8);
                 writer.WriteNumberValue(KeyIncarnationId.Value);
+            }
+            if (Optional.IsDefined(WireServer))
+            {
+                writer.WritePropertyName("wireServer"u8);
+                writer.WriteObjectValue(WireServer, options);
+            }
+            if (Optional.IsDefined(Imds))
+            {
+                writer.WritePropertyName("imds"u8);
+                writer.WriteObjectValue(Imds, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,8 +85,9 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool? enabled = default;
-            Mode? mode = default;
             int? keyIncarnationId = default;
+            HostEndpointSettings wireServer = default;
+            HostEndpointSettings imds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,15 +101,6 @@ namespace Azure.ResourceManager.Compute.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("mode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mode = new Mode(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("keyIncarnationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -113,13 +110,31 @@ namespace Azure.ResourceManager.Compute.Models
                     keyIncarnationId = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("wireServer"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    wireServer = HostEndpointSettings.DeserializeHostEndpointSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("imds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imds = HostEndpointSettings.DeserializeHostEndpointSettings(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProxyAgentSettings(enabled, mode, keyIncarnationId, serializedAdditionalRawData);
+            return new ProxyAgentSettings(enabled, keyIncarnationId, wireServer, imds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProxyAgentSettings>.Write(ModelReaderWriterOptions options)

@@ -1644,7 +1644,6 @@ EnableIPForwarding = true,
                         ProxyAgentSettings = new ProxyAgentSettings()
                         {
                             Enabled = true,
-                            Mode = Mode.Enforce,
                         },
                     },
                 },

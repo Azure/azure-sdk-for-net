@@ -1,0 +1,2 @@
+MembersMustExist : Member 'public System.Nullable<Azure.ResourceManager.Compute.Models.Mode> Azure.ResourceManager.Compute.Models.ProxyAgentSettings.Mode.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Compute.Models.ProxyAgentSettings.Mode.set(System.Nullable<Azure.ResourceManager.Compute.Models.Mode>)' does not exist in the implementation but it does exist in the contract.

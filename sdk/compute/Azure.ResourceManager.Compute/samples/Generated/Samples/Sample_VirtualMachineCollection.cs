@@ -771,7 +771,6 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     ProxyAgentSettings = new ProxyAgentSettings()
                     {
                         Enabled = true,
-                        Mode = Mode.Enforce,
                     },
                 },
             };

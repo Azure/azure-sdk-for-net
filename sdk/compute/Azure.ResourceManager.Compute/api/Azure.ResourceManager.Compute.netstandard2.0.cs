@@ -5603,6 +5603,17 @@ namespace Azure.ResourceManager.Compute.Models
         ReadOnly = 1,
         ReadWrite = 2,
     }
+    public partial class HostEndpointSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>
+    {
+        public HostEndpointSettings() { }
+        public string InVmAccessControlProfileReferenceId { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.Mode? Mode { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.Models.HostEndpointSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.HostEndpointSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HyperVGeneration : System.IEquatable<Azure.ResourceManager.Compute.Models.HyperVGeneration>
     {
@@ -6147,6 +6158,7 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly int _dummyPrimitive;
         public Mode(string value) { throw null; }
         public static Azure.ResourceManager.Compute.Models.Mode Audit { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.Mode Disabled { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.Mode Enforce { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.Mode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -6558,8 +6570,9 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public ProxyAgentSettings() { }
         public bool? Enabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.HostEndpointSettings Imds { get { throw null; } set { } }
         public int? KeyIncarnationId { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Mode? Mode { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.HostEndpointSettings WireServer { get { throw null; } set { } }
         Azure.ResourceManager.Compute.Models.ProxyAgentSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ProxyAgentSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ProxyAgentSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.ProxyAgentSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ProxyAgentSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
