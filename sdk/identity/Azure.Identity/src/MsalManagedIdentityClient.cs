@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
-using Microsoft.Identity.Client.AppConfig;
 
 namespace Azure.Identity
 {
@@ -19,7 +18,7 @@ namespace Azure.Identity
         private bool _isForceRefreshEnabled { get; }
 
         internal bool IsSupportLoggingEnabled { get; }
-        internal ManagedIdentityId ManagedIdentityId { get; }
+        internal Microsoft.Identity.Client.AppConfig.ManagedIdentityId ManagedIdentityId { get; }
         internal bool DisableInstanceDiscovery { get; }
         internal CredentialPipeline Pipeline { get; }
         internal Uri AuthorityHost { get; }
@@ -39,18 +38,15 @@ namespace Azure.Identity
             IsSupportLoggingEnabled = clientOptions?.Options?.IsUnsafeSupportLoggingEnabled ?? false;
 
             // select the correct managed identity Id.
-            if (!string.IsNullOrEmpty(clientOptions?.ClientId))
+            ManagedIdentityId = clientOptions.ManagedIdentityId?._idType switch
             {
-                ManagedIdentityId = ManagedIdentityId.WithUserAssignedClientId(clientOptions.ClientId);
-            }
-            else if (clientOptions?.ResourceIdentifier != null)
-            {
-                ManagedIdentityId = ManagedIdentityId.WithUserAssignedResourceId(clientOptions.ResourceIdentifier.ToString());
-            }
-            else
-            {
-                ManagedIdentityId = ManagedIdentityId.SystemAssigned;
-            }
+                ManagedIdentityIdType.SystemAssigned or null => Microsoft.Identity.Client.AppConfig.ManagedIdentityId.SystemAssigned,
+                ManagedIdentityIdType.ClientId => Microsoft.Identity.Client.AppConfig.ManagedIdentityId.WithUserAssignedClientId(clientOptions.ManagedIdentityId._userAssignedId),
+                ManagedIdentityIdType.ResourceId => Microsoft.Identity.Client.AppConfig.ManagedIdentityId.WithUserAssignedResourceId(clientOptions.ManagedIdentityId._userAssignedId),
+                ManagedIdentityIdType.ObjectId => Microsoft.Identity.Client.AppConfig.ManagedIdentityId.WithUserAssignedObjectId(clientOptions.ManagedIdentityId._userAssignedId),
+                _ => throw new InvalidOperationException("Invalid ManagedIdentityIdType")
+            };
+
             Pipeline = clientOptions.Pipeline;
             _clientAsyncLock = new AsyncLockWithValue<IManagedIdentityApplication>();
             _isForceRefreshEnabled = clientOptions.IsForceRefreshEnabled;

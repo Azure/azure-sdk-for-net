@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -99,6 +100,67 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterMonitorProfileKubeStateMetrics(metricLabelsAllowlist, metricAnnotationsAllowList, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricLabelsAllowlist), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  metricLabelsAllowlist: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MetricLabelsAllowlist))
+                {
+                    builder.Append("  metricLabelsAllowlist: ");
+                    if (MetricLabelsAllowlist.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MetricLabelsAllowlist}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MetricLabelsAllowlist}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricAnnotationsAllowList), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  metricAnnotationsAllowList: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MetricAnnotationsAllowList))
+                {
+                    builder.Append("  metricAnnotationsAllowList: ");
+                    if (MetricAnnotationsAllowList.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MetricAnnotationsAllowList}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MetricAnnotationsAllowList}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedClusterMonitorProfileKubeStateMetrics>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterMonitorProfileKubeStateMetrics>)this).GetFormatFromOptions(options) : options.Format;
@@ -107,6 +169,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support writing '{options.Format}' format.");
             }

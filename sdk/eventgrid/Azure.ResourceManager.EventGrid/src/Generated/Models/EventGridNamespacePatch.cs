@@ -78,16 +78,21 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Tags of the namespace resource. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Namespace resource identity information. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Represents available Sku pricing tiers. </summary>
+        [WirePath("sku")]
         public NamespaceSku Sku { get; set; }
         /// <summary> Topic spaces configuration properties that can be updated. </summary>
+        [WirePath("properties.topicSpacesConfiguration")]
         public UpdateTopicSpacesConfigurationInfo TopicSpacesConfiguration { get; set; }
         /// <summary> Topics configuration properties that can be updated. </summary>
         internal UpdateTopicsConfigurationInfo TopicsConfiguration { get; set; }
         /// <summary> Custom domain info for topics configuration. </summary>
+        [WirePath("properties.topicsConfiguration.customDomains")]
         public IList<CustomDomainConfiguration> TopicsCustomDomains
         {
             get
@@ -102,8 +107,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceUpdateParameterProperties.InboundIpRules" /&gt;
         /// </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
+        [WirePath("properties.inboundIpRules")]
         public IList<EventGridInboundIPRule> InboundIPRules { get; }
     }
 }

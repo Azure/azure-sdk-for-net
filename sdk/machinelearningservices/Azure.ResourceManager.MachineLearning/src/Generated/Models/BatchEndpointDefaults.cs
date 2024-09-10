@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Name of the deployment that will be default for the endpoint.
         /// This deployment will end up getting 100% traffic when the endpoint scoring URL is invoked.
         /// </summary>
+        [WirePath("deploymentName")]
         public string DeploymentName { get; set; }
     }
 }

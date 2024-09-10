@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -154,6 +155,151 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Confidence), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  confidence: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Confidence))
+                {
+                    builder.Append("  confidence: ");
+                    builder.AppendLine($"'{Confidence.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  providerName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProviderName))
+                {
+                    builder.Append("  providerName: ");
+                    if (ProviderName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProviderName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProviderName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReportLink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reportLink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReportLink))
+                {
+                    builder.Append("  reportLink: ");
+                    if (ReportLink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ReportLink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ReportLink}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThreatDescription), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  threatDescription: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThreatDescription))
+                {
+                    builder.Append("  threatDescription: ");
+                    if (ThreatDescription.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ThreatDescription}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ThreatDescription}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThreatName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  threatName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThreatName))
+                {
+                    builder.Append("  threatName: ");
+                    if (ThreatName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ThreatName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ThreatName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThreatType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  threatType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThreatType))
+                {
+                    builder.Append("  threatType: ");
+                    if (ThreatType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ThreatType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ThreatType}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligence>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsThreatIntelligence>)this).GetFormatFromOptions(options) : options.Format;
@@ -162,6 +308,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support writing '{options.Format}' format.");
             }

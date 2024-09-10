@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The email of the user the incident is assigned to. </summary>
+        [WirePath("email")]
         public string Email { get; set; }
         /// <summary> The name of the user the incident is assigned to. </summary>
+        [WirePath("assignedTo")]
         public string AssignedTo { get; set; }
         /// <summary> The object id of the user the incident is assigned to. </summary>
+        [WirePath("objectId")]
         public Guid? ObjectId { get; set; }
         /// <summary> The user principal name of the user the incident is assigned to. </summary>
+        [WirePath("userPrincipalName")]
         public string UserPrincipalName { get; set; }
         /// <summary> The type of the owner the incident is assigned to. </summary>
+        [WirePath("ownerType")]
         public SecurityInsightsIncidentOwnerType? OwnerType { get; set; }
     }
 }

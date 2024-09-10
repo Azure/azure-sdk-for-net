@@ -86,8 +86,10 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> The list of available upgrade versions for the control plane. </summary>
+        [WirePath("properties.controlPlaneProfile")]
         public ManagedClusterPoolUpgradeProfile ControlPlaneProfile { get; }
         /// <summary> The list of available upgrade versions for agent pools. </summary>
+        [WirePath("properties.agentPoolProfiles")]
         public IReadOnlyList<ManagedClusterPoolUpgradeProfile> AgentPoolProfiles { get; }
     }
 }

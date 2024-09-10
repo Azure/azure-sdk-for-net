@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -108,6 +109,60 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new AutomationRuleModifyPropertiesAction(order, actionType, serializedAdditionalRawData, actionConfiguration);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActionConfiguration))
+                {
+                    builder.Append("  actionConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ActionConfiguration, options, 2, false, "  actionConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Order), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  order: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  order: ");
+                builder.AppendLine($"{Order}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  actionType: ");
+                builder.AppendLine($"'{ActionType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AutomationRuleModifyPropertiesAction>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleModifyPropertiesAction>)this).GetFormatFromOptions(options) : options.Format;
@@ -116,6 +171,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AutomationRuleModifyPropertiesAction)} does not support writing '{options.Format}' format.");
             }

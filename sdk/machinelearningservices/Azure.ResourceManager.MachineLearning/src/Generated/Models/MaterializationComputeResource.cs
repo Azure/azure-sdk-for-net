@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies the instance type. </summary>
+        [WirePath("instanceType")]
         public string InstanceType { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01";
+            _apiVersion = apiVersion ?? "2023-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the list of the Notification Recipient User subscribed to the notification. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="notificationName"> Notification Name Identifier. </param>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the list of the Notification Recipient User subscribed to the notification. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="notificationName"> Notification Name Identifier. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Determine if the Notification Recipient User is subscribed to the notification. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="notificationName"> Notification Name Identifier. </param>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Determine if the Notification Recipient User is subscribed to the notification. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="notificationName"> Notification Name Identifier. </param>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Adds the API Management User to the list of Recipients for the Notification. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="notificationName"> Notification Name Identifier. </param>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Adds the API Management User to the list of Recipients for the Notification. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="notificationName"> Notification Name Identifier. </param>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Removes the API Management user from the list of Notification. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="notificationName"> Notification Name Identifier. </param>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Removes the API Management user from the list of Notification. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="notificationName"> Notification Name Identifier. </param>

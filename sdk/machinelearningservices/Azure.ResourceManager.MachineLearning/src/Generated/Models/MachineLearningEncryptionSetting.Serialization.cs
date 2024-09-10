@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,11 +27,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CosmosDBResourceId))
-            {
-                writer.WritePropertyName("cosmosDbResourceId"u8);
-                writer.WriteStringValue(CosmosDBResourceId);
-            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -38,18 +36,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("keyVaultProperties"u8);
             writer.WriteObjectValue(KeyVaultProperties, options);
-            if (Optional.IsDefined(SearchAccountResourceId))
-            {
-                writer.WritePropertyName("searchAccountResourceId"u8);
-                writer.WriteStringValue(SearchAccountResourceId);
-            }
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(StorageAccountResourceId))
-            {
-                writer.WritePropertyName("storageAccountResourceId"u8);
-                writer.WriteStringValue(StorageAccountResourceId);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,23 +74,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            ResourceIdentifier cosmosDbResourceId = default;
+            MachineLearningEncryptionStatus status = default;
             MachineLearningCmkIdentity identity = default;
             MachineLearningEncryptionKeyVaultProperties keyVaultProperties = default;
-            ResourceIdentifier searchAccountResourceId = default;
-            MachineLearningEncryptionStatus status = default;
-            ResourceIdentifier storageAccountResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cosmosDbResourceId"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    cosmosDbResourceId = new ResourceIdentifier(property.Value.GetString());
+                    status = new MachineLearningEncryptionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -121,43 +100,73 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     keyVaultProperties = MachineLearningEncryptionKeyVaultProperties.DeserializeMachineLearningEncryptionKeyVaultProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("searchAccountResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    searchAccountResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("status"u8))
-                {
-                    status = new MachineLearningEncryptionStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("storageAccountResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storageAccountResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningEncryptionSetting(
-                cosmosDbResourceId,
-                identity,
-                keyVaultProperties,
-                searchAccountResourceId,
-                status,
-                storageAccountResourceId,
-                serializedAdditionalRawData);
+            return new MachineLearningEncryptionSetting(status, identity, keyVaultProperties, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  status: ");
+                builder.AppendLine($"'{Status.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("UserAssignedIdentity", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine("{");
+                builder.Append("    userAssignedIdentity: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyVaultProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyVaultProperties))
+                {
+                    builder.Append("  keyVaultProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, KeyVaultProperties, options, 2, false, "  keyVaultProperties: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningEncryptionSetting>.Write(ModelReaderWriterOptions options)
@@ -168,6 +177,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningEncryptionSetting)} does not support writing '{options.Format}' format.");
             }

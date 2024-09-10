@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -138,6 +140,103 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new MeshRevision(revision, upgrades ?? new ChangeTrackingList<string>(), compatibleWith ?? new ChangeTrackingList<CompatibleVersions>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Revision), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  revision: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Revision))
+                {
+                    builder.Append("  revision: ");
+                    if (Revision.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Revision}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Revision}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Upgrades), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  upgrades: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Upgrades))
+                {
+                    if (Upgrades.Any())
+                    {
+                        builder.Append("  upgrades: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Upgrades)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompatibleWith), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  compatibleWith: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CompatibleWith))
+                {
+                    if (CompatibleWith.Any())
+                    {
+                        builder.Append("  compatibleWith: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CompatibleWith)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  compatibleWith: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MeshRevision>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MeshRevision>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,6 +245,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MeshRevision)} does not support writing '{options.Format}' format.");
             }

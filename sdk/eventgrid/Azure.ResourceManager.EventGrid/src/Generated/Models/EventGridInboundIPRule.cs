@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> IP Address in CIDR notation e.g., 10.0.0.0/8. </summary>
+        [WirePath("ipMask")]
         public string IPMask { get; set; }
         /// <summary> Action to perform based on the match or no match of the IpMask. </summary>
+        [WirePath("action")]
         public EventGridIPActionType? Action { get; set; }
     }
 }

@@ -37,7 +37,7 @@ public class AudioTests(bool isAsync) : AoaiTestBase<AudioClient>(isAsync)
     public async Task TextToSpeechWorks()
     {
         AudioClient audioClient = GetTestClient("tts");
-        BinaryData ttsData = await audioClient.GenerateSpeechFromTextAsync(
+        BinaryData ttsData = await audioClient.GenerateSpeechAsync(
             "hello, world!",
             GeneratedSpeechVoice.Alloy);
         Assert.That(ttsData, Is.Not.Null);

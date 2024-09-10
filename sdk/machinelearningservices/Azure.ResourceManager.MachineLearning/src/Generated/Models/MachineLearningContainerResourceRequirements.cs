@@ -51,19 +51,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningContainerResourceRequirements"/>. </summary>
-        /// <param name="containerResourceLimits"> Container resource limit info:. </param>
         /// <param name="containerResourceRequests"> Container resource request info:. </param>
+        /// <param name="containerResourceLimits"> Container resource limit info:. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningContainerResourceRequirements(MachineLearningContainerResourceSettings containerResourceLimits, MachineLearningContainerResourceSettings containerResourceRequests, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningContainerResourceRequirements(MachineLearningContainerResourceSettings containerResourceRequests, MachineLearningContainerResourceSettings containerResourceLimits, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ContainerResourceLimits = containerResourceLimits;
             ContainerResourceRequests = containerResourceRequests;
+            ContainerResourceLimits = containerResourceLimits;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Container resource limit info:. </summary>
-        public MachineLearningContainerResourceSettings ContainerResourceLimits { get; set; }
         /// <summary> Container resource request info:. </summary>
+        [WirePath("containerResourceRequests")]
         public MachineLearningContainerResourceSettings ContainerResourceRequests { get; set; }
+        /// <summary> Container resource limit info:. </summary>
+        [WirePath("containerResourceLimits")]
+        public MachineLearningContainerResourceSettings ContainerResourceLimits { get; set; }
     }
 }

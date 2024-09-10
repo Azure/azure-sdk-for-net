@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Azure.Core;
 using Azure.Identity;
-using NUnit.Framework;
 using OpenAI.TestFramework;
 using OpenAI.TestFramework.Mocks;
 using OpenAI.TestFramework.Recording;
@@ -32,7 +32,29 @@ public class AzureTestEnvironment
     {
         _mode = mode;
 
-        RepoRoot = FindRepoRoot();
+        /**
+         * We want to be able to to find "root" folders:
+         * - The root of the Git repo on disk
+         * - The root folder of the source code (eng/sdk)
+         * These two are usually the same. In external repos, they may however be a little different.
+         * 
+         * To search for these folders, we use a simple method where we search up from these starting folders:
+         * - Check the "SourcePath" assembly metadata attribute value. All projects in the Azure C# repo automatically have this attribute
+         *   added as part of the build "magic" (see {repo_root}\Directory.Build.Targets)
+         * - Where the executing assembly is running from
+         * Until we find a parent folder that contains a specific subfolder(s).
+         */
+        DirectoryInfo?[] startingPoints =
+        [
+            AssemblyHelper.GetAssemblySourceDir<AzureTestEnvironment>(),
+            new FileInfo(Assembly.GetExecutingAssembly().Location).Directory,
+        ];
+
+        RepoRoot = FindFirstParentWithSubfolders(startingPoints, ".git")
+            ?? throw new InvalidOperationException("Could not determine the GIT root folder for this repository");
+
+        string sourceRoot = (FindFirstParentWithSubfolders(startingPoints, "eng", "sdk") ?? RepoRoot)
+            .FullName;
 
         DotNetExe = AssemblyHelper.GetDotnetExecutable()
             ?? throw new InvalidOperationException(
@@ -43,7 +65,7 @@ public class AzureTestEnvironment
             ?? throw new InvalidOperationException("Could not determine the path to the recording test proxy DLL"));
 
         TestProxyHttpsCert = new FileInfo(Path.Combine(
-            RepoRoot.FullName,
+            sourceRoot,
             "eng",
             "common",
             "testproxy",
@@ -60,7 +82,7 @@ public class AzureTestEnvironment
         if (sourceDir != null)
         {
             string relativePath = PathHelpers.GetRelativePath(
-                Path.Combine(RepoRoot.FullName, "sdk"),
+                Path.Combine(sourceRoot, "sdk"),
                 sourceDir.FullName);
             serviceName = relativePath
                 .Split(new char[] { Path.DirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries)
@@ -150,47 +172,31 @@ public class AzureTestEnvironment
             ?? throw new InvalidOperationException($"Could not find required environment variable '{_optionPrefix + name }' or '{name}'.");
     }
 
-    /// <summary>
-    /// Finds the root directory of the Git repository.
-    /// </summary>
-    /// <returns>The root directory of the Git repository.</returns>
-    private static DirectoryInfo FindRepoRoot()
+    private static DirectoryInfo? FindFirstParentWithSubfolders(IEnumerable<DirectoryInfo?> startingDirs, params string[] subFolders)
+        => startingDirs
+            .Select(d => FindParentWithSubfolders(d, subFolders))
+            .FirstOrDefault(d => d != null);
+
+    private static DirectoryInfo? FindParentWithSubfolders(DirectoryInfo? start, params string[] subFolders)
     {
-        /**
-         * We want to find the folder that is the Git repository root folder. We do this by searching for a directory that contains
-         * a .git subfolder.
-         * 
-         * We search up for the .git subfolder from two starting locations:
-         * - Check the "SourcePath" assembly metadata attribute value. All projects in the Azure C# repo automatically have this attribute
-         *   added as part of the build "magic" (see {repo_root}\Directory.Build.Targets)
-         * - Where the executing assembly is running from
-         * 
-         * Side note: an entirely different way to do this would be call: git rev-parse --show-toplevel
-         */
-
-        DirectoryInfo?[] startingPoints =
-        [
-            AssemblyHelper.GetAssemblySourceDir<AzureTestEnvironment>(),
-            new FileInfo(Assembly.GetExecutingAssembly().Location).Directory,
-        ];
-
-        foreach (DirectoryInfo? dir in startingPoints)
+        if (subFolders == null || subFolders.Length == 0)
         {
-            if (dir?.Exists != true)
-            {
-                continue;
-            }
+            return null;
+        }
 
-            for (var d = dir; d != null; d = d.Parent)
+        for (DirectoryInfo? current = start; current != null; current = current.Parent)
+        {
+            if (!current.Exists)
             {
-                if (d.EnumerateDirectories(".git").Any())
-                {
-                    return d;
-                }
+                return null;
+            }
+            else if (subFolders.All(sub => current.EnumerateDirectories(sub).Any()))
+            {
+                return current;
             }
         }
 
-        throw new InvalidOperationException("Could not determine the root folder for this repository");
+        return null;
     }
 
     private TokenCredential GetCredential()

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-07-01-preview";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        internal RequestUriBuilder CreateListSecretsRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string name, SecretExpiry body)
+        internal RequestUriBuilder CreateListSecretsRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string name)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.MachineLearning
             return uri;
         }
 
-        internal HttpMessage CreateListSecretsRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, SecretExpiry body)
+        internal HttpMessage CreateListSecretsRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -553,13 +553,6 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
-                request.Content = content;
-            }
             _userAgent.Apply(message);
             return message;
         }
@@ -569,18 +562,17 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="name"> Datastore name. </param>
-        /// <param name="body"> Secret expiry information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MachineLearningDatastoreSecrets>> ListSecretsAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, SecretExpiry body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MachineLearningDatastoreSecrets>> ListSecretsAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListSecretsRequest(subscriptionId, resourceGroupName, workspaceName, name, body);
+            using var message = CreateListSecretsRequest(subscriptionId, resourceGroupName, workspaceName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -601,18 +593,17 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="name"> Datastore name. </param>
-        /// <param name="body"> Secret expiry information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MachineLearningDatastoreSecrets> ListSecrets(string subscriptionId, string resourceGroupName, string workspaceName, string name, SecretExpiry body = null, CancellationToken cancellationToken = default)
+        public Response<MachineLearningDatastoreSecrets> ListSecrets(string subscriptionId, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListSecretsRequest(subscriptionId, resourceGroupName, workspaceName, name, body);
+            using var message = CreateListSecretsRequest(subscriptionId, resourceGroupName, workspaceName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

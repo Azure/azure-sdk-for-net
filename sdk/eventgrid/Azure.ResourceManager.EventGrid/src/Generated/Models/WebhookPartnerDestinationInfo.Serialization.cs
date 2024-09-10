@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -224,6 +226,196 @@ namespace Azure.ResourceManager.EventGrid.Models
                 clientAuthentication);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureSubscriptionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureSubscriptionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureSubscriptionId))
+                {
+                    builder.Append("  azureSubscriptionId: ");
+                    if (AzureSubscriptionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AzureSubscriptionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AzureSubscriptionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGroupName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceGroupName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceGroupName))
+                {
+                    builder.Append("  resourceGroupName: ");
+                    if (ResourceGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceGroupName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endpointType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  endpointType: ");
+                builder.AppendLine($"'{EndpointType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointServiceContext), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endpointServiceContext: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndpointServiceContext))
+                {
+                    builder.Append("  endpointServiceContext: ");
+                    if (EndpointServiceContext.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EndpointServiceContext}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EndpointServiceContext}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceMoveChangeHistory), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceMoveChangeHistory: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ResourceMoveChangeHistory))
+                {
+                    if (ResourceMoveChangeHistory.Any())
+                    {
+                        builder.Append("  resourceMoveChangeHistory: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ResourceMoveChangeHistory)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  resourceMoveChangeHistory: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    endpointUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndpointUri))
+                {
+                    builder.Append("    endpointUrl: ");
+                    builder.AppendLine($"'{EndpointUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointBaseUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    endpointBaseUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndpointBaseUri))
+                {
+                    builder.Append("    endpointBaseUrl: ");
+                    builder.AppendLine($"'{EndpointBaseUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAuthentication), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientAuthentication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientAuthentication))
+                {
+                    builder.Append("    clientAuthentication: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ClientAuthentication, options, 4, false, "    clientAuthentication: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<WebhookPartnerDestinationInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebhookPartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -232,6 +424,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WebhookPartnerDestinationInfo)} does not support writing '{options.Format}' format.");
             }

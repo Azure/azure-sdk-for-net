@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-07-01-preview";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        internal RequestUriBuilder CreatePublishRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, DestinationAsset body)
+        internal RequestUriBuilder CreatePublishRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, DestinationAssetContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.MachineLearning
             return uri;
         }
 
-        internal HttpMessage CreatePublishRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, DestinationAsset body)
+        internal HttpMessage CreatePublishRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, DestinationAssetContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -609,9 +609,9 @@ namespace Azure.ResourceManager.MachineLearning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -622,20 +622,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
-        /// <param name="body"> Destination registry info. </param>
+        /// <param name="content"> Destination registry info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PublishAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, DestinationAsset body, CancellationToken cancellationToken = default)
+        public async Task<Response> PublishAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, DestinationAssetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePublishRequest(subscriptionId, resourceGroupName, workspaceName, name, version, body);
+            using var message = CreatePublishRequest(subscriptionId, resourceGroupName, workspaceName, name, version, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -653,20 +653,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
-        /// <param name="body"> Destination registry info. </param>
+        /// <param name="content"> Destination registry info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Publish(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, DestinationAsset body, CancellationToken cancellationToken = default)
+        public Response Publish(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, DestinationAssetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePublishRequest(subscriptionId, resourceGroupName, workspaceName, name, version, body);
+            using var message = CreatePublishRequest(subscriptionId, resourceGroupName, workspaceName, name, version, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

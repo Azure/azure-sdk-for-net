@@ -92,6 +92,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/>, <see cref="MachineLearningAzureFileDatastore"/> and <see cref="OneLakeDatastore"/>.
         /// </summary>
+        [WirePath("properties")]
         public MachineLearningDatastoreProperties Properties { get; set; }
     }
 }
