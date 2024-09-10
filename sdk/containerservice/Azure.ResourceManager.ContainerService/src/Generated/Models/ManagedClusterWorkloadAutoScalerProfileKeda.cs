@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable KEDA. </summary>
+        [WirePath("enabled")]
         public bool IsKedaEnabled { get; set; }
     }
 }

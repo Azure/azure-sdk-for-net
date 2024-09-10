@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string RedisValue = "Redis";
         private const string ApiKeyValue = "ApiKey";
         private const string AzureOpenAIValue = "AzureOpenAI";
-        private const string AIServicesValue = "AIServices";
         private const string CognitiveSearchValue = "CognitiveSearch";
         private const string CognitiveServiceValue = "CognitiveService";
         private const string CustomKeysValue = "CustomKeys";
@@ -124,6 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string SerpValue = "Serp";
         private const string BingLLMSearchValue = "BingLLMSearch";
         private const string ServerlessValue = "Serverless";
+        private const string AIServicesValue = "AIServices";
 
         /// <summary> PythonFeed. </summary>
         public static MachineLearningConnectionCategory PythonFeed { get; } = new MachineLearningConnectionCategory(PythonFeedValue);
@@ -151,8 +151,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningConnectionCategory ApiKey { get; } = new MachineLearningConnectionCategory(ApiKeyValue);
         /// <summary> AzureOpenAI. </summary>
         public static MachineLearningConnectionCategory AzureOpenAI { get; } = new MachineLearningConnectionCategory(AzureOpenAIValue);
-        /// <summary> AIServices. </summary>
-        public static MachineLearningConnectionCategory AIServices { get; } = new MachineLearningConnectionCategory(AIServicesValue);
         /// <summary> CognitiveSearch. </summary>
         public static MachineLearningConnectionCategory CognitiveSearch { get; } = new MachineLearningConnectionCategory(CognitiveSearchValue);
         /// <summary> CognitiveService. </summary>
@@ -329,6 +327,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningConnectionCategory BingLLMSearch { get; } = new MachineLearningConnectionCategory(BingLLMSearchValue);
         /// <summary> Serverless. </summary>
         public static MachineLearningConnectionCategory Serverless { get; } = new MachineLearningConnectionCategory(ServerlessValue);
+        /// <summary> AIServices. </summary>
+        public static MachineLearningConnectionCategory AIServices { get; } = new MachineLearningConnectionCategory(AIServicesValue);
         /// <summary> Determines if two <see cref="MachineLearningConnectionCategory"/> values are the same. </summary>
         public static bool operator ==(MachineLearningConnectionCategory left, MachineLearningConnectionCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningConnectionCategory"/> values are not the same. </summary>

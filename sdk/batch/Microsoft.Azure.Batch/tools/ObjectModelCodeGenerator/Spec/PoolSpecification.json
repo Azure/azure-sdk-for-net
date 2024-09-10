@@ -55,17 +55,6 @@
         },
         {
           "Key": {
-            "Type": "CloudServiceConfiguration",
-            "Name": "CloudServiceConfiguration",
-            "SummaryComment": "The <see cref=\"CloudServiceConfiguration\"/> for the pool.",
-            "RemarksComment": "This property is mutually exclusive with <see cref=\"VirtualMachineConfiguration\"/>.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
             "Type": "IList<CertificateReference>",
             "Name": "CertificateReferences",
             "SummaryComment": "A list of certificates to be installed on each compute node in the pool.",
@@ -222,7 +211,6 @@
             "Type": "VirtualMachineConfiguration",
             "Name": "VirtualMachineConfiguration",
             "SummaryComment": "The <see cref=\"VirtualMachineConfiguration\"/> of the pool.",
-            "RemarksComment": "This property is mutually exclusive with <see cref=\"CloudServiceConfiguration\"/>.",
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
@@ -241,17 +229,6 @@
             "Type": "string",
             "Name": "VmSize"
           }
-        },
-        {
-          "Key": {
-            "Type": "IList<string>",
-            "Name": "ApplicationLicenses",
-            "SummaryComment": "The list of application licenses the Batch service will make available on each compute node in the pool.",
-            "RemarksComment": "The list of application licenses must be a subset of available Batch service application licenses.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
         },
         {
           "Key": {

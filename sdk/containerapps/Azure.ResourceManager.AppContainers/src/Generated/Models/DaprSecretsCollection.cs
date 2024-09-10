@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Collection of secrets used by a Dapr component. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ContainerAppDaprSecret> Value { get; }
     }
 }

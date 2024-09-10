@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Set target lags values. </summary>
+        [WirePath("values")]
         public IList<int> Values { get; }
     }
 }

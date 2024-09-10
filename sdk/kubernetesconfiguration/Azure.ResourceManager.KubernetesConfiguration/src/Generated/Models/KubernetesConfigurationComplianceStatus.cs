@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> The compliance state of the configuration. </summary>
+        [WirePath("complianceState")]
         public KubernetesConfigurationComplianceStateType? ComplianceState { get; }
         /// <summary> Datetime the configuration was last applied. </summary>
+        [WirePath("lastConfigApplied")]
         public DateTimeOffset? LastConfigAppliedOn { get; }
         /// <summary> Message from when the configuration was applied. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> Level of the message. </summary>
+        [WirePath("messageLevel")]
         public KubernetesConfigurationMesageLevel? MessageLevel { get; }
     }
 }

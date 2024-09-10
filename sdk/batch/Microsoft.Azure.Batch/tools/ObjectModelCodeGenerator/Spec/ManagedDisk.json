@@ -17,6 +17,19 @@
         "Type": "Models.StorageAccountType?",
         "Name": "StorageAccountType"
       }
-    }
+    },
+    {
+      "Key": {
+        "Type": "VMDiskSecurityProfile",
+        "Name": "SecurityProfile",
+        "SummaryComment": "Gets or sets specifies the security profile settings for the managed disk.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional",
+        "HideSetter": false
+      },
+      "Value": null
+    },
   ]
 }
