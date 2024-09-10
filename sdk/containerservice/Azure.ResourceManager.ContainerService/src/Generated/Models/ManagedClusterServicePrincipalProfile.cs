@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The ID for the service principal. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
         /// <summary> The secret password associated with the service principal in plain text. </summary>
+        [WirePath("secret")]
         public string Secret { get; set; }
     }
 }

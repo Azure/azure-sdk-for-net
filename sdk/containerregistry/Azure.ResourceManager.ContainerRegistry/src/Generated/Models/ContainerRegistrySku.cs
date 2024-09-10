@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The SKU name of the container registry. Required for registry creation. </summary>
+        [WirePath("name")]
         public ContainerRegistrySkuName Name { get; set; }
         /// <summary> The SKU tier based on the SKU name. </summary>
+        [WirePath("tier")]
         public ContainerRegistrySkuTier? Tier { get; }
     }
 }

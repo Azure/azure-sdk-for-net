@@ -65,8 +65,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Optional number of instances or nodes used by the compute target. </summary>
+        [WirePath("instanceCount")]
         public int? InstanceCount { get; set; }
         /// <summary> Optional type of VM used as supported by the compute target. </summary>
+        [WirePath("instanceType")]
         public string InstanceType { get; set; }
         /// <summary>
         /// Additional properties bag.
@@ -98,6 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public IDictionary<string, BinaryData> Properties { get; set; }
     }
 }

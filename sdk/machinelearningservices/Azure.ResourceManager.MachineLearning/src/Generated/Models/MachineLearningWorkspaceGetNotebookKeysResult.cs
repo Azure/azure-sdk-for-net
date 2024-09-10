@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetNotebookKeysResult"/>. </summary>
-        /// <param name="primaryAccessKey"> The primary access key of the Notebook. </param>
-        /// <param name="secondaryAccessKey"> The secondary access key of the Notebook. </param>
+        /// <param name="primaryAccessKey"></param>
+        /// <param name="secondaryAccessKey"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey, string secondaryAccessKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +61,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The primary access key of the Notebook. </summary>
+        /// <summary> Gets the primary access key. </summary>
+        [WirePath("primaryAccessKey")]
         public string PrimaryAccessKey { get; }
-        /// <summary> The secondary access key of the Notebook. </summary>
+        /// <summary> Gets the secondary access key. </summary>
+        [WirePath("secondaryAccessKey")]
         public string SecondaryAccessKey { get; }
     }
 }

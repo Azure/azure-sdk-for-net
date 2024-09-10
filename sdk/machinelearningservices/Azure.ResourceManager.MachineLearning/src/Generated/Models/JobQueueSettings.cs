@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Controls the compute job tier. </summary>
+        [WirePath("jobTier")]
         public JobTier? JobTier { get; set; }
     }
 }

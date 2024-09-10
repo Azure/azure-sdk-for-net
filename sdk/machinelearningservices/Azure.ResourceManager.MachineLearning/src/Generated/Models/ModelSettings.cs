@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The unique model identifier that this ServerlessEndpoint should provision. </summary>
+        [WirePath("modelId")]
         public string ModelId { get; set; }
     }
 }

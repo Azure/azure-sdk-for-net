@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string StartFailedValue = "StartFailed";
         private const string StopFailedValue = "StopFailed";
         private const string RestartFailedValue = "RestartFailed";
-        private const string ResizeFailedValue = "ResizeFailed";
         private const string ReimageFailedValue = "ReimageFailed";
         private const string DeleteFailedValue = "DeleteFailed";
 
@@ -44,8 +43,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningOperationStatus StopFailed { get; } = new MachineLearningOperationStatus(StopFailedValue);
         /// <summary> RestartFailed. </summary>
         public static MachineLearningOperationStatus RestartFailed { get; } = new MachineLearningOperationStatus(RestartFailedValue);
-        /// <summary> ResizeFailed. </summary>
-        public static MachineLearningOperationStatus ResizeFailed { get; } = new MachineLearningOperationStatus(ResizeFailedValue);
         /// <summary> ReimageFailed. </summary>
         public static MachineLearningOperationStatus ReimageFailed { get; } = new MachineLearningOperationStatus(ReimageFailedValue);
         /// <summary> DeleteFailed. </summary>
