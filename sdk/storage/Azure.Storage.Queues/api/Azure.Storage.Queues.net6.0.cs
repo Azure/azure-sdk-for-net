@@ -303,11 +303,16 @@ namespace Azure.Storage.Queues.Models
         public bool Equals(Azure.Storage.Queues.Models.QueueErrorCode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        public bool Equals(string value) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) { throw null; }
+        public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode code, string value) { throw null; }
+        public static bool operator ==(string value, Azure.Storage.Queues.Models.QueueErrorCode code) { throw null; }
         public static implicit operator Azure.Storage.Queues.Models.QueueErrorCode (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) { throw null; }
+        public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode code, string value) { throw null; }
+        public static bool operator !=(string value, Azure.Storage.Queues.Models.QueueErrorCode code) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class QueueGeoReplication
