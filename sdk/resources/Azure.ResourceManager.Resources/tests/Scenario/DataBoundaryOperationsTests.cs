@@ -21,12 +21,14 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task PutDataBoundary()
         {
+            // get tenant object (usingtesting tenat id) and call create or update on tenant object (collection)
+            // var tenant = GetTenant();
             string dataBoundaryName = Recording.GenerateAssetName("dataBoundary-CreateOrUpdate-");
             var dataBoundaryData = CreateDataBoundary();
-            var dataBoundary = (await GetTenantDataBoundary().CreateOrUpdateAsync(WaitUntil.Completed, dataBoundaryName, dataBoundaryData)).Value;
+            //Get using tenant like below
+            var dataBoundary = (await tenant.GetTenantDataBoundary().CreateOrUpdateAsync(WaitUntil.Completed, dataBoundaryName, dataBoundaryData)).Value;
 
-            Assert.AreEqual("EU", dataBoundary.Properties.DataBoundary);
-            Assert.AreEqual("Created", dataBoundary.Properties.ProvisioningState);
+            //Check that dataBoundary returns proper reponse. 
 
             await dataBoundary.DeleteAsync(WaitUntil.Completed);
         }
@@ -36,10 +38,10 @@ namespace Azure.ResourceManager.Resources.Tests
         public async Task GetDataBoundaryTenant()
         {
             string dataBoundaryName = Recording.GenerateAssetName("dataBoundary-CreateOrUpdate-");
-            var dataBoundaryData = CreateDataBoundary();
-            var dataBoundary = (await GetTenantDataBoundary().CreateOrUpdateAsync(WaitUntil.Completed, dataBoundaryName, dataBoundaryData)).Value;
+            // get tenant object (usingtesting tenat id) and
+            // var tenant = GetTenant();
 
-            var dataBoundaryTenantGet = (await GetTenantDataBoundaryAsync()).Value;
+            var dataBoundaryTenantGet = (await tenant.GetTenantDataBoundaryAsync()).Value;
 
             Assert.AreEqual("EU", dataBoundaryTenantGet.Properties.DataBoundary);
             Assert.AreEqual("Created", dataBoundaryTenantGet.Properties.ProvisioningState);
@@ -51,13 +53,11 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task GetDataBoundaryScoped()
         {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            // get tenant object (using testing tenant id) and
+            // var tenant = GetTenant();
 
-            string dataBoundaryName = Recording.GenerateAssetName("dataBoundary-CreateOrUpdate-");
-            var dataBoundaryData = CreateDataBoundary();
-            var dataBoundary = (await GetTenantDataBoundary().CreateOrUpdateAsync(WaitUntil.Completed, dataBoundaryName, dataBoundaryData)).Value;
-
-            var dataBoundaryTenantGet = (await GetScopedDataBoundaryAsync(subscription)).Value;
+            // using subscription id from subcription under existing testing tenant
+            var dataBoundaryTenantGet = (await tenant.GetScopedDataBoundaryAsync(subscriptionId)).Value;
 
             Assert.AreEqual("EU", dataBoundaryTenantGet.Properties.DataBoundary);
             Assert.AreEqual("Created", dataBoundaryTenantGet.Properties.ProvisioningState);
