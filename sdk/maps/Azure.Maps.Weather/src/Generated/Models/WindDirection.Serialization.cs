@@ -11,34 +11,6 @@ namespace Azure.Maps.Weather.Models
 {
     public partial class WindDirection
     {
-        internal static WindDirection DeserializeWindDirection(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            int? degrees = default;
-            string localizedDescription = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("degrees"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    degrees = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("localizedDescription"u8))
-                {
-                    localizedDescription = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new WindDirection(degrees, localizedDescription);
-        }
-
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static WindDirection FromResponse(Response response)

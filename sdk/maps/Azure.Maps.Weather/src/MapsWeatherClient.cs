@@ -169,7 +169,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetHourlyForecastAsync(JsonFormat.Json.ToString(), coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
+                return await restClient.GetHourlyForecastAsync(JsonFormat.Json, coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetHourlyForecast(JsonFormat.Json.ToString(), coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken);
+                return restClient.GetHourlyForecast(JsonFormat.Json, coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -241,7 +241,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetMinuteForecastAsync(JsonFormat.Json.ToString(), coord, options.Interval, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
+                return await restClient.GetMinuteForecastAsync(JsonFormat.Json, coord, options.Interval, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -277,7 +277,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetMinuteForecast(JsonFormat.Json.ToString(), coord, options.Interval, options.Language.ToString(), cancellationToken);
+                return restClient.GetMinuteForecast(JsonFormat.Json, coord, options.Interval, options.Language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -313,7 +313,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetQuarterDayForecastAsync(JsonFormat.Json.ToString(), coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
+                return await restClient.GetQuarterDayForecastAsync(JsonFormat.Json, coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -349,7 +349,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetQuarterDayForecast(JsonFormat.Json.ToString(), coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken);
+                return restClient.GetQuarterDayForecast(JsonFormat.Json, coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -385,7 +385,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetCurrentConditionsAsync(JsonFormat.Json.ToString(), coord, options.Unit, options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
+                return await restClient.GetCurrentConditionsAsync(JsonFormat.Json, coord, options.Unit, options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -421,7 +421,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetCurrentConditions(JsonFormat.Json.ToString(), coord, options.Unit, options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), options.Duration, options.Language.ToString(), cancellationToken);
+                return restClient.GetCurrentConditions(JsonFormat.Json, coord, options.Unit, options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), options.Duration, options.Language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -457,7 +457,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetDailyForecastAsync(JsonFormat.Json.ToString(), coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
+                return await restClient.GetDailyForecastAsync(JsonFormat.Json, coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -493,7 +493,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetDailyForecast(JsonFormat.Json.ToString(), coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken);
+                return restClient.GetDailyForecast(JsonFormat.Json, coord, options.Unit, options.Duration, options.Language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -539,7 +539,7 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetWeatherAlongRouteAsync(JsonFormat.Json.ToString(), query, language.ToString(), cancellationToken).ConfigureAwait(false);
+                return await restClient.GetWeatherAlongRouteAsync(JsonFormat.Json, query, language.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -585,7 +585,7 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetWeatherAlongRoute(JsonFormat.Json.ToString(), query, language.ToString(), cancellationToken);
+                return restClient.GetWeatherAlongRoute(JsonFormat.Json, query, language.ToString(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -621,7 +621,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetSevereWeatherAlertsAsync(JsonFormat.Json.ToString(), coord, options.Language.ToString(), options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), cancellationToken).ConfigureAwait(false);
+                return await restClient.GetSevereWeatherAlertsAsync(JsonFormat.Json, coord, options.Language.ToString(), options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -657,7 +657,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetSevereWeatherAlerts(JsonFormat.Json.ToString(), coord, options.Language.ToString(), options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), cancellationToken);
+                return restClient.GetSevereWeatherAlerts(JsonFormat.Json, coord, options.Language.ToString(), options.Details == null ? "true" : (options.Details.Value ? "true" : "false"), cancellationToken);
             }
             catch (Exception e)
             {
@@ -693,7 +693,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetDailyIndicesAsync(JsonFormat.Json.ToString(), coord, options.Language.ToString(), options.Duration, options.IndexId, options.IndexGroupId, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetDailyIndicesAsync(JsonFormat.Json, coord, options.Language.ToString(), options.Duration, options.IndexId, options.IndexGroupId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -729,7 +729,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetDailyIndices(JsonFormat.Json.ToString(), coord, options.Language.ToString(), options.Duration, options.IndexId, options.IndexGroupId, cancellationToken);
+                return restClient.GetDailyIndices(JsonFormat.Json, coord, options.Language.ToString(), options.Duration, options.IndexId, options.IndexGroupId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -757,7 +757,7 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetTropicalStormActiveAsync(JsonFormat.Json.ToString(), cancellationToken).ConfigureAwait(false);
+                return await restClient.GetTropicalStormActiveAsync(JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -785,7 +785,7 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetTropicalStormActive(JsonFormat.Json.ToString(), cancellationToken);
+                return restClient.GetTropicalStormActive(JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -811,11 +811,11 @@ namespace Azure.Maps.Weather
         public virtual async Task<Response<StormSearchResult>> GetTropicalStormSearchAsync(GetTropicalStormSearchOptions options, CancellationToken cancellationToken = default)
         {
 
-            using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.SearchTropicalStorm");
+            using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.GetTropicalStormSearch");
             scope.Start();
             try
             {
-                return await restClient.SearchTropicalStormAsync(JsonFormat.Json.ToString(), options.Year, options.BasinId, options.GovernmentStormId, cancellationToken).ConfigureAwait(false);
+                return await restClient.SearchTropicalStormAsync(JsonFormat.Json, options.Year, options.BasinId, options.GovernmentStormId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -841,11 +841,11 @@ namespace Azure.Maps.Weather
         public virtual Response<StormSearchResult> GetTropicalStormSearch(GetTropicalStormSearchOptions options, CancellationToken cancellationToken = default)
         {
 
-            using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.SearchTropicalStorm");
+            using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.GetTropicalStormSearch");
             scope.Start();
             try
             {
-                return restClient.SearchTropicalStorm(JsonFormat.Json.ToString(), options.Year, options.BasinId, options.GovernmentStormId, cancellationToken);
+                return restClient.SearchTropicalStorm(JsonFormat.Json, options.Year, options.BasinId, options.GovernmentStormId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -876,7 +876,7 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetTropicalStormForecastAsync(JsonFormat.Json.ToString(), options.Year, options.BasinId, options.GovernmentStormId, options.Unit, options.IncludeDetails, options.IncludeGeometricDetails, options.IncludeWindowGeometry, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetTropicalStormForecastAsync(JsonFormat.Json, options.Year, options.BasinId, options.GovernmentStormId, options.Unit, options.IncludeDetails, options.IncludeGeometricDetails, options.IncludeWindowGeometry, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -907,7 +907,7 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetTropicalStormForecast(JsonFormat.Json.ToString(), options.Year, options.BasinId, options.GovernmentStormId, options.Unit, options.IncludeDetails, options.IncludeGeometricDetails, options.IncludeWindowGeometry, cancellationToken);
+                return restClient.GetTropicalStormForecast(JsonFormat.Json, options.Year, options.BasinId, options.GovernmentStormId, options.Unit, options.IncludeDetails, options.IncludeGeometricDetails, options.IncludeWindowGeometry, cancellationToken);
             }
             catch (Exception e)
             {
@@ -938,7 +938,7 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return await restClient.GetTropicalStormLocationsAsync(JsonFormat.Json.ToString(), options.Year, options.BasinId, options.GovernmentStormId, options.IncludeDetails, options.IncludeGeometricDetails, options.Unit, options.IncludeCurrentStorm, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetTropicalStormLocationsAsync(JsonFormat.Json, options.Year, options.BasinId, options.GovernmentStormId, options.IncludeDetails, options.IncludeGeometricDetails, options.Unit, options.IncludeCurrentStorm, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -969,7 +969,7 @@ namespace Azure.Maps.Weather
             scope.Start();
             try
             {
-                return restClient.GetTropicalStormLocations(JsonFormat.Json.ToString(), options.Year, options.BasinId, options.GovernmentStormId, options.IncludeDetails, options.IncludeGeometricDetails, options.Unit, options.IncludeCurrentStorm, cancellationToken);
+                return restClient.GetTropicalStormLocations(JsonFormat.Json, options.Year, options.BasinId, options.GovernmentStormId, options.IncludeDetails, options.IncludeGeometricDetails, options.Unit, options.IncludeCurrentStorm, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1005,7 +1005,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetCurrentAirQualityAsync(JsonFormat.Json.ToString(), coord, options.Language.ToString(), options.IncludePollutantDetails, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetCurrentAirQualityAsync(JsonFormat.Json, coord, options.Language.ToString(), options.IncludePollutantDetails, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1041,7 +1041,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetCurrentAirQuality(JsonFormat.Json.ToString(), coord, options.Language.ToString(), options.IncludePollutantDetails, cancellationToken);
+                return restClient.GetCurrentAirQuality(JsonFormat.Json, coord, options.Language.ToString(), options.IncludePollutantDetails, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1077,7 +1077,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetAirQualityDailyForecastsAsync(JsonFormat.Json.ToString(), coord, options.Language.ToString(), options.Duration, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetAirQualityDailyForecastsAsync(JsonFormat.Json, coord, options.Language.ToString(), options.Duration, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1113,7 +1113,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetAirQualityDailyForecasts(JsonFormat.Json.ToString(), coord, options.Language.ToString(), options.Duration, cancellationToken);
+                return restClient.GetAirQualityDailyForecasts(JsonFormat.Json, coord, options.Language.ToString(), options.Duration, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1149,7 +1149,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetAirQualityHourlyForecastsAsync(JsonFormat.Json.ToString(), coord, options.Language.ToString(), options.Duration, options.IncludePollutantDetails, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetAirQualityHourlyForecastsAsync(JsonFormat.Json, coord, options.Language.ToString(), options.Duration, options.IncludePollutantDetails, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1185,7 +1185,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetAirQualityHourlyForecasts(JsonFormat.Json.ToString(), coord, options.Language.ToString(), options.Duration, options.IncludePollutantDetails, cancellationToken);
+                return restClient.GetAirQualityHourlyForecasts(JsonFormat.Json, coord, options.Language.ToString(), options.Duration, options.IncludePollutantDetails, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1221,7 +1221,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetDailyHistoricalActualsAsync(JsonFormat.Json.ToString(), coord, options.StartDate, options.EndDate, options.Unit, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetDailyHistoricalActualsAsync(JsonFormat.Json, coord, options.StartDate, options.EndDate, options.Unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1257,7 +1257,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetDailyHistoricalActuals(JsonFormat.Json.ToString(), coord, options.StartDate, options.EndDate, options.Unit, cancellationToken);
+                return restClient.GetDailyHistoricalActuals(JsonFormat.Json, coord, options.StartDate, options.EndDate, options.Unit, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1293,7 +1293,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetDailyHistoricalRecordsAsync(JsonFormat.Json.ToString(), coord, options.StartDate, options.EndDate, options.Unit, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetDailyHistoricalRecordsAsync(JsonFormat.Json, coord, options.StartDate, options.EndDate, options.Unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1329,7 +1329,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetDailyHistoricalRecords(JsonFormat.Json.ToString(), coord, options.StartDate, options.EndDate, options.Unit, cancellationToken);
+                return restClient.GetDailyHistoricalRecords(JsonFormat.Json, coord, options.StartDate, options.EndDate, options.Unit, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1365,7 +1365,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetDailyHistoricalNormalsAsync(JsonFormat.Json.ToString(), coord, options.StartDate, options.EndDate, options.Unit, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetDailyHistoricalNormalsAsync(JsonFormat.Json, coord, options.StartDate, options.EndDate, options.Unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1401,7 +1401,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetDailyHistoricalNormals(JsonFormat.Json.ToString(), coord, options.StartDate, options.EndDate, options.Unit, cancellationToken);
+                return restClient.GetDailyHistoricalNormals(JsonFormat.Json, coord, options.StartDate, options.EndDate, options.Unit, cancellationToken);
             }
             catch (Exception e)
             {

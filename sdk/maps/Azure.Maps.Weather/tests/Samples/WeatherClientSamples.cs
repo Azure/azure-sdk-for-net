@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -83,7 +83,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetAirQualityDailyForecasts
             var options = new GetAirQualityDailyForecastsOptions()
             {
-                Coordinates = new GeoPosition(25.0338053, 121.5640089),
+                Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
             var response = client.GetAirQualityDailyForecasts(options);
@@ -102,7 +102,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetAirQualityHourlyForecasts
             var options = new GetAirQualityHourlyForecastsOptions()
             {
-                Coordinates = new GeoPosition(25.0338053, 121.5640089),
+                Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
             var response = client.GetAirQualityHourlyForecasts(options);
@@ -121,7 +121,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetCurrentAirQuality
             var options = new GetCurrentAirQualityOptions()
             {
-                Coordinates = new GeoPosition(25.0338053, 121.5640089),
+                Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
             var response = client.GetCurrentAirQuality(options);
@@ -140,7 +140,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetCurrentConditions
             var options = new GetCurrentConditionsOptions()
             {
-                Coordinates = new GeoPosition(25.0338053, 121.5640089),
+                Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
             var response = client.GetCurrentConditions(options);
@@ -159,7 +159,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetDailyForecast
             var options = new GetDailyForecastOptions()
             {
-                Coordinates = new GeoPosition(25.0338053, 121.5640089),
+                Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
             var response = client.GetDailyForecast(options);
@@ -178,7 +178,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetDailyHistoricalActuals
             var options = new GetDailyHistoricalActualsOptions()
             {
-                Coordinates = new GeoPosition(40.760139, -73.961968),
+                Coordinates = new GeoPosition(-73.961968, 40.760139),
                 StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
                 EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
             };
@@ -198,7 +198,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetDailyHistoricalNormals
             var options = new GetDailyHistoricalNormalsOptions()
             {
-                Coordinates = new GeoPosition(40.760139, -73.961968),
+                Coordinates = new GeoPosition(-73.961968, 40.760139),
                 StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
                 EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
             };
@@ -218,7 +218,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetDailyHistoricalRecords
             var options = new GetDailyHistoricalRecordsOptions()
             {
-                Coordinates = new GeoPosition(40.760139, -73.961968),
+                Coordinates = new GeoPosition(-73.961968, 40.760139),
                 StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
                 EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
             };
@@ -238,7 +238,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetDailyIndices
             var options = new GetDailyIndicesOptions()
             {
-                Coordinates = new GeoPosition(25.0338053, 121.5640089),
+                Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
             var response = client.GetDailyIndices(options);
@@ -257,7 +257,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetHourlyForecast
             var options = new GetHourlyForecastOptions()
             {
-                Coordinates = new GeoPosition(25.0338053, 121.5640089),
+                Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
             var response = client.GetHourlyForecast(options);
@@ -276,7 +276,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetMinuteForecast
             var options = new GetMinuteForecastOptions()
             {
-                Coordinates = new GeoPosition(25.0338053, 121.5640089),
+                Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
             var response = client.GetMinuteForecast(options);
@@ -295,7 +295,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetQuarterDayForecast
             var options = new GetQuarterDayForecastOptions()
             {
-                Coordinates = new GeoPosition(25.0338053, 121.5640089),
+                Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
             var response = client.GetQuarterDayForecast(options);
@@ -314,7 +314,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             #region Snippet:GetSevereWeatherAlerts
             var options = new GetSevereWeatherAlertsOptions()
             {
-                Coordinates = new GeoPosition(25.0338053, 121.5640089),
+                Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
             var response = client.GetSevereWeatherAlerts(options);
@@ -332,7 +332,6 @@ namespace Azure.Maps.Weather.Tests.Samples
             var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetTropicalStormActive
             var response = client.GetTropicalStormActive();
-            Console.WriteLine(response);
             #endregion
         }
 
@@ -409,7 +408,7 @@ namespace Azure.Maps.Weather.Tests.Samples
                 "25.033075,121.525694,0:25.0338053,121.5640089,2",
                 WeatherLanguage.EnglishUsa
             );
-            Console.WriteLine(response);
+            response.ToString();
             #endregion
         }
     }
