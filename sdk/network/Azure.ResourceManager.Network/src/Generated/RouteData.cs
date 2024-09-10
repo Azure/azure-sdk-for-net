@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the route resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </summary>
-        public bool? HasBgpOverride { get; set; }
+        public bool? HasBgpOverride { get; }
     }
 }

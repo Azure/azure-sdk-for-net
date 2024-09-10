@@ -217,6 +217,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("adminState"u8);
                 writer.WriteStringValue(AdminState.Value.ToString());
             }
+            if (Optional.IsDefined(ResiliencyModel))
+            {
+                writer.WritePropertyName("resiliencyModel"u8);
+                writer.WriteStringValue(ResiliencyModel.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -289,6 +294,7 @@ namespace Azure.ResourceManager.Network
             bool? allowVirtualWanTraffic = default;
             bool? allowRemoteVnetTraffic = default;
             ExpressRouteGatewayAdminState? adminState = default;
+            ResiliencyModel? resiliencyModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -611,6 +617,15 @@ namespace Azure.ResourceManager.Network
                             adminState = new ExpressRouteGatewayAdminState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("resiliencyModel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resiliencyModel = new ResiliencyModel(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -654,7 +669,8 @@ namespace Azure.ResourceManager.Network
                 enableBgpRouteTranslationForNat,
                 allowVirtualWanTraffic,
                 allowRemoteVnetTraffic,
-                adminState);
+                adminState,
+                resiliencyModel);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayData>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(HasBgpOverride))
+            if (options.Format != "W" && Optional.IsDefined(HasBgpOverride))
             {
                 writer.WritePropertyName("hasBgpOverride"u8);
                 writer.WriteBooleanValue(HasBgpOverride.Value);

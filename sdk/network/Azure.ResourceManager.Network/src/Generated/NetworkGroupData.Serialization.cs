@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(MemberType))
+            {
+                writer.WritePropertyName("memberType"u8);
+                writer.WriteStringValue(MemberType.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -115,6 +120,7 @@ namespace Azure.ResourceManager.Network
             ResourceType type = default;
             SystemData systemData = default;
             string description = default;
+            GroupMemberType? memberType = default;
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -168,6 +174,15 @@ namespace Azure.ResourceManager.Network
                             description = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("memberType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            memberType = new GroupMemberType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -201,6 +216,7 @@ namespace Azure.ResourceManager.Network
                 type,
                 systemData,
                 description,
+                memberType,
                 provisioningState,
                 resourceGuid,
                 etag,

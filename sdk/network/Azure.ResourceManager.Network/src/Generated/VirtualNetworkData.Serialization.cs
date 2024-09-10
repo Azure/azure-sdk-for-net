@@ -161,6 +161,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(PrivateEndpointVNetPolicies))
+            {
+                writer.WritePropertyName("privateEndpointVNetPolicies"u8);
+                writer.WriteStringValue(PrivateEndpointVNetPolicies.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -221,6 +226,7 @@ namespace Azure.ResourceManager.Network
             VirtualNetworkEncryption encryption = default;
             IList<WritableSubResource> ipAllocations = default;
             IReadOnlyList<FlowLogData> flowLogs = default;
+            PrivateEndpointVNetPolicy? privateEndpointVNetPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -444,6 +450,15 @@ namespace Azure.ResourceManager.Network
                             flowLogs = array;
                             continue;
                         }
+                        if (property0.NameEquals("privateEndpointVNetPolicies"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateEndpointVNetPolicies = new PrivateEndpointVNetPolicy(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -475,7 +490,8 @@ namespace Azure.ResourceManager.Network
                 bgpCommunities,
                 encryption,
                 ipAllocations ?? new ChangeTrackingList<WritableSubResource>(),
-                flowLogs ?? new ChangeTrackingList<FlowLogData>());
+                flowLogs ?? new ChangeTrackingList<FlowLogData>(),
+                privateEndpointVNetPolicies);
         }
 
         BinaryData IPersistableModel<VirtualNetworkData>.Write(ModelReaderWriterOptions options)

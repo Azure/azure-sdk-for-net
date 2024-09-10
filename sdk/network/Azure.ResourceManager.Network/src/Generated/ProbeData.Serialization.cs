@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(NoHealthyBackendsBehavior))
             {
-                writer.WritePropertyName("NoHealthyBackendsBehavior"u8);
+                writer.WritePropertyName("noHealthyBackendsBehavior"u8);
                 writer.WriteStringValue(NoHealthyBackendsBehavior.Value.ToString());
             }
             if (Optional.IsDefined(NumberOfProbes))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
                             intervalInSeconds = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("NoHealthyBackendsBehavior"u8))
+                        if (property0.NameEquals("noHealthyBackendsBehavior"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
