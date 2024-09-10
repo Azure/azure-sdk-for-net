@@ -6,11 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "Content-Length": "239",
+        "Content-Length": "179",
         "Content-Type": "application/json",
-        "extra-parameters": "pass-through",
-        "traceparent": "00-1589b8a280e11ce86aad52b04c5f0155-420ab5a104123e2e-01",
+        "traceparent": "00-9fb17960bec0b8875542724f4cbcc1ad-deadcffb3a32797f-01",
         "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240909.1 (.NET Framework 4.8.9261.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -26,23 +24,20 @@
             "role": "user"
           }
         ],
-        "max_tokens": 10,
-        "temperature": 1,
-        "model": "6b6b217e-6ed3-11ef-9135-8c1645fec84b",
-        "top_p": 0.90000000000000002
+        "model": "6b6b217e-6ed3-11ef-9135-8c1645fec84b"
       },
       "StatusCode": 400,
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 10 Sep 2024 05:13:30 GMT",
+        "Date": "Tue, 10 Sep 2024 17:51:13 GMT",
         "request-context": "appId=",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-aml-cluster": "int-01",
+        "x-aml-cluster": "int-02",
         "X-Content-Type-Options": "nosniff",
         "x-ms-error-code": "unknown_model",
-        "x-request-time": "0.262"
+        "x-request-time": "0.287"
       },
       "ResponseBody": {
         "error": {
@@ -56,6 +51,6 @@
   "Variables": {
     "AZUREAI_GITHUB_TOKEN": "Sanitized",
     "AZUREAI_GITHUB_URL": "https://int.api.azureml-test.ms/nexus",
-    "RandomSeed": "1961051712"
+    "RandomSeed": "1331365416"
   }
 }

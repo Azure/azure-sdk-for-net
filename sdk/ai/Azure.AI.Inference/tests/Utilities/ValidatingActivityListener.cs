@@ -55,9 +55,11 @@ namespace Azure.AI.Inference.Tests.Utilities
             validateTag(activity, ServerPortKey, endpoint.Port);
             validateTag(activity, GenAiOperationNameKey, "Complete");
             validateTag(activity, GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
-            validateTag(activity, GenAiRequestTemperatureKey, requestOptions.Temperature);
+            validateFloatTag(activity, GenAiRequestTemperatureKey, requestOptions.Temperature);
             if (requestOptions.AdditionalProperties.TryGetValue("top_p", out BinaryData topP))
-                validateTag(activity, GenAiRequestTopPKey, JsonSerializer.Deserialize<double?>(topP));
+            {
+                validateFloatTag(activity, GenAiRequestTopPKey, JsonSerializer.Deserialize<float?>(topP));
+            }
             // Validate events
             validateChatMessageEvents(activity, requestOptions.Messages);
         }
@@ -152,6 +154,23 @@ namespace Azure.AI.Inference.Tests.Utilities
             {
                 Assert.NotNull(activity.GetTagItem(key));
                 Assert.AreEqual(value.ToString(), activity.GetTagItem(key).ToString());
+            }
+        }
+
+        private static void validateFloatTag(Activity activity, string key, float? value)
+        {
+            if (!value.HasValue)
+            {
+                Assert.IsNull(activity.GetTagItem(key));
+            }
+            else
+            {
+                Assert.NotNull(activity.GetTagItem(key));
+                Assert.AreEqual(
+                    expected: float.Parse(value.ToString()),
+                    actual: float.Parse(activity.GetTagItem(key).ToString()),
+                    delta: 0.001
+                    );
             }
         }
 

@@ -127,13 +127,21 @@ namespace Azure.AI.Inference.Tests
             using var actListener = new ValidatingActivityListener();
             using var meterListener = new ValidatingMeterListener();
             // Set the non existing model.
-            m_requestOptions.Model = "6b6b217e-6ed3-11ef-9135-8c1645fec84b";
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("What is the capital of France?"),
+                },
+                Model = "6b6b217e-6ed3-11ef-9135-8c1645fec84b"
+            };
             m_requestStreamingOptions.Model = "6b6b217e-6ed3-11ef-9135-8c1645fec84b";
             try
             {
                 switch (testType)
                 {
-                    case TestType.Plane: await client.CompleteAsync(m_requestOptions);
+                    case TestType.Plane: await client.CompleteAsync(requestOptions);
                         break;
                     case TestType.Streaming: await client.CompleteStreamingAsync(m_requestStreamingOptions);
                         break;
