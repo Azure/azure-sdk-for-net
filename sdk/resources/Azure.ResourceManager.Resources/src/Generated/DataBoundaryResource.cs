@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Generate the resource identifier of a <see cref="DataBoundaryResource"/> instance. </summary>
         /// <param name="scope"> The scope. </param>
-        /// <param name="default"> The default. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, DataBoundaryDefaultName @default)
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, DataBoundaryName name)
         {
-            var resourceId = $"{scope}/providers/Microsoft.Resources/dataBoundaries/{@default}";
+            var resourceId = $"{scope}/providers/Microsoft.Resources/dataBoundaries/{name}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -108,15 +108,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataBoundaryResource>> GetAsync(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoundaryResource>> GetAsync(DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataBoundaryRestClient.GetScopeAsync(Id.Parent, default, cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoundaryRestClient.GetScopeAsync(Id.Parent, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataBoundaryResource(Client, response.Value), response.GetRawResponse());
@@ -149,15 +149,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataBoundaryResource> Get(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoundaryResource> Get(DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryResource.Get");
             scope.Start();
             try
             {
-                var response = _dataBoundaryRestClient.GetScope(Id.Parent, default, cancellationToken);
+                var response = _dataBoundaryRestClient.GetScope(Id.Parent, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataBoundaryResource(Client, response.Value), response.GetRawResponse());

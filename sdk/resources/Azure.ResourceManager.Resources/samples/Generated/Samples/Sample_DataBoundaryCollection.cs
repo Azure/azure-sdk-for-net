@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Resources.Samples
             DataBoundaryCollection collection = client.GetDataBoundaries(scopeId);
 
             // invoke the operation
-            DataBoundaryDefaultName @default = DataBoundaryDefaultName.Default;
-            DataBoundaryResource result = await collection.GetAsync(@default);
+            DataBoundaryName name = DataBoundaryName.Default;
+            DataBoundaryResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Resources.Samples
             DataBoundaryCollection collection = client.GetDataBoundaries(scopeId);
 
             // invoke the operation
-            DataBoundaryDefaultName @default = DataBoundaryDefaultName.Default;
-            bool result = await collection.ExistsAsync(@default);
+            DataBoundaryName name = DataBoundaryName.Default;
+            bool result = await collection.ExistsAsync(name);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Resources.Samples
             DataBoundaryCollection collection = client.GetDataBoundaries(scopeId);
 
             // invoke the operation
-            DataBoundaryDefaultName @default = DataBoundaryDefaultName.Default;
-            NullableResponse<DataBoundaryResource> response = await collection.GetIfExistsAsync(@default);
+            DataBoundaryName name = DataBoundaryName.Default;
+            NullableResponse<DataBoundaryResource> response = await collection.GetIfExistsAsync(name);
             DataBoundaryResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

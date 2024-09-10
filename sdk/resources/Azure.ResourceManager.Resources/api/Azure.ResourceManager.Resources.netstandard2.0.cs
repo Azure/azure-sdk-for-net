@@ -267,17 +267,17 @@ namespace Azure.ResourceManager.Resources
     public partial class DataBoundaryCollection : Azure.ResourceManager.ArmCollection
     {
         protected DataBoundaryCollection() { }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource> Get(Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource>> GetAsync(Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.DataBoundaryResource> GetIfExists(Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.DataBoundaryResource>> GetIfExistsAsync(Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource> Get(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource>> GetAsync(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.DataBoundaryResource> GetIfExists(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.DataBoundaryResource>> GetIfExistsAsync(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataBoundaryData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.DataBoundaryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.DataBoundaryData>
     {
-        internal DataBoundaryData() { }
-        public Azure.ResourceManager.Resources.Models.DataBoundaryProperties Properties { get { throw null; } }
+        public DataBoundaryData() { }
+        public Azure.ResourceManager.Resources.Models.DataBoundaryProperties Properties { get { throw null; } set { } }
         Azure.ResourceManager.Resources.DataBoundaryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.DataBoundaryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.DataBoundaryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Resources.DataBoundaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.DataBoundaryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -290,9 +290,9 @@ namespace Azure.ResourceManager.Resources
         protected DataBoundaryResource() { }
         public virtual Azure.ResourceManager.Resources.DataBoundaryData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource> Get(Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource>> GetAsync(Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, Azure.ResourceManager.Resources.Models.DataBoundaryName name) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource> Get(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource>> GetAsync(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Resources.DataBoundaryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.DataBoundaryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.DataBoundaryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Resources.DataBoundaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.DataBoundaryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -471,8 +471,8 @@ namespace Azure.ResourceManager.Resources
         public static Azure.Pageable<Azure.ResourceManager.Resources.ArmDeploymentScriptResource> GetArmDeploymentScripts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.ArmDeploymentScriptResource> GetArmDeploymentScriptsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Resources.DataBoundaryCollection GetDataBoundaries(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource> GetDataBoundary(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource>> GetDataBoundaryAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource> GetDataBoundary(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource>> GetDataBoundaryAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Resources.DataBoundaryResource GetDataBoundaryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Resources.DeploymentStackResource> GetDeploymentStack(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string deploymentStackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Resources.DeploymentStackResource> GetDeploymentStack(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string deploymentStackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -498,6 +498,10 @@ namespace Azure.ResourceManager.Resources
         public static Azure.Pageable<Azure.ResourceManager.Resources.TemplateSpecResource> GetTemplateSpecs(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.TemplateSpecResource> GetTemplateSpecsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Resources.TemplateSpecVersionResource GetTemplateSpecVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.TenantDataBoundaryCollection GetTenantDataBoundaries(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Resources.TenantDataBoundaryResource> GetTenantDataBoundary(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TenantDataBoundaryResource>> GetTenantDataBoundaryAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Resources.TenantDataBoundaryResource GetTenantDataBoundaryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class ScriptLogData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ScriptLogData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ScriptLogData>
     {
@@ -642,6 +646,35 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersionResource> Update(Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersionResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class TenantDataBoundaryCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected TenantDataBoundaryCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.TenantDataBoundaryResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Models.DataBoundaryName name, Azure.ResourceManager.Resources.DataBoundaryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.TenantDataBoundaryResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Models.DataBoundaryName name, Azure.ResourceManager.Resources.DataBoundaryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.TenantDataBoundaryResource> Get(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TenantDataBoundaryResource>> GetAsync(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.TenantDataBoundaryResource> GetIfExists(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.TenantDataBoundaryResource>> GetIfExistsAsync(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TenantDataBoundaryResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.DataBoundaryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.DataBoundaryData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected TenantDataBoundaryResource() { }
+        public virtual Azure.ResourceManager.Resources.DataBoundaryData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(Azure.ResourceManager.Resources.Models.DataBoundaryName name) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.TenantDataBoundaryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TenantDataBoundaryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.DataBoundaryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.DataBoundaryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.DataBoundaryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.DataBoundaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.DataBoundaryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.DataBoundaryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.DataBoundaryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.TenantDataBoundaryResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.DataBoundaryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.TenantDataBoundaryResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.DataBoundaryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.Resources.Mocking
 {
@@ -653,14 +686,15 @@ namespace Azure.ResourceManager.Resources.Mocking
         public virtual Azure.ResourceManager.Resources.ArmDeploymentResource GetArmDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.ArmDeploymentScriptResource GetArmDeploymentScriptResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.DataBoundaryCollection GetDataBoundaries(Azure.Core.ResourceIdentifier scope) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource> GetDataBoundary(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource>> GetDataBoundaryAsync(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource> GetDataBoundary(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DataBoundaryResource>> GetDataBoundaryAsync(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.DataBoundaryResource GetDataBoundaryResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.DeploymentStackResource GetDeploymentStackResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.JitRequestResource GetJitRequestResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.ScriptLogResource GetScriptLogResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.TemplateSpecResource GetTemplateSpecResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.TemplateSpecVersionResource GetTemplateSpecVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.TenantDataBoundaryResource GetTenantDataBoundaryResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableResourcesManagementGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -725,6 +759,9 @@ namespace Azure.ResourceManager.Resources.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentResource> GetArmDeployment(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentResource>> GetArmDeploymentAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.ArmDeploymentCollection GetArmDeployments() { throw null; }
+        public virtual Azure.ResourceManager.Resources.TenantDataBoundaryCollection GetTenantDataBoundaries() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.TenantDataBoundaryResource> GetTenantDataBoundary(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TenantDataBoundaryResource>> GetTenantDataBoundaryAsync(Azure.ResourceManager.Resources.Models.DataBoundaryName name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Resources.Models
@@ -1357,26 +1394,26 @@ namespace Azure.ResourceManager.Resources.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.BasicArmDependency>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataBoundaryDefaultName : System.IEquatable<Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName>
+    public readonly partial struct DataBoundaryName : System.IEquatable<Azure.ResourceManager.Resources.Models.DataBoundaryName>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DataBoundaryDefaultName(string value) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName Default { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName other) { throw null; }
+        public DataBoundaryName(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.DataBoundaryName Default { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.DataBoundaryName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName left, Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName left, Azure.ResourceManager.Resources.Models.DataBoundaryDefaultName right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.DataBoundaryName left, Azure.ResourceManager.Resources.Models.DataBoundaryName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.DataBoundaryName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.DataBoundaryName left, Azure.ResourceManager.Resources.Models.DataBoundaryName right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DataBoundaryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.DataBoundaryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.DataBoundaryProperties>
     {
-        internal DataBoundaryProperties() { }
-        public Azure.ResourceManager.Resources.Models.DataBoundaryRegion? DataBoundary { get { throw null; } }
+        public DataBoundaryProperties() { }
+        public Azure.ResourceManager.Resources.Models.DataBoundaryRegion? DataBoundary { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.DataBoundaryProvisioningState? ProvisioningState { get { throw null; } }
         Azure.ResourceManager.Resources.Models.DataBoundaryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.DataBoundaryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.DataBoundaryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

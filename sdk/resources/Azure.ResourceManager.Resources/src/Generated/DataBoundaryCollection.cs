@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataBoundaryResource>> GetAsync(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoundaryResource>> GetAsync(DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataBoundaryRestClient.GetScopeAsync(Id, default, cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoundaryRestClient.GetScopeAsync(Id, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataBoundaryResource(Client, response.Value), response.GetRawResponse());
@@ -101,15 +101,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataBoundaryResource> Get(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoundaryResource> Get(DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataBoundaryRestClient.GetScope(Id, default, cancellationToken);
+                var response = _dataBoundaryRestClient.GetScope(Id, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataBoundaryResource(Client, response.Value), response.GetRawResponse());
@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataBoundaryRestClient.GetScopeAsync(Id, default, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoundaryRestClient.GetScopeAsync(Id, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataBoundaryRestClient.GetScope(Id, default, cancellationToken: cancellationToken);
+                var response = _dataBoundaryRestClient.GetScope(Id, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,15 +220,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<DataBoundaryResource>> GetIfExistsAsync(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DataBoundaryResource>> GetIfExistsAsync(DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataBoundaryRestClient.GetScopeAsync(Id, default, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoundaryRestClient.GetScopeAsync(Id, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<DataBoundaryResource>(response.GetRawResponse());
                 return Response.FromValue(new DataBoundaryResource(Client, response.Value), response.GetRawResponse());
@@ -261,15 +261,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<DataBoundaryResource> GetIfExists(DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DataBoundaryResource> GetIfExists(DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoundaryClientDiagnostics.CreateScope("DataBoundaryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataBoundaryRestClient.GetScope(Id, default, cancellationToken: cancellationToken);
+                var response = _dataBoundaryRestClient.GetScope(Id, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<DataBoundaryResource>(response.GetRawResponse());
                 return Response.FromValue(new DataBoundaryResource(Client, response.Value), response.GetRawResponse());

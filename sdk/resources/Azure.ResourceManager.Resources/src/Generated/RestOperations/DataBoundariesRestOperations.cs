@@ -36,19 +36,173 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetScopeRequestUri(string scope, DataBoundaryDefaultName @default)
+        internal RequestUriBuilder CreatePutRequestUri(DataBoundaryName name, DataBoundaryData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Resources/dataBoundaries/", false);
+            uri.AppendPath(name.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal Core.HttpMessage CreatePutRequest(DataBoundaryName name, DataBoundaryData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Resources/dataBoundaries/", false);
+            uri.AppendPath(name.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Opt-in tenant to data boundary. </summary>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="data"> The data boundary to opt the tenant to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async Task<Response<DataBoundaryData>> PutAsync(DataBoundaryName name, DataBoundaryData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreatePutRequest(name, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    {
+                        DataBoundaryData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataBoundaryData.DeserializeDataBoundaryData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Opt-in tenant to data boundary. </summary>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="data"> The data boundary to opt the tenant to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public Response<DataBoundaryData> Put(DataBoundaryName name, DataBoundaryData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreatePutRequest(name, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    {
+                        DataBoundaryData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataBoundaryData.DeserializeDataBoundaryData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetTenantRequestUri(DataBoundaryName name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Resources/dataBoundaries/", false);
+            uri.AppendPath(name.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal Core.HttpMessage CreateGetTenantRequest(DataBoundaryName name)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Resources/dataBoundaries/", false);
+            uri.AppendPath(name.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get data boundary of tenant. </summary>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<DataBoundaryData>> GetTenantAsync(DataBoundaryName name, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetTenantRequest(name);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoundaryData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataBoundaryData.DeserializeDataBoundaryData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((DataBoundaryData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get data boundary of tenant. </summary>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<DataBoundaryData> GetTenant(DataBoundaryName name, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetTenantRequest(name);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoundaryData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataBoundaryData.DeserializeDataBoundaryData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((DataBoundaryData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetScopeRequestUri(string scope, DataBoundaryName name)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/dataBoundaries/", false);
-            uri.AppendPath(@default.ToString(), true);
+            uri.AppendPath(name.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal Core.HttpMessage CreateGetScopeRequest(string scope, DataBoundaryDefaultName @default)
+        internal Core.HttpMessage CreateGetScopeRequest(string scope, DataBoundaryName name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,7 +212,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/dataBoundaries/", false);
-            uri.AppendPath(@default.ToString(), true);
+            uri.AppendPath(name.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -68,14 +222,14 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Get data boundary at specified scope. </summary>
         /// <param name="scope"> The scope at which the operation is performed. </param>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DataBoundaryData>> GetScopeAsync(string scope, DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public async Task<Response<DataBoundaryData>> GetScopeAsync(string scope, DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateGetScopeRequest(scope, @default);
+            using var message = CreateGetScopeRequest(scope, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -95,14 +249,14 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Get data boundary at specified scope. </summary>
         /// <param name="scope"> The scope at which the operation is performed. </param>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<DataBoundaryData> GetScope(string scope, DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public Response<DataBoundaryData> GetScope(string scope, DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateGetScopeRequest(scope, @default);
+            using var message = CreateGetScopeRequest(scope, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

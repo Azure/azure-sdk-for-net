@@ -30,7 +30,7 @@ rename-mapping:
   FileDefinition: DecompiledFileDefinition
   DataBoundary: DataBoundaryRegion
   DataBoundaryDefinition: DataBoundary
-  DefaultName: DataBoundaryDefaultName
+  DefaultName: DataBoundaryName
 
 patch-initializer-customization:
   ArmDeploymentContent:
@@ -123,7 +123,7 @@ models-to-treat-empty-string-as-null:
   - ArmApplicationPackageSupportUris
 
 suppress-abstract-base-class:
-- ArmDeploymentScriptData
+  - ArmDeploymentScriptData
 
 directive:
   - remove-operation: checkResourceName
@@ -192,8 +192,6 @@ directive:
   - remove-operation: DeploymentStacks_GetAtManagementGroup
   - remove-operation: DeploymentStacks_DeleteAtManagementGroup
   - remove-operation: Operations_List
-  - remove-operation: DataBoundaries_Put
-  - remove-operation: DataBoundaries_GetTenant
 
   - from: managedapplications.json
     where: $['x-ms-paths']
@@ -329,6 +327,10 @@ directive:
     where: $.definitions
     transform: >
       $.DataBoundaryProperties.properties.provisioningState['x-ms-enum'].name = 'DataBoundaryProvisioningState';
+  - from: dataBoundaries.json
+    where: $.paths..parameters[?(@.name === 'default')]
+    transform: >
+      $['x-ms-client-name'] = 'name';
   - from: resources.json
     where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
     transform: $['$ref'] = '#/definitions/DeploymentWhatIf'

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataBoundaryProperties"/>. </summary>
-        internal DataBoundaryProperties()
+        public DataBoundaryProperties()
         {
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The data boundary definition. </summary>
         [WirePath("dataBoundary")]
-        public DataBoundaryRegion? DataBoundary { get; }
+        public DataBoundaryRegion? DataBoundary { get; set; }
         /// <summary> Denotes the state of provisioning. </summary>
         [WirePath("provisioningState")]
         public DataBoundaryProvisioningState? ProvisioningState { get; }

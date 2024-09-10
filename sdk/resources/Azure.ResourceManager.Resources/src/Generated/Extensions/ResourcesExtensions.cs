@@ -83,20 +83,20 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetDataBoundaryAsync(ResourceIdentifier,DataBoundaryDefaultName,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetDataBoundaryAsync(ResourceIdentifier,DataBoundaryName,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DataBoundaryResource>> GetDataBoundaryAsync(this ArmClient client, ResourceIdentifier scope, DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataBoundaryResource>> GetDataBoundaryAsync(this ArmClient client, ResourceIdentifier scope, DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableResourcesArmClient(client).GetDataBoundaryAsync(scope, @default, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesArmClient(client).GetDataBoundaryAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,20 +121,20 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetDataBoundary(ResourceIdentifier,DataBoundaryDefaultName,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetDataBoundary(ResourceIdentifier,DataBoundaryName,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="default"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DataBoundaryResource> GetDataBoundary(this ArmClient client, ResourceIdentifier scope, DataBoundaryDefaultName @default, CancellationToken cancellationToken = default)
+        public static Response<DataBoundaryResource> GetDataBoundary(this ArmClient client, ResourceIdentifier scope, DataBoundaryName name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourcesArmClient(client).GetDataBoundary(scope, @default, cancellationToken);
+            return GetMockableResourcesArmClient(client).GetDataBoundary(scope, name, cancellationToken);
         }
 
         /// <summary>
@@ -306,6 +306,25 @@ namespace Azure.ResourceManager.Resources
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableResourcesArmClient(client).GetDeploymentStackResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantDataBoundaryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantDataBoundaryResource.CreateResourceIdentifier" /> to create a <see cref="TenantDataBoundaryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetTenantDataBoundaryResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TenantDataBoundaryResource"/> object. </returns>
+        public static TenantDataBoundaryResource GetTenantDataBoundaryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourcesArmClient(client).GetTenantDataBoundaryResource(id);
         }
 
         /// <summary>
@@ -1797,6 +1816,97 @@ namespace Azure.ResourceManager.Resources
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableResourcesTenantResource(tenantResource).GetArmDeployment(deploymentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of TenantDataBoundaryResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesTenantResource.GetTenantDataBoundaries()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of TenantDataBoundaryResources and their operations over a TenantDataBoundaryResource. </returns>
+        public static TenantDataBoundaryCollection GetTenantDataBoundaries(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableResourcesTenantResource(tenantResource).GetTenantDataBoundaries();
+        }
+
+        /// <summary>
+        /// Get data boundary of tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Resources/dataBoundaries/{default}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataBoundaries_GetTenant</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantDataBoundaryResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesTenantResource.GetTenantDataBoundaryAsync(DataBoundaryName,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TenantDataBoundaryResource>> GetTenantDataBoundaryAsync(this TenantResource tenantResource, DataBoundaryName name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableResourcesTenantResource(tenantResource).GetTenantDataBoundaryAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get data boundary of tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Resources/dataBoundaries/{default}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataBoundaries_GetTenant</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantDataBoundaryResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesTenantResource.GetTenantDataBoundary(DataBoundaryName,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TenantDataBoundaryResource> GetTenantDataBoundary(this TenantResource tenantResource, DataBoundaryName name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableResourcesTenantResource(tenantResource).GetTenantDataBoundary(name, cancellationToken);
         }
 
         /// <summary>

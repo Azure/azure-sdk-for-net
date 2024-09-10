@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataBoundaryData"/>. </summary>
-        internal DataBoundaryData()
+        public DataBoundaryData()
         {
         }
 
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Data boundary properties. </summary>
         [WirePath("properties")]
-        public DataBoundaryProperties Properties { get; }
+        public DataBoundaryProperties Properties { get; set; }
     }
 }
