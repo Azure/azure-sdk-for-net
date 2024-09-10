@@ -190,10 +190,8 @@ namespace System.ClientModel.Primitives
         public object? ProxiedModel { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
         public void AddProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
-        public System.ClientModel.Primitives.IJsonModel<T> GetProxy<T>(System.ClientModel.Primitives.IJsonModel<T> proxiedModel) { throw null; }
-        public System.ClientModel.Primitives.IPersistableModel<T> GetProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxiedModel) { throw null; }
-        public bool TryGetProxy(System.Type modelType, out System.ClientModel.Primitives.IJsonModel<object>? proxy) { throw null; }
-        public bool TryGetProxy(System.Type modelType, out System.ClientModel.Primitives.IPersistableModel<object>? proxy) { throw null; }
+        public System.ClientModel.Primitives.IJsonModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IJsonModel<T> proxiedModel) { throw null; }
+        public System.ClientModel.Primitives.IPersistableModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> model) { throw null; }
         public bool TryGetProxy<T>(out System.ClientModel.Primitives.IJsonModel<T>? proxy) { throw null; }
         public bool TryGetProxy<T>(out System.ClientModel.Primitives.IPersistableModel<T>? proxy) { throw null; }
     }
