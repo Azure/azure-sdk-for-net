@@ -391,6 +391,13 @@
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="2.1.1" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.Inference.Tests'))">
+    <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.3.0-beta.1" />
+    <PackageReference Include="OpenTelemetry" Version="1.9.0" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.9.0" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20240823.1</TestProxyVersion>
   </PropertyGroup>

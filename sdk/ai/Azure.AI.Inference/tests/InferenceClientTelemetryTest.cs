@@ -6,7 +6,6 @@ using Azure.AI.Inference.Tests.Utilities;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Inference.Tests
