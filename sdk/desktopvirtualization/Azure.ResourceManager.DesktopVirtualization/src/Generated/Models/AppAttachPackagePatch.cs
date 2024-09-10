@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Detailed properties for App Attach Package. </summary>
+        [WirePath("properties")]
         public AppAttachPackagePatchProperties Properties { get; set; }
     }
 }

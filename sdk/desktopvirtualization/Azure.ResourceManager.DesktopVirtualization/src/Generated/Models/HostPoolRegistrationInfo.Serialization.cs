@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -126,6 +127,75 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new HostPoolRegistrationInfo(expirationTime, token, registrationTokenOperation, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expirationTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpireOn))
+                {
+                    builder.Append("  expirationTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Token), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  token: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Token))
+                {
+                    builder.Append("  token: ");
+                    if (Token.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Token}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Token}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistrationTokenOperation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  registrationTokenOperation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegistrationTokenOperation))
+                {
+                    builder.Append("  registrationTokenOperation: ");
+                    builder.AppendLine($"'{RegistrationTokenOperation.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<HostPoolRegistrationInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -134,6 +204,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support writing '{options.Format}' format.");
             }

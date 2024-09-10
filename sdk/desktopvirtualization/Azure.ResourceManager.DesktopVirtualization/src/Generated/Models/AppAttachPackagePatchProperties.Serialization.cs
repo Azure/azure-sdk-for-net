@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -46,10 +48,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(KeyVaultURL))
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultURL"u8);
-                writer.WriteStringValue(KeyVaultURL);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(FailHealthCheckOnStagingFailure))
             {
@@ -96,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             AppAttachPackageInfoProperties image = default;
             IList<ResourceIdentifier> hostPoolReferences = default;
-            string keyVaultURL = default;
+            Uri keyVaultURL = default;
             FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +136,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (property.NameEquals("keyVaultURL"u8))
                 {
-                    keyVaultURL = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultURL = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("failHealthCheckOnStagingFailure"u8))
@@ -155,6 +161,94 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new AppAttachPackagePatchProperties(image, hostPoolReferences ?? new ChangeTrackingList<ResourceIdentifier>(), keyVaultURL, failHealthCheckOnStagingFailure, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Image), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  image: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Image))
+                {
+                    builder.Append("  image: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Image, options, 2, false, "  image: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostPoolReferences), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hostPoolReferences: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HostPoolReferences))
+                {
+                    if (HostPoolReferences.Any())
+                    {
+                        builder.Append("  hostPoolReferences: ");
+                        builder.AppendLine("[");
+                        foreach (var item in HostPoolReferences)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyVaultURL: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyVaultUri))
+                {
+                    builder.Append("  keyVaultURL: ");
+                    builder.AppendLine($"'{KeyVaultUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailHealthCheckOnStagingFailure), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failHealthCheckOnStagingFailure: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailHealthCheckOnStagingFailure))
+                {
+                    builder.Append("  failHealthCheckOnStagingFailure: ");
+                    builder.AppendLine($"'{FailHealthCheckOnStagingFailure.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppAttachPackagePatchProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppAttachPackagePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -163,6 +257,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppAttachPackagePatchProperties)} does not support writing '{options.Format}' format.");
             }

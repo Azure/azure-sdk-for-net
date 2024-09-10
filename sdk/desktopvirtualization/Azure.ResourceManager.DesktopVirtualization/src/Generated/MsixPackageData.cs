@@ -92,26 +92,37 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> VHD/CIM image path on Network Share. </summary>
+        [WirePath("properties.imagePath")]
         public string ImagePath { get; set; }
         /// <summary> Package Name from appxmanifest.xml. </summary>
+        [WirePath("properties.packageName")]
         public string PackageName { get; set; }
         /// <summary> Package Family Name from appxmanifest.xml. Contains Package Name and Publisher name. </summary>
+        [WirePath("properties.packageFamilyName")]
         public string PackageFamilyName { get; set; }
         /// <summary> User friendly Name to be displayed in the portal. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Relative Path to the package inside the image. </summary>
+        [WirePath("properties.packageRelativePath")]
         public string PackageRelativePath { get; set; }
         /// <summary> Specifies how to register Package in feed. </summary>
+        [WirePath("properties.isRegularRegistration")]
         public bool? IsRegularRegistration { get; set; }
         /// <summary> Make this version of the package the active one across the hostpool. </summary>
+        [WirePath("properties.isActive")]
         public bool? IsActive { get; set; }
         /// <summary> List of package dependencies. </summary>
+        [WirePath("properties.packageDependencies")]
         public IList<MsixPackageDependencies> PackageDependencies { get; }
         /// <summary> Package version found in the appxmanifest.xml. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> Date Package was last updated, found in the appxmanifest.xml. </summary>
+        [WirePath("properties.lastUpdated")]
         public DateTimeOffset? LastUpdatedOn { get; set; }
         /// <summary> List of package applications. </summary>
+        [WirePath("properties.packageApplications")]
         public IList<MsixPackageApplications> PackageApplications { get; }
     }
 }

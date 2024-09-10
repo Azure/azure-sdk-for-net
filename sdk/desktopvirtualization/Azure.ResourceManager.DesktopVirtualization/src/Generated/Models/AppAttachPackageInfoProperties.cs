@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isActive"> Make this version of the package the active one across the hostpool. </param>
         /// <param name="packageDependencies"> List of package dependencies. </param>
         /// <param name="version"> Package version found in the appxmanifest.xml. </param>
-        /// <param name="lastUpdated"> Date Package was last updated, found in the appxmanifest.xml. </param>
+        /// <param name="lastUpdatedOn"> Date Package was last updated, found in the appxmanifest.xml. </param>
         /// <param name="packageApplications"> List of package applications. </param>
         /// <param name="certificateName"> Certificate name found in the appxmanifest.xml. </param>
-        /// <param name="certificateExpiry"> Date certificate expires, found in the appxmanifest.xml. </param>
+        /// <param name="certificateExpireOn"> Date certificate expires, found in the appxmanifest.xml. </param>
         /// <param name="isPackageTimestamped"> Is package timestamped so it can ignore the certificate expiry date. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppAttachPackageInfoProperties(string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdated, IList<MsixPackageApplications> packageApplications, string certificateName, DateTimeOffset? certificateExpiry, PackageTimestamped? isPackageTimestamped, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppAttachPackageInfoProperties(string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdatedOn, IList<MsixPackageApplications> packageApplications, string certificateName, DateTimeOffset? certificateExpireOn, PackageTimestamped? isPackageTimestamped, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PackageAlias = packageAlias;
             ImagePath = imagePath;
@@ -83,45 +83,61 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             IsActive = isActive;
             PackageDependencies = packageDependencies;
             Version = version;
-            LastUpdated = lastUpdated;
+            LastUpdatedOn = lastUpdatedOn;
             PackageApplications = packageApplications;
             CertificateName = certificateName;
-            CertificateExpiry = certificateExpiry;
+            CertificateExpireOn = certificateExpireOn;
             IsPackageTimestamped = isPackageTimestamped;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Alias of App Attach Package. Assigned at import time. </summary>
+        [WirePath("packageAlias")]
         public string PackageAlias { get; set; }
         /// <summary> VHD/CIM image path on Network Share. </summary>
+        [WirePath("imagePath")]
         public string ImagePath { get; set; }
         /// <summary> Package Name from appxmanifest.xml. </summary>
+        [WirePath("packageName")]
         public string PackageName { get; set; }
         /// <summary> Package Family Name from appxmanifest.xml. Contains Package Name and Publisher name. </summary>
+        [WirePath("packageFamilyName")]
         public string PackageFamilyName { get; set; }
         /// <summary> Package Full Name from appxmanifest.xml. </summary>
+        [WirePath("packageFullName")]
         public string PackageFullName { get; set; }
         /// <summary> User friendly Name to be displayed in the portal. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Relative Path to the package inside the image. </summary>
+        [WirePath("packageRelativePath")]
         public string PackageRelativePath { get; set; }
         /// <summary> Specifies how to register Package in feed. </summary>
+        [WirePath("isRegularRegistration")]
         public bool? IsRegularRegistration { get; set; }
         /// <summary> Make this version of the package the active one across the hostpool. </summary>
+        [WirePath("isActive")]
         public bool? IsActive { get; set; }
         /// <summary> List of package dependencies. </summary>
+        [WirePath("packageDependencies")]
         public IList<MsixPackageDependencies> PackageDependencies { get; set; }
         /// <summary> Package version found in the appxmanifest.xml. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
         /// <summary> Date Package was last updated, found in the appxmanifest.xml. </summary>
-        public DateTimeOffset? LastUpdated { get; set; }
+        [WirePath("lastUpdated")]
+        public DateTimeOffset? LastUpdatedOn { get; set; }
         /// <summary> List of package applications. </summary>
+        [WirePath("packageApplications")]
         public IList<MsixPackageApplications> PackageApplications { get; }
         /// <summary> Certificate name found in the appxmanifest.xml. </summary>
+        [WirePath("certificateName")]
         public string CertificateName { get; set; }
         /// <summary> Date certificate expires, found in the appxmanifest.xml. </summary>
-        public DateTimeOffset? CertificateExpiry { get; set; }
+        [WirePath("certificateExpiry")]
+        public DateTimeOffset? CertificateExpireOn { get; set; }
         /// <summary> Is package timestamped so it can ignore the certificate expiry date. </summary>
+        [WirePath("isPackageTimestamped")]
         public PackageTimestamped? IsPackageTimestamped { get; set; }
     }
 }

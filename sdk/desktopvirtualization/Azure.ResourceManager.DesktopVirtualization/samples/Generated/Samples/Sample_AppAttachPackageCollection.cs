@@ -170,7 +170,7 @@ MinVersion = "packageDep_version",
 }
 },
                     Version = "packageversion",
-                    LastUpdated = DateTimeOffset.Parse("2008-09-22T14:01:54.9571247Z"),
+                    LastUpdatedOn = DateTimeOffset.Parse("2008-09-22T14:01:54.9571247Z"),
                     PackageApplications =
 {
 new MsixPackageApplications()
@@ -185,12 +185,12 @@ RawPng = BinaryData.FromString("\"VGhpcyBpcyBhIHN0cmluZyB0byBoYXNo\""),
 }
 },
                     CertificateName = "certName",
-                    CertificateExpiry = DateTimeOffset.Parse("2023-01-02T17:18:19.1234567Z"),
+                    CertificateExpireOn = DateTimeOffset.Parse("2023-01-02T17:18:19.1234567Z"),
                 },
                 HostPoolReferences =
 {
 },
-                KeyVaultURL = "",
+                KeyVaultUri = new Uri(""),
                 FailHealthCheckOnStagingFailure = FailHealthCheckOnStagingFailure.NeedsAssistance,
             });
             ArmOperation<AppAttachPackageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, appAttachPackageName, data);

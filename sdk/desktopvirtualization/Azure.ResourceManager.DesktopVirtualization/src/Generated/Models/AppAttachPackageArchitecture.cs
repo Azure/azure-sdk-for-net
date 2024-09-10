@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ARMValue = "ARM";
-        private const string ARM64Value = "ARM64";
+        private const string ArmValue = "ARM";
+        private const string Arm64Value = "ARM64";
         private const string X86Value = "x86";
         private const string X64Value = "x64";
         private const string NeutralValue = "Neutral";
         private const string X86A64Value = "x86a64";
-        private const string ALLValue = "ALL";
+        private const string AllValue = "ALL";
 
         /// <summary> ARM. </summary>
-        public static AppAttachPackageArchitecture ARM { get; } = new AppAttachPackageArchitecture(ARMValue);
+        public static AppAttachPackageArchitecture Arm { get; } = new AppAttachPackageArchitecture(ArmValue);
         /// <summary> ARM64. </summary>
-        public static AppAttachPackageArchitecture ARM64 { get; } = new AppAttachPackageArchitecture(ARM64Value);
+        public static AppAttachPackageArchitecture Arm64 { get; } = new AppAttachPackageArchitecture(Arm64Value);
         /// <summary> x86. </summary>
         public static AppAttachPackageArchitecture X86 { get; } = new AppAttachPackageArchitecture(X86Value);
         /// <summary> x64. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> x86a64. </summary>
         public static AppAttachPackageArchitecture X86A64 { get; } = new AppAttachPackageArchitecture(X86A64Value);
         /// <summary> ALL. </summary>
-        public static AppAttachPackageArchitecture ALL { get; } = new AppAttachPackageArchitecture(ALLValue);
+        public static AppAttachPackageArchitecture All { get; } = new AppAttachPackageArchitecture(AllValue);
         /// <summary> Determines if two <see cref="AppAttachPackageArchitecture"/> values are the same. </summary>
         public static bool operator ==(AppAttachPackageArchitecture left, AppAttachPackageArchitecture right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppAttachPackageArchitecture"/> values are not the same. </summary>

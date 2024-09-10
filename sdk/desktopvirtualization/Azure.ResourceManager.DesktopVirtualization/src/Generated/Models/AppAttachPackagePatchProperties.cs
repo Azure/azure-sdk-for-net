@@ -55,25 +55,29 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="AppAttachPackagePatchProperties"/>. </summary>
         /// <param name="image"> Detailed properties for App Attach Package. </param>
         /// <param name="hostPoolReferences"> List of Hostpool resource Ids. </param>
-        /// <param name="keyVaultURL"> URL path to certificate name located in keyVault. </param>
+        /// <param name="keyVaultUri"> URL path to certificate name located in keyVault. </param>
         /// <param name="failHealthCheckOnStagingFailure"> Parameter indicating how the health check should behave if this package fails staging. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppAttachPackagePatchProperties(AppAttachPackageInfoProperties image, IList<ResourceIdentifier> hostPoolReferences, string keyVaultURL, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppAttachPackagePatchProperties(AppAttachPackageInfoProperties image, IList<ResourceIdentifier> hostPoolReferences, Uri keyVaultUri, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Image = image;
             HostPoolReferences = hostPoolReferences;
-            KeyVaultURL = keyVaultURL;
+            KeyVaultUri = keyVaultUri;
             FailHealthCheckOnStagingFailure = failHealthCheckOnStagingFailure;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Detailed properties for App Attach Package. </summary>
+        [WirePath("image")]
         public AppAttachPackageInfoProperties Image { get; set; }
         /// <summary> List of Hostpool resource Ids. </summary>
+        [WirePath("hostPoolReferences")]
         public IList<ResourceIdentifier> HostPoolReferences { get; }
         /// <summary> URL path to certificate name located in keyVault. </summary>
-        public string KeyVaultURL { get; set; }
+        [WirePath("keyVaultURL")]
+        public Uri KeyVaultUri { get; set; }
         /// <summary> Parameter indicating how the health check should behave if this package fails staging. </summary>
+        [WirePath("failHealthCheckOnStagingFailure")]
         public FailHealthCheckOnStagingFailure? FailHealthCheckOnStagingFailure { get; set; }
     }
 }

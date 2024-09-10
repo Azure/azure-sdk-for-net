@@ -1036,9 +1036,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AppAttachPackageArchitecture(string value) { throw null; }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture ALL { get { throw null; } }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture ARM { get { throw null; } }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture ARM64 { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture All { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture Arm { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture Arm64 { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture Neutral { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture X64 { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture X86 { get { throw null; } }
@@ -1056,14 +1056,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public partial class AppAttachPackageInfoProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties>
     {
         public AppAttachPackageInfoProperties() { }
-        public System.DateTimeOffset? CertificateExpiry { get { throw null; } set { } }
+        public System.DateTimeOffset? CertificateExpireOn { get { throw null; } set { } }
         public string CertificateName { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string ImagePath { get { throw null; } set { } }
         public bool? IsActive { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.PackageTimestamped? IsPackageTimestamped { get { throw null; } set { } }
         public bool? IsRegularRegistration { get { throw null; } set { } }
-        public System.DateTimeOffset? LastUpdated { get { throw null; } set { } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
         public string PackageAlias { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageApplications> PackageApplications { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageDependencies> PackageDependencies { get { throw null; } set { } }
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure? FailHealthCheckOnStagingFailure { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> HostPoolReferences { get { throw null; } }
         public Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties Image { get { throw null; } set { } }
-        public string KeyVaultURL { get { throw null; } set { } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
         Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1107,19 +1107,39 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure? FailHealthCheckOnStagingFailure { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> HostPoolReferences { get { throw null; } }
         public Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties Image { get { throw null; } set { } }
-        public string KeyVaultURL { get { throw null; } set { } }
-        public Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState? ProvisioningState { get { throw null; } }
         Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppAttachPackageProvisioningState : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppAttachPackageProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState left, Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState left, Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public static partial class ArmDesktopVirtualizationModelFactory
     {
         public static Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData AppAttachPackageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch AppAttachPackagePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties AppAttachPackageProperties(Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState?), Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties image = null, System.Collections.Generic.IEnumerable<string> hostPoolReferences = null, string keyVaultURL = null, Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure = default(Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure?)) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties AppAttachPackageProperties(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState? provisioningState = default(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState?), Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties image = null, System.Collections.Generic.IEnumerable<string> hostPoolReferences = null, System.Uri keyVaultUri = null, Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure = default(Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.ResourceIdentifier privateEndpointId, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState?)) { throw null; }
@@ -1666,26 +1686,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType left, Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType left, Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState left, Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState left, Azure.ResourceManager.DesktopVirtualization.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

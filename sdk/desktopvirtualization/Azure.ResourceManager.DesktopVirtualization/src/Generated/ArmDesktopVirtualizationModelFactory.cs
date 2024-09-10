@@ -896,10 +896,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="provisioningState"> The provisioning state of the App Attach Package. </param>
         /// <param name="image"> Detailed properties for App Attach Package. </param>
         /// <param name="hostPoolReferences"> List of Hostpool resource Ids. </param>
-        /// <param name="keyVaultURL"> URL path to certificate name located in keyVault. </param>
+        /// <param name="keyVaultUri"> URL path to certificate name located in keyVault. </param>
         /// <param name="failHealthCheckOnStagingFailure"> Parameter indicating how the health check should behave if this package fails staging. </param>
         /// <returns> A new <see cref="Models.AppAttachPackageProperties"/> instance for mocking. </returns>
-        public static AppAttachPackageProperties AppAttachPackageProperties(ProvisioningState? provisioningState = null, AppAttachPackageInfoProperties image = null, IEnumerable<string> hostPoolReferences = null, string keyVaultURL = null, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure = null)
+        public static AppAttachPackageProperties AppAttachPackageProperties(AppAttachPackageProvisioningState? provisioningState = null, AppAttachPackageInfoProperties image = null, IEnumerable<string> hostPoolReferences = null, Uri keyVaultUri = null, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure = null)
         {
             hostPoolReferences ??= new List<string>();
 
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 provisioningState,
                 image,
                 hostPoolReferences?.ToList(),
-                keyVaultURL,
+                keyVaultUri,
                 failHealthCheckOnStagingFailure,
                 serializedAdditionalRawData: null);
         }
