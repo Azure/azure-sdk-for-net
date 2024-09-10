@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity"/>
+    <PackageReference Include="NUnit"  />
+    <PackageReference Include="NUnit3TestAdapter"  />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\azure_sdk_for_net.csproj" />
+  </ItemGroup>
+</Project>

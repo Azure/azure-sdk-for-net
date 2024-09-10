@@ -17,7 +17,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure IoTOperations management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package azure_sdk_for_net --prerelease
+dotnet add package Azure.ResourceManager.IoTOperations --prerelease
 ```
 
 ### Prerequisites

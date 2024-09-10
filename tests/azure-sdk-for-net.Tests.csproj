@@ -1,0 +1,5 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\azure_sdk_for_net.csproj" />
+  </ItemGroup>
+</Project>

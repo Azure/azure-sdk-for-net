@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+    <PackageId>azure_sdk_for_net</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider IoTOperations.</Description>
+    <PackageTags>azure;management;arm;resource manager;ProviderNameLowercase</PackageTags>
+  </PropertyGroup>
+</Project>
