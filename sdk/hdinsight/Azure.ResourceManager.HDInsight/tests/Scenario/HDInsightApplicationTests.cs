@@ -117,7 +117,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
             Assert.AreEqual("CustomApplication", application.Data.Properties.ApplicationType);
             Assert.AreEqual(1, application.Data.Properties.InstallScriptActions.Count);
         }
-        [RecordedTest]
+        [Test]
+        // regressation test for issue https://github.com/Azure/azure-sdk-for-net/issues/45709  only for not throwing exception
         public async Task GetHDInsightCluster()
         {
             string resourceGroupName = _cluster.Data.Id.ResourceGroupName;
