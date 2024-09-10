@@ -3122,6 +3122,34 @@ namespace Azure.Storage.Files.Shares.Tests
         #endregion
 
         [RecordedTest]
+        [TestCase(null, false)]
+        [TestCase("ShareNotFound", true)]
+        [TestCase("ShareDisabled", false)]
+        [TestCase("", false)]
+        public void ShareErrorCode_EqualityOperatorOverloadTest(string errorCode, bool expected)
+        {
+            try
+            {
+                throw new RequestFailedException(status: 404, message: "Some error.", errorCode: errorCode, innerException: null);
+            }
+            catch (RequestFailedException ex)
+            {
+                bool result1 = ShareErrorCode.ShareNotFound == ex.ErrorCode;
+                bool result2 = ex.ErrorCode == ShareErrorCode.ShareNotFound;
+                Assert.AreEqual(expected, result1);
+                Assert.AreEqual(expected, result2);
+
+                bool result3 = ShareErrorCode.ShareNotFound != ex.ErrorCode;
+                bool result4 = ex.ErrorCode != ShareErrorCode.ShareNotFound;
+                Assert.AreEqual(!expected, result3);
+                Assert.AreEqual(!expected, result4);
+
+                bool result5 = ShareErrorCode.ShareNotFound.Equals(ex.ErrorCode);
+                Assert.AreEqual(expected, result5);
+            }
+        }
+
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.
