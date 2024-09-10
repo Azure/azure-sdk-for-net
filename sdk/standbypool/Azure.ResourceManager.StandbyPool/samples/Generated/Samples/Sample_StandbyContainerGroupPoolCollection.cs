@@ -186,9 +186,9 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             string standbyContainerGroupPoolName = "pool";
             StandbyContainerGroupPoolData data = new StandbyContainerGroupPoolData(new AzureLocation("West US"))
             {
-                Properties = new StandbyContainerGroupPoolResourceProperties(new StandbyContainerGroupPoolElasticityProfile(688)
+                Properties = new StandbyContainerGroupPoolProperties(new StandbyContainerGroupPoolElasticityProfile(688)
                 {
-                    RefillPolicy = StandbyPoolRefillPolicy.Always,
+                    RefillPolicy = StandbyRefillPolicy.Always,
                 }, new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.ContainerInstance/containerGroupProfiles/cgProfile"))
                 {
                     Revision = 1,

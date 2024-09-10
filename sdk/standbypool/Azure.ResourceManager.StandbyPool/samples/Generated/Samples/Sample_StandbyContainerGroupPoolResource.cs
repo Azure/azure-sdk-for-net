@@ -107,20 +107,17 @@ namespace Azure.ResourceManager.StandbyPool.Samples
                 Tags =
 {
 },
-                Properties = new StandbyContainerGroupPoolResourceUpdateProperties()
+                Properties = new StandbyContainerGroupPoolUpdateProperties()
                 {
-                    ElasticityProfile = new StandbyContainerGroupPoolElasticityPatchProfile()
+                    ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile(1743)
                     {
-                        MaxReadyCapacity = 1743,
-                        RefillPolicy = StandbyPoolRefillPolicy.Always,
+                        RefillPolicy = StandbyRefillPolicy.Always,
                     },
-                    ContainerGroupProperties = new StandbyContainerGroupPatchProperties()
+                    ContainerGroupProperties = new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.ContainerInstance/containerGroupProfiles/cgProfile"))
                     {
-                        ContainerGroupProfile = new StandbyContainerGroupPatchProfile()
-                        {
-                            Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.ContainerInstance/containerGroupProfiles/cgProfile"),
-                            Revision = 2,
-                        },
+                        Revision = 2,
+                    })
+                    {
                         SubnetIds =
 {
 new WritableSubResource()

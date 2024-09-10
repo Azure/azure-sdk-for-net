@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             string standbyVirtualMachinePoolName = "pool";
             StandbyVirtualMachinePoolData data = new StandbyVirtualMachinePoolData(new AzureLocation("West US"))
             {
-                Properties = new StandbyVirtualMachinePoolResourceProperties(StandbyVirtualMachineState.Running)
+                Properties = new StandbyVirtualMachinePoolProperties(StandbyVirtualMachineState.Running)
                 {
                     ElasticityProfile = new StandbyVirtualMachinePoolElasticityProfile(304)
                     {

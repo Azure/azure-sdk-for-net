@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             string standbyVirtualMachinePoolName = "pool";
             string runtimeView = "latest";
             ResourceIdentifier standbyVirtualMachinePoolRuntimeViewResourceId = StandbyVirtualMachinePoolRuntimeViewResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, standbyVirtualMachinePoolName, runtimeView);
-            StandbyVirtualMachinePoolRuntimeViewResource standbyVirtualMachinePoolRuntimeViewResource = client.GetStandbyVirtualMachinePoolRuntimeViewResource(standbyVirtualMachinePoolRuntimeViewResourceId);
+            StandbyVirtualMachinePoolRuntimeViewResource standbyVirtualMachinePoolRuntimeView = client.GetStandbyVirtualMachinePoolRuntimeViewResource(standbyVirtualMachinePoolRuntimeViewResourceId);
 
             // invoke the operation
-            StandbyVirtualMachinePoolRuntimeViewResource result = await standbyVirtualMachinePoolRuntimeViewResource.GetAsync();
+            StandbyVirtualMachinePoolRuntimeViewResource result = await standbyVirtualMachinePoolRuntimeView.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            StandbyVirtualMachinePoolRuntimeViewResourceData resourceData = result.Data;
+            StandbyVirtualMachinePoolRuntimeViewData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

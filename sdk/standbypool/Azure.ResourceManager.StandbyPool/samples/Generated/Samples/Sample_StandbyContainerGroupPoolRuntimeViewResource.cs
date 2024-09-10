@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             string standbyContainerGroupPoolName = "pool";
             string runtimeView = "latest";
             ResourceIdentifier standbyContainerGroupPoolRuntimeViewResourceId = StandbyContainerGroupPoolRuntimeViewResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, standbyContainerGroupPoolName, runtimeView);
-            StandbyContainerGroupPoolRuntimeViewResource standbyContainerGroupPoolRuntimeViewResource = client.GetStandbyContainerGroupPoolRuntimeViewResource(standbyContainerGroupPoolRuntimeViewResourceId);
+            StandbyContainerGroupPoolRuntimeViewResource standbyContainerGroupPoolRuntimeView = client.GetStandbyContainerGroupPoolRuntimeViewResource(standbyContainerGroupPoolRuntimeViewResourceId);
 
             // invoke the operation
-            StandbyContainerGroupPoolRuntimeViewResource result = await standbyContainerGroupPoolRuntimeViewResource.GetAsync();
+            StandbyContainerGroupPoolRuntimeViewResource result = await standbyContainerGroupPoolRuntimeView.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            StandbyContainerGroupPoolRuntimeViewResourceData resourceData = result.Data;
+            StandbyContainerGroupPoolRuntimeViewData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

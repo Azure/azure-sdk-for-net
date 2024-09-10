@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.StandbyPool.Samples
 {
-    public partial class Sample_StandbyVirtualMachinePoolRuntimeViewResourceCollection
+    public partial class Sample_StandbyVirtualMachinePoolRuntimeViewCollection
     {
         // StandbyVirtualMachinePoolRuntimeViews_ListByStandbyPool
         [NUnit.Framework.Test]
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             StandbyVirtualMachinePoolResource standbyVirtualMachinePool = client.GetStandbyVirtualMachinePoolResource(standbyVirtualMachinePoolResourceId);
 
             // get the collection of this StandbyVirtualMachinePoolRuntimeViewResource
-            StandbyVirtualMachinePoolRuntimeViewResourceCollection collection = standbyVirtualMachinePool.GetStandbyVirtualMachinePoolRuntimeViewResources();
+            StandbyVirtualMachinePoolRuntimeViewCollection collection = standbyVirtualMachinePool.GetStandbyVirtualMachinePoolRuntimeViews();
 
             // invoke the operation and iterate over the result
             await foreach (StandbyVirtualMachinePoolRuntimeViewResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                StandbyVirtualMachinePoolRuntimeViewResourceData resourceData = item.Data;
+                StandbyVirtualMachinePoolRuntimeViewData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             StandbyVirtualMachinePoolResource standbyVirtualMachinePool = client.GetStandbyVirtualMachinePoolResource(standbyVirtualMachinePoolResourceId);
 
             // get the collection of this StandbyVirtualMachinePoolRuntimeViewResource
-            StandbyVirtualMachinePoolRuntimeViewResourceCollection collection = standbyVirtualMachinePool.GetStandbyVirtualMachinePoolRuntimeViewResources();
+            StandbyVirtualMachinePoolRuntimeViewCollection collection = standbyVirtualMachinePool.GetStandbyVirtualMachinePoolRuntimeViews();
 
             // invoke the operation
             string runtimeView = "latest";
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            StandbyVirtualMachinePoolRuntimeViewResourceData resourceData = result.Data;
+            StandbyVirtualMachinePoolRuntimeViewData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             StandbyVirtualMachinePoolResource standbyVirtualMachinePool = client.GetStandbyVirtualMachinePoolResource(standbyVirtualMachinePoolResourceId);
 
             // get the collection of this StandbyVirtualMachinePoolRuntimeViewResource
-            StandbyVirtualMachinePoolRuntimeViewResourceCollection collection = standbyVirtualMachinePool.GetStandbyVirtualMachinePoolRuntimeViewResources();
+            StandbyVirtualMachinePoolRuntimeViewCollection collection = standbyVirtualMachinePool.GetStandbyVirtualMachinePoolRuntimeViews();
 
             // invoke the operation
             string runtimeView = "latest";
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             StandbyVirtualMachinePoolResource standbyVirtualMachinePool = client.GetStandbyVirtualMachinePoolResource(standbyVirtualMachinePoolResourceId);
 
             // get the collection of this StandbyVirtualMachinePoolRuntimeViewResource
-            StandbyVirtualMachinePoolRuntimeViewResourceCollection collection = standbyVirtualMachinePool.GetStandbyVirtualMachinePoolRuntimeViewResources();
+            StandbyVirtualMachinePoolRuntimeViewCollection collection = standbyVirtualMachinePool.GetStandbyVirtualMachinePoolRuntimeViews();
 
             // invoke the operation
             string runtimeView = "latest";
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                StandbyVirtualMachinePoolRuntimeViewResourceData resourceData = result.Data;
+                StandbyVirtualMachinePoolRuntimeViewData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

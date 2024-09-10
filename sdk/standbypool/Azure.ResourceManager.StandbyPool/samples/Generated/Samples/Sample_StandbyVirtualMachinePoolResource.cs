@@ -106,11 +106,10 @@ namespace Azure.ResourceManager.StandbyPool.Samples
                 Tags =
 {
 },
-                Properties = new StandbyVirtualMachinePoolResourceUpdateProperties()
+                Properties = new StandbyVirtualMachinePoolUpdateProperties()
                 {
-                    ElasticityProfile = new StandbyVirtualMachinePoolElasticityPatchProfile()
+                    ElasticityProfile = new StandbyVirtualMachinePoolElasticityProfile(304)
                     {
-                        MaxReadyCapacity = 304,
                         MinReadyCapacity = 300,
                     },
                     VirtualMachineState = StandbyVirtualMachineState.Running,

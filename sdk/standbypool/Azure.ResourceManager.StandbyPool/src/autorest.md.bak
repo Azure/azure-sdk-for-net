@@ -17,6 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  flatten-models: false
 use-model-reader-writer: true
 
 #mgmt-debug:
@@ -24,21 +25,21 @@ use-model-reader-writer: true
 
 rename-mapping:
   StandbyContainerGroupPoolResource: StandbyContainerGroupPool
+  StandbyContainerGroupPoolResourceProperties: StandbyContainerGroupPoolProperties
   StandbyVirtualMachinePoolResource: StandbyVirtualMachinePool
-  StandbyVirtualMachinePoolResource.properties.attachedVirtualMachineScaleSetId: -|arm-id
+  StandbyVirtualMachinePoolResourceProperties: StandbyVirtualMachinePoolProperties
   StandbyVirtualMachineResource: StandbyVirtualMachine
-  StandbyVirtualMachineResource.properties.virtualMachineResourceId: -|arm-id
+  StandbyVirtualMachineResourceProperties: StandbyVirtualMachineProperties
   VirtualMachineState: StandbyVirtualMachineState
   ContainerGroupProfile: StandbyContainerGroupProfile
   ContainerGroupProperties: StandbyContainerGroupProperties
-  ContainerGroupPropertiesUpdate: StandbyContainerGroupPatchProperties
-  ContainerGroupProfileUpdate: StandbyContainerGroupPatchProfile
-  StandbyContainerGroupPoolElasticityProfileUpdate: StandbyContainerGroupPoolElasticityPatchProfile
-  StandbyVirtualMachinePoolElasticityProfileUpdate: StandbyVirtualMachinePoolElasticityPatchProfile
-
-prepend-rp-prefix:
-  - ProvisioningState
-  - RefillPolicy
+  StandbyContainerGroupPoolRuntimeViewResource: StandbyContainerGroupPoolRuntimeView
+  StandbyContainerGroupPoolRuntimeViewResourceProperties: StandbyContainerGroupPoolRuntimeViewProperties
+  StandbyVirtualMachinePoolRuntimeViewResource: StandbyVirtualMachinePoolRuntimeView
+  StandbyVirtualMachinePoolRuntimeViewResourceProperties: StandbyVirtualMachinePoolRuntimeViewProperties
+  ProvisioningState: StandbyProvisioningState
+  RefillPolicy: StandbyRefillPolicy
+  VirtualMachineInstanceCountSummary: StandbyVirtualMachineInstanceCountSummary
 
 format-by-name-rules:
   'tenantId': 'uuid'
