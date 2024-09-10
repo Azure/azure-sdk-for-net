@@ -276,10 +276,11 @@ namespace Azure.ResourceManager.Resources.Tests
 
         protected static DataBoundaryData CreateDataBoundaryOptIn()
         {
+            // TODO: there is no create method for create data boundary
             var data = new DataBoundaryData();
 
-            data.dataBoundary = "EU";
-            data.provisioningState = "Created";
+            //data.dataBoundary = "EU";
+            //data.provisioningState = "Created";
 
             return data;
         }

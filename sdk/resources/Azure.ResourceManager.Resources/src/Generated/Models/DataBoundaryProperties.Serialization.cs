@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            DataBoundaryType? dataBoundary = default;
+            DataBoundaryRegion? dataBoundary = default;
             DataBoundaryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    dataBoundary = new DataBoundaryType(property.Value.GetString());
+                    dataBoundary = new DataBoundaryRegion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="dataBoundary"> The data boundary definition. </param>
         /// <param name="provisioningState"> Denotes the state of provisioning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoundaryProperties(DataBoundaryType? dataBoundary, DataBoundaryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataBoundaryProperties(DataBoundaryRegion? dataBoundary, DataBoundaryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataBoundary = dataBoundary;
             ProvisioningState = provisioningState;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The data boundary definition. </summary>
         [WirePath("dataBoundary")]
-        public DataBoundaryType? DataBoundary { get; }
+        public DataBoundaryRegion? DataBoundary { get; }
         /// <summary> Denotes the state of provisioning. </summary>
         [WirePath("provisioningState")]
         public DataBoundaryProvisioningState? ProvisioningState { get; }

@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="dataBoundary"> The data boundary definition. </param>
         /// <param name="provisioningState"> Denotes the state of provisioning. </param>
         /// <returns> A new <see cref="Models.DataBoundaryProperties"/> instance for mocking. </returns>
-        public static DataBoundaryProperties DataBoundaryProperties(DataBoundaryType? dataBoundary = null, DataBoundaryProvisioningState? provisioningState = null)
+        public static DataBoundaryProperties DataBoundaryProperties(DataBoundaryRegion? dataBoundary = null, DataBoundaryProvisioningState? provisioningState = null)
         {
             return new DataBoundaryProperties(dataBoundary, provisioningState, serializedAdditionalRawData: null);
         }
