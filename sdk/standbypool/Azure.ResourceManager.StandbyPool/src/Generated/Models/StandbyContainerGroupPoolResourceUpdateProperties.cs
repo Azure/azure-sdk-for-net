@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
         /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolResourceUpdateProperties(StandbyContainerGroupPoolElasticityPatchProfile elasticityProfile, StandbyContainerGroupPatchProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolResourceUpdateProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, ContainerGroupProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ElasticityProfile = elasticityProfile;
             ContainerGroupProperties = containerGroupProperties;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.StandbyPool.Models
         }
 
         /// <summary> Specifies elasticity profile of standby container group pools. </summary>
-        public StandbyContainerGroupPoolElasticityPatchProfile ElasticityProfile { get; set; }
+        public StandbyContainerGroupPoolElasticityProfile ElasticityProfile { get; set; }
         /// <summary> Specifies container group properties of standby container group pools. </summary>
-        public StandbyContainerGroupPatchProperties ContainerGroupProperties { get; set; }
+        public ContainerGroupProperties ContainerGroupProperties { get; set; }
     }
 }

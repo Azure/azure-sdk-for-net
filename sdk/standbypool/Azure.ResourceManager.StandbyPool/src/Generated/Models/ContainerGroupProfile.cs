@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> Specifies the elasticity profile of the standby container group pools. </summary>
-    public partial class StandbyContainerGroupPoolElasticityPatchProfile
+    /// <summary> Details of the ContainerGroupProfile. </summary>
+    public partial class ContainerGroupProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +46,35 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolElasticityPatchProfile"/>. </summary>
-        public StandbyContainerGroupPoolElasticityPatchProfile()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfile"/>. </summary>
+        /// <param name="id"> Specifies container group profile id of standby container groups. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public ContainerGroupProfile(ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
+            Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolElasticityPatchProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies maximum number of standby container groups in the standby pool. </param>
-        /// <param name="refillPolicy"> Specifies refill policy of the pool. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfile"/>. </summary>
+        /// <param name="id"> Specifies container group profile id of standby container groups. </param>
+        /// <param name="revision"> Specifies revision of container group profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolElasticityPatchProfile(long? maxReadyCapacity, StandbyPoolRefillPolicy? refillPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupProfile(ResourceIdentifier id, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MaxReadyCapacity = maxReadyCapacity;
-            RefillPolicy = refillPolicy;
+            Id = id;
+            Revision = revision;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies maximum number of standby container groups in the standby pool. </summary>
-        public long? MaxReadyCapacity { get; set; }
-        /// <summary> Specifies refill policy of the pool. </summary>
-        public StandbyPoolRefillPolicy? RefillPolicy { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfile"/> for deserialization. </summary>
+        internal ContainerGroupProfile()
+        {
+        }
+
+        /// <summary> Specifies container group profile id of standby container groups. </summary>
+        public ResourceIdentifier Id { get; set; }
+        /// <summary> Specifies revision of container group profile. </summary>
+        public long? Revision { get; set; }
     }
 }

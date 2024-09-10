@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            StandbyVirtualMachinePoolElasticityPatchProfile elasticityProfile = default;
-            StandbyVirtualMachineState? virtualMachineState = default;
+            StandbyVirtualMachinePoolElasticityProfile elasticityProfile = default;
+            VirtualMachineState? virtualMachineState = default;
             ResourceIdentifier attachedVirtualMachineScaleSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    elasticityProfile = StandbyVirtualMachinePoolElasticityPatchProfile.DeserializeStandbyVirtualMachinePoolElasticityPatchProfile(property.Value, options);
+                    elasticityProfile = StandbyVirtualMachinePoolElasticityProfile.DeserializeStandbyVirtualMachinePoolElasticityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("virtualMachineState"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    virtualMachineState = new StandbyVirtualMachineState(property.Value.GetString());
+                    virtualMachineState = new VirtualMachineState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("attachedVirtualMachineScaleSetId"u8))

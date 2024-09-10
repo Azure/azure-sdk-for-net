@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             IReadOnlyList<VirtualMachineInstanceCountSummary> instanceCountSummary = default;
-            StandbyPoolProvisioningState? provisioningState = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    provisioningState = new StandbyPoolProvisioningState(property.Value.GetString());
+                    provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

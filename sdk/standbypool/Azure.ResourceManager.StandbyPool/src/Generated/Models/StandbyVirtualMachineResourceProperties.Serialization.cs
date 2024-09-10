@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            string virtualMachineResourceId = default;
-            StandbyPoolProvisioningState? provisioningState = default;
+            ResourceIdentifier virtualMachineResourceId = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachineResourceId"u8))
                 {
-                    virtualMachineResourceId = property.Value.GetString();
+                    virtualMachineResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    provisioningState = new StandbyPoolProvisioningState(property.Value.GetString());
+                    provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

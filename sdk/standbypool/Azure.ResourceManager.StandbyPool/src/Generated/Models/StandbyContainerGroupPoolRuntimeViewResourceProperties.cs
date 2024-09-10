@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewResourceProperties"/>. </summary>
         /// <param name="instanceCountSummary"> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </param>
-        public StandbyContainerGroupPoolRuntimeViewResourceProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary)
+        internal StandbyContainerGroupPoolRuntimeViewResourceProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary)
         {
             InstanceCountSummary = instanceCountSummary.ToList();
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="instanceCountSummary"> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </param>
         /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolRuntimeViewResourceProperties(IReadOnlyList<ContainerGroupInstanceCountSummary> instanceCountSummary, StandbyPoolProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolRuntimeViewResourceProperties(IReadOnlyList<ContainerGroupInstanceCountSummary> instanceCountSummary, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceCountSummary = instanceCountSummary;
             ProvisioningState = provisioningState;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </summary>
         public IReadOnlyList<ContainerGroupInstanceCountSummary> InstanceCountSummary { get; }
         /// <summary> Displays the provisioning state of the standby pool. </summary>
-        public StandbyPoolProvisioningState? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

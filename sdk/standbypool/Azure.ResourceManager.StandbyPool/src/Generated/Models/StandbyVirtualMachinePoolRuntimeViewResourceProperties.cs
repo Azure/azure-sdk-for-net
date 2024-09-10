@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// Note: any updates to pool resources outside of StandbyPoolRP (i.e deleting a VM through portal) are not reflected here.
         /// Note: any resources in the Running state may still be installing extensions / not fully provisioned.
         /// </param>
-        public StandbyVirtualMachinePoolRuntimeViewResourceProperties(IEnumerable<VirtualMachineInstanceCountSummary> instanceCountSummary)
+        internal StandbyVirtualMachinePoolRuntimeViewResourceProperties(IEnumerable<VirtualMachineInstanceCountSummary> instanceCountSummary)
         {
             InstanceCountSummary = instanceCountSummary.ToList();
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </param>
         /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolRuntimeViewResourceProperties(IReadOnlyList<VirtualMachineInstanceCountSummary> instanceCountSummary, StandbyPoolProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachinePoolRuntimeViewResourceProperties(IReadOnlyList<VirtualMachineInstanceCountSummary> instanceCountSummary, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceCountSummary = instanceCountSummary;
             ProvisioningState = provisioningState;
@@ -87,6 +87,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         public IReadOnlyList<VirtualMachineInstanceCountSummary> InstanceCountSummary { get; }
         /// <summary> Displays the provisioning state of the standby pool. </summary>
-        public StandbyPoolProvisioningState? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

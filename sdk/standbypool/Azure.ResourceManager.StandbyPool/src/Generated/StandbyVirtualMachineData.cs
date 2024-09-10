@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StandbyPool
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineData"/>. </summary>
-        public StandbyVirtualMachineData()
+        internal StandbyVirtualMachineData()
         {
         }
 
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.StandbyPool
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public StandbyVirtualMachineResourceProperties Properties { get; set; }
+        public StandbyVirtualMachineResourceProperties Properties { get; }
     }
 }

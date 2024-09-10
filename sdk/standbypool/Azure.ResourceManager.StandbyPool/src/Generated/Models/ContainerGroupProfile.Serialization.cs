@@ -13,24 +13,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    public partial class StandbyContainerGroupPatchProfile : IUtf8JsonSerializable, IJsonModel<StandbyContainerGroupPatchProfile>
+    public partial class ContainerGroupProfile : IUtf8JsonSerializable, IJsonModel<ContainerGroupProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPatchProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StandbyContainerGroupPatchProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerGroupProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPatchProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyContainerGroupPatchProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
@@ -54,19 +51,19 @@ namespace Azure.ResourceManager.StandbyPool.Models
             writer.WriteEndObject();
         }
 
-        StandbyContainerGroupPatchProfile IJsonModel<StandbyContainerGroupPatchProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerGroupProfile IJsonModel<ContainerGroupProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPatchProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandbyContainerGroupPatchProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStandbyContainerGroupPatchProfile(document.RootElement, options);
+            return DeserializeContainerGroupProfile(document.RootElement, options);
         }
 
-        internal static StandbyContainerGroupPatchProfile DeserializeStandbyContainerGroupPatchProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerGroupProfile DeserializeContainerGroupProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,10 +79,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
@@ -104,38 +97,38 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StandbyContainerGroupPatchProfile(id, revision, serializedAdditionalRawData);
+            return new ContainerGroupProfile(id, revision, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StandbyContainerGroupPatchProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerGroupProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPatchProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPatchProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StandbyContainerGroupPatchProfile IPersistableModel<StandbyContainerGroupPatchProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerGroupProfile IPersistableModel<ContainerGroupProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPatchProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeStandbyContainerGroupPatchProfile(document.RootElement, options);
+                        return DeserializeContainerGroupProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPatchProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StandbyContainerGroupPatchProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerGroupProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

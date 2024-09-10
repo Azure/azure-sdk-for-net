@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResourceProperties"/>. </summary>
         /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineResourceId"/> is null. </exception>
-        public StandbyVirtualMachineResourceProperties(string virtualMachineResourceId)
+        internal StandbyVirtualMachineResourceProperties(ResourceIdentifier virtualMachineResourceId)
         {
             Argument.AssertNotNull(virtualMachineResourceId, nameof(virtualMachineResourceId));
 
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachineResourceProperties(string virtualMachineResourceId, StandbyPoolProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachineResourceProperties(ResourceIdentifier virtualMachineResourceId, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualMachineResourceId = virtualMachineResourceId;
             ProvisioningState = provisioningState;
@@ -72,8 +73,8 @@ namespace Azure.ResourceManager.StandbyPool.Models
         }
 
         /// <summary> Resource id of the virtual machine. </summary>
-        public string VirtualMachineResourceId { get; set; }
+        public ResourceIdentifier VirtualMachineResourceId { get; }
         /// <summary> The status of the last operation. </summary>
-        public StandbyPoolProvisioningState? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolRuntimeViews_ListByStandbyPool</description>
+        /// <description>StandbyVirtualMachinePoolRuntimeViewResource_ListByStandbyPool</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolRuntimeViews_ListByStandbyPool</description>
+        /// <description>StandbyVirtualMachinePoolRuntimeViewResource_ListByStandbyPool</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

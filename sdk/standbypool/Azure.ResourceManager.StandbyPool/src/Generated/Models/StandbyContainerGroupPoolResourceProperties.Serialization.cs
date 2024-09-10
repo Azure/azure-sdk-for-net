@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             StandbyContainerGroupPoolElasticityProfile elasticityProfile = default;
-            StandbyContainerGroupProperties containerGroupProperties = default;
-            StandbyPoolProvisioningState? provisioningState = default;
+            ContainerGroupProperties containerGroupProperties = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
                 if (property.NameEquals("containerGroupProperties"u8))
                 {
-                    containerGroupProperties = StandbyContainerGroupProperties.DeserializeStandbyContainerGroupProperties(property.Value, options);
+                    containerGroupProperties = ContainerGroupProperties.DeserializeContainerGroupProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    provisioningState = new StandbyPoolProvisioningState(property.Value.GetString());
+                    provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

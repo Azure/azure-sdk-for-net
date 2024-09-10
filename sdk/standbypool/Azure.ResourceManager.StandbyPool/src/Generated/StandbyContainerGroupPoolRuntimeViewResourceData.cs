@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StandbyPool
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewResourceData"/>. </summary>
-        public StandbyContainerGroupPoolRuntimeViewResourceData()
+        internal StandbyContainerGroupPoolRuntimeViewResourceData()
         {
         }
 
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.StandbyPool
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public StandbyContainerGroupPoolRuntimeViewResourceProperties Properties { get; set; }
+        public StandbyContainerGroupPoolRuntimeViewResourceProperties Properties { get; }
     }
 }

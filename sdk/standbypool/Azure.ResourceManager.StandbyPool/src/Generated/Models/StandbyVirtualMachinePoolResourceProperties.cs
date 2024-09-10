@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolResourceProperties"/>. </summary>
         /// <param name="virtualMachineState"> Specifies the desired state of virtual machines in the pool. </param>
-        public StandbyVirtualMachinePoolResourceProperties(StandbyVirtualMachineState virtualMachineState)
+        public StandbyVirtualMachinePoolResourceProperties(VirtualMachineState virtualMachineState)
         {
             VirtualMachineState = virtualMachineState;
         }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="attachedVirtualMachineScaleSetId"> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolResourceProperties(StandbyVirtualMachinePoolElasticityProfile elasticityProfile, StandbyVirtualMachineState virtualMachineState, ResourceIdentifier attachedVirtualMachineScaleSetId, StandbyPoolProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachinePoolResourceProperties(StandbyVirtualMachinePoolElasticityProfile elasticityProfile, VirtualMachineState virtualMachineState, ResourceIdentifier attachedVirtualMachineScaleSetId, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ElasticityProfile = elasticityProfile;
             VirtualMachineState = virtualMachineState;
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> Specifies the elasticity profile of the standby virtual machine pools. </summary>
         public StandbyVirtualMachinePoolElasticityProfile ElasticityProfile { get; set; }
         /// <summary> Specifies the desired state of virtual machines in the pool. </summary>
-        public StandbyVirtualMachineState VirtualMachineState { get; set; }
+        public VirtualMachineState VirtualMachineState { get; set; }
         /// <summary> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </summary>
         public ResourceIdentifier AttachedVirtualMachineScaleSetId { get; set; }
         /// <summary> The status of the last operation. </summary>
-        public StandbyPoolProvisioningState? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            StandbyContainerGroupPoolElasticityPatchProfile elasticityProfile = default;
-            StandbyContainerGroupPatchProperties containerGroupProperties = default;
+            StandbyContainerGroupPoolElasticityProfile elasticityProfile = default;
+            ContainerGroupProperties containerGroupProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    elasticityProfile = StandbyContainerGroupPoolElasticityPatchProfile.DeserializeStandbyContainerGroupPoolElasticityPatchProfile(property.Value, options);
+                    elasticityProfile = StandbyContainerGroupPoolElasticityProfile.DeserializeStandbyContainerGroupPoolElasticityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("containerGroupProperties"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    containerGroupProperties = StandbyContainerGroupPatchProperties.DeserializeStandbyContainerGroupPatchProperties(property.Value, options);
+                    containerGroupProperties = ContainerGroupProperties.DeserializeContainerGroupProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
