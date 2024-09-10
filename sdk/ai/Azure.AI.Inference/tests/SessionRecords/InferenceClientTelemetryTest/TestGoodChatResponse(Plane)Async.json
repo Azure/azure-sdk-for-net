@@ -1,0 +1,127 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://int.api.azureml-test.ms/nexus/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "Content-Length": "209",
+        "Content-Type": "application/json",
+        "extra-parameters": "pass-through",
+        "traceparent": "00-cae711faa2faa083fbda83a7280d8b71-a280b93a8803dd92-01",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240909.1 (.NET Framework 4.8.9261.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "What is the capital of France?",
+            "role": "user"
+          }
+        ],
+        "max_tokens": 10,
+        "temperature": 1,
+        "model": "gpt-4o",
+        "top_p": 0.90000000000000002
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "599dc023-8665-49f7-affd-9b6faa66033d",
+        "azureml-model-session": "d119-20240903080628",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Tue, 10 Sep 2024 00:31:14 GMT",
+        "request-context": "appId=",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "Vary": "Accept-Encoding",
+        "x-aml-cluster": "int-02",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "279",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "x-ms-region": "East US",
+        "x-ratelimit-remaining-requests": "29",
+        "x-ratelimit-remaining-tokens": "29974",
+        "X-Request-ID": "30f6bfc3-cc26-44f6-a956-9fcf935168f3",
+        "x-request-time": "0.994"
+      },
+      "ResponseBody": {
+        "choices": [
+          {
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            },
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "The capital of France is Paris.",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1725928274,
+        "id": "chatcmpl-A5j4kGrUFg1Uh4UOggMXseJrJjOCp",
+        "model": "gpt-4o-2024-05-13",
+        "object": "chat.completion",
+        "prompt_filter_results": [
+          {
+            "prompt_index": 0,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
+        "system_fingerprint": "fp_80a1bad4c7",
+        "usage": {
+          "completion_tokens": 7,
+          "prompt_tokens": 24,
+          "total_tokens": 31
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZUREAI_GITHUB_TOKEN": "Sanitized",
+    "AZUREAI_GITHUB_URL": "https://int.api.azureml-test.ms/nexus",
+    "RandomSeed": "1251389377"
+  }
+}

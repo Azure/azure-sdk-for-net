@@ -1,0 +1,61 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://int.api.azureml-test.ms/nexus/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "Content-Length": "239",
+        "Content-Type": "application/json",
+        "extra-parameters": "pass-through",
+        "traceparent": "00-1df854f30f168887bd2743716ad287ba-d0a1aa4caf1898c4-01",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240909.1 (.NET Framework 4.8.9261.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "What is the capital of France?",
+            "role": "user"
+          }
+        ],
+        "max_tokens": 10,
+        "temperature": 1,
+        "model": "6b6b217e-6ed3-11ef-9135-8c1645fec84b",
+        "top_p": 0.90000000000000002
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 10 Sep 2024 05:15:36 GMT",
+        "request-context": "appId=",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-aml-cluster": "int-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-error-code": "unknown_model",
+        "x-request-time": "0.309"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "unknown_model",
+          "message": "Unknown model: 6b6b217e-6ed3-11ef-9135-8c1645fec84b",
+          "details": null
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZUREAI_GITHUB_TOKEN": "Sanitized",
+    "AZUREAI_GITHUB_URL": "https://int.api.azureml-test.ms/nexus",
+    "RandomSeed": "91467945"
+  }
+}

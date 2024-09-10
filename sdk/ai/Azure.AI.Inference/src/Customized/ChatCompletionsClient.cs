@@ -58,6 +58,7 @@ namespace Azure.AI.Inference
             catch (Exception ex)
             {
                 otel.RecordError(ex);
+                throw;
             }
             return Response.FromValue(ChatCompletions.FromResponse(response), response);
         }
@@ -167,6 +168,10 @@ namespace Azure.AI.Inference
                 scope.Failed(e);
                 throw;
             }
+            finally
+            {
+                otel.Dispose();
+            }
         }
 
         /// <summary>
@@ -223,6 +228,10 @@ namespace Azure.AI.Inference
                 otel.Dispose();
                 scope.Failed(e);
                 throw;
+            }
+            finally
+            {
+                otel.Dispose();
             }
         }
 
