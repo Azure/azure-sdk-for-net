@@ -20,44 +20,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<KeyVaultContractProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultContractProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultContractProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(LastStatus))
             {
                 writer.WritePropertyName("lastStatus"u8);
                 writer.WriteObjectValue(LastStatus, options);
             }
-            if (Optional.IsDefined(SecretIdentifier))
-            {
-                writer.WritePropertyName("secretIdentifier"u8);
-                writer.WriteStringValue(SecretIdentifier);
-            }
-            if (Optional.IsDefined(IdentityClientId))
-            {
-                writer.WritePropertyName("identityClientId"u8);
-                writer.WriteStringValue(IdentityClientId);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         KeyVaultContractProperties IJsonModel<KeyVaultContractProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
