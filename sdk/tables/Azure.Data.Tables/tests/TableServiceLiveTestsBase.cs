@@ -22,7 +22,7 @@ namespace Azure.Data.Tables.Tests
     /// </remarks>
     [ClientTestFixture(
         serviceVersions: default,
-        additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
+        additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD, TableEndpointType.CosmosTableAAD })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
         public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode? recordedTestMode = default, bool enableTenantDiscovery = false) : base(isAsync, recordedTestMode)
@@ -88,8 +88,11 @@ namespace Azure.Data.Tables.Tests
         public async Task TablesTestSetup()
         {
             // Bail out before attempting the setup if this test is in the CosmosIgnoreTests set.
-            if (_endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason) ||
-                _endpointType == TableEndpointType.StorageAAD && _AadIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out ignoreReason))
+            if (
+                _endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason) ||
+                _endpointType == TableEndpointType.CosmosTableAAD && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out ignoreReason) ||
+                _endpointType == TableEndpointType.StorageAAD && _AadIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out ignoreReason) ||
+                _endpointType == TableEndpointType.CosmosTableAAD && _AadIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out ignoreReason))
             {
                 Assert.Ignore(ignoreReason);
             }
@@ -97,18 +100,21 @@ namespace Azure.Data.Tables.Tests
             ServiceUri = _endpointType switch
             {
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosUri,
+                TableEndpointType.CosmosTableAAD => TestEnvironment.CosmosUri,
                 _ => TestEnvironment.StorageUri,
             };
 
             AccountName = _endpointType switch
             {
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosAccountName,
+                TableEndpointType.CosmosTableAAD => TestEnvironment.CosmosAccountName,
                 _ => TestEnvironment.StorageAccountName,
             };
 
             AccountKey = _endpointType switch
             {
                 TableEndpointType.CosmosTable => TestEnvironment.PrimaryCosmosAccountKey,
+                TableEndpointType.CosmosTableAAD => TestEnvironment.PrimaryCosmosAccountKey,
                 _ => TestEnvironment.PrimaryStorageAccountKey,
             };
 
@@ -135,6 +141,11 @@ namespace Azure.Data.Tables.Tests
             return _endpointType switch
             {
                 TableEndpointType.StorageAAD => InstrumentClient(
+                    new TableServiceClient(
+                        new Uri(serviceUri),
+                        TestEnvironment.Credential,
+                        options)),
+                TableEndpointType.CosmosTableAAD => InstrumentClient(
                     new TableServiceClient(
                         new Uri(serviceUri),
                         TestEnvironment.Credential,
