@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-Private 
+## 1.7.0-Private (2024-09-20)
 
 ### Features Added
 - Features updated for metadata security protocol.
