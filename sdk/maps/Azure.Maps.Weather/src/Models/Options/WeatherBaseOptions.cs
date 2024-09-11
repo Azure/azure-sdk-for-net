@@ -10,7 +10,7 @@ namespace Azure.Maps.Weather.Models.Options
     {
         /// <summary> Specifies the coordinates. </summary>
         public GeoPosition Coordinates { get; set; }
-        /// <summary> Specifies the language code in which the timezone names should be returned. Please refer to <see href="https://docs.microsoft.com/azure/azure-maps/supported-languages">Supported Languages</see> </summary>
+        /// <summary> Specifies the language code in which search results should be returned. Please refer to <see href="https://docs.microsoft.com/azure/azure-maps/supported-languages">Supported Languages</see> </summary>
         public WeatherLanguage Language { get; set; }
     }
 }

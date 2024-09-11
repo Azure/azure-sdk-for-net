@@ -1,4 +1,4 @@
-using Azure.Maps.TimeZone;
+using Azure.Maps.Weather;
 
 
 ## Examples
