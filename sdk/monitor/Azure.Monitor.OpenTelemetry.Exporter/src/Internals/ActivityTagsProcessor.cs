@@ -46,6 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeNetPeerPort,
             SemanticConventions.AttributeNetHostPort,
             SemanticConventions.AttributeNetHostName,
+            "otel.status_code",
 
             // required - Messaging
             SemanticConventions.AttributeMessagingSystem,
