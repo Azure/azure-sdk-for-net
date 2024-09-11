@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Internal;
 
@@ -16,12 +17,12 @@ internal class LoggingHandler
     private readonly ClientModelLogMessages _logMessages;
     private readonly bool _useILogger;
 
-    public LoggingHandler(bool useILogger, ILogger logger, PipelineMessageSanitizer sanitizer)
+    public LoggingHandler(ILogger logger, PipelineMessageSanitizer sanitizer)
     {
         _logger = logger;
         _sanitizer = sanitizer;
         _logMessages = new ClientModelLogMessages(logger);
-        _useILogger = useILogger;
+        _useILogger = logger is not NullLogger;
     }
 
     public void LogRequest(PipelineRequest request, string requestId, string? assemblyName)

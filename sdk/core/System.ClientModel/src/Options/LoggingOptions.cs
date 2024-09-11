@@ -54,6 +54,9 @@ public class LoggingOptions
     /// Gets or sets the implementation of <see cref="ILoggerFactory"/> to use to
     /// create <see cref="ILogger"/> instances for logging.
     /// </summary>
+    /// <remarks>If an ILoggerFactory is not provided, logs will be written to Event Source
+    /// instead. If an ILoggerFactory is provided, logs will be written to ILogger only and not
+    /// Event Source.</remarks>
     /// <value>Defaults to <see cref="NullLoggerFactory"/>.</value>
     public ILoggerFactory LoggerFactory
     {
