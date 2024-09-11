@@ -183,7 +183,7 @@ namespace Azure.Maps.Weather
         public static WeatherLanguage Russian { get; } = new WeatherLanguage(RussianValue);
         /// <summary> Return Slovak ("sk-SK"). </summary>
         public static WeatherLanguage Slovak { get; } = new WeatherLanguage(SlovakValue);
-        /// <summary> Return Slovenian ("sl-SI"). </summary>
+        /// <summary> Return Slovenian ("sl-SL"). </summary>
         public static WeatherLanguage Slovenian { get; } = new WeatherLanguage(SlovenianValue);
         /// <summary> Return Serbian (Cyrillic) ("sr-Cyrl-RS"). </summary>
         public static WeatherLanguage SerbianCyrillic { get; } = new WeatherLanguage(SerbianCyrillicValue);
