@@ -51,4 +51,4 @@ And you can upload one manually:
 
 ## Package Release
 
-See [Release Checklist](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/8/Release-Checklist?anchor=prepare-release-script).
+See [Release Checklist](https://aka.ms/azsdk/release-checklist).
