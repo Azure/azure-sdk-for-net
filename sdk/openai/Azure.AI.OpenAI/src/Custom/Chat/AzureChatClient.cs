@@ -36,20 +36,4 @@ internal partial class AzureChatClient : ChatClient
 
     protected AzureChatClient()
     { }
-
-    /// <inheritdoc/>
-    public override AsyncCollectionResult<StreamingChatCompletionUpdate> CompleteChatStreamingAsync(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
-    {
-        options ??= new();
-        options.StreamOptions = null;
-        return base.CompleteChatStreamingAsync(messages, options, cancellationToken);
-    }
-
-    /// <inheritdoc/>
-    public override CollectionResult<StreamingChatCompletionUpdate> CompleteChatStreaming(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
-    {
-        options ??= new();
-        options.StreamOptions = null;
-        return base.CompleteChatStreaming(messages, options, cancellationToken);
-    }
 }
