@@ -907,6 +907,14 @@
       ]
     },
     {
+      "filename": "**/sdk/maps/Azure.Maps.Weather/**/*.cs",
+      "words": [
+        "Actuals",
+        "Bangla",
+        "Hecto"
+      ]
+    },
+    {
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
         "cabac",
