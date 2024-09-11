@@ -1,8 +1,8 @@
-# Azure Maps TimeZone client library for .NET
+# Azure Maps Weather client library for .NET
 
-Azure Maps TimeZone is a library which contains Azure Maps TimeZone APIs.
+Azure Maps Weather is a library which contains Azure Maps Weather APIs.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZone/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/timezone) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Weather/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/weather) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
 
 ## Getting started
 
@@ -11,7 +11,7 @@ Azure Maps TimeZone is a library which contains Azure Maps TimeZone APIs.
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Maps.TimeZone --prerelease
+dotnet add package Azure.Maps.Weather --prerelease
 ```
 
 ### Prerequisites
@@ -33,25 +33,25 @@ There are 3  ways to authenticate the client: Shared key authentication, Microso
 * Go to Azure Maps account > Authentication tab
 * Copy `Primary Key` or `Secondary Key` under **Shared Key authentication** section
 
-```C# Snippet:InstantiateTimeZoneClientViaSubscriptionKey
+```C# Snippet:InstantiateWeatherClientViaSubscriptionKey
 // Create a SearchClient that will authenticate through Subscription Key (Shared key)
 AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
-MapsTimeZoneClient client = new MapsTimeZoneClient(credential);
+MapsWeatherClient client = new MapsWeatherClient(credential);
 ```
 
 #### Microsoft Entra authentication
 
-In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsTimeZoneClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Microsoft Entra support for authenticating Azure SDK clients with their corresponding Azure services.
+In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsWeatherClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Microsoft Entra support for authenticating Azure SDK clients with their corresponding Azure services.
 
-To use Microsoft Entra authentication, the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsTimeZoneClient`.
+To use Microsoft Entra authentication, the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsWeatherClient`.
 
 We also need an **Azure Maps Client ID** which can be found on the Azure Maps page > Authentication tab > "Client ID" in Microsoft Entra Authentication section.
 
-```C# Snippet:InstantiateTimeZoneClientViaMicrosoftEntra
-// Create a MapsTimeZoneClient that will authenticate through MicrosoftEntra
+```C# Snippet:InstantiateWeatherClientViaMicrosoftEntra
+// Create a MapsWeatherClient that will authenticate through MicrosoftEntra
 DefaultAzureCredential credential = new DefaultAzureCredential();
 string clientId = "<My Map Account Client Id>";
-MapsTimeZoneClient client = new MapsTimeZoneClient(credential, clientId);
+MapsWeatherClient client = new MapsWeatherClient(credential, clientId);
 ```
 
 #### Shared Access Signature (SAS) Authentication
@@ -66,9 +66,9 @@ dotnet add package Azure.ResourceManager.Maps --prerelease
 ```
 
 
-And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsTimeZoneClient`. In the follow code sample, we fetch a specific maps account resource, and create a SAS token for 1 day expiry time when the code is executed.
+And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsWeatherClient`. In the follow code sample, we fetch a specific maps account resource, and create a SAS token for 1 day expiry time when the code is executed.
 
-```C# Snippet:InstantiateTimeZoneClientViaSas
+```C# Snippet:InstantiateWeatherClientViaSas
 // Get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
 TokenCredential cred = new DefaultAzureCredential();
 // Authenticate your client
@@ -95,9 +95,9 @@ string expiry = now.AddDays(1).ToString("O");
 MapsAccountSasContent sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, start, expiry);
 Response<MapsAccountSasToken> sas = mapsAccount.GetSas(sasContent);
 
-// Create a TimeZoneClient that will authenticate via SAS token
+// Create a WeatherClient that will authenticate via SAS token
 AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
-MapsTimeZoneClient client = new MapsTimeZoneClient(sasCredential);
+MapsWeatherClient client = new MapsWeatherClient(sasCredential);
 ```
 
 ## Key concepts
@@ -119,57 +119,204 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZone/samples). 
+You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Weather/samples). 
 
-### Get TimeZone By ID
+### Get Air Quality Daily Forecasts
 
-```C# Snippet:GetTimeZoneById
-TimeZoneBaseOptions options = new TimeZoneBaseOptions();
-options.Options = TimeZoneOptions.All;
-Response<TimeZoneInformation> response = client.GetTimeZoneByID("Asia/Bahrain", options);
-Console.WriteLine("Version: " + response.Value.Version);
-Console.WriteLine("Countires: " + response.Value.TimeZones[0].Countries);
+```C# Snippet:GetAirQualityDailyForecasts
+var options = new GetAirQualityDailyForecastsOptions()
+{
+    Coordinates = new GeoPosition(121.5640089, 25.0338053),
+    Language = WeatherLanguage.EnglishUsa
+};
+var response = client.GetAirQualityDailyForecasts(options);
+Console.WriteLine(response);
 ```
+### Get Air Quality Hourly Forecasts
 
-### Get TimeZone By Coordinates
-
-```C# Snippet:GetTimeZoneByCoordinates
-TimeZoneBaseOptions options = new TimeZoneBaseOptions();
-options.Options = TimeZoneOptions.All;
-GeoPosition coordinates = new GeoPosition(121.5640089, 25.0338053);
-Response<TimeZoneInformation> response =  client.GetTimeZoneByCoordinates(coordinates, options);
-Console.WriteLine("Names: " + response.Value.TimeZones[0].Names);
+```C# Snippet:GetAirQualityHourlyForecasts
+var options = new GetAirQualityHourlyForecastsOptions()
+{
+    Coordinates = new GeoPosition(121.5640089, 25.0338053),
+    Language = WeatherLanguage.EnglishUsa
+};
+var response = client.GetAirQualityHourlyForecasts(options);
+Console.WriteLine(response);
 ```
+### Get Current Air Quality
 
-### Get Windows TimeZone Ids
-
-```C# Snippet:GetWindowsTimeZoneIds
-Response<IReadOnlyList<TimeZoneWindows>> response = client.GetWindowsTimeZoneIds();
-Console.WriteLine("Count: " + response.Value.Count);
-Console.WriteLine("WindowsId: " + response.Value[0].WindowsId);
-Console.WriteLine("Territory: " + response.Value[0].Territory);
+```C# Snippet:GetCurrentAirQuality
+var options = new GetCurrentAirQualityOptions()
+{
+    Coordinates = new GeoPosition(121.5640089, 25.0338053),
+    Language = WeatherLanguage.EnglishUsa
+};
+var response = client.GetCurrentAirQuality(options);
+Console.WriteLine(response);
 ```
+### Get Current Conditions
 
-### Get Iana TimeZone Ids
-
-```C# Snippet:GetIanaTimeZoneIds
-Response<IReadOnlyList<IanaId>> response = client.GetIanaTimeZoneIds();
-Console.WriteLine("IsAlias: " + response.Value[0].IsAlias);
-Console.WriteLine("Id: " + response.Value[0].Id);
+```C# Snippet:GetCurrentConditions
+var options = new GetCurrentConditionsOptions()
+{
+    Coordinates = new GeoPosition(121.5640089, 25.0338053),
+    Language = WeatherLanguage.EnglishUsa
+};
+var response = client.GetCurrentConditions(options);
+Console.WriteLine(response);
 ```
+### Get Daily Forecast
 
-### Get Iana Version
-
-```C# Snippet:GetIanaVersion
-Response<TimeZoneIanaVersionResult> response = client.GetIanaVersion();
-Console.WriteLine("Version: " + response.Value.Version);
+```C# Snippet:GetDailyForecast
+var options = new GetDailyForecastOptions()
+{
+    Coordinates = new GeoPosition(121.5640089, 25.0338053),
+    Language = WeatherLanguage.EnglishUsa
+};
+var response = client.GetDailyForecast(options);
+Console.WriteLine(response);
 ```
+### Get Daily Historical Actuals
 
-### Convert Windows TimeZone To Iana
+```C# Snippet:GetDailyHistoricalActuals
+var options = new GetDailyHistoricalActualsOptions()
+{
+    Coordinates = new GeoPosition(-73.961968, 40.760139),
+    StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
+    EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
+};
+var response = client.GetDailyHistoricalActuals(options);
+Console.WriteLine(response);
+```
+### Get Daily Historical Normals
 
-```C# Snippet:ConvertWindowsTimeZoneToIana
-Response<IReadOnlyList<IanaId>> response = client.ConvertWindowsTimeZoneToIana("Dateline Standard Time");
-Console.WriteLine("Id: " + response.Value[0].Id);
+```C# Snippet:GetDailyHistoricalNormals
+var options = new GetDailyHistoricalNormalsOptions()
+{
+    Coordinates = new GeoPosition(-73.961968, 40.760139),
+    StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
+    EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
+};
+var response = client.GetDailyHistoricalNormals(options);
+Console.WriteLine(response);
+```
+### Get Daily Historical Records
+
+```C# Snippet:GetDailyHistoricalRecords
+var options = new GetDailyHistoricalRecordsOptions()
+{
+    Coordinates = new GeoPosition(-73.961968, 40.760139),
+    StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
+    EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
+};
+var response = client.GetDailyHistoricalRecords(options);
+Console.WriteLine(response);
+```
+### Get Daily Indices
+
+```C# Snippet:GetDailyIndices
+var options = new GetDailyIndicesOptions()
+{
+    Coordinates = new GeoPosition(121.5640089, 25.0338053),
+    Language = WeatherLanguage.EnglishUsa
+};
+var response = client.GetDailyIndices(options);
+Console.WriteLine(response);
+```
+### Get Hourly Forecast
+
+```C# Snippet:GetHourlyForecast
+var options = new GetHourlyForecastOptions()
+{
+    Coordinates = new GeoPosition(121.5640089, 25.0338053),
+    Language = WeatherLanguage.EnglishUsa
+};
+var response = client.GetHourlyForecast(options);
+Console.WriteLine(response);
+```
+### Get Minute Forecast
+
+```C# Snippet:GetMinuteForecast
+var options = new GetMinuteForecastOptions()
+{
+    Coordinates = new GeoPosition(121.5640089, 25.0338053),
+    Language = WeatherLanguage.EnglishUsa
+};
+var response = client.GetMinuteForecast(options);
+Console.WriteLine(response);
+```
+### Get Quarter Day Forecast
+
+```C# Snippet:GetQuarterDayForecast
+var options = new GetQuarterDayForecastOptions()
+{
+    Coordinates = new GeoPosition(121.5640089, 25.0338053),
+    Language = WeatherLanguage.EnglishUsa
+};
+var response = client.GetQuarterDayForecast(options);
+Console.WriteLine(response);
+```
+### Get Severe Weather Alerts
+
+```C# Snippet:GetSevereWeatherAlerts
+var options = new GetSevereWeatherAlertsOptions()
+{
+    Coordinates = new GeoPosition(121.5640089, 25.0338053),
+    Language = WeatherLanguage.EnglishUsa
+};
+var response = client.GetSevereWeatherAlerts(options);
+Console.WriteLine(response);
+```
+### Get Tropical Storm Active
+
+```C# Snippet:GetTropicalStormActive
+var response = client.GetTropicalStormActive();
+Console.WriteLine(response);
+```
+### Get Tropical Storm Forecast
+
+```C# Snippet:GetTropicalStormForecast
+var options = new GetTropicalStormForecastOptions()
+{
+    Year = 2021,
+    BasinId = "NP",
+    GovernmentStormId = 2
+};
+var response = client.GetTropicalStormForecast(options);
+Console.WriteLine(response);
+```
+### Get Tropical Storm Locations
+
+```C# Snippet:GetTropicalStormLocations
+var options = new GetTropicalStormLocationsOptions()
+{
+    Year = 2021,
+    BasinId = "NP",
+    GovernmentStormId = 2
+};
+var response = client.GetTropicalStormLocations(options);
+Console.WriteLine(response);
+```
+### Get Tropical Storm Search
+
+```C# Snippet:GetTropicalStormSearch
+var options = new GetTropicalStormSearchOptions()
+{
+    Year = 2021,
+    BasinId = "NP",
+    GovernmentStormId = 2
+};
+var response = client.GetTropicalStormSearch(options);
+Console.WriteLine(response);
+```
+### Get Weather Along Route
+
+```C# Snippet:GetWeatherAlongRoute
+var response = client.GetWeatherAlongRoute(
+    "25.033075,121.525694,0:25.0338053,121.5640089,2",
+    WeatherLanguage.EnglishUsa
+);
+Console.WriteLine(response);
 ```
 
 
@@ -177,14 +324,14 @@ Console.WriteLine("Id: " + response.Value[0].Id);
 
 ### General
 
-When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://docs.microsoft.com/rest/api/maps/timezone).
+When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://docs.microsoft.com/rest/api/maps/weather).
 
-For example, if you search with an invalid coordinate, a error is returned, indicating "Bad Request".400
+For example, if you search with an invalid coordinate, an error is returned, indicating "Bad Request".400
 
 
 ## Next steps
 
-* For more context and additional scenarios, please see: [detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZone/samples)
+* For more context and additional scenarios, please see: [detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Weather/samples)
 
 ## Contributing
 
@@ -196,4 +343,4 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact <opencode@microsoft.com> with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.TimeZone/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.Weather/README.png)

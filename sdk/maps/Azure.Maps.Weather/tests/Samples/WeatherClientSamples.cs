@@ -332,6 +332,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetTropicalStormActive
             var response = client.GetTropicalStormActive();
+            Console.WriteLine(response);
             #endregion
         }
 
@@ -408,7 +409,7 @@ namespace Azure.Maps.Weather.Tests.Samples
                 "25.033075,121.525694,0:25.0338053,121.5640089,2",
                 WeatherLanguage.EnglishUsa
             );
-            response.ToString();
+            Console.WriteLine(response);
             #endregion
         }
     }
