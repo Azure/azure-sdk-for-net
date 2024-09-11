@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
-            activity.SetStatus(Status.Ok);
+            activity.SetStatus(Status.Ok); // this should be omitted from telemetry.
             activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpRoute, "/search");
             activity.SetTag(SemanticConventions.AttributeUrlScheme, "https");
@@ -53,9 +53,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
             Assert.False(requestData.Success);
             Assert.Null(requestData.Source);
-            Assert.Equal(2, requestData.Properties.Count);
+            Assert.Equal(1, requestData.Properties.Count);
             Assert.Equal("bar", requestData.Properties["foo"]);
-            Assert.Equal("OK", requestData.Properties["otel.status_code"]);
             Assert.True(requestData.Measurements.Count == 0);
         }
 
@@ -237,7 +236,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             activity.Stop();
 
-            activity.SetStatus(Status.Ok);
+            activity.SetStatus(Status.Ok); // this should be omitted from telemetry.
             activity.SetTag(SemanticConventions.AttributeMessagingSystem, "servicebus");
             activity.SetTag(SemanticConventions.AttributeServerAddress, "my.servicebus.windows.net");
             activity.SetTag(SemanticConventions.AttributeMessagingDestinationName, "queueName");
@@ -255,9 +254,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
             Assert.True(requestData.Success);
             Assert.Equal("my.servicebus.windows.net/queueName", requestData.Source);
-            Assert.Equal(2, requestData.Properties.Count);
+            Assert.Equal(1, requestData.Properties.Count);
             Assert.Equal("bar", requestData.Properties["foo"]);
-            Assert.Equal("OK", requestData.Properties["otel.status_code"]);
             Assert.True(requestData.Measurements.Count == 0);
         }
 

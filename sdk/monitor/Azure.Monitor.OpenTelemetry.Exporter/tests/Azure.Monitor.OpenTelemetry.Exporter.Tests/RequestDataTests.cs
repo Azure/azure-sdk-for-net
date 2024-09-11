@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
-            activity.SetStatus(Status.Ok);
+            activity.SetStatus(Status.Ok); // this should be omitted from telemetry.
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpRoute, "/search");
             activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in AzMonListExtensionsTests.
@@ -65,9 +65,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
             Assert.True(requestData.Success);
             Assert.Null(requestData.Source);
-            Assert.Equal(2, requestData.Properties.Count);
+            Assert.Equal(1, requestData.Properties.Count);
             Assert.Equal("bar", requestData.Properties["foo"]);
-            Assert.Equal("OK", requestData.Properties["otel.status_code"]);
             Assert.True(requestData.Measurements.Count == 0);
         }
 

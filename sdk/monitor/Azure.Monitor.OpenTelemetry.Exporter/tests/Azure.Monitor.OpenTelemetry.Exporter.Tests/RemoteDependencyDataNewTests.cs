@@ -78,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
-            activity.SetStatus(Status.Ok);
+            activity.SetStatus(Status.Ok); // this should be omitted from telemetry.
             activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeUrlFull, httpUrl);
             activity.SetTag(SemanticConventions.AttributeServerAddress, "www.foo.bar");
@@ -95,8 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("200", remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
-            Assert.Equal(1, remoteDependencyData.Properties.Count);
-            Assert.Equal("OK", remoteDependencyData.Properties["otel.status_code"]);
+            Assert.Equal(0, remoteDependencyData.Properties.Count);
             Assert.Equal(0, remoteDependencyData.Measurements.Count);
         }
 
@@ -136,7 +135,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             activity.Stop();
 
-            activity.SetStatus(Status.Ok);
+            activity.SetStatus(Status.Ok); // this should be omitted from telemetry.
             activity.SetTag(SemanticConventions.AttributeMessagingSystem, "servicebus");
             activity.SetTag(SemanticConventions.AttributeServerAddress, "my.servicebus.windows.net");
             activity.SetTag(SemanticConventions.AttributeMessagingDestinationName, "queueName");
@@ -152,8 +151,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal("my.servicebus.windows.net/queueName", remoteDependencyData.Target);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
-            Assert.Equal(1, remoteDependencyData.Properties.Count);
-            Assert.Equal("OK", remoteDependencyData.Properties["otel.status_code"]);
+            Assert.Equal(0, remoteDependencyData.Properties.Count);
             Assert.Equal(0, remoteDependencyData.Measurements.Count);
         }
     }
