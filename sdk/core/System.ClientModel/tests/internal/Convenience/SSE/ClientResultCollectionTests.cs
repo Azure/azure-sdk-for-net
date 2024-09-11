@@ -121,10 +121,10 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         int i = 0;
         await foreach (BinaryData data in result.GetRawResponse().EnumerateDataEvents())
         {
-            MockJsonModel model = data.ToObjectFromJson<MockJsonModel>();
+            MockJsonModel? model = data.ToObjectFromJson<MockJsonModel>();
 
-            Assert.AreEqual(i, model.IntValue);
-            Assert.AreEqual(i.ToString(), model.StringValue);
+            Assert.AreEqual(i, model?.IntValue);
+            Assert.AreEqual(i.ToString(), model?.StringValue);
 
             i++;
         }

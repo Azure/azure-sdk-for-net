@@ -82,7 +82,7 @@
         - https://github.com/Azure/azure-functions-host/blob/dev/test/WebJobs.Script.Tests/Microsoft.Azure.WebJobs.Script.WebHost.deps.json
   -->
 
-  <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' or '$(IsGeneratorLibrary)' == 'true'">
 
     <!-- BCL packages -->
     <PackageReference Update="System.Buffers" Version="4.5.1" />
@@ -98,7 +98,7 @@
     <PackageReference Update="System.Security.Cryptography.Cose" Version="7.0.0" />
     <PackageReference Update="System.Threading.Channels" Version="6.0.0" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageReference Update="System.Text.Json" Version="4.7.2" />
+    <PackageReference Update="System.Text.Json" Version="6.0.9" />
     <PackageReference Update="System.Text.Encodings.Web" Version="6.0.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
@@ -129,7 +129,7 @@
     <PackageReference Update="Azure.Storage.Queues" Version="12.19.1" />
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.19.1" />
     <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0-beta.1" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.12.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.13.0" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.2" />
     <PackageReference Update="Azure.ResourceManager.ApplicationInsights" Version="1.0.0" />
     <PackageReference Update="Azure.ResourceManager.Authorization" Version="1.1.3" />
@@ -227,7 +227,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240827.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240904.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240813.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="All" />
@@ -239,6 +239,10 @@
     <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="3.9.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
+    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20240904.4" />
   </ItemGroup>
 
   <!--
@@ -324,7 +328,7 @@
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.0-rc.1.23419.4" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="3.1.32" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.Graph" Version="4.52.0" />
+    <PackageReference Update="Microsoft.Graph" Version="5.57.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Update="Microsoft.NET.Sdk.Functions" Version="4.2.0" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="[2.3.24, 3.0.0)" />

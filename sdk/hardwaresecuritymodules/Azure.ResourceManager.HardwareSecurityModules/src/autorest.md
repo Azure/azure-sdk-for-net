@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: HardwareSecurityModules
 namespace: Azure.ResourceManager.HardwareSecurityModules
-require: https://github.com/Azure/azure-rest-api-specs/blob/9a3161dbc683120d907689209a6eebd450af8c3d/specification/hardwaresecuritymodules/resource-manager/readme.md
-#tag: package-2023-12-preview
+require: https://github.com/emmeliaAra/azure-rest-api-specs/blob/db39221e04397a78418fcab59f68dfa1745c07c5/specification/hardwaresecuritymodules/resource-manager/readme.md
+#tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,6 +19,8 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
+use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -31,9 +33,43 @@ format-by-name-rules:
   '*Uris': 'Uri'
 
 rename-mapping:
-  NetworkInterface.id: -|arm-id
-  OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
-  PrivateLinkResource: HardwareSecurityModulesPrivateLinkData
+  ActivationState: SecurityDomainActivationState
+  BackupRequestProperties: CloudHsmClusterBackupContent
+  BackupResult: CloudHsmClusterBackupResult
+  BackupResultProperties: CloudHsmClusterBackupResultProperties
+  EndpointDetail: DedicatedHsmEndpointDetail
+  EndpointDependency: DedicatedHsmEndpointDependency
+  JsonWebKeyType: DedicatedHsmJsonWebKeyType
+  NetworkInterface: DedicatedHsmNetworkInterface
+  NetworkProfile: DedicatedHsmNetworkProfile
+  OutboundEnvironmentEndpoint: DedicatedHsmEgressEndpoint
+  OutboundEnvironmentEndpointCollection: DedicatedHsmEgressEndpointListResult
+  PrivateEndpointConnection: CloudHsmClusterPrivateEndpointConnection
+  PrivateEndpointConnectionListResult: CloudHsmClusterPrivateEndpointConnectionListResult
+  PrivateEndpointConnectionProperties: CloudHsmClusterPrivateEndpointConnectionProperties
+  PrivateEndpointConnectionProvisioningState: CloudHsmClusterPrivateEndpointConnectionProvisioningState
+  PrivateEndpointServiceConnectionStatus: CloudHsmClusterPrivateEndpointServiceConnectionStatus
+  PrivateLinkResource: CloudHsmClusterPrivateLinkData
+  PrivateLinkResourceListResult: CloudHsmClusterPrivateLinkResourceListResult
+  PrivateLinkResourceProperties: CloudHsmClusterPrivateLinkResourceProperties
+  PrivateLinkServiceConnectionState: CloudHsmClusterPrivateLinkServiceConnectionState
+  ProvisioningState: CloudHsmClusterProvisioningState
+  PublicNetworkAccess: CloudHsmClusterPublicNetworkAccess
+  RestoreRequestProperties: CloudHsmClusterRestoreContent
+  RestoreResult: CloudHsmClusterRestoreResult
+  Sku: DedicatedHsmSku
+  SkuName: DedicatedHsmSkuName
+  SkuName.SafeNet_Luna_Network_HSM_A790: SafeNetLunaNetworkHsmA790
+  SkuName.payShield10K_LMK1_CPS60: PayShield10KLmk1Cps60
+  SkuName.payShield10K_LMK1_CPS250: PayShield10KLmk1Cps250
+  SkuName.payShield10K_LMK1_CPS2500: PayShield10KLmk1Cps2500
+  SkuName.payShield10K_LMK2_CPS60: PayShield10KLmk2Cps60
+  SkuName.payShield10K_LMK2_CPS250: PayShield10KLmk2Cps250
+  SkuName.payShield10K_LMK2_CPS2500: PayShield10KLmk2Cps2500
+
+override-operation-name:
+  CloudHsmClusterBackupStatus_Get: GetCloudHsmClusterBackupStatus
+  CloudHsmClusterRestoreStatus_Get: GetCloudHsmClusterRestoreStatus
 
 acronym-mapping:
   CPU: Cpu
@@ -68,16 +104,14 @@ directive:
     where: $.definitions
     transform: >
       delete $.Resource.properties.id.format;
-  # The SystemData is defined in common types
-  - from: dedicatedhsm.json
-    where: $.definitions
-    transform: >
-      $.DedicatedHsm.properties.systemData['$ref'] = '../../../../../common-types/resource-management/v3/types.json#/definitions/systemData';
-      delete $.SystemData;
-      delete $.IdentityType;
   # CodeGen doesn't support `x-ms-client-default`, here is an issue https://github.com/Azure/autorest.csharp/issues/3475 opened to eliminate this attribute
   - from: cloudhsm.json
     where: $.definitions
     transform: >
       delete $.CloudHsmClusterSku.properties.family['x-ms-client-default'];
+  # Enum value name must not contain spaces
+  - from: dedicatedhsm.json
+    where: $.definitions
+    transform: >
+      $.Sku.properties.name['x-ms-enum']['values'][0]['value'] = 'SafeNet_Luna_Network_HSM_A790';
 ```

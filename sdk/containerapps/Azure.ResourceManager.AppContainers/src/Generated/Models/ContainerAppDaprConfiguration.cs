@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Boolean indicating if the Dapr side car is enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> Dapr application identifier. </summary>
+        [WirePath("appId")]
         public string AppId { get; set; }
         /// <summary> Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http. </summary>
+        [WirePath("appProtocol")]
         public ContainerAppProtocol? AppProtocol { get; set; }
         /// <summary> Tells Dapr which port your application is listening on. </summary>
+        [WirePath("appPort")]
         public int? AppPort { get; set; }
         /// <summary> Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB. </summary>
+        [WirePath("httpReadBufferSize")]
         public int? HttpReadBufferSize { get; set; }
         /// <summary> Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB. </summary>
+        [WirePath("httpMaxRequestSize")]
         public int? HttpMaxRequestSize { get; set; }
         /// <summary> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </summary>
+        [WirePath("logLevel")]
         public ContainerAppDaprLogLevel? LogLevel { get; set; }
         /// <summary> Enables API logging for the Dapr sidecar. </summary>
+        [WirePath("enableApiLogging")]
         public bool? IsApiLoggingEnabled { get; set; }
     }
 }

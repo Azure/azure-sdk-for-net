@@ -1,12 +1,19 @@
 # Release History
 
-## 1.13.0-beta.1 (Unreleased)
+## 1.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 1.13.0 (2024-09-03)
+
+### Features Added
+- Added `JsonModelWriteCore` to serialization file so that derived models could call it without doing the serialization of base properties themselves.
 
 ### Other Changes
 - Added to the sample code to authenticate with the azure in China in the README.md file.

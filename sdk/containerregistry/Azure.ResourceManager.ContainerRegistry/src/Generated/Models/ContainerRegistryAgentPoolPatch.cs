@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The ARM resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The count of agent machine. </summary>
+        [WirePath("properties.count")]
         public int? Count { get; set; }
     }
 }
