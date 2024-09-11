@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
+using System.Linq;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> Details of the ContainerGroupProperties. </summary>
-    public partial class StandbyContainerGroupPatchProperties
+    /// <summary> Displays the counts of container groups in each state, as known by the StandbyPool resource provider. </summary>
+    public partial class ContainerGroupInstanceCountSummary
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +46,31 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPatchProperties"/>. </summary>
-        public StandbyContainerGroupPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceCountSummary"/>. </summary>
+        /// <param name="instanceCountsByState"> The count of pooled resources in each state. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceCountsByState"/> is null. </exception>
+        internal ContainerGroupInstanceCountSummary(IEnumerable<PoolResourceStateCount> instanceCountsByState)
         {
-            SubnetIds = new ChangeTrackingList<WritableSubResource>();
+            Argument.AssertNotNull(instanceCountsByState, nameof(instanceCountsByState));
+
+            InstanceCountsByState = instanceCountsByState.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPatchProperties"/>. </summary>
-        /// <param name="containerGroupProfile"> Specifies container group profile of standby container groups. </param>
-        /// <param name="subnetIds"> Specifies subnet Ids for container group. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceCountSummary"/>. </summary>
+        /// <param name="instanceCountsByState"> The count of pooled resources in each state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPatchProperties(StandbyContainerGroupPatchProfile containerGroupProfile, IList<WritableSubResource> subnetIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupInstanceCountSummary(IReadOnlyList<PoolResourceStateCount> instanceCountsByState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ContainerGroupProfile = containerGroupProfile;
-            SubnetIds = subnetIds;
+            InstanceCountsByState = instanceCountsByState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies container group profile of standby container groups. </summary>
-        public StandbyContainerGroupPatchProfile ContainerGroupProfile { get; set; }
-        /// <summary> Specifies subnet Ids for container group. </summary>
-        public IList<WritableSubResource> SubnetIds { get; }
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceCountSummary"/> for deserialization. </summary>
+        internal ContainerGroupInstanceCountSummary()
+        {
+        }
+
+        /// <summary> The count of pooled resources in each state. </summary>
+        public IReadOnlyList<PoolResourceStateCount> InstanceCountsByState { get; }
     }
 }

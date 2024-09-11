@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.StandbyPool
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -61,29 +66,6 @@ namespace Azure.ResourceManager.StandbyPool
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ElasticityProfile))
-            {
-                writer.WritePropertyName("elasticityProfile"u8);
-                writer.WriteObjectValue(ElasticityProfile, options);
-            }
-            if (Optional.IsDefined(VirtualMachineState))
-            {
-                writer.WritePropertyName("virtualMachineState"u8);
-                writer.WriteStringValue(VirtualMachineState.Value.ToString());
-            }
-            if (Optional.IsDefined(AttachedVirtualMachineScaleSetId))
-            {
-                writer.WritePropertyName("attachedVirtualMachineScaleSetId"u8);
-                writer.WriteStringValue(AttachedVirtualMachineScaleSetId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -122,20 +104,26 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 return null;
             }
+            StandbyVirtualMachinePoolProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            StandbyVirtualMachinePoolElasticityProfile elasticityProfile = default;
-            StandbyVirtualMachineState? virtualMachineState = default;
-            ResourceIdentifier attachedVirtualMachineScaleSetId = default;
-            StandbyPoolProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = StandbyVirtualMachinePoolProperties.DeserializeStandbyVirtualMachinePoolProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -179,54 +167,6 @@ namespace Azure.ResourceManager.StandbyPool
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("elasticityProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            elasticityProfile = StandbyVirtualMachinePoolElasticityProfile.DeserializeStandbyVirtualMachinePoolElasticityProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualMachineState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            virtualMachineState = new StandbyVirtualMachineState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("attachedVirtualMachineScaleSetId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            attachedVirtualMachineScaleSetId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new StandbyPoolProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -240,10 +180,7 @@ namespace Azure.ResourceManager.StandbyPool
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                elasticityProfile,
-                virtualMachineState,
-                attachedVirtualMachineScaleSetId,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

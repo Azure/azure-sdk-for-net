@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> Details of the ContainerGroupProfile. </summary>
-    public partial class StandbyContainerGroupPatchProfile
+    /// <summary> The updatable properties of the StandbyContainerGroupPoolResource. </summary>
+    public partial class StandbyContainerGroupPoolUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +45,25 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPatchProfile"/>. </summary>
-        public StandbyContainerGroupPatchProfile()
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
+        public StandbyContainerGroupPoolUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPatchProfile"/>. </summary>
-        /// <param name="id"> Specifies container group profile id of standby container groups. </param>
-        /// <param name="revision"> Specifies revision of container group profile. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
+        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
+        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPatchProfile(ResourceIdentifier id, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolUpdateProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            Revision = revision;
+            ElasticityProfile = elasticityProfile;
+            ContainerGroupProperties = containerGroupProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies container group profile id of standby container groups. </summary>
-        public ResourceIdentifier Id { get; set; }
-        /// <summary> Specifies revision of container group profile. </summary>
-        public long? Revision { get; set; }
+        /// <summary> Specifies elasticity profile of standby container group pools. </summary>
+        public StandbyContainerGroupPoolElasticityProfile ElasticityProfile { get; set; }
+        /// <summary> Specifies container group properties of standby container group pools. </summary>
+        public StandbyContainerGroupProperties ContainerGroupProperties { get; set; }
     }
 }
