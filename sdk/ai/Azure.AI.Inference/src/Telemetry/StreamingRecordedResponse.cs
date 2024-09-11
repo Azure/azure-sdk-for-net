@@ -46,7 +46,7 @@ namespace Azure.AI.Inference.Telemetry
             }
         }
 
-        private List<Dictionary<string, object>> getFuncArgs()
+        private List<Dictionary<string, object>> GetFuncArgs()
         {
             List<Dictionary<string, object>> listArgs = new();
             foreach (StringBuilder sb in m_hshFunctionArgs.Values)
@@ -57,7 +57,7 @@ namespace Azure.AI.Inference.Telemetry
             return listArgs;
         }
 
-        public override string[] getSerializedCompletions() {
+        public override string[] GetSerializedCompletions() {
             var messageDict = new Dictionary<string, object>
             {
                 {"content", m_contents.ToString()}
@@ -69,7 +69,7 @@ namespace Azure.AI.Inference.Telemetry
             };
             if (m_hshFunctionArgs.Count > 0)
             {
-                messageDict.Add("tool_calls", getFuncArgs());
+                messageDict.Add("tool_calls", GetFuncArgs());
             }
             return new string[] { JsonSerializer.Serialize(evt)};
         }

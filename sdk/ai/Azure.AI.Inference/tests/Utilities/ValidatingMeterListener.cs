@@ -11,7 +11,7 @@ using System.Reflection;
 using Azure.AI.Inference.Telemetry;
 using NUnit.Framework;
 
-using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
+using static Azure.AI.Inference.Telemetry.OpenTelemetryInternalConstants;
 
 namespace Azure.AI.Inference.Tests.Utilities
 {
@@ -28,7 +28,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             {
                 InstrumentPublished = (i, l) =>
                 {
-                    if (i.Meter.Name == OpenTelemetryScope.ACTIVITY_NAME)
+                    if (i.Meter.Name == OpenTelemetryConstants.ActivityName)
                     {
                         l.EnableMeasurementEvents(i);
                     }
@@ -80,7 +80,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// <param name="model">The model called.</param>
         /// <param name="endpoint">The endpoint called.</param>
         /// <returns></returns>
-        private static Dictionary<string, object> getDefaultTags(string model, Uri endpoint)
+        private static Dictionary<string, object> GetDefaultTags(string model, Uri endpoint)
         {
             return new Dictionary<string, object>{
                 { GenAiSystemKey, GenAiSystemValue},
@@ -101,11 +101,11 @@ namespace Azure.AI.Inference.Tests.Utilities
             if (metricsPresent)
             {
                 // InputTags
-                Dictionary<string, object> input_tags = getDefaultTags(model, endpoint);
+                Dictionary<string, object> input_tags = GetDefaultTags(model, endpoint);
                 input_tags.Add(GenAiUsageInputTokensKey, "input");
                 lstExpected.Add(input_tags);
                 // Output tags
-                Dictionary<string, object> output_tags = getDefaultTags(model, endpoint);
+                Dictionary<string, object> output_tags = GetDefaultTags(model, endpoint);
                 output_tags.Add(GenAiUsageOutputTokensKey, "output");
                 lstExpected.Add(output_tags);
             }
@@ -121,7 +121,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         {
             var lstExpected = new List<Dictionary<string, object>>()
             {
-                getDefaultTags(model, endpoint)
+                GetDefaultTags(model, endpoint)
             };
             ValidateMetrics(GenAiClientOperationDurationMetricName, lstExpected, true);
         }
@@ -147,7 +147,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             Assert.AreEqual(lstExpected.Count, m_measurements[metricsName].Count);
             for (int i = 0; i < lstExpected.Count; i++)
             {
-                assertDictEqual(lstExpected[i], lstActual[i]);
+                AssertDictEqual(lstExpected[i], lstActual[i]);
                 foreach (var metric in m_measurements[metricsName])
                 {
                     if (metricsName == GenAiClientOperationDurationMetricName)
@@ -167,7 +167,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// </summary>
         /// <param name="actual">The actual values.</param>
         /// <param name="expected">The expected values.</param>
-        private static void assertDictEqual(Dictionary<string, object> expected, Dictionary<string, object> actual)
+        private static void AssertDictEqual(Dictionary<string, object> expected, Dictionary<string, object> actual)
         {
             Assert.AreEqual(expected.Count, actual.Count);
             foreach (KeyValuePair<string, object> kv in expected)

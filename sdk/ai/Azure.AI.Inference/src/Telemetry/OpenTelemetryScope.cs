@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Text.Json;
+using static Azure.AI.Inference.Telemetry.OpenTelemetryInternalConstants;
 using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
 
 namespace Azure.AI.Inference.Telemetry
@@ -13,22 +14,16 @@ namespace Azure.AI.Inference.Telemetry
     internal class OpenTelemetryScope : IDisposable
     {
         /// <summary>
-        /// The Activity name to be used for creation of actions.
-        /// </summary>
-        public const string ACTIVITY_NAME = "Azure.AI.Inference.ChatCompletionsClient";
-        public const string ENABLE_ENV = "AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED";
-
-        /// <summary>
         /// Activity source is used to save events and log the tags.
         /// On the ApplicationInsights events are logged to traces table.
         /// The tags are not logged, but are shown in the console.
         /// </summary>
-        private static readonly ActivitySource s_chatSource = new ActivitySource(ACTIVITY_NAME);
+        private static readonly ActivitySource s_chatSource = new ActivitySource(ActivityName);
         /// <summary>
         /// Add histograms to log metrics.
         /// On the ApplicationInsights metrics are logged to customMetrics table.
         /// </summary>
-        private static readonly Meter s_meter = new Meter(ACTIVITY_NAME);
+        private static readonly Meter s_meter = new Meter(ActivityName);
         private static readonly Histogram<double> s_duration = s_meter.CreateHistogram<double>(
             GenAiClientOperationDurationMetricName, "s", "Measures GenAI operation duration.");
         private static readonly Histogram<long> s_tokens = s_meter.CreateHistogram<long>(
@@ -46,7 +41,7 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="message"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        public static string getContent(ChatRequestMessage message)
+        public static string GetContent(ChatRequestMessage message)
         {
             if (message.GetType() == typeof(ChatRequestAssistantMessage))
                 return ((ChatRequestAssistantMessage)message).Content;
@@ -65,10 +60,10 @@ namespace Azure.AI.Inference.Telemetry
         /// </summary>
         /// <param name="name">The activity name.</param>
         /// <returns>Activity or null.</returns>
-        private Activity getActivityMaybe(string name)
+        private static Activity GetActivityMaybe(string name)
         {
             Activity act = null;
-            string enable = Environment.GetEnvironmentVariable(ENABLE_ENV);
+            string enable = Environment.GetEnvironmentVariable(EnvironmentVariableSwitchName);
             if (enable != null && (enable.Equals("true", StringComparison.OrdinalIgnoreCase) || enable.Equals("1")))
                 act = s_chatSource.CreateActivity(name, ActivityKind.Client);
             return act;
@@ -80,7 +75,7 @@ namespace Azure.AI.Inference.Telemetry
         /// <typeparam name="T"></typeparam>
         /// <param name="name">The name of tag to set.</param>
         /// <param name="value">Nullable value to be set.</param>
-        private void setTagMaybe<T>(string name, Nullable<T> value) where T: struct
+        private void SetTagMaybe<T>(string name, Nullable<T> value) where T: struct
         {
             if (value.HasValue && m_activity != null)
                 m_activity.SetTag(name, value.Value);
@@ -105,7 +100,7 @@ namespace Azure.AI.Inference.Telemetry
         public OpenTelemetryScope(ChatCompletionsOptions requestOptions, Uri endpoint)
         {
             m_recordedStreamingResponse = new();
-            m_activity = getActivityMaybe($"Complete_{requestOptions.Model}");
+            m_activity = GetActivityMaybe($"Complete_{requestOptions.Model}");
             if (m_activity == null)
                 return;
             m_activity.Start();
@@ -122,11 +117,11 @@ namespace Azure.AI.Inference.Telemetry
             {
                 m_activity.SetTag(kv.Key, kv.Value);
             }
-            setTagMaybe(GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
-            setTagMaybe(GenAiRequestTemperatureKey, requestOptions.Temperature);
+            SetTagMaybe(GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
+            SetTagMaybe(GenAiRequestTemperatureKey, requestOptions.Temperature);
             if (requestOptions.AdditionalProperties != null && requestOptions.AdditionalProperties.ContainsKey("top_p"))
             {
-                setTagMaybe(
+                SetTagMaybe(
                     GenAiRequestTopPKey,
                     JsonSerializer.Deserialize<double?>(requestOptions.AdditionalProperties["top_p"]));
             }
@@ -135,7 +130,7 @@ namespace Azure.AI.Inference.Telemetry
             {
                 TagList requestTags = new() {
                     { GenAiSystemKey, GenAiSystemValue},
-                    { GenAiEventContent, getContent(message)}
+                    { GenAiEventContent, GetContent(message)}
                 };
                 m_activity.AddEvent(
                     new ActivityEvent(
@@ -220,7 +215,7 @@ namespace Azure.AI.Inference.Telemetry
             }
 
             // Record the event for each response
-            string[] choices = recordedResponse.getSerializedCompletions();
+            string[] choices = recordedResponse.GetSerializedCompletions();
             foreach (string choice in choices)
             {
                 TagList completionTags = new()

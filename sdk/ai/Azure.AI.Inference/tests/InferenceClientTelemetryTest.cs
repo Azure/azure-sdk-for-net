@@ -18,7 +18,7 @@ namespace Azure.AI.Inference.Tests
         { }
 
         [SetUp]
-        public void setup()
+        public void Setup()
         {
             m_requestOptions = new ChatCompletionsOptions()
             {
@@ -36,12 +36,12 @@ namespace Azure.AI.Inference.Tests
                 Messages =
                 {
                     new ChatRequestSystemMessage("You are a helpful assistant."),
-                     new ChatRequestUserMessage(
-                         "Give me 5 good reasons why I should exercise every day."),
+                    new ChatRequestUserMessage(
+                        "Give me 5 good reasons why I should exercise every day."),
                 },
                 Model = "gpt-4o"
             };
-            Environment.SetEnvironmentVariable(OpenTelemetryScope.ENABLE_ENV, "1");
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "1");
         }
 
         public enum TestType
@@ -59,7 +59,7 @@ namespace Azure.AI.Inference.Tests
                     InstrumentClientOptions(new ChatCompletionsClientOptions())));
         }
 
-        private static async Task<StreamingRecordedResponse> getStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response)
+        private static async Task<StreamingRecordedResponse> GetStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response)
         {
             var recordedResponse = new StreamingRecordedResponse();
             await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
@@ -90,7 +90,7 @@ namespace Azure.AI.Inference.Tests
                 case TestType.Streaming:
                     {
                         StreamingResponse<StreamingChatCompletionsUpdate> response = await client.CompleteStreamingAsync(m_requestStreamingOptions);
-                        recordedResponse = await getStreamingResponse(response);
+                        recordedResponse = await GetStreamingResponse(response);
                     }
                     break;
             }
@@ -100,14 +100,14 @@ namespace Azure.AI.Inference.Tests
             if (recordedResponse is StreamingRecordedResponse)
             {
                 m_requestStreamingOptions.Model = recordedResponse.Model;
-                actListener.validateStartActivity(m_requestStreamingOptions, endpoint);
+                actListener.ValidateStartActivity(m_requestStreamingOptions, endpoint);
             }
             else
             {
                 m_requestOptions.Model = recordedResponse.Model;
-                actListener.validateStartActivity(m_requestOptions, endpoint);
+                actListener.ValidateStartActivity(m_requestOptions, endpoint);
             }
-            actListener.validateResponseEvents(recordedResponse);
+            actListener.ValidateResponseEvents(recordedResponse);
             // TODO: When we will support usage tags on streaming
             // always set them and check.
             meterListener.ValidateTags(recordedResponse.Model, endpoint,
@@ -149,7 +149,7 @@ namespace Azure.AI.Inference.Tests
             catch (Exception ex)
             {
                 Assert.That(ex is RequestFailedException, $"The exception was of wrong type {ex.GetType()}");
-                actListener.validateErrorTag("400", ex.Message);
+                actListener.ValidateErrorTag("400", ex.Message);
             }
         }
     }

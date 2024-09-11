@@ -53,6 +53,6 @@ namespace Azure.AI.Inference.Telemetry
             }
         }
 
-        public override string[] getSerializedCompletions() { return m_completions; }
+        public override string[] GetSerializedCompletions() { return m_completions; }
     }
 }

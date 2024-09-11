@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure.AI.Inference.Telemetry;
 using NUnit.Framework;
 
-using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
+using static Azure.AI.Inference.Telemetry.OpenTelemetryInternalConstants;
 
 namespace Azure.AI.Inference.Tests.Utilities
 {
@@ -20,7 +20,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         private readonly ActivityListener m_activityListener;
         private readonly ConcurrentQueue<Activity> m_listeners = new();
 
-        private void activityStopped(Activity act)
+        private void ActivityStopped(Activity act)
         {
             // We have another activity, which is created when we start the http request.
             // that is why we limit the stopped activities by.
@@ -32,8 +32,8 @@ namespace Azure.AI.Inference.Tests.Utilities
         {
             m_activityListener = new ActivityListener()
             {
-                ActivityStopped = activityStopped,
-                ShouldListenTo = s => s.Name == OpenTelemetryScope.ACTIVITY_NAME,
+                ActivityStopped = ActivityStopped,
+                ShouldListenTo = s => s.Name == OpenTelemetryConstants.ActivityName,
                 Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded
             };
             ActivitySource.AddActivityListener(m_activityListener);
@@ -44,24 +44,24 @@ namespace Azure.AI.Inference.Tests.Utilities
             m_activityListener.Dispose();
         }
 
-        public void validateStartActivity(ChatCompletionsOptions requestOptions, Uri endpoint)
+        public void ValidateStartActivity(ChatCompletionsOptions requestOptions, Uri endpoint)
         {
             Activity activity = m_listeners.Single();
             Assert.NotNull(activity);
             // Validate all tags
-            validateTag(activity, GenAiSystemKey, GenAiSystemValue);
-            validateTag(activity, GenAiResponseModelKey, requestOptions.Model);
-            validateTag(activity, ServerAddressKey, endpoint.Host);
-            validateTag(activity, ServerPortKey, endpoint.Port);
-            validateTag(activity, GenAiOperationNameKey, "Complete");
-            validateTag(activity, GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
-            validateFloatTag(activity, GenAiRequestTemperatureKey, requestOptions.Temperature);
+            ValidateTag(activity, GenAiSystemKey, GenAiSystemValue);
+            ValidateTag(activity, GenAiResponseModelKey, requestOptions.Model);
+            ValidateTag(activity, ServerAddressKey, endpoint.Host);
+            ValidateTag(activity, ServerPortKey, endpoint.Port);
+            ValidateTag(activity, GenAiOperationNameKey, "Complete");
+            ValidateTag(activity, GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
+            ValidateFloatTag(activity, GenAiRequestTemperatureKey, requestOptions.Temperature);
             if (requestOptions.AdditionalProperties.TryGetValue("top_p", out BinaryData topP))
             {
-                validateFloatTag(activity, GenAiRequestTopPKey, JsonSerializer.Deserialize<float?>(topP));
+                ValidateFloatTag(activity, GenAiRequestTopPKey, JsonSerializer.Deserialize<float?>(topP));
             }
             // Validate events
-            validateChatMessageEvents(activity, requestOptions.Messages);
+            ValidateChatMessageEvents(activity, requestOptions.Messages);
         }
 
         /// <summary>
@@ -69,23 +69,23 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// </summary>
         /// <param name="value">The string to be cleaned.</param>
         /// <returns></returns>
-        private static string cleanString(string value)
+        private static string CleanString(string value)
         {
             return value.Replace("\\u0022", "\"").Replace("\\\\n", "\\n").Replace("\\\\u", "\\u").Trim('\"');
         }
 
-        public void validateResponseEvents(AbstractRecordedResponse response)
+        public void ValidateResponseEvents(AbstractRecordedResponse response)
         {
             Activity activity = m_listeners.Single();
-            validateTag(activity, GenAiResponseIdKey, response.Id);
-            validateTag(activity, GenAiResponseModelKey, response.Model);
-            validateTag(activity, GenAiResponseFinishReasonKey, response.FinishReason);
-            validateIntTag(activity, GenAiUsageOutputTokensKey, response.CompletionTokens);
-            validateIntTag(activity, GenAiUsageInputTokensKey, response.PromptTokens);
+            ValidateTag(activity, GenAiResponseIdKey, response.Id);
+            ValidateTag(activity, GenAiResponseModelKey, response.Model);
+            ValidateTag(activity, GenAiResponseFinishReasonKey, response.FinishReason);
+            ValidateIntTag(activity, GenAiUsageOutputTokensKey, response.CompletionTokens);
+            ValidateIntTag(activity, GenAiUsageInputTokensKey, response.PromptTokens);
             var validChoices = new HashSet<string>();
-            foreach (string v in response.getSerializedCompletions())
+            foreach (string v in response.GetSerializedCompletions())
             {
-                validChoices.Add(cleanString(v));
+                validChoices.Add(CleanString(v));
             }
             foreach (var evt in activity.Events)
             {
@@ -95,12 +95,12 @@ namespace Azure.AI.Inference.Tests.Utilities
                 Assert.AreEqual(GenAiSystemKey, evt.Tags.ElementAt(0).Key);
                 Assert.AreEqual(GenAiSystemValue, evt.Tags.ElementAt(0).Value);
                 Assert.AreEqual(GenAiEventContent, evt.Tags.ElementAt(1).Key);
-                Assert.That(validChoices.Contains(cleanString(evt.Tags.ElementAt(1).Value.ToString())));
+                Assert.That(validChoices.Contains(CleanString(evt.Tags.ElementAt(1).Value.ToString())));
             }
             Assert.AreEqual(ActivityStatusCode.Ok, activity.Status);
         }
 
-        public void validateErrorTag(
+        public void ValidateErrorTag(
             string errorType,
             string errorDescription
             )
@@ -108,10 +108,10 @@ namespace Azure.AI.Inference.Tests.Utilities
             Activity activity = m_listeners.Single();
             Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
             Assert.AreEqual(errorDescription, activity.StatusDescription);
-            validateTag(activity, ErrorTypeKey, errorType);
+            ValidateTag(activity, ErrorTypeKey, errorType);
         }
 
-        private static void validateEvent(Activity activity, string name, Dictionary<string, object> actuals)
+        private static void ValidateEvent(Activity activity, string name, Dictionary<string, object> actuals)
         {
             ActivityEvent expected = new ActivityEvent("None");
             foreach (ActivityEvent evt in activity.Events)
@@ -124,27 +124,27 @@ namespace Azure.AI.Inference.Tests.Utilities
             }
             Assert.AreNotEqual(expected.Name, "None");
             Assert.Greater(expected.Timestamp, new DateTimeOffset(new DateTime(2024, 6, 1)));
-            validateEventTags(expected.Tags, actuals);
+            ValidateEventTags(expected.Tags, actuals);
         }
 
-        private static void validateChatMessageEvents(Activity activity, IList<ChatRequestMessage> messages)
+        private static void ValidateChatMessageEvents(Activity activity, IList<ChatRequestMessage> messages)
         {
             Assert.NotNull(activity);
             foreach (ChatRequestMessage message in messages)
             {
-                validateEvent(
+                ValidateEvent(
                     activity: activity,
                     name: $"gen_ai.{message.Role}.message",
                     actuals: new Dictionary<string, object>()
                     {
                         { GenAiSystemKey, GenAiSystemValue},
-                        { GenAiEventContent, OpenTelemetryScope.getContent(message)}
+                        { GenAiEventContent, OpenTelemetryScope.GetContent(message)}
                     }
                 );
             }
         }
 
-        private static void validateTag(Activity activity, string key, object value)
+        private static void ValidateTag(Activity activity, string key, object value)
         {
             if (string.IsNullOrEmpty(value?.ToString()))
             {
@@ -157,7 +157,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             }
         }
 
-        private static void validateFloatTag(Activity activity, string key, float? value)
+        private static void ValidateFloatTag(Activity activity, string key, float? value)
         {
             if (!value.HasValue)
             {
@@ -174,7 +174,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             }
         }
 
-        private static void validateIntTag(Activity activity, string key, int value)
+        private static void ValidateIntTag(Activity activity, string key, int value)
         {
             if (value == AbstractRecordedResponse.NOT_SET)
             {
@@ -188,7 +188,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             }
         }
 
-        private static void validateEventTags(IEnumerable<KeyValuePair<string, object>> actuals, Dictionary<string, object> tags)
+        private static void ValidateEventTags(IEnumerable<KeyValuePair<string, object>> actuals, Dictionary<string, object> tags)
         {
             // Though technically we can add the same named tag multiple times, we are not doing it in
             // our code.

@@ -63,7 +63,7 @@ namespace Azure.AI.Inference.Tests
             Assert.AreEqual(resp.CompletionTokens, withUsage ? 7 : StreamingRecordedResponse.NOT_SET);
             Assert.AreEqual(resp.PromptTokens, withUsage ? 3 : StreamingRecordedResponse.NOT_SET);
 
-            string[] strSerialized = resp.getSerializedCompletions();
+            string[] strSerialized = resp.GetSerializedCompletions();
             Assert.AreEqual(strSerialized.Length, 1);
             Dictionary<string, object> dtData = JsonSerializer.Deserialize<Dictionary<string, object>>(strSerialized[0]);
             Assert.That(dtData.ContainsKey("message"));
@@ -89,7 +89,7 @@ namespace Azure.AI.Inference.Tests
             Assert.AreEqual(resp.FinishReason, CompletionsFinishReason.ToolCalls.ToString());
             Assert.AreEqual(resp.Model, "gpt-100o");
 
-            string[] strSerialized = resp.getSerializedCompletions();
+            string[] strSerialized = resp.GetSerializedCompletions();
             Assert.AreEqual(strSerialized.Length, 1);
             Dictionary<string, object> dtData = JsonSerializer.Deserialize<Dictionary<string, object>>(strSerialized[0]);
             // Message

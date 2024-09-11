@@ -1,24 +1,24 @@
 # Using telemetry with Azure.AI.Inference
 
-In this example we will demonstrate how [OpenTelemetry](https://learn.microsoft.com/dotnet/core/diagnostics/observability-with-otel) library can be leveraged to diagnose the issues in the Chat completion request.
+In this example we will demonstrate how [OpenTelemetry](https://learn.microsoft.com/dotnet/core/diagnostics/observability-with-otel) library can be leveraged to diagnose the issues in the Chat Completions request.
 
-## Project creation and dependency installation.
-First, we will create the console application project and add `Azure.AI.Inference` as a dependency. The first command will create the project called `TelemetryDemo.csproj`. The ` dotnet add package <…>` command will modify project file and in future we will need to run `dotnet restore` to install all dependencies, if we will remove the installed ones.
+## Project creation and dependency installation
+First, we will create the console application project and add `Azure.AI.Inference` as a dependency. The first command will create the project called `TelemetryDemo.csproj`. The `dotnet add package <…>` command will modify project file and in future we will need to run `dotnet restore` to install all dependencies, if we will remove the installed ones.
 
-```bash
+```dotnetcli
 dotnet new console --name TelemetryDemo --output TelemetryDemo
 dotnet add package Azure.AI.Inference --prerelease
 ```
 
 Now we will need to add the dependencies for OpenTelemetry.
 
-```bash
+```dotnetcli
 dotnet add package OpenTelemetry
 dotnet add package OpenTelemetry.Exporter.Console
 dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore --prerelease
 ```
 
-## Create the simple application with telemetry.
+## Create the simple application with telemetry
 The `dotnet new` created the project with the single file called Program.cs. Let us edit this file with the IDE of choice.
 
 First we will import open telemetry and Azure.AI.Inference
@@ -41,16 +41,11 @@ var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariabl
 var model = System.Environment.GetEnvironmentVariable("MODEL_NAME");
 ```
 
-Next, we will define the constant, which defines, what [Activity](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity) and [Meter](https://learn.microsoft.com/dotnet/api/system.diagnostics.metrics.meter) do we want to listen to. In Azure.AI.Inferencecase they are both named `Azure.AI.Inference.ChatCompletionsClient`.
+To get the telemetry, we will need to listen for [Activity](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity) and [Meter](https://learn.microsoft.com/dotnet/api/system.diagnostics.metrics.meter)  defined by the constant `OpenTelemetryConstants.ActivityName` from the `Azure.AI.Inference.Telemetry` namespace.
+To log metrics and events to [Application Insights](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) we will need to get the connection string. Please open the Azure portal, create the Application Insights resource you wish to use for storing the telemetry. After that open the main page and find the "Connection String". It generally will have the format similar to "InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://region-x.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx". In our code we will use the connection string from environment variable.
 
 ```c#
-const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
-```
-
-To log metrics and events to Application Insights we will need to get the connection string. Please open the Azure portal, create the Application Insights resource you wish to use for storing the telemetry. After that open the main page and find the "Connection String". It generally will have the format similar to "InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://region-x.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx". In our code we will create the constant, storing the connection string.
-
-```c#
-const string appInsightsConn = "InstrumentationKey=21e5a111-cd0c-4d22-963e-e9722648fff2;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=a298b1a1-2dc5-4bde-bd4a-1bbf6efec113";
+var appInsightsConn = System.Environment.GetEnvironmentVariable("APP_INSIGHTS_CONNECTION_STR");
 ```
 
 To allow telemetry collection we will create the listeners, which will listen to Azure.AI.Inference activity and meters.In the code below we will create `tracerProvider`, which will listen to activity and `meterProvider`, listening to meter. We will add console exporters to both providers with the line `AddConsoleExporter()` and monitor exporter for Application Insights export: `AddAzureMonitorMetricExporter`. 
@@ -76,7 +71,7 @@ using var meterProvider = Sdk.CreateMeterProviderBuilder()
     .Build();
 ```
 
-Please note that if we will only create `tracerProvider` is required for both metrics and activity exports, but to export metrics we also need to define `meterProvider`.
+To export only events, we need to define `tracerProvider`, to export also metrics, we need to we also need to define `meterProvider`. Metrics cannot be exported without events.
 After we have initialized the providers, we will use simple completions example from [Sample1](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample1_ChatCompletions.md).
 ```c#
 // Set up the parameters.
@@ -102,7 +97,7 @@ Response<ChatCompletions> response = client.Complete(requestOptions);
 System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
 
-## Running the application.
+## Running the application
 **IMPORTANT!** To switch on the telemetry we need to set environment variable `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED` to "1" or "true". It can be done in IDE or in the console as outlined below.
 
 On Windows CMD
@@ -121,14 +116,14 @@ export AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED=1
 ```
 
 Now run the application from IDE, or use
-```bash
+```dotnetcli
 dotnet run
 ```
 
 The Console will show all the exported telemetry along with the response from LLM.
 
-## Getting the telemetry from Application Insights.
-After we have run the application, we can list all the metrics and events on the Application Insights. On the top panel of Aplication Insights resource please select "Logs".
+## Getting the telemetry from Application Insights
+After we have run the application, we can list all the metrics and events on the Application Insights. On the top panel of Application Insights resource please select "Logs".
 To get the metrics run the query.
 ```
 customMetrics

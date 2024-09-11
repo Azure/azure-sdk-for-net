@@ -18,6 +18,6 @@ namespace Azure.AI.Inference.Telemetry
         /// Return the JSON serialized completion for event logging.
         /// </summary>
         /// <returns>The iterator over completions</returns>
-        public abstract string[] getSerializedCompletions();
+        public abstract string[] GetSerializedCompletions();
     }
 }

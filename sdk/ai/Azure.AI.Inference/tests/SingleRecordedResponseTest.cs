@@ -55,7 +55,7 @@ namespace Azure.AI.Inference.Tests
             Assert.AreEqual(15, response.CompletionTokens);
             Assert.AreEqual(10, response.PromptTokens);
             //Check the content
-            var strSerializedString = response.getSerializedCompletions();
+            var strSerializedString = response.GetSerializedCompletions();
             Assert.AreEqual(strSerializedString.Length, 3);
             for (int i = 0; i < strSerializedString.Length; i++)
             {
@@ -140,7 +140,7 @@ namespace Azure.AI.Inference.Tests
             Assert.AreEqual("Phi2001", response.Model);
             Assert.AreEqual(15, response.CompletionTokens);
             Assert.AreEqual(10, response.PromptTokens);
-            var strSerializedString = response.getSerializedCompletions();
+            var strSerializedString = response.GetSerializedCompletions();
             for (int i = 0; i < strSerializedString.Length; i++)
             {
                 Dictionary<string, object> dtData = JsonSerializer.Deserialize<Dictionary<string, object>>(strSerializedString[i]);

@@ -30,7 +30,7 @@ namespace Azure.AI.Inference.Tests
                 MaxTokens = 100500,
                 AdditionalProperties = { { "top_p", BinaryData.FromObjectAsJson(42) } }
             };
-            Environment.SetEnvironmentVariable(OpenTelemetryScope.ENABLE_ENV, "1");
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "1");
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Azure.AI.Inference.Tests
             [Values(false, true, true, false, false)] bool hasActivity
             )
         {
-            Environment.SetEnvironmentVariable(OpenTelemetryScope.ENABLE_ENV, env);
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, env);
             using var listener = new ValidatingActivityListener();
             using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
             {
@@ -60,14 +60,14 @@ namespace Azure.AI.Inference.Tests
         [Test]
         public void TestStartActivity()
         {
-            Environment.SetEnvironmentVariable(OpenTelemetryScope.ENABLE_ENV, "1");
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "1");
             using var listener = new ValidatingActivityListener();
             using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
             {
                 Assert.True(scope.IsEnabled);
                 Assert.False(scope.AreMetricsOn);
             }
-            listener.validateStartActivity(requestOptions, endpoint);
+            listener.ValidateStartActivity(requestOptions, endpoint);
         }
 
         [Test, Sequential]
@@ -76,7 +76,7 @@ namespace Azure.AI.Inference.Tests
             [Values("gpt-3000", "gpt-3000-2024-09-06")] string modelNameReturned
             )
         {
-            ChatCompletions completions = getChatCompletions(modelNameReturned);
+            ChatCompletions completions = GetChatCompletions(modelNameReturned);
             var response = new SingleRecordedResponse(completions);
             using (var actListener = new ValidatingActivityListener())
             {
@@ -89,8 +89,8 @@ namespace Azure.AI.Inference.Tests
                         scope.RecordResponse(completions);
                     }
                     requestOptions.Model = modelNameReturned;
-                    actListener.validateStartActivity(requestOptions, endpoint);
-                    actListener.validateResponseEvents(response);
+                    actListener.ValidateStartActivity(requestOptions, endpoint);
+                    actListener.ValidateResponseEvents(response);
                     meterListener.ValidateTags(modelNameReturned, endpoint, true);
                     meterListener.VaidateDuration(modelNameReturned, endpoint);
                 }
@@ -114,8 +114,8 @@ namespace Azure.AI.Inference.Tests
                         scope.RecordError(ex);
                     }
                 }
-                actListener.validateStartActivity(requestOptions, endpoint);
-                actListener.validateErrorTag(
+                actListener.ValidateStartActivity(requestOptions, endpoint);
+                actListener.ValidateErrorTag(
                     "System.Exception",
                     errMessage ?? "Exception of type 'System.Exception' was thrown.");
             }
@@ -126,9 +126,9 @@ namespace Azure.AI.Inference.Tests
         {
             StreamingRecordedResponse resp = new();
             StreamingChatCompletionsUpdate[] updates = new StreamingChatCompletionsUpdate[]{
-                getFuncPart("first", "func1", "{\"arg1\": 42}"),
-                getFuncPart(" second", "func2", "{\"arg1\": 42,"),
-                getFuncPart(" third", "func2", "\"arg2\": 43}"),
+                GetFuncPart("first", "func1", "{\"arg1\": 42}"),
+                GetFuncPart(" second", "func2", "{\"arg1\": 42,"),
+                GetFuncPart(" third", "func2", "\"arg2\": 43}"),
             };
             using (var actListener = new ValidatingActivityListener())
             {
@@ -145,15 +145,15 @@ namespace Azure.AI.Inference.Tests
                         }
                         scope.RecordStreamingResponse();
                     }
-                    actListener.validateStartActivity(requestOptions, endpoint);
-                    actListener.validateResponseEvents(resp);
+                    actListener.ValidateStartActivity(requestOptions, endpoint);
+                    actListener.ValidateResponseEvents(resp);
                     meterListener.ValidateTags("gpt-3000", endpoint, false);
                     meterListener.VaidateDuration("gpt-3000", endpoint);
                 }
             }
         }
 
-        private static StreamingChatCompletionsUpdate getFuncPart(string content, string functionName, string argsUpdate)
+        private static StreamingChatCompletionsUpdate GetFuncPart(string content, string functionName, string argsUpdate)
         {
             Dictionary<string, string> dtCalls = new()
             {
@@ -177,7 +177,7 @@ namespace Azure.AI.Inference.Tests
             );
         }
 
-        private ChatCompletions getChatCompletions(string model)
+        private static ChatCompletions GetChatCompletions(string model)
         {
             CompletionsUsage usage = new(
                 promptTokens: 10,
@@ -226,7 +226,7 @@ namespace Azure.AI.Inference.Tests
             [Values(RunType.plane, RunType.streaming, RunType.error)] RunType rtype
             )
         {
-            Environment.SetEnvironmentVariable(OpenTelemetryScope.ENABLE_ENV, "0");
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "0");
             using (var actListener = new ValidatingActivityListener())
             {
                 using (var meterListener = new ValidatingMeterListener())
@@ -238,14 +238,14 @@ namespace Azure.AI.Inference.Tests
                         switch (rtype)
                         {
                             case RunType.plane:
-                                ChatCompletions completions = getChatCompletions("gpt-3000");
+                                ChatCompletions completions = GetChatCompletions("gpt-3000");
                                 scope.RecordResponse(completions);
                                 break;
                             case RunType.streaming:
                                 scope.RecordStreamingResponse();
-                                scope.UpdateStreamResponse(getFuncPart("first", "func1", "{\"arg1\": 42}"));
-                                scope.UpdateStreamResponse(getFuncPart(" second", "func2", "{\"arg1\": 42,"));
-                                scope.UpdateStreamResponse(getFuncPart(" third", "func2", "\"arg2\": 43}"));
+                                scope.UpdateStreamResponse(GetFuncPart("first", "func1", "{\"arg1\": 42}"));
+                                scope.UpdateStreamResponse(GetFuncPart(" second", "func2", "{\"arg1\": 42,"));
+                                scope.UpdateStreamResponse(GetFuncPart(" third", "func2", "\"arg2\": 43}"));
                                 break;
                             case RunType.error:
                                 var ex = new Exception("Mock");
