@@ -1,9 +1,11 @@
 # Release History
 
-## 2.0.0 (2024-09-12)
+## 1.10.0 (2024-09-12)
 
 ### Features Added
-- Upgraded api-version tag from 'package-2024-01' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/738879cc6e1c5569b01130fd69a2587388fc34b3/specification/network/resource-manager/readme.md
+
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added experimental Bicep serialization.
 
 ## 1.9.0 (2024-07-10)
 
@@ -15,26 +17,26 @@
 ### Features Added
 
 - Upgraded api-version tag from 'package-2023-09' to 'package-2023-11'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c4e661cdf92c8f579574008d0cd11874cc303da0/specification/network/resource-manager/readme.md
-- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
-- Update .Net SDK to older SDK by removing identity field for flowLog networkWatcher resource.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Updated .Net SDK to older SDK by removing identity field for flowLog networkWatcher resource.
 
 ## 1.7.0 (2024-01-12)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-2023-06' to 'package-2023-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2f74f79b243484837a6d7b6dfa78b3e16274d006/specification/network/resource-manager/readme.md
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ## 1.6.0 (2023-11-21)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-2023-05' to 'package-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4b55e2d0e29fb2e829985485c9150f46157c3b80/specification/network/resource-manager/readme.md
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Bugs Fixed
 
-- Fix an issue that the `DeserializeHopLink` can't handle empty `resourceId`.
+- Fixed an issue that the `DeserializeHopLink` can't handle empty `resourceId`.
 
 ### Other Changes
 
@@ -43,7 +45,8 @@
 ## 1.6.0-beta.1 (2023-09-25)
 
 ### Features Added
-- Add support to VMSS features.
+
+- Added support to VMSS features.
 
 ## 1.5.0 (2023-09-16)
 
@@ -59,7 +62,7 @@
 
 ### Features Added
 
-- Make `NetworkArmClientMockingExtension`, `NetworkManagementGroupMockingExtension`, `NetworkResourceGroupMockingExtension`, `NetworkSubscriptionMockingExtension` public for mocking the extension methods.
+- Maked `NetworkArmClientMockingExtension`, `NetworkManagementGroupMockingExtension`, `NetworkResourceGroupMockingExtension`, `NetworkSubscriptionMockingExtension` public for mocking the extension methods.
 
 ## 1.4.0 (2023-07-31)
 
@@ -102,7 +105,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
@@ -113,7 +116,7 @@
 
 ### Features Added
 
-Add new resources:
+Added new resources:
 - `AdminRuleGroupResource`
 - `ApplicationGatewayWafDynamicManifestResource`
 - `BaseAdminRuleResource`
@@ -182,7 +185,7 @@ This release is the first stable release of the Network Management client librar
 
 ### Features Added
 
-- Added Update methods in resource classes.
+- Added Updated methods in resource classes.
 
 ### Breaking Changes
 
@@ -341,8 +344,8 @@ VirtualNetworkData vnet = new VirtualNetworkData()
 {
     Location = "westus",
 };
-vnet.AddressSpace.AddressPrefixes.Add("10.0.0.0/16");
-vnet.Subnets.Add(new SubnetData
+vnet.AddressSpace.AddressPrefixes.Added("10.0.0.0/16");
+vnet.Subnets.Added(new SubnetData
 {
     Name = "mySubnet",
     AddressPrefix = "10.0.0.0/24",
