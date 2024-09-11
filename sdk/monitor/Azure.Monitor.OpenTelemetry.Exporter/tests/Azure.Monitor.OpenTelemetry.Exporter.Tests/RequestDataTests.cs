@@ -65,8 +65,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
             Assert.True(requestData.Success);
             Assert.Null(requestData.Source);
-            Assert.True(requestData.Properties.Count == 1);
+            Assert.Equal(2, requestData.Properties.Count);
             Assert.Equal("bar", requestData.Properties["foo"]);
+            Assert.Equal("OK", requestData.Properties["otel.status_code"]);
             Assert.True(requestData.Measurements.Count == 0);
         }
 

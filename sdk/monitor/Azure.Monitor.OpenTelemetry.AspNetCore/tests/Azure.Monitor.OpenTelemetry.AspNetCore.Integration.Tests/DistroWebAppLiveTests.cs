@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         // DEVELOPER TIP: Can pass RecordedTestMode.Live into the base ctor to run this test with a live resource. This is recommended for local development.
         // DEVELOPER TIP: Can pass RecordedTestMode.Record into the base ctor to re-record the SessionRecords.
-        public DistroWebAppLiveTests(bool isAsync) : base(isAsync) { }
+        public DistroWebAppLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record) { }
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
@@ -275,6 +275,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
+                        new("network.protocol.version", "1.1"),
                         new("CustomProperty1", "Value1"),
                     },
                 });
@@ -301,6 +302,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
+                        new("network.protocol.version", "1.1"),
                         new("CustomProperty1", "Value1"),
                     },
                 });
