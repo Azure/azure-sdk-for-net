@@ -169,10 +169,15 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
+                if (uriBuilder.Path.EndsWith("/"))
                 {
-                    Path = tenantId
-                };
+                    uriBuilder.Path = uriBuilder.Path + tenantId;
+                }
+                else
+                {
+                    uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
+                }
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
             if (!string.IsNullOrEmpty(claims))
