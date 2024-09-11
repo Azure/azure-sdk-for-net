@@ -151,10 +151,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                     remoteDependencyDocument.CommandName = messagingUrl;
 
                     break;
-                case OperationType.Rpc:
-                    // remoteDependencyDocument.Name = activity.DisplayName;
-                    // remoteDependencyDocument.CommandName = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeRpcService)?.ToString();
-                    // remoteDependencyDocument.ResultCode = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeRpcStatus)?.ToString();
                 default:
                     // Unknown or Manual or Unexpected Dependency Type
                     remoteDependencyDocument.Name = activity.DisplayName;
