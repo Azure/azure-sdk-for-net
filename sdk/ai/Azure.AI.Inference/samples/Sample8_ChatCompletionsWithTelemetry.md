@@ -22,7 +22,7 @@ dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore --prerelease
 The `dotnet new` created the project with the single file called Program.cs. Let us edit this file with the IDE of choice.
 
 First we will import open telemetry and Azure.AI.Inference
-```c#
+```C# Snippet:Azure_AI_Inference_TelemetrySyncScenario_import
 //Azure imports
 using Azure;
 using Azure.AI.Inference;
@@ -34,25 +34,19 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 ```
 
-Now we will define the `endpoint`, `credential` and `model`. In this example we will take these values from the environment variables.
-```c#
+Now we will define the `endpoint`, `credential` and `model`. To log metrics and events to [Application Insights](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) we will need to get the connection string. Please open the Azure portal, create the Application Insights resource you wish to use for storing the telemetry. After that open the main page and find the "Connection String". It generally will have the format similar to "InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://region-x.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx". In our code we will use the connection string from environment variable.
+```C# Snippet:Azure_AI_Inference_TelemetrySyncScenario_variables
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
 var model = System.Environment.GetEnvironmentVariable("MODEL_NAME");
-```
-
-To get the telemetry, we will need to listen for [Activity](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity) and [Meter](https://learn.microsoft.com/dotnet/api/system.diagnostics.metrics.meter)  defined by the constant `OpenTelemetryConstants.ActivityName` from the `Azure.AI.Inference.Telemetry` namespace.
-To log metrics and events to [Application Insights](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) we will need to get the connection string. Please open the Azure portal, create the Application Insights resource you wish to use for storing the telemetry. After that open the main page and find the "Connection String". It generally will have the format similar to "InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://region-x.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx". In our code we will use the connection string from environment variable.
-
-```c#
 var appInsightsConn = System.Environment.GetEnvironmentVariable("APP_INSIGHTS_CONNECTION_STR");
 ```
 
-To allow telemetry collection we will create the listeners, which will listen to Azure.AI.Inference activity and meters.In the code below we will create `tracerProvider`, which will listen to activity and `meterProvider`, listening to meter. We will add console exporters to both providers with the line `AddConsoleExporter()` and monitor exporter for Application Insights export: `AddAzureMonitorMetricExporter`. 
+In this example we will take these values from the environment variables. To get the telemetry, we will need to listen for [Activity](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity) and [Meter](https://learn.microsoft.com/dotnet/api/system.diagnostics.metrics.meter)  defined by the constant `OpenTelemetryConstants.ActivityName` from the `Azure.AI.Inference.Telemetry` namespace. To allow telemetry collection we will create the listeners, which will listen to Azure.AI.Inference activity and meters.In the code below we will create `tracerProvider`, which will listen to activity and `meterProvider`, listening to meter. We will add console exporters to both providers with the line `AddConsoleExporter()` and monitor exporter for Application Insights export: `AddAzureMonitorMetricExporter`. 
 
-```c#
+```C# Snippet:Azure_AI_Inference_TelemetrySyncScenario_providers
 using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .AddSource(ACTIVITY)
+    .AddSource(OpenTelemetryConstants.ActivityName)
     .ConfigureResource(r => r.AddService("MyServiceName"))
     .AddConsoleExporter()
     .AddAzureMonitorTraceExporter(options =>
@@ -62,7 +56,7 @@ using var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .Build();
 
 using var meterProvider = Sdk.CreateMeterProviderBuilder()
-    .AddMeter(ACTIVITY)
+    .AddMeter(OpenTelemetryConstants.ActivityName)
     .AddConsoleExporter()
     .AddAzureMonitorMetricExporter(options =>
     {
@@ -73,8 +67,7 @@ using var meterProvider = Sdk.CreateMeterProviderBuilder()
 
 To export only events, we need to define `tracerProvider`, to export also metrics, we need to we also need to define `meterProvider`. Metrics cannot be exported without events.
 After we have initialized the providers, we will use simple completions example from [Sample1](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample1_ChatCompletions.md).
-```c#
-// Set up the parameters.
+```C# Snippet:Azure_AI_Inference_TelemetrySyncScenario_inference
 var client = new ChatCompletionsClient(
     endpoint,
     credential,
@@ -91,7 +84,6 @@ var requestOptions = new ChatCompletionsOptions()
     Temperature = 1,
     MaxTokens = 1000
 };
-
 // Call the enpoint and output the response.
 Response<ChatCompletions> response = client.Complete(requestOptions);
 System.Console.WriteLine(response.Value.Choices[0].Message.Content);

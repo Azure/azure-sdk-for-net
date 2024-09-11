@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#region Snippet:Azure_AI_Inference_TelemetrySyncScenario_import
 //Azure imports
 using Azure;
 using Azure.AI.Inference;
@@ -10,6 +11,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
+#endregion
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
@@ -30,7 +32,7 @@ namespace Azure.AI.Inference.Tests.Samples
         [SyncOnly]
         public void TelemetrySyncScenario()
         {
-            #region Snippet:Azure_AI_Inference_TelemetrySyncScenario
+            #region Snippet:Azure_AI_Inference_TelemetrySyncScenario_variables
 #if SNIPPET
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
@@ -42,9 +44,10 @@ namespace Azure.AI.Inference.Tests.Samples
             var model = "gpt-4o";
             var appInsightsConn = TestEnvironment.TestApplicationInsights;
 #endif
-            const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
+            #endregion
+            #region Snippet:Azure_AI_Inference_TelemetrySyncScenario_providers
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource(ACTIVITY)
+                .AddSource(OpenTelemetryConstants.ActivityName)
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
                 .AddAzureMonitorTraceExporter(options =>
@@ -54,15 +57,16 @@ namespace Azure.AI.Inference.Tests.Samples
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(ACTIVITY)
+                .AddMeter(OpenTelemetryConstants.ActivityName)
                 .AddConsoleExporter()
                 .AddAzureMonitorMetricExporter(options =>
                 {
                     options.ConnectionString = appInsightsConn;
                 })
                 .Build();
-
+            #endregion
             // Set up the parameters.
+            #region Snippet:Azure_AI_Inference_TelemetrySyncScenario_inference
             var client = new ChatCompletionsClient(
                 endpoint,
                 credential,
@@ -107,7 +111,6 @@ namespace Azure.AI.Inference.Tests.Samples
         [AsyncOnly]
         public async Task TelemetrySyncStreamScenario()
         {
-            #region Snippet:Azure_AI_Inference_TelemetrySyncStreamScenario
 #if SNIPPET
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
@@ -152,17 +155,13 @@ namespace Azure.AI.Inference.Tests.Samples
                     new ChatRequestSystemMessage("You are a helpful assistant."),
                     new ChatRequestUserMessage("What is the capital of France?"),
                 },
-                Model = model,
-                //Temperature = 1,
-                //MaxTokens = 1000
+                Model = model
             };
 
             // Call the enpoint and output the response.
             StreamingResponse<StreamingChatCompletionsUpdate> response = client.CompleteStreaming(requestOptions);
             Assert.That(response, Is.Not.Null);
-            #endregion
 
-            #region Snippet:Azure_AI_Inference_TelemetrySyncStreamScenario_CheckResponse
 #if !SNIPPET
             await checkStreamingResponse(response);
 #else
@@ -175,7 +174,6 @@ namespace Azure.AI.Inference.Tests.Samples
             }
 #endif
             System.Console.WriteLine("");
-            #endregion
         }
 
         private async Task checkStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response)
@@ -218,7 +216,6 @@ namespace Azure.AI.Inference.Tests.Samples
         [AsyncOnly]
         public async Task TelemetryAsyncScenario()
         {
-            #region Snippet:Azure_AI_Inference_TelemetrySyncScenario
 #if SNIPPET
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
@@ -270,7 +267,6 @@ namespace Azure.AI.Inference.Tests.Samples
             // Call the enpoint and output the response.
             Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
             System.Console.WriteLine(response.Value.Choices[0].Message.Content);
-            #endregion
 #if !SNIPPET
             checkResponse(response);
 #endif
@@ -280,7 +276,6 @@ namespace Azure.AI.Inference.Tests.Samples
         [AsyncOnly]
         public async Task TelemetryAsyncStreamScenario()
         {
-            #region Snippet:Azure_AI_Inference_TelemetrySyncStreamScenario
 #if SNIPPET
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
@@ -333,9 +328,7 @@ namespace Azure.AI.Inference.Tests.Samples
             // Call the enpoint and output the response.
             StreamingResponse<StreamingChatCompletionsUpdate> response = await client.CompleteStreamingAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
-            #endregion
 
-            #region Snippet:Azure_AI_Inference_TelemetrySyncStreamScenario_CheckResponse
 #if !SNIPPET
             await checkStreamingResponse(response);
 #else
@@ -348,7 +341,6 @@ namespace Azure.AI.Inference.Tests.Samples
             }
 #endif
             System.Console.WriteLine("");
-            #endregion
         }
     }
 }
