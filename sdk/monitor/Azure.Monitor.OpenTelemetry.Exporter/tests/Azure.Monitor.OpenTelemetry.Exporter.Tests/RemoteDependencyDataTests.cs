@@ -114,7 +114,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
-            activity.SetStatus(Status.Ok); // this should be omitted from telemetry.
+            activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in AzMonListExtensionsTests.
             activity.SetTag(SemanticConventions.AttributeHttpHost, "www.foo.bar");
@@ -131,8 +131,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("200", remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
-            Assert.Equal(0, remoteDependencyData.Properties.Count);
-            Assert.Equal(0, remoteDependencyData.Measurements.Count);
+            Assert.True(remoteDependencyData.Properties.Count == 0);
+            Assert.True(remoteDependencyData.Measurements.Count == 0);
         }
 
         [Fact]
@@ -147,7 +147,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             activity.Stop();
 
-            activity.SetStatus(Status.Ok); // this should be omitted from telemetry.
+            activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeDbName, "mysqlserver");
             activity.SetTag(SemanticConventions.AttributeDbSystem, "mssql");
             activity.SetTag(SemanticConventions.AttributePeerService, "localhost"); // only adding test via peer.service. all possible combinations are covered in AzMonListExtensionsTests.
@@ -164,9 +164,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Null(remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
-            Assert.Equal(1, remoteDependencyData.Properties.Count);
+            Assert.True(remoteDependencyData.Properties.Count == 1);
             Assert.True(remoteDependencyData.Properties.Contains(new KeyValuePair<string, string>(SemanticConventions.AttributeDbName, "mysqlserver" )));
-            Assert.Equal(0, remoteDependencyData.Measurements.Count);
+            Assert.True(remoteDependencyData.Measurements.Count == 0);
         }
 
         [Fact]
