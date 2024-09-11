@@ -22,10 +22,13 @@ public class BasicStorageTests(bool async)
         await test.Define(StorageResources.CreateAccount("storage"))
         .Compare(
             """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
                 name: take('storage${uniqueString(resourceGroup().id)}', 24)
                 kind: 'StorageV2'
-                location: resourceGroup().location
+                location: location
                 sku: {
                     name: 'Standard_LRS'
                 }
@@ -51,10 +54,13 @@ public class BasicStorageTests(bool async)
             })
         .Compare(
             """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
                 name: take('storage${uniqueString(resourceGroup().id)}', 24)
                 kind: 'StorageV2'
-                location: resourceGroup().location
+                location: location
                 sku: {
                     name: 'Standard_LRS'
                 }
@@ -86,10 +92,13 @@ public class BasicStorageTests(bool async)
             })
         .Compare(
             """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
                 name: take('storage${uniqueString(resourceGroup().id)}', 24)
                 kind: 'StorageV2'
-                location: resourceGroup().location
+                location: location
                 sku: {
                     name: 'Standard_LRS'
                 }
@@ -101,7 +110,7 @@ public class BasicStorageTests(bool async)
 
             resource id 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
                 name: take('id-${uniqueString(resourceGroup().id)}', 128)
-                location: resourceGroup().location
+                location: location
             }
 
             resource id_StorageBlobDataReader_storage 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
@@ -131,10 +140,13 @@ public class BasicStorageTests(bool async)
             })
         .Compare(
             """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
                 name: take('storage${uniqueString(resourceGroup().id)}', 24)
                 kind: 'StorageV2'
-                location: resourceGroup().location
+                location: location
                 sku: {
                     name: 'Standard_LRS'
                 }
@@ -169,17 +181,10 @@ public class BasicStorageTests(bool async)
                         Value = StorageSkuName.StandardLrs,
                         Description = "Storage Account type"
                     };
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The storage account location."
-                    };
 
                 StorageAccount sa =
                     new(nameof(sa))
                     {
-                        Location = location,
                         Sku = new StorageSku { Name = storageAccountType },
                         Kind = StorageKind.StorageV2
                     };
@@ -192,7 +197,7 @@ public class BasicStorageTests(bool async)
             @description('Storage Account type')
             param storageAccountType string = 'Standard_LRS'
 
-            @description('The storage account location.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
@@ -227,17 +232,9 @@ public class BasicStorageTests(bool async)
                         Description = "The container name."
                     };
 
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The storage account location."
-                    };
-
                 StorageAccount sa =
                     new(nameof(sa))
                     {
-                        Location = location,
                         Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
                         Kind = StorageKind.StorageV2,
                         AccessTier = StorageAccountAccessTier.Hot
@@ -255,7 +252,7 @@ public class BasicStorageTests(bool async)
             @description('The container name.')
             param containerName string = 'mycontainer'
 
-            @description('The storage account location.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
@@ -298,16 +295,10 @@ public class BasicStorageTests(bool async)
                         Value = StorageSkuName.StandardLrs,
                         Description = "Storage Account type"
                     };
-                BicepParameter location = new(nameof(location), typeof(string))
-                {
-                    Value = BicepFunction.GetResourceGroup().Location,
-                    Description = "The storage account location."
-                };
 
                 StorageAccount sa =
                     new(nameof(sa))
                     {
-                        Location = location,
                         Sku = new StorageSku { Name = storageAccountType },
                         Kind = StorageKind.Storage,
                         Encryption =
@@ -330,7 +321,7 @@ public class BasicStorageTests(bool async)
             @description('Storage Account type')
             param storageAccountType string = 'Standard_LRS'
 
-            @description('The storage account location.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {

@@ -234,4 +234,21 @@ public partial class KubernetesClusterExtension : Resource
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
+
+    /// <summary>
+    /// Assign a role to an that grants access to this
+    /// KubernetesClusterExtension.
+    /// </summary>
+    /// <param name="role">The role to grant.</param>
+    /// <param name="principalType">The type of the principal to assign to.</param>
+    /// <param name="principalId">The principal to assign to.</param>
+    /// <returns>The <see cref="RoleAssignment"/>.</returns>
+    public RoleAssignment AssignRole(KubernetesConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
+        new($"{principalId.Compile()}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}_{ResourceName}")
+        {
+            Scope = new IdentifierExpression(ResourceName),
+            PrincipalType = principalType,
+            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
+            PrincipalId = principalId
+        };
 }

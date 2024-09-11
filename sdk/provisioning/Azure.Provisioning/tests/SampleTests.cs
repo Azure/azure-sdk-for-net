@@ -31,15 +31,8 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location
-                    };
-
                 // Create a storage account and blob resources
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
-                storage.Location = location;
                 blobs = new(nameof(blobs)) { Parent = storage };
 
                 // Grab the endpoint
@@ -47,6 +40,7 @@ internal class SampleTests(bool async)
             })
         .Compare(
             """
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
@@ -96,24 +90,17 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location
-                    };
                 BicepParameter principalId = new(nameof(principalId), typeof(string)) { Value = "" };
                 BicepParameter tags = new(nameof(tags), typeof(object)) { Value = new BicepDictionary<string>() };
 
                 UserAssignedIdentity mi =
                     new(nameof(mi))
                     {
-                        Location = location,
                         Tags = tags,
                     };
                 ContainerRegistryService acr =
                     new(nameof(acr))
                     {
-                        Location = location,
                         Sku = new ContainerRegistrySku() { Name = ContainerRegistrySkuName.Basic },
                         Tags = tags,
                         Identity =
@@ -131,14 +118,12 @@ internal class SampleTests(bool async)
                 OperationalInsightsWorkspace law =
                     new(nameof(law))
                     {
-                        Location = location,
                         Sku = new OperationalInsightsWorkspaceSku() { Name = OperationalInsightsWorkspaceSkuName.PerGB2018 },
                         Tags = tags,
                     };
                 ContainerAppManagedEnvironment cae =
                     new(nameof(cae))
                     {
-                        Location = location,
                         WorkloadProfiles =
                         {
                             new ContainerAppWorkloadProfile()
@@ -188,11 +173,12 @@ internal class SampleTests(bool async)
             })
         .Compare(
             """
-            param location string = resourceGroup().location
-
             param principalId string = ''
 
             param tags object = { }
+
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
 
             resource mi 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
                 name: take('mi-${uniqueString(resourceGroup().id)}', 128)
@@ -307,12 +293,7 @@ internal class SampleTests(bool async)
             ctx =>
             {
                 // Create a new resource group
-                ResourceGroup rg =
-                    new("rg-test", "2024-03-01")
-                    {
-                        Name = BicepFunction.Interpolate($"rg-test-{BicepFunction.GetUniqueString(BicepFunction.GetSubscription().Id)}"),
-                        Location = AzureLocation.WestUS2
-                    };
+                ResourceGroup rg = new("rg-test", "2024-03-01");
 
                 // Create a new infra group scoped to our subscription and add
                 // the resource group
@@ -325,9 +306,12 @@ internal class SampleTests(bool async)
             """
             targetScope = 'subscription'
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = deployment().location
+
             resource rg-test 'Microsoft.Resources/resourceGroups@2024-03-01' = {
-                name: 'rg-test-${uniqueString(subscription().id)}'
-                location: 'westus2'
+                name: take('rg-test-${uniqueString(deployment().id)}', 90)
+                location: location
             }
             """)
         .Lint()

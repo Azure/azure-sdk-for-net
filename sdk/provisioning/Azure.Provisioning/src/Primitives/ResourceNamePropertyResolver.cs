@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Provisioning.Expressions;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Primitives;
 
@@ -100,7 +101,7 @@ public readonly struct ResourceNameRequirements(
 /// https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules
 /// </see>.
 /// </remarks>
-public abstract class ResourceNameResolver : PropertyResolver
+public abstract class ResourceNamePropertyResolver : PropertyResolver
 {
     /// <inheritdoc />
     public override void ResolveProperties(ProvisioningContext context, ProvisioningConstruct construct)
@@ -182,7 +183,7 @@ public abstract class ResourceNameResolver : PropertyResolver
 /// <see cref="NamedProvisioningConstruct.ResourceName"/> as a prefix and a
 /// unique suffix based on the current resource group's ID.
 /// </summary>
-public class DynamicResourceNameResolver : ResourceNameResolver
+public class DynamicResourceNamePropertyResolver : ResourceNamePropertyResolver
 {
     // TODO: Consider making this more configurable by providing different
     // sources besides just the current resource group's ID, potentially
@@ -208,9 +209,26 @@ public class DynamicResourceNameResolver : ResourceNameResolver
             requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Underscore) ? "_" :
             requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Period) ? "." :
             "";
-        BicepValue<string> suffix = BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id);
+        BicepValue<string> suffix = GetUniqueSuffix(context, resource);
         return BicepFunction.Take(BicepFunction.Interpolate($"{prefix}{separator}{suffix}"), requirements.MaxLength);
     }
+
+    /// <summary>
+    /// Get a unique dynamic name suffix for the given resource.
+    /// </summary>
+    /// <param name="context">The provisioning context for this resource.</param>
+    /// <param name="resource">The resource with an unset Name property.</param>
+    /// <returns>A unique dynamic name suffix for the resource.</returns>
+    /// <remarks>
+    /// This defaults to `uniqueString(resourceGroup().id)` for most resources
+    /// and `uniqueString(deployment().id)` for resource groups.  This can be
+    /// overridden to provide a different "entropy source."
+    /// </remarks>
+    protected virtual BicepValue<string> GetUniqueSuffix(ProvisioningContext context, Resource resource) =>
+        BicepFunction.GetUniqueString(
+            resource is not ResourceGroup ?
+                BicepFunction.GetResourceGroup().Id :
+                BicepFunction.GetDeployment().Id);
 }
 
 /// <summary>
@@ -218,7 +236,7 @@ public class DynamicResourceNameResolver : ResourceNameResolver
 /// <see cref="NamedProvisioningConstruct.ResourceName"/> as a prefix and a
 /// randomly generated suffix of allowed characters.
 /// </summary>
-public class StaticResourceNameResolver : ResourceNameResolver
+public class StaticResourceNamePropertyResolver : ResourceNamePropertyResolver
 {
     private static readonly char[] s_lower = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     private static readonly char[] s_upper = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];

@@ -282,4 +282,20 @@ public partial class SignalRService : Resource
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
+
+    /// <summary>
+    /// Assign a role to an that grants access to this SignalRService.
+    /// </summary>
+    /// <param name="role">The role to grant.</param>
+    /// <param name="principalType">The type of the principal to assign to.</param>
+    /// <param name="principalId">The principal to assign to.</param>
+    /// <returns>The <see cref="RoleAssignment"/>.</returns>
+    public RoleAssignment AssignRole(SignalRBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
+        new($"{principalId.Compile()}_{SignalRBuiltInRole.GetBuiltInRoleName(role)}_{ResourceName}")
+        {
+            Scope = new IdentifierExpression(ResourceName),
+            PrincipalType = principalType,
+            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
+            PrincipalId = principalId
+        };
 }

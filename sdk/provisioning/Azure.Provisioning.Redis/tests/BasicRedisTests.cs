@@ -20,17 +20,9 @@ public class BasicRedisTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The cache location."
-                    };
-
                 RedisResource cache =
                     new(nameof(cache), "2020-06-01")
                     {
-                        Location = location,
                         EnableNonSslPort = false,
                         MinimumTlsVersion = RedisTlsVersion.Tls1_2,
                         Sku =
@@ -44,7 +36,7 @@ public class BasicRedisTests(bool async)
             })
         .Compare(
             """
-            @description('The cache location.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource cache 'Microsoft.Cache/redis@2020-06-01' = {

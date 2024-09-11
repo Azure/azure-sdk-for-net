@@ -443,9 +443,14 @@ public partial class CosmosDBAccount : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-15-preview.
+        /// 2024-09-01-preview.
         /// </summary>
-        public static readonly string V2024_05_15_preview = "2024-05-15-preview";
+        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
+
+        /// <summary>
+        /// 2024-08-15.
+        /// </summary>
+        public static readonly string V2024_08_15 = "2024-08-15";
 
         /// <summary>
         /// 2024-05-15.
@@ -607,5 +612,21 @@ public partial class CosmosDBAccount : Resource
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
+        };
+
+    /// <summary>
+    /// Assign a role to an that grants access to this CosmosDBAccount.
+    /// </summary>
+    /// <param name="role">The role to grant.</param>
+    /// <param name="principalType">The type of the principal to assign to.</param>
+    /// <param name="principalId">The principal to assign to.</param>
+    /// <returns>The <see cref="RoleAssignment"/>.</returns>
+    public RoleAssignment AssignRole(CosmosDBBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
+        new($"{principalId.Compile()}_{CosmosDBBuiltInRole.GetBuiltInRoleName(role)}_{ResourceName}")
+        {
+            Scope = new IdentifierExpression(ResourceName),
+            PrincipalType = principalType,
+            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
+            PrincipalId = principalId
         };
 }
