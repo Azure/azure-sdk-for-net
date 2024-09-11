@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls, options);
             }
+            if (Optional.IsDefined(CircuitBreaker))
+            {
+                writer.WritePropertyName("circuitBreaker"u8);
+                writer.WriteObjectValue(CircuitBreaker, options);
+            }
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
@@ -119,6 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             BackendCredentialsContract credentials = default;
             BackendProxyContract proxy = default;
             BackendTlsProperties tls = default;
+            BackendCircuitBreaker circuitBreaker = default;
             Uri uri = default;
             BackendProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -189,6 +195,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("circuitBreaker"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            circuitBreaker = BackendCircuitBreaker.DeserializeBackendCircuitBreaker(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -224,6 +239,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 credentials,
                 proxy,
                 tls,
+                circuitBreaker,
                 uri,
                 protocol,
                 serializedAdditionalRawData);

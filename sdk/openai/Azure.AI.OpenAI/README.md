@@ -81,7 +81,7 @@ AzureOpenAIClientOptions optionsWithCustomAudience = new()
 
 #### Create client with an API key
 
-While not as secure as Microsoft Entra-based authentication, it's possible to authenticate using a client subscription key:
+While not as secure as [Microsoft Entra-based authentication](#create-client-with-a-microsoft-entra-credential), it's possible to authenticate using a client subscription key:
 
 ```C# Snippet:ConfigureClient:WithAOAITopLevelClient
 string keyFromEnvironment = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY");

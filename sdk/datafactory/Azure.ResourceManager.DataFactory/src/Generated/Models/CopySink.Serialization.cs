@@ -118,6 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "DynamicsCrmSink": return DynamicsCrmSink.DeserializeDynamicsCrmSink(element, options);
                     case "DynamicsSink": return DynamicsSink.DeserializeDynamicsSink(element, options);
                     case "FileSystemSink": return FileSystemSink.DeserializeFileSystemSink(element, options);
+                    case "IcebergSink": return IcebergSink.DeserializeIcebergSink(element, options);
                     case "InformixSink": return InformixSink.DeserializeInformixSink(element, options);
                     case "JsonSink": return JsonSink.DeserializeJsonSink(element, options);
                     case "LakeHouseTableSink": return LakeHouseTableSink.DeserializeLakeHouseTableSink(element, options);

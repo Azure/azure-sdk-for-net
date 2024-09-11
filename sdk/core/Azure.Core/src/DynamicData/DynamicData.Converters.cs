@@ -127,7 +127,7 @@ namespace Azure.Core.Serialization
                 string? value = reader.GetString() ??
                     throw new JsonException($"Failed to read 'string' value at JSON position {reader.Position}.");
 
-                // From: https://github.com/Azure/autorest.csharp/blob/feature/v3/src/assets/Generator.Shared/TypeFormatters.cs#L137
+                // From: https://github.com/Azure/autorest.csharp/blob/main/src/assets/Generator.Shared/TypeFormatters.cs#L137
                 return TimeSpan.ParseExact(value, "c", CultureInfo.InvariantCulture);
             }
 
@@ -136,7 +136,7 @@ namespace Azure.Core.Serialization
                 TimeSpan timeValue,
                 JsonSerializerOptions options)
             {
-                // From: https://github.com/Azure/autorest.csharp/blob/feature/v3/src/assets/Generator.Shared/TypeFormatters.cs#L37
+                // From: https://github.com/Azure/autorest.csharp/blob/main/src/assets/Generator.Shared/TypeFormatters.cs#L37
                 string value = timeValue.ToString("c", CultureInfo.InvariantCulture);
                 writer.WriteStringValue(value);
             }

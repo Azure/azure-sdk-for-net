@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 - Fixed \[BUG\] Method overload BlobBaseClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
+- Fixed \[BUG\] Fixed Equality failures due to implicit cast on BlobErrorCode #44213
 
 ### Other Changes
 
