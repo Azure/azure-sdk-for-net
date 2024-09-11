@@ -15,6 +15,13 @@ namespace Azure.AI.Inference.Tests
         private ChatCompletionsOptions requestOptions;
         private readonly Uri endpoint = new Uri("https://int.api.azureml-test.ms/nexus");
 
+        public enum RunType
+        {
+            Basic,
+            Streaming,
+            Error
+        };
+
         [SetUp]
         public void setup()
         {
@@ -153,6 +160,44 @@ namespace Azure.AI.Inference.Tests
             }
         }
 
+        [Test]
+        public void testSwitchedOffTelemetry(
+            [Values(RunType.Basic, RunType.Streaming, RunType.Error)] RunType rtype
+            )
+        {
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "0");
+            using (var actListener = new ValidatingActivityListener())
+            {
+                using (var meterListener = new ValidatingMeterListener())
+                {
+                    using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
+                    {
+                        Assert.False(scope.IsEnabled);
+                        Assert.True(scope.AreMetricsOn);
+                        switch (rtype)
+                        {
+                            case RunType.Basic:
+                                ChatCompletions completions = GetChatCompletions("gpt-3000");
+                                scope.RecordResponse(completions);
+                                break;
+                            case RunType.Streaming:
+                                scope.RecordStreamingResponse();
+                                scope.UpdateStreamResponse(GetFuncPart("first", "func1", "{\"arg1\": 42}"));
+                                scope.UpdateStreamResponse(GetFuncPart(" second", "func2", "{\"arg1\": 42,"));
+                                scope.UpdateStreamResponse(GetFuncPart(" third", "func2", "\"arg2\": 43}"));
+                                break;
+                            case RunType.Error:
+                                var ex = new Exception("Mock");
+                                scope.RecordError(ex);
+                                break;
+                        }
+                    }
+                    actListener.VaidateTelemetryIsOff();
+                    meterListener.VaidateMetricsAreOff();
+                }
+            }
+        }
+        #region Helpers
         private static StreamingChatCompletionsUpdate GetFuncPart(string content, string functionName, string argsUpdate)
         {
             Dictionary<string, string> dtCalls = new()
@@ -214,49 +259,6 @@ namespace Azure.AI.Inference.Tests
                  choices: choices,
                  serializedAdditionalRawData: new Dictionary<string, BinaryData>());
         }
-
-        public enum RunType{
-            plane,
-            streaming,
-            error
-        };
-
-        [Test]
-        public void testSwitchedOffTelemetry(
-            [Values(RunType.plane, RunType.streaming, RunType.error)] RunType rtype
-            )
-        {
-            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "0");
-            using (var actListener = new ValidatingActivityListener())
-            {
-                using (var meterListener = new ValidatingMeterListener())
-                {
-                    using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
-                    {
-                        Assert.False(scope.IsEnabled);
-                        Assert.True(scope.AreMetricsOn);
-                        switch (rtype)
-                        {
-                            case RunType.plane:
-                                ChatCompletions completions = GetChatCompletions("gpt-3000");
-                                scope.RecordResponse(completions);
-                                break;
-                            case RunType.streaming:
-                                scope.RecordStreamingResponse();
-                                scope.UpdateStreamResponse(GetFuncPart("first", "func1", "{\"arg1\": 42}"));
-                                scope.UpdateStreamResponse(GetFuncPart(" second", "func2", "{\"arg1\": 42,"));
-                                scope.UpdateStreamResponse(GetFuncPart(" third", "func2", "\"arg2\": 43}"));
-                                break;
-                            case RunType.error:
-                                var ex = new Exception("Mock");
-                                scope.RecordError(ex);
-                                break;
-                        }
-                    }
-                    actListener.VaidateTelemetryIsOff();
-                    meterListener.VaidateMetricsAreOff();
-                }
-            }
-        }
+        #endregion
     }
 }

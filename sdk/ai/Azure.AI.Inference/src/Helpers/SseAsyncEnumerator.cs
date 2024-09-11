@@ -14,10 +14,10 @@ namespace Azure.Core.Sse
     internal static class SseAsyncEnumerator<T>
     {
         internal static async IAsyncEnumerable<T> EnumerateFromSseStream(
-            OpenTelemetryScope scope,
             Stream stream,
             Func<JsonElement, IEnumerable<T>> multiElementDeserializer,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            [EnumeratorCancellation] CancellationToken cancellationToken = default,
+            OpenTelemetryScope scope = null)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace Azure.Core.Sse
                         IEnumerable<T> newItems = multiElementDeserializer.Invoke(sseMessageJson.RootElement);
                         foreach (T item in newItems)
                         {
-                            scope.UpdateStreamResponse(item);
+                            scope?.UpdateStreamResponse(item);
                             yield return item;
                         }
                     }
@@ -51,21 +51,21 @@ namespace Azure.Core.Sse
             {
                 // Always dispose the stream immediately once enumeration is complete for any reason
                 stream.Dispose();
-                // Record the telemetry and dispose the scope.
-                scope.RecordStreamingResponse();
-                scope.Dispose();
+                // Record the telemetry and dispose the scope, if the scope is present.
+                scope?.RecordStreamingResponse();
+                scope?.Dispose();
             }
         }
 
         internal static IAsyncEnumerable<T> EnumerateFromSseStream(
-            OpenTelemetryScope scope,
             Stream stream,
             Func<JsonElement, T> elementDeserializer,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            OpenTelemetryScope scope = null)
             => EnumerateFromSseStream(
-                scope,
                 stream,
                 (element) => new T[] { elementDeserializer.Invoke(element) },
-                cancellationToken);
+                cancellationToken,
+                scope);
     }
 }

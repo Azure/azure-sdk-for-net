@@ -156,10 +156,11 @@ namespace Azure.AI.Inference
                     baseResponse,
                     (responseForEnumeration)
                         => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
-                            otel,
                             responseForEnumeration.ContentStream,
                             StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
-                            cancellationToken));
+                            cancellationToken,
+                            otel
+                            ));
             }
             catch (Exception e)
             {
@@ -217,10 +218,10 @@ namespace Azure.AI.Inference
                     baseResponse,
                     (responseForEnumeration)
                         => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
-                            otel,
                             responseForEnumeration.ContentStream,
                             StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
-                            cancellationToken));
+                            cancellationToken,
+                            otel));
             }
             catch (Exception e)
             {

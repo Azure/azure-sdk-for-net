@@ -17,6 +17,12 @@ namespace Azure.AI.Inference.Tests
         public InferenceClientTelemetryTest(bool isAsync) : base(isAsync)
         { }
 
+        public enum TestType
+        {
+            Basic,
+            Streaming
+        };
+
         [SetUp]
         public void Setup()
         {
@@ -44,33 +50,8 @@ namespace Azure.AI.Inference.Tests
             Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "1");
         }
 
-        public enum TestType
-        {
-            Plane,
-            Streaming
-        };
-
-        private ChatCompletionsClient CreateClient(Uri endpoint)
-        {
-            return InstrumentClient(
-                new ChatCompletionsClient(
-                    endpoint,
-                    new AzureKeyCredential(TestEnvironment.GithubToken),
-                    InstrumentClientOptions(new ChatCompletionsClientOptions())));
-        }
-
-        private static async Task<StreamingRecordedResponse> GetStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response)
-        {
-            var recordedResponse = new StreamingRecordedResponse();
-            await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
-            {
-                recordedResponse.Update(chatUpdate);
-            }
-            return recordedResponse;
-        }
-
         [RecordedTest]
-        [TestCase(TestType.Plane)]
+        [TestCase(TestType.Basic)]
         [TestCase(TestType.Streaming)]
         public async Task TestGoodChatResponse(TestType testType)
         {
@@ -81,7 +62,7 @@ namespace Azure.AI.Inference.Tests
             AbstractRecordedResponse recordedResponse = null;
             switch (testType)
             {
-                case TestType.Plane:
+                case TestType.Basic:
                     {
                         Response<ChatCompletions> response = await client.CompleteAsync(m_requestOptions);
                         recordedResponse = new SingleRecordedResponse(response);
@@ -111,12 +92,12 @@ namespace Azure.AI.Inference.Tests
             // TODO: When we will support usage tags on streaming
             // always set them and check.
             meterListener.ValidateTags(recordedResponse.Model, endpoint,
-                testType == TestType.Plane);
+                testType == TestType.Basic);
             meterListener.VaidateDuration(recordedResponse.Model, endpoint);
         }
 
         [RecordedTest]
-        [TestCase(TestType.Plane)]
+        [TestCase(TestType.Basic)]
         [TestCase(TestType.Streaming)]
         public async Task TestBadChatResponse(TestType testType)
         {
@@ -139,7 +120,7 @@ namespace Azure.AI.Inference.Tests
             {
                 switch (testType)
                 {
-                    case TestType.Plane: await client.CompleteAsync(requestOptions);
+                    case TestType.Basic: await client.CompleteAsync(requestOptions);
                         break;
                     case TestType.Streaming: await client.CompleteStreamingAsync(m_requestStreamingOptions);
                         break;
@@ -152,5 +133,26 @@ namespace Azure.AI.Inference.Tests
                 actListener.ValidateErrorTag("400", ex.Message);
             }
         }
+
+        #region Helpers
+        private static async Task<StreamingRecordedResponse> GetStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response)
+        {
+            var recordedResponse = new StreamingRecordedResponse();
+            await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
+            {
+                recordedResponse.Update(chatUpdate);
+            }
+            return recordedResponse;
+        }
+
+        private ChatCompletionsClient CreateClient(Uri endpoint)
+        {
+            return InstrumentClient(
+                new ChatCompletionsClient(
+                    endpoint,
+                    new AzureKeyCredential(TestEnvironment.GithubToken),
+                    InstrumentClientOptions(new ChatCompletionsClientOptions())));
+        }
+        #endregion
     }
 }

@@ -88,23 +88,8 @@ namespace Azure.AI.Inference.Tests.Samples
             System.Console.WriteLine(response.Value.Choices[0].Message.Content);
             #endregion
 #if !SNIPPET
-            checkResponse(response);
+            CheckResponse(response);
 #endif
-        }
-
-        private void checkResponse(Response<ChatCompletions> response)
-        {
-            Assert.That(response, Is.Not.Null);
-            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            ChatChoice choice = response.Value.Choices[0];
-            Assert.That(choice.Index, Is.EqualTo(0));
-            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
         }
 
         [Test]
@@ -176,42 +161,6 @@ namespace Azure.AI.Inference.Tests.Samples
             System.Console.WriteLine("");
         }
 
-        private async Task checkStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response)
-        {
-            string id = null;
-            string ret_model = null;
-            bool gotRole = false;
-            await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
-            {
-                Assert.That(chatUpdate, Is.Not.Null);
-
-                Assert.That(chatUpdate.Id, Is.Not.Null.Or.Empty);
-                Assert.That(chatUpdate.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
-                Assert.That(chatUpdate.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
-                if (!string.IsNullOrEmpty(chatUpdate.Id))
-                {
-                    Assert.That((id is null) || (id == chatUpdate.Id));
-                    id = chatUpdate.Id;
-                }
-                if (!string.IsNullOrEmpty(chatUpdate.Model))
-                {
-                    Assert.That((ret_model is null) || (ret_model == chatUpdate.Model));
-                    ret_model = chatUpdate.Model;
-                }
-                if (chatUpdate.Role.HasValue)
-                {
-                    Assert.IsFalse(gotRole);
-                    Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
-                    gotRole = true;
-                }
-
-                if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
-                {
-                    System.Console.Write(chatUpdate.ContentUpdate);
-                }
-            }
-        }
-
         [Test]
         [AsyncOnly]
         public async Task TelemetryAsyncScenario()
@@ -268,7 +217,7 @@ namespace Azure.AI.Inference.Tests.Samples
             Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
             System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 #if !SNIPPET
-            checkResponse(response);
+            CheckResponse(response);
 #endif
         }
 
@@ -342,5 +291,58 @@ namespace Azure.AI.Inference.Tests.Samples
 #endif
             System.Console.WriteLine("");
         }
+
+        #region Helpers
+        private async Task checkStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response)
+        {
+            string id = null;
+            string ret_model = null;
+            bool gotRole = false;
+            await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
+            {
+                Assert.That(chatUpdate, Is.Not.Null);
+
+                Assert.That(chatUpdate.Id, Is.Not.Null.Or.Empty);
+                Assert.That(chatUpdate.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
+                Assert.That(chatUpdate.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
+                if (!string.IsNullOrEmpty(chatUpdate.Id))
+                {
+                    Assert.That((id is null) || (id == chatUpdate.Id));
+                    id = chatUpdate.Id;
+                }
+                if (!string.IsNullOrEmpty(chatUpdate.Model))
+                {
+                    Assert.That((ret_model is null) || (ret_model == chatUpdate.Model));
+                    ret_model = chatUpdate.Model;
+                }
+                if (chatUpdate.Role.HasValue)
+                {
+                    Assert.IsFalse(gotRole);
+                    Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
+                    gotRole = true;
+                }
+
+                if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+                {
+                    System.Console.Write(chatUpdate.ContentUpdate);
+                }
+            }
+        }
+
+        private void CheckResponse(Response<ChatCompletions> response)
+        {
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+            ChatChoice choice = response.Value.Choices[0];
+            Assert.That(choice.Index, Is.EqualTo(0));
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+        }
+        #endregion
     }
 }

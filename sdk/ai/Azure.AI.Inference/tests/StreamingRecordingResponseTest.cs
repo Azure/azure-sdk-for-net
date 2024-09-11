@@ -112,6 +112,7 @@ namespace Azure.AI.Inference.Tests
             Assert.AreEqual(dtData["index"].ToString(), "0");
         }
 
+        #region Helpers
         private static StreamingChatCompletionsUpdate getFuncPart(string content, string functionName, string argsUpdate)
         {
             Dictionary<string, string> dtCalls =  new()
@@ -135,5 +136,6 @@ namespace Azure.AI.Inference.Tests
                 )
             );
         }
+        #endregion
     }
 }
