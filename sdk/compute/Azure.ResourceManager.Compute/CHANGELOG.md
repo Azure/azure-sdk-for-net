@@ -5,12 +5,6 @@
 ### Features Added
 - Features updated for metadata security protocol.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.6.0 (2024-08-26)
 
 ### Features Added
