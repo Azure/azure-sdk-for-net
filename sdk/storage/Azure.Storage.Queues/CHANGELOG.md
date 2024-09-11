@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed \[BUG\] Fixed Equality failures due to implicit cast on QueueErrorCode #44213
 
 ### Other Changes
 

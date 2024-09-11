@@ -11,7 +11,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20240826.1
+      ref: refs/tags/azure-sdk-build-tools_20240910.2
 
 parameters:
 - name: stages

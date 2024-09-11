@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> Details of the elasticity profile. </summary>
-    internal partial class StandbyVirtualMachinePoolElasticityPatchProfile
+    /// <summary> Displays the counts of container groups in each state, as known by the StandbyPool resource provider. </summary>
+    public partial class ContainerGroupInstanceCountSummary
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +46,31 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityPatchProfile"/>. </summary>
-        public StandbyVirtualMachinePoolElasticityPatchProfile()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceCountSummary"/>. </summary>
+        /// <param name="instanceCountsByState"> The count of pooled resources in each state. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceCountsByState"/> is null. </exception>
+        internal ContainerGroupInstanceCountSummary(IEnumerable<PoolResourceStateCount> instanceCountsByState)
         {
+            Argument.AssertNotNull(instanceCountsByState, nameof(instanceCountsByState));
+
+            InstanceCountsByState = instanceCountsByState.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityPatchProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies maximum number of virtual machines in the standby virtual machine pool. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceCountSummary"/>. </summary>
+        /// <param name="instanceCountsByState"> The count of pooled resources in each state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolElasticityPatchProfile(long? maxReadyCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupInstanceCountSummary(IReadOnlyList<PoolResourceStateCount> instanceCountsByState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MaxReadyCapacity = maxReadyCapacity;
+            InstanceCountsByState = instanceCountsByState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies maximum number of virtual machines in the standby virtual machine pool. </summary>
-        public long? MaxReadyCapacity { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceCountSummary"/> for deserialization. </summary>
+        internal ContainerGroupInstanceCountSummary()
+        {
+        }
+
+        /// <summary> The count of pooled resources in each state. </summary>
+        public IReadOnlyList<PoolResourceStateCount> InstanceCountsByState { get; }
     }
 }

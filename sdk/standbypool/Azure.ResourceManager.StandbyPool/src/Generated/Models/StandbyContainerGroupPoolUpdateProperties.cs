@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> Details of the ContainerGroupProperties. </summary>
-    public partial class StandbyContainerGroupPatchProperties
+    /// <summary> The updatable properties of the StandbyContainerGroupPoolResource. </summary>
+    public partial class StandbyContainerGroupPoolUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +45,25 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPatchProperties"/>. </summary>
-        public StandbyContainerGroupPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
+        public StandbyContainerGroupPoolUpdateProperties()
         {
-            SubnetIds = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPatchProperties"/>. </summary>
-        /// <param name="containerGroupProfile"> Specifies container group profile of standby container groups. </param>
-        /// <param name="subnetIds"> Specifies subnet Ids for container group. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolUpdateProperties"/>. </summary>
+        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
+        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPatchProperties(StandbyContainerGroupPatchProfile containerGroupProfile, IList<WritableSubResource> subnetIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolUpdateProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ContainerGroupProfile = containerGroupProfile;
-            SubnetIds = subnetIds;
+            ElasticityProfile = elasticityProfile;
+            ContainerGroupProperties = containerGroupProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies container group profile of standby container groups. </summary>
-        public StandbyContainerGroupPatchProfile ContainerGroupProfile { get; set; }
-        /// <summary> Specifies subnet Ids for container group. </summary>
-        public IList<WritableSubResource> SubnetIds { get; }
+        /// <summary> Specifies elasticity profile of standby container group pools. </summary>
+        public StandbyContainerGroupPoolElasticityProfile ElasticityProfile { get; set; }
+        /// <summary> Specifies container group properties of standby container group pools. </summary>
+        public StandbyContainerGroupProperties ContainerGroupProperties { get; set; }
     }
 }

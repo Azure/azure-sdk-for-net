@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.StandbyPool.Models
+namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Specifies the elasticity profile of the standby container group pools. </summary>
-    public partial class StandbyContainerGroupPoolElasticityPatchProfile
+    /// <summary> Information to import app attach package. </summary>
+    public partial class ImportPackageInfoContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,27 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolElasticityPatchProfile"/>. </summary>
-        public StandbyContainerGroupPoolElasticityPatchProfile()
+        /// <summary> Initializes a new instance of <see cref="ImportPackageInfoContent"/>. </summary>
+        public ImportPackageInfoContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolElasticityPatchProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies maximum number of standby container groups in the standby pool. </param>
-        /// <param name="refillPolicy"> Specifies refill policy of the pool. </param>
+        /// <summary> Initializes a new instance of <see cref="ImportPackageInfoContent"/>. </summary>
+        /// <param name="path"> URI to Image. </param>
+        /// <param name="packageArchitecture"> Possible device architectures that an app attach package can be configured for. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolElasticityPatchProfile(long? maxReadyCapacity, StandbyPoolRefillPolicy? refillPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImportPackageInfoContent(string path, AppAttachPackageArchitecture? packageArchitecture, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MaxReadyCapacity = maxReadyCapacity;
-            RefillPolicy = refillPolicy;
+            Path = path;
+            PackageArchitecture = packageArchitecture;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies maximum number of standby container groups in the standby pool. </summary>
-        public long? MaxReadyCapacity { get; set; }
-        /// <summary> Specifies refill policy of the pool. </summary>
-        public StandbyPoolRefillPolicy? RefillPolicy { get; set; }
+        /// <summary> URI to Image. </summary>
+        [WirePath("path")]
+        public string Path { get; set; }
+        /// <summary> Possible device architectures that an app attach package can be configured for. </summary>
+        [WirePath("packageArchitecture")]
+        public AppAttachPackageArchitecture? PackageArchitecture { get; set; }
     }
 }
