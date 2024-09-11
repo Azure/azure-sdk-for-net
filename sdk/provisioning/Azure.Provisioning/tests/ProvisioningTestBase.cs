@@ -20,7 +20,7 @@ using NUnit.Framework;
 namespace Azure.Provisioning.Tests;
 
 [AsyncOnly]
-[LiveOnly] // Ignore tests in the CI for now
+// [LiveOnly] // Ignore tests in the CI for now
 public class ProvisioningTestBase : ManagementRecordedTestBase<ProvisioningTestEnvironment>
 {
     public bool SkipTools { get; set; }

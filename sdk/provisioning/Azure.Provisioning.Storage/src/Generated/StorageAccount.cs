@@ -585,7 +585,7 @@ public partial class StorageAccount : Resource
         };
 
     /// <summary>
-    /// Assign a role to an that grants access to this StorageAccount.
+    /// Assign a role to a principal that grants access to this StorageAccount.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>

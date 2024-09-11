@@ -289,7 +289,7 @@ public class Resource(Specification spec, Type armType)
 
                         if (fence.RequiresSeparator) { writer.WriteLine(); }
                         writer.WriteLine($"/// <summary>");
-                        writer.WriteWrapped($"Assign a role to an that grants access to this {Name}.");
+                        writer.WriteWrapped($"Assign a role to a principal that grants access to this {Name}.");
                         writer.WriteLine($"/// </summary>");
                         writer.WriteLine($"/// <param name=\"role\">The role to grant.</param>");
                         writer.WriteLine($"/// <param name=\"principalType\">The type of the principal to assign to.</param>");

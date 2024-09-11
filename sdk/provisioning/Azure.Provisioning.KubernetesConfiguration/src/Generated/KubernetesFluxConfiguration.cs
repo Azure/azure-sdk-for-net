@@ -238,7 +238,7 @@ public partial class KubernetesFluxConfiguration : Resource
         };
 
     /// <summary>
-    /// Assign a role to an that grants access to this
+    /// Assign a role to a principal that grants access to this
     /// KubernetesFluxConfiguration.
     /// </summary>
     /// <param name="role">The role to grant.</param>

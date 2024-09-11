@@ -250,7 +250,8 @@ public partial class ServiceBusNamespace : Resource
         };
 
     /// <summary>
-    /// Assign a role to an that grants access to this ServiceBusNamespace.
+    /// Assign a role to a principal that grants access to this
+    /// ServiceBusNamespace.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>

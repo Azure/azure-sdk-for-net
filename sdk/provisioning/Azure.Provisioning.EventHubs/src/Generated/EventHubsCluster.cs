@@ -173,7 +173,8 @@ public partial class EventHubsCluster : Resource
         };
 
     /// <summary>
-    /// Assign a role to an that grants access to this EventHubsCluster.
+    /// Assign a role to a principal that grants access to this
+    /// EventHubsCluster.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
