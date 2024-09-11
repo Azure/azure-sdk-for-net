@@ -26,7 +26,9 @@ namespace Azure.ResourceManager.HDInsight.Tests
         public async Task SetUp()
         {
             string rgName = Recording.GenerateAssetName(DefaultResourceGroupPrefix);
-            string clusterName = Recording.GenerateAssetName("cluster");
+            //Due to the HDInsightManagementTestBase's previous update, vnet restricts the cluster name have the unique first six characters.
+            string clsusterNamePrefix = "G" + rgName.Substring(DefaultResourceGroupPrefix.Length) + "Cluster";
+            string clusterName = Recording.GenerateAssetName(clsusterNamePrefix);
             string storageAccountName = Recording.GenerateAssetName("azstorageforcluster");
             string containerName = Recording.GenerateAssetName("container");
             _applicationName = Recording.GenerateAssetName("application");
