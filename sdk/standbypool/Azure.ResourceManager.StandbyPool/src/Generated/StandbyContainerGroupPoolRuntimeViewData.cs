@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.StandbyPool.Models;
 
-namespace Azure.ResourceManager.StandbyPool.Models
+namespace Azure.ResourceManager.StandbyPool
 {
-    /// <summary> Details of the elasticity profile. </summary>
-    internal partial class StandbyVirtualMachinePoolElasticityPatchProfile
+    /// <summary>
+    /// A class representing the StandbyContainerGroupPoolRuntimeView data model.
+    /// Contains information about a standby container group pool as last known by the StandbyPool resource provider.
+    /// </summary>
+    public partial class StandbyContainerGroupPoolRuntimeViewData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +51,25 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityPatchProfile"/>. </summary>
-        public StandbyVirtualMachinePoolElasticityPatchProfile()
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewData"/>. </summary>
+        internal StandbyContainerGroupPoolRuntimeViewData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityPatchProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies maximum number of virtual machines in the standby virtual machine pool. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolElasticityPatchProfile(long? maxReadyCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolRuntimeViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StandbyContainerGroupPoolRuntimeViewProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            MaxReadyCapacity = maxReadyCapacity;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies maximum number of virtual machines in the standby virtual machine pool. </summary>
-        public long? MaxReadyCapacity { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public StandbyContainerGroupPoolRuntimeViewProperties Properties { get; }
     }
 }
