@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://int.api.azureml-test.ms/nexus/chat/completions?api-version=2024-05-01-preview",
+      "RequestUri": "https://models.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "181",
         "Content-Type": "application/json",
-        "traceparent": "00-d323c429647d20e7c9713d064f3fcc36-15838b241bfc06c0-01",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240909.1 (.NET Framework 4.8.9261.0; Microsoft Windows 10.0.22631 )",
+        "traceparent": "00-67e50652272500c832a5d02d3d92135a-35ce75ad8274732f-01",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240911.1 (.NET Framework 4.8.9261.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -30,25 +30,24 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d408e3b9-e6c1-40ea-b427-5486bc470d81",
-        "azureml-model-session": "d077-20240814132435",
+        "apim-request-id": "c363902f-7f78-4d75-8785-83e16404821a",
+        "azureml-model-session": "d051-20240831044342",
         "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Tue, 10 Sep 2024 18:11:12 GMT",
+        "Date": "Wed, 11 Sep 2024 17:55:37 GMT",
         "request-context": "appId=",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "Vary": "Accept-Encoding",
-        "x-aml-cluster": "int-02",
+        "x-aml-cluster": "vienna-eastus2-02",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "202",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "x-ms-region": "East US",
-        "x-ratelimit-remaining-requests": "29",
-        "x-ratelimit-remaining-tokens": "29948",
-        "X-Request-ID": "92341ad5-4f6e-41b4-804a-5c6b00be762d",
-        "x-request-time": "0.627"
+        "x-ms-region": "East US 2",
+        "x-ratelimit-remaining-requests": "199996",
+        "x-ratelimit-remaining-tokens": "19980023",
+        "X-Request-ID": "ad6a71a8-44de-4a81-b08a-c113243a3479",
+        "x-request-time": "0.289"
       },
       "ResponseBody": {
         "choices": [
@@ -57,6 +56,14 @@
               "hate": {
                 "filtered": false,
                 "severity": "safe"
+              },
+              "protected_material_code": {
+                "filtered": false,
+                "detected": false
+              },
+              "protected_material_text": {
+                "filtered": false,
+                "detected": false
               },
               "self_harm": {
                 "filtered": false,
@@ -80,9 +87,9 @@
             }
           }
         ],
-        "created": 1725991872,
-        "id": "chatcmpl-A5zcWMK6r7lfTkqgsXGotgeIU3Hd6",
-        "model": "gpt-4o-2024-05-13",
+        "created": 1726077337,
+        "id": "chatcmpl-A6Lqz5kRKhXtwNENxaRSZNkTLCShF",
+        "model": "gpt-4o-2024-08-06",
         "object": "chat.completion",
         "prompt_filter_results": [
           {
@@ -91,6 +98,10 @@
               "hate": {
                 "filtered": false,
                 "severity": "safe"
+              },
+              "jailbreak": {
+                "filtered": false,
+                "detected": false
               },
               "self_harm": {
                 "filtered": false,
@@ -107,7 +118,7 @@
             }
           }
         ],
-        "system_fingerprint": "fp_80a1bad4c7",
+        "system_fingerprint": "fp_b2ffeb16ee",
         "usage": {
           "completion_tokens": 7,
           "prompt_tokens": 24,
@@ -118,7 +129,7 @@
   ],
   "Variables": {
     "AZUREAI_GITHUB_TOKEN": "Sanitized",
-    "AZUREAI_GITHUB_URL": "https://int.api.azureml-test.ms/nexus",
-    "RandomSeed": "1489816213"
+    "AZUREAI_GITHUB_URL": "https://models.inference.ai.azure.com",
+    "RandomSeed": "930148738"
   }
 }

@@ -1,15 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://int.api.azureml-test.ms/nexus/chat/completions?api-version=2024-05-01-preview",
+      "RequestUri": "https://models.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Connection": "keep-alive",
         "Content-Length": "179",
         "Content-Type": "application/json",
-        "traceparent": "00-c4a85c709c81ac315614477f294f6b0c-21b95f075d249cbf-01",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240909.1 (.NET Framework 4.8.9261.0; Microsoft Windows 10.0.22631 )",
+        "traceparent": "00-9fe14824bdcb91ef1fa48ef00bd7226a-cc7c52eb44b7208f-01",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240911.1 (.NET Framework 4.8.9261.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -30,14 +31,14 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 10 Sep 2024 17:50:13 GMT",
+        "Date": "Wed, 11 Sep 2024 17:55:36 GMT",
         "request-context": "appId=",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-aml-cluster": "int-02",
+        "x-aml-cluster": "vienna-eastus2-02",
         "X-Content-Type-Options": "nosniff",
         "x-ms-error-code": "unknown_model",
-        "x-request-time": "0.286"
+        "x-request-time": "0.074"
       },
       "ResponseBody": {
         "error": {
@@ -50,7 +51,7 @@
   ],
   "Variables": {
     "AZUREAI_GITHUB_TOKEN": "Sanitized",
-    "AZUREAI_GITHUB_URL": "https://int.api.azureml-test.ms/nexus",
-    "RandomSeed": "823568422"
+    "AZUREAI_GITHUB_URL": "https://models.inference.ai.azure.com",
+    "RandomSeed": "712278208"
   }
 }
