@@ -25,6 +25,18 @@ internal class LoggingHandler
         _useILogger = logger is not NullLogger;
     }
 
+    /// <summary>
+    ///  Whether the given log level or event level is enabled, depending
+    ///  on whether this handler logs to ILogger or Event Source. Can be
+    ///  used to guard expensive operations.
+    /// </summary>
+    /// <param name="logLevel"></param>
+    /// <param name="eventLevel"></param>
+    public bool IsEnabled(LogLevel logLevel, EventLevel eventLevel)
+    {
+        return _useILogger ? _logger.IsEnabled(logLevel) : ClientModelEventSource.Log.IsEnabled(eventLevel, EventKeywords.None);
+    }
+
     public void LogRequest(PipelineRequest request, string requestId, string? assemblyName)
     {
         if (_useILogger)

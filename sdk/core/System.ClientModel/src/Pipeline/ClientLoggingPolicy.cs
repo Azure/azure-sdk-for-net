@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,6 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly int _maxLength;
     private readonly string _clientAssembly = "System-ClientModel";
     private readonly LoggingHandler _handler;
-    private readonly ILogger _logger;
 
     /// <summary>
     /// Creates a new instance of the <see cref="ClientLoggingPolicy"/> class.
@@ -47,8 +47,8 @@ public class ClientLoggingPolicy : PipelinePolicy
         _logContent = loggingOptions.IsLoggingContentEnabled;
         _maxLength = loggingOptions.LoggedContentSizeLimit;
         PipelineMessageSanitizer sanitizer = new(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
-        _logger = loggingOptions.LoggerFactory.CreateLogger("System.ClientModel");
-        _handler = new LoggingHandler(_logger, sanitizer);
+        ILogger logger = loggingOptions.LoggerFactory.CreateLogger("System.ClientModel");
+        _handler = new LoggingHandler(logger, sanitizer);
     }
 
     /// <inheritdoc/>
@@ -61,7 +61,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        if (!(ClientModelEventSource.Log.IsEnabled() || _logger.IsEnabled(LogLevel.Warning))) // The highest LogLevel we log with is LogLevel.Warning
+        if (_handler.IsEnabled(LogLevel.Warning, EventLevel.Warning)) // Warning is the highest level logged
         {
             if (async)
             {
@@ -84,9 +84,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         byte[]? bytes = null;
         Encoding? requestTextEncoding = null;
 
-        // If logging content is enabled we should always process the content for OnSendingRequest/Async, we
-        // shouldn't check the LogLevel/EventLevel here
-        if (_logContent && request.Content != null)
+        if (_logContent && request.Content != null && _handler.IsEnabled(LogLevel.Information, EventLevel.Informational))
         {
             // Convert binary content to bytes
             using var memoryStream = new MaxLengthStream(_maxLength);
@@ -144,7 +142,7 @@ public class ClientLoggingPolicy : PipelinePolicy
             _handler.LogResponse(requestId, response, elapsed);
         }
 
-        if (_logContent && response.ContentStream != null)
+        if (_logContent && response.ContentStream != null && _handler.IsEnabled(LogLevel.Information, EventLevel.Informational))
         {
             Encoding? responseTextEncoding = null;
 
@@ -155,7 +153,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
             if (message.BufferResponse || response.ContentStream.CanSeek)
             {
-                byte[]? responseBytes = null;
+                byte[]? responseBytes;
                 if (message.BufferResponse)
                 {
                     // Content is buffered, so log the first _maxLength bytes
@@ -181,7 +179,7 @@ public class ClientLoggingPolicy : PipelinePolicy
             }
             else
             {
-                response.ContentStream = new LoggingStream(this, _handler, requestId, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding, message);
+                response.ContentStream = new LoggingStream(_handler, requestId, _maxLength, response.ContentStream, response.IsError, responseTextEncoding);
             }
         }
 
@@ -230,16 +228,14 @@ public class ClientLoggingPolicy : PipelinePolicy
     {
         private readonly string _requestId;
         private int _maxLoggedBytes;
-        private int _originalMaxLength;
+        private readonly int _originalMaxLength;
         private readonly Stream _originalStream;
         private readonly bool _error;
         private readonly Encoding? _textEncoding;
         private int _blockNumber;
         private readonly LoggingHandler _handler;
-        private readonly PipelineMessage _message;
-        private readonly ClientLoggingPolicy _policy;
 
-        public LoggingStream(ClientLoggingPolicy policy, LoggingHandler handler, string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding, PipelineMessage message)
+        public LoggingStream(LoggingHandler handler, string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)
         {
             // Should only wrap non-seekable streams
             Debug.Assert(!originalStream.CanSeek);
@@ -250,8 +246,6 @@ public class ClientLoggingPolicy : PipelinePolicy
             _error = error;
             _textEncoding = textEncoding;
             _handler = handler;
-            _message = message;
-            _policy = policy;
         }
 
         public override long Seek(long offset, SeekOrigin origin)
