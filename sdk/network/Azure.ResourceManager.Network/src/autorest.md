@@ -33,7 +33,7 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
-# mgmt-debug:
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
@@ -196,11 +196,24 @@ rename-mapping:
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   IPRule: BastionHostIPRule
   NetworkVirtualApplianceConnection.properties.routingConfiguration: ConnectionRoutingConfiguration
+  ConnectionSharedKeyResult: VpnLinkConnectionSharedKey
+  SharedKeyProperties: VpnLinkConnectionSharedKeyProperties
+  RoutingRuleCollection: NetworkManagerRoutingRules
+  RoutingRule: NetworkManagerRoutingRule
+  SecurityUserConfiguration:  NetworkManagerSecurityUserConfiguration
+  SecurityUserRuleCollection: NetworkManagerSecurityUserRules
+  SecurityUserRule: NetworkManagerSecurityUserRule
+  GroupMemberType: NetworkGroupMemberType
+  PrivateEndpointVNetPolicies: PrivateEndpointVnetPolicies
+  ResiliencyModel: ExpressRouteGatewayResiliencyModel
+  SensitivityType: ManagedRuleSensitivityType
   # to workaround breaking change in FirewallPacketCaptureParameters, we have to keep the old codes and rename it
   FirewallPacketCaptureParameters: FirewallPacketCaptureRequestParameters
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
+- NetworkManagerRoutingRules
+- NetworkManagerSecurityUserRules
 
 models-to-treat-empty-string-as-null:
   - HopLink
@@ -286,7 +299,6 @@ request-path-is-non-resource:
 # - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}
 # - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIpAddressName}
 
-
 # This part is for generate partial class in network
 partial-resources:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}: VirtualMachineScaleSet
@@ -310,7 +322,6 @@ override-operation-name:
   VirtualMachineScaleSets_ListPublicIPAddresses: GetPublicIPAddresses
   VirtualMachineScaleSets_GetPublicIPAddress: GetPublicIPAddress
   VirtualMachineScaleSets_GetNetworkInterface: GetNetworkInterface
-  VirtualMachineScaleSets_ListIpConfigurations: GetIPConfigurations
   VirtualMachineScaleSetVMs_ListNetworkInterfaces: GetNetworkInterfaces
   VirtualMachineScaleSetVMs_ListPublicIPAddresses: GetPublicIPAddresses
   Generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVirtualWanVpnServerConfigurationVpnProfile
