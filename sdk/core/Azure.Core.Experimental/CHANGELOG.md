@@ -1,6 +1,10 @@
 # Release History
 
-## 0.1.0-preview.35 (2024-09-10)
+## 0.1.0-preview.35 (2024-09-12)
+
+### Breaking Changes
+
+- Remove Protobuf support ([#44472](https://github.com/Azure/azure-sdk-for-net/pull/44472))
 
 ## 0.1.0-preview.34 (2024-06-06)
 
