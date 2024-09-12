@@ -340,8 +340,8 @@ VirtualNetworkData vnet = new VirtualNetworkData()
 {
     Location = "westus",
 };
-vnet.AddressSpace.AddressPrefixes.Added("10.0.0.0/16");
-vnet.Subnets.Added(new SubnetData
+vnet.AddressSpace.AddressPrefixes.Add("10.0.0.0/16");
+vnet.Subnets.Add(new SubnetData
 {
     Name = "mySubnet",
     AddressPrefix = "10.0.0.0/24",
