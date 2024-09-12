@@ -21,13 +21,7 @@ public class BasicSignalRTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The SignalR service location."
-                    };
-                BicepParameter endpointName =
+               BicepParameter endpointName =
                     new(nameof(endpointName), typeof(string))
                     {
                         Value = "mySignalRService.55e432ab-7428-3695-b637-de57b20d40e5"
@@ -36,7 +30,6 @@ public class BasicSignalRTests(bool async)
                 SignalRService signalr =
                     new(nameof(signalr), "2022-02-01")
                     {
-                        Location = location,
                         Sku = new SignalRResourceSku { Name = "Standard_S1", Capacity = 1 },
                         Kind = SignalRServiceKind.SignalR,
                         Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
@@ -92,11 +85,11 @@ public class BasicSignalRTests(bool async)
             })
         .Compare(
             """
-            @description('The SignalR service location.')
-            param location string = resourceGroup().location
-
             param endpointName string = 'mySignalRService.55e432ab-7428-3695-b637-de57b20d40e5'
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+            
             resource signalr 'Microsoft.SignalRService/signalR@2022-02-01' = {
                 name: take('signalr-${uniqueString(resourceGroup().id)}', 63)
                 location: location

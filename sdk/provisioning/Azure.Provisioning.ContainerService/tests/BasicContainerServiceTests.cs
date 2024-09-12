@@ -21,11 +21,6 @@ public class BasicContainerServiceTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location
-                    };
                 BicepParameter dnsPrefix = new(nameof(dnsPrefix), typeof(string));
                 BicepParameter linuxAdminUsername = new(nameof(linuxAdminUsername), typeof(string));
                 BicepParameter sshRsaPublicKey = new(nameof(sshRsaPublicKey), typeof(string));
@@ -33,7 +28,6 @@ public class BasicContainerServiceTests(bool async)
                 ContainerServiceManagedCluster aks =
                     new(nameof(aks))
                     {
-                        Location = location,
                         ClusterIdentity = new ManagedClusterIdentity { ResourceIdentityType = ManagedServiceIdentityType.SystemAssigned },
                         DnsPrefix = dnsPrefix,
                         LinuxProfile =
@@ -61,14 +55,15 @@ public class BasicContainerServiceTests(bool async)
             })
         .Compare(
             """
-            param location string = resourceGroup().location
-
             param dnsPrefix string
 
             param linuxAdminUsername string
 
             param sshRsaPublicKey string
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+            
             resource aks 'Microsoft.ContainerService/managedClusters@2023-08-01' = {
                 name: take('aks-${uniqueString(resourceGroup().id)}', 63)
                 location: location

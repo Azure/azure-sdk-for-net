@@ -20,12 +20,6 @@ public class BasicPostgreSqlTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The database location."
-                    };
                 BicepParameter adminLogin =
                     new(nameof(adminLogin), typeof(string))
                     {
@@ -51,7 +45,6 @@ public class BasicPostgreSqlTests(bool async)
                 PostgreSqlFlexibleServer server =
                     new(nameof(server))
                     {
-                        Location = location,
                         Sku =
                             new PostgreSqlFlexibleServerSku
                             {
@@ -98,9 +91,6 @@ public class BasicPostgreSqlTests(bool async)
             })
         .Compare(
             """
-            @description('The database location.')
-            param location string = resourceGroup().location
-
             @description('The administrator username of the server.')
             param adminLogin string
 
@@ -114,6 +104,9 @@ public class BasicPostgreSqlTests(bool async)
             @description('The AAD admin Object ID.')
             param aadAdminOid string
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+            
             resource server 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
                 name: take('server${uniqueString(resourceGroup().id)}', 24)
                 location: location

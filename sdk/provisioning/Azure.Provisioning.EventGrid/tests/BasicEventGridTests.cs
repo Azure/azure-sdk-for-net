@@ -23,18 +23,11 @@ public class BasicEventGridTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "Service location."
-                    };
                 BicepParameter webhookUri = new(nameof(webhookUri), typeof(string));
 
                 StorageAccount storage =
                     new(nameof(storage))
                     {
-                        Location = location,
                         Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
                         Kind = StorageKind.StorageV2,
                         AllowBlobPublicAccess = false,
@@ -44,7 +37,6 @@ public class BasicEventGridTests(bool async)
                 SystemTopic topic =
                     new(nameof(topic))
                     {
-                        Location = location,
                         Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
                         Source = storage.Id,
                         TopicType = "Microsoft.Storage.StorageAccounts"
@@ -66,11 +58,11 @@ public class BasicEventGridTests(bool async)
             })
         .Compare(
             """
-            @description('Service location.')
-            param location string = resourceGroup().location
-
             param webhookUri string
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+            
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
                 name: take('storage${uniqueString(resourceGroup().id)}', 24)
                 kind: 'StorageV2'

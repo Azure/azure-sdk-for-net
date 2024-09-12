@@ -21,13 +21,6 @@ public class BasicAppContainersTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "Service location."
-                    };
-
                 BicepParameter containerImage =
                     new(nameof(containerImage), typeof(string))
                     {
@@ -38,14 +31,12 @@ public class BasicAppContainersTests(bool async)
                 OperationalInsightsWorkspace logAnalytics =
                     new(nameof(logAnalytics))
                     {
-                        Location = location,
                         Sku = new OperationalInsightsWorkspaceSku { Name = OperationalInsightsWorkspaceSkuName.PerGB2018 }
                     };
 
                 ContainerAppManagedEnvironment env =
                     new(nameof(env))
                     {
-                        Location = location,
                         AppLogsConfiguration =
                             new ContainerAppLogsConfiguration
                             {
@@ -61,7 +52,6 @@ public class BasicAppContainersTests(bool async)
                 ContainerApp app =
                     new(nameof(app))
                     {
-                        Location = location,
                         ManagedEnvironmentId = env.Id,
                         Configuration =
                             new ContainerAppConfiguration
@@ -106,11 +96,11 @@ public class BasicAppContainersTests(bool async)
             })
         .Compare(
             """
-            @description('Service location.')
-            param location string = resourceGroup().location
-
             @description('Specifies the docker container image to deploy.')
             param containerImage string = 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
+
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
 
             resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
                 name: take('logAnalytics-${uniqueString(resourceGroup().id)}', 63)
