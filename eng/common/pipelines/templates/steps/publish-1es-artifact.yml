@@ -11,11 +11,7 @@ parameters:
   ArtifactName: ''
   ArtifactPath: ''
   CustomCondition: true
-  # Disable sbom generation by default for forked PR builds to avoid a bunch of warnings
-  ${{ if and(eq(variables['Build.Reason'],'PullRequest'), eq(variables['System.PullRequest.IsFork'], 'True')) }}:
-    SbomEnabled: false
-  ${{ else }}:
-    SbonEnabled: true
+  SbomEnabled: true
 
 steps:
   - pwsh: |
@@ -35,4 +31,6 @@ steps:
     inputs:
       artifactName: '$(PublishArtifactName)'
       targetPath: '${{ parameters.ArtifactPath }}'
-      sbomEnabled: ${{ parameters.SbomEnabled }}
+      # Disable sbom generation by default for forked PR builds to avoid a bunch of warnings
+      ${{ if not(and(eq(variables['Build.Reason'],'PullRequest'), eq(variables['System.PullRequest.IsFork'], 'True'))) }}:
+        sbomEnabled: ${{ parameters.SbomEnabled }}
