@@ -10,14 +10,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/healthdataaiservices/ci.mgmt.yml
-    - sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices/
+    - sdk/devhub/ci.mgmt.yml
+    - sdk/devhub/Azure.ResourceManager.DeveloperHub/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: healthdataaiservices
+    ServiceDirectory: devhub
     LimitForPullRequest: true
     Artifacts:
-      - name: Azure.ResourceManager.HealthDataAIServices
-        safeName: AzureResourceManagerHealthDataAIServices
+    - name: Azure.ResourceManager.DeveloperHub
+      safeName: AzureResourceManagerDeveloperHub
