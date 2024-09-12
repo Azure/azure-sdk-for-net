@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="accessPolicyName"> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </param>
         /// <param name="userObjectId"> The user associated with the access policy. </param>
         /// <returns> A new <see cref="RedisEnterprise.AccessPolicyAssignmentData"/> instance for mocking. </returns>
-        public static AccessPolicyAssignmentData AccessPolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RedisEnterpriseProvisioningStatus? provisioningState = null, string accessPolicyName = null, string userObjectId = null)
+        public static AccessPolicyAssignmentData AccessPolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RedisEnterpriseProvisioningStatus? provisioningState = null, string accessPolicyName = null, Guid? userObjectId = null)
         {
             return new AccessPolicyAssignmentData(
                 id,

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             AccessPolicyAssignmentData data = new AccessPolicyAssignmentData()
             {
                 AccessPolicyName = "default",
-                UserObjectId = "6497c918-11ad-41e7-1b0f-7c518a87d0b0",
+                UserObjectId = Guid.Parse("6497c918-11ad-41e7-1b0f-7c518a87d0b0"),
             };
             ArmOperation<AccessPolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyAssignmentName, data);
             AccessPolicyAssignmentResource result = lro.Value;

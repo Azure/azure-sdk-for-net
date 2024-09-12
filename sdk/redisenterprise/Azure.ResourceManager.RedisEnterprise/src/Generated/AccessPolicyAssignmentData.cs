@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> The user associated with the access policy. </summary>
         internal AccessPolicyAssignmentPropertiesUser User { get; set; }
         /// <summary> The object ID of the user. </summary>
-        public string UserObjectId
+        public Guid? UserObjectId
         {
             get => User is null ? default : User.ObjectId;
             set

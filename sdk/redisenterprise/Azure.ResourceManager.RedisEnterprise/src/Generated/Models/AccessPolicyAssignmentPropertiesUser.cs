@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentPropertiesUser"/>. </summary>
         /// <param name="objectId"> The object ID of the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessPolicyAssignmentPropertiesUser(string objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessPolicyAssignmentPropertiesUser(Guid? objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ObjectId = objectId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The object ID of the user. </summary>
-        public string ObjectId { get; set; }
+        public Guid? ObjectId { get; set; }
     }
 }

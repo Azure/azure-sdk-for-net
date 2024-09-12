@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
-                writer.WriteStringValue(ObjectId);
+                writer.WriteStringValue(ObjectId.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,14 +69,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            string objectId = default;
+            Guid? objectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectId"u8))
                 {
-                    objectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    objectId = property.Value.GetGuid();
                     continue;
                 }
                 if (options.Format != "W")

@@ -1,12 +1,12 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2024-09-01-preview)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+- Adds support for using Microsoft Entra token-based authentication.
+- Cluster has new properties: highAvailability and redundancyMode.
+- New product SKUs added.
+- Database has new properties: redisVersion, deferUpgrade and accessKeysAuthentication. 
 
 ### Other Changes
 
