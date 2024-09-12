@@ -1,10 +1,11 @@
 # Release History
 
-## 1.1.0 (2024-09-10)
+## 1.1.0 (2024-09-12)
 
 ### Other Changes
 
 - Removed implicit cast from `string` to `ApiKeyCredential`.
+- Upgraded `System.Text.Json` package dependency to 6.0.9.
 
 ## 1.1.0-beta.7 (2024-08-14)
 
