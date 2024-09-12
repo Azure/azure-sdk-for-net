@@ -26,20 +26,20 @@ public partial class IPv6FirewallRule : Resource
     /// The end IP address of the firewall rule. Must be IPv6 format. Must be
     /// greater than or equal to startIpv6Address.
     /// </summary>
-    public BicepValue<string> EndIPv6Address { get => _endIPv6Address; }
+    public BicepValue<string> EndIPv6Address { get => _endIPv6Address; set => _endIPv6Address.Assign(value); }
     private readonly BicepValue<string> _endIPv6Address;
+
+    /// <summary>
+    /// The start IP address of the firewall rule. Must be IPv6 format.
+    /// </summary>
+    public BicepValue<string> StartIPv6Address { get => _startIPv6Address; set => _startIPv6Address.Assign(value); }
+    private readonly BicepValue<string> _startIPv6Address;
 
     /// <summary>
     /// Resource ID.
     /// </summary>
     public BicepValue<ResourceIdentifier> Id { get => _id; }
     private readonly BicepValue<ResourceIdentifier> _id;
-
-    /// <summary>
-    /// The start IP address of the firewall rule. Must be IPv6 format.
-    /// </summary>
-    public BicepValue<string> StartIPv6Address { get => _startIPv6Address; }
-    private readonly BicepValue<string> _startIPv6Address;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServer.
@@ -57,9 +57,9 @@ public partial class IPv6FirewallRule : Resource
         : base(resourceName, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion, context)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _endIPv6Address = BicepValue<string>.DefineProperty(this, "EndIPv6Address", ["properties", "endIPv6Address"], isOutput: true);
+        _endIPv6Address = BicepValue<string>.DefineProperty(this, "EndIPv6Address", ["properties", "endIPv6Address"]);
+        _startIPv6Address = BicepValue<string>.DefineProperty(this, "StartIPv6Address", ["properties", "startIPv6Address"]);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _startIPv6Address = BicepValue<string>.DefineProperty(this, "StartIPv6Address", ["properties", "startIPv6Address"], isOutput: true);
         _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
     }
 
