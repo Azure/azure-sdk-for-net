@@ -58,6 +58,10 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
     /// </para>
     /// </remarks>
     public IList<Resource> DependsOn { get; } = [];
+    // TODO: Decide whether we want to support ResourceIdentifier in addition
+    // to actual Resources.  Given it's a niche scenario, right now I'd lean
+    // toward making people use Foo.FromExisting("...") if they wanted to add a
+    // dependency to an external resource.
 
     /// <summary>
     /// Compose the resource into a provisioning plan that can be saved as
