@@ -58,7 +58,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
     protected AoaiTestBase(bool isAsync, RecordedTestMode? mode = null)
         : base(isAsync, mode)
     {
-        TestConfig = new TestConfig(Mode);
+        TestConfig = new TestConfig(() => Mode);
         Assets = new Assets();
         TestEnvironment = new AzureTestEnvironment(Mode);
 
@@ -235,6 +235,10 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
     /// <inheritdoc />
     protected override RecordedTestMode GetDefaultRecordedTestMode()
         => AzureTestEnvironment.DefaultRecordMode;
+
+    /// <inheritdoc />
+    protected override bool GetDefaultAutomaticRecordEnabled()
+        => AzureTestEnvironment.DefaultAutomaticRecordEnabled;
 
     /// <inheritdoc />
     protected override ProxyServiceOptions CreateProxyServiceOptions()

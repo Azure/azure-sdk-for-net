@@ -48,7 +48,7 @@ public abstract class RecordedClientTestBase : ClientTestBase
     /// Creates a new instance.
     /// </summary>
     /// <param name="isAsync">True to run the async version of a test, false to run the sync version of a test.</param>
-    public RecordedClientTestBase(bool isAsync) : this(isAsync, null)
+    public RecordedClientTestBase(bool isAsync) : this(isAsync, null, null)
     { }
 
     /// <summary>
@@ -56,10 +56,13 @@ public abstract class RecordedClientTestBase : ClientTestBase
     /// </summary>
     /// <param name="isAsync">True to run the async version of a test, false to run the sync version of a test.</param>
     /// <param name="mode">(Optional) The recorded test mode to use. If unset, the default recorded test mode will be used.</param>
-    public RecordedClientTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
+    /// <param name="automaticRecord">(Optional) Whether or not to attempt to record automatically in the case of missing recordings
+    /// or recording mismatches.</param>
+    public RecordedClientTestBase(bool isAsync, RecordedTestMode? mode = null, bool? automaticRecord = null) : base(isAsync)
     {
         _options = new TestRecordingOptions();
         Mode = mode ?? GetDefaultRecordedTestMode();
+        AutomaticRecord = automaticRecord ?? (!IsRunningInCI && GetDefaultAutomaticRecordEnabled());
     }
 
     /// <inheritdoc />
@@ -74,6 +77,12 @@ public abstract class RecordedClientTestBase : ClientTestBase
     /// Gets or sets the current recording mode for the test.
     /// </summary>
     public RecordedTestMode Mode { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether or not we should attempt to record a test if there is a recording mismatch, or the recording
+    /// file is missing.
+    /// </summary>
+    public bool AutomaticRecord { get; set; }
 
     /// <summary>
     /// Gets or sets the recording options to use for the current test. This will be pre-populated with a sensible configuration.
@@ -156,6 +165,16 @@ public abstract class RecordedClientTestBase : ClientTestBase
             }
         }
     }
+
+    /// <summary>
+    /// Gets whether or not we are running the tests in CI/CD (e.g. GitHub workflows)
+    /// </summary>
+    public virtual bool IsRunningInCI => new string?[]
+        {
+            Environment.GetEnvironmentVariable("CI"),       // GitHub workflows
+            Environment.GetEnvironmentVariable("TF_BUILD"), // Azure DevOps
+        }
+        .Any(s => s != null);
 
     /// <summary>
     /// Checks if the recording has a recorded value for <paramref name="name"/>. If there is none, the <paramref name="valueToAdd"/>
@@ -327,6 +346,13 @@ public abstract class RecordedClientTestBase : ClientTestBase
     /// </summary>
     /// <returns>The test mode to use.</returns>
     protected virtual RecordedTestMode GetDefaultRecordedTestMode() => RecordedTestMode.Playback;
+
+    /// <summary>
+    /// Gets the default value for whether or not to automatically record a test if there is a recording mismatch, or the recording
+    /// file is missing.
+    /// </summary>
+    /// <returns>True or false.</returns>
+    protected virtual bool GetDefaultAutomaticRecordEnabled() => true;
 
     /// <summary>
     /// Gets the name of recording JSON file that contains the recording. This will be based on a sanitized version

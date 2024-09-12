@@ -82,11 +82,6 @@ namespace Azure.AI.OpenAI.Chat
         /// The configured strictness of the search relevance filtering.
         /// Higher strictness will increase precision but lower recall of the answer.
         /// </param>
-        /// <param name="roleInformation">
-        /// Additional instructions for the model to inform how it should behave and any context it should reference when
-        /// generating a response. You can describe the assistant's personality and tell it how to format responses.
-        /// This is limited to 100 tokens and counts against the overall token limit.
-        /// </param>
         /// <param name="maxSearchQueries">
         /// The maximum number of rewritten queries that should be sent to the search provider for a single user message.
         /// By default, the system will make an automatic determination.
@@ -116,12 +111,11 @@ namespace Azure.AI.OpenAI.Chat
         /// Note that content field mappings are required for Pinecone.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalPineconeChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, string roleInformation, int? maxSearchQueries, bool? allowPartialResult, IList<string> internalIncludeContexts, string environment, string indexName, DataSourceAuthentication authentication, DataSourceVectorizer vectorizationSource, DataSourceFieldMappings fieldMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalPineconeChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, int? maxSearchQueries, bool? allowPartialResult, IList<string> internalIncludeContexts, string environment, string indexName, DataSourceAuthentication authentication, DataSourceVectorizer vectorizationSource, DataSourceFieldMappings fieldMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TopNDocuments = topNDocuments;
             InScope = inScope;
             Strictness = strictness;
-            RoleInformation = roleInformation;
             MaxSearchQueries = maxSearchQueries;
             AllowPartialResult = allowPartialResult;
             _internalIncludeContexts = internalIncludeContexts;
@@ -147,12 +141,6 @@ namespace Azure.AI.OpenAI.Chat
         /// Higher strictness will increase precision but lower recall of the answer.
         /// </summary>
         internal int? Strictness { get; set; }
-        /// <summary>
-        /// Additional instructions for the model to inform how it should behave and any context it should reference when
-        /// generating a response. You can describe the assistant's personality and tell it how to format responses.
-        /// This is limited to 100 tokens and counts against the overall token limit.
-        /// </summary>
-        internal string RoleInformation { get; set; }
         /// <summary>
         /// The maximum number of rewritten queries that should be sent to the search provider for a single user message.
         /// By default, the system will make an automatic determination.

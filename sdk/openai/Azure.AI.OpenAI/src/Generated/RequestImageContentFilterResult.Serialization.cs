@@ -10,14 +10,14 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ImageContentFilterResultForPrompt : IJsonModel<ImageContentFilterResultForPrompt>
+    public partial class RequestImageContentFilterResult : IJsonModel<RequestImageContentFilterResult>
     {
-        void IJsonModel<ImageContentFilterResultForPrompt>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RequestImageContentFilterResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageContentFilterResultForPrompt>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RequestImageContentFilterResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageContentFilterResultForPrompt)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestImageContentFilterResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,19 +78,19 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
-        ImageContentFilterResultForPrompt IJsonModel<ImageContentFilterResultForPrompt>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RequestImageContentFilterResult IJsonModel<RequestImageContentFilterResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageContentFilterResultForPrompt>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RequestImageContentFilterResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageContentFilterResultForPrompt)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestImageContentFilterResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImageContentFilterResultForPrompt(document.RootElement, options);
+            return DeserializeRequestImageContentFilterResult(document.RootElement, options);
         }
 
-        internal static ImageContentFilterResultForPrompt DeserializeImageContentFilterResultForPrompt(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RequestImageContentFilterResult DeserializeRequestImageContentFilterResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -175,7 +175,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImageContentFilterResultForPrompt(
+            return new RequestImageContentFilterResult(
                 sexual,
                 violence,
                 hate,
@@ -186,43 +186,43 @@ namespace Azure.AI.OpenAI
                 jailbreak);
         }
 
-        BinaryData IPersistableModel<ImageContentFilterResultForPrompt>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RequestImageContentFilterResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageContentFilterResultForPrompt>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RequestImageContentFilterResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageContentFilterResultForPrompt)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestImageContentFilterResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ImageContentFilterResultForPrompt IPersistableModel<ImageContentFilterResultForPrompt>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RequestImageContentFilterResult IPersistableModel<RequestImageContentFilterResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageContentFilterResultForPrompt>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RequestImageContentFilterResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeImageContentFilterResultForPrompt(document.RootElement, options);
+                        return DeserializeRequestImageContentFilterResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageContentFilterResultForPrompt)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestImageContentFilterResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ImageContentFilterResultForPrompt>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RequestImageContentFilterResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The result to deserialize the model from. </param>
-        internal static new ImageContentFilterResultForPrompt FromResponse(PipelineResponse response)
+        internal static new RequestImageContentFilterResult FromResponse(PipelineResponse response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeImageContentFilterResultForPrompt(document.RootElement);
+            return DeserializeRequestImageContentFilterResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="BinaryContent"/>. </summary>

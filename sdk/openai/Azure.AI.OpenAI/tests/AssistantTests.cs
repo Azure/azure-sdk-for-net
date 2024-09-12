@@ -118,33 +118,55 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assert.That(thread.Metadata.TryGetValue("threadMetadata", out threadMetadataValue) && threadMetadataValue == "newThreadMetadataValue");
     }
 
+    public enum TestResponseFormatKind
+    {
+        Default,
+        Text,
+        JsonObject,
+        JsonSchema,
+    }
+
     [RecordedTest]
-    public async Task SettingResponseFormatWorks()
+    [TestCase(TestResponseFormatKind.Default)]
+    [TestCase(TestResponseFormatKind.Text)]
+    [TestCase(TestResponseFormatKind.JsonObject)]
+    //[TestCase(TestResponseFormatKind.JsonSchema)]
+    public async Task SettingResponseFormatWorks(TestResponseFormatKind responseFormatKind)
     {
         AssistantClient client = GetTestClient();
         string modelName = client.DeploymentOrThrow();
 
-        Assistant assistant = await client.CreateAssistantAsync(modelName, new()
+        AssistantResponseFormat selectedResponseFormat = responseFormatKind switch
         {
-            ResponseFormat = AssistantResponseFormat.JsonObject,
-        });
+            TestResponseFormatKind.Text => AssistantResponseFormat.Text,
+            TestResponseFormatKind.JsonObject => AssistantResponseFormat.JsonObject,
+            TestResponseFormatKind.JsonSchema => AssistantResponseFormat.CreateJsonSchemaFormat(
+                name: "food_item_with_ingredients",
+                jsonSchema: s_foodSchemaBytes,
+                description: "the name of a food item with a list of its ingredients",
+                strictSchemaEnabled: true),
+            _ => null,
+        };
+
+        AssistantCreationOptions assistantOptions = new()
+        {
+            ResponseFormat = selectedResponseFormat,
+        };
+
+        Assistant assistant = await client.CreateAssistantAsync(modelName, assistantOptions);
         Validate(assistant);
-        Assert.That(assistant.ResponseFormat, Is.EqualTo(AssistantResponseFormat.JsonObject));
-        assistant = await client.ModifyAssistantAsync(assistant, new()
-        {
-            ResponseFormat = AssistantResponseFormat.Text,
-        });
-        Assert.That(assistant.ResponseFormat, Is.EqualTo(AssistantResponseFormat.Text));
+        Assert.That(assistant.ResponseFormat, Is.EqualTo(selectedResponseFormat ?? AssistantResponseFormat.Auto));
+
         AssistantThread thread = await client.CreateThreadAsync();
         Validate(thread);
+
         ThreadMessage message = await client.CreateMessageAsync(thread.Id, MessageRole.User, ["Write some JSON for me!"]);
         Validate(message);
-        ThreadRun run = await client.CreateRunAsync(thread, assistant, new()
-        {
-            ResponseFormat = AssistantResponseFormat.JsonObject,
-        });
+
+        ThreadRun run = await client.CreateRunAsync(thread, assistant);
         Validate(run);
-        Assert.That(run.ResponseFormat, Is.EqualTo(AssistantResponseFormat.JsonObject));
+
+        Assert.That(run.ResponseFormat, Is.EqualTo(selectedResponseFormat ?? AssistantResponseFormat.Auto));
     }
 
     [RecordedTest]
@@ -288,7 +310,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         };
         AssistantThread thread = await client.CreateThreadAsync(options);
         Validate(thread);
-        List<ThreadMessage> messageList = await client.GetMessagesAsync(thread, new() { Order = ListOrder.OldestFirst }).ToListAsync();
+        List<ThreadMessage> messageList = await client.GetMessagesAsync(thread, new() { Order = MessageCollectionOrder.Ascending }).ToListAsync();
         Assert.That(messageList.Count, Is.EqualTo(2));
         Assert.That(messageList[0].Role, Is.EqualTo(MessageRole.User));
         Assert.That(messageList[0].Content?.Count, Is.EqualTo(1));
@@ -399,39 +421,39 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
     }
 
+    public enum TestStrictSchemaMode
+    {
+        Default,
+        UseStrictToolParameterSchema,
+        DoNotUseStrictToolParameterSchema
+    }
+
     [RecordedTest]
-    public async Task FunctionToolsWork()
+    [TestCase(TestStrictSchemaMode.Default)]
+    //[TestCase(TestStrictSchemaMode.UseStrictToolParameterSchema)]
+    //[TestCase(TestStrictSchemaMode.DoNotUseStrictToolParameterSchema)]
+    public async Task FunctionToolsWork(TestStrictSchemaMode schemaMode)
     {
         AssistantClient client = GetTestClient();
         string modelName = client.DeploymentOrThrow();
-        Assistant assistant = await client.CreateAssistantAsync(modelName, new AssistantCreationOptions()
+
+        s_getFoodForDayOfWeekTool.StrictParameterSchemaEnabled = schemaMode switch
         {
-            Tools =
-            {
-                new FunctionToolDefinition()
-                {
-                    FunctionName = "get_favorite_food_for_day_of_week",
-                    Description = "gets the user's favorite food for a given day of the week, like Tuesday",
-                    Parameters = BinaryData.FromObjectAsJson(new
-                    {
-                        type = "object",
-                        properties = new
-                        {
-                            day_of_week = new
-                            {
-                                type = "string",
-                                description = "a day of the week, like Tuesday or Saturday",
-                            }
-                        }
-                    }),
-                },
-            },
-        });
+            TestStrictSchemaMode.UseStrictToolParameterSchema => true,
+            TestStrictSchemaMode.DoNotUseStrictToolParameterSchema => false,
+            _ => null,
+        };
+        AssistantCreationOptions options = new()
+        {
+            Tools = { s_getFoodForDayOfWeekTool }
+        };
+
+        Assistant assistant = await client.CreateAssistantAsync(modelName, options);
         Validate(assistant);
         Assert.That(assistant.Tools?.Count, Is.EqualTo(1));
 
         FunctionToolDefinition responseToolDefinition = assistant.Tools[0] as FunctionToolDefinition;
-        Assert.That(responseToolDefinition?.FunctionName, Is.EqualTo("get_favorite_food_for_day_of_week"));
+        Assert.That(responseToolDefinition?.FunctionName, Is.EqualTo(s_getFoodForDayOfWeekTool.FunctionName));
         Assert.That(responseToolDefinition?.Parameters, Is.Not.Null);
 
         ThreadRun run = await client.CreateThreadAndRunAsync(
@@ -469,7 +491,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             r => r.Status.IsTerminal);
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
 
-        List<ThreadMessage> messages = await client.GetMessagesAsync(run.ThreadId, new() { Order = ListOrder.NewestFirst })
+        List<ThreadMessage> messages = await client.GetMessagesAsync(run.ThreadId, new() { Order = MessageCollectionOrder.Descending })
             .ToListAsync();
         Assert.That(messages.Count, Is.GreaterThan(1));
         Assert.That(messages.ElementAt(0).Role, Is.EqualTo(MessageRole.Assistant));
@@ -573,7 +595,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             r => r.Status.IsTerminal);
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
 
-        AsyncPageCollection<ThreadMessage> messages = client.GetMessagesAsync(thread, new() { Order = ListOrder.NewestFirst });
+        AsyncPageCollection<ThreadMessage> messages = client.GetMessagesAsync(thread, new() { Order = MessageCollectionOrder.Descending });
         int numPages = 0;
         int numThreads = 0;
         bool hasCake = false;
@@ -650,4 +672,40 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     }
 
     private static readonly DateTimeOffset s_2024 = new(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
+    private static FunctionToolDefinition s_getFoodForDayOfWeekTool = new()
+    {
+        FunctionName = "get_favorite_food_for_day_of_week",
+        Description = "gets the user's favorite food for a given day of the week, like Tuesday",
+        Parameters = BinaryData.FromObjectAsJson(new
+        {
+            type = "object",
+            properties = new
+            {
+                day_of_week = new
+                {
+                    type = "string",
+                    description = "a day of the week, like Tuesday or Saturday",
+                }
+            }
+        }),
+    };
+    private static readonly BinaryData s_foodSchemaBytes = BinaryData.FromString("""
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "a descriptive name for the food"
+            },
+            "ingredients": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "recipe ingredients for the food"
+            }
+          },
+          "additionalProperties": false
+        }
+        """);
 }

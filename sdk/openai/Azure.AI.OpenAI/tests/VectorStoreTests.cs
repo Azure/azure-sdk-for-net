@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils.Config;
 using NUnit.Framework;
 using OpenAI;
+using OpenAI.Assistants;
 using OpenAI.Files;
 using OpenAI.TestFramework;
 using OpenAI.VectorStores;
@@ -84,10 +85,12 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         deleted = await client.DeleteVectorStoreAsync(vectorStore.Id);
         Assert.That(deleted, Is.True);
 
-        vectorStore = await client.CreateVectorStoreAsync(new VectorStoreCreationOptions()
+        var options = new VectorStoreCreationOptions();
+        foreach (var file in testFiles)
         {
-            FileIds = testFiles.Select(file => file.Id).ToList()
-        });
+            options.FileIds.Add(file.Id);
+        }
+        vectorStore = await client.CreateVectorStoreAsync(options);
         Validate(vectorStore);
         Assert.Multiple(() =>
         {
@@ -110,7 +113,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             Assert.That(vectorStore.Name, Is.EqualTo($"Test Vector Store {i}"));
         }
 
-        AsyncPageCollection<VectorStore> response = client.GetVectorStoresAsync(new VectorStoreCollectionOptions() { Order = ListOrder.NewestFirst });
+        AsyncPageCollection<VectorStore> response = client.GetVectorStoresAsync(new VectorStoreCollectionOptions() { Order = VectorStoreCollectionOrder.Descending });
         Assert.That(response, Is.Not.Null);
 
         int lastIdSeen = int.MaxValue;

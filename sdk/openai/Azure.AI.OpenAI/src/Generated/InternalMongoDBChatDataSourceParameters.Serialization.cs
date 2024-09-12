@@ -10,14 +10,14 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI.Chat
 {
-    internal partial class InternalAzureMachineLearningIndexChatDataSourceParameters : IJsonModel<InternalAzureMachineLearningIndexChatDataSourceParameters>
+    internal partial class InternalMongoDBChatDataSourceParameters : IJsonModel<InternalMongoDBChatDataSourceParameters>
     {
-        void IJsonModel<InternalAzureMachineLearningIndexChatDataSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InternalMongoDBChatDataSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureMachineLearningIndexChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalMongoDBChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalAzureMachineLearningIndexChatDataSourceParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalMongoDBChatDataSourceParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,11 +35,6 @@ namespace Azure.AI.OpenAI.Chat
             {
                 writer.WritePropertyName("strictness"u8);
                 writer.WriteNumberValue(Strictness.Value);
-            }
-            if (SerializedAdditionalRawData?.ContainsKey("role_information") != true && Optional.IsDefined(RoleInformation))
-            {
-                writer.WritePropertyName("role_information"u8);
-                writer.WriteStringValue(RoleInformation);
             }
             if (SerializedAdditionalRawData?.ContainsKey("max_search_queries") != true && Optional.IsDefined(MaxSearchQueries))
             {
@@ -61,30 +56,45 @@ namespace Azure.AI.OpenAI.Chat
                 }
                 writer.WriteEndArray();
             }
+            if (SerializedAdditionalRawData?.ContainsKey("endpoint") != true)
+            {
+                writer.WritePropertyName("endpoint"u8);
+                writer.WriteStringValue(Endpoint);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("database_name") != true)
+            {
+                writer.WritePropertyName("database_name"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("collection_name") != true)
+            {
+                writer.WritePropertyName("collection_name"u8);
+                writer.WriteStringValue(CollectionName);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("app_name") != true)
+            {
+                writer.WritePropertyName("app_name"u8);
+                writer.WriteStringValue(AppName);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("index_name") != true)
+            {
+                writer.WritePropertyName("index_name"u8);
+                writer.WriteStringValue(IndexName);
+            }
             if (SerializedAdditionalRawData?.ContainsKey("authentication") != true)
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue<DataSourceAuthentication>(Authentication, options);
             }
-            if (SerializedAdditionalRawData?.ContainsKey("project_resource_id") != true)
+            if (SerializedAdditionalRawData?.ContainsKey("embedding_dependency") != true)
             {
-                writer.WritePropertyName("project_resource_id"u8);
-                writer.WriteStringValue(ProjectResourceId);
+                writer.WritePropertyName("embedding_dependency"u8);
+                writer.WriteObjectValue<DataSourceVectorizer>(EmbeddingDependency, options);
             }
-            if (SerializedAdditionalRawData?.ContainsKey("name") != true)
+            if (SerializedAdditionalRawData?.ContainsKey("fields_mapping") != true)
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (SerializedAdditionalRawData?.ContainsKey("version") != true)
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (SerializedAdditionalRawData?.ContainsKey("filter") != true && Optional.IsDefined(Filter))
-            {
-                writer.WritePropertyName("filter"u8);
-                writer.WriteStringValue(Filter);
+                writer.WritePropertyName("fields_mapping"u8);
+                writer.WriteObjectValue<DataSourceFieldMappings>(FieldMappings, options);
             }
             if (SerializedAdditionalRawData != null)
             {
@@ -108,19 +118,19 @@ namespace Azure.AI.OpenAI.Chat
             writer.WriteEndObject();
         }
 
-        InternalAzureMachineLearningIndexChatDataSourceParameters IJsonModel<InternalAzureMachineLearningIndexChatDataSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InternalMongoDBChatDataSourceParameters IJsonModel<InternalMongoDBChatDataSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureMachineLearningIndexChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalMongoDBChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalAzureMachineLearningIndexChatDataSourceParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalMongoDBChatDataSourceParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalAzureMachineLearningIndexChatDataSourceParameters(document.RootElement, options);
+            return DeserializeInternalMongoDBChatDataSourceParameters(document.RootElement, options);
         }
 
-        internal static InternalAzureMachineLearningIndexChatDataSourceParameters DeserializeInternalAzureMachineLearningIndexChatDataSourceParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static InternalMongoDBChatDataSourceParameters DeserializeInternalMongoDBChatDataSourceParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -131,15 +141,17 @@ namespace Azure.AI.OpenAI.Chat
             int? topNDocuments = default;
             bool? inScope = default;
             int? strictness = default;
-            string roleInformation = default;
             int? maxSearchQueries = default;
             bool? allowPartialResult = default;
             IList<string> includeContexts = default;
+            string endpoint = default;
+            string databaseName = default;
+            string collectionName = default;
+            string appName = default;
+            string indexName = default;
             DataSourceAuthentication authentication = default;
-            string projectResourceId = default;
-            string name = default;
-            string version = default;
-            string filter = default;
+            DataSourceVectorizer embeddingDependency = default;
+            DataSourceFieldMappings fieldsMapping = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,11 +181,6 @@ namespace Azure.AI.OpenAI.Chat
                         continue;
                     }
                     strictness = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("role_information"u8))
-                {
-                    roleInformation = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("max_search_queries"u8))
@@ -208,29 +215,44 @@ namespace Azure.AI.OpenAI.Chat
                     includeContexts = array;
                     continue;
                 }
+                if (property.NameEquals("endpoint"u8))
+                {
+                    endpoint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("database_name"u8))
+                {
+                    databaseName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("collection_name"u8))
+                {
+                    collectionName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("app_name"u8))
+                {
+                    appName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("index_name"u8))
+                {
+                    indexName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("authentication"u8))
                 {
                     authentication = DataSourceAuthentication.DeserializeDataSourceAuthentication(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("project_resource_id"u8))
+                if (property.NameEquals("embedding_dependency"u8))
                 {
-                    projectResourceId = property.Value.GetString();
+                    embeddingDependency = DataSourceVectorizer.DeserializeDataSourceVectorizer(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("fields_mapping"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("version"u8))
-                {
-                    version = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("filter"u8))
-                {
-                    filter = property.Value.GetString();
+                    fieldsMapping = DataSourceFieldMappings.DeserializeDataSourceFieldMappings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -240,59 +262,61 @@ namespace Azure.AI.OpenAI.Chat
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InternalAzureMachineLearningIndexChatDataSourceParameters(
+            return new InternalMongoDBChatDataSourceParameters(
                 topNDocuments,
                 inScope,
                 strictness,
-                roleInformation,
                 maxSearchQueries,
                 allowPartialResult,
                 includeContexts ?? new ChangeTrackingList<string>(),
+                endpoint,
+                databaseName,
+                collectionName,
+                appName,
+                indexName,
                 authentication,
-                projectResourceId,
-                name,
-                version,
-                filter,
+                embeddingDependency,
+                fieldsMapping,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InternalAzureMachineLearningIndexChatDataSourceParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<InternalMongoDBChatDataSourceParameters>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureMachineLearningIndexChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalMongoDBChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalAzureMachineLearningIndexChatDataSourceParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalMongoDBChatDataSourceParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InternalAzureMachineLearningIndexChatDataSourceParameters IPersistableModel<InternalAzureMachineLearningIndexChatDataSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        InternalMongoDBChatDataSourceParameters IPersistableModel<InternalMongoDBChatDataSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureMachineLearningIndexChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalMongoDBChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeInternalAzureMachineLearningIndexChatDataSourceParameters(document.RootElement, options);
+                        return DeserializeInternalMongoDBChatDataSourceParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalAzureMachineLearningIndexChatDataSourceParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalMongoDBChatDataSourceParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InternalAzureMachineLearningIndexChatDataSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InternalMongoDBChatDataSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The result to deserialize the model from. </param>
-        internal static InternalAzureMachineLearningIndexChatDataSourceParameters FromResponse(PipelineResponse response)
+        internal static InternalMongoDBChatDataSourceParameters FromResponse(PipelineResponse response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeInternalAzureMachineLearningIndexChatDataSourceParameters(document.RootElement);
+            return DeserializeInternalMongoDBChatDataSourceParameters(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="BinaryContent"/>. </summary>

@@ -4,7 +4,7 @@
 namespace Azure.AI.OpenAI;
 
 [CodeGenModel("AzureContentFilterResultForChoice")]
-public partial class ContentFilterResultForResponse
+public partial class ResponseContentFilterResult
 {
     internal InternalAzureContentFilterResultForPromptContentFilterResultsError Error { get; }
 }

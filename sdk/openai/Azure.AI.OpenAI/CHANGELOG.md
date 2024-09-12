@@ -1,5 +1,50 @@
 # Release History
 
+## 2.0.0-beta.6 (2024-09-xx)
+
+This update includes support for the latest `2024-08-01-preview` Azure OpenAI Service API version ([published on 09/06](https://github.com/Azure/azure-rest-api-specs/pull/30430)), including the structured outputs feature. It also increments library compatibility to `OpenAI 2.0.0-beta.12`, which comes with several breaking change design updates.
+
+### Features Added
+
+**Azure OpenAI On Your Data**
+
+- A new `MongoDBChatDataSource` has been added, which supports integration of an external MongoDB database via username and password.
+- A new integrated vectorization source, obtainable via `DataSourceVectorizer.FromIntegratedResource()`, has been added to support in-resource configuration of Azure AI Search vectorization.
+- `RerankScore` is now available on `AzureChatCitation` (in addition to its previous appearance on `AzureChatRetrievedDocument`).
+
+### Bugs Fixed
+
+- Addressed an issue that caused the use of `Content` and other properties on `StreamingChatCompletionUpdate` to throw an exception for some update chunks when using an asynchronous response content filter.
+
+### Breaking Changes
+
+**Azure OpenAI Specific**
+
+- The `AzureMachineLearningIndexChatDataSource` type (together with its service support) has been removed.
+- `RoleInformation` has been removed from On Your Data chat data sources. Please use conventional system messages on chat completion requests, instead.
+- Aligning with naming guidelines:
+  - `DataSourceOutputContextFlags` has been renamed to `DataSourceOutputContexts`
+  - `*ContentFilterForPrompt` types and methods have been renamed to `*RequestContentFilterResult`; `*ContentFilterForResponse` items have likewise been renamed to `*ResponseContentFilterResult`
+- Extension methods supporting specific scenario clients have been migrated to their corresponding Azure namespaces (previously at the root of `Azure.AI.OpenAI`):
+  - Chat: `GetAzureMessageContext()`, `GetContentFilterResultForPrompt()`, and `GetContentFilterResultForResponse()`, together with `AddDataSource()`, are now in the `Azure.AI.OpenAI.Chat` namespace
+  - Images: `GetContentFilterResultForPrompt()`, and `GetContentFilterResultForResponse()` are now in the `Azure.AI.OpenAI.Images` namespace
+
+
+**Not specific to Azure OpenAI**
+
+- Renamed `ChatMessageContentPart`'s `CreateTextMessageContentPart` factory method to `CreateTextPart`.
+- Renamed `ChatMessageContentPart`'s `CreateImageMessageContentPart` factory method to `CreateImagePart`.
+- Renamed `ChatMessageContentPart`'s `CreateRefusalMessageContentPart` factory method to `CreateRefusalPart`.
+- Renamed `ImageChatMessageContentPartDetail` to `ChatImageDetailLevel`.
+- Removed `ChatMessageContentPart`'s `ToString` overload.
+- Removed the common `ListOrder` enum from the top-level `OpenAI` namespace in favor of individual enums in their corresponding sub-namespace.
+- Renamed the `PageSize` property to `PageSizeLimit`.
+- Removed setter from collection properties.
+
+### Other Changes
+
+- Many instances of `init` on request options types have been replaced with `set`, allowing mutation of these types after instantiation.
+
 ## 2.0.0-beta.5 (2024-09-03)
 
 This update increments library compatibility to `OpenAI 2.0.0-beta.11`, including several breaking changes.

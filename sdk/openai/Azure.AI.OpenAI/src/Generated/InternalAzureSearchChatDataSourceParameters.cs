@@ -68,11 +68,6 @@ namespace Azure.AI.OpenAI.Chat
         /// The configured strictness of the search relevance filtering.
         /// Higher strictness will increase precision but lower recall of the answer.
         /// </param>
-        /// <param name="roleInformation">
-        /// Additional instructions for the model to inform how it should behave and any context it should reference when
-        /// generating a response. You can describe the assistant's personality and tell it how to format responses.
-        /// This is limited to 100 tokens and counts against the overall token limit.
-        /// </param>
         /// <param name="maxSearchQueries">
         /// The maximum number of rewritten queries that should be sent to the search provider for a single user message.
         /// By default, the system will make an automatic determination.
@@ -97,16 +92,15 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="filter"> A filter to apply to the search. </param>
         /// <param name="vectorizationSource">
         /// The vectorization source to use with Azure Search.
-        /// Supported sources for Azure Search include endpoint and deployment name.
+        /// Supported sources for Azure Search include endpoint, deployment name, and integrated.
         /// Please note <see cref="DataSourceVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAzureSearchChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, string roleInformation, int? maxSearchQueries, bool? allowPartialResult, IList<string> internalIncludeContexts, Uri endpoint, string indexName, DataSourceAuthentication authentication, DataSourceFieldMappings fieldMappings, DataSourceQueryType? queryType, string semanticConfiguration, string filter, DataSourceVectorizer vectorizationSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalAzureSearchChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, int? maxSearchQueries, bool? allowPartialResult, IList<string> internalIncludeContexts, Uri endpoint, string indexName, DataSourceAuthentication authentication, DataSourceFieldMappings fieldMappings, DataSourceQueryType? queryType, string semanticConfiguration, string filter, DataSourceVectorizer vectorizationSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TopNDocuments = topNDocuments;
             InScope = inScope;
             Strictness = strictness;
-            RoleInformation = roleInformation;
             MaxSearchQueries = maxSearchQueries;
             AllowPartialResult = allowPartialResult;
             _internalIncludeContexts = internalIncludeContexts;
@@ -135,12 +129,6 @@ namespace Azure.AI.OpenAI.Chat
         /// Higher strictness will increase precision but lower recall of the answer.
         /// </summary>
         internal int? Strictness { get; set; }
-        /// <summary>
-        /// Additional instructions for the model to inform how it should behave and any context it should reference when
-        /// generating a response. You can describe the assistant's personality and tell it how to format responses.
-        /// This is limited to 100 tokens and counts against the overall token limit.
-        /// </summary>
-        internal string RoleInformation { get; set; }
         /// <summary>
         /// The maximum number of rewritten queries that should be sent to the search provider for a single user message.
         /// By default, the system will make an automatic determination.

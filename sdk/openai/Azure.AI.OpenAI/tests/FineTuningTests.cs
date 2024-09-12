@@ -193,7 +193,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.That(job.Status, Is.EqualTo("cancelled"));
     }
 
-    [RecordedTest]
+    [RecordedTest(AutomaticRecord = false)]
     [Category("LongRunning")] // CAUTION: This test can take up 30 *minutes* to run in live mode
     public async Task CreateAndDeleteFineTuning()
     {
@@ -229,7 +229,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.True(deleted, "Failed to delete fine tuning model: {0}", job.FineTunedModel);
     }
 
-    [RecordedTest]
+    [RecordedTest(AutomaticRecord = false)]
     [Category("LongRunning")] // CAUTION: This test can take around 10 to 15 *minutes* in live mode to run
     public async Task DeployAndChatWithModel()
     {

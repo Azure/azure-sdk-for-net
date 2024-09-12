@@ -8,23 +8,23 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI
 {
     /// <summary> A content filter result for an image generation operation's input request content. </summary>
-    public partial class ImageContentFilterResultForPrompt : ImageContentFilterResultForResponse
+    public partial class RequestImageContentFilterResult : ResponseImageContentFilterResult
     {
-        /// <summary> Initializes a new instance of <see cref="ImageContentFilterResultForPrompt"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestImageContentFilterResult"/>. </summary>
         /// <param name="jailbreak">
         /// A detection result that describes user prompt injection attacks, where malicious users deliberately exploit
         /// system vulnerabilities to elicit unauthorized behavior from the LLM. This could lead to inappropriate content
         /// generation or violations of system-imposed restrictions.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jailbreak"/> is null. </exception>
-        internal ImageContentFilterResultForPrompt(ContentFilterDetectionResult jailbreak)
+        internal RequestImageContentFilterResult(ContentFilterDetectionResult jailbreak)
         {
             Argument.AssertNotNull(jailbreak, nameof(jailbreak));
 
             Jailbreak = jailbreak;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageContentFilterResultForPrompt"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestImageContentFilterResult"/>. </summary>
         /// <param name="sexual">
         /// A content filter category for language related to anatomical organs and genitals, romantic relationships, acts
         /// portrayed in erotic or affectionate terms, pregnancy, physical sexual acts, including those portrayed as an
@@ -56,15 +56,15 @@ namespace Azure.AI.OpenAI
         /// system vulnerabilities to elicit unauthorized behavior from the LLM. This could lead to inappropriate content
         /// generation or violations of system-imposed restrictions.
         /// </param>
-        internal ImageContentFilterResultForPrompt(ContentFilterSeverityResult sexual, ContentFilterSeverityResult violence, ContentFilterSeverityResult hate, ContentFilterSeverityResult selfHarm, IDictionary<string, BinaryData> serializedAdditionalRawData, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, ContentFilterDetectionResult jailbreak) : base(sexual, violence, hate, selfHarm, serializedAdditionalRawData)
+        internal RequestImageContentFilterResult(ContentFilterSeverityResult sexual, ContentFilterSeverityResult violence, ContentFilterSeverityResult hate, ContentFilterSeverityResult selfHarm, IDictionary<string, BinaryData> serializedAdditionalRawData, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, ContentFilterDetectionResult jailbreak) : base(sexual, violence, hate, selfHarm, serializedAdditionalRawData)
         {
             Profanity = profanity;
             CustomBlocklists = customBlocklists;
             Jailbreak = jailbreak;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageContentFilterResultForPrompt"/> for deserialization. </summary>
-        internal ImageContentFilterResultForPrompt()
+        /// <summary> Initializes a new instance of <see cref="RequestImageContentFilterResult"/> for deserialization. </summary>
+        internal RequestImageContentFilterResult()
         {
         }
 

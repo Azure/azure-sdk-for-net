@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI.Chat
 {
-    /// <summary> The ElasticsearchChatDataSourceParameters. </summary>
-    internal partial class InternalElasticsearchChatDataSourceParameters
+    /// <summary> The MongoDBChatDataSourceParameters. </summary>
+    internal partial class InternalMongoDBChatDataSourceParameters
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -41,26 +41,50 @@ namespace Azure.AI.OpenAI.Chat
         /// </para>
         /// </summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        /// <summary> Initializes a new instance of <see cref="InternalElasticsearchChatDataSourceParameters"/>. </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="indexName"></param>
+        /// <summary> Initializes a new instance of <see cref="InternalMongoDBChatDataSourceParameters"/>. </summary>
+        /// <param name="endpoint"> The name of the MongoDB cluster endpoint. </param>
+        /// <param name="databaseName"> The name of the MongoDB database. </param>
+        /// <param name="collectionName"> The name of the MongoDB collection. </param>
+        /// <param name="appName"> The name of the MongoDB application. </param>
+        /// <param name="indexName"> The name of the MongoDB index. </param>
         /// <param name="authentication">
+        /// The authentication mechanism to use with Pinecone.
+        /// Supported authentication mechanisms for Pinecone include: username and password.
         /// Please note <see cref="DataSourceAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/> or <paramref name="authentication"/> is null. </exception>
-        internal InternalElasticsearchChatDataSourceParameters(Uri endpoint, string indexName, DataSourceAuthentication authentication)
+        /// <param name="embeddingDependency">
+        /// The vectorization source to use as an embedding dependency for the MongoDB data source.
+        /// Supported vectorization sources for MongoDB include: endpoint, deployment name.
+        /// Please note <see cref="DataSourceVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
+        /// </param>
+        /// <param name="fieldMappings">
+        /// Field mappings to apply to data used by the MongoDB data source.
+        /// Note that content and vector field mappings are required for MongoDB.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/>, <paramref name="appName"/>, <paramref name="indexName"/>, <paramref name="authentication"/>, <paramref name="embeddingDependency"/> or <paramref name="fieldMappings"/> is null. </exception>
+        internal InternalMongoDBChatDataSourceParameters(string endpoint, string databaseName, string collectionName, string appName, string indexName, DataSourceAuthentication authentication, DataSourceVectorizer embeddingDependency, DataSourceFieldMappings fieldMappings)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(collectionName, nameof(collectionName));
+            Argument.AssertNotNull(appName, nameof(appName));
             Argument.AssertNotNull(indexName, nameof(indexName));
             Argument.AssertNotNull(authentication, nameof(authentication));
+            Argument.AssertNotNull(embeddingDependency, nameof(embeddingDependency));
+            Argument.AssertNotNull(fieldMappings, nameof(fieldMappings));
 
             _internalIncludeContexts = new ChangeTrackingList<string>();
             Endpoint = endpoint;
+            DatabaseName = databaseName;
+            CollectionName = collectionName;
+            AppName = appName;
             IndexName = indexName;
             Authentication = authentication;
+            EmbeddingDependency = embeddingDependency;
+            FieldMappings = fieldMappings;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalElasticsearchChatDataSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalMongoDBChatDataSourceParameters"/>. </summary>
         /// <param name="topNDocuments"> The configured number of documents to feature in the query. </param>
         /// <param name="inScope"> Whether queries should be restricted to use of the indexed data. </param>
         /// <param name="strictness">
@@ -79,18 +103,27 @@ namespace Azure.AI.OpenAI.Chat
         /// The output context properties to include on the response.
         /// By default, citations and intent will be requested.
         /// </param>
-        /// <param name="endpoint"></param>
-        /// <param name="indexName"></param>
+        /// <param name="endpoint"> The name of the MongoDB cluster endpoint. </param>
+        /// <param name="databaseName"> The name of the MongoDB database. </param>
+        /// <param name="collectionName"> The name of the MongoDB collection. </param>
+        /// <param name="appName"> The name of the MongoDB application. </param>
+        /// <param name="indexName"> The name of the MongoDB index. </param>
         /// <param name="authentication">
+        /// The authentication mechanism to use with Pinecone.
+        /// Supported authentication mechanisms for Pinecone include: username and password.
         /// Please note <see cref="DataSourceAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
         /// </param>
-        /// <param name="fieldMappings"></param>
-        /// <param name="queryType"></param>
-        /// <param name="vectorizationSource">
+        /// <param name="embeddingDependency">
+        /// The vectorization source to use as an embedding dependency for the MongoDB data source.
+        /// Supported vectorization sources for MongoDB include: endpoint, deployment name.
         /// Please note <see cref="DataSourceVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
         /// </param>
+        /// <param name="fieldMappings">
+        /// Field mappings to apply to data used by the MongoDB data source.
+        /// Note that content and vector field mappings are required for MongoDB.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalElasticsearchChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, int? maxSearchQueries, bool? allowPartialResult, IList<string> internalIncludeContexts, Uri endpoint, string indexName, DataSourceAuthentication authentication, DataSourceFieldMappings fieldMappings, DataSourceQueryType? queryType, DataSourceVectorizer vectorizationSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalMongoDBChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, int? maxSearchQueries, bool? allowPartialResult, IList<string> internalIncludeContexts, string endpoint, string databaseName, string collectionName, string appName, string indexName, DataSourceAuthentication authentication, DataSourceVectorizer embeddingDependency, DataSourceFieldMappings fieldMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TopNDocuments = topNDocuments;
             InScope = inScope;
@@ -99,16 +132,18 @@ namespace Azure.AI.OpenAI.Chat
             AllowPartialResult = allowPartialResult;
             _internalIncludeContexts = internalIncludeContexts;
             Endpoint = endpoint;
+            DatabaseName = databaseName;
+            CollectionName = collectionName;
+            AppName = appName;
             IndexName = indexName;
             Authentication = authentication;
+            EmbeddingDependency = embeddingDependency;
             FieldMappings = fieldMappings;
-            QueryType = queryType;
-            VectorizationSource = vectorizationSource;
             SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalElasticsearchChatDataSourceParameters"/> for deserialization. </summary>
-        internal InternalElasticsearchChatDataSourceParameters()
+        /// <summary> Initializes a new instance of <see cref="InternalMongoDBChatDataSourceParameters"/> for deserialization. </summary>
+        internal InternalMongoDBChatDataSourceParameters()
         {
         }
 
@@ -131,9 +166,15 @@ namespace Azure.AI.OpenAI.Chat
         /// partial queries fail. If not specified or specified as false, the request will fail if any search query fails.
         /// </summary>
         internal bool? AllowPartialResult { get; set; }
-        /// <summary> Gets the endpoint. </summary>
-        internal Uri Endpoint { get; set; }
-        /// <summary> Gets the index name. </summary>
+        /// <summary> The name of the MongoDB cluster endpoint. </summary>
+        internal string Endpoint { get; set; }
+        /// <summary> The name of the MongoDB database. </summary>
+        internal string DatabaseName { get; set; }
+        /// <summary> The name of the MongoDB collection. </summary>
+        internal string CollectionName { get; set; }
+        /// <summary> The name of the MongoDB application. </summary>
+        internal string AppName { get; set; }
+        /// <summary> The name of the MongoDB index. </summary>
         internal string IndexName { get; set; }
     }
 }

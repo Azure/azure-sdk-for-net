@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Chat;
 using OpenAI.Chat;
 using OpenAI.TestFramework;
 
@@ -77,7 +78,7 @@ public partial class ChatTests
         Assert.IsNotNull(completion);
         Assert.That(completion.Id, Is.Not.Null.Or.Empty);
 
-        ContentFilterResultForPrompt filter = completion.GetContentFilterResultForPrompt();
+        RequestContentFilterResult filter = completion.GetRequestContentFilterResult();
         Assert.IsNotNull(filter);
         Assert.That(filter.SelfHarm, Is.Not.Null);
         Assert.That(filter.SelfHarm.Filtered, Is.False);
@@ -138,7 +139,7 @@ public partial class ChatTests
         Assert.That(completion, Is.Not.Null);
         Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
 
-        ContentFilterResultForResponse responseFilter = completion.GetContentFilterResultForResponse();
+        ResponseContentFilterResult responseFilter = completion.GetResponseContentFilterResult();
         Assert.That(responseFilter, Is.Not.Null);
         Assert.That(responseFilter.Hate, Is.Not.Null);
         Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
@@ -205,7 +206,7 @@ public partial class ChatTests
                 content.Append(part.Text);
             }
 
-            var promptFilter = update.GetContentFilterResultForPrompt();
+            var promptFilter = update.GetRequestContentFilterResult();
             if (!foundPromptFilter && promptFilter?.Hate != null)
             {
                 Assert.That(promptFilter.Hate.Filtered, Is.False);
@@ -213,7 +214,7 @@ public partial class ChatTests
                 foundPromptFilter = true;
             }
 
-            var responseFilter = update.GetContentFilterResultForResponse();
+            var responseFilter = update.GetResponseContentFilterResult();
             if (!foundResponseFilter && responseFilter?.Hate != null)
             {
                 Assert.That(responseFilter.Hate.Filtered, Is.False);
