@@ -19,7 +19,10 @@ public class AzureClientPlugin : ClientModelPlugin
     /// </summary>
     /// <param name="context"></param>
     [ImportingConstructor]
-    public AzureClientPlugin(GeneratorContext context) : base(context) { }
+    public AzureClientPlugin(GeneratorContext context) : base(context)
+    {
+        TypeFactory = new AzureTypeFactory();
+    }
 
     /// <summary>
     /// Customize the generation output for Azure client SDK.
@@ -35,4 +38,9 @@ public class AzureClientPlugin : ClientModelPlugin
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 """;
+
+    /// <summary>
+    /// Returns the Azure type factory
+    /// </summary>
+    public override AzureTypeFactory TypeFactory { get; }
 }
