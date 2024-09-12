@@ -50,7 +50,7 @@ public class BasicStorageTests(bool async)
             ctx =>
             {
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
-                BlobService blobs = new(nameof(blobs)) { Parent = storage };
+                BlobService blobs = new(nameof(blobs)) { Parent = storage, DependsOn = { storage } };
             })
         .Compare(
             """
@@ -73,9 +73,12 @@ public class BasicStorageTests(bool async)
             resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
                 name: 'default'
                 parent: storage
+                dependsOn: [
+                    storage
+                ]
             }
             """)
-        .Lint()
+        .Lint(ignore: ["no-unnecessary-dependson"])
         .ValidateAndDeployAsync();
     }
 

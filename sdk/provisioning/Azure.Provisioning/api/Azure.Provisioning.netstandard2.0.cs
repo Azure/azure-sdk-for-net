@@ -907,6 +907,7 @@ namespace Azure.Provisioning.Primitives
     public abstract partial class Resource : Azure.Provisioning.Primitives.NamedProvisioningConstruct
     {
         protected Resource(string resourceName, Azure.Core.ResourceType resourceType, string? resourceVersion = null, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Provisioning.ProvisioningContext)) { }
+        public System.Collections.Generic.IList<Azure.Provisioning.Primitives.Resource> DependsOn { get { throw null; } }
         public bool IsExistingResource { get { throw null; } protected set { } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public string? ResourceVersion { get { throw null; } set { } }
