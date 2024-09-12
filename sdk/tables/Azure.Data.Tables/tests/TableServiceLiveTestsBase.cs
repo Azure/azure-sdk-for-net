@@ -72,12 +72,15 @@ namespace Azure.Data.Tables.Tests
             { "ValidateSasCredentialsWithGenerateSasUri", "https://github.com/Azure/azure-sdk-for-net/issues/13578" },
             { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" },
             { "GetEntityAllowsEmptyRowKey", "Empty RowKey values are not supported by Cosmos." },
-            { "ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName", "https://github.com/Azure/azure-sdk-for-net/issues/26800" }
+            { "ValidateSasCredentialsWith,GenerateSasUriAndUpperCaseTableName", "https://github.com/Azure/azure-sdk-for-net/issues/26800" },
+            { "EnableTenantDiscoveryDoesNotFailAuth", "Tenant discovery is not supported by Cosmos endpoints." },
         };
 
         private readonly Dictionary<string, string> _AadIgnoreTests = new()
         {
-            { "GetAccessPoliciesReturnsPolicies", "https://github.com/Azure/azure-sdk-for-net/issues/21913" }
+            { "GetAccessPoliciesReturnsPolicies", "https://github.com/Azure/azure-sdk-for-net/issues/21913" },
+            { "DeleteEntityWithConnectionStringCtor", "Connection string specific test."},
+            { "ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName", "Not Entra ID related."}
         };
 
         /// <summary>
