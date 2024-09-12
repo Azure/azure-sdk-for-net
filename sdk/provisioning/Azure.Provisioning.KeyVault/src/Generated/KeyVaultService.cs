@@ -162,8 +162,9 @@ public partial class KeyVaultService : Resource
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
     public RoleAssignment AssignRole(KeyVaultBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{identity.ResourceName}_{KeyVaultBuiltInRole.GetBuiltInRoleName(role)}_{ResourceName}")
+        new($"{ResourceName}_{identity.ResourceName}_{KeyVaultBuiltInRole.GetBuiltInRoleName(role)}")
         {
+            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(ResourceName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
@@ -178,8 +179,9 @@ public partial class KeyVaultService : Resource
     /// <param name="principalId">The principal to assign to.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
     public RoleAssignment AssignRole(KeyVaultBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{principalId.Compile()}_{KeyVaultBuiltInRole.GetBuiltInRoleName(role)}_{ResourceName}")
+        new($"{ResourceName}_{KeyVaultBuiltInRole.GetBuiltInRoleName(role)}")
         {
+            Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(ResourceName),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),

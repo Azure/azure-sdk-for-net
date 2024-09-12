@@ -201,8 +201,8 @@ internal class SampleTests(bool async)
                 tags: tags
             }
 
-            resource mi_AcrPull_acr 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-                name: guid(resourceGroup().id, 'mi_AcrPull_acr')
+            resource acr_mi_AcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+                name: guid(acr.id, mi.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d'))
                 properties: {
                     principalId: mi.properties.principalId
                     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
@@ -243,8 +243,8 @@ internal class SampleTests(bool async)
                 tags: tags
             }
 
-            resource mi_Contributor_cae 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-                name: guid(resourceGroup().id, 'mi_Contributor_cae')
+            resource cae_mi_Contributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+                name: guid(cae.id, mi.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c'))
                 properties: {
                     principalId: mi.properties.principalId
                     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')

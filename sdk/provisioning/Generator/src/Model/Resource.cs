@@ -277,9 +277,12 @@ public class Resource(Specification spec, Type armType)
                         writer.WriteLine($"public RoleAssignment AssignRole({Spec!.Name}BuiltInRole role, UserAssignedIdentity identity) =>");
                         using (writer.Scope())
                         {
-                            writer.WriteLine($"new($\"{{identity.ResourceName}}_{{{Spec!.Name}BuiltInRole.GetBuiltInRoleName(role)}}_{{ResourceName}}\")");
+                            writer.WriteLine($"new($\"{{ResourceName}}_{{identity.ResourceName}}_{{{Spec!.Name}BuiltInRole.GetBuiltInRoleName(role)}}\")");
                             using (writer.Scope("{", "};"))
                             {
+                                writer.Write($"Name = BicepFunction.CreateGuid(");
+                                if (Properties.Any(p => p.Name == "Id")) { writer.Write("Id, "); }
+                                writer.WriteLine($"identity.PrincipalId, BicepFunction.GetSubscriptionResourceId(\"Microsoft.Authorization/roleDefinitions\", role.ToString())),");
                                 writer.WriteLine($"Scope = new IdentifierExpression(ResourceName),");
                                 writer.WriteLine($"PrincipalType = RoleManagementPrincipalType.ServicePrincipal,");
                                 writer.WriteLine($"RoleDefinitionId = BicepFunction.GetSubscriptionResourceId(\"Microsoft.Authorization/roleDefinitions\", role.ToString()),");
@@ -298,9 +301,12 @@ public class Resource(Specification spec, Type armType)
                         writer.WriteLine($"public RoleAssignment AssignRole({Spec!.Name}BuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>");
                         using (writer.Scope())
                         {
-                            writer.WriteLine($"new($\"{{principalId.Compile()}}_{{{Spec!.Name}BuiltInRole.GetBuiltInRoleName(role)}}_{{ResourceName}}\")");
+                            writer.WriteLine($"new($\"{{ResourceName}}_{{{Spec!.Name}BuiltInRole.GetBuiltInRoleName(role)}}\")");
                             using (writer.Scope("{", "};"))
                             {
+                                writer.Write($"Name = BicepFunction.CreateGuid(");
+                                if (Properties.Any(p => p.Name == "Id")) { writer.Write("Id, "); }
+                                writer.WriteLine($"principalId, BicepFunction.GetSubscriptionResourceId(\"Microsoft.Authorization/roleDefinitions\", role.ToString())),");
                                 writer.WriteLine($"Scope = new IdentifierExpression(ResourceName),");
                                 writer.WriteLine($"PrincipalType = principalType,");
                                 writer.WriteLine($"RoleDefinitionId = BicepFunction.GetSubscriptionResourceId(\"Microsoft.Authorization/roleDefinitions\", role.ToString()),");
