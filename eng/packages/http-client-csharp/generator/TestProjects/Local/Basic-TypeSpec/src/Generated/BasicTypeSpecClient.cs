@@ -11,6 +11,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure;
 using BasicTypeSpec.Models;
 
 namespace BasicTypeSpec
@@ -21,7 +22,7 @@ namespace BasicTypeSpec
         private readonly Uri _endpoint;
         private const string AuthorizationHeader = "my-api-key";
         /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly ApiKeyCredential _keyCredential;
+        private readonly global::Azure.AzureKeyCredential _keyCredential;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient for mocking. </summary>
         protected BasicTypeSpecClient()
@@ -32,7 +33,7 @@ namespace BasicTypeSpec
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, ApiKeyCredential keyCredential) : this(endpoint, keyCredential, new BasicTypeSpecClientOptions())
+        public BasicTypeSpecClient(Uri endpoint, global::Azure.AzureKeyCredential keyCredential) : this(endpoint, keyCredential, new BasicTypeSpecClientOptions())
         {
         }
 
@@ -41,7 +42,7 @@ namespace BasicTypeSpec
         /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, ApiKeyCredential keyCredential, BasicTypeSpecClientOptions options)
+        public BasicTypeSpecClient(Uri endpoint, global::Azure.AzureKeyCredential keyCredential, BasicTypeSpecClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(keyCredential, nameof(keyCredential));
