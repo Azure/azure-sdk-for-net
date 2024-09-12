@@ -86,7 +86,9 @@ internal class ModelReaderWriterSamples
         #endregion
     }
 
-    private class OutputModelProxy : IJsonModel<OutputModel>
+    #region Snippet:Readme_Read_Proxy_ClassStub
+    public class OutputModelProxy : IJsonModel<OutputModel>
+    #endregion
     {
         void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +116,9 @@ internal class ModelReaderWriterSamples
         }
     }
 
-    private class InputModelProxy : IJsonModel<InputModel>
+    #region Snippet:Readme_Write_Proxy_ClassStub
+    public class InputModelProxy : IJsonModel<InputModel>
+    #endregion
     {
         void IJsonModel<InputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {

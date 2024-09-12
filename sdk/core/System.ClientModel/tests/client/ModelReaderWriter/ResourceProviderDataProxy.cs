@@ -9,7 +9,11 @@ using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client
 {
-    public class ResourceDataWriteProxy : IJsonModel<ResourceProviderData>
+    /// <summary>
+    /// Overrides the default serialization of <see cref="ResourceProviderData"/>.
+    /// Only change is we omit the "id" property from the serialization.
+    /// </summary>
+    public class ResourceProviderDataProxy : IJsonModel<ResourceProviderData>
     {
         private void Write(ResourceProviderData model, Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {

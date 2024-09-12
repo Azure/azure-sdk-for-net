@@ -11,6 +11,8 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ModelReaderWriterOptions
 {
+    // Proxies are compared by exact type only.
+
     private Dictionary<Type, object>? _proxies;
     private static ModelReaderWriterOptions? s_jsonOptions;
 
@@ -54,17 +56,13 @@ public class ModelReaderWriterOptions
     /// <summary>
     /// Gets the model that is currently being proxied.
     /// </summary>
-    /// <remarks>
-    /// Whenever a proxy is used for a given type, the model being proxied is set here.
-    /// The value does not need to be cleared after setting it will be overwritten on the next use.
-    /// </remarks>
     public object? ProxiedModel { get; private set; }
 
     /// <summary>
     /// Gets the <see cref="IPersistableModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
     /// </summary>
     /// <param name="proxy"> The <see cref="IPersistableModel{T}"/> proxy if one exists. </param>
-    /// <returns> True if a proxy was found; otherwise, false. </returns>
+    /// <returns> True if a proxy for <typeparamref name="T"/> was found; otherwise, false. </returns>
     public bool TryGetProxy<T>([NotNullWhen(true)] out IPersistableModel<T>? proxy)
     {
         if (_proxies is null || !_proxies.TryGetValue(typeof(T), out object? result))
@@ -81,7 +79,7 @@ public class ModelReaderWriterOptions
     /// Gets the <see cref="IJsonModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
     /// </summary>
     /// <param name="proxy"> The <see cref="IJsonModel{T}"/> proxy if one exists. </param>
-    /// <returns> True if a proxy was found; otherwise, false. </returns>
+    /// <returns> True if a proxy for <typeparamref name="T"/> was found; otherwise, false. </returns>
     public bool TryGetProxy<T>([NotNullWhen(true)] out IJsonModel<T>? proxy)
     {
         if (_proxies is null || !_proxies.TryGetValue(typeof(T), out object? result) || result is not IJsonModel<T> jsonResult)
@@ -122,7 +120,7 @@ public class ModelReaderWriterOptions
     /// Gets the <see cref="IPersistableModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
     /// </summary>
     /// <param name="model"> The <see cref="IPersistableModel{T}"/> model to proxy. </param>
-    /// <returns> The <see cref="IPersistableModel{T}"/> proxy to use. </returns>
+    /// <returns> The <see cref="IPersistableModel{T}"/> proxy if one was found otherwise returns <paramref name="model"/>. </returns>
     public IPersistableModel<T> ResolveProxy<T>(IPersistableModel<T> model)
     {
         if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out object? result))
@@ -138,7 +136,7 @@ public class ModelReaderWriterOptions
     /// Gets the <see cref="IJsonModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
     /// </summary>
     /// <param name="model"> The <see cref="IJsonModel{T}"/> model to proxy. </param>
-    /// <returns> The <see cref="IJsonModel{T}"/> proxy to use. </returns>
+    /// <returns> The <see cref="IJsonModel{T}"/> proxy if one was found otherwise returns <paramref name="model"/>. </returns>
     public IJsonModel<T> ResolveProxy<T>(IJsonModel<T> model)
     {
         if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out object? result) || result is not IJsonModel<T> jsonResult)

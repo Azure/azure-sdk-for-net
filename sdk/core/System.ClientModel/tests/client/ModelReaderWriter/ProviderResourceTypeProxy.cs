@@ -10,6 +10,10 @@ using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
+    /// <summary>
+    /// Overrides the default serialization and deserialization of <see cref="ProviderResourceType"/>.
+    /// The only change is the property name "resourceType" to "resourceTypex".
+    /// </summary>
     public partial class ProviderResourceTypeProxy : IJsonModel<ProviderResourceType>
     {
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelReaderWriterOptions options = default)
