@@ -3,15 +3,9 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
