@@ -274,6 +274,26 @@ public static class BicepFunction
         BicepSyntax.Call("toUpper", value.Compile());
 
     /// <summary>
+    /// Combines multiple string values <paramref name="values"/> and returns
+    /// the concatenated string.  This represents the <c>concat</c> Bicep
+    /// function.  To improve readability, prefer
+    /// <see cref="BicepFunction.Interpolate"/> instead of
+    /// <see cref="Concat"/>.
+    /// </summary>
+    /// <param name="values">Strings in sequential order for concatenation.</param>
+    /// <returns>A string or array of concatenated values.</returns>
+    /// <remarks>
+    /// See the
+    /// <see href="https://learn.microsoft.com/azure/azure-resource-manager/bicep/bicep-functions-string#concat">
+    /// Bicep Functions Reference</see> for more.
+    /// </remarks>
+    public static BicepValue<string> Concat(params BicepValue<string>[] values)
+    {
+        if (values.Length < 1) { throw new ArgumentException($"{nameof(Concat)} requires at least one value.", nameof(values)); }
+        return BicepSyntax.Call("concat", values.Select(v => v.Compile()).ToArray());
+    }
+
+    /// <summary>
     /// Convert a formattable string with literal text, C# expressions, and
     /// Bicep expressions into an interpolated Bicep string.
     /// </summary>

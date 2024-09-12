@@ -556,6 +556,7 @@ namespace Azure.Provisioning.Expressions
     public static partial class BicepFunction
     {
         public static Azure.Provisioning.BicepValue<string> AsString(Azure.Provisioning.BicepValue<object> value) { throw null; }
+        public static Azure.Provisioning.BicepValue<string> Concat(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.BicepValue<string> CreateGuid(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.ArmDeployment GetDeployment() { throw null; }
         public static Azure.Provisioning.Resources.ResourceGroup GetResourceGroup() { throw null; }
