@@ -19,81 +19,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         void IJsonModel<AppPlatformContentCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformContentCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CertificatePropertiesType);
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
-            {
-                writer.WritePropertyName("thumbprint"u8);
-                writer.WriteStringValue(Thumbprint);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Issuer))
-            {
-                writer.WritePropertyName("issuer"u8);
-                writer.WriteStringValue(Issuer);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IssuedOn))
-            {
-                writer.WritePropertyName("issuedDate"u8);
-                writer.WriteStringValue(IssuedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
-            {
-                writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ActivateOn))
-            {
-                writer.WritePropertyName("activateDate"u8);
-                writer.WriteStringValue(ActivateOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(SubjectName))
-            {
-                writer.WritePropertyName("subjectName"u8);
-                writer.WriteStringValue(SubjectName);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DnsNames))
-            {
-                writer.WritePropertyName("dnsNames"u8);
-                writer.WriteStartArray();
-                foreach (var item in DnsNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         AppPlatformContentCertificateProperties IJsonModel<AppPlatformContentCertificateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
