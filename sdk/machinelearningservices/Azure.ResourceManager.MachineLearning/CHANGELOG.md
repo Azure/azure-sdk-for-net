@@ -8,6 +8,10 @@
 
 ### Bugs Fixed
 
+- Fix the responsed error type "data" to "Microsoft.MachineLearningServices/registries/data" in `MachineLearningDataContainerData`.
+- Fix the responsed error type "environments" to "Microsoft.MachineLearningServices/registries/environments" in `MachineLearningEnvironmentContainerData`.
+- Override the `ValidateResourceId` method in `MachineLearningEnvironmentContainerResource` and `MachineLearningDataContainerResource` to ovoid checking the wrong resource id.
+
 ### Other Changes
 
 ## 1.2.0 (2024-09-06)
