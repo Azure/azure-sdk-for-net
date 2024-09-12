@@ -54,7 +54,7 @@ public class BasicAppServiceTests(bool async)
                 BicepVariable funcAppName =
                     new(nameof(funcAppName), typeof(string))
                     {
-                        Value = BicepFunction.Interpolate($"functionApp-{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}")
+                        Value = BicepFunction.Concat("functionApp-", BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id))
                     };
 
                 WebSite functionApp =
@@ -148,7 +148,7 @@ public class BasicAppServiceTests(bool async)
                 }
             }
 
-            var funcAppName = 'functionApp-${uniqueString(resourceGroup().id)}'
+            var funcAppName = concat('functionApp-', uniqueString(resourceGroup().id))
 
             resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
                 name: funcAppName
