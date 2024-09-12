@@ -60,7 +60,7 @@ public class BasicPostgreSqlTests(bool async)
                             {
                                 ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
                                 PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Disabled,
-                                TenantId = BicepFunction.GetSubscription().TenantId
+                                TenantId = BicepFunction.GetTenant().TenantId
                             },
                         Storage =
                             new PostgreSqlFlexibleServerStorage
@@ -116,7 +116,7 @@ public class BasicPostgreSqlTests(bool async)
                     authConfig: {
                         activeDirectoryAuth: 'Enabled'
                         passwordAuth: 'Disabled'
-                        tenantId: subscription().tenantId
+                        tenantId: tenant().tenantId
                     }
                     backup: {
                         backupRetentionDays: 7

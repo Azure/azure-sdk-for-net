@@ -558,12 +558,10 @@ namespace Azure.Provisioning.Expressions
         public static Azure.Provisioning.BicepValue<string> AsString(Azure.Provisioning.BicepValue<object> value) { throw null; }
         public static Azure.Provisioning.BicepValue<string> CreateGuid(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.ArmDeployment GetDeployment() { throw null; }
-        public static Azure.Provisioning.BicepValue<object> GetReference(Azure.Provisioning.BicepValue<string> resourceName) { throw null; }
         public static Azure.Provisioning.Resources.ResourceGroup GetResourceGroup() { throw null; }
-        public static Azure.Provisioning.Resources.ResourceGroup GetResourceGroup(Azure.Provisioning.BicepValue<string> resourceGroupName) { throw null; }
-        public static Azure.Provisioning.Resources.ResourceGroup GetResourceGroup(Azure.Provisioning.BicepValue<string> subscriptionId, Azure.Provisioning.BicepValue<string> resourceGroupName) { throw null; }
         public static Azure.Provisioning.Resources.Subscription GetSubscription() { throw null; }
         public static Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GetSubscriptionResourceId(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
+        public static Azure.Provisioning.Resources.Tenant GetTenant() { throw null; }
         public static Azure.Provisioning.BicepValue<string> GetUniqueString(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.BicepValue<string> Interpolate(System.FormattableString text) { throw null; }
         public static Azure.Provisioning.BicepValue<object> ParseJson(Azure.Provisioning.BicepValue<object> value) { throw null; }
@@ -2102,6 +2100,28 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> TimeCreated { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> TimeModified { get { throw null; } }
+    }
+    public partial class Tenant : Azure.Provisioning.Primitives.Resource
+    {
+        public Tenant(string resourceName, string? resourceVersion = null, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Core.ResourceType), default(string), default(Azure.Provisioning.ProvisioningContext)) { }
+        public Azure.Provisioning.BicepValue<string> Country { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CountryCode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DefaultDomain { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> Domains { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> TenantBrandingLogoUri { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.TenantCategory> TenantCategory { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TenantType { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Provisioning.Resources.Tenant FromExpression(Azure.Provisioning.Expressions.Expression expression) { throw null; }
+    }
+    public enum TenantCategory
+    {
+        Home = 0,
+        ProjectedBy = 1,
+        ManagedBy = 2,
     }
     public partial class UserAssignedIdentityDetails : Azure.Provisioning.Primitives.ProvisioningConstruct
     {
