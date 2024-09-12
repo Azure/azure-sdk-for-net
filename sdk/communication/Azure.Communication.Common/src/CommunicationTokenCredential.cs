@@ -35,6 +35,16 @@ namespace Azure.Communication
         }
 
         /// <summary>
+        /// Initializes a new instance of <see cref="EntraTokenCredential"/>.
+        /// </summary>
+        /// <param name="options"></param>
+        public CommunicationTokenCredential(EntraCommunicationTokenCredentialOptions options)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            _tokenCredential = new EntraTokenCredential(options);
+        }
+
+        /// <summary>
         /// Gets an <see cref="AccessToken"/> for the user.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
