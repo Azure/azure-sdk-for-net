@@ -21,19 +21,12 @@ public class BasicEventHubsTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "Hub location."
-                    };
                 BicepParameter hubName = new(nameof(hubName), typeof(string)) { Value = "orders" };
                 BicepParameter groupName = new(nameof(groupName), typeof(string)) { Value = "managers" };
 
                 EventHubsNamespace ns =
                     new(nameof(ns))
                     {
-                        Location = location,
                         Sku = new EventHubsSku
                         {
                             Name = EventHubsSkuName.Standard,
@@ -59,13 +52,13 @@ public class BasicEventHubsTests(bool async)
             })
         .Compare(
             """
-            @description('Hub location.')
-            param location string = resourceGroup().location
-
             param hubName string = 'orders'
 
             param groupName string = 'managers'
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+            
             resource ns 'Microsoft.EventHub/namespaces@2017-04-01' = {
                 name: take('ns-${uniqueString(resourceGroup().id)}', 256)
                 location: location

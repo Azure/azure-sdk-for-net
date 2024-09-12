@@ -21,16 +21,9 @@ public class BasicCognitiveServicesTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location
-                    };
-
                 CognitiveServicesAccount account =
                     new(nameof(account))
                     {
-                        Location = location,
                         Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
                         Kind = "TextTranslation",
                         Sku = new CognitiveServicesSku { Name = "S1" },
@@ -47,6 +40,7 @@ public class BasicCognitiveServicesTests(bool async)
             })
         .Compare(
             """
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource account 'Microsoft.CognitiveServices/accounts@2022-12-01' = {

@@ -85,9 +85,14 @@ public partial class CassandraCluster : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-15-preview.
+        /// 2024-09-01-preview.
         /// </summary>
-        public static readonly string V2024_05_15_preview = "2024-05-15-preview";
+        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
+
+        /// <summary>
+        /// 2024-08-15.
+        /// </summary>
+        public static readonly string V2024_08_15 = "2024-08-15";
 
         /// <summary>
         /// 2024-05-15.

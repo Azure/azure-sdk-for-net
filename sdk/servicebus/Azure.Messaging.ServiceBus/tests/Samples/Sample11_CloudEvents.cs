@@ -16,15 +16,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusCloudEvents
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
+                DefaultAzureCredential credential = new();
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
+                var credential = TestEnvironment.Credential;
 #endif
 
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);

@@ -23,25 +23,23 @@ public class BasicCommunicationTests(bool async)
                 BicepParameter location =
                     new(nameof(location), typeof(string))
                     {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "Service location."
+                        Value = "global"
                     };
 
                 CommunicationService comm =
                     new(nameof(comm), "2023-03-31")
                     {
-                        Location = new StringLiteral("global"),
+                        Location = location,
                         DataLocation = "unitedstates"
                     };
             })
         .Compare(
             """
-            @description('Service location.')
-            param location string = resourceGroup().location
+            param location string = 'global'
 
             resource comm 'Microsoft.Communication/communicationServices@2023-03-31' = {
                 name: take('comm-${uniqueString(resourceGroup().id)}', 63)
-                location: 'global'
+                location: location
                 properties: {
                     dataLocation: 'unitedstates'
                 }
