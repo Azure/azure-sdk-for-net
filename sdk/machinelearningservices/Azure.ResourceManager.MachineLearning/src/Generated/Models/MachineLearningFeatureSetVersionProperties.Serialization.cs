@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,6 +28,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Specification))
+            {
+                if (Specification != null)
+                {
+                    writer.WritePropertyName("specification"u8);
+                    writer.WriteObjectValue(Specification, options);
+                }
+                else
+                {
+                    writer.WriteNull("specification");
+                }
+            }
+            if (Optional.IsDefined(MaterializationSettings))
+            {
+                if (MaterializationSettings != null)
+                {
+                    writer.WritePropertyName("materializationSettings"u8);
+                    writer.WriteObjectValue(MaterializationSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("materializationSettings");
+                }
+            }
+            if (Optional.IsDefined(Stage))
+            {
+                if (Stage != null)
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage);
+                }
+                else
+                {
+                    writer.WriteNull("stage");
+                }
+            }
             if (Optional.IsCollectionDefined(Entities))
             {
                 if (Entities != null)
@@ -43,68 +81,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("entities");
                 }
             }
-            if (Optional.IsDefined(MaterializationSettings))
-            {
-                if (MaterializationSettings != null)
-                {
-                    writer.WritePropertyName("materializationSettings"u8);
-                    writer.WriteObjectValue(MaterializationSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("materializationSettings");
-                }
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Specification))
+            if (Optional.IsDefined(IsArchived))
             {
-                if (Specification != null)
-                {
-                    writer.WritePropertyName("specification"u8);
-                    writer.WriteObjectValue(Specification, options);
-                }
-                else
-                {
-                    writer.WriteNull("specification");
-                }
-            }
-            if (Optional.IsDefined(Stage))
-            {
-                if (Stage != null)
-                {
-                    writer.WritePropertyName("stage"u8);
-                    writer.WriteStringValue(Stage);
-                }
-                else
-                {
-                    writer.WriteNull("stage");
-                }
-            }
-            if (Optional.IsDefined(AutoDeleteSetting))
-            {
-                if (AutoDeleteSetting != null)
-                {
-                    writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoDeleteSetting");
-                }
+                writer.WritePropertyName("isArchived"u8);
+                writer.WriteBooleanValue(IsArchived.Value);
             }
             if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
-            }
-            if (Optional.IsDefined(IsArchived))
-            {
-                writer.WritePropertyName("isArchived"u8);
-                writer.WriteBooleanValue(IsArchived.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -116,24 +106,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("description");
-                }
-            }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("properties");
                 }
             }
             if (Optional.IsCollectionDefined(Tags))
@@ -152,6 +124,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("tags");
+                }
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                if (Properties != null)
+                {
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("properties");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -192,21 +182,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<string> entities = default;
-            MaterializationSettings materializationSettings = default;
-            RegistryAssetProvisioningState? provisioningState = default;
             FeaturesetSpecification specification = default;
+            MaterializationSettings materializationSettings = default;
             string stage = default;
-            AutoDeleteSetting autoDeleteSetting = default;
-            bool? isAnonymous = default;
+            IList<string> entities = default;
+            RegistryAssetProvisioningState? provisioningState = default;
             bool? isArchived = default;
+            bool? isAnonymous = default;
             string description = default;
-            IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("specification"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        specification = null;
+                        continue;
+                    }
+                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("materializationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        materializationSettings = null;
+                        continue;
+                    }
+                    materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("stage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        stage = null;
+                        continue;
+                    }
+                    stage = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("entities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -222,16 +241,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     entities = array;
                     continue;
                 }
-                if (property.NameEquals("materializationSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        materializationSettings = null;
-                        continue;
-                    }
-                    materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -239,45 +248,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("specification"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        specification = null;
-                        continue;
-                    }
-                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("stage"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        stage = null;
-                        continue;
-                    }
-                    stage = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("autoDeleteSetting"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        autoDeleteSetting = null;
-                        continue;
-                    }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("isAnonymous"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isAnonymous = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("isArchived"u8))
@@ -289,6 +259,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isArchived = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("isAnonymous"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAnonymous = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -297,21 +276,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        properties = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -329,6 +293,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        properties = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -337,17 +316,267 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningFeatureSetVersionProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                autoDeleteSetting,
-                isAnonymous,
                 isArchived,
-                entities ?? new ChangeTrackingList<string>(),
-                materializationSettings,
-                provisioningState,
+                isAnonymous,
                 specification,
-                stage);
+                materializationSettings,
+                stage,
+                entities ?? new ChangeTrackingList<string>(),
+                provisioningState);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SpecificationPath", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  specification: ");
+                builder.AppendLine("{");
+                builder.Append("    path: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Specification))
+                {
+                    builder.Append("  specification: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Specification, options, 2, false, "  specification: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaterializationSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  materializationSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaterializationSettings))
+                {
+                    builder.Append("  materializationSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MaterializationSettings, options, 2, false, "  materializationSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Stage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Stage))
+                {
+                    builder.Append("  stage: ");
+                    if (Stage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Stage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Stage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Entities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  entities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Entities))
+                {
+                    if (Entities.Any())
+                    {
+                        builder.Append("  entities: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Entities)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsArchived), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isArchived: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsArchived))
+                {
+                    builder.Append("  isArchived: ");
+                    var boolValue = IsArchived.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAnonymous), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isAnonymous: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAnonymous))
+                {
+                    builder.Append("  isAnonymous: ");
+                    var boolValue = IsAnonymous.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Properties))
+                {
+                    if (Properties.Any())
+                    {
+                        builder.Append("  properties: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Properties)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureSetVersionProperties>.Write(ModelReaderWriterOptions options)
@@ -358,6 +587,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support writing '{options.Format}' format.");
             }

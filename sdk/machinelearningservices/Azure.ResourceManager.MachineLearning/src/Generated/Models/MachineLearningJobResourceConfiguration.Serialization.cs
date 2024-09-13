@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,6 +28,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(ShmSize))
+            {
+                writer.WritePropertyName("shmSize"u8);
+                writer.WriteStringValue(ShmSize);
+            }
             if (Optional.IsDefined(DockerArgs))
             {
                 if (DockerArgs != null)
@@ -37,11 +44,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("dockerArgs");
                 }
-            }
-            if (Optional.IsDefined(ShmSize))
-            {
-                writer.WritePropertyName("shmSize"u8);
-                writer.WriteStringValue(ShmSize);
             }
             if (Optional.IsDefined(InstanceCount))
             {
@@ -58,35 +60,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("instanceType");
-                }
-            }
-            if (Optional.IsCollectionDefined(Locations))
-            {
-                if (Locations != null)
-                {
-                    writer.WritePropertyName("locations"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Locations)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("locations");
-                }
-            }
-            if (Optional.IsDefined(MaxInstanceCount))
-            {
-                if (MaxInstanceCount != null)
-                {
-                    writer.WritePropertyName("maxInstanceCount"u8);
-                    writer.WriteNumberValue(MaxInstanceCount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("maxInstanceCount");
                 }
             }
             if (Optional.IsCollectionDefined(Properties))
@@ -157,17 +130,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string dockerArgs = default;
             string shmSize = default;
+            string dockerArgs = default;
             int? instanceCount = default;
             string instanceType = default;
-            IList<string> locations = default;
-            int? maxInstanceCount = default;
             IDictionary<string, BinaryData> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("shmSize"u8))
+                {
+                    shmSize = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("dockerArgs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -176,11 +152,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     dockerArgs = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("shmSize"u8))
-                {
-                    shmSize = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("instanceCount"u8))
@@ -200,31 +171,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     instanceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("locations"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        locations = null;
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    locations = array;
-                    continue;
-                }
-                if (property.NameEquals("maxInstanceCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        maxInstanceCount = null;
-                        continue;
-                    }
-                    maxInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -258,12 +204,138 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningJobResourceConfiguration(
                 instanceCount,
                 instanceType,
-                locations ?? new ChangeTrackingList<string>(),
-                maxInstanceCount,
                 properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 serializedAdditionalRawData,
-                dockerArgs,
-                shmSize);
+                shmSize,
+                dockerArgs);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShmSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  shmSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShmSize))
+                {
+                    builder.Append("  shmSize: ");
+                    if (ShmSize.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ShmSize}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ShmSize}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DockerArgs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dockerArgs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DockerArgs))
+                {
+                    builder.Append("  dockerArgs: ");
+                    if (DockerArgs.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DockerArgs}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DockerArgs}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  instanceCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstanceCount))
+                {
+                    builder.Append("  instanceCount: ");
+                    builder.AppendLine($"{InstanceCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  instanceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstanceType))
+                {
+                    builder.Append("  instanceType: ");
+                    if (InstanceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InstanceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InstanceType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Properties))
+                {
+                    if (Properties.Any())
+                    {
+                        builder.Append("  properties: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Properties)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"'{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningJobResourceConfiguration>.Write(ModelReaderWriterOptions options)
@@ -274,6 +346,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningJobResourceConfiguration)} does not support writing '{options.Format}' format.");
             }

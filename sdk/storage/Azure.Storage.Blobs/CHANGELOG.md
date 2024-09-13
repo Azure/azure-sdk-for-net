@@ -1,14 +1,43 @@
 # Release History
 
-## 12.21.0-beta.2 (Unreleased)
+## 12.22.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed \[BUG\] Method overload BlobBaseClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
+- Fixed \[BUG\] Fixed Equality failures due to implicit cast on BlobErrorCode #44213
 
 ### Other Changes
+
+## 12.21.2 (2024-08-08)
+
+### Bugs Fixed
+- Fixed \[BUG\] WrapKeyInternal to correctly call WrapKey in sync flow #42160
+
+## 12.22.0-beta.1 (2024-08-06)
+
+### Features Added
+- Added support for service version 2024-11-04.
+- Added ability to retrieve SAS string to sign for debugging purposes.
+
+### Bugs Fixed
+- Fixed \[BUG\] BlobContainerClient(connectionString, blobContainerName, options) ctor to set clientSideEncryptionOptions #44623
+
+## 12.21.1 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
+
+## 12.21.0 (2024-07-16)
+
+### Features Added
+- Includes all features from 12.21.0-beta.1.
+
+### Bugs Fixed
+- Fixed bug where storage clients when constructed with URLs with '#' character would truncate the blob name at the '#'.
 
 ## 12.21.0-beta.1 (2024-06-11)
 - Added support for service version 2024-08-04.

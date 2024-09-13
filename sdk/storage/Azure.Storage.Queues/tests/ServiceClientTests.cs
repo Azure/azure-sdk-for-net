@@ -53,7 +53,7 @@ namespace Azure.Storage.Queues.Test
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri(Tenants.TestConfigPremiumBlob.BlobServiceEndpoint).ToHttp();
 
             // Act
@@ -115,7 +115,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
                 new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -134,7 +134,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
                 new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -153,7 +153,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
                 new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -541,11 +541,14 @@ namespace Azure.Storage.Queues.Test
                     constants.Sas.SharedKeyCredential,
                     GetOptions()));
 
+            string stringToSign = null;
+
             // Act
             Uri sasUri = serviceClient.GenerateAccountSasUri(
                 permissions: permissions,
                 expiresOn: expiresOn,
-                resourceTypes: resourceTypes);
+                resourceTypes: resourceTypes,
+                out stringToSign);
 
             // Assert
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, AccountSasServices.Queues, resourceTypes);
@@ -554,6 +557,7 @@ namespace Azure.Storage.Queues.Test
                 Query = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString()
             };
             Assert.AreEqual(expectedUri.Uri, sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -576,14 +580,17 @@ namespace Azure.Storage.Queues.Test
             // Add more properties on the builder
             sasBuilder.SetPermissions(permissions);
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder, out stringToSign);
 
             // Assert
             AccountSasBuilder sasBuilder2 = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
             UriBuilder expectedUri = new UriBuilder(serviceUri);
             expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
             Assert.AreEqual(expectedUri.Uri, sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -613,13 +620,14 @@ namespace Azure.Storage.Queues.Test
         [RecordedTest]
         public void CanMockClientConstructors()
         {
+            TokenCredential mockTokenCredential = new Mock<TokenCredential>().Object;
             // One has to call .Object to trigger constructor. It's lazy.
             var mock = new Mock<QueueServiceClient>(TestConfigDefault.ConnectionString, new QueueClientOptions()).Object;
             mock = new Mock<QueueServiceClient>(TestConfigDefault.ConnectionString).Object;
             mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), new QueueClientOptions()).Object;
             mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
             mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
-            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new QueueClientOptions()).Object;
+            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), mockTokenCredential, new QueueClientOptions()).Object;
         }
     }
 }

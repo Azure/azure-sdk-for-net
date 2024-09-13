@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,11 +27,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Alerts))
-            {
-                writer.WritePropertyName("alerts"u8);
-                writer.WriteObjectValue(Alerts, options);
-            }
+            writer.WritePropertyName("alerts"u8);
+            writer.WriteObjectValue(Alerts, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,10 +74,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("alerts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
                     continue;
                 }
@@ -92,6 +86,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsAlertsDataTypeOfDataConnector(alerts, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AlertsState", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alerts: ");
+                builder.AppendLine("{");
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Alerts))
+                {
+                    builder.Append("  alerts: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Alerts, options, 2, false, "  alerts: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SecurityInsightsAlertsDataTypeOfDataConnector>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertsDataTypeOfDataConnector>)this).GetFormatFromOptions(options) : options.Format;
@@ -100,6 +127,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsAlertsDataTypeOfDataConnector)} does not support writing '{options.Format}' format.");
             }

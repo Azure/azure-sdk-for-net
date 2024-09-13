@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The OIDC issuer url of the Managed Cluster. </summary>
+        [WirePath("issuerURL")]
         public string IssuerUriInfo { get; }
         /// <summary> Whether the OIDC issuer is enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }
 }

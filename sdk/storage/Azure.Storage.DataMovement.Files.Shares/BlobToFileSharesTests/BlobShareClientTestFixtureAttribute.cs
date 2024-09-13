@@ -1,14 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseShares;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Blobs;
+using BaseShares::Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {

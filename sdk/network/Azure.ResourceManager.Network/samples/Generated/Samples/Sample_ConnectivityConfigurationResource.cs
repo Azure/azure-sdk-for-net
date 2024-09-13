@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ConnectivityConfigurationsGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/NetworkManagerConnectivityConfigurationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerConnectivityConfigurationGet.json
             // this example is just showing the usage of "ConnectivityConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ConnectivityConfigurationsPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/NetworkManagerConnectivityConfigurationPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerConnectivityConfigurationPut.json
             // this example is just showing the usage of "ConnectivityConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,7 +108,7 @@ IsGlobal = GlobalMeshSupportFlag.False,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_ConnectivityConfigurationsDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/NetworkManagerConnectivityConfigurationDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerConnectivityConfigurationDelete.json
             // this example is just showing the usage of "ConnectivityConfigurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

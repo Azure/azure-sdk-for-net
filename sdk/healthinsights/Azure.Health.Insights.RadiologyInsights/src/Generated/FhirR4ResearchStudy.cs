@@ -18,7 +18,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     {
         /// <summary> Initializes a new instance of <see cref="FhirR4ResearchStudy"/>. </summary>
         /// <param name="status"> active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn. </param>
-        public FhirR4ResearchStudy(ResearchStudyStatusCodeType status) : base("ResearchStudy")
+        internal FhirR4ResearchStudy(ResearchStudyStatusCodeType status) : base("ResearchStudy")
         {
             Identifier = new ChangeTrackingList<FhirR4Identifier>();
             Protocol = new ChangeTrackingList<FhirR4Reference>();
@@ -71,7 +71,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="note"> Comments made about the study. </param>
         /// <param name="arm"> Defined path through the study for a subject. </param>
         /// <param name="objective"> A goal for the study. </param>
-        internal FhirR4ResearchStudy(string resourceType, string id, FhirR4Meta meta, string implicitRules, string language, IDictionary<string, BinaryData> additionalProperties, FhirR4Narrative text, IReadOnlyList<FhirR4Resource> contained, IReadOnlyList<FhirR4Extension> extension, IReadOnlyList<FhirR4Extension> modifierExtension, IList<FhirR4Identifier> identifier, string title, IList<FhirR4Reference> protocol, IList<FhirR4Reference> partOf, ResearchStudyStatusCodeType status, FhirR4CodeableConcept primaryPurposeType, FhirR4CodeableConcept phase, IList<FhirR4CodeableConcept> category, IList<FhirR4CodeableConcept> focus, IList<FhirR4CodeableConcept> condition, IList<FhirR4ContactDetail> contact, IList<FhirR4CodeableConcept> keyword, IList<FhirR4CodeableConcept> location, string description, IList<FhirR4Reference> enrollment, FhirR4Period period, FhirR4Reference sponsor, FhirR4Reference principalInvestigator, IList<FhirR4Reference> site, FhirR4CodeableConcept reasonStopped, IList<FhirR4Annotation> note, IList<ResearchStudyArm> arm, IList<ResearchStudyObjective> objective) : base(resourceType, id, meta, implicitRules, language, additionalProperties, text, contained, extension, modifierExtension)
+        internal FhirR4ResearchStudy(string resourceType, string id, FhirR4Meta meta, string implicitRules, string language, IDictionary<string, BinaryData> additionalProperties, FhirR4Narrative text, IReadOnlyList<FhirR4Resource> contained, IReadOnlyList<FhirR4Extension> extension, IReadOnlyList<FhirR4Extension> modifierExtension, IReadOnlyList<FhirR4Identifier> identifier, string title, IReadOnlyList<FhirR4Reference> protocol, IReadOnlyList<FhirR4Reference> partOf, ResearchStudyStatusCodeType status, FhirR4CodeableConcept primaryPurposeType, FhirR4CodeableConcept phase, IReadOnlyList<FhirR4CodeableConcept> category, IReadOnlyList<FhirR4CodeableConcept> focus, IReadOnlyList<FhirR4CodeableConcept> condition, IReadOnlyList<FhirR4ContactDetail> contact, IReadOnlyList<FhirR4CodeableConcept> keyword, IReadOnlyList<FhirR4CodeableConcept> location, string description, IReadOnlyList<FhirR4Reference> enrollment, FhirR4Period period, FhirR4Reference sponsor, FhirR4Reference principalInvestigator, IReadOnlyList<FhirR4Reference> site, FhirR4CodeableConcept reasonStopped, IReadOnlyList<FhirR4Annotation> note, IReadOnlyList<ResearchStudyArm> arm, IReadOnlyList<ResearchStudyObjective> objective) : base(resourceType, id, meta, implicitRules, language, additionalProperties, text, contained, extension, modifierExtension)
         {
             Identifier = identifier;
             Title = title;
@@ -104,50 +104,50 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Business Identifier for study. </summary>
-        public IList<FhirR4Identifier> Identifier { get; }
+        public IReadOnlyList<FhirR4Identifier> Identifier { get; }
         /// <summary> Name for this study. </summary>
-        public string Title { get; set; }
+        public string Title { get; }
         /// <summary> Steps followed in executing study. </summary>
-        public IList<FhirR4Reference> Protocol { get; }
+        public IReadOnlyList<FhirR4Reference> Protocol { get; }
         /// <summary> Part of larger study. </summary>
-        public IList<FhirR4Reference> PartOf { get; }
+        public IReadOnlyList<FhirR4Reference> PartOf { get; }
         /// <summary> active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn. </summary>
-        public ResearchStudyStatusCodeType Status { get; set; }
+        public ResearchStudyStatusCodeType Status { get; }
         /// <summary> treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility. </summary>
-        public FhirR4CodeableConcept PrimaryPurposeType { get; set; }
+        public FhirR4CodeableConcept PrimaryPurposeType { get; }
         /// <summary> n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4. </summary>
-        public FhirR4CodeableConcept Phase { get; set; }
+        public FhirR4CodeableConcept Phase { get; }
         /// <summary> Classifications for the study. </summary>
-        public IList<FhirR4CodeableConcept> Category { get; }
+        public IReadOnlyList<FhirR4CodeableConcept> Category { get; }
         /// <summary> Drugs, devices, etc. under study. </summary>
-        public IList<FhirR4CodeableConcept> Focus { get; }
+        public IReadOnlyList<FhirR4CodeableConcept> Focus { get; }
         /// <summary> Condition being studied. </summary>
-        public IList<FhirR4CodeableConcept> Condition { get; }
+        public IReadOnlyList<FhirR4CodeableConcept> Condition { get; }
         /// <summary> Contact details for the study. </summary>
-        public IList<FhirR4ContactDetail> Contact { get; }
+        public IReadOnlyList<FhirR4ContactDetail> Contact { get; }
         /// <summary> Used to search for the study. </summary>
-        public IList<FhirR4CodeableConcept> Keyword { get; }
+        public IReadOnlyList<FhirR4CodeableConcept> Keyword { get; }
         /// <summary> Geographic region(s) for study. </summary>
-        public IList<FhirR4CodeableConcept> Location { get; }
+        public IReadOnlyList<FhirR4CodeableConcept> Location { get; }
         /// <summary> What this is study doing. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
         /// <summary> Inclusion &amp; exclusion criteria. </summary>
-        public IList<FhirR4Reference> Enrollment { get; }
+        public IReadOnlyList<FhirR4Reference> Enrollment { get; }
         /// <summary> When the study began and ended. </summary>
-        public FhirR4Period Period { get; set; }
+        public FhirR4Period Period { get; }
         /// <summary> Organization that initiates and is legally responsible for the study. </summary>
-        public FhirR4Reference Sponsor { get; set; }
+        public FhirR4Reference Sponsor { get; }
         /// <summary> Researcher who oversees multiple aspects of the study. </summary>
-        public FhirR4Reference PrincipalInvestigator { get; set; }
+        public FhirR4Reference PrincipalInvestigator { get; }
         /// <summary> Facility where study activities are conducted. </summary>
-        public IList<FhirR4Reference> Site { get; }
+        public IReadOnlyList<FhirR4Reference> Site { get; }
         /// <summary> accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design. </summary>
-        public FhirR4CodeableConcept ReasonStopped { get; set; }
+        public FhirR4CodeableConcept ReasonStopped { get; }
         /// <summary> Comments made about the study. </summary>
-        public IList<FhirR4Annotation> Note { get; }
+        public IReadOnlyList<FhirR4Annotation> Note { get; }
         /// <summary> Defined path through the study for a subject. </summary>
-        public IList<ResearchStudyArm> Arm { get; }
+        public IReadOnlyList<ResearchStudyArm> Arm { get; }
         /// <summary> A goal for the study. </summary>
-        public IList<ResearchStudyObjective> Objective { get; }
+        public IReadOnlyList<ResearchStudyObjective> Objective { get; }
     }
 }

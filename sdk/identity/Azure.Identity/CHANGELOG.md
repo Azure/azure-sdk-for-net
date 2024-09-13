@@ -1,12 +1,22 @@
 # Release History
 
-## 1.13.0-beta.1 (Unreleased)
+## 1.13.0-beta.2 (Unreleased)
 
 ### Features Added
+- `ManagedIdentityCredential` now supports specifying a user-assigned managed identity by object ID.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- If `DefaultAzureCredential` attempts to authenticate with the `MangagedIdentityCredential` and it receives either a failed response that is not json, it will now fall through to the next credential in the chain. [#45184](https://github.com/Azure/azure-sdk-for-net/issues/45184)
+
+### Other Changes
+- `AzurePowerShellCredential` now utilizes the AsSecureString parameter to Get-AzAccessToken for version 2.17.0 and greater of the Az.Accounts module.
+
+## 1.13.0-beta.1 (2024-07-24)
+
+### Breaking Changes
+- Previously, if a clientID or ResourceID was specified for Cloud Shell managed identity, which is not supported, the clientID or resourceID would be silently ignored. Now, an exception will be thrown if a clientID or resourceID is specified for Cloud Shell managed identity.
 
 ### Other Changes
 - The logging level passed to MSAL now correlates to the log level configured on your configured `AzureEventSourceListener`. Previously, the log level was always set to `Microsoft.Identity.Client.LogLevel.Info`.

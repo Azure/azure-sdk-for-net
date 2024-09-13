@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 * Rpc tags linked to `OperationType.Rpc`
   ([#44906](https://github.com/Azure/azure-sdk-for-net/pull/44906))
+
+* RPC attributes are now correctly exported to Application Insights as custom properties.
+  ([#45316](https://github.com/Azure/azure-sdk-for-net/pull/45316))
+
+### Other Changes
+
+## 1.4.0-beta.1 (2024-07-12)
+
+### Bugs Fixed
+
+* Added the `LogRecord.CategoryName` field to log and exception telemetry.
+  Previously the `CategoryName` field was omitted, which was inconsistent with
+  expected `ILogger` behavior, and with Application Insights classic behavior.
+  ([#44754](https://github.com/Azure/azure-sdk-for-net/pull/44754))
 
 ### Features Added
 
@@ -98,7 +112,7 @@
   of the OpenTelemetry LoggerProvider. This fix prevents data duplication in
   message fields and properties.
   ([#39308](https://github.com/Azure/azure-sdk-for-net/pull/39308))
-  
+
 * Fixed an issue related to the processing of scopes that do not conform to a
   key-value pair structure.
   ([#39453](https://github.com/Azure/azure-sdk-for-net/pull/39453))
@@ -107,7 +121,7 @@
      'SomeScopeValue' to the properties using a key that follows the pattern
      'scope->*'. Additionally, 'OriginalFormatScope_*' keys were used to handle
      formatted strings within the scope.
-   * **New Behavior**: 
+   * **New Behavior**:
      * Non-key-value pair scopes are no longer added to the properties,
        resulting in cleaner and more efficient log output.
      * 'OriginalFormatScope_*' keys have been removed.
@@ -191,7 +205,7 @@
   ([#36509](https://github.com/Azure/azure-sdk-for-net/pull/36509))
 * Add `db.name` to custom properties.
   ([#36389](https://github.com/Azure/azure-sdk-for-net/pull/36389))
- 
+
 ### Bugs Fixed
 
 * Fixed an issue which resulted in standard metrics getting exported to backends other than Azure Monitor, when Azure Monitor metric exporter was used with other exporters such as otlp side by side.
@@ -320,7 +334,7 @@
 * Request and Dependency Success criteria will now be decided based on
   `Activity.Status` ([#31024](https://github.com/Azure/azure-sdk-for-net/pull/31024))
 * Changed `AzureMonitorTraceExporter` to internal ([#31067](https://github.com/Azure/azure-sdk-for-net/pull/31067))
-  
+
 ### Bugs Fixed
 
 * Fix shared RoleName/RoleInstance between Trace and Log Exporter ([#26438](https://github.com/Azure/azure-sdk-for-net/pull/26438))

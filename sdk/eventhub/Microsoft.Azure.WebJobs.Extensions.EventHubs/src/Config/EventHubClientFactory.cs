@@ -192,8 +192,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             IConfigurationSection connectionSection = _configuration.GetWebJobsConnectionStringSection(connection);
             if (!connectionSection.Exists())
             {
+                // A common mistake is for developers to set their `connection` to a full connection string rather
+                // than an informational name.  If the value validates as a connection string, redact it to prevent
+                // leaking sensitive information.
+                if (IsEventHubsConnectionString(connection))
+                {
+                    connection =  "<< REDACTED >> (a full connection string was incorrectly used instead of a connection setting name)";
+                }
+
                 // Not found
-                throw new InvalidOperationException($"EventHub account connection string '{connection}' does not exist." +
+                throw new InvalidOperationException($"EventHub account connection string with name '{connection}' does not exist in the settings. " +
                                                     $"Make sure that it is a defined App Setting.");
             }
 
@@ -212,6 +220,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             var credential = _componentFactory.CreateTokenCredential(connectionSection);
 
             return new EventHubsConnectionInformation(fullyQualifiedNamespace, credential);
+        }
+
+        private static bool IsEventHubsConnectionString(string connectionString)
+        {
+            try
+            {
+                var properties = EventHubsConnectionStringProperties.Parse(connectionString);
+
+                return (!string.IsNullOrEmpty(properties.FullyQualifiedNamespace))
+                    || (!string.IsNullOrEmpty(properties.SharedAccessKeyName))
+                    || (!string.IsNullOrEmpty(properties.SharedAccessKey))
+                    || (!string.IsNullOrEmpty(properties.SharedAccessSignature))
+                    || (!string.IsNullOrEmpty(properties.EventHubName));
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static string GenerateCacheKey(EventHubConnection eventHubConnection, string consumerGroup = null) =>

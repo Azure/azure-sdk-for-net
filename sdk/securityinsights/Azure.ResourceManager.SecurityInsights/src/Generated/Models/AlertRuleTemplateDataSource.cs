@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The connector id that provides the following data types. </summary>
+        [WirePath("connectorId")]
         public string ConnectorId { get; set; }
         /// <summary> The data types used by the alert rule template. </summary>
+        [WirePath("dataTypes")]
         public IList<string> DataTypes { get; }
     }
 }

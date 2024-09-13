@@ -6,6 +6,5 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <Import Project="$(RepoEngPath)\mgmt\Directory.Build.Mgmt.targets" Condition="'$(IsLegacyMgmtProject)' == 'true'" />
   <Import Project="$(RepoEngPath)\Directory.Build.Common.targets" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
 </Project>

@@ -7,8 +7,6 @@ using System.Reflection;
 using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Diagnostics;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Sender

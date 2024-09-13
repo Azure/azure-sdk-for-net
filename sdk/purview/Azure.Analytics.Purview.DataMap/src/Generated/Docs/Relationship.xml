@@ -9,8 +9,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship atlasRelationship = new AtlasRelationship();
-Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
+AtlasRelationship body = new AtlasRelationship();
+Response<AtlasRelationship> response = await client.CreateAsync(body);
 ]]></code>
 This sample shows how to call CreateAsync with all parameters.
 <code><![CDATA[
@@ -18,7 +18,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship atlasRelationship = new AtlasRelationship
+AtlasRelationship body = new AtlasRelationship
 {
     Attributes =
     {
@@ -47,7 +47,7 @@ AtlasRelationship atlasRelationship = new AtlasRelationship
     UpdatedBy = "<updatedBy>",
     Version = 1234L,
 };
-Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
+Response<AtlasRelationship> response = await client.CreateAsync(body);
 ]]></code></example>
     </member>
     <member name="Create(AtlasRelationship,CancellationToken)">
@@ -58,8 +58,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship atlasRelationship = new AtlasRelationship();
-Response<AtlasRelationship> response = client.Create(atlasRelationship);
+AtlasRelationship body = new AtlasRelationship();
+Response<AtlasRelationship> response = client.Create(body);
 ]]></code>
 This sample shows how to call Create with all parameters.
 <code><![CDATA[
@@ -67,7 +67,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship atlasRelationship = new AtlasRelationship
+AtlasRelationship body = new AtlasRelationship
 {
     Attributes =
     {
@@ -96,7 +96,7 @@ AtlasRelationship atlasRelationship = new AtlasRelationship
     UpdatedBy = "<updatedBy>",
     Version = 1234L,
 };
-Response<AtlasRelationship> response = client.Create(atlasRelationship);
+Response<AtlasRelationship> response = client.Create(body);
 ]]></code></example>
     </member>
     <member name="CreateAsync(RequestContent,RequestContext)">
@@ -251,8 +251,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship atlasRelationship = new AtlasRelationship();
-Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
+AtlasRelationship body = new AtlasRelationship();
+Response<AtlasRelationship> response = await client.UpdateAsync(body);
 ]]></code>
 This sample shows how to call UpdateAsync with all parameters.
 <code><![CDATA[
@@ -260,7 +260,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship atlasRelationship = new AtlasRelationship
+AtlasRelationship body = new AtlasRelationship
 {
     Attributes =
     {
@@ -289,7 +289,7 @@ AtlasRelationship atlasRelationship = new AtlasRelationship
     UpdatedBy = "<updatedBy>",
     Version = 1234L,
 };
-Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
+Response<AtlasRelationship> response = await client.UpdateAsync(body);
 ]]></code></example>
     </member>
     <member name="Update(AtlasRelationship,CancellationToken)">
@@ -300,8 +300,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship atlasRelationship = new AtlasRelationship();
-Response<AtlasRelationship> response = client.Update(atlasRelationship);
+AtlasRelationship body = new AtlasRelationship();
+Response<AtlasRelationship> response = client.Update(body);
 ]]></code>
 This sample shows how to call Update with all parameters.
 <code><![CDATA[
@@ -309,7 +309,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship atlasRelationship = new AtlasRelationship
+AtlasRelationship body = new AtlasRelationship
 {
     Attributes =
     {
@@ -338,7 +338,7 @@ AtlasRelationship atlasRelationship = new AtlasRelationship
     UpdatedBy = "<updatedBy>",
     Version = 1234L,
 };
-Response<AtlasRelationship> response = client.Update(atlasRelationship);
+Response<AtlasRelationship> response = client.Update(body);
 ]]></code></example>
     </member>
     <member name="UpdateAsync(RequestContent,RequestContext)">

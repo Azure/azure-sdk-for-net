@@ -516,10 +516,7 @@ namespace Azure.Storage.DataMovement
             HttpAuthorization authorization = await _sourceResource.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
             if (authorization != null)
             {
-                options = new StorageResourceCopyFromUriOptions()
-                {
-                    SourceAuthentication = authorization
-                };
+                options.SourceAuthentication = authorization;
             }
             return options;
         }

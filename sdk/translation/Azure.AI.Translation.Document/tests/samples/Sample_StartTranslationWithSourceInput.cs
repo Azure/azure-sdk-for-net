@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Document.Samples
             Uri targetUri = CreateTargetContainer();
 #endif
             //Creating a TranslationSource object with sourceURI, sourceLanguage, storageSource, DocumentFilterPrefix and DocumentFilterSuffix
-            TranslationSource translationSource = new TranslationSource(sourceUri, "en", "AzureBlob", "File", "txt");
+            TranslationSource translationSource = new TranslationSource(sourceUri, "en", "AzureBlob", "Document", "txt");
             TranslationTarget translationTarget = new TranslationTarget(targetUri, "fr");
             List<TranslationTarget> targets = new List<TranslationTarget> { translationTarget };
             var input = new DocumentTranslationInput(translationSource, targets);

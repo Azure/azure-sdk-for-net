@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAvailableResourceGroupDelegations_GetAvailableDelegationsInTheResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/AvailableDelegationsResourceGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/AvailableDelegationsResourceGroupGet.json
             // this example is just showing the usage of "AvailableResourceGroupDelegations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAvailableServiceAliasesByResourceGroup_GetAvailableServiceAliasesInTheResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/AvailableServiceAliasesListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/AvailableServiceAliasesListByResourceGroup.json
             // this example is just showing the usage of "AvailableServiceAliases_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAvailablePrivateEndpointTypesByResourceGroup_GetAvailablePrivateEndpointTypesInTheResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/AvailablePrivateEndpointTypesResourceGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/AvailablePrivateEndpointTypesResourceGroupGet.json
             // this example is just showing the usage of "AvailablePrivateEndpointTypes_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService_CheckPrivateLinkServiceVisibility()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/CheckPrivateLinkServiceVisibilityByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/CheckPrivateLinkServiceVisibilityByResourceGroup.json
             // this example is just showing the usage of "PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices_GetListOfPrivateLinkServiceIdThatCanBeLinkedToAPrivateEndPointWithAutoApproved()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/AutoApprovedPrivateLinkServicesResourceGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/AutoApprovedPrivateLinkServicesResourceGroupGet.json
             // this example is just showing the usage of "PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

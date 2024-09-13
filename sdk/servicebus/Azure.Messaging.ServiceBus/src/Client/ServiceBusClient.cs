@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus
         /// Other values will be ignored; to configure the processor, please use the <see cref="ServiceBusClientOptions" />.
         /// </remarks>
         public ServiceBusClient(string connectionString) :
-            this(connectionString, new ServiceBusClientOptions())
+            this(connectionString, null as ServiceBusClientOptions)
         {
         }
 
@@ -192,7 +192,7 @@ namespace Azure.Messaging.ServiceBus
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
         public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential) :
-            this(fullyQualifiedNamespace, (object)credential, new ServiceBusClientOptions())
+            this(fullyQualifiedNamespace, (object)credential, null)
         {
         }
 
@@ -562,7 +562,7 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
-                options: new ServiceBusProcessorOptions());
+                options: null);
         }
 
         /// <summary>
@@ -619,7 +619,7 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
-                options: new ServiceBusProcessorOptions());
+                options: null);
         }
 
         /// <summary>

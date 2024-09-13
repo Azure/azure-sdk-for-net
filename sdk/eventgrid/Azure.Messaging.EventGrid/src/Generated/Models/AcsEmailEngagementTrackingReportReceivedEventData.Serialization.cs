@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string sender = default;
             string recipient = default;
             string messageId = default;
-            DateTimeOffset? userActionTimeStamp = default;
+            DateTimeOffset? userActionTimestamp = default;
             string engagementContext = default;
             string userAgent = default;
             AcsUserEngagement? engagementType = default;
@@ -44,13 +44,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userActionTimeStamp"u8))
+                if (property.NameEquals("userActionTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userActionTimeStamp = property.Value.GetDateTimeOffset("O");
+                    userActionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("engagementContext"u8))
@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 sender,
                 recipient,
                 messageId,
-                userActionTimeStamp,
+                userActionTimestamp,
                 engagementContext,
                 userAgent,
                 engagementType);

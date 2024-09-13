@@ -262,7 +262,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobContainerClient(httpUri, Tenants.GetOAuthCredential()),
+                () => new BlobContainerClient(httpUri, TestEnvironment.Credential),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -347,7 +347,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -371,7 +371,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -395,7 +395,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -426,6 +426,19 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadContainer.ExistsAsync(),
                 e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public void ctor_BlobContainerClient_clientSideEncryptionOptions()
+        {
+            var client = new BlobContainerClient(
+                connectionString: "UseDevelopmentStorage=true",
+                blobContainerName: "enc-test",
+                options: new SpecializedBlobClientOptions()
+                {
+                    ClientSideEncryption = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V2_0)
+                });
+            Assert.NotNull(client.ClientSideEncryption);
         }
 
         [RecordedTest]
@@ -494,7 +507,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             var containerName = GetNewContainerName();
-            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient service = GetServiceClient_OAuth();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
             try
@@ -635,6 +648,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [PlaybackOnly("Public access disabled on live tests accounts")]
         public async Task CreateAsync_PublicAccess()
         {
             // Arrange
@@ -1259,7 +1273,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
             BlobSignedIdentifier[] signedIdentifiers = new[]
             {
                 new BlobSignedIdentifier
@@ -1271,7 +1284,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(
-                accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
@@ -1303,12 +1315,10 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
             BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
             Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(
-                accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
@@ -1318,7 +1328,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
 
             Response<BlobContainerProperties> propertiesResponse = await test.Container.GetPropertiesAsync();
-            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
 
             Response<BlobContainerAccessPolicy> getPolicyResponse = await test.Container.GetAccessPolicyAsync();
             Assert.AreEqual(1, getPolicyResponse.Value.SignedIdentifiers.Count());
@@ -1523,7 +1532,6 @@ namespace Azure.Storage.Blobs.Test
                 BlobServiceClient service = GetServiceClient_SharedKey();
                 BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
                 await container.CreateIfNotExistsAsync();
-                PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
                 BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                 parameters.LeaseId = await SetupContainerLeaseCondition(container, parameters.LeaseId, garbageLeaseId);
                 BlobRequestConditions accessConditions = BuildContainerAccessConditions(
@@ -1533,7 +1541,6 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 Response<BlobContainerInfo> response = await container.SetAccessPolicyAsync(
-                    accessType: publicAccessType,
                     permissions: signedIdentifiers,
                     conditions: accessConditions
                 );
@@ -1577,7 +1584,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
             BlobSignedIdentifier[] signedIdentifiers = new[]
             {
                 new BlobSignedIdentifier
@@ -1594,13 +1600,11 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await test.Container.SetAccessPolicyAsync(
-                accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
             // Assert
             Response<BlobContainerProperties> propertiesResponse = await test.Container.GetPropertiesAsync();
-            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
 
             Response<BlobContainerAccessPolicy> response = await test.Container.GetAccessPolicyAsync();
             Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
@@ -3524,8 +3528,10 @@ namespace Azure.Storage.Blobs.Test
                     constants.Sas.SharedKeyCredential,
                     GetOptions()));
 
+            string stringToSign = null;
+
             //Act
-            Uri sasUri = containerClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = containerClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
@@ -3538,6 +3544,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -3563,8 +3570,10 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerName = containerName
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = containerClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = containerClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             BlobSasBuilder sasBuilder2 = new BlobSasBuilder(permissions, expiresOn)
@@ -3577,6 +3586,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -4058,7 +4068,7 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), TestEnvironment.Credential, new BlobClientOptions()).Object;
         }
 
         #region Secondary Storage

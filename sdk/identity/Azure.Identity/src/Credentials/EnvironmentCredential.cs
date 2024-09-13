@@ -126,10 +126,11 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from Microsoft Entra ID, using the specified client details specified in the environment variables
+        /// Obtains a token from Microsoft Entra ID, using the client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
-        /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible,
-        /// reuse credential instances to optimize cache effectiveness.
+        /// Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential
+        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>
@@ -137,16 +138,19 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
+        /// <exception cref="CredentialUnavailableException">Thrown when the credential is unavailable because the environment is not properly configured.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// Obtains a token from Microsoft Entra ID, using the specified client details specified in the environment variables
+        /// Obtains a token from Microsoft Entra ID, using the client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
-        /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible,
-        /// reuse credential instances to optimize cache effectiveness.
+        /// Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential
+        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>
@@ -154,6 +158,8 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/>.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
+        /// <exception cref="CredentialUnavailableException">Thrown when the credential is unavailable because the environment is not properly configured.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);

@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The Private Endpoint Connection properties. </summary>
+        [WirePath("properties")]
         public HybridComputePrivateEndpointConnectionProperties Properties { get; }
     }
 }

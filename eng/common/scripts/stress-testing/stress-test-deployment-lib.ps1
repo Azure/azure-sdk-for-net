@@ -122,6 +122,12 @@ function DeployStressTests(
         }
         $clusterGroup = 'rg-stress-cluster-prod'
         $subscription = 'Azure SDK Test Resources'
+    } elseif ($environment -eq 'storage') {
+        if ($clusterGroup -or $subscription) {
+            Write-Warning "Overriding cluster group and subscription with defaults for 'storage' environment."
+        }
+        $clusterGroup = 'rg-stress-cluster-storage'
+        $subscription = 'XClient'
     } elseif (!$clusterGroup -or !$subscription) {
         throw "clusterGroup and subscription parameters must be specified when deploying to an environment that is not pg or prod."
     }

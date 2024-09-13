@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="identity"> The identity of the virtual network gateway, if configured. </param>
         /// <param name="autoScaleConfiguration"> Autoscale configuration for virutal network gateway. </param>
         /// <param name="ipConfigurations"> IP configurations for virtual network gateway. </param>
         /// <param name="gatewayType"> The type of this virtual network gateway. </param>
@@ -61,10 +63,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="allowVirtualWanTraffic"> Configures this gateway to accept traffic from remote Virtual WAN networks. </param>
         /// <param name="allowRemoteVnetTraffic"> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </param>
         /// <param name="adminState"> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </param>
-        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, AddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="resiliencyModel"> Property to indicate if the Express Route Gateway has resiliency model of MultiHomed or SingleHomed. </param>
+        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, ManagedServiceIdentity identity, VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, AddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState, ExpressRouteGatewayResiliencyModel? resiliencyModel) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
+            Identity = identity;
             AutoScaleConfiguration = autoScaleConfiguration;
             IPConfigurations = ipConfigurations;
             GatewayType = gatewayType;
@@ -90,12 +94,15 @@ namespace Azure.ResourceManager.Network
             AllowVirtualWanTraffic = allowVirtualWanTraffic;
             AllowRemoteVnetTraffic = allowRemoteVnetTraffic;
             AdminState = adminState;
+            ResiliencyModel = resiliencyModel;
         }
 
         /// <summary> The extended location of type local virtual network gateway. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
+        /// <summary> The identity of the virtual network gateway, if configured. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Autoscale configuration for virutal network gateway. </summary>
         internal VirtualNetworkGatewayAutoScaleConfiguration AutoScaleConfiguration { get; set; }
         /// <summary> The bounds of the autoscale configuration. </summary>
@@ -181,5 +188,7 @@ namespace Azure.ResourceManager.Network
         public bool? AllowRemoteVnetTraffic { get; set; }
         /// <summary> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </summary>
         public ExpressRouteGatewayAdminState? AdminState { get; set; }
+        /// <summary> Property to indicate if the Express Route Gateway has resiliency model of MultiHomed or SingleHomed. </summary>
+        public ExpressRouteGatewayResiliencyModel? ResiliencyModel { get; set; }
     }
 }

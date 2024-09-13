@@ -1,10 +1,14 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
+## 12.9.1 (Unreleased)
+
+### Bugs Fixed
+- Fixed an issue that prevented use of stored access policy based SaS Uris by adding a parameterless constructor to `TableSasBuilder`. The resulting builder can then be modified to include the stored access policy identifier or any other details.
+
+## 12.9.0 (2024-07-22)
 
 ### Features Added
-
-### Breaking Changes
+- Overload the `DeleteEntity` method to allow an `ITableEntity` object as parameter.
 
 ### Bugs Fixed
 - Fixed an issue where custom models decorated with the `DataMemberAttribute` that didn't explicitly set a name caused the query filter to be malformed.

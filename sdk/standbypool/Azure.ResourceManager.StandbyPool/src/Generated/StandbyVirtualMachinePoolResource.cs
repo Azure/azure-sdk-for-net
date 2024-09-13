@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -159,6 +159,75 @@ namespace Azure.ResourceManager.StandbyPool
             return GetStandbyVirtualMachines().Get(standbyVirtualMachineName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of StandbyVirtualMachinePoolRuntimeViewResources in the StandbyVirtualMachinePool. </summary>
+        /// <returns> An object representing collection of StandbyVirtualMachinePoolRuntimeViewResources and their operations over a StandbyVirtualMachinePoolRuntimeViewResource. </returns>
+        public virtual StandbyVirtualMachinePoolRuntimeViewCollection GetStandbyVirtualMachinePoolRuntimeViews()
+        {
+            return GetCachedClient(client => new StandbyVirtualMachinePoolRuntimeViewCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a StandbyVirtualMachinePoolRuntimeViewResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}/runtimeViews/{runtimeView}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolRuntimeViews_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolRuntimeViewResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runtimeView"> The unique identifier for the runtime view. The input string should be the word 'latest', which will get the latest runtime view of the pool, otherwise the request will fail with NotFound exception. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StandbyVirtualMachinePoolRuntimeViewResource>> GetStandbyVirtualMachinePoolRuntimeViewAsync(string runtimeView, CancellationToken cancellationToken = default)
+        {
+            return await GetStandbyVirtualMachinePoolRuntimeViews().GetAsync(runtimeView, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a StandbyVirtualMachinePoolRuntimeViewResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}/runtimeViews/{runtimeView}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolRuntimeViews_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolRuntimeViewResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runtimeView"> The unique identifier for the runtime view. The input string should be the word 'latest', which will get the latest runtime view of the pool, otherwise the request will fail with NotFound exception. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StandbyVirtualMachinePoolRuntimeViewResource> GetStandbyVirtualMachinePoolRuntimeView(string runtimeView, CancellationToken cancellationToken = default)
+        {
+            return GetStandbyVirtualMachinePoolRuntimeViews().Get(runtimeView, cancellationToken);
+        }
+
         /// <summary>
         /// Get a StandbyVirtualMachinePoolResource
         /// <list type="bullet">
@@ -172,7 +241,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +281,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,7 +321,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,7 +363,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -336,7 +405,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -378,7 +447,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,7 +489,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -482,7 +551,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -544,7 +613,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -601,7 +670,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -658,7 +727,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -718,7 +787,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

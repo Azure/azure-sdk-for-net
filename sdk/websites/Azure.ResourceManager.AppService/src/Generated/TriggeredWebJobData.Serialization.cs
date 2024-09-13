@@ -102,6 +102,16 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("using_sdk"u8);
                 writer.WriteBooleanValue(IsUsingSdk.Value);
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess);
+            }
+            if (Optional.IsDefined(IsStorageAccountRequired))
+            {
+                writer.WritePropertyName("storageAccountRequired"u8);
+                writer.WriteBooleanValue(IsStorageAccountRequired.Value);
+            }
             if (Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
@@ -178,6 +188,8 @@ namespace Azure.ResourceManager.AppService
             WebJobType? webJobType = default;
             string error = default;
             bool? usingSdk = default;
+            string publicNetworkAccess = default;
+            bool? storageAccountRequired = default;
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -294,6 +306,20 @@ namespace Azure.ResourceManager.AppService
                             usingSdk = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            publicNetworkAccess = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("storageAccountRequired"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageAccountRequired = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("settings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -338,6 +364,8 @@ namespace Azure.ResourceManager.AppService
                 webJobType,
                 error,
                 usingSdk,
+                publicNetworkAccess,
+                storageAccountRequired,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 kind,
                 serializedAdditionalRawData);
@@ -580,6 +608,45 @@ namespace Azure.ResourceManager.AppService
                 {
                     builder.Append("    using_sdk: ");
                     var boolValue = IsUsingSdk.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
+                {
+                    builder.Append("    publicNetworkAccess: ");
+                    if (PublicNetworkAccess.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PublicNetworkAccess}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PublicNetworkAccess}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStorageAccountRequired), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageAccountRequired: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsStorageAccountRequired))
+                {
+                    builder.Append("    storageAccountRequired: ");
+                    var boolValue = IsStorageAccountRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

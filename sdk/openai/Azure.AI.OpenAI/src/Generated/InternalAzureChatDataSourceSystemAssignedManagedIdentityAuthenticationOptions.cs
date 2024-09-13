@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI.Chat
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> Discriminator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {

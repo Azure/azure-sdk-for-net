@@ -68,8 +68,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
-            NumberVerificationWithoutCodeContent numberVerificationWithoutCodeContent = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"));
-            Response response = client.VerifyWithoutCode("<apcGatewayId>", numberVerificationWithoutCodeContent);
+            NumberVerificationWithoutCodeContent body = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"));
+            Response response = client.VerifyWithoutCode("<apcGatewayId>", body);
         }
 
         [Test]
@@ -80,8 +80,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
-            NumberVerificationWithoutCodeContent numberVerificationWithoutCodeContent = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"));
-            Response response = await client.VerifyWithoutCodeAsync("<apcGatewayId>", numberVerificationWithoutCodeContent);
+            NumberVerificationWithoutCodeContent body = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"));
+            Response response = await client.VerifyWithoutCodeAsync("<apcGatewayId>", body);
         }
 
         [Test]
@@ -140,12 +140,12 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
-            NumberVerificationWithoutCodeContent numberVerificationWithoutCodeContent = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"))
+            NumberVerificationWithoutCodeContent body = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"))
             {
                 PhoneNumber = "<phoneNumber>",
                 HashedPhoneNumber = "<hashedPhoneNumber>",
             };
-            Response response = client.VerifyWithoutCode("<apcGatewayId>", numberVerificationWithoutCodeContent);
+            Response response = client.VerifyWithoutCode("<apcGatewayId>", body);
         }
 
         [Test]
@@ -156,12 +156,12 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
-            NumberVerificationWithoutCodeContent numberVerificationWithoutCodeContent = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"))
+            NumberVerificationWithoutCodeContent body = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"))
             {
                 PhoneNumber = "<phoneNumber>",
                 HashedPhoneNumber = "<hashedPhoneNumber>",
             };
-            Response response = await client.VerifyWithoutCodeAsync("<apcGatewayId>", numberVerificationWithoutCodeContent);
+            Response response = await client.VerifyWithoutCodeAsync("<apcGatewayId>", body);
         }
 
         [Test]
@@ -208,8 +208,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
-            NumberVerificationWithCodeContent numberVerificationWithCodeContent = new NumberVerificationWithCodeContent("<apcCode>");
-            Response<NumberVerificationResult> response = client.VerifyWithCode("<apcGatewayId>", numberVerificationWithCodeContent);
+            NumberVerificationWithCodeContent body = new NumberVerificationWithCodeContent("<apcCode>");
+            Response<NumberVerificationResult> response = client.VerifyWithCode("<apcGatewayId>", body);
         }
 
         [Test]
@@ -220,8 +220,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
-            NumberVerificationWithCodeContent numberVerificationWithCodeContent = new NumberVerificationWithCodeContent("<apcCode>");
-            Response<NumberVerificationResult> response = await client.VerifyWithCodeAsync("<apcGatewayId>", numberVerificationWithCodeContent);
+            NumberVerificationWithCodeContent body = new NumberVerificationWithCodeContent("<apcCode>");
+            Response<NumberVerificationResult> response = await client.VerifyWithCodeAsync("<apcGatewayId>", body);
         }
 
         [Test]
@@ -268,8 +268,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
-            NumberVerificationWithCodeContent numberVerificationWithCodeContent = new NumberVerificationWithCodeContent("<apcCode>");
-            Response<NumberVerificationResult> response = client.VerifyWithCode("<apcGatewayId>", numberVerificationWithCodeContent);
+            NumberVerificationWithCodeContent body = new NumberVerificationWithCodeContent("<apcCode>");
+            Response<NumberVerificationResult> response = client.VerifyWithCode("<apcGatewayId>", body);
         }
 
         [Test]
@@ -280,8 +280,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
-            NumberVerificationWithCodeContent numberVerificationWithCodeContent = new NumberVerificationWithCodeContent("<apcCode>");
-            Response<NumberVerificationResult> response = await client.VerifyWithCodeAsync("<apcGatewayId>", numberVerificationWithCodeContent);
+            NumberVerificationWithCodeContent body = new NumberVerificationWithCodeContent("<apcCode>");
+            Response<NumberVerificationResult> response = await client.VerifyWithCodeAsync("<apcGatewayId>", body);
         }
     }
 }

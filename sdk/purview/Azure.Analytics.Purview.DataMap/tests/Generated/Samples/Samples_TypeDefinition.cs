@@ -3723,8 +3723,8 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
+            AtlasTypesDef body = new AtlasTypesDef();
+            Response<AtlasTypesDef> response = client.BatchCreate(body);
         }
 
         [Test]
@@ -3735,8 +3735,8 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
+            AtlasTypesDef body = new AtlasTypesDef();
+            Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
         }
 
         [Test]
@@ -5065,7 +5065,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            AtlasTypesDef body = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
@@ -5319,7 +5319,7 @@ LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
+            Response<AtlasTypesDef> response = client.BatchCreate(body);
         }
 
         [Test]
@@ -5330,7 +5330,7 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            AtlasTypesDef body = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
@@ -5584,7 +5584,7 @@ LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
+            Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
         }
 
         [Test]
@@ -5625,8 +5625,8 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
+            AtlasTypesDef body = new AtlasTypesDef();
+            Response<AtlasTypesDef> response = client.BatchUpdate(body);
         }
 
         [Test]
@@ -5637,8 +5637,8 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
+            AtlasTypesDef body = new AtlasTypesDef();
+            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(body);
         }
 
         [Test]
@@ -6967,7 +6967,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            AtlasTypesDef body = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
@@ -7221,7 +7221,7 @@ LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
+            Response<AtlasTypesDef> response = client.BatchUpdate(body);
         }
 
         [Test]
@@ -7232,7 +7232,7 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            AtlasTypesDef body = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
@@ -7486,7 +7486,7 @@ LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
+            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(body);
         }
 
         [Test]
@@ -7525,8 +7525,8 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response response = client.BatchDelete(atlasTypesDef);
+            AtlasTypesDef body = new AtlasTypesDef();
+            Response response = client.BatchDelete(body);
         }
 
         [Test]
@@ -7537,8 +7537,8 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response response = await client.BatchDeleteAsync(atlasTypesDef);
+            AtlasTypesDef body = new AtlasTypesDef();
+            Response response = await client.BatchDeleteAsync(body);
         }
 
         [Test]
@@ -8201,7 +8201,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            AtlasTypesDef body = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
@@ -8455,7 +8455,7 @@ LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response response = client.BatchDelete(atlasTypesDef);
+            Response response = client.BatchDelete(body);
         }
 
         [Test]
@@ -8466,7 +8466,7 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            AtlasTypesDef body = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
@@ -8720,7 +8720,7 @@ LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response response = await client.BatchDeleteAsync(atlasTypesDef);
+            Response response = await client.BatchDeleteAsync(body);
         }
 
         [Test]

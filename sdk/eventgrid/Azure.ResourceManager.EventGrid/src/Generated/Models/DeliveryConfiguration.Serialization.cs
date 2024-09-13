@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -122,6 +123,66 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new DeliveryConfiguration(deliveryMode, queue, push, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeliveryMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deliveryMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeliveryMode))
+                {
+                    builder.Append("  deliveryMode: ");
+                    builder.AppendLine($"'{DeliveryMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Queue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  queue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Queue))
+                {
+                    builder.Append("  queue: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Queue, options, 2, false, "  queue: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Push), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  push: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Push))
+                {
+                    builder.Append("  push: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Push, options, 2, false, "  push: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DeliveryConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +191,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support writing '{options.Format}' format.");
             }

@@ -95,11 +95,19 @@ public partial class PineconeChatDataSource : AzureChatDataSource
         init => InternalParameters.OutputContextFlags = value;
     }
 
-    public PineconeChatDataSource()
+    public PineconeChatDataSource() : base(type: "pinecone", serializedAdditionalRawData: null)
     {
-        Type = "pinecone";
         InternalParameters = new();
-        _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+    }
+
+    // CUSTOM: Made internal.
+    /// <summary> Initializes a new instance of <see cref="PineconeChatDataSource"/>. </summary>
+    /// <param name="internalParameters"> The parameter information to control the use of the Pinecone data source. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="internalParameters"/> is null. </exception>
+    internal PineconeChatDataSource(InternalPineconeChatDataSourceParameters internalParameters) : this()
+    {
+        Argument.AssertNotNull(internalParameters, nameof(internalParameters));
+        InternalParameters = internalParameters;
     }
 
     /// <summary> Initializes a new instance of <see cref="PineconeChatDataSource"/>. </summary>
@@ -107,7 +115,8 @@ public partial class PineconeChatDataSource : AzureChatDataSource
     /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal PineconeChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalPineconeChatDataSourceParameters internalParameters) : base(type, serializedAdditionalRawData)
+    internal PineconeChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalPineconeChatDataSourceParameters internalParameters)
+        : base(type, serializedAdditionalRawData)
     {
         InternalParameters = internalParameters;
     }

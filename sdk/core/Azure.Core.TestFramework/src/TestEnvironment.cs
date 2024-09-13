@@ -207,7 +207,7 @@ namespace Azure.Core.TestFramework
                 else
                 {
                     var clientSecret = GetOptionalVariable("CLIENT_SECRET");
-                    var systemAccessToken = GetOptionalVariable("SYSTEM_ACCESSOTOKEN");
+                    var systemAccessToken = GetOptionalVariable("SYSTEM_ACCESSTOKEN");
                     if (!string.IsNullOrWhiteSpace(clientSecret))
                     {
                         // If the recording is null but we are in Record Mode this means the Credential is being used

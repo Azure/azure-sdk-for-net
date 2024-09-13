@@ -48,7 +48,7 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="VerifyFaceToFaceRequest"/>. </summary>
         /// <param name="faceId1"> The faceId of one face, come from "Detect". </param>
         /// <param name="faceId2"> The faceId of another face, come from "Detect". </param>
-        public VerifyFaceToFaceRequest(Guid faceId1, Guid faceId2)
+        internal VerifyFaceToFaceRequest(Guid faceId1, Guid faceId2)
         {
             FaceId1 = faceId1;
             FaceId2 = faceId2;

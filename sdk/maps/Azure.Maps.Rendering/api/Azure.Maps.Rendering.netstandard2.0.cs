@@ -17,8 +17,6 @@ namespace Azure.Maps.Rendering
         public System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePushpinStyle> ImagePushpinStyles { get { throw null; } }
         public Azure.Maps.Rendering.RenderingLanguage? Language { get { throw null; } set { } }
         public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
-        public Azure.Maps.Rendering.MapImageLayer? MapImageLayer { get { throw null; } set { } }
-        public Azure.Maps.Rendering.MapImageStyle? MapImageStyle { get { throw null; } set { } }
         public int? WidthInPixels { get { throw null; } }
         public int? ZoomLevel { get { throw null; } set { } }
     }
@@ -54,43 +52,6 @@ namespace Azure.Maps.Rendering
         public double? PushpinScaleRatio { get { throw null; } set { } }
         public int? RotationInDegrees { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MapImageLayer : System.IEquatable<Azure.Maps.Rendering.MapImageLayer>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MapImageLayer(string value) { throw null; }
-        public static Azure.Maps.Rendering.MapImageLayer Basic { get { throw null; } }
-        public static Azure.Maps.Rendering.MapImageLayer Hybrid { get { throw null; } }
-        public static Azure.Maps.Rendering.MapImageLayer Labels { get { throw null; } }
-        public bool Equals(Azure.Maps.Rendering.MapImageLayer other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Rendering.MapImageLayer left, Azure.Maps.Rendering.MapImageLayer right) { throw null; }
-        public static implicit operator Azure.Maps.Rendering.MapImageLayer (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Rendering.MapImageLayer left, Azure.Maps.Rendering.MapImageLayer right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MapImageStyle : System.IEquatable<Azure.Maps.Rendering.MapImageStyle>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MapImageStyle(string value) { throw null; }
-        public static Azure.Maps.Rendering.MapImageStyle Dark { get { throw null; } }
-        public static Azure.Maps.Rendering.MapImageStyle Main { get { throw null; } }
-        public bool Equals(Azure.Maps.Rendering.MapImageStyle other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Rendering.MapImageStyle left, Azure.Maps.Rendering.MapImageStyle right) { throw null; }
-        public static implicit operator Azure.Maps.Rendering.MapImageStyle (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Rendering.MapImageStyle left, Azure.Maps.Rendering.MapImageStyle right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class MapsRenderingClient
     {
         protected MapsRenderingClient() { }
@@ -123,10 +84,11 @@ namespace Azure.Maps.Rendering
     }
     public partial class MapsRenderingClientOptions : Azure.Core.ClientOptions
     {
-        public MapsRenderingClientOptions(Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion version = Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion.V2022_08_01, System.Uri endpoint = null) { }
+        public MapsRenderingClientOptions(Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion version = Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion.V2024_04_01, System.Uri endpoint = null, Azure.Maps.Rendering.MediaType? acceptMediaType = default(Azure.Maps.Rendering.MediaType?)) { }
+        public Azure.Maps.Rendering.MediaType? AcceptMediaType { get { throw null; } set { } }
         public enum ServiceVersion
         {
-            V2022_08_01 = 1,
+            V2024_04_01 = 1,
         }
     }
     public static partial class MapsRenderingModelFactory
@@ -234,6 +196,24 @@ namespace Azure.Maps.Rendering
         public static bool operator !=(Azure.Maps.Rendering.MapTileSize left, Azure.Maps.Rendering.MapTileSize right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaType : System.IEquatable<Azure.Maps.Rendering.MediaType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaType(string value) { throw null; }
+        public static Azure.Maps.Rendering.MediaType ImageJpeg { get { throw null; } }
+        public static Azure.Maps.Rendering.MediaType ImagePng { get { throw null; } }
+        public bool Equals(Azure.Maps.Rendering.MediaType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Rendering.MediaType left, Azure.Maps.Rendering.MediaType right) { throw null; }
+        public static implicit operator Azure.Maps.Rendering.MediaType (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Rendering.MediaType left, Azure.Maps.Rendering.MediaType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class PushpinPosition
     {
         public PushpinPosition(double longitude, double latitude, string? label = null) { }
@@ -306,6 +286,24 @@ namespace Azure.Maps.Rendering
         public static bool operator ==(Azure.Maps.Rendering.RenderingLanguage left, Azure.Maps.Rendering.RenderingLanguage right) { throw null; }
         public static implicit operator Azure.Maps.Rendering.RenderingLanguage (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Rendering.RenderingLanguage left, Azure.Maps.Rendering.RenderingLanguage right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TrafficTilesetId : System.IEquatable<Azure.Maps.Rendering.TrafficTilesetId>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TrafficTilesetId(string value) { throw null; }
+        public static Azure.Maps.Rendering.TrafficTilesetId MicrosoftTrafficRelativeMain { get { throw null; } }
+        public static Azure.Maps.Rendering.TrafficTilesetId None { get { throw null; } }
+        public bool Equals(Azure.Maps.Rendering.TrafficTilesetId other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Rendering.TrafficTilesetId left, Azure.Maps.Rendering.TrafficTilesetId right) { throw null; }
+        public static implicit operator Azure.Maps.Rendering.TrafficTilesetId (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Rendering.TrafficTilesetId left, Azure.Maps.Rendering.TrafficTilesetId right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

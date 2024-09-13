@@ -115,36 +115,52 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The SKU of the container registry. </summary>
+        [WirePath("sku")]
         public ContainerRegistrySku Sku { get; set; }
         /// <summary> The identity of the container registry. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The URL that can be used to log into the container registry. </summary>
+        [WirePath("properties.loginServer")]
         public string LoginServer { get; }
         /// <summary> The creation date of the container registry in ISO8601 format. </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The provisioning state of the container registry at the time the operation was called. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerRegistryProvisioningState? ProvisioningState { get; }
         /// <summary> The status of the container registry at the time the operation was called. </summary>
+        [WirePath("properties.status")]
         public ContainerRegistryResourceStatus Status { get; }
         /// <summary> The value that indicates whether the admin user is enabled. </summary>
+        [WirePath("properties.adminUserEnabled")]
         public bool? IsAdminUserEnabled { get; set; }
         /// <summary> The network rule set for a container registry. </summary>
+        [WirePath("properties.networkRuleSet")]
         public ContainerRegistryNetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> The policies for a container registry. </summary>
+        [WirePath("properties.policies")]
         public ContainerRegistryPolicies Policies { get; set; }
         /// <summary> The encryption settings of container registry. </summary>
+        [WirePath("properties.encryption")]
         public ContainerRegistryEncryption Encryption { get; set; }
         /// <summary> Enable a single data endpoint per region for serving data. </summary>
+        [WirePath("properties.dataEndpointEnabled")]
         public bool? IsDataEndpointEnabled { get; set; }
         /// <summary> List of host names that will serve data when dataEndpointEnabled is true. </summary>
+        [WirePath("properties.dataEndpointHostNames")]
         public IReadOnlyList<string> DataEndpointHostNames { get; }
         /// <summary> List of private endpoint connections for a container registry. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Whether or not public network access is allowed for the container registry. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public ContainerRegistryPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Whether to allow trusted Azure services to access a network restricted registry. </summary>
+        [WirePath("properties.networkRuleBypassOptions")]
         public ContainerRegistryNetworkRuleBypassOption? NetworkRuleBypassOptions { get; set; }
         /// <summary> Whether or not zone redundancy is enabled for this container registry. </summary>
+        [WirePath("properties.zoneRedundancy")]
         public ContainerRegistryZoneRedundancy? ZoneRedundancy { get; set; }
     }
 }
