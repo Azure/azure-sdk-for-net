@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
                 TypeProperties = nfsStorageClassTypeProperties
             };
             var storageClassCollection = new StorageClassResourceCollection(Client, TestEnvironment.ConnectedCluster);
-            await storageClassCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testsc", storageClassData);
+            var storageClassResource = await storageClassCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testsc", storageClassData);
+            await storageClassResource.Value.DeleteAsync(WaitUntil.Started);
         }
     }
 }

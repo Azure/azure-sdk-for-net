@@ -30,7 +30,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
                 AdvertiseMode = AdvertiseMode.ARP
             };
             loadBalancerData.Addresses.Add("192.168.10.1/32");
-            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testlb", loadBalancerData);
+            var loadBalancerResource = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testlb", loadBalancerData);
+            await loadBalancerResource.Value.DeleteAsync(WaitUntil.Completed);
             var bgpPeerData = new BgpPeerData
             {
                 MyAsn = 64000,
@@ -38,7 +39,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
                 PeerAddress = "192.168.2.0"
             };
             var bgpPeerCollection = new BgpPeerCollection(Client, connectedCluster);
-            await bgpPeerCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testpeer", bgpPeerData);
+            var bgpPeerResource = await bgpPeerCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testpeer", bgpPeerData);
+            await bgpPeerResource.Value.DeleteAsync(WaitUntil.Completed);
         }
     }
 }
