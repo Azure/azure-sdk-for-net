@@ -454,52 +454,52 @@ public class PaginatedCollectionScenarioTests
     //    Assert.AreEqual(MockPagingData.Count, count);
     //}
 
-    //[Test]
-    //public void CanEvolveFromProtocol()
-    //{
-    //    // This scenario tests validates that user code doesn't break when
-    //    // convenience methods are added.  We show this by illustrating that
-    //    // exactly the same code works the same way when using a client that
-    //    // has only protocol methods and a client that has the same protocol
-    //    // methods and also convenience methods.
+    [Test]
+    public void CanEvolveFromProtocol()
+    {
+        // This scenario tests validates that user code doesn't break when
+        // convenience methods are added.  We show this by illustrating that
+        // exactly the same code works the same way when using a client that
+        // has only protocol methods and a client that has the same protocol
+        // methods and also convenience methods.
 
-    //    PagingClientOptions options = new()
-    //    {
-    //        Transport = new MockPipelineTransport("Mock", i => 200)
-    //    };
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
 
-    //    static void Validate(IEnumerable<ClientResult> results)
-    //    {
-    //        int pageCount = 0;
-    //        foreach (ClientResult result in results)
-    //        {
-    //            Assert.AreEqual(200, result.GetRawResponse().Status);
-    //            pageCount++;
-    //        }
+        static void Validate(CollectionResult collectionResult)
+        {
+            int pageCount = 0;
+            foreach (ClientResult result in collectionResult.GetRawPages())
+            {
+                Assert.AreEqual(200, result.GetRawResponse().Status);
+                pageCount++;
+            }
 
-    //        Assert.AreEqual(MockPagingData.Count / MockPagingData.DefaultPageSize, pageCount);
-    //    }
+            Assert.AreEqual(MockPagingData.Count / MockPagingData.DefaultPageSize, pageCount);
+        }
 
-    //    // Protocol code
-    //    PagingProtocolClient protocolClient = new PagingProtocolClient(options);
-    //    IEnumerable<ClientResult> pageResults = protocolClient.GetValues(
-    //        order: default,
-    //        pageSize: default,
-    //        offset: default,
-    //        new RequestOptions());
+        // Protocol code
+        PagingProtocolClient protocolClient = new PagingProtocolClient(options);
+        CollectionResult protoResult = protocolClient.GetValues(
+            order: default,
+            pageSize: default,
+            offset: default,
+            new RequestOptions());
 
-    //    Validate(pageResults);
+        Validate(protoResult);
 
-    //    // Convenience code
-    //    PagingClient convenienceClient = new PagingClient(options);
-    //    IEnumerable<ClientResult> pages = convenienceClient.GetValues(
-    //        order: default,
-    //        pageSize: default,
-    //        offset: default,
-    //        new RequestOptions());
+        // Convenience layer added -- behavior calling protocol method is the same
+        PagingClient convenienceClient = new PagingClient(options);
+        CollectionResult convResult = convenienceClient.GetValues(
+            order: default,
+            pageSize: default,
+            offset: default,
+            new RequestOptions());
 
-    //    Validate(pages);
-    //}
+        Validate(convResult);
+    }
 
     //[Test]
     //public async Task CanEvolveFromProtocolAsync()
