@@ -37,11 +37,13 @@ namespace Azure.AI.OpenAI
     public partial class AzureOpenAIClient : OpenAI.OpenAIClient
     {
         protected AzureOpenAIClient() { }
-        public AzureOpenAIClient(Azure.AI.OpenAI.AzureOpenAIClientOptions options = null) { }
         protected AzureOpenAIClient(System.ClientModel.Primitives.ClientPipeline pipeline, System.Uri endpoint, Azure.AI.OpenAI.AzureOpenAIClientOptions options) { }
-        public AzureOpenAIClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.OpenAI.AzureOpenAIClientOptions options = null) { }
+        public AzureOpenAIClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public AzureOpenAIClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.OpenAI.AzureOpenAIClientOptions options) { }
+        public AzureOpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public AzureOpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.OpenAI.AzureOpenAIClientOptions options = null) { }
-        public AzureOpenAIClient(System.Uri endpoint, System.ClientModel.ApiKeyCredential credential, Azure.AI.OpenAI.AzureOpenAIClientOptions options = null) { }
+        public AzureOpenAIClient(System.Uri endpoint, System.ClientModel.ApiKeyCredential credential) { }
+        public AzureOpenAIClient(System.Uri endpoint, System.ClientModel.ApiKeyCredential credential, Azure.AI.OpenAI.AzureOpenAIClientOptions options) { }
         public override OpenAI.Assistants.AssistantClient GetAssistantClient() { throw null; }
         public override OpenAI.Audio.AudioClient GetAudioClient(string deploymentName) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -60,7 +62,7 @@ namespace Azure.AI.OpenAI
     }
     public partial class AzureOpenAIClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {
-        public AzureOpenAIClientOptions(Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion.V2024_05_01_Preview) { }
+        public AzureOpenAIClientOptions(Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion.V2024_07_01_Preview) { }
         public string ApplicationId { get { throw null; } set { } }
         public Azure.AI.OpenAI.AzureOpenAIAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
@@ -68,6 +70,7 @@ namespace Azure.AI.OpenAI
             V2024_04_01_Preview = 7,
             V2024_05_01_Preview = 8,
             V2024_06_01 = 9,
+            V2024_07_01_Preview = 10,
         }
     }
     public static partial class AzureStreamingChatCompletionUpdateExtensions
@@ -256,7 +259,7 @@ namespace Azure.AI.OpenAI.Chat
         public string Content { get { throw null; } }
         public int DataSourceIndex { get { throw null; } }
         public string Filepath { get { throw null; } }
-        public string FilterReason { get { throw null; } }
+        public Azure.AI.OpenAI.Chat.AzureChatRetrievedDocumentFilterReason? FilterReason { get { throw null; } }
         public double? OriginalSearchScore { get { throw null; } }
         public double? RerankScore { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SearchQueries { get { throw null; } }

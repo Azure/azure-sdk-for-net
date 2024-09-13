@@ -1,10 +1,10 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Azure.Core;
 using Azure.Identity;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Config;
 using NUnit.Framework;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 {
@@ -13,9 +13,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         private const string NormConnectionString = "Endpoint=http://localhost;Port=8080;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH;Version=1.0;";
         private const string SecConnectionString = "Endpoint=https://abc;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH;Version=1.0;";
 
-        [TestCase(NormConnectionString, "http://localhost:8080/", "/clients/socketio/hubs/testHub")]
-        [TestCase(SecConnectionString, "https://abc/", "/clients/socketio/hubs/testHub")]
-        public void TestWebPubSubConnection_Scheme(string connectionString, string expectedEndpoint, string expectedPath)
+        [TestCase(NormConnectionString, "http://localhost:8080/", "/clients/socketio/hubs/testHub", null)]
+        [TestCase(NormConnectionString, "http://localhost:8080/", "/clients/socketio/hubs/testHub", "uid")]
+        [TestCase(SecConnectionString, "https://abc/", "/clients/socketio/hubs/testHub", "uid")]
+        public void TestWebPubSubConnection_Scheme(string connectionString, string expectedEndpoint, string expectedPath, string userId)
         {
             var connectionInfo = new SocketIOConnectionInfo(connectionString);
 
@@ -26,12 +27,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var service = new WebPubSubForSocketIOService(connectionInfo.Endpoint, connectionInfo.KeyCredential, "testHub");
 
-            var clientConnection = service.GetNegotiationResult();
+            var clientConnection = service.GetNegotiationResult(userId);
 
             Assert.NotNull(clientConnection);
             Assert.AreEqual(expectedEndpoint, clientConnection.Endpoint.AbsoluteUri);
             Assert.AreEqual(expectedPath, clientConnection.Path);
             Assert.NotNull(clientConnection.Token);
+
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(clientConnection.Token);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                Assert.IsNull(jwt.Subject);
+            }
+            else
+            {
+                Assert.AreEqual(userId, jwt.Subject);
+            }
         }
 
         [TestCase]

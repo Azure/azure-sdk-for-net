@@ -48,7 +48,7 @@
                                             }
                                 },
                                 CurrentDedicatedNodes = 4,
-                                CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily: "4", osVersion: "3"),
+                                VirtualMachineConfiguration = new Models.VirtualMachineConfiguration(imageReference: new Models.ImageReference(), nodeAgentSKUId: "df"),
                                 Id = "pool-id"
                             },
                         };
@@ -70,7 +70,6 @@
             const string applicationId = "blender";
             const string version = "beta";
             const string poolId = "mock-pool";
-            const string osFamily = "3";
 
             using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
             Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
@@ -85,7 +84,7 @@
                             Body = new Protocol.Models.CloudPool
                             {
                                 CurrentDedicatedNodes = 4,
-                                CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily),
+                                VirtualMachineConfiguration = new Models.VirtualMachineConfiguration(imageReference: new Models.ImageReference(), nodeAgentSKUId: "df"),
                                 Id = poolId
                             }
                         };

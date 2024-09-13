@@ -13,6 +13,7 @@ trigger:
     exclude:
     - eng/mgmt/
     - eng/common/
+    - eng/packages/
 
 pr:
   branches:
@@ -30,6 +31,7 @@ pr:
     exclude:
     - eng/mgmt/
     - eng/common/
+    - eng/packages/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -58,6 +60,8 @@ extends:
     AOTTestInputs:
     - ArtifactName: Azure.Core
       ExpectedWarningsFilepath: /Azure.Core/tests/compatibility/ExpectedAotWarnings.txt
+    - ArtifactName: System.ClientModel
+      ExpectedWarningsFilepath: None
 
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

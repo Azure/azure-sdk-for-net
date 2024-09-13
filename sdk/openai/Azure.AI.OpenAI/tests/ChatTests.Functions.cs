@@ -1,13 +1,15 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Chat;
-using Azure.Core.TestFramework;
 using OpenAI.Chat;
+using OpenAI.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -113,7 +115,8 @@ public partial class ChatTests
         Assert.That(completion.FunctionCall, Is.Not.Null);
         Assert.That(completion.FunctionCall.FunctionName, Is.EqualTo(FUNCTION_TEMPERATURE.FunctionName));
         Assert.That(completion.FunctionCall.FunctionArguments, Is.Not.Null);
-        var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(completion.FunctionCall.FunctionArguments, SERIALIZER_OPTIONS);
+        var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(completion.FunctionCall.FunctionArguments, SERIALIZER_OPTIONS)!;
+        Assert.That(parsedArgs, Is.Not.Null);
         Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
         Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
 
@@ -157,7 +160,7 @@ public partial class ChatTests
         StringBuilder content = new();
         bool foundPromptFilter = false;
         bool foundResponseFilter = false;
-        string functionName = null;
+        string? functionName = null;
         StringBuilder functionArgs = new();
 
         ChatClient client = GetTestClient();
@@ -219,9 +222,7 @@ public partial class ChatTests
             }
         };
 
-        AsyncResultCollection<StreamingChatCompletionUpdate> response = SyncOrAsync(client,
-            c => c.CompleteChatStreaming(messages, requestOptions),
-            c => c.CompleteChatStreamingAsync(messages, requestOptions));
+        AsyncCollectionResult<StreamingChatCompletionUpdate> response = client.CompleteChatStreamingAsync(messages, requestOptions);
         Assert.That(response, Is.Not.Null);
 
         await foreach (StreamingChatCompletionUpdate update in response)
@@ -234,7 +235,8 @@ public partial class ChatTests
         if (functionCallType != FunctionCallTestType.None)
         {
             Assert.That(functionName, Is.Not.Null);
-            var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(functionArgs.ToString(), SERIALIZER_OPTIONS);
+            var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(functionArgs.ToString(), SERIALIZER_OPTIONS)!;
+            Assert.That(parsedArgs, Is.Not.Null);
             Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
             Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
 
@@ -260,9 +262,7 @@ public partial class ChatTests
             functionName = null;
             functionArgs.Clear();
 
-            response = SyncOrAsync(client,
-                c => c.CompleteChatStreaming(messages, requestOptions),
-                c => c.CompleteChatStreamingAsync(messages, requestOptions));
+            response = client.CompleteChatStreamingAsync(messages, requestOptions);
             Assert.That(response, Is.Not.Null);
 
             await foreach (StreamingChatCompletionUpdate update in response)

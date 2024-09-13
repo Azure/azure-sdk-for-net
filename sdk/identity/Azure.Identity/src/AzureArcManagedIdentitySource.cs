@@ -15,10 +15,10 @@ namespace Azure.Identity
         private const string IdentityEndpointInvalidUriError = "The environment variable IDENTITY_ENDPOINT contains an invalid Uri.";
         private const string NoChallengeErrorMessage = "Did not receive expected WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint.";
         private const string InvalidChallangeErrorMessage = "The WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint did not match the expected format.";
-        private const string UserAssignedNotSupportedErrorMessage = "User assigned identity is not supported by the Azure Arc Managed Identity Endpoint. To authenticate with the system assigned identity omit the client id when constructing the ManagedIdentityCredential, or if authenticating with the DefaultAzureCredential ensure the AZURE_CLIENT_ID environment variable is not set.";
+        private const string UserAssignedNotSupportedErrorMessage = "User-assigned managed identity is not supported by the Azure Arc Managed Identity Endpoint. To authenticate with the system-assigned managed identity, omit the client ID when constructing the ManagedIdentityCredential, or if authenticating with DefaultAzureCredential, ensure the AZURE_CLIENT_ID environment variable is not set.";
         private const string ArcApiVersion = "2019-11-01";
 
-        private readonly string _clientId;
+        private readonly ManagedIdentityId _managedIdentityId;
         private readonly Uri _endpoint;
 
         public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
@@ -43,8 +43,8 @@ namespace Azure.Identity
         internal AzureArcManagedIdentitySource(Uri endpoint, ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
             _endpoint = endpoint;
-            _clientId = options.ClientId;
-            if (!string.IsNullOrEmpty(_clientId) || null != options.ResourceIdentifier)
+            _managedIdentityId = options.ManagedIdentityId;
+            if (options.ManagedIdentityId._idType != ManagedIdentityIdType.SystemAssigned)
             {
                 AzureIdentityEventSource.Singleton.UserAssignedManagedIdentityNotSupported("Azure Arc");
             }
@@ -53,7 +53,7 @@ namespace Azure.Identity
         protected override Request CreateRequest(string[] scopes)
         {
             // arc MI endpoint doesn't support user assigned identities so if client id was specified throw AuthenticationFailedException
-            if (!string.IsNullOrEmpty(_clientId))
+            if (_managedIdentityId._idType != ManagedIdentityIdType.SystemAssigned)
             {
                 throw new AuthenticationFailedException(UserAssignedNotSupportedErrorMessage);
             }

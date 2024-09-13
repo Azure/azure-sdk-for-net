@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The number of pending runs in the queue. </summary>
+        [WirePath("count")]
         public int? Count { get; }
     }
 }
