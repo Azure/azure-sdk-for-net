@@ -1389,7 +1389,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="options">
@@ -1445,7 +1445,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="options">
@@ -1501,7 +1501,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="sourceRange">
@@ -1584,7 +1584,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="sourceRange">
@@ -1667,7 +1667,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="sourceRange">
