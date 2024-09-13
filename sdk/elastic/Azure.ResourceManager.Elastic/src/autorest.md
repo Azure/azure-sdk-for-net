@@ -52,6 +52,11 @@ acronym-mapping:
 
 rename-mapping:
   MonitoredResource: MonitoredResourceContent
-  ElasticTrafficFilter.Properties.Type: ElasticTrafficFilterType 
+
+directive:
+  - from: elastic.json
+    where: $.definitions
+    transform: >
+      $.ElasticTrafficFilter.properties.type['x-ms-client-name']= 'ElasticTrafficFilterType'
 
 ```
