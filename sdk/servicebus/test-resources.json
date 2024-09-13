@@ -183,9 +183,17 @@
       "type": "string",
       "value": "[listkeys(variables('authRuleResourceId'), variables('sbVersion')).primaryConnectionString]"
     },
+    "SERVICEBUS_SECONDARY_NAMESPACE_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[listkeys(variables('authRuleSecondaryResourceId'), variables('sbVersion')).primaryConnectionString]"
+    },
     "SERVICEBUS_SECONDARY_FULLY_QUALIFIED_NAMESPACE": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.ServiceBus/namespaces', variables('serviceBusSecondaryNamespace'))).serviceBusEndpoint]"
+    },
+    "SERVICEBUS_PREMIUM_NAMESPACE_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[listkeys(variables('authRulePremiumResourceId'), variables('sbVersion')).primaryConnectionString]"
     },
     "SERVICEBUS_PREMIUM_FULLY_QUALIFIED_NAMESPACE": {
       "type": "string",
