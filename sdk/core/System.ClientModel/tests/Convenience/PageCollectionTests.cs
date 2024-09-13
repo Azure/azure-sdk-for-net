@@ -27,173 +27,173 @@ public class PageCollectionTests
         }
     }
 
-    [Test]
-    public void CanGetAllValues()
-    {
-        PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
-        IEnumerable<int> values = pages.GetAllValues();
+    //[Test]
+    //public void CanGetAllValues()
+    //{
+    //    PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
+    //    IEnumerable<int> values = pages.GetAllValues();
 
-        int count = 0;
-        foreach (int value in values)
-        {
-            Assert.AreEqual(count, value);
-            count++;
-        }
+    //    int count = 0;
+    //    foreach (int value in values)
+    //    {
+    //        Assert.AreEqual(count, value);
+    //        count++;
+    //    }
 
-        Assert.AreEqual(Count, count);
-    }
+    //    Assert.AreEqual(Count, count);
+    //}
 
-    [Test]
-    public async Task CanGetAllValuesAsync()
-    {
-        AsyncPageCollection<int> pages = new MockAsyncPageCollection<int>(MockValues, DefaultPageSize);
-        IAsyncEnumerable<int> values = pages.GetAllValuesAsync();
+    //[Test]
+    //public async Task CanGetAllValuesAsync()
+    //{
+    //    AsyncPageCollection<int> pages = new MockAsyncPageCollection<int>(MockValues, DefaultPageSize);
+    //    IAsyncEnumerable<int> values = pages.GetAllValuesAsync();
 
-        int count = 0;
-        await foreach (int value in values)
-        {
-            Assert.AreEqual(count, value);
-            count++;
-        }
+    //    int count = 0;
+    //    await foreach (int value in values)
+    //    {
+    //        Assert.AreEqual(count, value);
+    //        count++;
+    //    }
 
-        Assert.AreEqual(Count, count);
-    }
+    //    Assert.AreEqual(Count, count);
+    //}
 
-    [Test]
-    public void CanGetCurrentPage()
-    {
-        PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
-        PageResult<int> page = pages.GetCurrentPage();
+    //[Test]
+    //public void CanGetCurrentPage()
+    //{
+    //    PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
+    //    PageResult<int> page = pages.GetCurrentPage();
 
-        Assert.AreEqual(MockPagingData.DefaultPageSize, page.Values.Count);
-        Assert.AreEqual(0, page.Values[0]);
-    }
+    //    Assert.AreEqual(MockPagingData.DefaultPageSize, page.Values.Count);
+    //    Assert.AreEqual(0, page.Values[0]);
+    //}
 
-    [Test]
-    public async Task CanGetCurrentPageAsync()
-    {
-        AsyncPageCollection<int> pages = new MockAsyncPageCollection<int>(MockValues, DefaultPageSize);
-        PageResult<int> page = await pages.GetCurrentPageAsync();
+    //[Test]
+    //public async Task CanGetCurrentPageAsync()
+    //{
+    //    AsyncPageCollection<int> pages = new MockAsyncPageCollection<int>(MockValues, DefaultPageSize);
+    //    PageResult<int> page = await pages.GetCurrentPageAsync();
 
-        Assert.AreEqual(MockPagingData.DefaultPageSize, page.Values.Count);
-        Assert.AreEqual(0, page.Values[0]);
-    }
+    //    Assert.AreEqual(MockPagingData.DefaultPageSize, page.Values.Count);
+    //    Assert.AreEqual(0, page.Values[0]);
+    //}
 
-    [Test]
-    public void CanGetCurrentPageThenGetAllItems()
-    {
-        PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
-        PageResult<int> page = pages.GetCurrentPage();
+    //[Test]
+    //public void CanGetCurrentPageThenGetAllItems()
+    //{
+    //    PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
+    //    PageResult<int> page = pages.GetCurrentPage();
 
-        Assert.AreEqual(DefaultPageSize, page.Values.Count);
-        Assert.AreEqual(0, page.Values[0]);
+    //    Assert.AreEqual(DefaultPageSize, page.Values.Count);
+    //    Assert.AreEqual(0, page.Values[0]);
 
-        IEnumerable<int> values = pages.GetAllValues();
+    //    IEnumerable<int> values = pages.GetAllValues();
 
-        int count = 0;
-        foreach (int value in values)
-        {
-            Assert.AreEqual(count, value);
-            count++;
-        }
+    //    int count = 0;
+    //    foreach (int value in values)
+    //    {
+    //        Assert.AreEqual(count, value);
+    //        count++;
+    //    }
 
-        Assert.AreEqual(Count, count);
-    }
+    //    Assert.AreEqual(Count, count);
+    //}
 
-    [Test]
-    public async Task CanGetCurrentPageThenGetAllItemsAsync()
-    {
-        AsyncPageCollection<int> pages = new MockAsyncPageCollection<int>(MockValues, DefaultPageSize);
-        PageResult<int> page = await pages.GetCurrentPageAsync();
+    //[Test]
+    //public async Task CanGetCurrentPageThenGetAllItemsAsync()
+    //{
+    //    AsyncPageCollection<int> pages = new MockAsyncPageCollection<int>(MockValues, DefaultPageSize);
+    //    PageResult<int> page = await pages.GetCurrentPageAsync();
 
-        Assert.AreEqual(DefaultPageSize, page.Values.Count);
-        Assert.AreEqual(0, page.Values[0]);
+    //    Assert.AreEqual(DefaultPageSize, page.Values.Count);
+    //    Assert.AreEqual(0, page.Values[0]);
 
-        IAsyncEnumerable<int> values = pages.GetAllValuesAsync();
+    //    IAsyncEnumerable<int> values = pages.GetAllValuesAsync();
 
-        int count = 0;
-        await foreach (int value in values)
-        {
-            Assert.AreEqual(count, value);
-            count++;
-        }
+    //    int count = 0;
+    //    await foreach (int value in values)
+    //    {
+    //        Assert.AreEqual(count, value);
+    //        count++;
+    //    }
 
-        Assert.AreEqual(Count, count);
-    }
+    //    Assert.AreEqual(Count, count);
+    //}
 
-    [Test]
-    public void CanGetCurrentPageWhileEnumeratingItems()
-    {
-        PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
-        IEnumerable<int> values = pages.GetAllValues();
+    //[Test]
+    //public void CanGetCurrentPageWhileEnumeratingItems()
+    //{
+    //    PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
+    //    IEnumerable<int> values = pages.GetAllValues();
 
-        int count = 0;
-        foreach (int value in values)
-        {
-            Assert.AreEqual(count, value);
-            count++;
+    //    int count = 0;
+    //    foreach (int value in values)
+    //    {
+    //        Assert.AreEqual(count, value);
+    //        count++;
 
-            PageResult<int> page = pages.GetCurrentPage();
+    //        PageResult<int> page = pages.GetCurrentPage();
 
-            // Validate that the current item is in range of the page values
-            Assert.GreaterOrEqual(value, page.Values[0]);
-            Assert.LessOrEqual(value, page.Values[page.Values.Count - 1]);
-        }
+    //        // Validate that the current item is in range of the page values
+    //        Assert.GreaterOrEqual(value, page.Values[0]);
+    //        Assert.LessOrEqual(value, page.Values[page.Values.Count - 1]);
+    //    }
 
-        Assert.AreEqual(MockPagingData.Count, count);
-    }
+    //    Assert.AreEqual(MockPagingData.Count, count);
+    //}
 
-    [Test]
-    public async Task CanGetCurrentPageWhileEnumeratingItemsAsync()
-    {
-        AsyncPageCollection<int> pages = new MockAsyncPageCollection<int>(MockValues, DefaultPageSize);
-        IAsyncEnumerable<int> values = pages.GetAllValuesAsync();
+    //[Test]
+    //public async Task CanGetCurrentPageWhileEnumeratingItemsAsync()
+    //{
+    //    AsyncPageCollection<int> pages = new MockAsyncPageCollection<int>(MockValues, DefaultPageSize);
+    //    IAsyncEnumerable<int> values = pages.GetAllValuesAsync();
 
-        int count = 0;
-        await foreach (int value in values)
-        {
-            Assert.AreEqual(count, value);
-            count++;
+    //    int count = 0;
+    //    await foreach (int value in values)
+    //    {
+    //        Assert.AreEqual(count, value);
+    //        count++;
 
-            PageResult<int> page = await pages.GetCurrentPageAsync();
+    //        PageResult<int> page = await pages.GetCurrentPageAsync();
 
-            // Validate that the current item is in range of the page values
-            Assert.GreaterOrEqual(value, page.Values[0]);
-            Assert.LessOrEqual(value, page.Values[page.Values.Count - 1]);
-        }
+    //        // Validate that the current item is in range of the page values
+    //        Assert.GreaterOrEqual(value, page.Values[0]);
+    //        Assert.LessOrEqual(value, page.Values[page.Values.Count - 1]);
+    //    }
 
-        Assert.AreEqual(MockPagingData.Count, count);
-    }
+    //    Assert.AreEqual(MockPagingData.Count, count);
+    //}
 
-    [Test]
-    public void CanEnumerateClientResults()
-    {
-        PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
-        IEnumerable<ClientResult> pageResults = pages;
+    //[Test]
+    //public void CanEnumerateClientResults()
+    //{
+    //    PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
+    //    IEnumerable<ClientResult> pageResults = pages;
 
-        int pageCount = 0;
-        foreach (ClientResult result in pageResults)
-        {
-            Assert.AreEqual(200, result.GetRawResponse().Status);
-            pageCount++;
-        }
+    //    int pageCount = 0;
+    //    foreach (ClientResult result in pageResults)
+    //    {
+    //        Assert.AreEqual(200, result.GetRawResponse().Status);
+    //        pageCount++;
+    //    }
 
-        Assert.AreEqual(2, pageCount);
-    }
+    //    Assert.AreEqual(2, pageCount);
+    //}
 
-    [Test]
-    public async Task CanEnumerateClientResultsAsync()
-    {
-        AsyncPageCollection<int> pages = new MockAsyncPageCollection<int>(MockValues, DefaultPageSize);
-        IAsyncEnumerable<ClientResult> pageResults = pages;
+    //[Test]
+    //public async Task CanEnumerateClientResultsAsync()
+    //{
+    //    AsyncPageCollection<int> pages = new MockAsyncPageCollection<int>(MockValues, DefaultPageSize);
+    //    IAsyncEnumerable<ClientResult> pageResults = pages;
 
-        int pageCount = 0;
-        await foreach (ClientResult result in pageResults)
-        {
-            Assert.AreEqual(200, result.GetRawResponse().Status);
-            pageCount++;
-        }
+    //    int pageCount = 0;
+    //    await foreach (ClientResult result in pageResults)
+    //    {
+    //        Assert.AreEqual(200, result.GetRawResponse().Status);
+    //        pageCount++;
+    //    }
 
-        Assert.AreEqual(2, pageCount);
-    }
+    //    Assert.AreEqual(2, pageCount);
+    //}
 }

@@ -7,55 +7,55 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Paging;
 
-internal abstract class PageEnumerator<T> : PageEnumerator,
-    IAsyncEnumerator<PageResult<T>>,
-    IEnumerator<PageResult<T>>
-{
-    public abstract PageResult<T> GetPageFromResult(ClientResult result);
+//internal abstract class PageEnumerator<T> : PageEnumerator,
+//    IAsyncEnumerator<PageResult<T>>,
+//    IEnumerator<PageResult<T>>
+//{
+//    public abstract PageResult<T> GetPageFromResult(ClientResult result);
 
-    public PageResult<T> GetCurrentPage()
-    {
-        if (Current is null)
-        {
-            return GetPageFromResult(GetFirst());
-        }
+//    public PageResult<T> GetCurrentPage()
+//    {
+//        if (Current is null)
+//        {
+//            return GetPageFromResult(GetFirst());
+//        }
 
-        return ((IEnumerator<PageResult<T>>)this).Current;
-    }
+//        return ((IEnumerator<PageResult<T>>)this).Current;
+//    }
 
-    public async Task<PageResult<T>> GetCurrentPageAsync()
-    {
-        if (Current is null)
-        {
-            return GetPageFromResult(await GetFirstAsync().ConfigureAwait(false));
-        }
+//    public async Task<PageResult<T>> GetCurrentPageAsync()
+//    {
+//        if (Current is null)
+//        {
+//            return GetPageFromResult(await GetFirstAsync().ConfigureAwait(false));
+//        }
 
-        return ((IEnumerator<PageResult<T>>)this).Current;
-    }
+//        return ((IEnumerator<PageResult<T>>)this).Current;
+//    }
 
-    PageResult<T> IEnumerator<PageResult<T>>.Current
-    {
-        get
-        {
-            if (Current is null)
-            {
-                return default!;
-            }
+//    PageResult<T> IEnumerator<PageResult<T>>.Current
+//    {
+//        get
+//        {
+//            if (Current is null)
+//            {
+//                return default!;
+//            }
 
-            return GetPageFromResult(Current);
-        }
-    }
+//            return GetPageFromResult(Current);
+//        }
+//    }
 
-    PageResult<T> IAsyncEnumerator<PageResult<T>>.Current
-    {
-        get
-        {
-            if (Current is null)
-            {
-                return default!;
-            }
+//    PageResult<T> IAsyncEnumerator<PageResult<T>>.Current
+//    {
+//        get
+//        {
+//            if (Current is null)
+//            {
+//                return default!;
+//            }
 
-            return GetPageFromResult(Current);
-        }
-    }
-}
+//            return GetPageFromResult(Current);
+//        }
+//    }
+//}
