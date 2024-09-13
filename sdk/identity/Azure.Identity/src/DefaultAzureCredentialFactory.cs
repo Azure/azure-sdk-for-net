@@ -123,16 +123,33 @@ namespace Azure.Identity
             var options = Options.Clone<DefaultAzureCredentialOptions>();
             options.IsChainedCredential = true;
 
+            if (options.ManagedIdentityClientId != null && options.ManagedIdentityResourceId != null)
+            {
+                throw new ArgumentException(
+                    $"{nameof(DefaultAzureCredentialOptions)} cannot specify both {nameof(options.ManagedIdentityResourceId)} and {nameof(options.ManagedIdentityClientId)}.");
+            }
+
             var miOptions = new ManagedIdentityClientOptions
             {
-                ResourceIdentifier = options.ManagedIdentityResourceId,
-                ClientId = options.ManagedIdentityClientId,
                 Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true),
                 Options = options,
                 InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
                 ExcludeTokenExchangeManagedIdentitySource = options.ExcludeWorkloadIdentityCredential,
                 IsForceRefreshEnabled = options.IsForceRefreshEnabled,
             };
+
+            if (!string.IsNullOrEmpty(options.ManagedIdentityClientId))
+            {
+                miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(options.ManagedIdentityClientId);
+            }
+            else if (options.ManagedIdentityResourceId != null)
+            {
+                miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(options.ManagedIdentityResourceId);
+            }
+            else
+            {
+                miOptions.ManagedIdentityId = ManagedIdentityId.SystemAssigned;
+            }
 
             return new ManagedIdentityCredential(new ManagedIdentityClient(miOptions));
         }

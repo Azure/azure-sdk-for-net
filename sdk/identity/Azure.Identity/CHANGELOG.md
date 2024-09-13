@@ -3,6 +3,7 @@
 ## 1.13.0-beta.2 (Unreleased)
 
 ### Features Added
+- `ManagedIdentityCredential` now supports specifying a user-assigned managed identity by object ID.
 
 ### Breaking Changes
 

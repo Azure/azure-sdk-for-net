@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -93,6 +94,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new CreateMonitorAction(actionType, serializedAdditionalRawData, monitorDefinition);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MonitorDefinition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  monitorDefinition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MonitorDefinition))
+                {
+                    builder.Append("  monitorDefinition: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MonitorDefinition, options, 2, false, "  monitorDefinition: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  actionType: ");
+                builder.AppendLine($"'{ActionType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CreateMonitorAction>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CreateMonitorAction>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +144,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CreateMonitorAction)} does not support writing '{options.Format}' format.");
             }

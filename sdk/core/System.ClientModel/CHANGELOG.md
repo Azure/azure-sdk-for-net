@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.8 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.1.0 (2024-09-12)
 
 ### Other Changes
+
+- Removed implicit cast from `string` to `ApiKeyCredential` ([#45554](https://github.com/Azure/azure-sdk-for-net/pull/45554)).
+- Upgraded `System.Text.Json` package dependency to 6.0.9 ([#45416](https://github.com/Azure/azure-sdk-for-net/pull/45416)).
 
 ## 1.1.0-beta.7 (2024-08-14)
 

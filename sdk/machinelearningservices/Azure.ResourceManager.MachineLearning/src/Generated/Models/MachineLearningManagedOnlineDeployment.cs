@@ -20,23 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningManagedOnlineDeployment"/>. </summary>
-        /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
-        /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
+        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
+        /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="appInsightsEnabled"> If true, enables Application Insights logging. </param>
-        /// <param name="dataCollector"> The mdc configuration, we disable mdc when it's null. </param>
-        /// <param name="egressPublicNetworkAccess"> If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled. </param>
         /// <param name="endpointComputeType"> [Required] The compute type of the endpoint. </param>
-        /// <param name="instanceType"> Compute instance type. </param>
-        /// <param name="livenessProbe"> Liveness probe monitors the health of the container regularly. </param>
-        /// <param name="model"> The URI path to the model. </param>
-        /// <param name="modelMountPath"> The path to mount the model in custom container. </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
-        /// <param name="readinessProbe"> Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe. </param>
-        /// <param name="requestSettings"> Request settings for the deployment. </param>
         /// <param name="scaleSettings">
         /// Scale settings for the deployment.
         /// If it is null or not provided,
@@ -45,7 +35,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </param>
-        internal MachineLearningManagedOnlineDeployment(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? appInsightsEnabled, DataCollector dataCollector, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, MachineLearningEndpointComputeType endpointComputeType, string instanceType, MachineLearningProbeSettings livenessProbe, string model, string modelMountPath, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningProbeSettings readinessProbe, MachineLearningOnlineRequestSettings requestSettings, MachineLearningOnlineScaleSettings scaleSettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties, serializedAdditionalRawData, appInsightsEnabled, dataCollector, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings)
+        /// <param name="requestSettings"> Request settings for the deployment. </param>
+        /// <param name="modelMountPath"> The path to mount the model in custom container. </param>
+        /// <param name="appInsightsEnabled"> If true, enables Application Insights logging. </param>
+        /// <param name="livenessProbe"> Liveness probe monitors the health of the container regularly. </param>
+        /// <param name="readinessProbe"> Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe. </param>
+        /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
+        /// <param name="instanceType"> Compute instance type. </param>
+        /// <param name="model"> The URI path to the model. </param>
+        /// <param name="egressPublicNetworkAccess"> If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled. </param>
+        /// <param name="dataCollector"> The mdc configuration, we disable mdc when it's null. </param>
+        internal MachineLearningManagedOnlineDeployment(string description, IDictionary<string, string> properties, MachineLearningCodeConfiguration codeConfiguration, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningEndpointComputeType endpointComputeType, MachineLearningOnlineScaleSettings scaleSettings, MachineLearningOnlineRequestSettings requestSettings, string modelMountPath, bool? appInsightsEnabled, MachineLearningProbeSettings livenessProbe, MachineLearningProbeSettings readinessProbe, MachineLearningDeploymentProvisioningState? provisioningState, string instanceType, string model, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, DataCollector dataCollector) : base(description, properties, codeConfiguration, environmentId, environmentVariables, serializedAdditionalRawData, endpointComputeType, scaleSettings, requestSettings, modelMountPath, appInsightsEnabled, livenessProbe, readinessProbe, provisioningState, instanceType, model, egressPublicNetworkAccess, dataCollector)
         {
             EndpointComputeType = endpointComputeType;
         }

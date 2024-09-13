@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         void IJsonModel<RecommendationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RecommendationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecommendationDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(RecommendationId))
             {
                 writer.WritePropertyName("recommendationId"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RecommendationDetails IJsonModel<RecommendationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         void IJsonModel<AppComplianceReportEvidenceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportEvidenceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppComplianceReportEvidenceProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(EvidenceType))
             {
                 writer.WritePropertyName("evidenceType"u8);
@@ -68,7 +76,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppComplianceReportEvidenceProperties IJsonModel<AppComplianceReportEvidenceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

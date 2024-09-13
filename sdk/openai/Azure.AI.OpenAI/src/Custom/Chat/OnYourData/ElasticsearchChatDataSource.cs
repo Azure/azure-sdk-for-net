@@ -102,11 +102,20 @@ public partial class ElasticsearchChatDataSource : AzureChatDataSource
         init => InternalParameters.VectorizationSource = value;
     }
 
-    public ElasticsearchChatDataSource()
+    public ElasticsearchChatDataSource() : base(type: "elasticsearch", serializedAdditionalRawData: null)
     {
-        Type = "elasticsearch";
         InternalParameters = new();
-        _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+    }
+
+    // CUSTOM: Made internal.
+    /// <summary> Initializes a new instance of <see cref="ElasticsearchChatDataSource"/>. </summary>
+    /// <param name="internalParameters"> The parameter information to control the use of the Elasticsearch data source. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="internalParameters"/> is null. </exception>
+    internal ElasticsearchChatDataSource(InternalElasticsearchChatDataSourceParameters internalParameters)
+        : this()
+    {
+        Argument.AssertNotNull(internalParameters, nameof(internalParameters));
+        InternalParameters = internalParameters;
     }
 
     /// <summary> Initializes a new instance of <see cref="ElasticsearchChatDataSource"/>. </summary>
@@ -114,7 +123,8 @@ public partial class ElasticsearchChatDataSource : AzureChatDataSource
     /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal ElasticsearchChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalElasticsearchChatDataSourceParameters internalParameters) : base(type, serializedAdditionalRawData)
+    internal ElasticsearchChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalElasticsearchChatDataSourceParameters internalParameters)
+        : base(type, serializedAdditionalRawData)
     {
         InternalParameters = internalParameters;
     }

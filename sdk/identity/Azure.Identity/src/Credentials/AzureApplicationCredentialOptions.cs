@@ -13,10 +13,11 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies the client id of the azure ManagedIdentity in the case of user assigned identity.
         /// </summary>
-        public string ManagedIdentityClientId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.ClientId);
-        private static string GetNonEmptyStringOrNull(string str)
+        public ManagedIdentityId ManagedIdentityId { get; set; } = GetManagedIdentityIdFromEnvironment(EnvironmentVariables.ClientId);
+
+        private static ManagedIdentityId GetManagedIdentityIdFromEnvironment(string clientId)
         {
-            return !string.IsNullOrEmpty(str) ? str : null;
+            return !string.IsNullOrEmpty(clientId) ? ManagedIdentityId.FromUserAssignedClientId(clientId) : ManagedIdentityId.SystemAssigned;
         }
     }
 }

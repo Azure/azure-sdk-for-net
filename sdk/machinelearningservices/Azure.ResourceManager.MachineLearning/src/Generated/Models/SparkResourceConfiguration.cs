@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Optional type of VM used as supported by the compute target. </summary>
+        [WirePath("instanceType")]
         public string InstanceType { get; set; }
         /// <summary> Version of spark runtime used for the job. </summary>
+        [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; set; }
     }
 }

@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="ContentFilterResultForResponse"/>. </summary>
         internal ContentFilterResultForResponse()
         {
@@ -88,7 +87,7 @@ namespace Azure.AI.OpenAI
             Error = error;
             ProtectedMaterialText = protectedMaterialText;
             ProtectedMaterialCode = protectedMaterialCode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

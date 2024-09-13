@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Billing.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PaymentMethodGetAtBillingProfile()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/PaymentMethodAtBillingAccount_Get.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentMethodsGetByBillingAccount.json
             // this example is just showing the usage of "PaymentMethods_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

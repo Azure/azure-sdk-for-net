@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> Version of the operator Helm chart. </summary>
+        [WirePath("chartVersion")]
         public string ChartVersion { get; set; }
         /// <summary> Values override for the operator Helm chart. </summary>
+        [WirePath("chartValues")]
         public string ChartValues { get; set; }
     }
 }

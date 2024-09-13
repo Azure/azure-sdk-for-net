@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,23 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Logbase))
-            {
-                if (Logbase != null)
-                {
-                    writer.WritePropertyName("logbase"u8);
-                    writer.WriteStringValue(Logbase);
-                }
-                else
-                {
-                    writer.WriteNull("logbase");
-                }
-            }
-            if (Optional.IsDefined(Rule))
-            {
-                writer.WritePropertyName("rule"u8);
-                writer.WriteStringValue(Rule.Value.ToString());
-            }
             if (Optional.IsDefined(Seed))
             {
                 if (Seed != null)
@@ -54,6 +38,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("seed");
                 }
+            }
+            if (Optional.IsDefined(Rule))
+            {
+                writer.WritePropertyName("rule"u8);
+                writer.WriteStringValue(Rule.Value.ToString());
             }
             writer.WritePropertyName("samplingAlgorithmType"u8);
             writer.WriteStringValue(SamplingAlgorithmType.ToString());
@@ -95,22 +84,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string logbase = default;
-            RandomSamplingAlgorithmRule? rule = default;
             int? seed = default;
+            RandomSamplingAlgorithmRule? rule = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logbase"u8))
+                if (property.NameEquals("seed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        logbase = null;
+                        seed = null;
                         continue;
                     }
-                    logbase = property.Value.GetString();
+                    seed = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("rule"u8))
@@ -120,16 +108,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     rule = new RandomSamplingAlgorithmRule(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("seed"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        seed = null;
-                        continue;
-                    }
-                    seed = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("samplingAlgorithmType"u8))
@@ -143,7 +121,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, logbase, rule, seed);
+            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, seed, rule);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Seed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  seed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Seed))
+                {
+                    builder.Append("  seed: ");
+                    builder.AppendLine($"{Seed.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rule), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rule: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Rule))
+                {
+                    builder.Append("  rule: ");
+                    builder.AppendLine($"'{Rule.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SamplingAlgorithmType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  samplingAlgorithmType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  samplingAlgorithmType: ");
+                builder.AppendLine($"'{SamplingAlgorithmType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<RandomSamplingAlgorithm>.Write(ModelReaderWriterOptions options)
@@ -154,6 +189,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support writing '{options.Format}' format.");
             }

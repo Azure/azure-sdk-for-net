@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Batch
             }
             ManagedServiceIdentity identity = default;
             AzureLocation? location = default;
-            IDictionary<string, string> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

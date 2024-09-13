@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> Timestamp when this token will be expired. </summary>
+        [WirePath("expirationTime")]
         public long? ExpirationTime { get; }
         /// <summary> Name of the connection. </summary>
+        [WirePath("hybridConnectionName")]
         public string HybridConnectionName { get; }
         /// <summary> Name of the relay. </summary>
+        [WirePath("relay")]
         public string Relay { get; }
         /// <summary> Sender access token. </summary>
+        [WirePath("token")]
         public string Token { get; }
     }
 }
