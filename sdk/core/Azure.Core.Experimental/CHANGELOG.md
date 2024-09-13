@@ -1,5 +1,15 @@
 # Release History
 
+## 0.1.0-preview.36 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 0.1.0-preview.35 (2024-09-12)
 
 ### Breaking Changes
