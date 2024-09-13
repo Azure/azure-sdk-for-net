@@ -27,8 +27,8 @@ Run `dotnet build /t:GenerateCode`, and the code will be generated under `sdk\<s
 dotnet build /t:GenerateCode
 ```
 
-Now that you have generated your SDK, you enhance it so it can be release to customers:
-1. Make sure to create a [release plan](https://aka.ms/azsdkdocs/release-plans). It will provide you with a workflow of tasks that you
+Now that you have generated your SDK, you can release it by following the following steps:
+
+1. Create a [release plan](https://aka.ms/azsdkdocs/release-plans). It will provide you with a workflow of tasks that you
 will need to accomplish to release an SDK. For example, all the neccessary approvals, guidance on testing, release pipeline, and more.
 2. [Enhance the SDK](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Azure_SDK_Package_Ship_Requirements.md).
-3. When ready, create a PR agains the `main` branch of this repo and comment `@Azure/dpg-devs` for awareness to loop in SDK developers for review.
