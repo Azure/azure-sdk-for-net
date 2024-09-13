@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             }
             catch (Exception e)
             {
-                _logger.LogWarning($"Encountered an exception while checking EventHub '{_client.EventHubName}'. Error: {e.Message}");
+                _logger.LogWarning($"Encountered an exception while getting checkpoints for EventHub '{_client.EventHubName}' used for scaling. Error: {e.Message}");
             }
 
             return CreateTriggerMetrics(partitionPropertiesTasks.Select(t => t.Result).ToList(), checkpoints);
