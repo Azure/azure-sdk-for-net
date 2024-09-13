@@ -185,8 +185,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             int retryCount = 7;
             var maxDelay = TimeSpan.FromSeconds(20);
 
-            IEnumerable<TimeSpan> delay = Backoff.ExponentialBackoff(initialDelay: TimeSpan.FromSeconds(5), retryCount: retryCount)
-                    .Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks)));
+            IEnumerable<TimeSpan> delay = Backoff.ExponentialBackoff(initialDelay: Recording.Mode != RecordedTestMode.Playback ? TimeSpan.FromSeconds(5) : TimeSpan.FromMilliseconds(10), retryCount: retryCount).Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks)));
 
             return Policy
                 .HandleResult<GetOperationStatusResponse>(r => ShouldRetryPolling(r, vmCount).GetAwaiter().GetResult())
