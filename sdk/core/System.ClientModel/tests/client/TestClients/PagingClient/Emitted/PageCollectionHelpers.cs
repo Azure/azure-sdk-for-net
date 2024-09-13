@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,57 +13,57 @@ namespace ClientModel.Tests.Paging;
 
 internal class PageCollectionHelpers
 {
-    public static PageCollection<T> Create<T>(PageEnumerator<T> enumerator)
-        => new EnumeratorPageCollection<T>(enumerator);
+    //public static AsyncCollectionResult<T> CreateAsync<T>(PageEnumerator<T> enumerator)
+    //    => new AsyncPaginatedCollectionResult<T>(enumerator);
 
-    public static AsyncPageCollection<T> CreateAsync<T>(PageEnumerator<T> enumerator)
-        => new AsyncEnumeratorPageCollection<T>(enumerator);
+    //public static CollectionResult<T> Create<T>(PageEnumerator<T> enumerator)
+    //    => new PaginatedCollectionResult<T>(enumerator);
 
-    public static IEnumerable<ClientResult> Create(PageResultEnumerator enumerator)
+    //public static AsyncCollectionResult CreateAsync(PageEnumerator enumerator)
+    //    => new AsyncPaginatedCollectionResult(enumerator);
+
+    public static CollectionResult Create(PageEnumerator enumerator)
+        => new PaginatedCollectionResult(enumerator);
+
+    private class PaginatedCollectionResult : CollectionResult
     {
-        while (enumerator.MoveNext())
-        {
-            yield return enumerator.Current;
-        }
-    }
+        private readonly PageEnumerator _pageEnumerator;
 
-    public static async IAsyncEnumerable<ClientResult> CreateAsync(PageResultEnumerator enumerator)
-    {
-        while (await enumerator.MoveNextAsync().ConfigureAwait(false))
+        public PaginatedCollectionResult(PageEnumerator pageEnumerator)
         {
-            yield return enumerator.Current;
-        }
-    }
-
-    private class EnumeratorPageCollection<T> : PageCollection<T>
-    {
-        private readonly PageEnumerator<T> _enumerator;
-
-        public EnumeratorPageCollection(PageEnumerator<T> enumerator)
-        {
-            _enumerator = enumerator;
+            _pageEnumerator = pageEnumerator;
         }
 
-        protected override PageResult<T> GetCurrentPageCore()
-            => _enumerator.GetCurrentPage();
-
-        protected override IEnumerator<PageResult<T>> GetEnumeratorCore()
-            => _enumerator;
-    }
-
-    private class AsyncEnumeratorPageCollection<T> : AsyncPageCollection<T>
-    {
-        private readonly PageEnumerator<T> _enumerator;
-
-        public AsyncEnumeratorPageCollection(PageEnumerator<T> enumerator)
+        public override ContinuationToken? ContinuationToken
         {
-            _enumerator = enumerator;
+            get => throw new NotImplementedException();
+            protected set => throw new NotImplementedException();
         }
 
-        protected override async Task<PageResult<T>> GetCurrentPageAsyncCore()
-            => await _enumerator.GetCurrentPageAsync().ConfigureAwait(false);
+        public override IEnumerable<BinaryData> AsRawValues()
+        {
+            while (_pageEnumerator.MoveNext())
+            {
+                ClientResult page = _pageEnumerator.Current;
+                foreach (BinaryData rawValue in GetValuesFromPage(page))
+                {
+                    yield return rawValue;
+                }
+            }
+        }
 
-        protected override IAsyncEnumerator<PageResult<T>> GetAsyncEnumeratorCore(CancellationToken cancellationToken = default)
-            => _enumerator;
+        private IEnumerable<BinaryData> GetValuesFromPage(ClientResult page)
+        {
+            PipelineResponse response = page.GetRawResponse();
+
+            using JsonDocument doc = JsonDocument.Parse(response.Content);
+
+            IEnumerable<JsonElement> els = doc.RootElement.EnumerateArray();
+            foreach (JsonElement el in els)
+            {
+                // TODO: fix perf
+                yield return BinaryData.FromString(el.ToString());
+            }
+        }
     }
 }

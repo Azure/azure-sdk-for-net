@@ -4,7 +4,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Threading;
 
 namespace ClientModel.Tests.Paging;
@@ -22,7 +21,7 @@ public class PagingClient
         _endpoint = new Uri("https://www.paging.com");
     }
 
-    public virtual AsyncPageCollection<ValueItem> GetValuesAsync(
+    public virtual AsyncCollectionResult<ValueItem> GetValuesAsync(
         string? order = default,
         int? pageSize = default,
         int? offset = default,
@@ -38,7 +37,7 @@ public class PagingClient
         return PageCollectionHelpers.CreateAsync(enumerator);
     }
 
-    public virtual AsyncPageCollection<ValueItem> GetValuesAsync(
+    public virtual AsyncCollectionResult<ValueItem> GetValuesAsync(
         ContinuationToken firstPageToken,
         CancellationToken cancellationToken = default)
     {
@@ -55,7 +54,7 @@ public class PagingClient
         return PageCollectionHelpers.CreateAsync(enumerator);
     }
 
-    public virtual PageCollection<ValueItem> GetValues(
+    public virtual CollectionResult<ValueItem> GetValues(
         string? order = default,
         int? pageSize = default,
         int? offset = default,
@@ -71,7 +70,7 @@ public class PagingClient
         return PageCollectionHelpers.Create(enumerator);
     }
 
-    public virtual PageCollection<ValueItem> GetValues(
+    public virtual CollectionResult<ValueItem> GetValues(
         ContinuationToken firstPageToken,
         CancellationToken cancellationToken = default)
     {
@@ -88,7 +87,7 @@ public class PagingClient
         return PageCollectionHelpers.Create(enumerator);
     }
 
-    public virtual IAsyncEnumerable<ClientResult> GetValuesAsync(
+    public virtual AsyncCollectionResult GetValuesAsync(
         string? order,
         int? pageSize,
         int? offset,
@@ -104,7 +103,7 @@ public class PagingClient
         return PageCollectionHelpers.CreateAsync(enumerator);
     }
 
-    public virtual IEnumerable<ClientResult> GetValues(
+    public virtual CollectionResult GetValues(
         string? order,
         int? pageSize,
         int? offset,

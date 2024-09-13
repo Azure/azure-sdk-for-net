@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 
 namespace ClientModel.Tests.Paging;
@@ -15,6 +16,7 @@ public class ValueItem
     }
 
     public int Id { get; }
+
     public string Value { get; }
 
     public string ToJson() => $"{{ \"id\" : {Id}, \"value\" : \"{Value}\" }}";
@@ -25,6 +27,11 @@ public class ValueItem
         string value = element.GetProperty("value").GetString()!;
         return new ValueItem(id, value);
     }
+
+    //public static BinaryData ToBinaryDataFromJson(JsonElement element)
+    //{
+
+    //}
 
     public override string ToString() => ToJson();
 }

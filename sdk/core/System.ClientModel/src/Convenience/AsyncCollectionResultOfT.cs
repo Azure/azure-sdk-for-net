@@ -11,7 +11,7 @@ namespace System.ClientModel;
 /// Represents a collection of values returned from a cloud service operation.
 /// The collection values may be returned by one or more service responses.
 /// </summary>
-public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<T>
+public abstract class AsyncCollectionResult<T> : AsyncCollectionResult, IAsyncEnumerable<T>
 {
     /// <summary>
     /// Create a new instance of <see cref="AsyncCollectionResult{T}"/>.

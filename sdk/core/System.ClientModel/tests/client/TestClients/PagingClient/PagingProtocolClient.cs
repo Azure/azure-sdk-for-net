@@ -27,7 +27,7 @@ public class PagingProtocolClient
         int? offset,
         RequestOptions? options = default)
     {
-        PageResultEnumerator enumerator = new ValuesPageResultEnumerator(
+        PageEnumerator enumerator = new ValuesPageEnumerator(
             _pipeline,
             _endpoint,
             order,
@@ -43,7 +43,7 @@ public class PagingProtocolClient
         int? offset,
         RequestOptions? options = default)
     {
-        PageResultEnumerator enumerator = new ValuesPageResultEnumerator(
+        PageEnumerator enumerator = new ValuesPageEnumerator(
             _pipeline,
             _endpoint,
             order,

@@ -1,61 +1,76 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Paging;
 
-internal abstract class PageEnumerator<T> : PageResultEnumerator,
-    IAsyncEnumerator<PageResult<T>>,
-    IEnumerator<PageResult<T>>
+internal abstract class PageEnumerator : IAsyncEnumerator<ClientResult>, IEnumerator<ClientResult>
 {
-    public abstract PageResult<T> GetPageFromResult(ClientResult result);
+    private ClientResult? _current;
+    private bool _hasNext = true;
 
-    public PageResult<T> GetCurrentPage()
+    public ClientResult Current => _current!;
+
+    public abstract Task<ClientResult> GetFirstAsync();
+
+    public abstract ClientResult GetFirst();
+
+    public abstract Task<ClientResult> GetNextAsync(ClientResult result);
+
+    public abstract ClientResult GetNext(ClientResult result);
+
+    public abstract bool HasNext(ClientResult result);
+
+    object IEnumerator.Current => ((IEnumerator<ClientResult>)this).Current;
+
+    public bool MoveNext()
     {
-        if (Current is null)
+        if (!_hasNext)
         {
-            return GetPageFromResult(GetFirst());
+            return false;
         }
 
-        return ((IEnumerator<PageResult<T>>)this).Current;
-    }
-
-    public async Task<PageResult<T>> GetCurrentPageAsync()
-    {
-        if (Current is null)
+        if (_current == null)
         {
-            return GetPageFromResult(await GetFirstAsync().ConfigureAwait(false));
+            _current = GetFirst();
+        }
+        else
+        {
+            _current = GetNext(_current);
         }
 
-        return ((IEnumerator<PageResult<T>>)this).Current;
+        _hasNext = HasNext(_current);
+        return true;
     }
 
-    PageResult<T> IEnumerator<PageResult<T>>.Current
+    void IEnumerator.Reset() => _current = null;
+
+    void IDisposable.Dispose() { }
+
+    public async ValueTask<bool> MoveNextAsync()
     {
-        get
+        if (!_hasNext)
         {
-            if (Current is null)
-            {
-                return default!;
-            }
-
-            return GetPageFromResult(Current);
+            return false;
         }
+
+        if (_current == null)
+        {
+            _current = await GetFirstAsync().ConfigureAwait(false);
+        }
+        else
+        {
+            _current = await GetNextAsync(_current).ConfigureAwait(false);
+        }
+
+        _hasNext = HasNext(_current);
+        return true;
     }
 
-    PageResult<T> IAsyncEnumerator<PageResult<T>>.Current
-    {
-        get
-        {
-            if (Current is null)
-            {
-                return default!;
-            }
-
-            return GetPageFromResult(Current);
-        }
-    }
+    ValueTask IAsyncDisposable.DisposeAsync() => default;
 }

@@ -11,7 +11,7 @@ namespace ClientModel.Tests.Paging;
 
 // Mocks a page result enumerator a client would have for paged endpoints when
 // those endpoints only have protocol methods on the client.
-internal class ValuesPageResultEnumerator : PageResultEnumerator
+internal class RawValuesPageEnumerator : PageEnumerator
 {
     private readonly ClientPipeline _pipeline;
     private readonly Uri _endpoint;
@@ -27,7 +27,7 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
 
     private readonly RequestOptions? _options;
 
-    public ValuesPageResultEnumerator(
+    public RawValuesPageEnumerator(
         ClientPipeline pipeline,
         Uri endpoint,
         string? order,
