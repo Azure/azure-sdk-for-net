@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ClientModel.Tests.Mocks;
@@ -16,6 +17,36 @@ namespace System.ClientModel.Tests.Results;
 /// </summary>
 public class PageScenarioCollectionTests
 {
+    [Test]
+    public void CanGetRawValuesFromProtocolMethod()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+        CollectionResult collectionResult = client.GetValues(
+                order: default,
+                pageSize: default,
+                offset: default,
+                new RequestOptions());
+
+        IEnumerable<BinaryData> rawValues = collectionResult.AsRawValues();
+
+        int count = 0;
+        foreach (BinaryData rawValue in rawValues)
+        {
+            ValueItem item = ValueItem.FromJson(rawValue);
+            Assert.AreEqual(count, item.Id);
+            Assert.AreEqual(count.ToString(), item.Value);
+
+            count++;
+        }
+
+        Assert.AreEqual(MockPagingData.Count, count);
+    }
+
     //[Test]
     //public void CanRehydratePageCollection()
     //{

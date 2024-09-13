@@ -28,6 +28,12 @@ public class ValueItem
         return new ValueItem(id, value);
     }
 
+    public static ValueItem FromJson(BinaryData data)
+    {
+        using JsonDocument doc = JsonDocument.Parse(data);
+        return FromJson(doc.RootElement);
+    }
+
     //public static BinaryData ToBinaryDataFromJson(JsonElement element)
     //{
 
