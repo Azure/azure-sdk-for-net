@@ -5,6 +5,7 @@
     <Version>1.0.0-beta.1</Version>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 	<NoWarn>CS8002</NoWarn>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
 	<ItemGroup>

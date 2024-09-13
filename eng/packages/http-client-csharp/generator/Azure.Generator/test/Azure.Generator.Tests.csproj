@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<!-- This is a workaround on the target frameworks, because in our build system, we requires to have net8.0, net6.0 and net462 -->
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+    <LangVersion>latest</LangVersion>
+		<!--This is a workaround because `Microsoft.Generator.CSharp` and `Microsoft.Generator.CSharp.Input` is not signed-->
+		<NoWarn>CS8002</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../src/Azure.Generator.csproj" />
+		<PackageReference Include="NUnit" />
+		<PackageReference Include="NUnit3TestAdapter" />
+		<PackageReference Include="Moq" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="TestHelpers\Configuration.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+	
+</Project>
