@@ -1,8 +1,19 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.1 (2024-09-27)
+
+### Features Added
+- New endpoint was added in the `2024-08-15-preview` version to get errors associated with an operation on a virtual machine
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
