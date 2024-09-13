@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -12,74 +13,161 @@ namespace System.ClientModel.Internal;
 // The methods in this class should only ever be called from LoggingHandler
 internal partial class ClientModelLogMessages
 {
-    private const int RequestEvent = 1;
-    private const int RequestContentEvent = 2;
-    private const int ResponseEvent = 5;
-    private const int ResponseContentEvent = 6;
-    private const int ResponseDelayEvent = 7;
-    private const int ErrorResponseEvent = 8;
-    private const int ErrorResponseContentEvent = 9;
-    private const int RequestRetryingEvent = 10;
-    private const int ResponseContentBlockEvent = 11;
-    private const int ErrorResponseContentBlockEvent = 12;
-    private const int ResponseContentTextEvent = 13;
-    private const int ErrorResponseContentTextEvent = 14;
-    private const int ResponseContentTextBlockEvent = 15;
-    private const int ErrorResponseContentTextBlockEvent = 16;
-    private const int RequestContentTextEvent = 17;
-    private const int ExceptionResponseEvent = 18;
-
     private ILogger _logger;
-    public ClientModelLogMessages(ILogger logger)
+    private PipelineMessageSanitizer _sanitizer;
+
+    public ClientModelLogMessages(ILogger logger, PipelineMessageSanitizer sanitizer)
     {
         _logger = logger;
+        _sanitizer = sanitizer;
     }
 
-    [LoggerMessage(RequestEvent, LogLevel.Information, "Request [{requestId}] {method} {uri}\r\n{headers}client assembly: {clientAssembly}", EventName = "Request")]
-    public partial void Request(string requestId, string method, string uri, string headers, string? clientAssembly);
+    #region Request
 
-    [LoggerMessage(RequestContentEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", EventName = "RequestContent")]
-    public partial void RequestContent(string requestId, byte[] content);
+    public void Request(string requestId, PipelineRequest request, string? clientAssembly)
+    {
+        if (_logger.IsEnabled(LogLevel.Information))
+        {
+            Request(requestId, request.Method, _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers), clientAssembly);
+        }
+    }
 
-    [LoggerMessage(RequestContentTextEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", EventName = "RequestContentText")]
-    public partial void RequestContentText(string requestId, string content);
+    [LoggerMessage(LoggingEventIds.RequestEvent, LogLevel.Information, "Request [{requestId}] {method} {uri}\r\n{headers}client assembly: {clientAssembly}", EventName = "Request")]
+    private partial void Request(string requestId, string method, string uri, string headers, string? clientAssembly);
 
-    [LoggerMessage(ResponseEvent, LogLevel.Information, "Response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "Response")]
-    public partial void Response(string requestId, int status, string reasonPhrase, string headers, double seconds);
+    public void RequestContent(string requestId, byte[] content, Encoding? textEncoding)
+    {
+        if (_logger.IsEnabled(LogLevel.Debug))
+        {
+            if (textEncoding != null)
+            {
+                RequestContentText(requestId, textEncoding.GetString(content));
+            }
+            else
+            {
+                RequestContent(requestId, content);
+            }
+        }
+    }
 
-    [LoggerMessage(ResponseContentEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", EventName = "ResponseContent")]
-    public partial void ResponseContent(string requestId, byte[] content);
+    [LoggerMessage(LoggingEventIds.RequestContentEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", EventName = "RequestContent")]
+    private partial void RequestContent(string requestId, byte[] content);
 
-    [LoggerMessage(ResponseContentTextEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", EventName = "ResponseContentText")]
-    public partial void ResponseContentText(string requestId, string content);
+    [LoggerMessage(LoggingEventIds.RequestContentTextEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", EventName = "RequestContentText")]
+    private partial void RequestContentText(string requestId, string content);
+    #endregion
 
-    [LoggerMessage(ResponseContentBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentBlock")]
-    public partial void ResponseContentBlock(string requestId, int blockNumber, byte[] content);
+    #region Response
 
-    [LoggerMessage(ResponseContentTextBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentTextBlock")]
-    public partial void ResponseContentTextBlock(string requestId, int blockNumber, string content);
+    public void Response(string requestId, PipelineResponse response, double seconds)
+    {
+        if (_logger.IsEnabled(LogLevel.Information))
+        {
+            Response(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
+        }
+    }
 
-    [LoggerMessage(ErrorResponseEvent, LogLevel.Warning, "Error response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "ErrorResponse")]
-    public partial void ErrorResponse(string requestId, int status, string reasonPhrase, string headers, double seconds);
+    [LoggerMessage(LoggingEventIds.ResponseEvent, LogLevel.Information, "Response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "Response")]
+    private partial void Response(string requestId, int status, string reasonPhrase, string headers, double seconds);
 
-    [LoggerMessage(ErrorResponseContentEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", EventName = "ErrorResponseContent")]
-    public partial void ErrorResponseContent(string requestId, byte[] content);
+    public void ResponseContent(string requestId, byte[] content, Encoding? textEncoding)
+    {
+        if (_logger.IsEnabled(LogLevel.Debug))
+        {
+            if (textEncoding != null)
+            {
+                ResponseContentText(requestId, textEncoding.GetString(content));
+            }
+            else
+            {
+                ResponseContent(requestId, content);
+            }
+        }
+    }
 
-    [LoggerMessage(ErrorResponseContentTextEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", EventName = "ErrorResponseContentText")]
-    public partial void ErrorResponseContentText(string requestId, string content);
+    [LoggerMessage(LoggingEventIds.ResponseContentEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", EventName = "ResponseContent")]
+    private partial void ResponseContent(string requestId, byte[] content);
 
-    [LoggerMessage(ErrorResponseContentBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", EventName = "ErrorResponseContentBlock")]
-    public partial void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content);
+    [LoggerMessage(LoggingEventIds.ResponseContentTextEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", EventName = "ResponseContentText")]
+    private partial void ResponseContentText(string requestId, string content);
 
-    [LoggerMessage(ErrorResponseContentTextBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", EventName = "ErrorResponseContentTextBlock")]
-    public partial void ErrorResponseContentTextBlock(string requestId, int blockNumber, string content);
+    public void ResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
+    {
+        if (_logger.IsEnabled(LogLevel.Debug))
+        {
+            if (textEncoding != null)
+            {
+                ResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+            }
+            else
+            {
+                ResponseContentBlock(requestId, blockNumber, content);
+            }
+        }
+    }
 
-    [LoggerMessage(RequestRetryingEvent, LogLevel.Information, "Request [{requestId}] attempt number {retryCount} took {seconds:00.0}s", EventName = "RequestRetrying")]
-    public partial void RequestRetrying(string requestId, int retryCount, double seconds);
+    [LoggerMessage(LoggingEventIds.ResponseContentBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentBlock")]
+    private partial void ResponseContentBlock(string requestId, int blockNumber, byte[] content);
 
-    [LoggerMessage(ResponseDelayEvent, LogLevel.Warning, "Response [{requestId}] took {seconds:00.0}s", EventName = "ResponseDelay")]
-    public partial void ResponseDelay(string requestId, double seconds);
+    [LoggerMessage(LoggingEventIds.ResponseContentTextBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentTextBlock")]
+    private partial void ResponseContentTextBlock(string requestId, int blockNumber, string content);
 
-    [LoggerMessage(ExceptionResponseEvent, LogLevel.Information, "Request [{requestId}] exception occurred.", EventName = "ExceptionResponse")]
-    public partial void ExceptionResponse(string requestId, Exception exception);
+    #endregion
+
+    #region Error Response
+
+    [LoggerMessage(LoggingEventIds.ErrorResponseEvent, LogLevel.Warning, "Error response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "ErrorResponse")]
+    private partial void ErrorResponse(string requestId, int status, string reasonPhrase, string headers, double seconds);
+
+    [LoggerMessage(LoggingEventIds.ErrorResponseContentEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", EventName = "ErrorResponseContent")]
+    private partial void ErrorResponseContent(string requestId, byte[] content);
+
+    [LoggerMessage(LoggingEventIds.ErrorResponseContentTextEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", EventName = "ErrorResponseContentText")]
+    private partial void ErrorResponseContentText(string requestId, string content);
+
+    [LoggerMessage(LoggingEventIds.ErrorResponseContentBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", EventName = "ErrorResponseContentBlock")]
+    private partial void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content);
+
+    [LoggerMessage(LoggingEventIds.ErrorResponseContentTextBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", EventName = "ErrorResponseContentTextBlock")]
+    private partial void ErrorResponseContentTextBlock(string requestId, int blockNumber, string content);
+
+    #endregion
+
+    #region Retry
+
+    [LoggerMessage(LoggingEventIds.RequestRetryingEvent, LogLevel.Information, "Request [{requestId}] attempt number {retryCount} took {seconds:00.0}s", EventName = "RequestRetrying")]
+    private partial void RequestRetrying(string requestId, int retryCount, double seconds);
+
+    #endregion
+
+    #region Delay Response
+
+    [LoggerMessage(LoggingEventIds.ResponseDelayEvent, LogLevel.Warning, "Response [{requestId}] took {seconds:00.0}s", EventName = "ResponseDelay")]
+    private partial void ResponseDelay(string requestId, double seconds);
+
+    #endregion
+
+    #region Exception Response
+
+    [LoggerMessage(LoggingEventIds.ExceptionResponseEvent, LogLevel.Information, "Request [{requestId}] exception occurred.", EventName = "ExceptionResponse")]
+    private partial void ExceptionResponse(string requestId, Exception exception);
+
+    #endregion
+
+    #region Helpers
+
+    private string FormatHeaders(IEnumerable<KeyValuePair<string, string>> headers)
+    {
+        var stringBuilder = new StringBuilder();
+        foreach (var header in headers)
+        {
+            stringBuilder.Append(header.Key);
+            stringBuilder.Append(':');
+            stringBuilder.Append(_sanitizer.SanitizeHeader(header.Key, header.Value));
+            stringBuilder.Append(Environment.NewLine);
+        }
+        return stringBuilder.ToString();
+    }
+
+    #endregion
 }

@@ -21,7 +21,7 @@ internal class LoggingHandler
     {
         _logger = logger;
         _sanitizer = sanitizer;
-        _logMessages = new ClientModelLogMessages(logger);
+        _logMessages = new ClientModelLogMessages(logger, _sanitizer);
         _useILogger = logger is not NullLogger;
     }
 
@@ -41,17 +41,11 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            if (_logger.IsEnabled(LogLevel.Information))
-            {
-                _logMessages.Request(requestId, request.Method, _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers), assemblyName);
-            }
+            _logMessages.Request(requestId, request, assemblyName);
         }
         else
         {
-            if (ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None))
-            {
-                ClientModelEventSource.Log.Request(requestId, request.Method, _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers), assemblyName);
-            }
+            ClientModelEventSource.Log.Request(requestId, request, assemblyName, _sanitizer);
         }
     }
 
@@ -61,29 +55,12 @@ internal class LoggingHandler
         {
             if (_logger.IsEnabled(LogLevel.Debug))
             {
-                if (textEncoding != null)
-                {
-                    _logMessages.RequestContentText(requestId, textEncoding.GetString(content));
-                }
-                else
-                {
-                    _logMessages.RequestContent(requestId, content);
-                }
+                _logMessages.RequestContent(requestId, content, textEncoding);
             }
         }
         else
         {
-            if (ClientModelEventSource.Log.IsEnabled(EventLevel.Verbose, EventKeywords.None))
-            {
-                if (textEncoding != null)
-                {
-                    ClientModelEventSource.Log.RequestContentText(requestId, textEncoding.GetString(content));
-                }
-                else
-                {
-                    ClientModelEventSource.Log.RequestContent(requestId, content);
-                }
-            }
+            ClientModelEventSource.Log.RequestContent(requestId, content, textEncoding);
         }
     }
 
