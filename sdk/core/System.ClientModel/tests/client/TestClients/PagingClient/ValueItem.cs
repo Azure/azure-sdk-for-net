@@ -34,10 +34,5 @@ public class ValueItem
         return FromJson(doc.RootElement);
     }
 
-    //public static BinaryData ToBinaryDataFromJson(JsonElement element)
-    //{
-
-    //}
-
     public override string ToString() => ToJson();
 }

@@ -6,8 +6,6 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Paging;
 
@@ -16,14 +14,43 @@ internal class PageCollectionHelpers
     //public static AsyncCollectionResult<T> CreateAsync<T>(PageEnumerator<T> enumerator)
     //    => new AsyncPaginatedCollectionResult<T>(enumerator);
 
-    //public static CollectionResult<T> Create<T>(PageEnumerator<T> enumerator)
-    //    => new PaginatedCollectionResult<T>(enumerator);
+    public static CollectionResult<T> Create<T>(PageEnumerator<T> enumerator)
+        => new PaginatedCollectionResult<T>(enumerator);
 
     //public static AsyncCollectionResult CreateAsync(PageEnumerator enumerator)
     //    => new AsyncPaginatedCollectionResult(enumerator);
 
     public static CollectionResult Create(PageEnumerator enumerator)
         => new PaginatedCollectionResult(enumerator);
+
+    private class PaginatedCollectionResult<T> : CollectionResult<T>
+    {
+        private readonly PageEnumerator<T> _pageEnumerator;
+
+        public PaginatedCollectionResult(PageEnumerator<T> pageEnumerator)
+        {
+            _pageEnumerator = pageEnumerator;
+        }
+
+        public override ContinuationToken? ContinuationToken { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
+
+        public override IEnumerable<BinaryData> AsRawValues()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerator<T> GetEnumerator()
+        {
+            while (_pageEnumerator.MoveNext())
+            {
+                IEnumerable<T> page = _pageEnumerator.GetCurrentPage();
+                foreach (T value in page)
+                {
+                    yield return value;
+                }
+            }
+        }
+    }
 
     private class PaginatedCollectionResult : CollectionResult
     {
@@ -52,6 +79,7 @@ internal class PageCollectionHelpers
             }
         }
 
+        // TODO: This has to be custom to the service schema
         private IEnumerable<BinaryData> GetValuesFromPage(ClientResult page)
         {
             PipelineResponse response = page.GetRawResponse();

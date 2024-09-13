@@ -9,126 +9,131 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Paging;
 
-//// Mocks a page enumerator a client would evolve to for paged endpoints when
-//// the client adds convenience methods.
-//internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
-//{
-//    private readonly ClientPipeline _pipeline;
-//    private readonly Uri _endpoint;
+// Mocks a page enumerator a client would evolve to for paged endpoints when
+// the client adds convenience methods.
+internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
+{
+    private readonly ClientPipeline _pipeline;
+    private readonly Uri _endpoint;
 
-//    private readonly string? _order;
-//    private readonly int? _pageSize;
+    private readonly string? _order;
+    private readonly int? _pageSize;
 
-//    // This one is special - it keeps track of which page we're on.
-//    private int? _offset;
+    // This one is special - it keeps track of which page we're on.
+    private int? _offset;
 
-//    // We need two offsets to be able to create both page tokens.
-//    private int _nextOffset;
+    // We need two offsets to be able to create both page tokens.
+    private int _nextOffset;
 
-//    private readonly RequestOptions? _options;
+    private readonly RequestOptions? _options;
 
-//    public ValuesPageEnumerator(
-//        ClientPipeline pipeline,
-//        Uri endpoint,
-//        string? order,
-//        int? pageSize,
-//        int? offset,
-//        RequestOptions? options)
-//    {
-//        _pipeline = pipeline;
-//        _endpoint = endpoint;
+    public ValuesPageEnumerator(
+        ClientPipeline pipeline,
+        Uri endpoint,
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions? options)
+    {
+        _pipeline = pipeline;
+        _endpoint = endpoint;
 
-//        _order = order;
-//        _pageSize = pageSize;
-//        _offset = offset;
+        _order = order;
+        _pageSize = pageSize;
+        _offset = offset;
 
-//        _options = options;
-//    }
+        _options = options;
+    }
 
-//    public override PageResult<ValueItem> GetPageFromResult(ClientResult result)
-//    {
-//        PipelineResponse response = result.GetRawResponse();
-//        ValueItemPage pageModel = ValueItemPage.FromJson(response.Content);
+    public override IEnumerable<ValueItem> GetPageValuesFromResult(ClientResult result)
+    {
+        PipelineResponse response = result.GetRawResponse();
+        ValueItemPage pageModel = ValueItemPage.FromJson(response.Content);
 
-//        ValuesPageToken pageToken = ValuesPageToken.FromOptions(_order, _pageSize, _offset);
-//        ValuesPageToken? nextPageToken = pageToken.GetNextPageToken(_nextOffset, MockPagingData.Count);
+        ValuesPageToken pageToken = ValuesPageToken.FromOptions(_order, _pageSize, _offset);
+        ValuesPageToken? nextPageToken = pageToken.GetNextPageToken(_nextOffset, MockPagingData.Count);
 
-//        return PageResult<ValueItem>.Create(pageModel.Values, pageToken, nextPageToken, response);
-//    }
+        foreach (ValueItem item in pageModel.Values)
+        {
+            yield return item;
+        }
 
-//    public override ClientResult GetFirst()
-//    {
-//        ClientResult result = GetValuesPage(_order, _pageSize, _offset);
+        //return PageResult<ValueItem>.Create(pageModel.Values, pageToken, nextPageToken, response);
+    }
 
-//        _nextOffset = GetNextOffset(_offset, _pageSize);
+    public override ClientResult GetFirst()
+    {
+        ClientResult result = GetValuesPage(_order, _pageSize, _offset);
 
-//        return result;
-//    }
+        _nextOffset = GetNextOffset(_offset, _pageSize);
 
-//    public override async Task<ClientResult> GetFirstAsync()
-//    {
-//        ClientResult result = await GetValuesPageAsync(_order, _pageSize, _offset).ConfigureAwait(false);
+        return result;
+    }
 
-//        _nextOffset = GetNextOffset(_offset, _pageSize);
+    public override async Task<ClientResult> GetFirstAsync()
+    {
+        ClientResult result = await GetValuesPageAsync(_order, _pageSize, _offset).ConfigureAwait(false);
 
-//        return result;
-//    }
+        _nextOffset = GetNextOffset(_offset, _pageSize);
 
-//    public override ClientResult GetNext(ClientResult result)
-//    {
-//        _offset = _nextOffset;
+        return result;
+    }
 
-//        ClientResult pageResult = GetValuesPage(_order, _pageSize, _offset);
+    public override ClientResult GetNext(ClientResult result)
+    {
+        _offset = _nextOffset;
 
-//        _nextOffset = GetNextOffset(_offset, _pageSize);
+        ClientResult pageResult = GetValuesPage(_order, _pageSize, _offset);
 
-//        return pageResult;
-//    }
+        _nextOffset = GetNextOffset(_offset, _pageSize);
 
-//    public override async Task<ClientResult> GetNextAsync(ClientResult result)
-//    {
-//        _offset = _nextOffset;
+        return pageResult;
+    }
 
-//        ClientResult pageResult = await GetValuesPageAsync(_order, _pageSize, _offset).ConfigureAwait(false);
+    public override async Task<ClientResult> GetNextAsync(ClientResult result)
+    {
+        _offset = _nextOffset;
 
-//        _nextOffset = GetNextOffset(_offset, _pageSize);
+        ClientResult pageResult = await GetValuesPageAsync(_order, _pageSize, _offset).ConfigureAwait(false);
 
-//        return pageResult;
-//    }
+        _nextOffset = GetNextOffset(_offset, _pageSize);
 
-//    public override bool HasNext(ClientResult result)
-//    {
-//        return _nextOffset < MockPagingData.Count;
-//    }
+        return pageResult;
+    }
 
-//    // In a real client implementation, these would be the generated protocol
-//    // method used to obtain a page of items.
-//    internal virtual async Task<ClientResult> GetValuesPageAsync(
-//        string? order,
-//        int? pageSize,
-//        int? offset,
-//        RequestOptions? options = default)
-//    {
-//        await Task.Delay(0);
-//        IEnumerable<ValueItem> values = MockPagingData.GetValues(order, pageSize, offset);
-//        return MockPagingData.GetPageResult(values);
-//    }
+    public override bool HasNext(ClientResult result)
+    {
+        return _nextOffset < MockPagingData.Count;
+    }
 
-//    internal virtual ClientResult GetValuesPage(
-//        string? order,
-//        int? pageSize,
-//        int? offset,
-//        RequestOptions? options = default)
-//    {
-//        IEnumerable<ValueItem> values = MockPagingData.GetValues(order, pageSize, offset);
-//        return MockPagingData.GetPageResult(values);
-//    }
+    // In a real client implementation, these would be the generated protocol
+    // method used to obtain a page of items.
+    internal virtual async Task<ClientResult> GetValuesPageAsync(
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions? options = default)
+    {
+        await Task.Delay(0);
+        IEnumerable<ValueItem> values = MockPagingData.GetValues(order, pageSize, offset);
+        return MockPagingData.GetPageResult(values);
+    }
 
-//    // This helper method is specific to this mock enumerator implementation
-//    private static int GetNextOffset(int? offset, int? pageSize)
-//    {
-//        offset ??= MockPagingData.DefaultOffset;
-//        pageSize ??= MockPagingData.DefaultPageSize;
-//        return offset.Value + pageSize.Value;
-//    }
-//}
+    internal virtual ClientResult GetValuesPage(
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions? options = default)
+    {
+        IEnumerable<ValueItem> values = MockPagingData.GetValues(order, pageSize, offset);
+        return MockPagingData.GetPageResult(values);
+    }
+
+    // This helper method is specific to this mock enumerator implementation
+    private static int GetNextOffset(int? offset, int? pageSize)
+    {
+        offset ??= MockPagingData.DefaultOffset;
+        pageSize ??= MockPagingData.DefaultPageSize;
+        return offset.Value + pageSize.Value;
+    }
+}

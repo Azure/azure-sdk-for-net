@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Paging;
 
-internal abstract class PageEnumerator : IAsyncEnumerator<ClientResult>, IEnumerator<ClientResult>
+internal abstract class PageEnumerator :
+    IAsyncEnumerator<ClientResult>,
+    IEnumerator<ClientResult>
 {
     private ClientResult? _current;
     private bool _hasNext = true;

@@ -54,21 +54,21 @@ public class PagingClient
     //    return PageCollectionHelpers.CreateAsync(enumerator);
     //}
 
-    //public virtual CollectionResult<ValueItem> GetValues(
-    //    string? order = default,
-    //    int? pageSize = default,
-    //    int? offset = default,
-    //    CancellationToken cancellationToken = default)
-    //{
-    //    ValuesPageEnumerator enumerator = new ValuesPageEnumerator(
-    //        _pipeline,
-    //        _endpoint,
-    //        order: order,
-    //        pageSize: pageSize,
-    //        offset: offset,
-    //        cancellationToken.ToRequestOptions());
-    //    return PageCollectionHelpers.Create(enumerator);
-    //}
+    public virtual CollectionResult<ValueItem> GetValues(
+        string? order = default,
+        int? pageSize = default,
+        int? offset = default,
+        CancellationToken cancellationToken = default)
+    {
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(
+            _pipeline,
+            _endpoint,
+            order: order,
+            pageSize: pageSize,
+            offset: offset,
+            cancellationToken.ToRequestOptions());
+        return PageCollectionHelpers.Create(enumerator);
+    }
 
     //public virtual CollectionResult<ValueItem> GetValues(
     //    ContinuationToken firstPageToken,

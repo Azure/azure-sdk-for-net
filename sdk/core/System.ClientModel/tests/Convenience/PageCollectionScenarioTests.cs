@@ -18,6 +18,29 @@ namespace System.ClientModel.Tests.Results;
 public class PageScenarioCollectionTests
 {
     [Test]
+    public void CanGetValuesFromConvenienceMethod()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+        CollectionResult<ValueItem> valueItems = client.GetValues();
+
+        int count = 0;
+        foreach (ValueItem item in valueItems)
+        {
+            Assert.AreEqual(count, item.Id);
+            Assert.AreEqual(count.ToString(), item.Value);
+
+            count++;
+        }
+
+        Assert.AreEqual(MockPagingData.Count, count);
+    }
+
+    [Test]
     public void CanGetRawValuesFromProtocolMethod()
     {
         PagingClientOptions options = new()
