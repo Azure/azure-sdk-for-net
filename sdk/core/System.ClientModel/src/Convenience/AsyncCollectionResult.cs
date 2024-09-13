@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591 // public XML comments
-public abstract class AsyncCollectionResult : ClientResult
+public abstract class AsyncCollectionResult
 {
     protected AsyncCollectionResult() : base()
     {

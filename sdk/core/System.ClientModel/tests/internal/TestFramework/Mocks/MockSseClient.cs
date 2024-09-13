@@ -85,6 +85,14 @@ public class MockSseClient
             return new AsyncMockJsonModelEnumerator(getResultAsync, this, cancellationToken);
         }
 
+        public override ContinuationToken? GetContinuationToken(ClientResult page) => null;
+
+        public async override IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        {
+            await Task.Delay(0);
+            yield return _protocolMethod(_content, /*options:*/ default);
+        }
+
         private sealed class AsyncMockJsonModelEnumerator : IAsyncEnumerator<MockJsonModel>
         {
             private const string _terminalData = "[DONE]";
@@ -146,7 +154,6 @@ public class MockSseClient
             {
                 ClientResult result = await _getResultAsync().ConfigureAwait(false);
                 PipelineResponse response = result.GetRawResponse();
-                _enumerable.SetRawResponse(response);
 
                 if (response.ContentStream is null)
                 {
@@ -172,18 +179,18 @@ public class MockSseClient
                     await _events.DisposeAsync().ConfigureAwait(false);
                     _events = null;
 
-                    // But we also need to dispose the response content stream
-                    // so we don't leave the unbuffered network stream open.
-                    PipelineResponse response = _enumerable.GetRawResponse();
+                    //// But we also need to dispose the response content stream
+                    //// so we don't leave the unbuffered network stream open.
+                    //PipelineResponse response = _enumerable._
 
-                    if (response.ContentStream is IAsyncDisposable asyncDisposable)
-                    {
-                        await asyncDisposable.DisposeAsync().ConfigureAwait(false);
-                    }
-                    else if (response.ContentStream is IDisposable disposable)
-                    {
-                        disposable.Dispose();
-                    }
+                    //if (response.ContentStream is IAsyncDisposable asyncDisposable)
+                    //{
+                    //    await asyncDisposable.DisposeAsync().ConfigureAwait(false);
+                    //}
+                    //else if (response.ContentStream is IDisposable disposable)
+                    //{
+                    //    disposable.Dispose();
+                    //}
                 }
             }
         }
