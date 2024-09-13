@@ -9,30 +9,33 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
 {
     public static class ResourceUtils
     {
-        public static VirtualMachineData GetBasicLinuxVirtualMachineData(AzureLocation location, string computerName, ResourceIdentifier nicID, string dummySSHKey,
+        public static VirtualMachineData GetBasicWindowsVirtualMachineData(AzureLocation location, string computerName, ResourceIdentifier nicID,
             string adminUsername = "adminuser")
         {
             return new VirtualMachineData(location)
             {
+                AdditionalCapabilities = new()
+                {
+                    HibernationEnabled = true
+                },
                 HardwareProfile = new()
                 {
-                    VmSize = VirtualMachineSizeType.StandardD4V3
+                    VmSize = "Standard_D2ads_v5"
                 },
                 OSProfile = new()
                 {
                     AdminUsername = adminUsername,
+                    AdminPassword = "Aa1!" + adminUsername,
                     ComputerName = computerName,
-                    LinuxConfiguration = new()
+                    WindowsConfiguration = new()
                     {
-                        DisablePasswordAuthentication = true,
-                        EnableVmAgentPlatformUpdates = true,
-                        SshPublicKeys = {
-                                    new()
-                                    {
-                                        Path = $"/home/{adminUsername}/.ssh/authorized_keys",
-                                        KeyData = dummySSHKey,
-                                    }
-                                }
+                        ProvisionVmAgent = true,
+                        IsAutomaticUpdatesEnabled = true,
+                        PatchSettings = new()
+                        {
+                            PatchMode = WindowsVmGuestPatchMode.AutomaticByOS,
+                            AssessmentMode = WindowsPatchAssessmentMode.ImageDefault
+                        }
                     }
                 },
                 NetworkProfile = new VirtualMachineNetworkProfile()
@@ -50,18 +53,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
                 {
                     OSDisk = new(DiskCreateOptionType.FromImage)
                     {
-                        OSType = SupportedOperatingSystemType.Linux,
+                        OSType = SupportedOperatingSystemType.Windows,
                         Caching = CachingType.ReadWrite,
                         ManagedDisk = new()
                         {
                             StorageAccountType = StorageAccountType.StandardLrs
-                        }
+                        },
+                        DeleteOption = DiskDeleteOptionType.Detach,
+                        DiskSizeGB = 127
                     },
                     ImageReference = new()
                     {
-                        Publisher = "Canonical",
-                        Offer = "UbuntuServer",
-                        Sku = "16.04-LTS",
+                        Publisher = "MicrosoftWindowsServer",
+                        Offer = "WindowsServer",
+                        Sku = "2022-datacenter-azure-edition",
                         Version = "latest",
                     }
                 }

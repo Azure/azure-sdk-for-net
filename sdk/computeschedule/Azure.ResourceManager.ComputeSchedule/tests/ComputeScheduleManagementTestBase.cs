@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         protected GenericResourceCollection _genericResourceCollection;
         protected ResourceGroupResource DefaultResourceGroupResource;
 
-        private const string DummySshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD1kQeX2CReMtaQhQdZsGeo1pGSdrugd/FTLRA+5FOJ63RVEXkJP0OKGdUv5mP9+/aAyQXjc9bXLKeWJl3shYUVqLphjYnsFxgBCMidVOHi826F2BXyPCb/aft0L7CzP185iP6hMMZQHqSIkI+FD6EoVPY42ocGdjOE8GR2NEotFK980ldh/IkIIcqSPsX5aCx7awVdiMACov+Iy7nuf7qL9W7IZUOjEbcReWuI5l56cXWbIg3/N5AFYkjictTkl9+CqgqxxAYxsYLSLTkKFN/D+vGXWXGuWygMMqT3Go5lKo1m15WN/TWoU8ftFVrktw1nPKzZPLPUdAGU0Lxj73fLJRALVPlCSPRU905Ophu5lzIObnze9Hs/aqilbByt6hLuLAWhPk9I2yEppIhbJ08YH8r2iwjcsoCuMsM+LUkwKZwMvUx6sei26e+3Hrbto1G9vvvpX89B2B09JXrcJroaxUjnjoYS9ug3wLD/+TPoVF8Sn2DIIytQiXsANC88Kf9dm3x2qJ7c7duy6shEIYGBha4i9/Q9709xyp8TKI2O47KAesPPgbpCE2StCIMNIBp0yl6+7JzuEPk0lAQ3Q24ow2q1EIv1D6zse4zL1Q5qHcF+Q7g5+ZlHW9IPO2YFaco7F149ez5xOmZAmINR0mUYDNyctkT+rAOXrCY1SO5SmQ== user@myserver";
-
         protected ComputeScheduleManagementTestBase(bool isAsync)
             : base(isAsync)
         {
@@ -46,7 +44,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Client = GetArmClient();
-                SubscriptionResource subIdRes = GenerateSubscriptionResource(Client, TestEnvironment.SubId);
+                SubscriptionResource subIdRes = await Client.GetDefaultSubscriptionAsync();
                 DefaultSubscription = Client.GetSubscriptionResource(subIdRes.Id);
                 DefaultResourceGroupResource = await DefaultSubscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup);
                 Location = DefaultResourceGroupResource.Data.Location;
@@ -140,8 +138,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         /// <returns></returns>
         protected async Task<GenericResource> CreateBasicDependenciesOfVirtualMachineCreationAsync(ResourceGroupResource rg, string dependencyName)
         {
-            var vnet = await CreateVirtualNetwork(rg, dependencyName);
-            var nic = await CreateNetworkInterface(GetSubnetId(vnet), rg, dependencyName);
+            GenericResource vnet = await CreateVirtualNetwork(rg, dependencyName);
+            GenericResource nic = await CreateNetworkInterface(GetSubnetId(vnet), rg, dependencyName);
             return nic;
         }
 
@@ -153,11 +151,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         /// <returns></returns>
         protected async Task<VirtualMachineResource> CreateVirtualMachineAsync(string vmName, string vmnamesuffix, ResourceGroupResource resourceGroup)
         {
-            var wholeVmName = $"{vmName}-{vmnamesuffix}";
-            var vmCollection = resourceGroup.GetVirtualMachines();
-            var nic = await CreateBasicDependenciesOfVirtualMachineCreationAsync(resourceGroup, wholeVmName);
-            var input = ResourceUtils.GetBasicLinuxVirtualMachineData(Location, wholeVmName, nic.Id, DummySshKey);
-            var lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, wholeVmName, input);
+            var computerName = $"{vmName}{vmnamesuffix}";
+            VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
+            GenericResource nic = await CreateBasicDependenciesOfVirtualMachineCreationAsync(resourceGroup, computerName);
+            VirtualMachineData input = ResourceUtils.GetBasicWindowsVirtualMachineData(Location, computerName, nic.Id);
+            ArmOperation<VirtualMachineResource> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, computerName, input);
             return lro.Value;
         }
 
@@ -168,7 +166,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
 
             for (int i = 0; i < vmCount; i++)
             {
-                var vm = await CreateVirtualMachineAsync(vmName, $"-{i}", resourceGroup);
+                VirtualMachineResource vm = await CreateVirtualMachineAsync(vmName, $"{i}", resourceGroup);
                 item.Add(vm);
             }
 
@@ -185,14 +183,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         protected Polly.Retry.AsyncRetryPolicy<GetOperationStatusResponse> PollOperationStatus(int vmCount)
         {
             int retryCount = 7;
-            var maxDelay = TimeSpan.FromSeconds(10);
+            var maxDelay = TimeSpan.FromSeconds(20);
 
-            IEnumerable<TimeSpan> delay = Backoff.ExponentialBackoff(initialDelay: TimeSpan.FromSeconds(2), retryCount: retryCount)
+            IEnumerable<TimeSpan> delay = Backoff.ExponentialBackoff(initialDelay: TimeSpan.FromSeconds(5), retryCount: retryCount)
                     .Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks)));
 
             return Policy
                 .HandleResult<GetOperationStatusResponse>(r => ShouldRetryPolling(r, vmCount).GetAwaiter().GetResult())
-                .Or<RequestFailedException>()
                 .WaitAndRetryAsync(delay);
         }
 
@@ -232,10 +229,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
 
         #region SA Operations
 
-        protected static async Task<StartResourceOperationResponse> TestSubmitStartAsync(string location, SubmitStartContent submitStartRequest, string subid)
+        protected static async Task<StartResourceOperationResponse> TestSubmitStartAsync(string location, SubmitStartContent submitStartRequest, string subid, ArmClient client)
         {
-            TokenCredential cred = new DefaultAzureCredential();
-            ArmClient client = new(cred);
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             SubmitStartContent content = submitStartRequest;
             StartResourceOperationResponse result;
@@ -252,10 +247,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<DeallocateResourceOperationResponse> TestSubmitDeallocateAsync(string location, SubmitDeallocateContent submitStartRequest, string subid)
+        protected static async Task<DeallocateResourceOperationResponse> TestSubmitDeallocateAsync(string location, SubmitDeallocateContent submitStartRequest, string subid, ArmClient client)
         {
-            TokenCredential cred = new DefaultAzureCredential();
-            ArmClient client = new(cred);
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             SubmitDeallocateContent content = submitStartRequest;
             DeallocateResourceOperationResponse result;
@@ -272,10 +265,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<HibernateResourceOperationResponse> TestSubmitHibernateAsync(string location, SubmitHibernateContent submitStartRequest, string subid)
+        protected static async Task<HibernateResourceOperationResponse> TestSubmitHibernateAsync(string location, SubmitHibernateContent submitStartRequest, string subid, ArmClient client)
         {
-            TokenCredential cred = new DefaultAzureCredential();
-            ArmClient client = new(cred);
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             SubmitHibernateContent content = submitStartRequest;
             HibernateResourceOperationResponse result;
@@ -292,10 +283,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<StartResourceOperationResponse> TestExecuteStartAsync(string location, ExecuteStartContent executeStartRequest, string subid)
+        protected static async Task<StartResourceOperationResponse> TestExecuteStartAsync(string location, ExecuteStartContent executeStartRequest, string subid, ArmClient client)
         {
-            TokenCredential cred = new DefaultAzureCredential();
-            ArmClient client = new(cred);
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             ExecuteStartContent content = executeStartRequest;
             StartResourceOperationResponse result;
@@ -312,10 +301,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<DeallocateResourceOperationResponse> TestExecuteDeallocateAsync(string location, ExecuteDeallocateContent executeDeallocateRequest, string subid)
+        protected static async Task<DeallocateResourceOperationResponse> TestExecuteDeallocateAsync(string location, ExecuteDeallocateContent executeDeallocateRequest, string subid, ArmClient client)
         {
-            TokenCredential cred = new DefaultAzureCredential();
-            ArmClient client = new(cred);
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             ExecuteDeallocateContent content = executeDeallocateRequest;
 
@@ -333,10 +320,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<HibernateResourceOperationResponse> TestExecuteHibernateAsync(string location, ExecuteHibernateContent executeHibernateRequest, string subid)
+        protected static async Task<HibernateResourceOperationResponse> TestExecuteHibernateAsync(string location, ExecuteHibernateContent executeHibernateRequest, string subid, ArmClient client)
         {
-            TokenCredential cred = new DefaultAzureCredential();
-            ArmClient client = new(cred);
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             ExecuteHibernateContent content = executeHibernateRequest;
             HibernateResourceOperationResponse result;
@@ -353,11 +338,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<GetOperationStatusResponse> TestGetOpsStatusAsync(string location, GetOperationStatusContent getOpsStatusRequest, string subid)
+        protected static async Task<GetOperationStatusResponse> TestGetOpsStatusAsync(string location, GetOperationStatusContent getOpsStatusRequest, string subid, ArmClient client)
         {
-            TokenCredential cred = new DefaultAzureCredential();
-
-            ArmClient client = new(cred);
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             GetOperationStatusContent content = getOpsStatusRequest;
             GetOperationStatusResponse result;
@@ -375,11 +357,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<CancelOperationsResponse> TestCancelOpsAsync(string location, CancelOperationsContent cancelOpsRequest, string subid)
+        protected static async Task<CancelOperationsResponse> TestCancelOpsAsync(string location, CancelOperationsContent cancelOpsRequest, string subid, ArmClient client)
         {
-            TokenCredential cred = new DefaultAzureCredential();
-
-            ArmClient client = new(cred);
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             CancelOperationsContent content = cancelOpsRequest;
             CancelOperationsResponse result;
@@ -396,11 +375,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<GetOperationErrorsResponse> TestGetOperationErrorsAsync(string location, GetOperationErrorsContent getOperationErrorsRequest, string subid)
+        protected static async Task<GetOperationErrorsResponse> TestGetOperationErrorsAsync(string location, GetOperationErrorsContent getOperationErrorsRequest, string subid, ArmClient client)
         {
-            TokenCredential cred = new DefaultAzureCredential();
-
-            ArmClient client = new(cred);
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             GetOperationErrorsContent content = getOperationErrorsRequest;
             GetOperationErrorsResponse result;
