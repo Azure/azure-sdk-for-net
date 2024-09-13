@@ -26,20 +26,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AgentPoolId))
+            if (options.Format != "W" && Optional.IsDefined(AgentPoolArmId))
             {
                 writer.WritePropertyName("agentPoolId"u8);
-                writer.WriteStringValue(AgentPoolId);
+                writer.WriteStringValue(AgentPoolArmId);
             }
             if (options.Format != "W" && Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (options.Format != "W" && Optional.IsDefined(BareMetalMachineId))
+            if (options.Format != "W" && Optional.IsDefined(BareMetalMachineArmId))
             {
                 writer.WritePropertyName("bareMetalMachineId"u8);
-                writer.WriteStringValue(BareMetalMachineId);
+                writer.WriteStringValue(BareMetalMachineArmId);
             }
             if (options.Format != "W" && Optional.IsDefined(CpuCores))
             {
@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            string agentPoolId = default;
+            ResourceIdentifier agentPoolId = default;
             string availabilityZone = default;
-            string bareMetalMachineId = default;
+            ResourceIdentifier bareMetalMachineId = default;
             long? cpuCores = default;
             KubernetesClusterNodeDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
@@ -193,7 +193,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 if (property.NameEquals("agentPoolId"u8))
                 {
-                    agentPoolId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentPoolId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("availabilityZone"u8))
@@ -203,7 +207,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("bareMetalMachineId"u8))
                 {
-                    bareMetalMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bareMetalMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cpuCores"u8))

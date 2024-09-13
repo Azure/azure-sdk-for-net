@@ -30,6 +30,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -121,6 +127,11 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(ClusterType.ToString());
             writer.WritePropertyName("clusterVersion"u8);
             writer.WriteStringValue(ClusterVersion);
+            if (Optional.IsDefined(CommandOutputSettings))
+            {
+                writer.WritePropertyName("commandOutputSettings"u8);
+                writer.WriteObjectValue(CommandOutputSettings, options);
+            }
             if (Optional.IsDefined(ComputeDeploymentThreshold))
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
@@ -168,10 +179,25 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(RuntimeProtectionConfiguration))
+            {
+                writer.WritePropertyName("runtimeProtectionConfiguration"u8);
+                writer.WriteObjectValue(RuntimeProtectionConfiguration, options);
+            }
+            if (Optional.IsDefined(SecretArchive))
+            {
+                writer.WritePropertyName("secretArchive"u8);
+                writer.WriteObjectValue(SecretArchive, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(SupportExpireOn))
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(UpdateStrategy))
+            {
+                writer.WritePropertyName("updateStrategy"u8);
+                writer.WriteObjectValue(UpdateStrategy, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(WorkloadResourceIds))
             {
@@ -228,6 +254,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -246,6 +273,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ServicePrincipalInformation clusterServicePrincipal = default;
             ClusterType clusterType = default;
             string clusterVersion = default;
+            CommandOutputSettings commandOutputSettings = default;
             ValidationThreshold computeDeploymentThreshold = default;
             IList<NetworkCloudRackDefinition> computeRackDefinitions = default;
             ClusterDetailedStatus? detailedStatus = default;
@@ -255,7 +283,10 @@ namespace Azure.ResourceManager.NetworkCloud
             long? manualActionCount = default;
             ResourceIdentifier networkFabricId = default;
             ClusterProvisioningState? provisioningState = default;
+            RuntimeProtectionConfiguration runtimeProtectionConfiguration = default;
+            ClusterSecretArchive secretArchive = default;
             DateTimeOffset? supportExpiryDate = default;
+            ClusterUpdateStrategy updateStrategy = default;
             IReadOnlyList<ResourceIdentifier> workloadResourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -264,6 +295,16 @@ namespace Azure.ResourceManager.NetworkCloud
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -415,6 +456,15 @@ namespace Azure.ResourceManager.NetworkCloud
                             clusterVersion = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("commandOutputSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            commandOutputSettings = CommandOutputSettings.DeserializeCommandOutputSettings(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("computeDeploymentThreshold"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -493,6 +543,24 @@ namespace Azure.ResourceManager.NetworkCloud
                             provisioningState = new ClusterProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("runtimeProtectionConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            runtimeProtectionConfiguration = RuntimeProtectionConfiguration.DeserializeRuntimeProtectionConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("secretArchive"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            secretArchive = ClusterSecretArchive.DeserializeClusterSecretArchive(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("supportExpiryDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -500,6 +568,15 @@ namespace Azure.ResourceManager.NetworkCloud
                                 continue;
                             }
                             supportExpiryDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("updateStrategy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            updateStrategy = ClusterUpdateStrategy.DeserializeClusterUpdateStrategy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workloadResourceIds"u8))
@@ -540,6 +617,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
+                identity,
                 aggregatorOrSingleRackDefinition,
                 analyticsWorkspaceId,
                 availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>(),
@@ -552,6 +630,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 clusterServicePrincipal,
                 clusterType,
                 clusterVersion,
+                commandOutputSettings,
                 computeDeploymentThreshold,
                 computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(),
                 detailedStatus,
@@ -561,7 +640,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 manualActionCount,
                 networkFabricId,
                 provisioningState,
+                runtimeProtectionConfiguration,
+                secretArchive,
                 supportExpiryDate,
+                updateStrategy,
                 workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);
         }
