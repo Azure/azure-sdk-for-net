@@ -57,7 +57,7 @@ public class Program
         TokenCredential tokenCredential = new DefaultAzureCredential();
 
         using var cancellationSource = new CancellationTokenSource();
-        var runDuration = TimeSpan.FromHours(testParameters.DurationInHours);
+        var runDuration = TimeSpan.FromHours(1);
         cancellationSource.CancelAfter(runDuration);
 
         var metrics = new Metrics(appInsightsKey);
