@@ -74,7 +74,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class AsyncCollectionResult : System.ClientModel.ClientResult
     {
         protected AsyncCollectionResult() { }
-        public abstract System.ClientModel.ContinuationToken GetContinuationToken(System.ClientModel.ClientResult result);
+        public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> GetRawPagesAsync();
     }
     [System.FlagsAttribute]
@@ -122,7 +122,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class CollectionResult
     {
         protected CollectionResult() { }
-        public abstract System.ClientModel.ContinuationToken GetContinuationToken(System.ClientModel.ClientResult result);
+        public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> GetRawPages();
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable

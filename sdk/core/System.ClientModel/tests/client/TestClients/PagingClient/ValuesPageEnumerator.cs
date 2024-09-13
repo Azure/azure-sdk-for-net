@@ -58,8 +58,6 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         {
             yield return item;
         }
-
-        //return PageResult<ValueItem>.Create(pageModel.Values, pageToken, nextPageToken, response);
     }
 
     public override ClientResult GetFirst()
@@ -107,18 +105,13 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         return _nextOffset < MockPagingData.Count;
     }
 
-    public override IEnumerable<BinaryData> GetRawItemsFromPage(ClientResult pageResult)
+    public override ContinuationToken? GetNextPageToken(ClientResult currentPageResult)
     {
-        PipelineResponse response = pageResult.GetRawResponse();
+        PipelineResponse response = currentPageResult.GetRawResponse();
+        ValueItemPage pageModel = ValueItemPage.FromJson(response.Content);
 
-        using JsonDocument doc = JsonDocument.Parse(response.Content);
-
-        IEnumerable<JsonElement> els = doc.RootElement.EnumerateArray();
-        foreach (JsonElement el in els)
-        {
-            // TODO: fix perf
-            yield return BinaryData.FromString(el.ToString());
-        }
+        ValuesPageToken pageToken = ValuesPageToken.FromOptions(_order, _pageSize, _offset);
+        return pageToken.GetNextPageToken(_nextOffset, MockPagingData.Count);
     }
 
     // In a real client implementation, these would be the generated protocol

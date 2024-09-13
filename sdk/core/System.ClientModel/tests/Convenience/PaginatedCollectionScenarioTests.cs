@@ -15,7 +15,7 @@ namespace System.ClientModel.Tests.Results;
 /// <summary>
 /// Scenario tests for sync and async page collections.
 /// </summary>
-public class PageScenarioCollectionTests
+public class PaginatedCollectionScenarioTests
 {
     [Test]
     public void CanGetValuesFromConvenienceMethod()
@@ -78,33 +78,37 @@ public class PageScenarioCollectionTests
         Assert.AreEqual(MockPagingData.Count, count);
     }
 
-    //[Test]
-    //public void CanRehydratePageCollection()
-    //{
-    //    PagingClientOptions options = new()
-    //    {
-    //        Transport = new MockPipelineTransport("Mock", i => 200)
-    //    };
+    [Test]
+    public void CanRehydratePaginatedCollection()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
 
-    //    PagingClient client = new PagingClient(options);
-    //    PageCollection<ValueItem> pages = client.GetValues();
-    //    PageResult<ValueItem> page = pages.GetCurrentPage();
+        // TODO: think about what this looks like if you enumerate
+        // at both the convenience and protocol layer -- i.e. try to
+        // use the convenience collection and then get the continuation token
 
-    //    ContinuationToken pageToken = page.PageToken;
+        PagingClient client = new PagingClient(options);
+        CollectionResult<ValueItem> values = client.GetValues();
+        ClientResult rawPage = values.GetRawPages().First();
+        ContinuationToken? continuationToken = values.GetContinuationToken(rawPage);
 
-    //    PageCollection<ValueItem> rehydratedPages = client.GetValues(pageToken);
-    //    PageResult<ValueItem> rehydratedPage = rehydratedPages.GetCurrentPage();
+        Assert.IsNotNull(continuationToken);
 
-    //    Assert.AreEqual(page.Values.Count, rehydratedPage.Values.Count);
+        CollectionResult<ValueItem> rehydratedValues = client.GetValues(continuationToken!);
 
-    //    List<ValueItem> allValues = pages.GetAllValues().ToList();
-    //    List<ValueItem> allRehydratedValues = rehydratedPages.GetAllValues().ToList();
+        List<ValueItem> remainingValues = values.ToList();
+        List<ValueItem> remainingRehydratedValues = rehydratedValues.ToList();
 
-    //    for (int i = 0; i < allValues.Count; i++)
-    //    {
-    //        Assert.AreEqual(allValues[i].Id, allRehydratedValues[i].Id);
-    //    }
-    //}
+        Assert.AreEqual(remainingValues.Count, remainingRehydratedValues.Count);
+
+        for (int i = 0; i < remainingValues.Count; i++)
+        {
+            Assert.AreEqual(remainingValues[i].Id, remainingRehydratedValues[i].Id);
+        }
+    }
 
     //[Test]
     //public async Task CanRehydratePageCollectionAsync()

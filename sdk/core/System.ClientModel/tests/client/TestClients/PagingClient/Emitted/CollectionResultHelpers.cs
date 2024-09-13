@@ -31,10 +31,9 @@ internal class CollectionResultHelpers
             _pageEnumerator = pageEnumerator;
         }
 
-        public override ContinuationToken GetContinuationToken(ClientResult result)
+        public override ContinuationToken? GetContinuationToken(ClientResult page)
         {
-            // TODO: Validate continuation
-            throw new NotImplementedException();
+            return _pageEnumerator.GetNextPageToken(page);
         }
 
         public override IEnumerator<T> GetEnumerator()

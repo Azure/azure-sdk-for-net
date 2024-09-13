@@ -70,22 +70,22 @@ public class PagingClient
         return CollectionResultHelpers.Create(enumerator);
     }
 
-    //public virtual CollectionResult<ValueItem> GetValues(
-    //    ContinuationToken firstPageToken,
-    //    CancellationToken cancellationToken = default)
-    //{
-    //    Argument.AssertNotNull(firstPageToken, nameof(firstPageToken));
+    public virtual CollectionResult<ValueItem> GetValues(
+        ContinuationToken firstPageToken,
+        CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(firstPageToken, nameof(firstPageToken));
 
-    //    ValuesPageToken token = ValuesPageToken.FromToken(firstPageToken);
-    //    ValuesPageEnumerator enumerator = new ValuesPageEnumerator(
-    //        _pipeline,
-    //        _endpoint,
-    //        token.Order,
-    //        token.PageSize,
-    //        token.Offset,
-    //        cancellationToken.ToRequestOptions());
-    //    return PageCollectionHelpers.Create(enumerator);
-    //}
+        ValuesPageToken token = ValuesPageToken.FromToken(firstPageToken);
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(
+            _pipeline,
+            _endpoint,
+            token.Order,
+            token.PageSize,
+            token.Offset,
+            cancellationToken.ToRequestOptions());
+        return CollectionResultHelpers.Create(enumerator);
+    }
 
     //public virtual AsyncCollectionResult GetValuesAsync(
     //    string? order,
@@ -109,7 +109,7 @@ public class PagingClient
         int? offset,
         RequestOptions options)
     {
-        RawValuesPageEnumerator enumerator = new RawValuesPageEnumerator(
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(
             _pipeline,
             _endpoint,
             order: order,

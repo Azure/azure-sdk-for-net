@@ -13,7 +13,7 @@ namespace System.ClientModel.Tests.Results;
 /// <summary>
 /// Unit tests for sync and async page collections.
 /// </summary>
-public class PageCollectionTests
+public class PaginatedCollectionTests
 {
     private const int Count = 16;
     private const int DefaultPageSize = 8;
