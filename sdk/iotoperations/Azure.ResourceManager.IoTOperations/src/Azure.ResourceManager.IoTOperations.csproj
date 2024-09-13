@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.IoTOperations</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider IoTOperations.</Description>
     <PackageTags>azure;management;arm;resource manager;iotoperations</PackageTags>
+    <NoWarn>$(NoWarn);AZC0033,AZC0030,AZC0031</NoWarn>
   </PropertyGroup>
 </Project>
