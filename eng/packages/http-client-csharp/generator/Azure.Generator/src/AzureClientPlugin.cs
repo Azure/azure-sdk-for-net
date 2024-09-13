@@ -16,7 +16,7 @@ namespace Azure.Generator;
 public class AzureClientPlugin : ClientModelPlugin
 {
     private static AzureClientPlugin? _instance;
-    internal static AzureClientPlugin Instance => _instance ?? throw new InvalidOperationException("ClientModelPlugin is not loaded.");
+    internal static AzureClientPlugin Instance => _instance ?? throw new InvalidOperationException("AzureClientPlugin is not loaded.");
 
     /// <inheritdoc/>
     public override AzureTypeFactory TypeFactory { get; }
