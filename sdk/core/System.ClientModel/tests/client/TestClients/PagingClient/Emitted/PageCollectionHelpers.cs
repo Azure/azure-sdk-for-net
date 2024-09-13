@@ -32,7 +32,11 @@ internal class PageCollectionHelpers
             _pageEnumerator = pageEnumerator;
         }
 
-        public override ContinuationToken? ContinuationToken { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
+        public override ContinuationToken? ContinuationToken
+        {
+            get => throw new NotImplementedException();
+            protected set => throw new NotImplementedException();
+        }
 
         public override IEnumerable<BinaryData> AsRawValues()
         {
