@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591 // public XML comments
-public abstract class CollectionResult : ClientResult, IEnumerable
+public abstract class CollectionResult : ClientResult
 {
     protected CollectionResult() : base()
     {
@@ -21,6 +21,6 @@ public abstract class CollectionResult : ClientResult, IEnumerable
 
     public abstract IEnumerable<BinaryData> AsRawValues();
 
-    IEnumerator IEnumerable.GetEnumerator() => AsRawValues().GetEnumerator();
+    public abstract IAsyncEnumerable<ClientResult> AsRawResponses();
 }
 #pragma warning restore CS1591 // public XML comments

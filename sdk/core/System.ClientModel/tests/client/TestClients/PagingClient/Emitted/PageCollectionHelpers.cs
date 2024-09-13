@@ -34,6 +34,7 @@ internal class PageCollectionHelpers
 
         public override ContinuationToken? ContinuationToken
         {
+            // TODO:
             get => throw new NotImplementedException();
             protected set => throw new NotImplementedException();
         }
@@ -54,6 +55,11 @@ internal class PageCollectionHelpers
                 }
             }
         }
+
+        public override IAsyncEnumerable<ClientResult> AsRawResponses()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     private class PaginatedCollectionResult : CollectionResult
@@ -67,6 +73,7 @@ internal class PageCollectionHelpers
 
         public override ContinuationToken? ContinuationToken
         {
+            // TODO: validate continuation
             get => throw new NotImplementedException();
             protected set => throw new NotImplementedException();
         }
@@ -76,26 +83,16 @@ internal class PageCollectionHelpers
             while (_pageEnumerator.MoveNext())
             {
                 ClientResult page = _pageEnumerator.Current;
-                foreach (BinaryData rawValue in GetValuesFromPage(page))
+                foreach (BinaryData rawItem in _pageEnumerator.GetRawItemsFromPage(page))
                 {
-                    yield return rawValue;
+                    yield return rawItem;
                 }
             }
         }
 
-        // TODO: This has to be custom to the service schema
-        private IEnumerable<BinaryData> GetValuesFromPage(ClientResult page)
+        public override IAsyncEnumerable<ClientResult> AsRawResponses()
         {
-            PipelineResponse response = page.GetRawResponse();
-
-            using JsonDocument doc = JsonDocument.Parse(response.Content);
-
-            IEnumerable<JsonElement> els = doc.RootElement.EnumerateArray();
-            foreach (JsonElement el in els)
-            {
-                // TODO: fix perf
-                yield return BinaryData.FromString(el.ToString());
-            }
+            throw new NotImplementedException();
         }
     }
 }

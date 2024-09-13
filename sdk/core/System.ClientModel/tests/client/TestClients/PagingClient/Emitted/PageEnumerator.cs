@@ -28,6 +28,8 @@ internal abstract class PageEnumerator :
 
     public abstract bool HasNext(ClientResult result);
 
+    public abstract IEnumerable<BinaryData> GetRawItemsFromPage(ClientResult pageResult);
+
     object IEnumerator.Current => ((IEnumerator<ClientResult>)this).Current;
 
     public bool MoveNext()

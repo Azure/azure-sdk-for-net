@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Threading;
 
 namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591 // public XML comments
-public abstract class AsyncCollectionResult : ClientResult, IAsyncEnumerable<object>
+public abstract class AsyncCollectionResult : ClientResult
 {
     protected AsyncCollectionResult() : base()
     {
@@ -21,7 +20,6 @@ public abstract class AsyncCollectionResult : ClientResult, IAsyncEnumerable<obj
 
     public abstract IAsyncEnumerable<BinaryData> AsRawValues();
 
-    IAsyncEnumerator<object> IAsyncEnumerable<object>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        => AsRawValues().GetAsyncEnumerator(cancellationToken);
+    public abstract IAsyncEnumerable<ClientResult> AsRawResponses();
 }
 #pragma warning restore CS1591 // public XML comments

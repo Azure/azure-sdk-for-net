@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Paging;
@@ -104,6 +105,20 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
     public override bool HasNext(ClientResult result)
     {
         return _nextOffset < MockPagingData.Count;
+    }
+
+    public override IEnumerable<BinaryData> GetRawItemsFromPage(ClientResult pageResult)
+    {
+        PipelineResponse response = pageResult.GetRawResponse();
+
+        using JsonDocument doc = JsonDocument.Parse(response.Content);
+
+        IEnumerable<JsonElement> els = doc.RootElement.EnumerateArray();
+        foreach (JsonElement el in els)
+        {
+            // TODO: fix perf
+            yield return BinaryData.FromString(el.ToString());
+        }
     }
 
     // In a real client implementation, these would be the generated protocol
