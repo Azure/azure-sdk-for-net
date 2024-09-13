@@ -17,6 +17,8 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+models-to-treat-empty-string-as-null:
+- HDInsightStorageAccountInfo
 use-model-reader-writer: true
 
 format-by-name-rules:

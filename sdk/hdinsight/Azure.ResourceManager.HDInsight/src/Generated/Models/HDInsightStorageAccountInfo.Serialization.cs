@@ -173,12 +173,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (property.NameEquals("resourceId"u8))
                 {
-                    DeserializeResourceId(property, ref resourceId);
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    {
+                        resourceId = null;
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("msiResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         msiResourceId = null;
                         continue;
