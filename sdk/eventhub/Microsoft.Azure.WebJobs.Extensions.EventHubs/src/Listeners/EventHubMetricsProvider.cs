@@ -78,9 +78,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             {
                 checkpoints = await Task.WhenAll(checkpointTasks).ConfigureAwait(false);
             }
-            catch
+            catch (Exception e)
             {
-                // GetCheckpointsAsync would log
+                _logger.LogWarning($"Encountered an exception while checking EventHub '{_client.EventHubName}'. Error: {e.Message}");
             }
 
             return CreateTriggerMetrics(partitionPropertiesTasks.Select(t => t.Result).ToList(), checkpoints);
