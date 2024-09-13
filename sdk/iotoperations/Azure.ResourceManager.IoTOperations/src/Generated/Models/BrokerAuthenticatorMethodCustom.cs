@@ -78,12 +78,6 @@ namespace Azure.ResourceManager.IoTOperations.Models
 
         /// <summary> Optional authentication needed for authenticating with the custom authentication server. </summary>
         internal BrokerAuthenticatorCustomAuth Auth { get; set; }
-        /// <summary> Kubernetes secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself. </summary>
-        public string X509SecretRef
-        {
-            get => Auth is null ? default : Auth.X509SecretRef;
-            set => Auth = new BrokerAuthenticatorCustomAuth(value);
-        }
 
         /// <summary> Optional CA certificate for validating the custom authentication server's certificate. </summary>
         public string CaCertConfigMap { get; set; }
