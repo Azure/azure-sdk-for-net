@@ -15,7 +15,6 @@ class PackageProps
     [boolean]$IsNewSdk
     [string]$ArtifactName
     [string]$ReleaseStatus
-    [boolean]$BuildDocs
     # was this package purely included because other packages included it as an AdditionalValidationPackage?
     [boolean]$IncludedForValidation
     # does this package include other packages that we should trigger validation for?
@@ -81,41 +80,6 @@ class PackageProps
     {
         $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
         $this.Group = $group
-    }
-
-    hidden [void]InitializeBuildDocs(
-        [string]$ServiceDirectory
-    )
-    {
-        # parse the relevant ci.yml file to determine if the package should build docs
-        $ciYmlPath = Join-Path $ServiceDirectory ".ci.yml"
-
-        if (Test-Path $ciYmlPath)
-        {
-            $ciYml = ConvertFrom-Yaml (Get-Content $ciYmlPath -Raw)
-
-            if ($ciYml.extends -and $ciYml.extends.parameters -and $ciYml.extends.parameters.Artifacts) {
-                $packagesBuildingDocs = $ciYml.extends.parameters.Artifacts `
-                    | Where-Object {
-                        if ($_.PSObject.Properties["skipPublishDocsMs"]) {
-                            $false
-                        }
-                        else {
-                            $true
-                        }
-                    } `
-                    | Select-Object -ExpandProperty name
-
-                if ($packagesBuildingDocs -contains $this.Name)
-                {
-                    $this.BuildDocs = $true
-                }
-            }
-        }
-        else
-        {
-            $this.BuildDocs = $false
-        }
     }
 }
 
