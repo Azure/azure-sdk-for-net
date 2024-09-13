@@ -992,7 +992,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -1064,7 +1064,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -1136,7 +1136,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -1187,7 +1187,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -1238,7 +1238,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
