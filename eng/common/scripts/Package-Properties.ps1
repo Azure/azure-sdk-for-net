@@ -66,8 +66,6 @@ class PackageProps
         {
             $this.ChangeLogPath = $null
         }
-
-        $this.InitializeBuildDocs($ServiceDirectory)
     }
 
     hidden [void]Initialize(
