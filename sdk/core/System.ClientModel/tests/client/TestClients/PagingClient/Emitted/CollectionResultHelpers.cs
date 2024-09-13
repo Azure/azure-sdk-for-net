@@ -32,9 +32,7 @@ internal class CollectionResultHelpers
         }
 
         public override ContinuationToken? GetContinuationToken(ClientResult page)
-        {
-            return _pageEnumerator.GetNextPageToken(page);
-        }
+            => _pageEnumerator.GetNextPageToken(page);
 
         public override IEnumerator<T> GetEnumerator()
         {
@@ -50,6 +48,7 @@ internal class CollectionResultHelpers
 
         public override IEnumerable<ClientResult> GetRawPages()
         {
+            // TODO: this must use a different enumerable each time it's called.
             while (_pageEnumerator.MoveNext())
             {
                 yield return _pageEnumerator.Current;
@@ -66,11 +65,8 @@ internal class CollectionResultHelpers
             _pageEnumerator = pageEnumerator;
         }
 
-        public override ContinuationToken GetContinuationToken(ClientResult result)
-        {
-            // TODO: Validate continuation
-            throw new NotImplementedException();
-        }
+        public override ContinuationToken? GetContinuationToken(ClientResult page)
+            => _pageEnumerator.GetNextPageToken(page);
 
         public override IEnumerable<ClientResult> GetRawPages()
         {

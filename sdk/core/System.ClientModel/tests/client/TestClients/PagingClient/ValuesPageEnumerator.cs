@@ -20,6 +20,8 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
     private readonly string? _order;
     private readonly int? _pageSize;
 
+    private readonly int? _intialOffset;
+
     // This one is special - it keeps track of which page we're on.
     private int? _offset;
 
@@ -41,6 +43,7 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
 
         _order = order;
         _pageSize = pageSize;
+        _intialOffset = offset;
         _offset = offset;
 
         _options = options;
@@ -105,6 +108,8 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         return _nextOffset < MockPagingData.Count;
     }
 
+    // Note to self: this can't rely on mutable state in the enumerator --
+    // needs to be more robust than that.
     public override ContinuationToken? GetNextPageToken(ClientResult currentPageResult)
     {
         PipelineResponse response = currentPageResult.GetRawResponse();

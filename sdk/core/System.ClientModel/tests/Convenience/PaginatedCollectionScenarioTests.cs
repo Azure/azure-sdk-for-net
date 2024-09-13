@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ClientModel.Tests.Mocks;
 using ClientModel.Tests.Paging;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Results;
@@ -93,11 +94,11 @@ public class PaginatedCollectionScenarioTests
         PagingClient client = new PagingClient(options);
         CollectionResult<ValueItem> values = client.GetValues();
         ClientResult rawPage = values.GetRawPages().First();
-        ContinuationToken? continuationToken = values.GetContinuationToken(rawPage);
+        ContinuationToken continuationToken = values.GetContinuationToken(rawPage)!;
 
         Assert.IsNotNull(continuationToken);
 
-        CollectionResult<ValueItem> rehydratedValues = client.GetValues(continuationToken!);
+        CollectionResult<ValueItem> rehydratedValues = client.GetValues(continuationToken);
 
         List<ValueItem> remainingValues = values.ToList();
         List<ValueItem> remainingRehydratedValues = rehydratedValues.ToList();
@@ -138,32 +139,36 @@ public class PaginatedCollectionScenarioTests
     //    }
     //}
 
-    //[Test]
-    //public void CanReorderItemsAndRehydrate()
-    //{
-    //    PagingClientOptions options = new()
-    //    {
-    //        Transport = new MockPipelineTransport("Mock", i => 200)
-    //    };
+    [Test]
+    public void RehydrationPreservesOrdering()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
 
-    //    string order = "desc";
-    //    Assert.AreNotEqual(MockPagingData.DefaultOrder, order);
+        string order = "desc";
+        Assert.AreNotEqual(MockPagingData.DefaultOrder, order);
 
-    //    PagingClient client = new PagingClient(options);
-    //    PageCollection<ValueItem> pages = client.GetValues(order: order);
-    //    PageResult<ValueItem> page = pages.GetCurrentPage();
+        // TODO: revisit per two enumerators
 
-    //    ContinuationToken pageToken = page.PageToken;
+        PagingClient client = new PagingClient(options);
+        CollectionResult<ValueItem> values = client.GetValues(order: order);
+        ClientResult rawPage = values.GetRawPages().First();
+        ContinuationToken continuationToken = values.GetContinuationToken(rawPage)!;
 
-    //    PageCollection<ValueItem> rehydratedPages = client.GetValues(pageToken);
-    //    PageResult<ValueItem> rehydratedPage = rehydratedPages.GetCurrentPage();
+        Assert.IsNotNull(continuationToken);
 
-    //    Assert.AreEqual(page.Values.Count, rehydratedPage.Values.Count);
+        CollectionResult<ValueItem> rehydratedValues = client.GetValues(continuationToken);
 
-    //    // We got the last one first from both pages
-    //    Assert.AreEqual(MockPagingData.Count - 1, page.Values[0].Id);
-    //    Assert.AreEqual(MockPagingData.Count - 1, rehydratedPage.Values[0].Id);
-    //}
+        List<ValueItem> remainingValues = values.ToList();
+        List<ValueItem> remainingRehydratedValues = rehydratedValues.ToList();
+
+        Assert.AreEqual(remainingValues.Count, remainingRehydratedValues.Count);
+
+        // We got pages in the same order from both collections
+        Assert.AreEqual(remainingRehydratedValues[0].Id, remainingValues[0].Id);
+    }
 
     //[Test]
     //public async Task CanReorderItemsAndRehydrateAsync()
@@ -192,8 +197,9 @@ public class PaginatedCollectionScenarioTests
     //    Assert.AreEqual(MockPagingData.Count - 1, rehydratedPage.Values[0].Id);
     //}
 
+    // TODO: come back to this one
     //[Test]
-    //public void CanChangePageSizeAndRehydrate()
+    //public void RehydrationPreservesPagesSize()
     //{
     //    PagingClientOptions options = new()
     //    {
@@ -204,17 +210,25 @@ public class PaginatedCollectionScenarioTests
     //    Assert.AreNotEqual(MockPagingData.DefaultPageSize, pageSize);
 
     //    PagingClient client = new PagingClient(options);
-    //    PageCollection<ValueItem> pages = client.GetValues(pageSize: pageSize);
-    //    PageResult<ValueItem> page = pages.GetCurrentPage();
+    //    CollectionResult values = client.GetValues(pageSize: pageSize);
+    //    List<ClientResult> rawPages = values.GetRawPages().ToList();
+    //    ClientResult firstPage = rawPages[0];
+    //    ContinuationToken continuationToken = values.GetContinuationToken(firstPage)!;
 
-    //    ContinuationToken pageToken = page.PageToken;
+    //    Assert.IsNotNull(continuationToken);
 
-    //    PageCollection<ValueItem> rehydratedPages = client.GetValues(pageToken);
-    //    PageResult<ValueItem> rehydratedPage = rehydratedPages.GetCurrentPage();
+    //    CollectionResult rehydratedValues = client.GetValues(continuationToken);
+
+    //    // The first page of the rehydrated collection is the second page of the
+    //    // original collection.
+    //    ClientResult rehydratedFirstPage = rehydratedValues.GetRawPages().First();
+
+    //    ValueItemPage valuesPage = ValueItemPage.FromJson(rawPages[1].GetRawResponse().Content);
+    //    ValueItemPage rehydratedValuesPage = ValueItemPage.FromJson(rehydratedFirstPage.GetRawResponse().Content);
 
     //    // Both pages have same non-default page size
-    //    Assert.AreEqual(pageSize, page.Values.Count);
-    //    Assert.AreEqual(pageSize, rehydratedPage.Values.Count);
+    //    Assert.AreEqual(pageSize, valuesPage.Values.Count);
+    //    Assert.AreEqual(pageSize, rehydratedValuesPage.Values.Count);
     //}
 
     //[Test]
@@ -378,37 +392,35 @@ public class PaginatedCollectionScenarioTests
     //    Assert.AreEqual(pageSize, rehydratedPage.Values.Count);
     //}
 
-    //[Test]
-    //public void CanCastToConvenienceFromProtocol()
-    //{
-    //    PagingClientOptions options = new()
-    //    {
-    //        Transport = new MockPipelineTransport("Mock", i => 200)
-    //    };
+    [Test]
+    public void CanCastToConvenienceFromProtocol()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
 
-    //    PagingClient client = new PagingClient(options);
+        PagingClient client = new PagingClient(options);
 
-    //    // Call the protocol method on the convenience client.
-    //    IEnumerable<ClientResult> pageResults = client.GetValues(
-    //        order: default,
-    //        pageSize: default,
-    //        offset: default,
-    //        new RequestOptions());
+        // Call the protocol method on the convenience client.
+        CollectionResult collectionResult = client.GetValues(
+            order: default,
+            pageSize: default,
+            offset: default,
+            new RequestOptions());
 
-    //    // Cast to convience type from protocol return value.
-    //    PageCollection<ValueItem> pages = (PageCollection<ValueItem>)pageResults;
+        // Cast to convience type from protocol return value.
+        CollectionResult<ValueItem> valueItems = (CollectionResult<ValueItem>)collectionResult;
 
-    //    IEnumerable<ValueItem> values = pages.GetAllValues();
+        int count = 0;
+        foreach (ValueItem value in valueItems)
+        {
+            Assert.AreEqual(count, value.Id);
+            count++;
+        }
 
-    //    int count = 0;
-    //    foreach (ValueItem value in values)
-    //    {
-    //        Assert.AreEqual(count, value.Id);
-    //        count++;
-    //    }
-
-    //    Assert.AreEqual(MockPagingData.Count, count);
-    //}
+        Assert.AreEqual(MockPagingData.Count, count);
+    }
 
     //[Test]
     //public async Task CanCastToConvenienceFromProtocolAsync()

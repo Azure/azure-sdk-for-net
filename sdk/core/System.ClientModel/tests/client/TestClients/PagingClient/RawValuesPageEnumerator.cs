@@ -20,6 +20,8 @@ internal class RawValuesPageEnumerator : PageEnumerator
     private readonly string? _order;
     private readonly int? _pageSize;
 
+    private readonly int? _intialOffset;
+
     // This one is special - it keeps track of which page we're on.
     private int? _offset;
 
@@ -41,6 +43,7 @@ internal class RawValuesPageEnumerator : PageEnumerator
 
         _order = order;
         _pageSize = pageSize;
+        _intialOffset = offset;
         _offset = offset;
 
         _options = options;
@@ -96,7 +99,7 @@ internal class RawValuesPageEnumerator : PageEnumerator
         PipelineResponse response = currentPageResult.GetRawResponse();
         ValueItemPage pageModel = ValueItemPage.FromJson(response.Content);
 
-        ValuesPageToken pageToken = ValuesPageToken.FromOptions(_order, _pageSize, _offset);
+        ValuesPageToken pageToken = ValuesPageToken.FromOptions(_order, _pageSize, _intialOffset);
         return pageToken.GetNextPageToken(_nextOffset, MockPagingData.Count);
     }
 
