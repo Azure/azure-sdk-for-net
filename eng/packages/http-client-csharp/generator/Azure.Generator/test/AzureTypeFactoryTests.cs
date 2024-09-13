@@ -6,6 +6,7 @@ using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using NUnit.Framework;
 using System;
+using System.Net;
 
 namespace Azure.Generator.Tests
 {
@@ -30,6 +31,42 @@ namespace Azure.Generator.Tests
         }
 
         [Test]
+        public void IPv4Address()
+        {
+            var input = InputFactory.Primitive.String("ipV4Address", "Azure.Core.ipV4Address");
+
+            var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual?.IsFrameworkType);
+            Assert.AreEqual(typeof(IPAddress), actual?.FrameworkType);
+        }
+
+        [Test]
+        public void IPv6Address()
+        {
+            var input = InputFactory.Primitive.String("ipV6Address", "Azure.Core.ipV6Address");
+
+            var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual?.IsFrameworkType);
+            Assert.AreEqual(typeof(IPAddress), actual?.FrameworkType);
+        }
+
+        [Test]
+        public void ETag()
+        {
+            var input = InputFactory.Primitive.String("eTag", "Azure.Core.eTag");
+
+            var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual?.IsFrameworkType);
+            Assert.AreEqual(typeof(ETag), actual?.FrameworkType);
+        }
+
+        [Test]
         public void AzureLocation()
         {
             var input = InputFactory.Primitive.String("azureLocation", "Azure.Core.azureLocation");
@@ -39,6 +76,18 @@ namespace Azure.Generator.Tests
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual?.IsFrameworkType);
             Assert.AreEqual(typeof(AzureLocation), actual?.FrameworkType);
+        }
+
+        [Test]
+        public void ResourceIdentifier()
+        {
+            var input = InputFactory.Primitive.String("armResourceIdentifier", "Azure.Core.armResourceIdentifier");
+
+            var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual?.IsFrameworkType);
+            Assert.AreEqual(typeof(ResourceIdentifier), actual?.FrameworkType);
         }
     }
 }

@@ -42,12 +42,5 @@ namespace Azure.Generator
 
             return null;
         }
-
-        /// <inheritdoc/>
-        protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
-        {
-            // TODO -- remove this until https://github.com/microsoft/typespec/issues/4433 resolves
-            return [];
-        }
     }
 }
