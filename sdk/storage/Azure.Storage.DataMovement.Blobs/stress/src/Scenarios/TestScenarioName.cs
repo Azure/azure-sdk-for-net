@@ -3,10 +3,8 @@
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    internal enum TestScenarioName
+    public enum TestScenarioName
     {
-        UploadBlockBlobTest,
-        DownloadBlockBlobTest,
-        CopyBlockBlobTest,
+        UploadSingleBlockBlobTest,
     }
 }

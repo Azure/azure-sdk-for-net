@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.DataMovement.Blobs.Stress.Configurations
+namespace Azure.Storage.Stress.Shared
 {
-    internal class SenderConfiguration
+    internal class ConfigurationHelper
     {
     }
 }

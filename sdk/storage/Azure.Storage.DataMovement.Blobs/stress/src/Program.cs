@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
 using CommandLine;
+using Azure.Core;
+using Azure.Identity;
+using Azure.Storage.Stress;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress;
 /// <summary>
@@ -43,14 +46,15 @@ public class Program
         var environmentFile = Environment.GetEnvironmentVariable("ENV_FILE");
         environment = EnvironmentReader.LoadFromFile(environmentFile);
 
-        environment.TryGetValue(EnvironmentVariables.ApplicationInsightsKey, out var appInsightsKey);
-        environment.TryGetValue(EnvironmentVariables.StorageConnectionString, out var serviceBusConnectionString);
+        environment.TryGetValue(DataMovementBlobStressConstants.EnvironmentVariables.ApplicationInsightsKey, out var appInsightsKey);
+        environment.TryGetValue(DataMovementBlobStressConstants.EnvironmentVariables.StorageBlobEndpoint, out var blobEndpoint);
+
+        // Check values
 
         // If a job index is provided, a single role is started, otherwise, all specified roles within the
         // test scenario runs are run in parallel.
 
-        var testParameters = new TestParameters();
-        testParameters.StorageConnectionString = serviceBusConnectionString;
+        TokenCredential tokenCredential = new DefaultAzureCredential();
 
         using var cancellationSource = new CancellationTokenSource();
         var runDuration = TimeSpan.FromHours(testParameters.DurationInHours);
@@ -66,29 +70,17 @@ public class Program
             var testScenarioName = testScenario.ToString();
             metrics.Client.Context.GlobalProperties["TestName"] = testScenarioName;
 
-            var blobContainerName = string.Empty;
-            environment.TryGetValue(EnvironmentVariables.StorageBlobContainer, out blobContainerName);
-
             metrics.Client.TrackEvent("Starting a test run.");
 
-            TestScenario testScenarioInstance = null;
+            TestScenarioBase testScenarioInstance = null;
 
             switch (testScenario)
             {
-                case TestScenarioName.UploadBlockBlobTest:
-                    testParameters.BlobContainerName = blobContainerName;
-                    testScenarioInstance = new SendReceiveTest(testParameters, metrics, opts.Role);
+                case TestScenarioName.UploadSingleBlockBlobTest:
+                    testScenarioInstance = new BlobSingleUploadScenario(new Uri(blobEndpoint), tokenCredential, metrics, opts.Role);
                     break;
-
-                case TestScenarioName.DownloadBlockBlobTest:
-                    testParameters.BlobContainerName = blobContainerName;
-                    testScenarioInstance = new SendReceiveBatchesTest(testParameters, metrics, opts.Role);
-                    break;
-
-                case TestScenarioName.CopyBlockBlobTest:
-                    testParameters.BlobContainerName = blobContainerName;
-                    testScenarioInstance = new SessionSendReceiveTest(testParameters, metrics, opts.Role);
-                    break;
+                default:
+                    throw new ArgumentException("Invalid test scenario, cannot perform test run.");
             }
 
             var testRun = testScenarioInstance.RunTestAsync(cancellationSource.Token);
@@ -118,10 +110,6 @@ public class Program
         }
         finally
         {
-            // The test parameters need to be disposed in order to dispose the SHA 256 hash used to check
-            // for message corruption.
-            testParameters.Dispose();
-
             // We need to wait one minute after flushing the Application Insights client. The Application
             // Insights flush is non-deterministic, so we don't want to let the application close until
             // all telemetry has been sent.
@@ -140,11 +128,7 @@ public class Program
     ///
     public static TestScenarioName StringToTestScenario(string testScenario) => testScenario switch
     {
-        "SendReceiveTest" or "SendRec" => TestScenarioName.SendReceiveTest,
-        "SendReceiveBatchesTest" or "SendRecBatch" => TestScenarioName.SendReceiveBatchesTest,
-        "SessionSendReceiveTest" or "SessionSendRec" => TestScenarioName.SessionSendReceiveTest,
-        "SessionSendProcessTest" or "SessionSendProc" => TestScenarioName.SessionSendProcessTest,
-        "SendProcessTest" or "SendProc" => TestScenarioName.SendProcessTest,
+        "UploadSingleBlockBlob" => TestScenarioName.UploadSingleBlockBlobTest,
         _ => throw new ArgumentNullException(),
     };
 

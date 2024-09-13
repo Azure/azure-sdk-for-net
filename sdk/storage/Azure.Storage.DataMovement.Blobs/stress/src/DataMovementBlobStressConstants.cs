@@ -11,5 +11,40 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 {
     internal class DataMovementBlobStressConstants
     {
+        public const int KB = 1024;
+        public const int MB = KB * 1024;
+        public const int GB = MB * 1024;
+        public const long TB = GB * 1024L;
+        public const int Base16 = 16;
+
+        public static partial class EnvironmentVariables
+        {
+            // Shared Resources
+
+            /// <summary>
+            ///   The name of the environment variable that holds the instrumentation key for the
+            ///   Application Insights resource for the test runs.
+            /// </summary>
+            ///
+            public const string ApplicationInsightsKey = "APPINSIGHTS_INSTRUMENTATIONKEY";
+
+            /// <summary>
+            ///   The name of the environment variable that holds the connection string for the
+            ///   Event Hubs Namespace resource for the test runs.
+            /// </summary>
+            ///
+            public const string StorageBlobEndpoint = "STRESS_STORAGE_BLOB_ENDPOINT";
+
+            // Job Index Information
+
+            /// <summary>
+            ///   The name of the environment variable that holds the index of the Kubernetes pod. This variable should
+            ///   only be set when deploying tests to the Kubernetes cluster, and it allows each test to run all of its roles
+            ///   in separate pods. For more information see
+            ///   <see href="https://kubernetes.io/docs/tasks/job/indexed-parallel-processing-static/">Kubernetes Documentation on Indexed Jobs</see>
+            /// </summary>
+            ///
+            public const string JobCompletionIndex = "JOB_COMPLETION_INDEX";
+        }
     }
 }
