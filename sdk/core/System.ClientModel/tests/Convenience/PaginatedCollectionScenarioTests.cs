@@ -42,6 +42,29 @@ public class PaginatedCollectionScenarioTests
     }
 
     [Test]
+    public async Task CanGetValuesFromConvenienceMethodAsync()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+        AsyncCollectionResult<ValueItem> valueItems = client.GetValuesAsync();
+
+        int count = 0;
+        await foreach (ValueItem item in valueItems)
+        {
+            Assert.AreEqual(count, item.Id);
+            Assert.AreEqual(count.ToString(), item.Value);
+
+            count++;
+        }
+
+        Assert.AreEqual(MockPagingData.Count, count);
+    }
+
+    [Test]
     public void CanGetRawValuesFromProtocolMethod()
     {
         PagingClientOptions options = new()
@@ -80,6 +103,44 @@ public class PaginatedCollectionScenarioTests
     }
 
     [Test]
+    public async Task CanGetRawValuesFromProtocolMethodAsync()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+        AsyncCollectionResult collectionResult = client.GetValuesAsync(
+                order: default,
+                pageSize: default,
+                offset: default,
+                new RequestOptions());
+
+        IAsyncEnumerable<ClientResult> rawPages = collectionResult.GetRawPagesAsync();
+
+        int count = 0;
+
+        // At the protocol layer, user must parse values from pages themselves.
+        // The below uses conveniences in the test code to do that to simplify
+        // the test implementation.
+
+        await foreach (ClientResult pageResult in rawPages)
+        {
+            ValueItemPage page = ValueItemPage.FromJson(pageResult.GetRawResponse().Content);
+            foreach (ValueItem item in page.Values)
+            {
+                Assert.AreEqual(count, item.Id);
+                Assert.AreEqual(count.ToString(), item.Value);
+
+                count++;
+            }
+        }
+
+        Assert.AreEqual(MockPagingData.Count, count);
+    }
+
+    [Test]
     public void CanRehydratePaginatedCollection()
     {
         PagingClientOptions options = new()
@@ -102,6 +163,38 @@ public class PaginatedCollectionScenarioTests
 
         List<ValueItem> remainingValues = values.ToList();
         List<ValueItem> remainingRehydratedValues = rehydratedValues.ToList();
+
+        Assert.AreEqual(remainingValues.Count, remainingRehydratedValues.Count);
+
+        for (int i = 0; i < remainingValues.Count; i++)
+        {
+            Assert.AreEqual(remainingValues[i].Id, remainingRehydratedValues[i].Id);
+        }
+    }
+
+    [Test]
+    public async Task CanRehydratePaginatedCollectionAsync()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        // TODO: think about what this looks like if you enumerate
+        // at both the convenience and protocol layer -- i.e. try to
+        // use the convenience collection and then get the continuation token
+
+        PagingClient client = new PagingClient(options);
+        AsyncCollectionResult<ValueItem> values = client.GetValuesAsync();
+        ClientResult rawPage = await values.GetRawPagesAsync().FirstAsync();
+        ContinuationToken continuationToken = values.GetContinuationToken(rawPage)!;
+
+        Assert.IsNotNull(continuationToken);
+
+        AsyncCollectionResult<ValueItem> rehydratedValues = client.GetValuesAsync(continuationToken);
+
+        List<ValueItem> remainingValues = await values.ToListAsync();
+        List<ValueItem> remainingRehydratedValues = await rehydratedValues.ToListAsync();
 
         Assert.AreEqual(remainingValues.Count, remainingRehydratedValues.Count);
 
@@ -170,32 +263,36 @@ public class PaginatedCollectionScenarioTests
         Assert.AreEqual(remainingRehydratedValues[0].Id, remainingValues[0].Id);
     }
 
-    //[Test]
-    //public async Task CanReorderItemsAndRehydrateAsync()
-    //{
-    //    PagingClientOptions options = new()
-    //    {
-    //        Transport = new MockPipelineTransport("Mock", i => 200)
-    //    };
+    [Test]
+    public async Task RehydrationPreservesOrderingAsync()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
 
-    //    string order = "desc";
-    //    Assert.AreNotEqual(MockPagingData.DefaultOrder, order);
+        string order = "desc";
+        Assert.AreNotEqual(MockPagingData.DefaultOrder, order);
 
-    //    PagingClient client = new PagingClient(options);
-    //    AsyncPageCollection<ValueItem> pages = client.GetValuesAsync(order: order);
-    //    PageResult<ValueItem> page = await pages.GetCurrentPageAsync();
+        // TODO: revisit per two enumerators
 
-    //    ContinuationToken pageToken = page.PageToken;
+        PagingClient client = new PagingClient(options);
+        AsyncCollectionResult<ValueItem> values = client.GetValuesAsync(order: order);
+        ClientResult rawPage = await values.GetRawPagesAsync().FirstAsync();
+        ContinuationToken continuationToken = values.GetContinuationToken(rawPage)!;
 
-    //    AsyncPageCollection<ValueItem> rehydratedPages = client.GetValuesAsync(pageToken);
-    //    PageResult<ValueItem> rehydratedPage = await rehydratedPages.GetCurrentPageAsync();
+        Assert.IsNotNull(continuationToken);
 
-    //    Assert.AreEqual(page.Values.Count, rehydratedPage.Values.Count);
+        AsyncCollectionResult<ValueItem> rehydratedValues = client.GetValuesAsync(continuationToken);
 
-    //    // We got the last one first from both pages
-    //    Assert.AreEqual(MockPagingData.Count - 1, page.Values[0].Id);
-    //    Assert.AreEqual(MockPagingData.Count - 1, rehydratedPage.Values[0].Id);
-    //}
+        List<ValueItem> remainingValues = await values.ToListAsync();
+        List<ValueItem> remainingRehydratedValues = await rehydratedValues.ToListAsync();
+
+        Assert.AreEqual(remainingValues.Count, remainingRehydratedValues.Count);
+
+        // We got pages in the same order from both collections
+        Assert.AreEqual(remainingRehydratedValues[0].Id, remainingValues[0].Id);
+    }
 
     // TODO: come back to this one
     //[Test]
@@ -422,37 +519,35 @@ public class PaginatedCollectionScenarioTests
         Assert.AreEqual(MockPagingData.Count, count);
     }
 
-    //[Test]
-    //public async Task CanCastToConvenienceFromProtocolAsync()
-    //{
-    //    PagingClientOptions options = new()
-    //    {
-    //        Transport = new MockPipelineTransport("Mock", i => 200)
-    //    };
+    [Test]
+    public async Task CanCastToConvenienceFromProtocolAsync()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
 
-    //    PagingClient client = new PagingClient(options);
+        PagingClient client = new PagingClient(options);
 
-    //    // Call the protocol method on the convenience client.
-    //    IAsyncEnumerable<ClientResult> pageResults = client.GetValuesAsync(
-    //        order: default,
-    //        pageSize: default,
-    //        offset: default,
-    //        new RequestOptions());
+        // Call the protocol method on the convenience client.
+        AsyncCollectionResult collectionResult = client.GetValuesAsync(
+            order: default,
+            pageSize: default,
+            offset: default,
+            new RequestOptions());
 
-    //    // Cast to convience type from protocol return value.
-    //    AsyncPageCollection<ValueItem> pages = (AsyncPageCollection<ValueItem>)pageResults;
+        // Cast to convience type from protocol return value.
+        AsyncCollectionResult<ValueItem> valueItems = (AsyncCollectionResult<ValueItem>)collectionResult;
 
-    //    IAsyncEnumerable<ValueItem> values = pages.GetAllValuesAsync();
+        int count = 0;
+        await foreach (ValueItem value in valueItems)
+        {
+            Assert.AreEqual(count, value.Id);
+            count++;
+        }
 
-    //    int count = 0;
-    //    await foreach (ValueItem value in values)
-    //    {
-    //        Assert.AreEqual(count, value.Id);
-    //        count++;
-    //    }
-
-    //    Assert.AreEqual(MockPagingData.Count, count);
-    //}
+        Assert.AreEqual(MockPagingData.Count, count);
+    }
 
     [Test]
     public void CanEvolveFromProtocol()
@@ -501,50 +596,50 @@ public class PaginatedCollectionScenarioTests
         Validate(convResult);
     }
 
-    //[Test]
-    //public async Task CanEvolveFromProtocolAsync()
-    //{
-    //    // This scenario tests validates that user code doesn't break when
-    //    // convenience methods are added.  We show this by illustrating that
-    //    // exactly the same code works the same way when using a client that
-    //    // has only protocol methods and a client that has the same protocol
-    //    // methods and also convenience methods.
+    [Test]
+    public async Task CanEvolveFromProtocolAsync()
+    {
+        // This scenario tests validates that user code doesn't break when
+        // convenience methods are added.  We show this by illustrating that
+        // exactly the same code works the same way when using a client that
+        // has only protocol methods and a client that has the same protocol
+        // methods and also convenience methods.
 
-    //    PagingClientOptions options = new()
-    //    {
-    //        Transport = new MockPipelineTransport("Mock", i => 200)
-    //    };
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
 
-    //    static async Task ValidateAsync(IAsyncEnumerable<ClientResult> results)
-    //    {
-    //        int pageCount = 0;
-    //        await foreach (ClientResult result in results)
-    //        {
-    //            Assert.AreEqual(200, result.GetRawResponse().Status);
-    //            pageCount++;
-    //        }
+        static async Task ValidateAsync(AsyncCollectionResult collectionResult)
+        {
+            int pageCount = 0;
+            await foreach (ClientResult result in collectionResult.GetRawPagesAsync())
+            {
+                Assert.AreEqual(200, result.GetRawResponse().Status);
+                pageCount++;
+            }
 
-    //        Assert.AreEqual(MockPagingData.Count / MockPagingData.DefaultPageSize, pageCount);
-    //    }
+            Assert.AreEqual(MockPagingData.Count / MockPagingData.DefaultPageSize, pageCount);
+        }
 
-    //    // Protocol code
-    //    PagingProtocolClient protocolClient = new PagingProtocolClient(options);
-    //    IAsyncEnumerable<ClientResult> pageResults = protocolClient.GetValuesAsync(
-    //        order: default,
-    //        pageSize: default,
-    //        offset: default,
-    //        new RequestOptions());
+        // Protocol code
+        PagingProtocolClient protocolClient = new PagingProtocolClient(options);
+        AsyncCollectionResult protoResult = protocolClient.GetValuesAsync(
+            order: default,
+            pageSize: default,
+            offset: default,
+            new RequestOptions());
 
-    //    await ValidateAsync(pageResults);
+        await ValidateAsync(protoResult);
 
-    //    // Convenience code
-    //    PagingClient convenienceClient = new PagingClient(options);
-    //    IAsyncEnumerable<ClientResult> pages = convenienceClient.GetValuesAsync(
-    //        order: default,
-    //        pageSize: default,
-    //        offset: default,
-    //        new RequestOptions());
+        // Convenience layer added -- behavior calling protocol method is the same
+        PagingClient convenienceClient = new PagingClient(options);
+        AsyncCollectionResult convResult = convenienceClient.GetValuesAsync(
+            order: default,
+            pageSize: default,
+            offset: default,
+            new RequestOptions());
 
-    //    await ValidateAsync(pages);
-    //}
+        await ValidateAsync(convResult);
+    }
 }
