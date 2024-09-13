@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Paging;
 
+/// <summary>
+/// Abstract type defining methods that service clients must provide in order
+/// to implement an enumerator over raw HTTP responses that represent the pages
+/// that deliver subsets of items in a paginated collection.
+/// </summary>
 internal abstract class PageEnumerator :
     IAsyncEnumerator<ClientResult>,
     IEnumerator<ClientResult>

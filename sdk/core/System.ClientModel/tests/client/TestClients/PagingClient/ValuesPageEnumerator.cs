@@ -46,7 +46,7 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         _options = options;
     }
 
-    public override IEnumerable<ValueItem> GetPageValuesFromResult(ClientResult result)
+    public override IEnumerable<ValueItem> GetValuesFromPage(ClientResult result)
     {
         PipelineResponse response = result.GetRawResponse();
         ValueItemPage pageModel = ValueItemPage.FromJson(response.Content);
