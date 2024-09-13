@@ -67,7 +67,7 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             cancellationToken.ToRequestOptions());
-        return PageCollectionHelpers.Create(enumerator);
+        return CollectionResultHelpers.Create(enumerator);
     }
 
     //public virtual CollectionResult<ValueItem> GetValues(
@@ -116,6 +116,6 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             options);
-        return PageCollectionHelpers.Create(enumerator);
+        return CollectionResultHelpers.Create(enumerator);
     }
 }

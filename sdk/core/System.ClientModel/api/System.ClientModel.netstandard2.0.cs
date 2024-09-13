@@ -9,7 +9,6 @@ namespace System.ClientModel
     public abstract partial class AsyncCollectionResult<T> : System.ClientModel.Primitives.AsyncCollectionResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
         protected internal AsyncCollectionResult() { }
-        protected internal AsyncCollectionResult(System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public abstract partial class BinaryContent : System.IDisposable
@@ -50,7 +49,6 @@ namespace System.ClientModel
     public abstract partial class CollectionResult<T> : System.ClientModel.Primitives.CollectionResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
         protected internal CollectionResult() { }
-        protected internal CollectionResult(System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
@@ -76,10 +74,8 @@ namespace System.ClientModel.Primitives
     public abstract partial class AsyncCollectionResult : System.ClientModel.ClientResult
     {
         protected AsyncCollectionResult() { }
-        protected AsyncCollectionResult(System.ClientModel.Primitives.PipelineResponse response) { }
-        public abstract System.ClientModel.ContinuationToken? ContinuationToken { get; protected set; }
-        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> AsRawResponses();
-        public abstract System.Collections.Generic.IAsyncEnumerable<System.BinaryData> AsRawValues();
+        public abstract System.ClientModel.ContinuationToken GetContinuationToken(System.ClientModel.ClientResult result);
+        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> GetRawPagesAsync();
     }
     [System.FlagsAttribute]
     public enum ClientErrorBehaviors
@@ -123,13 +119,11 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class CollectionResult : System.ClientModel.ClientResult
+    public abstract partial class CollectionResult
     {
         protected CollectionResult() { }
-        protected CollectionResult(System.ClientModel.Primitives.PipelineResponse response) { }
-        public abstract System.ClientModel.ContinuationToken? ContinuationToken { get; protected set; }
-        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> AsRawResponses();
-        public abstract System.Collections.Generic.IEnumerable<System.BinaryData> AsRawValues();
+        public abstract System.ClientModel.ContinuationToken GetContinuationToken(System.ClientModel.ClientResult result);
+        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> GetRawPages();
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {

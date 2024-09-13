@@ -50,6 +50,6 @@ public class PagingProtocolClient
             pageSize,
             offset,
             options);
-        return PageCollectionHelpers.Create(enumerator);
+        return CollectionResultHelpers.Create(enumerator);
     }
 }

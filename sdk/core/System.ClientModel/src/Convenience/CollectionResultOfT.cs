@@ -29,16 +29,6 @@ public abstract class CollectionResult<T> : CollectionResult, IEnumerable<T>
     {
     }
 
-    /// <summary>
-    /// Create a new instance of <see cref="CollectionResult{T}"/>.
-    /// </summary>
-    /// <param name="response">The <see cref="PipelineResponse"/> holding the
-    /// items in the collection, or the first set of the items in the collection.
-    /// </param>
-    protected internal CollectionResult(PipelineResponse response) : base(response)
-    {
-    }
-
     /// <inheritdoc/>
     public abstract IEnumerator<T> GetEnumerator();
 

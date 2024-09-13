@@ -5,11 +5,10 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace ClientModel.Tests.Paging;
 
-internal class PageCollectionHelpers
+internal class CollectionResultHelpers
 {
     //public static AsyncCollectionResult<T> CreateAsync<T>(PageEnumerator<T> enumerator)
     //    => new AsyncPaginatedCollectionResult<T>(enumerator);
@@ -32,15 +31,9 @@ internal class PageCollectionHelpers
             _pageEnumerator = pageEnumerator;
         }
 
-        public override ContinuationToken? ContinuationToken
+        public override ContinuationToken GetContinuationToken(ClientResult result)
         {
-            // TODO:
-            get => throw new NotImplementedException();
-            protected set => throw new NotImplementedException();
-        }
-
-        public override IEnumerable<BinaryData> AsRawValues()
-        {
+            // TODO: Validate continuation
             throw new NotImplementedException();
         }
 
@@ -56,9 +49,12 @@ internal class PageCollectionHelpers
             }
         }
 
-        public override IAsyncEnumerable<ClientResult> AsRawResponses()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
-            throw new NotImplementedException();
+            while (_pageEnumerator.MoveNext())
+            {
+                yield return _pageEnumerator.Current;
+            }
         }
     }
 
@@ -71,28 +67,18 @@ internal class PageCollectionHelpers
             _pageEnumerator = pageEnumerator;
         }
 
-        public override ContinuationToken? ContinuationToken
+        public override ContinuationToken GetContinuationToken(ClientResult result)
         {
-            // TODO: validate continuation
-            get => throw new NotImplementedException();
-            protected set => throw new NotImplementedException();
+            // TODO: Validate continuation
+            throw new NotImplementedException();
         }
 
-        public override IEnumerable<BinaryData> AsRawValues()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
             while (_pageEnumerator.MoveNext())
             {
-                ClientResult page = _pageEnumerator.Current;
-                foreach (BinaryData rawItem in _pageEnumerator.GetRawItemsFromPage(page))
-                {
-                    yield return rawItem;
-                }
+                yield return _pageEnumerator.Current;
             }
-        }
-
-        public override IAsyncEnumerable<ClientResult> AsRawResponses()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -29,16 +29,6 @@ public abstract class AsyncCollectionResult<T> : AsyncCollectionResult, IAsyncEn
     {
     }
 
-    /// <summary>
-    /// Create a new instance of <see cref="AsyncCollectionResult{T}"/>.
-    /// </summary>
-    /// <param name="response">The <see cref="PipelineResponse"/> holding the
-    /// items in the collection, or the first set of the items in the collection.
-    /// </param>
-    protected internal AsyncCollectionResult(PipelineResponse response) : base(response)
-    {
-    }
-
     /// <inheritdoc/>
     public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
 }

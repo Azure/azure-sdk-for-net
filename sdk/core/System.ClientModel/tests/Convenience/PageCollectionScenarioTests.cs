@@ -55,16 +55,24 @@ public class PageScenarioCollectionTests
                 offset: default,
                 new RequestOptions());
 
-        IEnumerable<BinaryData> rawValues = collectionResult.AsRawValues();
+        IEnumerable<ClientResult> rawPages = collectionResult.GetRawPages();
 
         int count = 0;
-        foreach (BinaryData rawValue in rawValues)
-        {
-            ValueItem item = ValueItem.FromJson(rawValue);
-            Assert.AreEqual(count, item.Id);
-            Assert.AreEqual(count.ToString(), item.Value);
 
-            count++;
+        // At the protocol layer, user must parse values from pages themselves.
+        // The below uses conveniences in the test code to do that to simplify
+        // the test implementation.
+
+        foreach (ClientResult pageResult in rawPages)
+        {
+            ValueItemPage page = ValueItemPage.FromJson(pageResult.GetRawResponse().Content);
+            foreach (ValueItem item in page.Values)
+            {
+                Assert.AreEqual(count, item.Id);
+                Assert.AreEqual(count.ToString(), item.Value);
+
+                count++;
+            }
         }
 
         Assert.AreEqual(MockPagingData.Count, count);

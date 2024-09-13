@@ -12,14 +12,8 @@ public abstract class AsyncCollectionResult : ClientResult
     {
     }
 
-    protected AsyncCollectionResult(PipelineResponse response) : base(response)
-    {
-    }
+    public abstract IAsyncEnumerable<ClientResult> GetRawPagesAsync();
 
-    public abstract ContinuationToken? ContinuationToken { get; protected set; }
-
-    public abstract IAsyncEnumerable<BinaryData> AsRawValues();
-
-    public abstract IAsyncEnumerable<ClientResult> AsRawResponses();
+    public abstract ContinuationToken GetContinuationToken(ClientResult result);
 }
 #pragma warning restore CS1591 // public XML comments
