@@ -31,8 +31,8 @@ public class WebPubSubSpecification() :
         AddNameRequirements<WebPubSubResource>(min: 3, max: 63, lower: true, upper: true, digits: true, hyphen: true);
         
         // Roles
-        Roles.Add(new Role("WebPubSubServiceReader", "bfb1c7d2-fb1a-466b-b2ba-aee63b92deaf", "Read-only access to Azure SignalR Service REST APIs"));
-        Roles.Add(new Role("WebPubSubServiceOwner", "12cf5a90-567b-43ae-8102-96cf46c7d9b4", "Full access to Azure SignalR Service REST APIs"));
+        Roles.Add(new Role("WebPubSubServiceReader", "bfb1c7d2-fb1a-466b-b2ba-aee63b92deaf", "Read-only access to Azure Web PubSub Service REST APIs"));
+        Roles.Add(new Role("WebPubSubServiceOwner", "12cf5a90-567b-43ae-8102-96cf46c7d9b4", "Full access to Azure Web PubSub Service REST APIs"));
         Roles.Add(new Role("WebPubSubContributor", "8cf5e20a-e4b2-4e9d-b3a1-5ceb692c2761", "Create, Read, Update, and Delete Web PubSub service resources"));
 
         // Assign Roles
