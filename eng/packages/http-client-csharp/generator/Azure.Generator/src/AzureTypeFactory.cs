@@ -5,8 +5,6 @@ using Azure.Generator.Primitives;
 using Microsoft.Generator.CSharp.ClientModel;
 using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Providers;
-using System.Collections.Generic;
 
 namespace Azure.Generator
 {
