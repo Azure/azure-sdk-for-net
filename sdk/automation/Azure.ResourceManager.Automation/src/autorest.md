@@ -20,6 +20,7 @@ modelerfour:
 use-model-reader-writer: true
 # mgmt-debug:
 #   show-serialized-names: true
+use-write-core: true
 
 rename-mapping:
   AutomationAccount.properties.publicNetworkAccess: IsPublicNetworkAccessAllowed
