@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
@@ -18,7 +19,14 @@ namespace Azure.ResourceManager.MachineLearning
         private static void DeserializeTypeValue(JsonProperty property, ref ResourceType type)
         {
             var propVal = property.Value.GetString();
-            type = propVal == "environments" ? new ResourceType("Microsoft.MachineLearningServices/registries/environments") : new ResourceType(propVal);
+            try
+            {
+                type = new ResourceType(propVal);
+            }
+            catch (Exception)
+            {
+                type = new ResourceType("Microsoft.MachineLearningServices/registries/environments");
+            }
         }
     }
 }
