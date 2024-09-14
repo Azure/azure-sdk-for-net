@@ -1,14 +1,13 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.1 (2024-09-14)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/45884.
+    - Handle incorrect returned ResourceType of "Microsoft.MachineLearningServices/registries/data" in `MachineLearningDataContainerData`.
+    - Handle incorrect returned ResourceType of "Microsoft.MachineLearningServices/registries/environments" in `MachineLearningEnvironmentContainerData`.
+    - Override the `ValidateResourceId` method in `MachineLearningEnvironmentContainerResource` and `MachineLearningDataContainerResource` to avoid validation exception.
 
 ## 1.2.0 (2024-09-06)
 
