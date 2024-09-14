@@ -18,6 +18,7 @@ sample-gen:
 use-model-reader-writer: true
 skip-csproj: true
 enable-bicep-serialization: true
+use-write-core: true
 
 rename-mapping:
   RoleAssignment.properties.delegatedManagedIdentityResourceId: -|arm-id
