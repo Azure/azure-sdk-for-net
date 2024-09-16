@@ -1,11 +1,12 @@
 # Release History
 
-## 1.1.0 (2024-09-12)
+## 1.1.0 (2024-09-16)
 
 ### Other Changes
 
 - Removed implicit cast from `string` to `ApiKeyCredential` ([#45554](https://github.com/Azure/azure-sdk-for-net/pull/45554)).
 - Upgraded `System.Text.Json` package dependency to 6.0.9 ([#45416](https://github.com/Azure/azure-sdk-for-net/pull/45416)).
+- Removed `PageCollection<T>` and related types in favor of using `CollectionResult<T>` and related types as the return values from paginated service endpoints ([#45961](https://github.com/Azure/azure-sdk-for-net/pull/45961)).
 
 ## 1.1.0-beta.7 (2024-08-14)
 

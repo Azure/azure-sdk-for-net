@@ -21,7 +21,7 @@ public abstract class OperationResult
     private PipelineResponse _response;
 
     /// <summary>
-    /// Create a new instance of <see cref="OperationResult"/>.
+    /// Creates a new instance of <see cref="OperationResult"/>.
     /// </summary>
     /// <param name="response">The <see cref="PipelineResponse"/> received from
     /// the service in response to the request that started the operation.</param>
@@ -55,7 +55,7 @@ public abstract class OperationResult
     /// different than the one that started the operation.</value>
     /// <remarks>This property is abstract so that derived types that do not
     /// support rehydration can return null without using a backing field for
-    /// an unused ContinuationToken.</remarks>
+    /// an unused <see cref="ContinuationToken"/>.</remarks>
     public abstract ContinuationToken? RehydrationToken { get; protected set; }
 
     /// <summary>
@@ -164,7 +164,7 @@ public abstract class OperationResult
 
     /// <summary>
     /// Gets the <see cref="PipelineResponse"/> corresponding to the most
-    /// recent update response received from the service.
+    /// recent update received from the service.
     /// </summary>
     /// <returns>The most recent <see cref="PipelineResponse"/> received
     /// from the service.
@@ -174,10 +174,6 @@ public abstract class OperationResult
     /// <summary>
     /// Update the value returned from <see cref="GetRawResponse"/>.
     /// </summary>
-    /// <remarks>This method may be called from types derived from
-    /// <see cref="ClientResult"/> that poll the service for status updates
-    /// or to retrieve additional collection values to update the raw response
-    /// to the response most recently returned from the service.</remarks>
     /// <param name="response">The <see cref="PipelineResponse"/> to return
     /// from <see cref="GetRawResponse"/>.</param>
     protected void SetRawResponse(PipelineResponse response)

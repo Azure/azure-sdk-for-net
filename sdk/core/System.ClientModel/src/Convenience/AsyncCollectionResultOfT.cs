@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
-#pragma warning disable CS1591 // public XML comments
 /// <summary>
 /// Represents a collection of values returned from a cloud service operation.
-/// The collection values may be returned by one or more service responses.
+/// The collection values may be delivered over one or more service responses.
 /// </summary>
 public abstract class AsyncCollectionResult<T> : AsyncCollectionResult, IAsyncEnumerable<T>
 {
+    /// <summary>
+    /// Creates a new instance of <see cref="AsyncCollectionResult{T}"/>.
+    /// </summary>
     protected internal AsyncCollectionResult()
     {
     }
@@ -32,10 +34,16 @@ public abstract class AsyncCollectionResult<T> : AsyncCollectionResult, IAsyncEn
     }
 
     /// <summary>
-    /// Get a collection of the values returned in a page response.
+    /// Gets a collection of the values returned in a page response.
     /// </summary>
-    /// <param name="page"></param>
-    /// <returns></returns>
+    /// <param name="page">The service response to obtain the values from.
+    /// </param>
+    /// <returns>A collection of <typeparamref name="T"/> values read from the
+    ///response content in <paramref name="page"/>.</returns>
+    /// <remarks>This method does not take a <see cref="CancellationToken"/>
+    /// parameter.  <see cref="AsyncCollectionResult{T}"/> implementations must
+    /// store the <see cref="CancellationToken"/> passed to the service method
+    /// that creates them and pass that token to any <c>async</c> methods
+    /// called from this method.</remarks>
     protected abstract IAsyncEnumerable<T> GetValuesFromPageAsync(ClientResult page);
 }
-#pragma warning restore CS1591 // public XML comments

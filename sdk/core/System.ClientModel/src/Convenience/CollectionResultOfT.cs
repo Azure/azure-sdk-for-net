@@ -4,16 +4,19 @@
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace System.ClientModel;
 
-#pragma warning disable CS1591 // public XML comments
 /// <summary>
 /// Represents a collection of values returned from a cloud service operation.
-/// The collection values may be returned by one or more service responses.
+/// The collection values may be delivered over one or more service responses.
 /// </summary>
 public abstract class CollectionResult<T> : CollectionResult, IEnumerable<T>
 {
+    /// <summary>
+    /// Creates a new instance of <see cref="CollectionResult{T}"/>.
+    /// </summary>
     protected internal CollectionResult()
     {
     }
@@ -31,10 +34,16 @@ public abstract class CollectionResult<T> : CollectionResult, IEnumerable<T>
     }
 
     /// <summary>
-    /// Get a collection of the values from a page response.
+    /// Gets a collection of the values returned in a page response.
     /// </summary>
-    /// <param name="page"></param>
-    /// <returns></returns>
+    /// <param name="page">The service response to obtain the values from.
+    /// </param>
+    /// <returns>A collection of <typeparamref name="T"/> values read from the
+    ///response content in <paramref name="page"/>.</returns>
+    /// <remarks><see cref="CollectionResult{T}"/> implementations are expected
+    /// to store the <see cref="CancellationToken"/> passed to the service
+    /// method that creates them and pass that token to any methods making
+    /// service calls that are called from this method.</remarks>
     protected abstract IEnumerable<T> GetValuesFromPage(ClientResult page);
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

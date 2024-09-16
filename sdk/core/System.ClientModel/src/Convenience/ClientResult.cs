@@ -14,7 +14,7 @@ public class ClientResult
     private readonly PipelineResponse _response;
 
     /// <summary>
-    /// Create a new instance of <see cref="ClientResult"/> from a service
+    /// Creates a new instance of <see cref="ClientResult"/> from a service
     /// response.
     /// </summary>
     /// <param name="response">The <see cref="PipelineResponse"/> received
@@ -69,7 +69,7 @@ public class ClientResult
         if (value is null)
         {
             string message = "ClientResult<T> contract guarantees that ClientResult<T>.Value is non-null. " +
-                "If you need to return a ClientResult where the Value is null, please use call ClientResult.FromOptionalValue instead.";
+                "If you need to return a ClientResult where the Value is null, please use ClientResult.FromOptionalValue instead.";
 
             throw new ArgumentNullException(nameof(value), message);
         }
