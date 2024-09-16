@@ -1,14 +1,8 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 1.4.0 (2024-09-17)
+- General availability of JSON and Custom schema formats.
+- General availability of `SchemRegistrySerializer`
 
 ## 1.4.0-beta.2 (2023-08-08)
 
