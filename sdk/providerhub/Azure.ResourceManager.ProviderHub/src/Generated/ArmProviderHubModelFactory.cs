@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="linkedOperationRules"></param>
         /// <param name="resourceDeletionPolicy"></param>
         /// <returns> A new <see cref="Models.ProviderResourceType"/> instance for mocking. </returns>
-        public static ProviderResourceType ProviderResourceType(string name = null, ResourceRoutingType? routingType = null, ResourceValidation? resourceValidation = null, IEnumerable<string> allowedUnauthorizedActions = null, IEnumerable<AuthorizationActionMapping> authorizationActionMappings = null, IEnumerable<LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, IEnumerable<LoggingRule> loggingRules = null, IEnumerable<ThrottlingRule> throttlingRules = null, IEnumerable<ResourceProviderEndpoint> endpoints = null, MarketplaceType? marketplaceType = null, IdentityManagementType? managementType = null, BinaryData metadata = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, IEnumerable<ProviderSubscriptionStateRule> subscriptionStateRules = null, IEnumerable<ServiceTreeInfo> serviceTreeInfos = null, OptInHeaderType? optInHeaders = null, string skuLink = null, IEnumerable<string> disallowedActionVerbs = null, TemplateDeploymentPolicy templateDeploymentPolicy = null, IEnumerable<ProviderHubExtendedLocationOptions> extendedLocations = null, IEnumerable<LinkedOperationRule> linkedOperationRules = null, ManifestResourceDeletionPolicy? resourceDeletionPolicy = null)
+        public static ProviderResourceType ProviderResourceType(string name = null, ResourceRoutingType? routingType = null, ResourceValidation? resourceValidation = null, IEnumerable<string> allowedUnauthorizedActions = null, IEnumerable<AuthorizationActionMapping> authorizationActionMappings = null, IEnumerable<LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, IEnumerable<LoggingRule> loggingRules = null, IEnumerable<ThrottlingRule> throttlingRules = null, IEnumerable<ResourceProviderEndpoint> endpoints = null, ResourceTypeMarketplaceType? marketplaceType = null, IdentityManagementType? managementType = null, BinaryData metadata = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, IEnumerable<ProviderSubscriptionStateRule> subscriptionStateRules = null, IEnumerable<ServiceTreeInfo> serviceTreeInfos = null, OptInHeaderType? optInHeaders = null, string skuLink = null, IEnumerable<string> disallowedActionVerbs = null, TemplateDeploymentPolicy templateDeploymentPolicy = null, IEnumerable<ProviderHubExtendedLocationOptions> extendedLocations = null, IEnumerable<LinkedOperationRule> linkedOperationRules = null, ManifestResourceDeletionPolicy? resourceDeletionPolicy = null)
         {
             allowedUnauthorizedActions ??= new List<string>();
             authorizationActionMappings ??= new List<AuthorizationActionMapping>();
@@ -217,8 +218,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="requiredFeatures"></param>
         /// <param name="requiredFeaturesPolicy"></param>
         /// <param name="timeout"></param>
+        /// <param name="endpointType"></param>
         /// <returns> A new <see cref="Models.ResourceProviderEndpoint"/> instance for mocking. </returns>
-        public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled = null, IEnumerable<string> apiVersions = null, Uri endpointUri = null, IEnumerable<AzureLocation> locations = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, TimeSpan? timeout = null)
+        public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled = null, IEnumerable<string> apiVersions = null, Uri endpointUri = null, IEnumerable<AzureLocation> locations = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, TimeSpan? timeout = null, EndpointType? endpointType = null)
         {
             apiVersions ??= new List<string>();
             locations ??= new List<AzureLocation>();
@@ -232,6 +234,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 requiredFeatures?.ToList(),
                 requiredFeaturesPolicy.HasValue ? new FeaturesRule(requiredFeaturesPolicy.Value, serializedAdditionalRawData: null) : null,
                 timeout,
+                endpointType,
                 serializedAdditionalRawData: null);
         }
 
@@ -307,6 +310,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 systemData,
                 properties,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceManagementEntity"/>. </summary>
+        /// <param name="resourceId"> The resource id. </param>
+        /// <param name="homeTenantId"> The home tenant id. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="status"> The operation status. </param>
+        /// <returns> A new <see cref="Models.ResourceManagementEntity"/> instance for mocking. </returns>
+        public static ResourceManagementEntity ResourceManagementEntity(string resourceId = null, string homeTenantId = null, AzureLocation? location = null, string status = null)
+        {
+            return new ResourceManagementEntity(resourceId, homeTenantId, location, status, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint" />. </summary>
+        /// <param name="isEnabled"></param>
+        /// <param name="apiVersions"></param>
+        /// <param name="endpointUri"></param>
+        /// <param name="locations"></param>
+        /// <param name="requiredFeatures"></param>
+        /// <param name="requiredFeaturesPolicy"></param>
+        /// <param name="timeout"></param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled, IEnumerable<string> apiVersions, Uri endpointUri, IEnumerable<AzureLocation> locations, IEnumerable<string> requiredFeatures, FeaturesPolicy? requiredFeaturesPolicy, TimeSpan? timeout)
+        {
+            return ResourceProviderEndpoint(isEnabled: isEnabled, apiVersions: apiVersions, endpointUri: endpointUri, locations: locations, requiredFeatures: requiredFeatures, requiredFeaturesPolicy: requiredFeaturesPolicy, timeout: timeout, endpointType: default);
         }
     }
 }

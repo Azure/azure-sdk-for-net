@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefaultRolloutSpecification"/>. </summary>
+        /// <param name="expeditedRollout"></param>
         /// <param name="canary"></param>
         /// <param name="lowTraffic"></param>
         /// <param name="mediumTraffic"></param>
@@ -61,8 +62,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="providerRegistration"></param>
         /// <param name="resourceTypeRegistrations"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultRolloutSpecification(CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefaultRolloutSpecification(DefaultRolloutSpecificationExpeditedRollout expeditedRollout, CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ExpeditedRollout = expeditedRollout;
             Canary = canary;
             LowTraffic = lowTraffic;
             MediumTraffic = mediumTraffic;
@@ -72,6 +74,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProviderRegistration = providerRegistration;
             ResourceTypeRegistrations = resourceTypeRegistrations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Gets or sets the expedited rollout. </summary>
+        internal DefaultRolloutSpecificationExpeditedRollout ExpeditedRollout { get; set; }
+        /// <summary> Indicates whether expedited rollout is enabled/disabled. </summary>
+        public bool? ExpeditedRolloutEnabled
+        {
+            get => ExpeditedRollout is null ? default : ExpeditedRollout.Enabled;
+            set
+            {
+                if (ExpeditedRollout is null)
+                    ExpeditedRollout = new DefaultRolloutSpecificationExpeditedRollout();
+                ExpeditedRollout.Enabled = value;
+            }
         }
 
         /// <summary> Gets or sets the canary. </summary>

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="linkedOperationRules"></param>
         /// <param name="resourceDeletionPolicy"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderResourceType(string name, ResourceRoutingType? routingType, ResourceValidation? resourceValidation, IReadOnlyList<string> allowedUnauthorizedActions, IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings, IReadOnlyList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IReadOnlyList<LoggingRule> loggingRules, IReadOnlyList<ThrottlingRule> throttlingRules, IReadOnlyList<ResourceProviderEndpoint> endpoints, MarketplaceType? marketplaceType, IdentityManagement identityManagement, BinaryData metadata, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules, IReadOnlyList<ServiceTreeInfo> serviceTreeInfos, RequestHeaderOptions requestHeaderOptions, string skuLink, IReadOnlyList<string> disallowedActionVerbs, TemplateDeploymentPolicy templateDeploymentPolicy, IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations, IReadOnlyList<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProviderResourceType(string name, ResourceRoutingType? routingType, ResourceValidation? resourceValidation, IReadOnlyList<string> allowedUnauthorizedActions, IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings, IReadOnlyList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IReadOnlyList<LoggingRule> loggingRules, IReadOnlyList<ThrottlingRule> throttlingRules, IReadOnlyList<ResourceProviderEndpoint> endpoints, ResourceTypeMarketplaceType? marketplaceType, IdentityManagement identityManagement, BinaryData metadata, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules, IReadOnlyList<ServiceTreeInfo> serviceTreeInfos, RequestHeaderOptions requestHeaderOptions, string skuLink, IReadOnlyList<string> disallowedActionVerbs, TemplateDeploymentPolicy templateDeploymentPolicy, IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations, IReadOnlyList<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             RoutingType = routingType;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets the endpoints. </summary>
         public IReadOnlyList<ResourceProviderEndpoint> Endpoints { get; }
         /// <summary> Gets the marketplace type. </summary>
-        public MarketplaceType? MarketplaceType { get; }
+        public ResourceTypeMarketplaceType? MarketplaceType { get; }
         /// <summary> Gets the identity management. </summary>
         internal IdentityManagement IdentityManagement { get; }
         /// <summary> Gets the management type. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ResourceTypeRegistrationsGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ResourceTypeRegistrations_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/ResourceTypeRegistrations_Get.json
             // this example is just showing the usage of "ResourceTypeRegistrations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ResourceTypeRegistrationsGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ResourceTypeRegistrations_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/ResourceTypeRegistrations_Get.json
             // this example is just showing the usage of "ResourceTypeRegistrations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_ResourceTypeRegistrationsGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ResourceTypeRegistrations_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/ResourceTypeRegistrations_Get.json
             // this example is just showing the usage of "ResourceTypeRegistrations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ResourceTypeRegistrationsCreateOrUpdate()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ResourceTypeRegistrations_CreateOrUpdate.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/ResourceTypeRegistrations_CreateOrUpdate.json
             // this example is just showing the usage of "ResourceTypeRegistrations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,6 +181,47 @@ ApiVersions =
 SwaggerSpecFolderUri = new Uri("https://github.com/Azure/azure-rest-api-specs/blob/feature/azure/contoso/specification/contoso/resource-manager/Microsoft.SampleRP/"),
 }
 },
+                    ResourceConcurrencyControlOptions =
+{
+["patch"] = new ResourceConcurrencyControlOption()
+{
+Policy = Policy.SynchronizeBeginExtension,
+},
+["post"] = new ResourceConcurrencyControlOption()
+{
+Policy = Policy.SynchronizeBeginExtension,
+},
+["put"] = new ResourceConcurrencyControlOption()
+{
+Policy = Policy.SynchronizeBeginExtension,
+},
+},
+                    ResourceGraphConfiguration = new ResourceTypeRegistrationPropertiesResourceGraphConfiguration()
+                    {
+                        Enabled = true,
+                        ApiVersion = "2019-01-01",
+                    },
+                    Management = new ResourceTypeRegistrationPropertiesManagement()
+                    {
+                        ManifestOwners =
+{
+"SPARTA-PlatformServiceAdministrator"
+},
+                        IncidentRoutingService = "",
+                        IncidentRoutingTeam = "",
+                        IncidentContactEmail = "helpme@contoso.com",
+                        ServiceTreeInfos =
+{
+new ServiceTreeInfo()
+{
+ServiceId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69",
+ComponentId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69",
+Readiness = Readiness.InDevelopment,
+}
+},
+                        ResourceAccessPolicy = ResourceProviderManagementResourceAccessPolicy.NotSpecified,
+                    },
+                    AllowNoncompliantCollectionResponse = true,
                 },
             };
             ArmOperation<ResourceTypeRegistrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceType, data);
@@ -198,7 +239,7 @@ SwaggerSpecFolderUri = new Uri("https://github.com/Azure/azure-rest-api-specs/bl
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ResourceTypeRegistrationsListByProviderRegistration()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ResourceTypeRegistrations_ListByProviderRegistration.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/ResourceTypeRegistrations_ListByProviderRegistration.json
             // this example is just showing the usage of "ResourceTypeRegistrations_ListByProviderRegistration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

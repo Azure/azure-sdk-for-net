@@ -62,8 +62,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="requiredFeatures"></param>
         /// <param name="featuresRule"></param>
         /// <param name="timeout"></param>
+        /// <param name="endpointType"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderEndpoint(bool? isEnabled, IReadOnlyList<string> apiVersions, Uri endpointUri, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceProviderEndpoint(bool? isEnabled, IReadOnlyList<string> apiVersions, Uri endpointUri, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, TimeSpan? timeout, EndpointType? endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             ApiVersions = apiVersions;
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequiredFeatures = requiredFeatures;
             FeaturesRule = featuresRule;
             Timeout = timeout;
+            EndpointType = endpointType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -95,5 +97,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets the timeout. </summary>
         public TimeSpan? Timeout { get; }
+        /// <summary> Gets the endpoint type. </summary>
+        public EndpointType? EndpointType { get; }
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManagement"/>. </summary>
         public ResourceProviderManagement()
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceAccessPolicy"></param>
         /// <param name="resourceAccessRoles"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, IList<ServiceTreeInfo> serviceTreeInfos, ResourceAccessPolicy? resourceAccessPolicy, IList<BinaryData> resourceAccessRoles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, IList<ServiceTreeInfo> serviceTreeInfos, ResourceProviderManagementResourceAccessPolicy? resourceAccessPolicy, IList<BinaryData> resourceAccessRoles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SchemaOwners = schemaOwners;
             ManifestOwners = manifestOwners;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets the service tree infos. </summary>
         public IList<ServiceTreeInfo> ServiceTreeInfos { get; }
         /// <summary> Gets or sets the resource access policy. </summary>
-        public ResourceAccessPolicy? ResourceAccessPolicy { get; set; }
+        public ResourceProviderManagementResourceAccessPolicy? ResourceAccessPolicy { get; set; }
         /// <summary>
         /// Gets the resource access roles
         /// <para>

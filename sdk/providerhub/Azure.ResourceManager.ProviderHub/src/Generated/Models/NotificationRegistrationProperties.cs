@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="messageScope"></param>
         /// <param name="includedEvents"></param>
         /// <param name="notificationEndpoints"></param>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationRegistrationProperties(NotificationMode? notificationMode, MessageScope? messageScope, IList<string> includedEvents, IList<NotificationEndpoint> notificationEndpoints, ProviderHubProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<string> IncludedEvents { get; }
         /// <summary> Gets the notification endpoints. </summary>
         public IList<NotificationEndpoint> NotificationEndpoints { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
+        /// <summary> The provisioned state of the resource. </summary>
         public ProviderHubProvisioningState? ProvisioningState { get; set; }
     }
 }

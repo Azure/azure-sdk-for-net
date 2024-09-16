@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(MarketplaceType))
             {
                 writer.WritePropertyName("marketplaceType"u8);
-                writer.WriteStringValue(MarketplaceType.Value.ToSerialString());
+                writer.WriteStringValue(MarketplaceType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(SwaggerSpecifications))
             {
@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AsyncTimeoutRules))
+            {
+                writer.WritePropertyName("asyncTimeoutRules"u8);
+                writer.WriteObjectValue(AsyncTimeoutRules, options);
             }
             if (Optional.IsCollectionDefined(LinkedAccessChecks))
             {
@@ -231,6 +236,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(ResourceConcurrencyControlOptions))
+            {
+                writer.WritePropertyName("resourceConcurrencyControlOptions"u8);
+                writer.WriteStartObject();
+                foreach (var item in ResourceConcurrencyControlOptions)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ResourceGraphConfiguration))
+            {
+                writer.WritePropertyName("resourceGraphConfiguration"u8);
+                writer.WriteObjectValue(ResourceGraphConfiguration, options);
+            }
+            if (Optional.IsDefined(Management))
+            {
+                writer.WritePropertyName("management"u8);
+                writer.WriteObjectValue(Management, options);
+            }
+            if (Optional.IsDefined(OpenApiConfiguration))
+            {
+                writer.WritePropertyName("openApiConfiguration"u8);
+                writer.WriteObjectValue(OpenApiConfiguration, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -273,10 +304,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceTypeRegistrationRegionality? regionality = default;
             IList<ResourceTypeEndpoint> endpoints = default;
             ResourceTypeExtensionOptions extensionOptions = default;
-            MarketplaceType? marketplaceType = default;
+            ResourceTypeRegistrationPropertiesMarketplaceType? marketplaceType = default;
             IList<SwaggerSpecification> swaggerSpecifications = default;
             IList<string> allowedUnauthorizedActions = default;
             IList<AuthorizationActionMapping> authorizationActionMappings = default;
+            ResourceTypeRegistrationPropertiesAsyncTimeoutRules asyncTimeoutRules = default;
             IList<LinkedAccessCheck> linkedAccessChecks = default;
             string defaultApiVersion = default;
             IList<LoggingRule> loggingRules = default;
@@ -298,6 +330,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             ResourceMovePolicy resourceMovePolicy = default;
             ResourceDeletionPolicy? resourceDeletionPolicy = default;
+            IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions = default;
+            ResourceTypeRegistrationPropertiesResourceGraphConfiguration resourceGraphConfiguration = default;
+            ResourceTypeRegistrationPropertiesManagement management = default;
+            OpenApiConfiguration openApiConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -349,7 +385,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    marketplaceType = property.Value.GetString().ToMarketplaceType();
+                    marketplaceType = new ResourceTypeRegistrationPropertiesMarketplaceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("swaggerSpecifications"u8))
@@ -392,6 +428,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         array.Add(AuthorizationActionMapping.DeserializeAuthorizationActionMapping(item, options));
                     }
                     authorizationActionMappings = array;
+                    continue;
+                }
+                if (property.NameEquals("asyncTimeoutRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    asyncTimeoutRules = ResourceTypeRegistrationPropertiesAsyncTimeoutRules.DeserializeResourceTypeRegistrationPropertiesAsyncTimeoutRules(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linkedAccessChecks"u8))
@@ -619,6 +664,47 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceDeletionPolicy = new ResourceDeletionPolicy(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("resourceConcurrencyControlOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ResourceConcurrencyControlOption> dictionary = new Dictionary<string, ResourceConcurrencyControlOption>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, ResourceConcurrencyControlOption.DeserializeResourceConcurrencyControlOption(property0.Value, options));
+                    }
+                    resourceConcurrencyControlOptions = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("resourceGraphConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGraphConfiguration = ResourceTypeRegistrationPropertiesResourceGraphConfiguration.DeserializeResourceTypeRegistrationPropertiesResourceGraphConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("management"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    management = ResourceTypeRegistrationPropertiesManagement.DeserializeResourceTypeRegistrationPropertiesManagement(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("openApiConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    openApiConfiguration = OpenApiConfiguration.DeserializeOpenApiConfiguration(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -634,6 +720,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 swaggerSpecifications ?? new ChangeTrackingList<SwaggerSpecification>(),
                 allowedUnauthorizedActions ?? new ChangeTrackingList<string>(),
                 authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(),
+                asyncTimeoutRules,
                 linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(),
                 defaultApiVersion,
                 loggingRules ?? new ChangeTrackingList<LoggingRule>(),
@@ -655,6 +742,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
                 resourceMovePolicy,
                 resourceDeletionPolicy,
+                resourceConcurrencyControlOptions ?? new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>(),
+                resourceGraphConfiguration,
+                management,
+                openApiConfiguration,
                 serializedAdditionalRawData);
         }
 

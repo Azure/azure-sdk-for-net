@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="extendedLocations"></param>
         /// <param name="extendedLocationType"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeSkuLocationInfo(AzureLocation location, IList<string> zones, IList<ResourceTypeSkuZoneDetail> zoneDetails, IList<string> extendedLocations, ProviderHubExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceTypeSkuLocationInfo(AzureLocation location, IList<string> zones, IList<ResourceTypeSkuZoneDetail> zoneDetails, IList<string> extendedLocations, SkuLocationInfoType? extendedLocationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Zones = zones;
@@ -87,6 +87,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets the extended locations. </summary>
         public IList<string> ExtendedLocations { get; }
         /// <summary> Gets or sets the extended location type. </summary>
-        public ProviderHubExtendedLocationType? ExtendedLocationType { get; set; }
+        public SkuLocationInfoType? ExtendedLocationType { get; set; }
     }
 }

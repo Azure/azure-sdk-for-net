@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(ExpeditedRollout))
+            {
+                writer.WritePropertyName("expeditedRollout"u8);
+                writer.WriteObjectValue(ExpeditedRollout, options);
+            }
             if (Optional.IsDefined(Canary))
             {
                 writer.WritePropertyName("canary"u8);
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
+            DefaultRolloutSpecificationExpeditedRollout expeditedRollout = default;
             CanaryTrafficRegionRolloutConfiguration canary = default;
             TrafficRegionRolloutConfiguration lowTraffic = default;
             TrafficRegionRolloutConfiguration mediumTraffic = default;
@@ -121,6 +127,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("expeditedRollout"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expeditedRollout = DefaultRolloutSpecificationExpeditedRollout.DeserializeDefaultRolloutSpecificationExpeditedRollout(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("canary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -205,6 +220,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DefaultRolloutSpecification(
+                expeditedRollout,
                 canary,
                 lowTraffic,
                 mediumTraffic,

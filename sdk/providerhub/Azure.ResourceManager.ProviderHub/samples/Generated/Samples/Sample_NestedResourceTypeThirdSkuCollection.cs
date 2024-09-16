@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SkusGetNestedResourceTypeThird()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeThird.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/Skus_GetNestedResourceTypeThird.json
             // this example is just showing the usage of "Skus_GetNestedResourceTypeThird" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_SkusGetNestedResourceTypeThird()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeThird.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/Skus_GetNestedResourceTypeThird.json
             // this example is just showing the usage of "Skus_GetNestedResourceTypeThird" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_SkusGetNestedResourceTypeThird()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeThird.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/Skus_GetNestedResourceTypeThird.json
             // this example is just showing the usage of "Skus_GetNestedResourceTypeThird" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_SkusCreateOrUpdateNestedResourceTypeThird()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_CreateOrUpdateNestedResourceTypeThird.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/Skus_CreateOrUpdateNestedResourceTypeThird.json
             // this example is just showing the usage of "Skus_CreateOrUpdateNestedResourceTypeThird" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -196,7 +196,7 @@ new ResourceTypeSkuCost("xxx")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_SkusListByResourceTypeRegistrationsNestedResourceTypeThird()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_ListByResourceTypeRegistrationsNestedResourceTypeThird.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/Skus_ListByResourceTypeRegistrationsNestedResourceTypeThird.json
             // this example is just showing the usage of "Skus_ListByResourceTypeRegistrationsNestedResourceTypeThird" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

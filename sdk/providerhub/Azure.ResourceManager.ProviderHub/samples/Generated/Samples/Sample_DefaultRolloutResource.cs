@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_DefaultRolloutsGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/DefaultRollouts_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/DefaultRollouts_Get.json
             // this example is just showing the usage of "DefaultRollouts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DefaultRolloutsDelete()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/DefaultRollouts_Delete.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/DefaultRollouts_Delete.json
             // this example is just showing the usage of "DefaultRollouts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_DefaultRolloutsCreateOrUpdate()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/DefaultRollouts_CreateOrUpdate.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/DefaultRollouts_CreateOrUpdate.json
             // this example is just showing the usage of "DefaultRollouts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
                 {
                     Specification = new DefaultRolloutSpecification()
                     {
+                        ExpeditedRolloutEnabled = true,
                         Canary = new CanaryTrafficRegionRolloutConfiguration()
                         {
                             SkipRegions =
@@ -131,7 +132,7 @@ new AzureLocation("eastus2euap")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Stop_DefaultRolloutsStop()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/DefaultRollouts_Stop.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2023-04-01-preview/examples/DefaultRollouts_Stop.json
             // this example is just showing the usage of "DefaultRollouts_Stop" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

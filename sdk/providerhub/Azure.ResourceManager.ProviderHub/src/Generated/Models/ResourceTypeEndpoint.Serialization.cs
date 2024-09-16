@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
+            if (Optional.IsDefined(EndpointType))
+            {
+                writer.WritePropertyName("endpointType"u8);
+                writer.WriteStringValue(EndpointType.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -126,6 +131,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             FeaturesRule featuresRule = default;
             IList<ResourceTypeExtension> extensions = default;
             TimeSpan? timeout = default;
+            EndpointType? endpointType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,6 +219,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("endpointType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpointType = new EndpointType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -227,6 +242,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 featuresRule,
                 extensions ?? new ChangeTrackingList<ResourceTypeExtension>(),
                 timeout,
+                endpointType,
                 serializedAdditionalRawData);
         }
 

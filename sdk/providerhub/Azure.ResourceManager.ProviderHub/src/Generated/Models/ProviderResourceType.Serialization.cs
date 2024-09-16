@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(MarketplaceType))
             {
                 writer.WritePropertyName("marketplaceType"u8);
-                writer.WriteStringValue(MarketplaceType.Value.ToSerialString());
+                writer.WriteStringValue(MarketplaceType.Value.ToString());
             }
             if (Optional.IsDefined(IdentityManagement))
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IReadOnlyList<LoggingRule> loggingRules = default;
             IReadOnlyList<ThrottlingRule> throttlingRules = default;
             IReadOnlyList<ResourceProviderEndpoint> endpoints = default;
-            MarketplaceType? marketplaceType = default;
+            ResourceTypeMarketplaceType? marketplaceType = default;
             IdentityManagement identityManagement = default;
             BinaryData metadata = default;
             IReadOnlyList<string> requiredFeatures = default;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    marketplaceType = property.Value.GetString().ToMarketplaceType();
+                    marketplaceType = new ResourceTypeMarketplaceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identityManagement"u8))

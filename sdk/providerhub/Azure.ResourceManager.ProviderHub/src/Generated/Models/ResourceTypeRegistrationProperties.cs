@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ServiceTreeInfos = new ChangeTrackingList<ServiceTreeInfo>();
             SubscriptionStateRules = new ChangeTrackingList<ProviderSubscriptionStateRule>();
             ExtendedLocations = new ChangeTrackingList<ProviderHubExtendedLocationOptions>();
+            ResourceConcurrencyControlOptions = new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationProperties"/>. </summary>
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="swaggerSpecifications"></param>
         /// <param name="allowedUnauthorizedActions"></param>
         /// <param name="authorizationActionMappings"></param>
+        /// <param name="asyncTimeoutRules"></param>
         /// <param name="linkedAccessChecks"></param>
         /// <param name="defaultApiVersion"></param>
         /// <param name="loggingRules"></param>
@@ -78,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="requiredFeatures"></param>
         /// <param name="featuresRule"></param>
         /// <param name="isAsyncOperationEnabled"></param>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="isThirdPartyS2SEnabled"></param>
         /// <param name="subscriptionLifecycleNotificationSpecifications"></param>
         /// <param name="isPureProxy"></param>
@@ -92,8 +94,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="extendedLocations"></param>
         /// <param name="resourceMovePolicy"></param>
         /// <param name="resourceDeletionPolicy"></param>
+        /// <param name="resourceConcurrencyControlOptions"> Dictionary of &lt;ResourceConcurrencyControlOption&gt;. </param>
+        /// <param name="resourceGraphConfiguration"></param>
+        /// <param name="management"></param>
+        /// <param name="openApiConfiguration"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeRegistrationProperties(ResourceRoutingType? routingType, ResourceTypeRegistrationRegionality? regionality, IList<ResourceTypeEndpoint> endpoints, ResourceTypeExtensionOptions extensionOptions, MarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AuthorizationActionMapping> authorizationActionMappings, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, FeaturesRule featuresRule, bool? isAsyncOperationEnabled, ProviderHubProvisioningState? provisioningState, bool? isThirdPartyS2SEnabled, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, bool? isPureProxy, IdentityManagementProperties identityManagement, CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, RequestHeaderOptions requestHeaderOptions, IList<ProviderSubscriptionStateRule> subscriptionStateRules, TemplateDeploymentOptions templateDeploymentOptions, IList<ProviderHubExtendedLocationOptions> extendedLocations, ResourceMovePolicy resourceMovePolicy, ResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceTypeRegistrationProperties(ResourceRoutingType? routingType, ResourceTypeRegistrationRegionality? regionality, IList<ResourceTypeEndpoint> endpoints, ResourceTypeExtensionOptions extensionOptions, ResourceTypeRegistrationPropertiesMarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AuthorizationActionMapping> authorizationActionMappings, ResourceTypeRegistrationPropertiesAsyncTimeoutRules asyncTimeoutRules, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, FeaturesRule featuresRule, bool? isAsyncOperationEnabled, ProviderHubProvisioningState? provisioningState, bool? isThirdPartyS2SEnabled, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, bool? isPureProxy, IdentityManagementProperties identityManagement, CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, RequestHeaderOptions requestHeaderOptions, IList<ProviderSubscriptionStateRule> subscriptionStateRules, TemplateDeploymentOptions templateDeploymentOptions, IList<ProviderHubExtendedLocationOptions> extendedLocations, ResourceMovePolicy resourceMovePolicy, ResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions, ResourceTypeRegistrationPropertiesResourceGraphConfiguration resourceGraphConfiguration, ResourceTypeRegistrationPropertiesManagement management, OpenApiConfiguration openApiConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RoutingType = routingType;
             Regionality = regionality;
@@ -103,6 +109,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             SwaggerSpecifications = swaggerSpecifications;
             AllowedUnauthorizedActions = allowedUnauthorizedActions;
             AuthorizationActionMappings = authorizationActionMappings;
+            AsyncTimeoutRules = asyncTimeoutRules;
             LinkedAccessChecks = linkedAccessChecks;
             DefaultApiVersion = defaultApiVersion;
             LoggingRules = loggingRules;
@@ -124,6 +131,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExtendedLocations = extendedLocations;
             ResourceMovePolicy = resourceMovePolicy;
             ResourceDeletionPolicy = resourceDeletionPolicy;
+            ResourceConcurrencyControlOptions = resourceConcurrencyControlOptions;
+            ResourceGraphConfiguration = resourceGraphConfiguration;
+            Management = management;
+            OpenApiConfiguration = openApiConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -148,13 +159,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Gets or sets the marketplace type. </summary>
-        public MarketplaceType? MarketplaceType { get; set; }
+        public ResourceTypeRegistrationPropertiesMarketplaceType? MarketplaceType { get; set; }
         /// <summary> Gets the swagger specifications. </summary>
         public IList<SwaggerSpecification> SwaggerSpecifications { get; }
         /// <summary> Gets the allowed unauthorized actions. </summary>
         public IList<string> AllowedUnauthorizedActions { get; }
         /// <summary> Gets the authorization action mappings. </summary>
         public IList<AuthorizationActionMapping> AuthorizationActionMappings { get; }
+        /// <summary> Gets or sets the async timeout rules. </summary>
+        public ResourceTypeRegistrationPropertiesAsyncTimeoutRules AsyncTimeoutRules { get; set; }
         /// <summary> Gets the linked access checks. </summary>
         public IList<LinkedAccessCheck> LinkedAccessChecks { get; }
         /// <summary> Gets or sets the default api version. </summary>
@@ -179,7 +192,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets or sets the is async operation enabled. </summary>
         public bool? IsAsyncOperationEnabled { get; set; }
-        /// <summary> Gets or sets the provisioning state. </summary>
+        /// <summary> The provisioned state of the resource. </summary>
         public ProviderHubProvisioningState? ProvisioningState { get; set; }
         /// <summary> Gets or sets the is third party s 2 s enabled. </summary>
         public bool? IsThirdPartyS2SEnabled { get; set; }
@@ -219,5 +232,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceMovePolicy ResourceMovePolicy { get; set; }
         /// <summary> Gets or sets the resource deletion policy. </summary>
         public ResourceDeletionPolicy? ResourceDeletionPolicy { get; set; }
+        /// <summary> Dictionary of &lt;ResourceConcurrencyControlOption&gt;. </summary>
+        public IDictionary<string, ResourceConcurrencyControlOption> ResourceConcurrencyControlOptions { get; }
+        /// <summary> Gets or sets the resource graph configuration. </summary>
+        public ResourceTypeRegistrationPropertiesResourceGraphConfiguration ResourceGraphConfiguration { get; set; }
+        /// <summary> Gets or sets the management. </summary>
+        public ResourceTypeRegistrationPropertiesManagement Management { get; set; }
+        /// <summary> Gets or sets the open api configuration. </summary>
+        internal OpenApiConfiguration OpenApiConfiguration { get; set; }
+        /// <summary> Indicates whether a non compliance response is allowed for a LIST call. </summary>
+        public bool? AllowNoncompliantCollectionResponse
+        {
+            get => OpenApiConfiguration is null ? default : OpenApiConfiguration.AllowNoncompliantCollectionResponse;
+            set
+            {
+                if (OpenApiConfiguration is null)
+                    OpenApiConfiguration = new OpenApiConfiguration();
+                OpenApiConfiguration.AllowNoncompliantCollectionResponse = value;
+            }
+        }
     }
 }

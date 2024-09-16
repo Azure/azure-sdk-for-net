@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly ProviderRegistrationsRestOperations _providerRegistrationRestClient;
         private readonly ClientDiagnostics _defaultClientDiagnostics;
         private readonly ProviderHubRestOperations _defaultRestClient;
+        private readonly ClientDiagnostics _resourceActionsClientDiagnostics;
+        private readonly ResourceActionsRestOperations _resourceActionsRestClient;
         private readonly ProviderRegistrationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -66,6 +68,8 @@ namespace Azure.ResourceManager.ProviderHub
             _providerRegistrationRestClient = new ProviderRegistrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerRegistrationApiVersion);
             _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _defaultRestClient = new ProviderHubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _resourceActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _resourceActionsRestClient = new ResourceActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +216,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +254,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,7 +285,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +323,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +354,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -381,7 +385,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,7 +425,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -461,7 +465,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -505,7 +509,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -549,7 +553,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -595,7 +599,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -641,7 +645,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -675,7 +679,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -709,7 +713,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -747,7 +751,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -764,6 +768,96 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 var response = _defaultRestClient.CheckinManifest(Id.SubscriptionId, Id.Name, content, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourceActions/{resourceActionName}/deleteResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceActions_DeleteResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceActionName"> The resource action name. </param>
+        /// <param name="properties"> The properties supplied to the DeleteResources operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceActionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceActionName"/> or <paramref name="properties"/> is null. </exception>
+        public virtual async Task<ArmOperation<ResourceManagementAction>> DeleteResourcesResourceActionAsync(WaitUntil waitUntil, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceActionName, nameof(resourceActionName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using var scope = _resourceActionsClientDiagnostics.CreateScope("ProviderRegistrationResource.DeleteResourcesResourceAction");
+            scope.Start();
+            try
+            {
+                var response = await _resourceActionsRestClient.DeleteResourcesAsync(Id.SubscriptionId, Id.Name, resourceActionName, properties, cancellationToken).ConfigureAwait(false);
+                var operation = new ProviderHubArmOperation<ResourceManagementAction>(new ResourceManagementActionOperationSource(), _resourceActionsClientDiagnostics, Pipeline, _resourceActionsRestClient.CreateDeleteResourcesRequest(Id.SubscriptionId, Id.Name, resourceActionName, properties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourceActions/{resourceActionName}/deleteResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceActions_DeleteResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceActionName"> The resource action name. </param>
+        /// <param name="properties"> The properties supplied to the DeleteResources operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceActionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceActionName"/> or <paramref name="properties"/> is null. </exception>
+        public virtual ArmOperation<ResourceManagementAction> DeleteResourcesResourceAction(WaitUntil waitUntil, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceActionName, nameof(resourceActionName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using var scope = _resourceActionsClientDiagnostics.CreateScope("ProviderRegistrationResource.DeleteResourcesResourceAction");
+            scope.Start();
+            try
+            {
+                var response = _resourceActionsRestClient.DeleteResources(Id.SubscriptionId, Id.Name, resourceActionName, properties, cancellationToken);
+                var operation = new ProviderHubArmOperation<ResourceManagementAction>(new ResourceManagementActionOperationSource(), _resourceActionsClientDiagnostics, Pipeline, _resourceActionsRestClient.CreateDeleteResourcesRequest(Id.SubscriptionId, Id.Name, resourceActionName, properties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

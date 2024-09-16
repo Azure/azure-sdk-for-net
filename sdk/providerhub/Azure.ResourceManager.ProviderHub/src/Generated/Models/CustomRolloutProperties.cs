@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomRolloutProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="specification"></param>
         /// <param name="status"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets or sets the provisioning state. </summary>
+        /// <summary> The provisioned state of the resource. </summary>
         public ProviderHubProvisioningState? ProvisioningState { get; set; }
         /// <summary> Gets or sets the specification. </summary>
         public CustomRolloutSpecification Specification { get; set; }

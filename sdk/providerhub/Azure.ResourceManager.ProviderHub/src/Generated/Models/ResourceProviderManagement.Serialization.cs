@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ResourceAccessPolicy))
             {
                 writer.WritePropertyName("resourceAccessPolicy"u8);
-                writer.WriteStringValue(ResourceAccessPolicy.Value.ToSerialString());
+                writer.WriteStringValue(ResourceAccessPolicy.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ResourceAccessRoles))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string incidentRoutingTeam = default;
             string incidentContactEmail = default;
             IList<ServiceTreeInfo> serviceTreeInfos = default;
-            ResourceAccessPolicy? resourceAccessPolicy = default;
+            ResourceProviderManagementResourceAccessPolicy? resourceAccessPolicy = default;
             IList<BinaryData> resourceAccessRoles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceAccessPolicy = property.Value.GetString().ToResourceAccessPolicy();
+                    resourceAccessPolicy = new ResourceProviderManagementResourceAccessPolicy(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceAccessRoles"u8))

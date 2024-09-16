@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="templateDeploymentOptions"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="providerHubMetadata"></param>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="subscriptionLifecycleNotificationSpecifications"></param>
         internal ProviderRegistrationProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, ProviderHubMetadata providerHubMetadata, ProviderHubProvisioningState? provisioningState, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications) : base(providerAuthentication, providerAuthorizations, @namespace, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, metadata, templateDeploymentOptions, serializedAdditionalRawData)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets or sets the provider hub metadata. </summary>
         public ProviderHubMetadata ProviderHubMetadata { get; set; }
-        /// <summary> Gets or sets the provisioning state. </summary>
+        /// <summary> The provisioned state of the resource. </summary>
         public ProviderHubProvisioningState? ProvisioningState { get; set; }
         /// <summary> Gets or sets the subscription lifecycle notification specifications. </summary>
         public SubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ExtendedLocationType.Value.ToSerialString());
+                writer.WriteStringValue(ExtendedLocationType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<string> zones = default;
             IList<ResourceTypeSkuZoneDetail> zoneDetails = default;
             IList<string> extendedLocations = default;
-            ProviderHubExtendedLocationType? type = default;
+            SkuLocationInfoType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    type = property.Value.GetString().ToProviderHubExtendedLocationType();
+                    type = new SkuLocationInfoType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
