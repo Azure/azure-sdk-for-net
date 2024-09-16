@@ -43,14 +43,14 @@ public class PlaywrightService
     /// Initializes a new instance of the <see cref="PlaywrightService"/> class.
     /// </summary>
     /// <param name="playwrightServiceSettings"></param>
-    /// <param name="tokenCredential"></param>
-    public PlaywrightService(PlaywrightServiceSettings playwrightServiceSettings, TokenCredential? tokenCredential = null) : this(
+    /// <param name="credential"></param>
+    public PlaywrightService(PlaywrightServiceSettings playwrightServiceSettings, TokenCredential? credential = null) : this(
         os: playwrightServiceSettings.Os,
         runId: playwrightServiceSettings.RunId,
         exposeNetwork: playwrightServiceSettings.ExposeNetwork,
         defaultAuth: playwrightServiceSettings.DefaultAuth,
         useCloudHostedBrowsers: playwrightServiceSettings.UseCloudHostedBrowsers,
-        tokenCredential: tokenCredential ?? playwrightServiceSettings.AzureTokenCredential
+        credential: credential ?? playwrightServiceSettings.AzureTokenCredential
     )
     {
         // No-op
@@ -64,21 +64,21 @@ public class PlaywrightService
     /// <param name="exposeNetwork">The network exposure.</param>
     /// <param name="defaultAuth">The default authentication mechanism.</param>
     /// <param name="useCloudHostedBrowsers">Whether to use cloud-hosted browsers.</param>
-    /// <param name="tokenCredential">The token credential.</param>
-    public PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, bool? useCloudHostedBrowsers = null, TokenCredential? tokenCredential = null)
+    /// <param name="credential">The token credential.</param>
+    public PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, bool? useCloudHostedBrowsers = null, TokenCredential? credential = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
-        _entraLifecycle = new EntraLifecycle(tokenCredential: tokenCredential);
+        _entraLifecycle = new EntraLifecycle(tokenCredential: credential);
         _jsonWebTokenHandler = new JsonWebTokenHandler();
         InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, defaultAuth, useCloudHostedBrowsers);
     }
 
-    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? tokenCredential = null)
+    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
-        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(tokenCredential);
+        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential);
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, defaultAuth, useCloudHostedBrowsers);
     }

@@ -23,7 +23,7 @@ public class PlaywrightServiceClientTests : RecordedTestBase<PlaywrightServiceTe
         var region = TestEnvironment.Region;
         var serviceApiEndpoint = TestUtils.GetPlaywrightServiceAPIEndpoint(workspaceId, region);
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, serviceApiEndpoint);
-        _playwrightService = new PlaywrightService(new PlaywrightServiceSettings(), tokenCredential: TestEnvironment.Credential);
+        _playwrightService = new PlaywrightService(new PlaywrightServiceSettings(), credential: TestEnvironment.Credential);
         await _playwrightService.InitializeAsync();
     }
 

@@ -18,9 +18,9 @@ public class PlaywrightServiceNUnit : PlaywrightService
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightServiceNUnit"/> class.
     /// </summary>
-    /// <param name="tokenCredential">The azure token credential to use for authentication.</param>
-    public PlaywrightServiceNUnit(TokenCredential? tokenCredential = null)
-        : base(playwrightServiceSettings, tokenCredential: tokenCredential)
+    /// <param name="credential">The azure token credential to use for authentication.</param>
+    public PlaywrightServiceNUnit(TokenCredential? credential = null)
+        : base(playwrightServiceSettings, credential: credential)
     {
     }
 
