@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<ApiManagementGatewayData> value = default;
+            IReadOnlyList<ApiManagementSelfHostedGatewayData> value = default;
             long? count = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<ApiManagementGatewayData> array = new List<ApiManagementGatewayData>();
+                    List<ApiManagementSelfHostedGatewayData> array = new List<ApiManagementSelfHostedGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementGatewayData.DeserializeApiManagementGatewayData(item, options));
+                        array.Add(ApiManagementSelfHostedGatewayData.DeserializeApiManagementSelfHostedGatewayData(item, options));
                     }
                     value = array;
                     continue;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GatewayListResult(value ?? new ChangeTrackingList<ApiManagementGatewayData>(), count, nextLink, serializedAdditionalRawData);
+            return new GatewayListResult(value ?? new ChangeTrackingList<ApiManagementSelfHostedGatewayData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

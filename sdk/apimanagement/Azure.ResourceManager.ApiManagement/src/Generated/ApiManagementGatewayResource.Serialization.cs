@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementGatewayResource : IJsonModel<ApiManagementGatewayData>
+    public partial class ApiManagementGatewayResource : IJsonModel<ApiManagementGatewayResourceData>
     {
-        void IJsonModel<ApiManagementGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayData>)Data).Write(writer, options);
+        void IJsonModel<ApiManagementGatewayResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayResourceData>)Data).Write(writer, options);
 
-        ApiManagementGatewayData IJsonModel<ApiManagementGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayData>)Data).Create(ref reader, options);
+        ApiManagementGatewayResourceData IJsonModel<ApiManagementGatewayResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementGatewayResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ApiManagementGatewayData IPersistableModel<ApiManagementGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGatewayData>(data, options);
+        ApiManagementGatewayResourceData IPersistableModel<ApiManagementGatewayResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGatewayResourceData>(data, options);
 
-        string IPersistableModel<ApiManagementGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementGatewayData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementGatewayResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementGatewayResourceData>)Data).GetFormatFromOptions(options);
     }
 }

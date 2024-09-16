@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ApiManagementListGatewayHostnameConfigurations()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListGatewayHostnameConfigurations.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListGatewayHostnameConfigurations.json
             // this example is just showing the usage of "GatewayHostnameConfiguration_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApiManagementGatewayResource created on azure
-            // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
+            // this example assumes you already have this ApiManagementSelfHostedGatewayResource created on azure
+            // for more information of creating ApiManagementSelfHostedGatewayResource, please refer to the document of ApiManagementSelfHostedGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string gatewayId = "gw1";
-            ResourceIdentifier apiManagementGatewayResourceId = ApiManagementGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
-            ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
+            ResourceIdentifier apiManagementSelfHostedGatewayResourceId = ApiManagementSelfHostedGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
+            ApiManagementSelfHostedGatewayResource apiManagementSelfHostedGateway = client.GetApiManagementSelfHostedGatewayResource(apiManagementSelfHostedGatewayResourceId);
 
             // get the collection of this ApiManagementGatewayHostnameConfigurationResource
-            ApiManagementGatewayHostnameConfigurationCollection collection = apiManagementGateway.GetApiManagementGatewayHostnameConfigurations();
+            ApiManagementGatewayHostnameConfigurationCollection collection = apiManagementSelfHostedGateway.GetApiManagementGatewayHostnameConfigurations();
 
             // invoke the operation and iterate over the result
             await foreach (ApiManagementGatewayHostnameConfigurationResource item in collection.GetAllAsync())
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ApiManagementGetGatewayHostnameConfiguration()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetGatewayHostnameConfiguration.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetGatewayHostnameConfiguration.json
             // this example is just showing the usage of "GatewayHostnameConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApiManagementGatewayResource created on azure
-            // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
+            // this example assumes you already have this ApiManagementSelfHostedGatewayResource created on azure
+            // for more information of creating ApiManagementSelfHostedGatewayResource, please refer to the document of ApiManagementSelfHostedGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string gatewayId = "gw1";
-            ResourceIdentifier apiManagementGatewayResourceId = ApiManagementGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
-            ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
+            ResourceIdentifier apiManagementSelfHostedGatewayResourceId = ApiManagementSelfHostedGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
+            ApiManagementSelfHostedGatewayResource apiManagementSelfHostedGateway = client.GetApiManagementSelfHostedGatewayResource(apiManagementSelfHostedGatewayResourceId);
 
             // get the collection of this ApiManagementGatewayHostnameConfigurationResource
-            ApiManagementGatewayHostnameConfigurationCollection collection = apiManagementGateway.GetApiManagementGatewayHostnameConfigurations();
+            ApiManagementGatewayHostnameConfigurationCollection collection = apiManagementSelfHostedGateway.GetApiManagementGatewayHostnameConfigurations();
 
             // invoke the operation
             string hcId = "default";
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ApiManagementGetGatewayHostnameConfiguration()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetGatewayHostnameConfiguration.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetGatewayHostnameConfiguration.json
             // this example is just showing the usage of "GatewayHostnameConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApiManagementGatewayResource created on azure
-            // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
+            // this example assumes you already have this ApiManagementSelfHostedGatewayResource created on azure
+            // for more information of creating ApiManagementSelfHostedGatewayResource, please refer to the document of ApiManagementSelfHostedGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string gatewayId = "gw1";
-            ResourceIdentifier apiManagementGatewayResourceId = ApiManagementGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
-            ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
+            ResourceIdentifier apiManagementSelfHostedGatewayResourceId = ApiManagementSelfHostedGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
+            ApiManagementSelfHostedGatewayResource apiManagementSelfHostedGateway = client.GetApiManagementSelfHostedGatewayResource(apiManagementSelfHostedGatewayResourceId);
 
             // get the collection of this ApiManagementGatewayHostnameConfigurationResource
-            ApiManagementGatewayHostnameConfigurationCollection collection = apiManagementGateway.GetApiManagementGatewayHostnameConfigurations();
+            ApiManagementGatewayHostnameConfigurationCollection collection = apiManagementSelfHostedGateway.GetApiManagementGatewayHostnameConfigurations();
 
             // invoke the operation
             string hcId = "default";
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_ApiManagementGetGatewayHostnameConfiguration()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetGatewayHostnameConfiguration.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetGatewayHostnameConfiguration.json
             // this example is just showing the usage of "GatewayHostnameConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,17 +133,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApiManagementGatewayResource created on azure
-            // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
+            // this example assumes you already have this ApiManagementSelfHostedGatewayResource created on azure
+            // for more information of creating ApiManagementSelfHostedGatewayResource, please refer to the document of ApiManagementSelfHostedGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string gatewayId = "gw1";
-            ResourceIdentifier apiManagementGatewayResourceId = ApiManagementGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
-            ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
+            ResourceIdentifier apiManagementSelfHostedGatewayResourceId = ApiManagementSelfHostedGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
+            ApiManagementSelfHostedGatewayResource apiManagementSelfHostedGateway = client.GetApiManagementSelfHostedGatewayResource(apiManagementSelfHostedGatewayResourceId);
 
             // get the collection of this ApiManagementGatewayHostnameConfigurationResource
-            ApiManagementGatewayHostnameConfigurationCollection collection = apiManagementGateway.GetApiManagementGatewayHostnameConfigurations();
+            ApiManagementGatewayHostnameConfigurationCollection collection = apiManagementSelfHostedGateway.GetApiManagementGatewayHostnameConfigurations();
 
             // invoke the operation
             string hcId = "default";
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ApiManagementCreateGatewayHostnameConfiguration()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateGatewayHostnameConfiguration.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateGatewayHostnameConfiguration.json
             // this example is just showing the usage of "GatewayHostnameConfiguration_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -177,17 +177,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApiManagementGatewayResource created on azure
-            // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
+            // this example assumes you already have this ApiManagementSelfHostedGatewayResource created on azure
+            // for more information of creating ApiManagementSelfHostedGatewayResource, please refer to the document of ApiManagementSelfHostedGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string gatewayId = "gw1";
-            ResourceIdentifier apiManagementGatewayResourceId = ApiManagementGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
-            ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
+            ResourceIdentifier apiManagementSelfHostedGatewayResourceId = ApiManagementSelfHostedGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
+            ApiManagementSelfHostedGatewayResource apiManagementSelfHostedGateway = client.GetApiManagementSelfHostedGatewayResource(apiManagementSelfHostedGatewayResourceId);
 
             // get the collection of this ApiManagementGatewayHostnameConfigurationResource
-            ApiManagementGatewayHostnameConfigurationCollection collection = apiManagementGateway.GetApiManagementGatewayHostnameConfigurations();
+            ApiManagementGatewayHostnameConfigurationCollection collection = apiManagementSelfHostedGateway.GetApiManagementGatewayHostnameConfigurations();
 
             // invoke the operation
             string hcId = "default";

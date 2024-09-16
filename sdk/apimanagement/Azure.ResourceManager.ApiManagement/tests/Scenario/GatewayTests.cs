@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var collection = ApiServiceResource.GetApiManagementGateways();
+            var collection = ApiServiceResource.GetApiManagementSelfHostedGateways();
 
             // list gateways: there should be none
             var gatewayListResponse = await collection.GetAllAsync().ToEnumerableAsync();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             string certificateId = Recording.GenerateAssetName("certificateId");
             string hostnameConfigId = Recording.GenerateAssetName("hostnameConfigId");
 
-            var gatewayContract = new ApiManagementGatewayData()
+            var gatewayContract = new ApiManagementSelfHostedGatewayData()
             {
                 LocationData = new ResourceLocationDataContract("Microsoft")
                 {
