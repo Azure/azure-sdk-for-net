@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure DataMovement Blobs Stress Testing</Description>
-    <Version>12.0.0-beta.6</Version>
     <PackageTags>Microsoft Azure Storage DataMovement, DataMovement, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
@@ -10,6 +9,7 @@
       $(NoWarn);CA2213
     </NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +22,7 @@
     <PackageReference Include="CommandLineParser" />
     <PackageReference Include="Microsoft.ApplicationInsights" />
     <PackageReference Include="NUnit" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
@@ -44,5 +45,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageStressTestSharedSources)*.cs" LinkBase="Shared\Stress" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="C:\azure-sdk-for-net\sdk\storage\Azure.Storage.Common\src\stress\Shared\ConfigurationHelper.cs" />
   </ItemGroup>
 </Project>

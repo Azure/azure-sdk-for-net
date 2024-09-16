@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Stress", "Azure.Storage.DataMovement.Blobs\stress\src\Azure.Storage.DataMovement.Blobs.Stress.csproj", "{1AD25785-5234-46E3-BF0C-A04B76DDF9E1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{C1C88D7D-2513-4A33-BB8B-11FCF2DE301A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{1AD25785-5234-46E3-BF0C-A04B76DDF9E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AD25785-5234-46E3-BF0C-A04B76DDF9E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AD25785-5234-46E3-BF0C-A04B76DDF9E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1C88D7D-2513-4A33-BB8B-11FCF2DE301A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1C88D7D-2513-4A33-BB8B-11FCF2DE301A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1C88D7D-2513-4A33-BB8B-11FCF2DE301A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1C88D7D-2513-4A33-BB8B-11FCF2DE301A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
