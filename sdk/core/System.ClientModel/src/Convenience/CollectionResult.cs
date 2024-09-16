@@ -2,19 +2,15 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Threading;
 
 namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591 // public XML comments
 public abstract class CollectionResult
 {
-    protected CollectionResult(CancellationToken cancellationToken)
+    protected CollectionResult()
     {
-        CancellationToken = cancellationToken;
     }
-
-    protected CancellationToken CancellationToken { get; }
 
     public abstract IEnumerable<ClientResult> GetRawPages();
 

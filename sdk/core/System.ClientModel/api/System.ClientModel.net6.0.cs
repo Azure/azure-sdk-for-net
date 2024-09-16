@@ -8,7 +8,7 @@ namespace System.ClientModel
     }
     public abstract partial class AsyncCollectionResult<T> : System.ClientModel.Primitives.AsyncCollectionResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
-        protected internal AsyncCollectionResult(System.Threading.CancellationToken cancellationToken) : base (default(System.Threading.CancellationToken)) { }
+        protected internal AsyncCollectionResult() { }
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
@@ -47,7 +47,7 @@ namespace System.ClientModel
     }
     public abstract partial class CollectionResult<T> : System.ClientModel.Primitives.CollectionResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
-        protected internal CollectionResult(System.Threading.CancellationToken cancellationToken) : base (default(System.Threading.CancellationToken)) { }
+        protected internal CollectionResult() { }
         public System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -73,8 +73,7 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class AsyncCollectionResult
     {
-        protected AsyncCollectionResult(System.Threading.CancellationToken cancellationToken) { }
-        protected System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        protected AsyncCollectionResult() { }
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> GetRawPagesAsync();
     }
@@ -122,8 +121,7 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class CollectionResult
     {
-        protected CollectionResult(System.Threading.CancellationToken cancellationToken) { }
-        protected System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        protected CollectionResult() { }
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> GetRawPages();
     }

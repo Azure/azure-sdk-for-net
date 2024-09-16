@@ -4,6 +4,7 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace ClientModel.Tests.Collections;
 
@@ -14,13 +15,14 @@ internal class ValueCollectionResult : CollectionResult<ValueItem>
     private readonly int? _pageSize;
     private readonly int? _offset;
     private readonly RequestOptions? _options;
+    private readonly CancellationToken _cancellationToken;
 
     public ValueCollectionResult(int? pageSize, int? offset, RequestOptions? options)
-        : base(options?.CancellationToken ?? default)
     {
         _pageSize = pageSize;
         _offset = offset;
         _options = options;
+        _cancellationToken = _options?.CancellationToken ?? default;
 
         _mockPagesData = MockPageResponseData.GetPages(pageSize, offset);
     }
@@ -34,7 +36,7 @@ internal class ValueCollectionResult : CollectionResult<ValueItem>
         {
             // Simulate the pipeline checking for cancellation,
             // which happens in the transport
-            CancellationToken.ThrowIfCancellationRequested();
+            _cancellationToken.ThrowIfCancellationRequested();
 
             PipelineResponse response = new MockPageResponse(page);
             yield return ClientResult.FromResponse(response);

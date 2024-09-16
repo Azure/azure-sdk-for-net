@@ -15,8 +15,7 @@ namespace System.ClientModel;
 /// </summary>
 public abstract class AsyncCollectionResult<T> : AsyncCollectionResult, IAsyncEnumerable<T>
 {
-    protected internal AsyncCollectionResult(CancellationToken cancellationToken)
-        : base(cancellationToken)
+    protected internal AsyncCollectionResult()
     {
     }
 
