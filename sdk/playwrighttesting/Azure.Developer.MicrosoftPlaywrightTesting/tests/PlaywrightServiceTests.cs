@@ -52,7 +52,7 @@ public class PlaywrightServiceTests
     public void Constructor_NoConstructorParams_SetsEntraAuthMechanismAsDefault()
     {
         PlaywrightService service = new(entraLifecycle: null);
-        Assert.That(service.DefaultAuth, Is.EqualTo(ServiceAuth.Entra));
+        Assert.That(service.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
     }
 
     [Test]
@@ -64,7 +64,7 @@ public class PlaywrightServiceTests
             Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs), Is.EqualTo(Constants.s_default_os));
             Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork), Is.EqualTo(Constants.s_default_expose_network));
             Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId), Is.Not.Null);
-            Assert.That(playwrightService.DefaultAuth, Is.EqualTo(ServiceAuth.Entra));
+            Assert.That(playwrightService.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
             Assert.That(playwrightService.UseCloudHostedBrowsers, Is.True);
         });
     }
@@ -93,8 +93,8 @@ public class PlaywrightServiceTests
     [Test]
     public void Constructor_PassDefaultAuthMechanism_SetsDefaultAuthMechanism()
     {
-        var playwrightService = new PlaywrightService(entraLifecycle: null, defaultAuth: ServiceAuth.Token);
-        Assert.That(playwrightService.DefaultAuth, Is.EqualTo(ServiceAuth.Token));
+        var playwrightService = new PlaywrightService(entraLifecycle: null, serviceAuth: ServiceAuthType.AccessToken);
+        Assert.That(playwrightService.ServiceAuth, Is.EqualTo(ServiceAuthType.AccessToken));
     }
 
     [Test]
@@ -340,7 +340,7 @@ public class PlaywrightServiceTests
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, token);
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler());
-        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler(), defaultAuth: ServiceAuth.Token);
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler(), serviceAuth: ServiceAuthType.AccessToken);
         service.InitializeAsync().Wait();
         Assert.That(service.RotationTimer, Is.Null);
     }

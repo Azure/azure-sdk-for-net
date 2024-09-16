@@ -53,17 +53,17 @@ public class ServiceOs
 /// <summary>
 /// Contains constants for authentication methods.
 /// </summary>
-public class ServiceAuth
+public class ServiceAuthType
 {
     /// <summary>
     /// Entra ID authentication method.
     /// </summary>
-    public static readonly string Entra = "ENTRA";
+    public static readonly string EntraId = "EntraId";
 
     /// <summary>
-    /// Service token authentication method.
+    /// Access token authentication method.
     /// </summary>
-    public static readonly string Token = "TOKEN";
+    public static readonly string AccessToken = "AccessToken";
 };
 
 /// <summary>
@@ -150,7 +150,7 @@ public class RunSettingKey
     /// <summary>
     /// The default authentication setting key.
     /// </summary>
-    public static readonly string DefaultAuth = "DefaultAuth";
+    public static readonly string ServiceAuthType = "ServiceAuthType";
 
     /// <summary>
     /// The use cloud-hosted browsers setting key.

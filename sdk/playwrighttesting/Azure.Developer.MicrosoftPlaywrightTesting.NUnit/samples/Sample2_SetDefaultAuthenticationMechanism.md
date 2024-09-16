@@ -23,8 +23,8 @@ public class PlaywrightServiceSetup : PlaywrightServiceNUnit {};
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
     <TestRunParameters>
-        <!-- Set the default auth as TOKEN -->
-        <Parameter name="DefaultAuth" value="TOKEN" />
+        <!-- Set the service auth type as AccessToken -->
+        <Parameter name="ServiceAuth" value="AccessToken" />
     </TestRunParameters>
 </RunSettings>
 ```

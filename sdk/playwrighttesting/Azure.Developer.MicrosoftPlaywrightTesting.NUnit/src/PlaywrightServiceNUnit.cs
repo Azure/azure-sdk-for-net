@@ -31,7 +31,7 @@ public class PlaywrightServiceNUnit : PlaywrightService
         os: GetOsPlatform(TestContext.Parameters.Get(RunSettingKey.Os)),
         runId: TestContext.Parameters.Get(RunSettingKey.RunId),
         exposeNetwork: TestContext.Parameters.Get(RunSettingKey.ExposeNetwork),
-        defaultAuth: TestContext.Parameters.Get(RunSettingKey.DefaultAuth),
+        serviceAuth: TestContext.Parameters.Get(RunSettingKey.ServiceAuthType),
         useCloudHostedBrowsers: TestContext.Parameters.Get(RunSettingKey.UseCloudHostedBrowsers),
         azureTokenCredentialType: TestContext.Parameters.Get(RunSettingKey.AzureTokenCredentialType),
         managedIdentityClientId: TestContext.Parameters.Get(RunSettingKey.ManagedIdentityClientId)

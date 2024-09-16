@@ -658,7 +658,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             PlaywrightService.GetDefaultRunId(); // will not set run id if already present in the environment variable
         }
 
-        runParameters.TryGetValue(RunSettingKey.DefaultAuth, out var defaultAuth);
+        runParameters.TryGetValue(RunSettingKey.ServiceAuthType, out var serviceAuth);
         runParameters.TryGetValue(RunSettingKey.AzureTokenCredentialType, out var azureTokenCredential);
         runParameters.TryGetValue(RunSettingKey.ManagedIdentityClientId, out var managedIdentityClientId);
         runParameters.TryGetValue(RunSettingKey.EnableGitHubSummary, out var enableGithubSummary);
@@ -672,7 +672,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         PlaywrightServiceOptions? playwrightServiceSettings = null;
         try
         {
-            playwrightServiceSettings = new(runId: runId?.ToString(), defaultAuth: defaultAuth?.ToString(), azureTokenCredentialType: azureTokenCredential?.ToString(), managedIdentityClientId: managedIdentityClientId?.ToString());
+            playwrightServiceSettings = new(runId: runId?.ToString(), serviceAuth: serviceAuth?.ToString(), azureTokenCredentialType: azureTokenCredential?.ToString(), managedIdentityClientId: managedIdentityClientId?.ToString());
         }
         catch (Exception ex)
         {
@@ -681,7 +681,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         }
 
         // setup entra rotation handlers
-        playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.DefaultAuth, null, playwrightServiceSettings.AzureTokenCredential);
+        playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, playwrightServiceSettings.AzureTokenCredential);
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         playwrightService.InitializeAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.

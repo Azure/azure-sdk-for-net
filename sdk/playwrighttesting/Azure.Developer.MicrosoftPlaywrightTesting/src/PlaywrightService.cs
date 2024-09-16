@@ -22,7 +22,7 @@ public class PlaywrightService
     /// <summary>
     /// Gets or sets the default authentication mechanism.
     /// </summary>
-    public string DefaultAuth { get; set; } = ServiceAuth.Entra;
+    public string ServiceAuth { get; set; } = ServiceAuthType.EntraId;
     /// <summary>
     /// Gets or sets a flag indicating whether to use cloud-hosted browsers.
     /// </summary>
@@ -48,7 +48,7 @@ public class PlaywrightService
         os: playwrightServiceOptions.Os,
         runId: playwrightServiceOptions.RunId,
         exposeNetwork: playwrightServiceOptions.ExposeNetwork,
-        defaultAuth: playwrightServiceOptions.DefaultAuth,
+        serviceAuth: playwrightServiceOptions.ServiceAuth,
         useCloudHostedBrowsers: playwrightServiceOptions.UseCloudHostedBrowsers,
         credential: credential ?? playwrightServiceOptions.AzureTokenCredential
     )
@@ -62,25 +62,25 @@ public class PlaywrightService
     /// <param name="os">The operating system.</param>
     /// <param name="runId">The run ID.</param>
     /// <param name="exposeNetwork">The network exposure.</param>
-    /// <param name="defaultAuth">The default authentication mechanism.</param>
+    /// <param name="serviceAuth">The service authentication mechanism.</param>
     /// <param name="useCloudHostedBrowsers">Whether to use cloud-hosted browsers.</param>
     /// <param name="credential">The token credential.</param>
-    public PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, bool? useCloudHostedBrowsers = null, TokenCredential? credential = null)
+    public PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, TokenCredential? credential = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
         _entraLifecycle = new EntraLifecycle(tokenCredential: credential);
         _jsonWebTokenHandler = new JsonWebTokenHandler();
-        InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, defaultAuth, useCloudHostedBrowsers);
+        InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
-    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null)
+    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
         _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential);
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
-        InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, defaultAuth, useCloudHostedBrowsers);
+        InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
     /// <summary>
@@ -145,7 +145,7 @@ public class PlaywrightService
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, null);
         }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
-        if (DefaultAuth == ServiceAuth.Token && !string.IsNullOrEmpty(GetAuthToken()))
+        if (ServiceAuth == ServiceAuthType.AccessToken && !string.IsNullOrEmpty(GetAuthToken()))
         {
             ValidateMptPAT();
             return;
@@ -179,11 +179,11 @@ public class PlaywrightService
         }
     }
 
-    private void InitializePlaywrightServiceEnvironmentVariables(string? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, bool? useCloudHostedBrowsers = null)
+    private void InitializePlaywrightServiceEnvironmentVariables(string? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null)
     {
-        if (!string.IsNullOrEmpty(defaultAuth))
+        if (!string.IsNullOrEmpty(serviceAuth))
         {
-            DefaultAuth = defaultAuth!;
+            ServiceAuth = serviceAuth!;
         }
         if (useCloudHostedBrowsers != null)
         {

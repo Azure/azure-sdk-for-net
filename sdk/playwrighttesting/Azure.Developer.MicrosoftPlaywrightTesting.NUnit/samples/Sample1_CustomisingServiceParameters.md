@@ -64,14 +64,14 @@ public class PlaywrightServiceSetup : PlaywrightServiceNUnit
 }
 ```
 
-## Settings
+## Options
 
 1. **`Os`**:
     - **Description**: This setting allows you to choose the operating system where the browsers running Playwright tests will be hosted.
     - **Available Options**:
-        - `ServiceOS.WINDOWS` for Windows OS.
-        - `ServiceOS.LINUX` for Linux OS.
-    - **Default Value**: `ServiceOS.LINUX`
+        - `System.Runtime.InteropServices.OSPlatform.Windows` for Windows OS.
+        - `System.Runtime.InteropServices.OSPlatform.LINUX` for Linux OS.
+    - **Default Value**: `System.Runtime.InteropServices.OSPlatform.LINUX`
 
 2. **`RunId`**:
     - **Description**: This setting allows you to set a unique ID for every test run to distinguish them in the service portal.
@@ -82,9 +82,9 @@ public class PlaywrightServiceSetup : PlaywrightServiceNUnit
 4. **`DefaultAuth`**
     - **Description**: This setting allows you to specify the default authentication mechanism to be used for sending requests to the service.
     - **Available Options**:
-        - `ServiceAuth.ENTRA` for Microsoft Entra ID authentication.
-        - `ServiceAuth.TOKEN` for MPT Access Token authentication.
-    - **Default Value**: `ServiceAuth.ENTRA`
+        - `ServiceAuthType.EntraId` for Microsoft Entra ID authentication.
+        - `ServiceAuthType.AccessToken` for MPT Access Token authentication.
+    - **Default Value**: `ServiceAuthType.EntraId`
 
 5. **`UseCloudHostedBrowsers`**
     - **Description**: This setting allows you to select whether to use cloud-hosted browsers to run your Playwright tests. Reporting features remain available even if you disable this setting.

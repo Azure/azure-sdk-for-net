@@ -10,7 +10,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.Tests;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]
-public class PlaywrightServiceSettingsTest
+public class PlaywrightServiceOptionsTest
 {
     [Test]
     public void Constructor_ShouldInitializeProperties()
@@ -18,20 +18,20 @@ public class PlaywrightServiceSettingsTest
         var os = OSPlatform.Linux;
         var runId = "test-run-id";
         var exposeNetwork = "true";
-        var defaultAuth = ServiceAuth.Entra;
+        var serviceAuth = ServiceAuthType.EntraId;
         var useCloudHostedBrowsers = "true";
         var azureTokenCredentialType = AzureTokenCredentialType.ManagedIdentityCredential;
         var managedIdentityClientId = "test-client-id";
 
         var settings = new PlaywrightServiceOptions(
-            os, runId, exposeNetwork, defaultAuth, useCloudHostedBrowsers, azureTokenCredentialType, managedIdentityClientId);
+            os, runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers, azureTokenCredentialType, managedIdentityClientId);
 
         Assert.Multiple(() =>
         {
             Assert.That(settings.Os, Is.EqualTo(os));
             Assert.That(settings.RunId, Is.EqualTo(runId));
             Assert.That(settings.ExposeNetwork, Is.EqualTo(exposeNetwork));
-            Assert.That(settings.DefaultAuth, Is.EqualTo(defaultAuth));
+            Assert.That(settings.ServiceAuth, Is.EqualTo(serviceAuth));
             Assert.That(settings.UseCloudHostedBrowsers, Is.True);
             Assert.That(settings.AzureTokenCredential, Is.InstanceOf<ManagedIdentityCredential>());
         });
@@ -46,7 +46,7 @@ public class PlaywrightServiceSettingsTest
             Assert.That(settings.Os, Is.Null);
             Assert.That(settings.RunId, Is.Null);
             Assert.That(settings.ExposeNetwork, Is.Null);
-            Assert.That(settings.DefaultAuth, Is.EqualTo(ServiceAuth.Entra));
+            Assert.That(settings.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
             Assert.That(settings.UseCloudHostedBrowsers, Is.True);
             Assert.That(settings.AzureTokenCredential, Is.InstanceOf<DefaultAzureCredential>());
         });
@@ -63,8 +63,8 @@ public class PlaywrightServiceSettingsTest
     public void Validate_ShouldThrowExceptionForInvalidDefaultAuth()
     {
         var invalidAuth = "InvalidAuth";
-        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceOptions(defaultAuth: invalidAuth));
-        Assert.That(ex!.Message, Does.Contain("Invalid value for DefaultAuth"));
+        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceOptions(serviceAuth: invalidAuth));
+        Assert.That(ex!.Message, Does.Contain("Invalid value for ServiceAuth"));
     }
 
     [TestCase("ManagedIdentityCredential", typeof(ManagedIdentityCredential))]

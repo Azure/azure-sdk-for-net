@@ -15,7 +15,7 @@ public class PlaywrightServiceOptions
     internal OSPlatform? Os { get; set; }
     internal string? RunId { get; set; }
     internal string? ExposeNetwork { get; set; }
-    internal string DefaultAuth { get; set; }
+    internal string ServiceAuth { get; set; }
     internal bool UseCloudHostedBrowsers { get; set; }
     internal TokenCredential AzureTokenCredential { get; set; }
 
@@ -25,16 +25,16 @@ public class PlaywrightServiceOptions
     /// <param name="os">The operating system.</param>
     /// <param name="runId">The run ID.</param>
     /// <param name="exposeNetwork">The network exposure.</param>
-    /// <param name="defaultAuth">The default authentication mechanism.</param>
+    /// <param name="serviceAuth">The default authentication mechanism.</param>
     /// <param name="useCloudHostedBrowsers">Whether to use cloud-hosted browsers.</param>
     /// <param name="azureTokenCredentialType">The Azure token credential type.</param>
     /// <param name="managedIdentityClientId">The managed identity client ID.</param>
-    public PlaywrightServiceOptions(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, string? useCloudHostedBrowsers = null, string? azureTokenCredentialType = null, string? managedIdentityClientId = null)
+    public PlaywrightServiceOptions(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, string? useCloudHostedBrowsers = null, string? azureTokenCredentialType = null, string? managedIdentityClientId = null)
     {
         Os = os;
         RunId = runId;
         ExposeNetwork = exposeNetwork;
-        DefaultAuth = defaultAuth ?? ServiceAuth.Entra;
+        ServiceAuth = serviceAuth ?? ServiceAuthType.EntraId;
         UseCloudHostedBrowsers = string.IsNullOrEmpty(useCloudHostedBrowsers) || bool.Parse(useCloudHostedBrowsers!);
         AzureTokenCredential = GetTokenCredential(azureTokenCredentialType, managedIdentityClientId);
         Validate();
@@ -46,9 +46,9 @@ public class PlaywrightServiceOptions
         {
             throw new System.Exception($"Invalid value for {nameof(Os)}: {Os}. Supported values are {ServiceOs.Linux} and {ServiceOs.Windows}");
         }
-        if (!string.IsNullOrEmpty(DefaultAuth) && DefaultAuth != ServiceAuth.Entra && DefaultAuth != ServiceAuth.Token)
+        if (!string.IsNullOrEmpty(ServiceAuth) && ServiceAuth != ServiceAuthType.EntraId && ServiceAuth != ServiceAuthType.AccessToken)
         {
-            throw new System.Exception($"Invalid value for {nameof(DefaultAuth)}: {DefaultAuth}. Supported values are {ServiceAuth.Entra} and {ServiceAuth.Token}");
+            throw new System.Exception($"Invalid value for {nameof(ServiceAuth)}: {ServiceAuth}. Supported values are {ServiceAuthType.EntraId} and {ServiceAuthType.AccessToken}");
         }
     }
 
