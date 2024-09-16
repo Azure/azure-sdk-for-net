@@ -9,16 +9,16 @@ namespace Azure.Maps.Search
         public MapsSearchClient(Azure.AzureSasCredential credential, Azure.Maps.Search.MapsSearchClientOptions options) { }
         public MapsSearchClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsSearchClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Search.MapsSearchClientOptions options) { }
-        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingResponse> GetGeocoding(string query = null, Azure.Maps.Search.Models.Queries.GeocodingQuery options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingResponse>> GetGeocodingAsync(string query = null, Azure.Maps.Search.Models.Queries.GeocodingQuery options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse> GetGeocodingBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.Queries.GeocodingQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse>> GetGeocodingBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.Queries.GeocodingQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.Boundary> GetPolygon(Azure.Maps.Search.Models.Options.GetPolygonOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.Boundary>> GetPolygonAsync(Azure.Maps.Search.Models.Options.GetPolygonOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingResponse> GetReverseGeocoding(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.Search.Models.Queries.ReverseGeocodingQuery options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingResponse>> GetReverseGeocodingAsync(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.Search.Models.Queries.ReverseGeocodingQuery options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse> GetReverseGeocodingBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.Queries.ReverseGeocodingQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse>> GetReverseGeocodingBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.Queries.ReverseGeocodingQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingResponse> GetGeocoding(string query = null, Azure.Maps.Search.Models.GeocodingQuery options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingResponse>> GetGeocodingAsync(string query = null, Azure.Maps.Search.Models.GeocodingQuery options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse> GetGeocodingBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeocodingQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse>> GetGeocodingBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeocodingQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.Boundary> GetPolygon(Azure.Maps.Search.Models.GetPolygonOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.Boundary>> GetPolygonAsync(Azure.Maps.Search.Models.GetPolygonOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingResponse> GetReverseGeocoding(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.Search.Models.ReverseGeocodingQuery options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingResponse>> GetReverseGeocodingAsync(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.Search.Models.ReverseGeocodingQuery options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse> GetReverseGeocodingBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseGeocodingQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse>> GetReverseGeocodingBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseGeocodingQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MapsSearchClientOptions : Azure.Core.ClientOptions
     {
@@ -307,6 +307,23 @@ namespace Azure.Maps.Search.Models
         public int? SuccessfulRequests { get { throw null; } }
         public int? TotalRequests { get { throw null; } }
     }
+    public partial class GeocodingQuery
+    {
+        public GeocodingQuery() { }
+        public string AddressLine { get { throw null; } set { } }
+        public string AdminDistrict { get { throw null; } set { } }
+        public string AdminDistrict2 { get { throw null; } set { } }
+        public string AdminDistrict3 { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoPosition? Coordinates { get { throw null; } set { } }
+        public string CountryRegion { get { throw null; } set { } }
+        public string Locality { get { throw null; } set { } }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
+        public string OptionalId { get { throw null; } set { } }
+        public string PostalCode { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
     public partial class GeocodingResponse
     {
         internal GeocodingResponse() { }
@@ -322,24 +339,6 @@ namespace Azure.Maps.Search.Models
         public string Id { get { throw null; } }
         public object Properties { get { throw null; } }
     }
-    public partial class GeoJsonFeatureCollection : Azure.Maps.Search.Models.GeoJsonObject
-    {
-        internal GeoJsonFeatureCollection() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.GeoJsonFeature> Features { get { throw null; } }
-    }
-    public partial class GeoJsonFeatureCollectionData
-    {
-        internal GeoJsonFeatureCollectionData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.GeoJsonFeature> Features { get { throw null; } }
-    }
-    public partial class GeoJsonFeatureData
-    {
-        internal GeoJsonFeatureData() { }
-        public string FeatureType { get { throw null; } }
-        public Azure.Maps.Search.Models.GeoJsonGeometry Geometry { get { throw null; } }
-        public string Id { get { throw null; } }
-        public object Properties { get { throw null; } }
-    }
     public partial class GeoJsonGeometry : Azure.Maps.Search.Models.GeoJsonObject
     {
         internal GeoJsonGeometry() { }
@@ -349,89 +348,14 @@ namespace Azure.Maps.Search.Models
         internal GeoJsonGeometryCollection() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.GeoJsonGeometry> Geometries { get { throw null; } }
     }
-    public partial class GeoJsonGeometryCollectionData
-    {
-        internal GeoJsonGeometryCollectionData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.GeoJsonGeometry> Geometries { get { throw null; } }
-    }
-    public partial class GeoJsonLineString : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        internal GeoJsonLineString() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonLineStringData
-    {
-        internal GeoJsonLineStringData() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiLineString : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        internal GeoJsonMultiLineString() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiLineStringData
-    {
-        internal GeoJsonMultiLineStringData() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiPoint : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        internal GeoJsonMultiPoint() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiPointData
-    {
-        internal GeoJsonMultiPointData() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiPolygon : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        internal GeoJsonMultiPolygon() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiPolygonData
-    {
-        internal GeoJsonMultiPolygonData() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> Coordinates { get { throw null; } }
-    }
     public abstract partial class GeoJsonObject
     {
         protected GeoJsonObject() { }
         public System.Collections.Generic.IReadOnlyList<double> BoundingBox { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct GeoJsonObjectType : System.IEquatable<Azure.Maps.Search.Models.GeoJsonObjectType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public GeoJsonObjectType(string value) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonObjectType GeoJsonFeature { get { throw null; } }
-        public static Azure.Maps.Search.Models.GeoJsonObjectType GeoJsonFeatureCollection { get { throw null; } }
-        public static Azure.Maps.Search.Models.GeoJsonObjectType GeoJsonGeometryCollection { get { throw null; } }
-        public static Azure.Maps.Search.Models.GeoJsonObjectType GeoJsonLineString { get { throw null; } }
-        public static Azure.Maps.Search.Models.GeoJsonObjectType GeoJsonMultiLineString { get { throw null; } }
-        public static Azure.Maps.Search.Models.GeoJsonObjectType GeoJsonMultiPoint { get { throw null; } }
-        public static Azure.Maps.Search.Models.GeoJsonObjectType GeoJsonMultiPolygon { get { throw null; } }
-        public static Azure.Maps.Search.Models.GeoJsonObjectType GeoJsonPoint { get { throw null; } }
-        public static Azure.Maps.Search.Models.GeoJsonObjectType GeoJsonPolygon { get { throw null; } }
-        public bool Equals(Azure.Maps.Search.Models.GeoJsonObjectType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Search.Models.GeoJsonObjectType left, Azure.Maps.Search.Models.GeoJsonObjectType right) { throw null; }
-        public static implicit operator Azure.Maps.Search.Models.GeoJsonObjectType (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Search.Models.GeoJsonObjectType left, Azure.Maps.Search.Models.GeoJsonObjectType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class GeoJsonPoint : Azure.Maps.Search.Models.GeoJsonGeometry
     {
         internal GeoJsonPoint() { }
-        public System.Collections.Generic.IReadOnlyList<double> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonPointData
-    {
-        internal GeoJsonPointData() { }
         public System.Collections.Generic.IReadOnlyList<double> Coordinates { get { throw null; } }
     }
     public partial class GeoJsonPolygon : Azure.Maps.Search.Models.GeoJsonGeometry
@@ -439,16 +363,19 @@ namespace Azure.Maps.Search.Models
         internal GeoJsonPolygon() { }
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
     }
-    public partial class GeoJsonPolygonData
-    {
-        internal GeoJsonPolygonData() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
-    }
     public partial class GeometryCopyright
     {
         internal GeometryCopyright() { }
         public string Copyright { get { throw null; } }
         public string SourceName { get { throw null; } }
+    }
+    public partial class GetPolygonOptions
+    {
+        public GetPolygonOptions() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
+        public Azure.Maps.Search.Models.ResolutionEnum? Resolution { get { throw null; } set { } }
+        public Azure.Maps.Search.Models.BoundaryResultTypeEnum? ResultType { get { throw null; } set { } }
     }
     public partial class Intersection
     {
@@ -464,7 +391,6 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.Address Address(string addressLine = null, string locality = null, string neighborhood = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.AddressAdminDistrictsItem> adminDistricts = null, string postalCode = null, Azure.Maps.Search.Models.AddressCountryRegion countryRegion = null, string formattedAddress = null, Azure.Maps.Search.Models.Intersection intersection = null) { throw null; }
         public static Azure.Maps.Search.Models.AddressAdminDistrictsItem AddressAdminDistrictsItem(string name = null, string shortName = null) { throw null; }
         public static Azure.Maps.Search.Models.AddressCountryRegion AddressCountryRegion(string iso = null, string name = null) { throw null; }
-        public static Azure.Maps.Search.Models.Boundary Boundary(System.Collections.Generic.IEnumerable<double> boundingBox = null, Azure.Maps.Search.Models.GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null, string name = null, string copyright = null, string copyrightUrl = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeometryCopyright> geometriesCopyright = null) { throw null; }
         public static Azure.Maps.Search.Models.BoundaryProperties BoundaryProperties(string name = null, string copyright = null, string copyrightUrl = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeometryCopyright> geometriesCopyright = null) { throw null; }
         public static Azure.Maps.Search.Models.ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, object info = null) { throw null; }
         public static Azure.Maps.Search.Models.ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ErrorDetail> details = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ErrorAdditionalInfo> additionalInfo = null) { throw null; }
@@ -475,29 +401,8 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.GeocodingBatchResponseItem GeocodingBatchResponseItem(string optionalId = null, Azure.Maps.Search.Models.FeatureCollectionEnum? type = default(Azure.Maps.Search.Models.FeatureCollectionEnum?), System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.FeaturesItem> features = null, string nextLink = null, Azure.Maps.Search.Models.ErrorDetail error = null) { throw null; }
         public static Azure.Maps.Search.Models.GeocodingBatchResponseSummary GeocodingBatchResponseSummary(int? successfulRequests = default(int?), int? totalRequests = default(int?)) { throw null; }
         public static Azure.Maps.Search.Models.GeocodingResponse GeocodingResponse(Azure.Maps.Search.Models.FeatureCollectionEnum? type = default(Azure.Maps.Search.Models.FeatureCollectionEnum?), System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.FeaturesItem> features = null, string nextLink = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonFeature GeoJsonFeature(System.Collections.Generic.IEnumerable<double> boundingBox = null, Azure.Maps.Search.Models.GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonFeatureCollection GeoJsonFeatureCollection(System.Collections.Generic.IEnumerable<double> boundingBox = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeoJsonFeature> features = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonFeatureCollectionData GeoJsonFeatureCollectionData(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeoJsonFeature> features = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonFeatureData GeoJsonFeatureData(Azure.Maps.Search.Models.GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonGeometry GeoJsonGeometry(System.Collections.Generic.IEnumerable<double> boundingBox = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonGeometryCollection GeoJsonGeometryCollection(System.Collections.Generic.IEnumerable<double> boundingBox = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeoJsonGeometry> geometries = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonGeometryCollectionData GeoJsonGeometryCollectionData(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeoJsonGeometry> geometries = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonLineString GeoJsonLineString(System.Collections.Generic.IEnumerable<double> boundingBox = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonLineStringData GeoJsonLineStringData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonMultiLineString GeoJsonMultiLineString(System.Collections.Generic.IEnumerable<double> boundingBox = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonMultiLineStringData GeoJsonMultiLineStringData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonMultiPoint GeoJsonMultiPoint(System.Collections.Generic.IEnumerable<double> boundingBox = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonMultiPointData GeoJsonMultiPointData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonMultiPolygon GeoJsonMultiPolygon(System.Collections.Generic.IEnumerable<double> boundingBox = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> coordinates = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonMultiPolygonData GeoJsonMultiPolygonData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> coordinates = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonObject GeoJsonObject(string type = null, System.Collections.Generic.IEnumerable<double> boundingBox = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonPoint GeoJsonPoint(System.Collections.Generic.IEnumerable<double> boundingBox = null, System.Collections.Generic.IEnumerable<double> coordinates = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonPointData GeoJsonPointData(System.Collections.Generic.IEnumerable<double> coordinates = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonPolygon GeoJsonPolygon(System.Collections.Generic.IEnumerable<double> boundingBox = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeoJsonPolygonData GeoJsonPolygonData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates = null) { throw null; }
         public static Azure.Maps.Search.Models.GeometryCopyright GeometryCopyright(string sourceName = null, string copyright = null) { throw null; }
         public static Azure.Maps.Search.Models.Intersection Intersection(string baseStreet = null, string secondaryStreet1 = null, string secondaryStreet2 = null, string intersectionType = null, string displayName = null) { throw null; }
-        public static Azure.Maps.Search.Models.UnknownGeoJsonObject UnknownGeoJsonObject(System.Collections.Generic.IEnumerable<double> boundingBox = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MatchCodesEnum : System.IEquatable<Azure.Maps.Search.Models.MatchCodesEnum>
@@ -569,6 +474,14 @@ namespace Azure.Maps.Search.Models
         public string OptionalId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Maps.Search.Models.ResultTypeEnum> ResultTypes { get { throw null; } set { } }
     }
+    public partial class ReverseGeocodingQuery
+    {
+        public ReverseGeocodingQuery() { }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
+        public string OptionalId { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum> ResultTypes { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReverseGeocodingResultTypeEnum : System.IEquatable<Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum>
     {
@@ -613,46 +526,5 @@ namespace Azure.Maps.Search.Models
         public static implicit operator Azure.Maps.Search.Models.UsageTypeEnum (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Search.Models.UsageTypeEnum left, Azure.Maps.Search.Models.UsageTypeEnum right) { throw null; }
         public override string ToString() { throw null; }
-    }
-}
-namespace Azure.Maps.Search.Models.Options
-{
-    public partial class BaseOptions
-    {
-        public BaseOptions() { }
-        public Azure.Core.GeoJson.GeoPosition? Coordinates { get { throw null; } set { } }
-        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
-    }
-    public partial class GetPolygonOptions : Azure.Maps.Search.Models.Options.BaseOptions
-    {
-        public GetPolygonOptions() { }
-        public Azure.Maps.Search.Models.ResolutionEnum? Resolution { get { throw null; } set { } }
-        public Azure.Maps.Search.Models.BoundaryResultTypeEnum? ResultType { get { throw null; } set { } }
-    }
-}
-namespace Azure.Maps.Search.Models.Queries
-{
-    public partial class GeocodingQuery : Azure.Maps.Search.Models.Options.BaseOptions
-    {
-        public GeocodingQuery() { }
-        public string AddressLine { get { throw null; } set { } }
-        public string AdminDistrict { get { throw null; } set { } }
-        public string AdminDistrict2 { get { throw null; } set { } }
-        public string AdminDistrict3 { get { throw null; } set { } }
-        public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } set { } }
-        public string CountryRegion { get { throw null; } set { } }
-        public string Locality { get { throw null; } set { } }
-        public string OptionalId { get { throw null; } set { } }
-        public string PostalCode { get { throw null; } set { } }
-        public string Query { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
-    public partial class ReverseGeocodingQuery
-    {
-        public ReverseGeocodingQuery() { }
-        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
-        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
-        public string OptionalId { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum> ResultTypes { get { throw null; } set { } }
     }
 }
