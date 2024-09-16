@@ -519,6 +519,49 @@ namespace Azure.AI.Inference.Tests
             Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
         }
 
+        [RecordedTest]
+        public async Task TestChatCompletionsUserAgent()
+        {
+            var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
+            var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
+
+            var clientOptions = new AzureAIInferenceClientOptions();
+            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
+            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
+            AddAppIdPolicy addAppIdPolicy = new AddAppIdPolicy("MyAppId");
+            clientOptions.AddPolicy(addAppIdPolicy, HttpPipelinePosition.PerCall);
+
+            var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
+
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("How many feet are in a mile?"),
+                },
+            };
+
+            Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+            ChatChoice choice = response.Value.Choices[0];
+            Assert.That(choice.Index, Is.EqualTo(0));
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+
+            string userAgent = null;
+            captureRequestPayloadPolicy._requestHeaders.TryGetValue("User-Agent", out userAgent);
+            Assert.That(userAgent, Is.Not.Null.Or.Empty);
+            Assert.That(userAgent.StartsWith("MyAppId"));
+        }
+
         #region Helpers
         private class CaptureRequestPayloadPolicy : HttpPipelinePolicy
         {
@@ -527,24 +570,26 @@ namespace Azure.AI.Inference.Tests
 
             public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             {
+                ProcessNext(message, pipeline);
+
+                var memStream = new MemoryStream();
+                message.Request.Content.WriteTo(memStream, new System.Threading.CancellationToken());
+                _requestContent = Encoding.UTF8.GetString(memStream.ToArray());
+
+                _requestHeaders = message.Request.Headers.ToDictionary(a => a.Name, a => a.Value);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                var task = ProcessNextAsync(message, pipeline);
+
                 var memStream = new MemoryStream();
                 message.Request.Content.WriteTo(memStream, new System.Threading.CancellationToken());
                 _requestContent = Encoding.UTF8.GetString(memStream.ToArray());
 
                 _requestHeaders = message.Request.Headers.ToDictionary(a => a.Name, a => a.Value);
 
-                ProcessNext(message, pipeline);
-            }
-
-            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-            {
-                var memStream = new MemoryStream();
-                message.Request.Content.WriteTo(memStream, new System.Threading.CancellationToken());
-                _requestContent = Encoding.UTF8.GetString(memStream.ToArray());
-
-                _requestHeaders = message.Request.Headers.ToDictionary(a=>a.Name, a=>a.Value);
-
-                return ProcessNextAsync(message, pipeline);
+                return task;
             }
         }
 
@@ -572,6 +617,45 @@ namespace Azure.AI.Inference.Tests
                 message.Request.Headers.Add("api-key", TestEnvironment.AoaiKey);
 
                 return ProcessNextAsync(message, pipeline);
+            }
+        }
+
+        private class AddAppIdPolicy : HttpPipelinePolicy
+        {
+            private string AppId { get; }
+
+            public AddAppIdPolicy(string appId)
+            {
+                AppId = appId;
+            }
+
+            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                ProcessNext(message, pipeline);
+
+                UpdateHeader(message);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                var task = ProcessNextAsync(message, pipeline);
+
+                UpdateHeader(message);
+
+                return task;
+            }
+
+            private void UpdateHeader(HttpMessage message)
+            {
+                if (message.Request.Headers.TryGetValue("User-Agent", out string currentHeader) == false)
+                {
+                    // Add your desired header name and value
+                    message.Request.Headers.Add("User-Agent", AppId);
+                }
+                else
+                {
+                    message.Request.Headers.SetValue("User-Agent", $"{AppId} {currentHeader}");
+                }
             }
         }
 
