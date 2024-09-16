@@ -50,12 +50,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting
         public static readonly string PlaywrightServiceUrl;
         public ServiceEnvironmentVariable() { }
     }
-    public partial class ServiceOs
-    {
-        public static readonly string Linux;
-        public static readonly string Windows;
-        public ServiceOs() { }
-    }
 }
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client
 {

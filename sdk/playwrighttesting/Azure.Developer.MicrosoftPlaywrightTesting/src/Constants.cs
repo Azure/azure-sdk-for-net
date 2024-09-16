@@ -37,7 +37,7 @@ public class ServiceEnvironmentVariable
 /// <summary>
 /// Contains constants for supported operating systems on Microsoft Playwright Testing.
 /// </summary>
-public class ServiceOs
+internal class ServiceOs
 {
     /// <summary>
     /// Linux operating system.
