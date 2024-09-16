@@ -20,14 +20,14 @@ public class PlaywrightServiceNUnit : PlaywrightService
     /// </summary>
     /// <param name="credential">The azure token credential to use for authentication.</param>
     public PlaywrightServiceNUnit(TokenCredential? credential = null)
-        : base(playwrightServiceSettings, credential: credential)
+        : base(playwrightServiceOptions, credential: credential)
     {
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="PlaywrightServiceSettings"/> based on the runsettings file.
+    /// Creates a new instance of <see cref="PlaywrightServiceOptions"/> based on the runsettings file.
     /// </summary>
-    public static PlaywrightServiceSettings playwrightServiceSettings = new(
+    public static PlaywrightServiceOptions playwrightServiceOptions = new(
         os: GetOsPlatform(TestContext.Parameters.Get(RunSettingKey.Os)),
         runId: TestContext.Parameters.Get(RunSettingKey.RunId),
         exposeNetwork: TestContext.Parameters.Get(RunSettingKey.ExposeNetwork),

@@ -23,7 +23,7 @@ public class PlaywrightServiceSettingsTest
         var azureTokenCredentialType = AzureTokenCredentialType.ManagedIdentityCredential;
         var managedIdentityClientId = "test-client-id";
 
-        var settings = new PlaywrightServiceSettings(
+        var settings = new PlaywrightServiceOptions(
             os, runId, exposeNetwork, defaultAuth, useCloudHostedBrowsers, azureTokenCredentialType, managedIdentityClientId);
 
         Assert.Multiple(() =>
@@ -40,7 +40,7 @@ public class PlaywrightServiceSettingsTest
     [Test]
     public void Constructor_ShouldUseDefaultValues()
     {
-        var settings = new PlaywrightServiceSettings();
+        var settings = new PlaywrightServiceOptions();
         Assert.Multiple(() =>
         {
             Assert.That(settings.Os, Is.Null);
@@ -55,7 +55,7 @@ public class PlaywrightServiceSettingsTest
     [Test]
     public void Validate_ShouldThrowExceptionForInvalidOs()
     {
-        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceSettings(os: OSPlatform.Create("invalid")));
+        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceOptions(os: OSPlatform.Create("invalid")));
         Assert.That(ex!.Message, Does.Contain("Invalid value for Os"));
     }
 
@@ -63,7 +63,7 @@ public class PlaywrightServiceSettingsTest
     public void Validate_ShouldThrowExceptionForInvalidDefaultAuth()
     {
         var invalidAuth = "InvalidAuth";
-        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceSettings(defaultAuth: invalidAuth));
+        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceOptions(defaultAuth: invalidAuth));
         Assert.That(ex!.Message, Does.Contain("Invalid value for DefaultAuth"));
     }
 
@@ -82,7 +82,7 @@ public class PlaywrightServiceSettingsTest
     [TestCase(null, typeof(DefaultAzureCredential))]
     public void GetTokenCredential_ShouldReturnCorrectCredential(string? credentialType, Type expectedType)
     {
-        var settings = new PlaywrightServiceSettings(azureTokenCredentialType: credentialType);
+        var settings = new PlaywrightServiceOptions(azureTokenCredentialType: credentialType);
         Assert.That(settings.AzureTokenCredential, Is.InstanceOf(expectedType));
     }
 }

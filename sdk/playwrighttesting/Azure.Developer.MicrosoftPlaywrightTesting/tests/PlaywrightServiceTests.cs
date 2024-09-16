@@ -161,7 +161,7 @@ public class PlaywrightServiceTests
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "access_token");
-        PlaywrightService service = new(new PlaywrightServiceSettings(), credential: tokenCredential.Object);
+        PlaywrightService service = new(new PlaywrightServiceOptions(), credential: tokenCredential.Object);
         service.InitializeAsync().Wait();
         tokenCredential.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
 

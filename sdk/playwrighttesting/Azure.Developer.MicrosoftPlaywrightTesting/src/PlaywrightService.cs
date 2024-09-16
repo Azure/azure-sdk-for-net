@@ -42,15 +42,15 @@ public class PlaywrightService
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightService"/> class.
     /// </summary>
-    /// <param name="playwrightServiceSettings"></param>
+    /// <param name="playwrightServiceOptions"></param>
     /// <param name="credential"></param>
-    public PlaywrightService(PlaywrightServiceSettings playwrightServiceSettings, TokenCredential? credential = null) : this(
-        os: playwrightServiceSettings.Os,
-        runId: playwrightServiceSettings.RunId,
-        exposeNetwork: playwrightServiceSettings.ExposeNetwork,
-        defaultAuth: playwrightServiceSettings.DefaultAuth,
-        useCloudHostedBrowsers: playwrightServiceSettings.UseCloudHostedBrowsers,
-        credential: credential ?? playwrightServiceSettings.AzureTokenCredential
+    public PlaywrightService(PlaywrightServiceOptions playwrightServiceOptions, TokenCredential? credential = null) : this(
+        os: playwrightServiceOptions.Os,
+        runId: playwrightServiceOptions.RunId,
+        exposeNetwork: playwrightServiceOptions.ExposeNetwork,
+        defaultAuth: playwrightServiceOptions.DefaultAuth,
+        useCloudHostedBrowsers: playwrightServiceOptions.UseCloudHostedBrowsers,
+        credential: credential ?? playwrightServiceOptions.AzureTokenCredential
     )
     {
         // No-op

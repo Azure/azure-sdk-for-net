@@ -8,9 +8,9 @@ using Azure.Identity;
 namespace Azure.Developer.MicrosoftPlaywrightTesting;
 
 /// <summary>
-/// Settings for the Playwright service.
+/// Options for the Playwright service.
 /// </summary>
-public class PlaywrightServiceSettings
+public class PlaywrightServiceOptions
 {
     internal OSPlatform? Os { get; set; }
     internal string? RunId { get; set; }
@@ -20,7 +20,7 @@ public class PlaywrightServiceSettings
     internal TokenCredential AzureTokenCredential { get; set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="PlaywrightServiceSettings"/> class.
+    /// Initializes a new instance of the <see cref="PlaywrightServiceOptions"/> class.
     /// </summary>
     /// <param name="os">The operating system.</param>
     /// <param name="runId">The run ID.</param>
@@ -29,7 +29,7 @@ public class PlaywrightServiceSettings
     /// <param name="useCloudHostedBrowsers">Whether to use cloud-hosted browsers.</param>
     /// <param name="azureTokenCredentialType">The Azure token credential type.</param>
     /// <param name="managedIdentityClientId">The managed identity client ID.</param>
-    public PlaywrightServiceSettings(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, string? useCloudHostedBrowsers = null, string? azureTokenCredentialType = null, string? managedIdentityClientId = null)
+    public PlaywrightServiceOptions(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, string? useCloudHostedBrowsers = null, string? azureTokenCredentialType = null, string? managedIdentityClientId = null)
     {
         Os = os;
         RunId = runId;

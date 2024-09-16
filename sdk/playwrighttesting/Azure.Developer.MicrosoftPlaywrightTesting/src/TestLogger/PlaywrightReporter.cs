@@ -669,7 +669,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         EnableGithubSummary = string.IsNullOrEmpty(enableGithubSummaryString) || bool.Parse(enableGithubSummaryString!);
         EnableResultPublish = string.IsNullOrEmpty(enableResultPublishString) || bool.Parse(enableResultPublishString!);
 
-        PlaywrightServiceSettings? playwrightServiceSettings = null;
+        PlaywrightServiceOptions? playwrightServiceSettings = null;
         try
         {
             playwrightServiceSettings = new(runId: runId?.ToString(), defaultAuth: defaultAuth?.ToString(), azureTokenCredentialType: azureTokenCredential?.ToString(), managedIdentityClientId: managedIdentityClientId?.ToString());
