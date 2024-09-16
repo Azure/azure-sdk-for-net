@@ -643,7 +643,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         }
 
         Dictionary<string, object> runParameters = XmlRunSettingsUtilities.GetTestRunParameters(xmlSettings);
-        runParameters.TryGetValue(RunSettingKey.RUN_ID, out var runId);
+        runParameters.TryGetValue(RunSettingKey.RunId, out var runId);
         // If run id is not provided and not set via env, try fetching it from CI info.
         CIInfo = CiInfoProvider.GetCIInfo();
         if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(PlaywrightConstants.PLAYWRIGHT_SERVICE_RUN_ID)))
@@ -658,11 +658,11 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             PlaywrightService.GetDefaultRunId(); // will not set run id if already present in the environment variable
         }
 
-        runParameters.TryGetValue(RunSettingKey.DEFAULT_AUTH, out var defaultAuth);
-        runParameters.TryGetValue(RunSettingKey.AZURE_TOKEN_CREDENTIAL_TYPE, out var azureTokenCredential);
-        runParameters.TryGetValue(RunSettingKey.MANAGED_IDENTITY_CLIENT_ID, out var managedIdentityClientId);
-        runParameters.TryGetValue(RunSettingKey.ENABLE_GITHUB_SUMMARY, out var enableGithubSummary);
-        runParameters.TryGetValue(RunSettingKey.ENABLE_RESULT_PUBLISH, out var enableResultPublish);
+        runParameters.TryGetValue(RunSettingKey.DefaultAuth, out var defaultAuth);
+        runParameters.TryGetValue(RunSettingKey.AzureTokenCredentialType, out var azureTokenCredential);
+        runParameters.TryGetValue(RunSettingKey.ManagedIdentityClientId, out var managedIdentityClientId);
+        runParameters.TryGetValue(RunSettingKey.EnableGitHubSummary, out var enableGithubSummary);
+        runParameters.TryGetValue(RunSettingKey.EnableResultPublish, out var enableResultPublish);
         string? enableGithubSummaryString = enableGithubSummary?.ToString();
         string? enableResultPublishString = enableResultPublish?.ToString();
 

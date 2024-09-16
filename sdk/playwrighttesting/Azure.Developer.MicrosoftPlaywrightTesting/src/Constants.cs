@@ -11,27 +11,27 @@ public class ServiceEnvironmentVariable
     /// <summary>
     /// The environment variable for the Playwright service access token.
     /// </summary>
-    public static readonly string PLAYWRIGHT_SERVICE_ACCESS_TOKEN_ENVIRONMENT_VARIABLE = "PLAYWRIGHT_SERVICE_ACCESS_TOKEN";
+    public static readonly string PlaywrightServiceAccessToken = "PLAYWRIGHT_SERVICE_ACCESS_TOKEN";
 
     /// <summary>
     /// The environment variable for the Playwright service URL.
     /// </summary>
-    public static readonly string PLAYWRIGHT_SERVICE_URL_ENVIRONMENT_VARIABLE = "PLAYWRIGHT_SERVICE_URL";
+    public static readonly string PlaywrightServiceUrl = "PLAYWRIGHT_SERVICE_URL";
 
     /// <summary>
     /// The environment variable for exposing the Playwright service network.
     /// </summary>
-    public static readonly string PLAYWRIGHT_SERVICE_EXPOSE_NETWORK_ENVIRONMENT_VARIABLE = "PLAYWRIGHT_SERVICE_EXPOSE_NETWORK";
+    public static readonly string PlaywrightServiceExposeNetwork = "PLAYWRIGHT_SERVICE_EXPOSE_NETWORK";
 
     /// <summary>
     /// The environment variable for the Playwright service operating system.
     /// </summary>
-    public static readonly string PLAYWRIGHT_SERVICE_OS_ENVIRONMENT_VARIABLE = "PLAYWRIGHT_SERVICE_OS";
+    public static readonly string PlaywrightServiceOs = "PLAYWRIGHT_SERVICE_OS";
 
     /// <summary>
     /// The environment variable for the Playwright service run ID.
     /// </summary>
-    public static readonly string PLAYWRIGHT_SERVICE_RUN_ID_ENVIRONMENT_VARIABLE = "PLAYWRIGHT_SERVICE_RUN_ID";
+    public static readonly string PlaywrightServiceRunId = "PLAYWRIGHT_SERVICE_RUN_ID";
 };
 
 /// <summary>
@@ -42,12 +42,12 @@ public class ServiceOs
     /// <summary>
     /// Linux operating system.
     /// </summary>
-    public static readonly string LINUX = "linux";
+    public static readonly string Linux = "linux";
 
     /// <summary>
     /// Windows operating system.
     /// </summary>
-    public static readonly string WINDOWS = "windows";
+    public static readonly string Windows = "windows";
 };
 
 /// <summary>
@@ -58,18 +58,18 @@ public class ServiceAuth
     /// <summary>
     /// Entra ID authentication method.
     /// </summary>
-    public static readonly string ENTRA = "ENTRA";
+    public static readonly string Entra = "ENTRA";
 
     /// <summary>
     /// Service token authentication method.
     /// </summary>
-    public static readonly string TOKEN = "TOKEN";
+    public static readonly string Token = "TOKEN";
 };
 
 /// <summary>
 /// Contains constants for Azure token credential types.
 /// </summary>
-public class AzureTokenCredentialType
+internal class AzureTokenCredentialType
 {
     /// <summary>
     /// Environment Credential.
@@ -135,53 +135,53 @@ public class RunSettingKey
     /// <summary>
     /// The operating system setting key.
     /// </summary>
-    public static readonly string OS = "Os";
+    public static readonly string Os = "Os";
 
     /// <summary>
     /// The run ID setting key.
     /// </summary>
-    public static readonly string RUN_ID = "RunId";
+    public static readonly string RunId = "RunId";
 
     /// <summary>
     /// The expose network setting key.
     /// </summary>
-    public static readonly string EXPOSE_NETWORK = "ExposeNetwork";
+    public static readonly string ExposeNetwork = "ExposeNetwork";
 
     /// <summary>
     /// The default authentication setting key.
     /// </summary>
-    public static readonly string DEFAULT_AUTH = "DefaultAuth";
+    public static readonly string DefaultAuth = "DefaultAuth";
 
     /// <summary>
     /// The use cloud-hosted browsers setting key.
     /// </summary>
-    public static readonly string USE_CLOUD_HOSTED_BROWSERS = "UseCloudHostedBrowsers";
+    public static readonly string UseCloudHostedBrowsers = "UseCloudHostedBrowsers";
 
     /// <summary>
     /// The Azure token credential type setting key.
     /// </summary>
-    public static readonly string AZURE_TOKEN_CREDENTIAL_TYPE = "AzureTokenCredentialType";
+    public static readonly string AzureTokenCredentialType = "AzureTokenCredentialType";
 
     /// <summary>
     /// The managed identity client ID setting key.
     /// </summary>
-    public static readonly string MANAGED_IDENTITY_CLIENT_ID = "ManagedIdentityClientId";
+    public static readonly string ManagedIdentityClientId = "ManagedIdentityClientId";
 
     /// <summary>
     /// Enable GitHub summary setting key.
     /// </summary>
-    public static readonly string ENABLE_GITHUB_SUMMARY = "EnableGitHubSummary";
+    public static readonly string EnableGitHubSummary = "EnableGitHubSummary";
 
     /// <summary>
     /// Enable Result publish.
     /// </summary>
-    public static readonly string ENABLE_RESULT_PUBLISH = "EnableResultPublish";
+    public static readonly string EnableResultPublish = "EnableResultPublish";
 }
 
 internal class Constants
 {
     // Default constants
-    internal static readonly string s_default_os = ServiceOs.LINUX;
+    internal static readonly string s_default_os = ServiceOs.Linux;
     internal static readonly string s_default_expose_network = "<loopback>";
 
     // Entra id access token constants
@@ -198,6 +198,7 @@ internal class Constants
     internal static readonly string s_no_auth_error = "Could not authenticate with the service. Please refer to https://aka.ms/mpt/authentication for more information.";
     internal static readonly string s_invalid_mpt_pat_error = "The Access Token provided in the environment variable is invalid.";
     internal static readonly string s_expired_mpt_pat_error = "The Access Token you are using is expired. Create a new token.";
+    internal static readonly string s_invalid_os_error = "Invalid operating system, supported values are 'linux' and 'windows'.";
 
     internal static readonly string s_playwright_service_disable_scalable_execution_environment_variable = "PLAYWRIGHT_SERVICE_DISABLE_SCALABLE_EXECUTION";
     internal static readonly string s_playwright_service_reporting_url_environment_variable = "PLAYWRIGHT_SERVICE_REPORTING_URL";

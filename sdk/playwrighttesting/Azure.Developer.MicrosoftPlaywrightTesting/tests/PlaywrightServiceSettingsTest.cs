@@ -4,6 +4,7 @@
 using Azure.Identity;
 using Azure.Developer.MicrosoftPlaywrightTesting;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.Tests;
 
@@ -14,10 +15,10 @@ public class PlaywrightServiceSettingsTest
     [Test]
     public void Constructor_ShouldInitializeProperties()
     {
-        var os = ServiceOs.LINUX;
+        var os = OSPlatform.Linux;
         var runId = "test-run-id";
         var exposeNetwork = "true";
-        var defaultAuth = ServiceAuth.ENTRA;
+        var defaultAuth = ServiceAuth.Entra;
         var useCloudHostedBrowsers = "true";
         var azureTokenCredentialType = AzureTokenCredentialType.ManagedIdentityCredential;
         var managedIdentityClientId = "test-client-id";
@@ -45,7 +46,7 @@ public class PlaywrightServiceSettingsTest
             Assert.That(settings.Os, Is.Null);
             Assert.That(settings.RunId, Is.Null);
             Assert.That(settings.ExposeNetwork, Is.Null);
-            Assert.That(settings.DefaultAuth, Is.EqualTo(ServiceAuth.ENTRA));
+            Assert.That(settings.DefaultAuth, Is.EqualTo(ServiceAuth.Entra));
             Assert.That(settings.UseCloudHostedBrowsers, Is.True);
             Assert.That(settings.AzureTokenCredential, Is.InstanceOf<DefaultAzureCredential>());
         });
@@ -54,8 +55,7 @@ public class PlaywrightServiceSettingsTest
     [Test]
     public void Validate_ShouldThrowExceptionForInvalidOs()
     {
-        var invalidOs = "InvalidOS";
-        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceSettings(os: invalidOs));
+        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceSettings(os: OSPlatform.Create("invalid")));
         Assert.That(ex!.Message, Does.Contain("Invalid value for Os"));
     }
 

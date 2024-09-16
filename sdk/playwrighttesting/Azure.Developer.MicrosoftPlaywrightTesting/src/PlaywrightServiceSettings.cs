@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.InteropServices;
 using Azure.Core;
 using Azure.Identity;
 
@@ -11,7 +12,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting;
 /// </summary>
 public class PlaywrightServiceSettings
 {
-    internal string? Os { get; set; }
+    internal OSPlatform? Os { get; set; }
     internal string? RunId { get; set; }
     internal string? ExposeNetwork { get; set; }
     internal string DefaultAuth { get; set; }
@@ -28,12 +29,12 @@ public class PlaywrightServiceSettings
     /// <param name="useCloudHostedBrowsers">Whether to use cloud-hosted browsers.</param>
     /// <param name="azureTokenCredentialType">The Azure token credential type.</param>
     /// <param name="managedIdentityClientId">The managed identity client ID.</param>
-    public PlaywrightServiceSettings(string? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, string? useCloudHostedBrowsers = null, string? azureTokenCredentialType = null, string? managedIdentityClientId = null)
+    public PlaywrightServiceSettings(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, string? useCloudHostedBrowsers = null, string? azureTokenCredentialType = null, string? managedIdentityClientId = null)
     {
         Os = os;
         RunId = runId;
         ExposeNetwork = exposeNetwork;
-        DefaultAuth = defaultAuth ?? ServiceAuth.ENTRA;
+        DefaultAuth = defaultAuth ?? ServiceAuth.Entra;
         UseCloudHostedBrowsers = string.IsNullOrEmpty(useCloudHostedBrowsers) || bool.Parse(useCloudHostedBrowsers!);
         AzureTokenCredential = GetTokenCredential(azureTokenCredentialType, managedIdentityClientId);
         Validate();
@@ -41,13 +42,13 @@ public class PlaywrightServiceSettings
 
     private void Validate()
     {
-        if (!string.IsNullOrEmpty(Os) && Os != ServiceOs.LINUX && Os != ServiceOs.WINDOWS)
+        if (Os != null && Os != OSPlatform.Linux && Os != OSPlatform.Windows)
         {
-            throw new System.Exception($"Invalid value for {nameof(Os)}: {Os}. Supported values are {ServiceOs.LINUX} and {ServiceOs.WINDOWS}");
+            throw new System.Exception($"Invalid value for {nameof(Os)}: {Os}. Supported values are {ServiceOs.Linux} and {ServiceOs.Windows}");
         }
-        if (!string.IsNullOrEmpty(DefaultAuth) && DefaultAuth != ServiceAuth.ENTRA && DefaultAuth != ServiceAuth.TOKEN)
+        if (!string.IsNullOrEmpty(DefaultAuth) && DefaultAuth != ServiceAuth.Entra && DefaultAuth != ServiceAuth.Token)
         {
-            throw new System.Exception($"Invalid value for {nameof(DefaultAuth)}: {DefaultAuth}. Supported values are {ServiceAuth.ENTRA} and {ServiceAuth.TOKEN}");
+            throw new System.Exception($"Invalid value for {nameof(DefaultAuth)}: {DefaultAuth}. Supported values are {ServiceAuth.Entra} and {ServiceAuth.Token}");
         }
     }
 

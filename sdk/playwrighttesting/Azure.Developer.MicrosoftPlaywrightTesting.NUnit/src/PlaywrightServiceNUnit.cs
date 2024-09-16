@@ -5,6 +5,7 @@ using Azure.Core;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.Developer.MicrosoftPlaywrightTesting;
+using System.Runtime.InteropServices;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 
@@ -27,13 +28,13 @@ public class PlaywrightServiceNUnit : PlaywrightService
     /// Creates a new instance of <see cref="PlaywrightServiceSettings"/> based on the runsettings file.
     /// </summary>
     public static PlaywrightServiceSettings playwrightServiceSettings = new(
-        os: TestContext.Parameters.Get(RunSettingKey.OS),
-        runId: TestContext.Parameters.Get(RunSettingKey.RUN_ID),
-        exposeNetwork: TestContext.Parameters.Get(RunSettingKey.EXPOSE_NETWORK),
-        defaultAuth: TestContext.Parameters.Get(RunSettingKey.DEFAULT_AUTH),
-        useCloudHostedBrowsers: TestContext.Parameters.Get(RunSettingKey.USE_CLOUD_HOSTED_BROWSERS),
-        azureTokenCredentialType: TestContext.Parameters.Get(RunSettingKey.AZURE_TOKEN_CREDENTIAL_TYPE),
-        managedIdentityClientId: TestContext.Parameters.Get(RunSettingKey.MANAGED_IDENTITY_CLIENT_ID)
+        os: GetOsPlatform(TestContext.Parameters.Get(RunSettingKey.Os)),
+        runId: TestContext.Parameters.Get(RunSettingKey.RunId),
+        exposeNetwork: TestContext.Parameters.Get(RunSettingKey.ExposeNetwork),
+        defaultAuth: TestContext.Parameters.Get(RunSettingKey.DefaultAuth),
+        useCloudHostedBrowsers: TestContext.Parameters.Get(RunSettingKey.UseCloudHostedBrowsers),
+        azureTokenCredentialType: TestContext.Parameters.Get(RunSettingKey.AzureTokenCredentialType),
+        managedIdentityClientId: TestContext.Parameters.Get(RunSettingKey.ManagedIdentityClientId)
     );
 
     /// <summary>
@@ -53,5 +54,22 @@ public class PlaywrightServiceNUnit : PlaywrightService
     public void Teardown()
     {
         Cleanup();
+    }
+
+    private static OSPlatform? GetOsPlatform(string? os)
+    {
+        if (string.IsNullOrEmpty(os))
+        {
+            return null;
+        }
+        else if (os!.Equals("Windows", System.StringComparison.OrdinalIgnoreCase))
+        {
+            return OSPlatform.Windows;
+        }
+        else if (os.Equals("Linux", System.StringComparison.OrdinalIgnoreCase))
+        {
+            return OSPlatform.Linux;
+        }
+        return null;
     }
 }

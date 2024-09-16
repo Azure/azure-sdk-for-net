@@ -31,7 +31,7 @@ internal class EntraLifecycle
             AccessToken accessToken = await _tokenCredential.GetTokenAsync(tokenRequestContext, default).ConfigureAwait(false);
             _entraIdAccessToken = accessToken.Token;
             _entraIdAccessTokenExpiry = accessToken.ExpiresOn.ToUnixTimeSeconds();
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_ACCESS_TOKEN_ENVIRONMENT_VARIABLE, _entraIdAccessToken);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, _entraIdAccessToken);
             return true;
         }
         catch (Exception ex)
@@ -55,7 +55,7 @@ internal class EntraLifecycle
     {
         try
         {
-            var token = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_ACCESS_TOKEN_ENVIRONMENT_VARIABLE);
+            var token = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
             JsonWebToken jsonWebToken = _jsonWebTokenHandler.ReadJsonWebToken(token);
             jsonWebToken.TryGetClaim(
                 "aid",

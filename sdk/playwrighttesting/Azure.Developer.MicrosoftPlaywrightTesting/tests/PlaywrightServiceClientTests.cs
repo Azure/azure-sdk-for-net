@@ -12,7 +12,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.Tests;
 public class PlaywrightServiceClientTests : RecordedTestBase<PlaywrightServiceTestEnvironment>
 {
     private PlaywrightService? _playwrightService;
-    private static string Access_Token => Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_ACCESS_TOKEN_ENVIRONMENT_VARIABLE)!;
+    private static string Access_Token => Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken)!;
 
     public PlaywrightServiceClientTests(bool isAsync) : base(isAsync, RecordedTestMode.Live) { }
 
@@ -22,7 +22,7 @@ public class PlaywrightServiceClientTests : RecordedTestBase<PlaywrightServiceTe
         var workspaceId = TestUtils.GetWorkspaceIdFromDashboardEndpoint(TestEnvironment.DashboardEndpoint);
         var region = TestEnvironment.Region;
         var serviceApiEndpoint = TestUtils.GetPlaywrightServiceAPIEndpoint(workspaceId, region);
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_URL_ENVIRONMENT_VARIABLE, serviceApiEndpoint);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, serviceApiEndpoint);
         _playwrightService = new PlaywrightService(new PlaywrightServiceSettings(), tokenCredential: TestEnvironment.Credential);
         await _playwrightService.InitializeAsync();
     }

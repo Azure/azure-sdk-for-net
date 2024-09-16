@@ -7,6 +7,7 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ public class PlaywrightService
     /// <summary>
     /// Gets or sets the default authentication mechanism.
     /// </summary>
-    public string DefaultAuth { get; set; } = ServiceAuth.ENTRA;
+    public string DefaultAuth { get; set; } = ServiceAuth.Entra;
     /// <summary>
     /// Gets or sets a flag indicating whether to use cloud-hosted browsers.
     /// </summary>
@@ -33,7 +34,7 @@ public class PlaywrightService
     /// <summary>
     /// Gets the service endpoint for the Playwright service.
     /// </summary>
-    public static string? ServiceEndpoint => Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_URL_ENVIRONMENT_VARIABLE);
+    public static string? ServiceEndpoint => Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl);
 
     private readonly EntraLifecycle? _entraLifecycle;
     private readonly JsonWebTokenHandler? _jsonWebTokenHandler;
@@ -64,22 +65,22 @@ public class PlaywrightService
     /// <param name="defaultAuth">The default authentication mechanism.</param>
     /// <param name="useCloudHostedBrowsers">Whether to use cloud-hosted browsers.</param>
     /// <param name="tokenCredential">The token credential.</param>
-    public PlaywrightService(string? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, bool? useCloudHostedBrowsers = null, TokenCredential? tokenCredential = null)
+    public PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, bool? useCloudHostedBrowsers = null, TokenCredential? tokenCredential = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
         _entraLifecycle = new EntraLifecycle(tokenCredential: tokenCredential);
         _jsonWebTokenHandler = new JsonWebTokenHandler();
-        InitializePlaywrightServiceEnvironmentVariables(os, runId, exposeNetwork, defaultAuth, useCloudHostedBrowsers);
+        InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, defaultAuth, useCloudHostedBrowsers);
     }
 
-    internal PlaywrightService(string? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? tokenCredential = null)
+    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? defaultAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? tokenCredential = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
         _entraLifecycle = entraLifecycle ?? new EntraLifecycle(tokenCredential);
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
-        InitializePlaywrightServiceEnvironmentVariables(os, runId, exposeNetwork, defaultAuth, useCloudHostedBrowsers);
+        InitializePlaywrightServiceEnvironmentVariables(getServiceCompatibleOs(os), runId, exposeNetwork, defaultAuth, useCloudHostedBrowsers);
     }
 
     /// <summary>
@@ -90,15 +91,15 @@ public class PlaywrightService
     /// <param name="runId">The run ID.</param>
     /// <param name="exposeNetwork">The network exposure.</param>
     /// <returns>The connect options.</returns>
-    public async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(string? os = null, string? runId = null, string? exposeNetwork = null) where T : class, new()
+    public async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null) where T : class, new()
     {
         if (Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable) == "true")
             throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
         if (string.IsNullOrEmpty(ServiceEndpoint))
             throw new Exception(Constants.s_no_service_endpoint_error_message);
-        string _serviceOs = Uri.EscapeDataString(os ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_OS_ENVIRONMENT_VARIABLE) ?? Constants.s_default_os);
-        string _runId = Uri.EscapeDataString(runId ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_RUN_ID_ENVIRONMENT_VARIABLE) ?? GetDefaultRunId());
-        string _exposeNetwork = exposeNetwork ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_EXPOSE_NETWORK_ENVIRONMENT_VARIABLE) ?? Constants.s_default_expose_network;
+        string _serviceOs = Uri.EscapeDataString(getServiceCompatibleOs(os) ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs) ?? Constants.s_default_os);
+        string _runId = Uri.EscapeDataString(runId ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId) ?? GetDefaultRunId());
+        string _exposeNetwork = exposeNetwork ?? Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork) ?? Constants.s_default_expose_network;
 
         string wsEndpoint = $"{ServiceEndpoint}?os={_serviceOs}&runId={_runId}&api-version={Constants.s_api_version}";
 
@@ -141,10 +142,10 @@ public class PlaywrightService
         {
             // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
             // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_URL_ENVIRONMENT_VARIABLE, null);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, null);
         }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
-        if (DefaultAuth == ServiceAuth.TOKEN && !string.IsNullOrEmpty(GetAuthToken()))
+        if (DefaultAuth == ServiceAuth.Token && !string.IsNullOrEmpty(GetAuthToken()))
         {
             ValidateMptPAT();
             return;
@@ -192,15 +193,15 @@ public class PlaywrightService
         }
         if (!string.IsNullOrEmpty(os))
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_OS_ENVIRONMENT_VARIABLE, os);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, os);
         }
         else
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_OS_ENVIRONMENT_VARIABLE, Constants.s_default_os);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, Constants.s_default_os);
         }
         if (!string.IsNullOrEmpty(runId))
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_RUN_ID_ENVIRONMENT_VARIABLE, runId);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId);
         }
         else
         {
@@ -208,23 +209,23 @@ public class PlaywrightService
         }
         if (!string.IsNullOrEmpty(exposeNetwork))
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_EXPOSE_NETWORK_ENVIRONMENT_VARIABLE, exposeNetwork);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, exposeNetwork);
         }
         else
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_EXPOSE_NETWORK_ENVIRONMENT_VARIABLE, Constants.s_default_expose_network);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, Constants.s_default_expose_network);
         }
         SetReportingUrlAndWorkspaceId();
     }
 
     internal static string GetDefaultRunId()
     {
-        var runIdFromEnvironmentVariable = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_RUN_ID_ENVIRONMENT_VARIABLE);
+        var runIdFromEnvironmentVariable = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
         if (!string.IsNullOrEmpty(runIdFromEnvironmentVariable))
             return runIdFromEnvironmentVariable!;
         CIInfo ciInfo = CiInfoProvider.GetCIInfo();
         var runId = ReporterUtils.GetRunId(ciInfo);
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_RUN_ID_ENVIRONMENT_VARIABLE, runId);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId);
         return runId;
     }
 
@@ -244,7 +245,7 @@ public class PlaywrightService
 
     private static string? GetAuthToken()
     {
-        return Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_ACCESS_TOKEN_ENVIRONMENT_VARIABLE);
+        return Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
     }
 
     private void ValidateMptPAT()
@@ -261,5 +262,16 @@ public class PlaywrightService
         {
             throw new Exception(Constants.s_invalid_mpt_pat_error);
         }
+    }
+
+    private string? getServiceCompatibleOs(OSPlatform? oSPlatform)
+    {
+        if (oSPlatform == null)
+            return null;
+        if (oSPlatform.Equals(OSPlatform.Linux))
+            return ServiceOs.Linux;
+        if (oSPlatform.Equals(OSPlatform.Windows))
+            return ServiceOs.Windows;
+        throw new ArgumentException(Constants.s_invalid_os_error);
     }
 }
