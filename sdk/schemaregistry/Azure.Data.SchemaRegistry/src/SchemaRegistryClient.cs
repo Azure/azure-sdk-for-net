@@ -109,6 +109,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="format">The serialization format of the schema.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned Schema.
+        /// </remarks>
         public virtual Response<SchemaProperties> RegisterSchema(
             string groupName,
             string schemaName,
@@ -165,6 +171,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="format">The serialization format of the schema.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned Schema.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Response<SchemaProperties>> GetSchemaPropertiesAsync(
             string groupName,
@@ -185,6 +197,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="format">The serialization format of the schema.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned Schema.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Response<SchemaProperties> GetSchemaProperties(
             string groupName,
@@ -239,6 +257,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId">The schema ID of the the schema from the SchemaRegistry.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned <see cref="SchemaRegistrySchema.Properties"/>.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Response<SchemaRegistrySchema>> GetSchemaAsync(string schemaId, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -252,6 +276,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaVersion"> Version number of specific schema. </param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned <see cref="SchemaRegistrySchema.Properties"/>.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Response<SchemaRegistrySchema>> GetSchemaAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -263,6 +293,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId">The schema ID of the the schema from the SchemaRegistry.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned <see cref="SchemaRegistrySchema.Properties"/>.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Response<SchemaRegistrySchema> GetSchema(string schemaId, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -276,6 +312,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaVersion"> Version number of specific schema. </param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned <see cref="SchemaRegistrySchema.Properties"/>.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Response<SchemaRegistrySchema> GetSchema(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
