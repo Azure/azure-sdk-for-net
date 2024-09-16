@@ -372,7 +372,7 @@ namespace Azure.Maps.Search.Models
     public partial class GetPolygonOptions
     {
         public GetPolygonOptions() { }
-        public Azure.Core.GeoJson.GeoPosition? Coordinates { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
         public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
         public Azure.Maps.Search.Models.ResolutionEnum? Resolution { get { throw null; } set { } }
         public Azure.Maps.Search.Models.BoundaryResultTypeEnum? ResultType { get { throw null; } set { } }

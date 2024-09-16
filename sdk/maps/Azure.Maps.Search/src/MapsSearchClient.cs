@@ -274,12 +274,12 @@ namespace Azure.Maps.Search
                 }
 
                 IEnumerable<double> coordinates = null;
-                if (options?.Coordinates != null)
+                if (options.Coordinates != null)
                 {
                     coordinates = coordinates = new[]
                     {
-                        Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                        Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                        Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                     };
                 }
                 return await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
@@ -309,9 +309,9 @@ namespace Azure.Maps.Search
                 }
 
                 IEnumerable<double> coordinates = null;
-                if (options?.Coordinates != null)
+                if (options.Coordinates != null)
                 {
-                    coordinates = new[] { (double)options.Coordinates?.Longitude, (double)options.Coordinates?.Latitude };
+                    coordinates = new[] { (double)options.Coordinates.Longitude, (double)options.Coordinates.Latitude };
                 }
                 return RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken);
             }
