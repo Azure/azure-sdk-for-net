@@ -6,10 +6,10 @@ using System.Text.Json;
 
 namespace ClientModel.Tests.Collections;
 
-// A mock model that illustrate value that can be returned in a page collection
-public class ValueItem
+// A mock model that illustrates values that can be returned in a streamed collection
+public class StreamedValue
 {
-    public ValueItem(int id, string value)
+    public StreamedValue(int id, string value)
     {
         Id = id;
         Value = value;

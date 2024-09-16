@@ -45,14 +45,14 @@ public class PaginatedCollectionClient
 
         return new ValueCollectionResult(token.PageSize, token.Offset, cancellationToken.ToRequestOptions());
     }
-    public virtual AsyncCollectionResult<ValueItem> GetValuesAsync(
+    public virtual AsyncCollectionResult GetValuesAsync(
         int? pageSize,
         RequestOptions? options)
     {
         return new AsyncValueCollectionResult(pageSize, offset: default, options);
     }
 
-    public virtual AsyncCollectionResult<ValueItem> GetValuesAsync(
+    public virtual AsyncCollectionResult GetValuesAsync(
         ContinuationToken continuationToken,
         RequestOptions? options)
     {
@@ -60,14 +60,14 @@ public class PaginatedCollectionClient
 
         return new AsyncValueCollectionResult(token.PageSize, token.Offset, options);
     }
-    public virtual CollectionResult<ValueItem> GetValues(
+    public virtual CollectionResult GetValues(
         int? pageSize,
         RequestOptions? options)
     {
         return new ValueCollectionResult(pageSize, offset: default, options);
     }
 
-    public virtual CollectionResult<ValueItem> GetValues(
+    public virtual CollectionResult GetValues(
         ContinuationToken continuationToken,
         RequestOptions? options)
     {
