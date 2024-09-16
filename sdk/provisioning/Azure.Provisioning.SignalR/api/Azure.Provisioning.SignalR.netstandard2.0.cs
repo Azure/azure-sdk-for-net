@@ -211,6 +211,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRUpstreamTemplate> UpstreamTemplates { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
+        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.SignalR.SignalRBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.SignalR.SignalRBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         public static Azure.Provisioning.SignalR.SignalRService FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.SignalR.SignalRKeys GetKeys() { throw null; }

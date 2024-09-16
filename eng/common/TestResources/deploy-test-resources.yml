@@ -43,7 +43,7 @@ steps:
 
   - ${{ if eq('true', parameters.UseFederatedAuth) }}:
     - task: AzurePowerShell@5
-      displayName: Deploy test resources
+      displayName: 🚀 Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
         PoolSubnet: $(PoolSubnet)
@@ -96,7 +96,7 @@ steps:
           -ServicePrincipalAuth `
           -Force `
           -Verbose | Out-Null
-      displayName: Deploy test resources
+      displayName: 🚀 Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
         PoolSubnet: $(PoolSubnet)

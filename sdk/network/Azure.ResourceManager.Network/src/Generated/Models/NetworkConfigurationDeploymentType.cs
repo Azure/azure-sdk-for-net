@@ -24,11 +24,17 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string SecurityAdminValue = "SecurityAdmin";
         private const string ConnectivityValue = "Connectivity";
+        private const string SecurityUserValue = "SecurityUser";
+        private const string RoutingValue = "Routing";
 
         /// <summary> SecurityAdmin. </summary>
         public static NetworkConfigurationDeploymentType SecurityAdmin { get; } = new NetworkConfigurationDeploymentType(SecurityAdminValue);
         /// <summary> Connectivity. </summary>
         public static NetworkConfigurationDeploymentType Connectivity { get; } = new NetworkConfigurationDeploymentType(ConnectivityValue);
+        /// <summary> SecurityUser. </summary>
+        public static NetworkConfigurationDeploymentType SecurityUser { get; } = new NetworkConfigurationDeploymentType(SecurityUserValue);
+        /// <summary> Routing. </summary>
+        public static NetworkConfigurationDeploymentType Routing { get; } = new NetworkConfigurationDeploymentType(RoutingValue);
         /// <summary> Determines if two <see cref="NetworkConfigurationDeploymentType"/> values are the same. </summary>
         public static bool operator ==(NetworkConfigurationDeploymentType left, NetworkConfigurationDeploymentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkConfigurationDeploymentType"/> values are not the same. </summary>

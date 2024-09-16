@@ -170,6 +170,13 @@ public abstract partial class Specification
             resources[typeof(SubscriptionResource)] = method;
         }
 
+        if (ArmAssembly == typeof(TenantResource).Assembly)
+        {
+            Func<string, ArmOperation<TenantResource>> func = _ => throw new NotImplementedException();
+            MethodInfo method = func.GetType().GetMethod("Invoke")!;
+            resources[typeof(TenantResource)] = method;
+        }
+
         // Verify no derived types
         foreach (Type derived in ArmAssembly.GetExportedTypes())
         {

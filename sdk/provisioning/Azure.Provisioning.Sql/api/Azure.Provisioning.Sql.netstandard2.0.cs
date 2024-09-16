@@ -417,21 +417,12 @@ namespace Azure.Provisioning.Sql
     public partial class IPv6FirewallRule : Azure.Provisioning.Primitives.Resource
     {
         public IPv6FirewallRule(string resourceName, string? resourceVersion = null, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Core.ResourceType), default(string), default(Azure.Provisioning.ProvisioningContext)) { }
-        public Azure.Provisioning.BicepValue<string> EndIPv6Address { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> StartIPv6Address { get { throw null; } }
-        public static Azure.Provisioning.Sql.IPv6FirewallRule FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
-    }
-    public partial class IPv6FirewallRuleData : Azure.Provisioning.Primitives.ProvisioningConstruct
-    {
-        public IPv6FirewallRuleData() : base (default(Azure.Provisioning.ProvisioningContext)) { }
         public Azure.Provisioning.BicepValue<string> EndIPv6Address { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
+        public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StartIPv6Address { get { throw null; } set { } }
+        public static Azure.Provisioning.Sql.IPv6FirewallRule FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
     }
     public enum JobAgentState
     {
@@ -1633,23 +1624,14 @@ namespace Azure.Provisioning.Sql
     public partial class SqlFirewallRule : Azure.Provisioning.Primitives.Resource
     {
         public SqlFirewallRule(string resourceName, string? resourceVersion = null, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Core.ResourceType), default(string), default(Azure.Provisioning.ProvisioningContext)) { }
-        public Azure.Provisioning.BicepValue<string> EndIPAddress { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> StartIPAddress { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlFirewallRule FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-    }
-    public partial class SqlFirewallRuleData : Azure.Provisioning.Primitives.ProvisioningConstruct
-    {
-        public SqlFirewallRuleData() : base (default(Azure.Provisioning.ProvisioningContext)) { }
         public Azure.Provisioning.BicepValue<string> EndIPAddress { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
+        public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StartIPAddress { get { throw null; } set { } }
+        public static Azure.Provisioning.Sql.SqlFirewallRule FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
     }
     public enum SqlMinimalTlsVersion
     {
@@ -1741,6 +1723,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ServerWorkspaceFeature> WorkspaceFeature { get { throw null; } }
+        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Sql.SqlBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Sql.SqlBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         public static Azure.Provisioning.Sql.SqlServer FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

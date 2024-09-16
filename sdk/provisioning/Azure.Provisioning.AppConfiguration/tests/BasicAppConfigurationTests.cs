@@ -20,13 +20,6 @@ public class BasicAppConfigurationTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "Config Store location."
-                    };
-
                 BicepParameter featureFlagKey =
                     new(nameof(featureFlagKey), typeof(string))
                     {
@@ -37,7 +30,6 @@ public class BasicAppConfigurationTests(bool async)
                 AppConfigurationStore configStore =
                     new(nameof(configStore), AppConfigurationStore.ResourceVersions.V2022_05_01)
                     {
-                        Location = location,
                         SkuName = "Standard",
                     };
 
@@ -64,11 +56,11 @@ public class BasicAppConfigurationTests(bool async)
             })
         .Compare(
             """
-            @description('Config Store location.')
-            param location string = resourceGroup().location
-
             @description('Specifies the key of the feature flag.')
             param featureFlagKey string = 'FeatureFlagSample'
+
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
 
             resource configStore 'Microsoft.AppConfiguration/configurationStores@2022-05-01' = {
                 name: take('configStore-${uniqueString(resourceGroup().id)}', 50)
@@ -85,7 +77,7 @@ public class BasicAppConfigurationTests(bool async)
             }
 
             resource featureFlag 'Microsoft.AppConfiguration/configurationStores/keyValues@2022-05-01' = {
-                name: '.appconfig.featureflag~2FFeatureFlagSample'
+                name: '.appconfig.featureflag~2F${featureFlagKey}'
                 properties: {
                     contentType: 'application/vnd.microsoft.appconfig.ff+json;charset=utf-8'
                     value: string(flag)

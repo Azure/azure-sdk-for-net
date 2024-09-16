@@ -75,11 +75,20 @@ public class ProvisioningContext
     /// </summary>
     public IList<PropertyResolver> PropertyResolvers { get; set; } =
     [
-        new DynamicResourceNameResolver(),
+        new DynamicResourceNamePropertyResolver(),
         new LocationPropertyResolver(),
     ];
     // TODO: Do we want to make this less mutable like AddPipelinePolicy to
     // maintain more control over how people are able to modify these?
+
+    /// <summary>
+    /// Gets or sets the collection of <see cref="InfrastructureResolver"/>s to
+    /// apply to any <see cref="Infrastructure"/> being composed.
+    /// </summary>
+    public IList<InfrastructureResolver> InfrastructureResolvers { get; set; } =
+    [
+        new OrderingInfrastructureResolver(),
+    ];
 
     #region Creating Clients
     /// <summary>

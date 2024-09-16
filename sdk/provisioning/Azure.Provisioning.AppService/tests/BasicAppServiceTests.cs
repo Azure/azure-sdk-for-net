@@ -23,17 +23,9 @@ public class BasicAppServiceTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "Service location."
-                    };
-
                 StorageAccount storage =
                     new(nameof(storage))
                     {
-                        Location = location,
                         Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
                         Kind = StorageKind.Storage,
                         EnableHttpsTrafficOnly = true,
@@ -43,7 +35,6 @@ public class BasicAppServiceTests(bool async)
                 AppServicePlan hostingPlan =
                     new(nameof(hostingPlan), "2021-03-01")
                     {
-                        Location = location,
                         Sku =
                             new AppServiceSkuDescription
                             {
@@ -55,7 +46,6 @@ public class BasicAppServiceTests(bool async)
                 ApplicationInsightsComponent appInsights =
                     new(nameof(appInsights))
                     {
-                        Location = location,
                         Kind = "web",
                         ApplicationType = ApplicationInsightsApplicationType.Web,
                         RequestSource = ComponentRequestSource.Rest
@@ -64,13 +54,12 @@ public class BasicAppServiceTests(bool async)
                 BicepVariable funcAppName =
                     new(nameof(funcAppName), typeof(string))
                     {
-                        Value = BicepFunction.Interpolate($"functionApp-{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}")
+                        Value = BicepFunction.Concat("functionApp-", BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id))
                     };
 
                 WebSite functionApp =
                     new(nameof(functionApp))
                     {
-                        Location = location,
                         Name = funcAppName,
                         Kind = "functionapp",
                         Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
@@ -124,7 +113,7 @@ public class BasicAppServiceTests(bool async)
             })
         .Compare(
             """
-            @description('Service location.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
@@ -159,7 +148,7 @@ public class BasicAppServiceTests(bool async)
                 }
             }
 
-            var funcAppName = 'functionApp-${uniqueString(resourceGroup().id)}'
+            var funcAppName = concat('functionApp-', uniqueString(resourceGroup().id))
 
             resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
                 name: funcAppName
