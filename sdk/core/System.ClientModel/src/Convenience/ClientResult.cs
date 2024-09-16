@@ -11,7 +11,7 @@ namespace System.ClientModel;
 /// </summary>
 public class ClientResult
 {
-    private PipelineResponse _response;
+    private readonly PipelineResponse _response;
 
     /// <summary>
     /// Create a new instance of <see cref="ClientResult"/> from a service
