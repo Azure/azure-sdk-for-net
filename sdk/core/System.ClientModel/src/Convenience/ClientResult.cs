@@ -11,18 +11,7 @@ namespace System.ClientModel;
 /// </summary>
 public class ClientResult
 {
-    private PipelineResponse? _response;
-
-    /// <summary>
-    /// Create a new instance of <see cref="ClientResult"/>.
-    /// </summary>
-    /// <remarks>If no <see cref="PipelineResponse"/> is provided when the
-    /// <see cref="ClientResult"/> instance is created, it is expected that
-    /// a derived type will call <see cref="SetRawResponse(PipelineResponse)"/>
-    /// prior to a user calling <see cref="GetRawResponse"/>.</remarks>
-    protected ClientResult()
-    {
-    }
+    private PipelineResponse _response;
 
     /// <summary>
     /// Create a new instance of <see cref="ClientResult"/> from a service
@@ -40,41 +29,9 @@ public class ClientResult
     /// <summary>
     /// Gets the <see cref="PipelineResponse"/> received from the service.
     /// </summary>
-    /// <returns>the <see cref="PipelineResponse"/> received from the service.
+    /// <returns>The <see cref="PipelineResponse"/> received from the service.
     /// </returns>
-    /// <exception cref="InvalidOperationException">No
-    /// <see cref="PipelineResponse"/> value is currently available for this
-    /// <see cref="ClientResult"/> instance.  This can happen when the instance
-    /// is a collection type like <see cref="AsyncCollectionResult{T}"/>
-    /// that has not yet been enumerated.</exception>
-    public PipelineResponse GetRawResponse()
-    {
-        if (_response is null)
-        {
-            throw new InvalidOperationException("No response is associated " +
-                "with this result.  If the result is a collection result " +
-                "type, this may be because no request has been sent to the " +
-                "server yet.");
-        }
-
-        return _response;
-    }
-
-    /// <summary>
-    /// Update the value returned from <see cref="GetRawResponse"/>.
-    /// </summary>
-    /// <remarks>This method may be called from types derived from
-    /// <see cref="ClientResult"/> that poll the service for status updates
-    /// or to retrieve additional collection values to update the raw response
-    /// to the response most recently returned from the service.</remarks>
-    /// <param name="response">The <see cref="PipelineResponse"/> to return
-    /// from <see cref="GetRawResponse"/>.</param>
-    protected void SetRawResponse(PipelineResponse response)
-    {
-        Argument.AssertNotNull(response, nameof(response));
-
-        _response = response;
-    }
+    public PipelineResponse GetRawResponse() => _response;
 
     #region Factory methods for ClientResult and subtypes
 

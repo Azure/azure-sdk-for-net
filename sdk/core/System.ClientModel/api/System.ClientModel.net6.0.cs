@@ -8,8 +8,9 @@ namespace System.ClientModel
     }
     public abstract partial class AsyncCollectionResult<T> : System.ClientModel.Primitives.AsyncCollectionResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
-        protected internal AsyncCollectionResult() { }
-        public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected internal AsyncCollectionResult(System.Threading.CancellationToken cancellationToken) : base (default(System.Threading.CancellationToken)) { }
+        public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
     public abstract partial class BinaryContent : System.IDisposable
     {
@@ -24,13 +25,11 @@ namespace System.ClientModel
     }
     public partial class ClientResult
     {
-        protected ClientResult() { }
         protected ClientResult(System.ClientModel.Primitives.PipelineResponse response) { }
         public static System.ClientModel.ClientResult<T?> FromOptionalValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.ClientResult FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.ClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
-        protected void SetRawResponse(System.ClientModel.Primitives.PipelineResponse response) { }
     }
     public partial class ClientResultException : System.Exception
     {
@@ -42,14 +41,15 @@ namespace System.ClientModel
     }
     public partial class ClientResult<T> : System.ClientModel.ClientResult
     {
-        protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) { }
+        protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
     public abstract partial class CollectionResult<T> : System.ClientModel.Primitives.CollectionResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
-        protected internal CollectionResult() { }
-        public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
+        protected internal CollectionResult(System.Threading.CancellationToken cancellationToken) : base (default(System.Threading.CancellationToken)) { }
+        public System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
+        protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ContinuationToken
@@ -73,7 +73,8 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class AsyncCollectionResult
     {
-        protected AsyncCollectionResult() { }
+        protected AsyncCollectionResult(System.Threading.CancellationToken cancellationToken) { }
+        protected System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> GetRawPagesAsync();
     }
@@ -121,7 +122,8 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class CollectionResult
     {
-        protected CollectionResult() { }
+        protected CollectionResult(System.Threading.CancellationToken cancellationToken) { }
+        protected System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> GetRawPages();
     }
@@ -172,11 +174,13 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
     }
-    public abstract partial class OperationResult : System.ClientModel.ClientResult
+    public abstract partial class OperationResult
     {
         protected OperationResult(System.ClientModel.Primitives.PipelineResponse response) { }
         public bool HasCompleted { get { throw null; } protected set { } }
         public abstract System.ClientModel.ContinuationToken? RehydrationToken { get; protected set; }
+        public System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
+        protected void SetRawResponse(System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract System.ClientModel.ClientResult UpdateStatus(System.ClientModel.Primitives.RequestOptions? options = null);
         public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult> UpdateStatusAsync(System.ClientModel.Primitives.RequestOptions? options = null);
         public virtual void WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }

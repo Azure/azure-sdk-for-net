@@ -3,35 +3,17 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ClientModel.Tests.Paging;
+namespace ClientModel.Tests.Collections;
 
-internal class MockValueItemPageResponse : PipelineResponse
+internal class MockPageResponse : PipelineResponse
 {
-    public MockValueItemPageResponse(IEnumerable<ValueItem> values)
+    public MockPageResponse(ValueItemPage page)
     {
-        StringBuilder sb = new StringBuilder();
-        sb.AppendLine("[");
-
-        int count = 0;
-        foreach (ValueItem value in values)
-        {
-            sb.AppendLine(value.ToJson());
-
-            if (++count != values.Count())
-            {
-                sb.AppendLine(",");
-            }
-        }
-        sb.AppendLine("]");
-
-        Content = BinaryData.FromString(sb.ToString());
+        Content = page.ToJson();
     }
 
     public override int Status => 200;
@@ -46,7 +28,8 @@ internal class MockValueItemPageResponse : PipelineResponse
 
     public override BinaryData Content { get; }
 
-    protected override PipelineResponseHeaders HeadersCore => throw new NotImplementedException();
+    protected override PipelineResponseHeaders HeadersCore
+        => throw new NotImplementedException();
 
     public override BinaryData BufferContent(CancellationToken cancellationToken = default)
         => Content;

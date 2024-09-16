@@ -5,8 +5,8 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
-namespace ClientModel.Tests.Paging;
+namespace ClientModel.Tests.Collections;
 
-public class PagingClientOptions : ClientPipelineOptions
+public class PaginatedCollectionClientOptions : ClientPipelineOptions
 {
 }

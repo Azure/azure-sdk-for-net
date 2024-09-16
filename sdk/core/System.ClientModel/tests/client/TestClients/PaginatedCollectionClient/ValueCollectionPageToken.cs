@@ -3,23 +3,24 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 
-namespace ClientModel.Tests.Paging;
+namespace ClientModel.Tests.Collections;
 
-internal class ValuesPageToken : ContinuationToken
+internal class ValueCollectionPageToken : ContinuationToken
 {
-    protected ValuesPageToken(string? order, int? pageSize, int? offset)
+    protected ValueCollectionPageToken(int? pageSize, int? offset)
     {
-        Order = order;
         PageSize = pageSize;
         Offset = offset;
     }
 
-    public string? Order { get; }
     public int? PageSize { get; }
+
     public int? Offset { get; }
 
     public override BinaryData ToBytes()
@@ -28,11 +29,6 @@ internal class ValuesPageToken : ContinuationToken
         using Utf8JsonWriter writer = new(stream);
 
         writer.WriteStartObject();
-
-        if (Order is not null)
-        {
-            writer.WriteString("order", Order);
-        }
 
         if (PageSize.HasValue)
         {
@@ -52,19 +48,19 @@ internal class ValuesPageToken : ContinuationToken
         return BinaryData.FromStream(stream);
     }
 
-    public ValuesPageToken? GetNextPageToken(int offset, int count)
+    public ValueCollectionPageToken? GetNextPageToken(int offset, int count)
     {
         if (offset >= count)
         {
             return null;
         }
 
-        return new ValuesPageToken(Order, PageSize, offset);
+        return new ValueCollectionPageToken(PageSize, offset);
     }
 
-    public static ValuesPageToken FromToken(ContinuationToken pageToken)
+    public static ValueCollectionPageToken FromToken(ContinuationToken pageToken)
     {
-        if (pageToken is ValuesPageToken token)
+        if (pageToken is ValueCollectionPageToken token)
         {
             return token;
         }
@@ -73,12 +69,11 @@ internal class ValuesPageToken : ContinuationToken
 
         if (data.ToMemory().Length == 0)
         {
-            throw new ArgumentException("Failed to create ValuesPageToken from provided pageToken.", nameof(pageToken));
+            throw new ArgumentException("Failed to create ValueCollectionPageToken from provided pageToken.", nameof(pageToken));
         }
 
         Utf8JsonReader reader = new(data);
 
-        string? order = null;
         int? pageSize = null;
         int? offset = null;
 
@@ -99,12 +94,6 @@ internal class ValuesPageToken : ContinuationToken
 
             switch (propertyName)
             {
-                case "order":
-                    reader.Read();
-                    Debug.Assert(reader.TokenType == JsonTokenType.String);
-                    order = reader.GetString();
-                    break;
-
                 case "pageSize":
                     reader.Read();
                     Debug.Assert(reader.TokenType == JsonTokenType.Number);
@@ -121,9 +110,27 @@ internal class ValuesPageToken : ContinuationToken
             }
         }
 
-        return new(order, pageSize, offset);
+        return new(pageSize, offset);
     }
 
-    public static ValuesPageToken FromOptions(string? order, int? pageSize, int? offset)
-        => new(order, pageSize, offset);
+    public static ValueCollectionPageToken FromOptions(int? pageSize, int? offset)
+        => new(pageSize, offset);
+
+    public static ValueCollectionPageToken? FromResponse(ClientResult page, int? pageSize)
+    {
+        PipelineResponse response = page.GetRawResponse();
+
+        using JsonDocument doc = JsonDocument.Parse(response.Content);
+
+        JsonElement data = doc.RootElement.GetProperty("data");
+        int lastId = data.EnumerateArray().LastOrDefault().GetProperty("id").GetInt32();
+        bool hasMore = doc.RootElement.GetProperty("has_more"u8).GetBoolean();
+
+        if (!hasMore)
+        {
+            return null;
+        }
+
+        return new(pageSize, lastId + 1);
+    }
 }

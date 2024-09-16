@@ -4,7 +4,7 @@
 using System;
 using System.Text.Json;
 
-namespace ClientModel.Tests.Paging;
+namespace ClientModel.Tests.Collections;
 
 // A mock model that illustrate values that can be returned in a page collection
 public class ValueItem

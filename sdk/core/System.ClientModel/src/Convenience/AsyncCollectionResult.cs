@@ -2,16 +2,22 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Threading;
 
 namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591 // public XML comments
 public abstract class AsyncCollectionResult
 {
-    protected AsyncCollectionResult() : base()
+    protected AsyncCollectionResult(CancellationToken cancellationToken)
     {
+        CancellationToken = cancellationToken;
     }
 
+    protected CancellationToken CancellationToken { get; }
+
+    // Note: implementation should use CancellationToken from property
+    // instead of passed-in parameter
     public abstract IAsyncEnumerable<ClientResult> GetRawPagesAsync();
 
     /// <summary>
