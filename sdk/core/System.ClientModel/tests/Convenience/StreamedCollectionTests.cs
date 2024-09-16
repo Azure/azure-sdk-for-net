@@ -3,13 +3,9 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using ClientModel.Tests.Collections;
-using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Results;
@@ -40,6 +36,118 @@ public class StreamedCollectionTests
         CollectionResult collection = client.GetValues();
         IEnumerable<ClientResult> pages = collection.GetRawPages();
 
+        int pageCount = 0;
+        foreach (ClientResult page in pages)
+        {
+            PipelineResponse response = page.GetRawResponse();
 
+            Assert.AreEqual(200, response.Status);
+            Assert.IsTrue(response.Content.ToString().StartsWith("event"));
+
+            pageCount++;
+        }
+
+        Assert.AreEqual(1, pageCount);
+    }
+
+    [Test]
+    public async Task CanEnumerateRawPagesAsync()
+    {
+        StreamedCollectionClient client = new();
+        AsyncCollectionResult collection = client.GetValuesAsync();
+        IAsyncEnumerable<ClientResult> pages = collection.GetRawPagesAsync();
+
+        int pageCount = 0;
+        await foreach (ClientResult page in pages)
+        {
+            PipelineResponse response = page.GetRawResponse();
+
+            Assert.AreEqual(200, response.Status);
+            Assert.IsTrue(response.Content.ToString().StartsWith("event"));
+
+            pageCount++;
+        }
+
+        Assert.AreEqual(1, pageCount);
+    }
+
+    [Test]
+    public void CanEnumerateValues()
+    {
+        StreamedCollectionClient client = new();
+        CollectionResult<StreamedValue> values = client.GetValues();
+
+        int count = 0;
+        foreach (StreamedValue value in values)
+        {
+            Assert.AreEqual(count, value.Id);
+            count++;
+        }
+
+        Assert.AreEqual(MockStreamedData.TotalItemCount, count);
+    }
+
+    [Test]
+    public void ResponseStreamIsDisposed()
+    {
+        StreamedCollectionClient client = new();
+        StreamedValueCollectionResult? values = client.GetValues() as StreamedValueCollectionResult;
+
+        Assert.IsNotNull(values);
+
+        ClientResult page = values!.GetRawPages().First();
+        MockStreamedResponse? response = page.GetRawResponse() as MockStreamedResponse;
+
+        Assert.IsNotNull(response);
+        Assert.IsFalse(response?.IsDisposed);
+
+        int count = 0;
+        foreach (StreamedValue value in values!.GetPageValues(page))
+        {
+            Assert.AreEqual(count, value.Id);
+            count++;
+        }
+
+        Assert.IsTrue(response?.IsDisposed);
+    }
+
+    [Test]
+    public async Task CanEnumerateValuesAsync()
+    {
+        StreamedCollectionClient client = new();
+        AsyncCollectionResult<StreamedValue> values = client.GetValuesAsync();
+
+        int count = 0;
+        await foreach (StreamedValue value in values)
+        {
+            Assert.AreEqual(count, value.Id);
+            count++;
+        }
+
+        Assert.AreEqual(MockStreamedData.TotalItemCount, count);
+    }
+
+    [Test]
+    public async Task ResponseStreamIsDisposedAsync()
+    {
+        StreamedCollectionClient client = new();
+        AsyncStreamedValueCollectionResult? values = client.GetValuesAsync() as AsyncStreamedValueCollectionResult;
+
+        Assert.IsNotNull(values);
+
+        ClientResult page = await values!.GetRawPagesAsync().FirstAsync();
+        MockStreamedResponse? response = page.GetRawResponse() as MockStreamedResponse;
+
+        Assert.IsNotNull(response);
+        Assert.IsFalse(response?.IsDisposed);
+
+        int count = 0;
+        await foreach (StreamedValue value in values!.GetPageValuesAsync(page))
+        {
+            Assert.AreEqual(count, value.Id);
+            count++;
+        }
+
+        Assert.IsTrue(response?.IsDisposed);
     }
 }

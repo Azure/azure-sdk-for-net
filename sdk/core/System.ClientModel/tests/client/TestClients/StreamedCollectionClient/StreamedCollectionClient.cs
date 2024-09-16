@@ -1,14 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Collections;
 
@@ -20,23 +15,23 @@ public class StreamedCollectionClient
     {
     }
 
-    public virtual AsyncCollectionResult<ValueItem> GetValuesAsync(CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<StreamedValue> GetValuesAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return new AsyncStreamedValueCollectionResult(cancellationToken.ToRequestOptions());
     }
 
-    public virtual CollectionResult<ValueItem> GetValues(CancellationToken cancellationToken = default)
+    public virtual CollectionResult<StreamedValue> GetValues(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return new StreamedValueCollectionResult(cancellationToken.ToRequestOptions());
     }
 
     public virtual AsyncCollectionResult GetValuesAsync(RequestOptions? options)
     {
-        throw new NotImplementedException();
+        return new AsyncStreamedValueCollectionResult(options);
     }
 
     public virtual CollectionResult GetValues(RequestOptions? options)
     {
-        throw new NotImplementedException();
+        return new StreamedValueCollectionResult(options);
     }
 }

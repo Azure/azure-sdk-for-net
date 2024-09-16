@@ -21,14 +21,14 @@ public class StreamedValue
 
     public string ToJson() => $"{{ \"id\" : {Id}, \"value\" : \"{Value}\" }}";
 
-    public static ValueItem FromJson(JsonElement element)
+    public static StreamedValue FromJson(JsonElement element)
     {
         int id = element.GetProperty("id").GetInt32();
         string value = element.GetProperty("value").GetString()!;
-        return new ValueItem(id, value);
+        return new StreamedValue(id, value);
     }
 
-    public static ValueItem FromJson(BinaryData data)
+    public static StreamedValue FromJson(byte[] data)
     {
         using JsonDocument doc = JsonDocument.Parse(data);
         return FromJson(doc.RootElement);

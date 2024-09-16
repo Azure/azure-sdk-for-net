@@ -14,7 +14,7 @@ public class MockPageResponseData
     public const int DefaultOffset = 0;
 
     // Source of all the data
-    public static IEnumerable<ValueItem> GetAllValues()
+    internal static IEnumerable<ValueItem> GetAllValues()
     {
         for (int i = 0; i < TotalItemCount; i++)
         {
