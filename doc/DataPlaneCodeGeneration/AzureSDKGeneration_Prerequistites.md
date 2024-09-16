@@ -12,7 +12,7 @@
 
 ## Set up TypeSpec project
 
-Make sure you have a typespec project in the `main` branch of the public API specification repository [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs). You can find more information about creating an API spec on TypeSpec [here](https://aka.ms/azsdk/typespec).
+Make sure you have a TypeSpec project in the `main` branch of the public API specification repository [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs). You can find more information about creating an API spec on TypeSpec [here](https://aka.ms/azsdk/typespec).
 
 ## Set up SDK Project Folder
 
