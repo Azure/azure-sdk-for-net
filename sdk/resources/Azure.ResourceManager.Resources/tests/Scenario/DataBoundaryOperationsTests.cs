@@ -4,8 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Resources.Models;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Tests
@@ -19,50 +18,34 @@ namespace Azure.ResourceManager.Resources.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task PutDataBoundary()
-        {
-            // get tenant object (usingtesting tenat id) and call create or update on tenant object (collection)
-            // var tenant = GetTenant();
-            string dataBoundaryName = Recording.GenerateAssetName("dataBoundary-CreateOrUpdate-");
-            var dataBoundaryData = CreateDataBoundary();
-            //Get using tenant like below
-            var dataBoundary = (await tenant.GetTenantDataBoundary().CreateOrUpdateAsync(WaitUntil.Completed, dataBoundaryName, dataBoundaryData)).Value;
-
-            //Check that dataBoundary returns proper reponse. 
-
-            await dataBoundary.DeleteAsync(WaitUntil.Completed);
-        }
-
-        [TestCase]
-        [RecordedTest]
         public async Task GetDataBoundaryTenant()
         {
-            string dataBoundaryName = Recording.GenerateAssetName("dataBoundary-CreateOrUpdate-");
-            // get tenant object (usingtesting tenat id) and
-            // var tenant = GetTenant();
+            string dataBoundaryName = Recording.GenerateAssetName("dataBoundary-GetTenantBoundary-");
 
-            var dataBoundaryTenantGet = (await tenant.GetTenantDataBoundaryAsync()).Value;
+            TokenCredential cred = new DefaultAzureCredential();
+            ArmClient client = new ArmClient(cred);
 
-            Assert.AreEqual("EU", dataBoundaryTenantGet.Properties.DataBoundary);
-            Assert.AreEqual("Created", dataBoundaryTenantGet.Properties.ProvisioningState);
+            var tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            await dataBoundary.DeleteAsync(WaitUntil.Completed);
+            var dataBoundaryTenantGet = (await tenant.GetTenantDataBoundaryAsync(dataBoundaryName)).Value;
+
+            Assert.AreEqual("EU", dataBoundaryTenantGet.Data.Properties.DataBoundary);
+            Assert.AreEqual("Created", dataBoundaryTenantGet.Data.Properties.ProvisioningState);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task GetDataBoundaryScoped()
         {
-            // get tenant object (using testing tenant id) and
-            // var tenant = GetTenant();
+            ResourceIdentifier r = new ResourceIdentifier("/subscriptions/1200d73d-d350-413a-98c5-e77ca51245de/providers/Microsoft.Resources/dataBoundaries");
+            SubscriptionResource subscription = Client.GetSubscriptionResource(r);
 
-            // using subscription id from subcription under existing testing tenant
-            var dataBoundaryTenantGet = (await tenant.GetScopedDataBoundaryAsync(subscriptionId)).Value;
+            string dataBoundaryName = Recording.GenerateAssetName("dataBoundary-GetSubscriptionBoundary-");
 
-            Assert.AreEqual("EU", dataBoundaryTenantGet.Properties.DataBoundary);
-            Assert.AreEqual("Created", dataBoundaryTenantGet.Properties.ProvisioningState);
+            var dataBoundaryTenantGet = (await Client.GetDataBoundaryAsync(r, dataBoundaryName)).Value;
 
-            await dataBoundary.DeleteAsync(WaitUntil.Completed);
+            Assert.AreEqual("EU", dataBoundaryTenantGet.Data.Properties.DataBoundary);
+            Assert.AreEqual("Created", dataBoundaryTenantGet.Data.Properties.ProvisioningState);
         }
     }
 }

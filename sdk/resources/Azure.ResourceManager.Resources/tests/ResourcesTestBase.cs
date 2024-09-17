@@ -273,15 +273,5 @@ namespace Azure.ResourceManager.Resources.Tests
             "DeploymentTemplates",
             $"simple-storage-account.json")))
         };
-
-        protected static DataBoundaryData CreateDataBoundaryOptIn()
-        {
-            var data = new DataBoundaryData();
-
-            data.Properties.DataBoundary = "EU";
-            data.Properties.ProvisioningState = "Created";
-
-            return data;
-        }
     }
 }
