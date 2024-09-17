@@ -24,12 +24,12 @@ internal class EntraLifecycle
         SetEntraIdAccessTokenFromEnvironment();
     }
 
-    internal async Task<bool> FetchEntraIdAccessTokenAsync(CancellationToken? cancellationToken = null)
+    internal async Task<bool> FetchEntraIdAccessTokenAsync(CancellationToken cancellationToken = default)
     {
         try
         {
             var tokenRequestContext = new TokenRequestContext(Constants.s_entra_access_token_scopes);
-            AccessToken accessToken = await _tokenCredential.GetTokenAsync(tokenRequestContext, cancellationToken ?? default).ConfigureAwait(false);
+            AccessToken accessToken = await _tokenCredential.GetTokenAsync(tokenRequestContext, cancellationToken).ConfigureAwait(false);
             _entraIdAccessToken = accessToken.Token;
             _entraIdAccessTokenExpiry = accessToken.ExpiresOn.ToUnixTimeSeconds();
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, _entraIdAccessToken);

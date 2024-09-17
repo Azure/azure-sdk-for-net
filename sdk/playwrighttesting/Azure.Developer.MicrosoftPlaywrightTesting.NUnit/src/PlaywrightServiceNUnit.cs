@@ -43,7 +43,7 @@ public class PlaywrightServiceNUnit : PlaywrightService
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns></returns>
     [OneTimeSetUp]
-    public async Task SetupAsync(CancellationToken? cancellationToken = null)
+    public async Task SetupAsync(CancellationToken cancellationToken = default)
     {
         await InitializeAsync(cancellationToken).ConfigureAwait(false);
     }

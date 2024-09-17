@@ -92,7 +92,7 @@ public class PlaywrightService
     /// <param name="exposeNetwork">The network exposure.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The connect options.</returns>
-    public async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken? cancellationToken = null) where T : class, new()
+    public async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken cancellationToken = default) where T : class, new()
     {
         if (Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable) == "true")
             throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
@@ -135,7 +135,7 @@ public class PlaywrightService
     /// <summary>
     /// Initialises the resources used to setup entra id authentication.
     /// </summary>
-    public async Task InitializeAsync(CancellationToken? cancellationToken = null)
+    public async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;

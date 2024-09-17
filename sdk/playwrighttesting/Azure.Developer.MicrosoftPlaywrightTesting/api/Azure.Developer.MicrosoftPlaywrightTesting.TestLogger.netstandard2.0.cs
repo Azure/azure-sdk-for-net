@@ -15,8 +15,8 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting
         public static string? ServiceEndpoint { get { throw null; } }
         public bool UseCloudHostedBrowsers { get { throw null; } set { } }
         public void Cleanup() { }
-        public System.Threading.Tasks.Task<Azure.Developer.MicrosoftPlaywrightTesting.ConnectOptions<T>> GetConnectOptionsAsync<T>(System.Runtime.InteropServices.OSPlatform? os = default(System.Runtime.InteropServices.OSPlatform?), string? runId = null, string? exposeNetwork = null, System.Threading.CancellationToken? cancellationToken = default(System.Threading.CancellationToken?)) where T : class, new() { throw null; }
-        public System.Threading.Tasks.Task InitializeAsync(System.Threading.CancellationToken? cancellationToken = default(System.Threading.CancellationToken?)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Developer.MicrosoftPlaywrightTesting.ConnectOptions<T>> GetConnectOptionsAsync<T>(System.Runtime.InteropServices.OSPlatform? os = default(System.Runtime.InteropServices.OSPlatform?), string? runId = null, string? exposeNetwork = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, new() { throw null; }
+        public System.Threading.Tasks.Task InitializeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PlaywrightServiceOptions
     {
