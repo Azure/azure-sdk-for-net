@@ -10,10 +10,10 @@ namespace Azure.Communication.CallAutomation.FHL
         /// </summary>
         /// <param name="kind">Server message type kind</param>
         /// <param name="audioData">Audio data</param>
-        public ServerStreamingData(ServerMessageType kind, AudioData audioData)
+        public ServerStreamingData(ServerMessageType kind, ServerAudioData audioData)
         {
             Kind = kind;
-            AudioData = audioData;
+            ServerAudioData = audioData;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation.FHL
         /// Audio Data which contains the audio data stream information
         /// IsRequired = false
         /// </summary>
-        public AudioData AudioData { get; }
+        public ServerAudioData ServerAudioData { get; }
 
         /// <summary>
         /// Mark determines end of stream of data
