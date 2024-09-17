@@ -138,7 +138,7 @@ public sealed partial class ClientPipeline
 
         if (policies[index] is ClientRetryPolicy retryPolicy)
         {
-            ILogger logger = options.LoggingOptions.LoggerFactory.CreateLogger("System.ClientModel.RetryPolicy");
+            ILogger logger = options.LoggingOptions.LoggerFactory.CreateLogger<ClientRetryPolicy>();
             retryPolicy.LogHandler = new LoggingHandler(logger, new PipelineMessageSanitizer(options.LoggingOptions.AllowedQueryParameters.ToArray(), options.LoggingOptions.AllowedHeaderNames.ToArray()));
         }
 
