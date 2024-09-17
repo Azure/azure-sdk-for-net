@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             }
             catch (Exception e)
             {
-                _logger.LogWarning($"Encountered an exception while checking EventHub '{_client.EventHubName}'. Error: {e.Message}");
+                _logger.LogWarning($"Encountered an exception while checking Event Hub '{_client.EventHubName}'. Error: {e.Message}");
                 return metrics;
             }
 
