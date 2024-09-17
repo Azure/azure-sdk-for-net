@@ -156,7 +156,7 @@ internal class TransferManagerTests
 
     [Test]
     [Combinatorial]
-    public async Task StartContainerTransafer(
+    public async Task BasicContainerTransfer(
         [Values(1, 5)] int numJobs,
         [Values(333, 500, 1024)] int itemSize,
         [Values(333, 1024)] int chunkSize)
