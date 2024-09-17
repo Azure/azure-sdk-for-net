@@ -44,6 +44,8 @@ namespace Azure.Storage.DataMovement
         private readonly CancellationTokenSource _cancellationTokenSource = new();
         private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
+        private readonly Func<string> _generateTransferId;
+
         /// <summary>
         /// Protected constructor for mocking.
         /// </summary>
@@ -64,7 +66,8 @@ namespace Azure.Storage.DataMovement
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
                 (options?.CheckpointerOptions != default ? new TransferCheckpointStoreOptions(options.CheckpointerOptions) : default)
                     ?.GetCheckpointer() ?? CreateDefaultCheckpointer(),
-                options?.ResumeProviders != null ? new List<StorageResourceProvider>(options.ResumeProviders) : new())
+                options?.ResumeProviders != null ? new List<StorageResourceProvider>(options.ResumeProviders) : new(),
+                default)
         {}
 
         /// <summary>
@@ -76,7 +79,8 @@ namespace Azure.Storage.DataMovement
             IProcessor<Func<Task>> chunksProcessor,
             JobBuilder jobBuilder,
             TransferCheckpointer checkpointer,
-            ICollection<StorageResourceProvider> resumeProviders)
+            ICollection<StorageResourceProvider> resumeProviders,
+            Func<string> generateTransferId = default)
         {
             _jobsProcessor = jobsProcessor;
             _partsProcessor = partsProcessor;
@@ -84,6 +88,7 @@ namespace Azure.Storage.DataMovement
             _jobBuilder = jobBuilder;
             _resumeProviders = new(resumeProviders ?? new List<StorageResourceProvider>());
             _checkpointer = checkpointer;
+            _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
 
             ConfigureProcessorCallbacks();
         }
@@ -342,7 +347,7 @@ namespace Azure.Storage.DataMovement
 
             transferOptions ??= new DataTransferOptions();
 
-            string transferId = Guid.NewGuid().ToString();
+            string transferId = _generateTransferId();
             await _checkpointer.AddNewJobAsync(
                 transferId,
                 sourceResource,
