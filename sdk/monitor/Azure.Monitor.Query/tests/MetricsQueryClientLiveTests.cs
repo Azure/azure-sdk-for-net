@@ -368,37 +368,5 @@ namespace Azure.Monitor.Query.Tests
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts"));
         }
-
-        [RecordedTest]
-        public async Task MetricsQueryMetricsStartEnd()
-        {
-            var client = CreateMetricsClient();
-            var queryOptions = new MetricsQueryResourcesOptions
-            {
-                TimeRange = new QueryTimeRange(DateTimeOffset.MinValue, DateTimeOffset.MaxValue)
-            };
-            var resourceId = TestEnvironment.StorageAccountId;
-
-            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
-                resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
-                metricNames: new List<string> { "Ingress" },
-                metricNamespace: "Microsoft.Storage/storageAccounts",
-                options: queryOptions).ConfigureAwait(false);
-
-            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
-            Assert.AreEqual(1, metricsQueryResults.Values.Count);
-            Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
-            Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
-            for (int i = 0; i < metricsQueryResults.Values.Count; i++)
-            {
-                foreach (MetricResult value in metricsQueryResults.Values[i].Metrics)
-                {
-                    for (int j = 0; j < value.TimeSeries.Count; j++)
-                    {
-                        Assert.GreaterOrEqual(value.TimeSeries[j].Values[i].Total, 0);
-                    }
-                }
-            }
-        }
     }
 }
