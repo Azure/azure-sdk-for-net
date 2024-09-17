@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Text;
 using Microsoft.Extensions.Logging;
 
@@ -32,7 +30,7 @@ internal partial class ClientModelLogMessages
         }
     }
 
-    [LoggerMessage(LoggingEventIds.RequestEvent, LogLevel.Information, "Request [{requestId}] {method} {uri}\r\n{headers}client assembly: {clientAssembly}", EventName = "Request")]
+    [LoggerMessage(LoggingEventIds.RequestEvent, LogLevel.Information, "Request [{requestId}] {method} {uri}\r\n{headers}client assembly: {clientAssembly}", SkipEnabledCheck = true, EventName = "Request")]
     private partial void Request(string requestId, string method, string uri, string headers, string? clientAssembly);
 
     public void RequestContent(string requestId, byte[] content, Encoding? textEncoding)
@@ -50,10 +48,10 @@ internal partial class ClientModelLogMessages
         }
     }
 
-    [LoggerMessage(LoggingEventIds.RequestContentEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", EventName = "RequestContent")]
+    [LoggerMessage(LoggingEventIds.RequestContentEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "RequestContent")]
     private partial void RequestContent(string requestId, byte[] content);
 
-    [LoggerMessage(LoggingEventIds.RequestContentTextEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", EventName = "RequestContentText")]
+    [LoggerMessage(LoggingEventIds.RequestContentTextEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "RequestContentText")]
     private partial void RequestContentText(string requestId, string content);
     #endregion
 
@@ -67,7 +65,7 @@ internal partial class ClientModelLogMessages
         }
     }
 
-    [LoggerMessage(LoggingEventIds.ResponseEvent, LogLevel.Information, "Response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "Response")]
+    [LoggerMessage(LoggingEventIds.ResponseEvent, LogLevel.Information, "Response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", SkipEnabledCheck = true, EventName = "Response")]
     private partial void Response(string requestId, int status, string reasonPhrase, string headers, double seconds);
 
     public void ResponseContent(string requestId, byte[] content, Encoding? textEncoding)
@@ -85,10 +83,10 @@ internal partial class ClientModelLogMessages
         }
     }
 
-    [LoggerMessage(LoggingEventIds.ResponseContentEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", EventName = "ResponseContent")]
+    [LoggerMessage(LoggingEventIds.ResponseContentEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ResponseContent")]
     private partial void ResponseContent(string requestId, byte[] content);
 
-    [LoggerMessage(LoggingEventIds.ResponseContentTextEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", EventName = "ResponseContentText")]
+    [LoggerMessage(LoggingEventIds.ResponseContentTextEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ResponseContentText")]
     private partial void ResponseContentText(string requestId, string content);
 
     public void ResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
@@ -106,51 +104,88 @@ internal partial class ClientModelLogMessages
         }
     }
 
-    [LoggerMessage(LoggingEventIds.ResponseContentBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentBlock")]
+    [LoggerMessage(LoggingEventIds.ResponseContentBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ResponseContentBlock")]
     private partial void ResponseContentBlock(string requestId, int blockNumber, byte[] content);
 
-    [LoggerMessage(LoggingEventIds.ResponseContentTextBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentTextBlock")]
+    [LoggerMessage(LoggingEventIds.ResponseContentTextBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ResponseContentTextBlock")]
     private partial void ResponseContentTextBlock(string requestId, int blockNumber, string content);
 
     #endregion
 
     #region Error Response
 
-    [LoggerMessage(LoggingEventIds.ErrorResponseEvent, LogLevel.Warning, "Error response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "ErrorResponse")]
+    public void ErrorResponse(string requestId, PipelineResponse response, double seconds)
+    {
+        if (_logger.IsEnabled(LogLevel.Warning))
+        {
+            ErrorResponse(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
+        }
+    }
+
+    [LoggerMessage(LoggingEventIds.ErrorResponseEvent, LogLevel.Warning, "Error response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", SkipEnabledCheck = true, EventName = "ErrorResponse")]
     private partial void ErrorResponse(string requestId, int status, string reasonPhrase, string headers, double seconds);
 
-    [LoggerMessage(LoggingEventIds.ErrorResponseContentEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", EventName = "ErrorResponseContent")]
+    public void ErrorResponseContent(string requestId, byte[] content, Encoding? textEncoding)
+    {
+        if (_logger.IsEnabled(LogLevel.Information))
+        {
+            if (textEncoding != null)
+            {
+                ErrorResponseContentText(requestId, textEncoding.GetString(content));
+            }
+            else
+            {
+                ErrorResponseContent(requestId, content);
+            }
+        }
+    }
+
+    [LoggerMessage(LoggingEventIds.ErrorResponseContentEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContent")]
     private partial void ErrorResponseContent(string requestId, byte[] content);
 
-    [LoggerMessage(LoggingEventIds.ErrorResponseContentTextEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", EventName = "ErrorResponseContentText")]
+    [LoggerMessage(LoggingEventIds.ErrorResponseContentTextEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContentText")]
     private partial void ErrorResponseContentText(string requestId, string content);
 
-    [LoggerMessage(LoggingEventIds.ErrorResponseContentBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", EventName = "ErrorResponseContentBlock")]
+    public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
+    {
+        if (_logger.IsEnabled(LogLevel.Information))
+        {
+            if (textEncoding != null)
+            {
+                ErrorResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+            }
+            else
+            {
+                ErrorResponseContentBlock(requestId, blockNumber, content);
+            }
+        }
+    }
+
+    [LoggerMessage(LoggingEventIds.ErrorResponseContentBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContentBlock")]
     private partial void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content);
 
-    [LoggerMessage(LoggingEventIds.ErrorResponseContentTextBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", EventName = "ErrorResponseContentTextBlock")]
+    [LoggerMessage(LoggingEventIds.ErrorResponseContentTextBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContentTextBlock")]
     private partial void ErrorResponseContentTextBlock(string requestId, int blockNumber, string content);
 
     #endregion
 
     #region Retry
-
     [LoggerMessage(LoggingEventIds.RequestRetryingEvent, LogLevel.Information, "Request [{requestId}] attempt number {retryCount} took {seconds:00.0}s", EventName = "RequestRetrying")]
-    private partial void RequestRetrying(string requestId, int retryCount, double seconds);
+    public partial void RequestRetrying(string requestId, int retryCount, double seconds);
 
     #endregion
 
     #region Delay Response
 
     [LoggerMessage(LoggingEventIds.ResponseDelayEvent, LogLevel.Warning, "Response [{requestId}] took {seconds:00.0}s", EventName = "ResponseDelay")]
-    private partial void ResponseDelay(string requestId, double seconds);
+    public partial void ResponseDelay(string requestId, double seconds);
 
     #endregion
 
     #region Exception Response
 
     [LoggerMessage(LoggingEventIds.ExceptionResponseEvent, LogLevel.Information, "Request [{requestId}] exception occurred.", EventName = "ExceptionResponse")]
-    private partial void ExceptionResponse(string requestId, Exception exception);
+    public partial void ExceptionResponse(string requestId, Exception exception);
 
     #endregion
 

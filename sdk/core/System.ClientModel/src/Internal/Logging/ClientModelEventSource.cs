@@ -68,6 +68,15 @@ internal sealed class ClientModelEventSource : EventSource
 
     #region Response
 
+    [NonEvent]
+    public void Response(string requestId, PipelineResponse response, double seconds, PipelineMessageSanitizer sanitizer)
+    {
+        if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+        {
+            Response(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), seconds);
+        }
+    }
+
     [Event(LoggingEventIds.ResponseEvent, Level = EventLevel.Informational, Message = "Response [{0}] {1} {2} ({4:00.0}s)\r\n{3}")]
     [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
     private void Response(string? requestId, int status, string reasonPhrase, string headers, double seconds)
@@ -75,17 +84,49 @@ internal sealed class ClientModelEventSource : EventSource
         WriteEvent(LoggingEventIds.ResponseEvent, requestId, status, reasonPhrase, headers, seconds);
     }
 
+    [NonEvent]
+    public void ResponseContent(string requestId, byte[] content, Encoding? textEncoding)
+    {
+        if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+        {
+            if (textEncoding is not null)
+            {
+                ResponseContentText(requestId, textEncoding.GetString(content));
+            }
+            else
+            {
+                ResponseContent(requestId, content);
+            }
+        }
+    }
+
     [Event(LoggingEventIds.ResponseContentEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content: {1}")]
     [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with an array with primitive type elements.")]
     private void ResponseContent(string? requestId, byte[] content)
     {
         WriteEvent(LoggingEventIds.ResponseContentEvent, requestId, content);
-    }s
+    }
 
     [Event(LoggingEventIds.ResponseContentTextEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content: {1}")]
     private void ResponseContentText(string? requestId, string content)
     {
         WriteEvent(LoggingEventIds.ResponseContentTextEvent, requestId, content);
+    }
+
+    [NonEvent]
+    public void ResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
+    {
+        if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+        {
+            if (textEncoding is not null)
+            {
+                ResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+            }
+            else
+            {
+                ResponseContentBlock(requestId, blockNumber, content);
+            }
+        }
     }
 
     [Event(LoggingEventIds.ResponseContentBlockEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content block {1}: {2}")]
@@ -106,11 +147,36 @@ internal sealed class ClientModelEventSource : EventSource
 
     #region Error Response
 
+    [NonEvent]
+    public void ErrorResponse(string requestId, PipelineResponse response, double elapsed, PipelineMessageSanitizer sanitizer)
+    {
+        if (IsEnabled(EventLevel.Warning, EventKeywords.None))
+        {
+            ErrorResponse(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), elapsed);
+        }
+    }
+
     [Event(LoggingEventIds.ErrorResponseEvent, Level = EventLevel.Warning, Message = "Error response [{0}] {1} {2} ({4:00.0}s)\r\n{3}")]
     [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
     private void ErrorResponse(string? requestId, int status, string reasonPhrase, string headers, double seconds)
     {
         WriteEvent(LoggingEventIds.ErrorResponseEvent, requestId, status, reasonPhrase, headers, seconds);
+    }
+
+    [NonEvent]
+    public void ErrorResponseContent(string requestId, byte[] content, Encoding? textEncoding)
+    {
+        if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+        {
+            if (textEncoding is not null)
+            {
+                ErrorResponseContentText(requestId, textEncoding.GetString(content));
+            }
+            else
+            {
+                ErrorResponseContent(requestId, content);
+            }
+        }
     }
 
     [Event(LoggingEventIds.ErrorResponseContentEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content: {1}")]
@@ -124,6 +190,22 @@ internal sealed class ClientModelEventSource : EventSource
     private void ErrorResponseContentText(string? requestId, string content)
     {
         WriteEvent(LoggingEventIds.ErrorResponseContentTextEvent, requestId, content);
+    }
+
+    [NonEvent]
+    public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
+    {
+        if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+        {
+            if (textEncoding is not null)
+            {
+                ErrorResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+            }
+            else
+            {
+                ErrorResponseContentBlock(requestId, blockNumber, content);
+            }
+        }
     }
 
     [Event(LoggingEventIds.ErrorResponseContentBlockEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content block {1}: {2}")]
@@ -146,9 +228,12 @@ internal sealed class ClientModelEventSource : EventSource
 
     [Event(LoggingEventIds.RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] attempt number {1} took {2:00.0}s")]
     [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
-    private void RequestRetrying(string? requestId, int retryNumber, double seconds)
+    public void RequestRetrying(string? requestId, int retryNumber, double seconds)
     {
-        WriteEvent(LoggingEventIds.RequestRetryingEvent, requestId, retryNumber, seconds);
+        if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+        {
+            WriteEvent(LoggingEventIds.RequestRetryingEvent, requestId, retryNumber, seconds);
+        }
     }
 
     #endregion
@@ -157,9 +242,12 @@ internal sealed class ClientModelEventSource : EventSource
 
     [Event(LoggingEventIds.ResponseDelayEvent, Level = EventLevel.Warning, Message = "Response [{0}] took {1:00.0}s")]
     [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
-    private void ResponseDelay(string? requestId, double seconds)
+    public void ResponseDelay(string? requestId, double seconds)
     {
-        WriteEvent(LoggingEventIds.ResponseDelayEvent, requestId, seconds);
+        if (IsEnabled(EventLevel.Warning, EventKeywords.None))
+        {
+            WriteEvent(LoggingEventIds.ResponseDelayEvent, requestId, seconds);
+        }
     }
 
     #endregion
@@ -167,9 +255,12 @@ internal sealed class ClientModelEventSource : EventSource
     #region Exception Response
 
     [Event(LoggingEventIds.ExceptionResponseEvent, Level = EventLevel.Informational, Message = "Request [{0}] exception {1}")]
-    private void ExceptionResponse(string? requestId, string exception)
+    public void ExceptionResponse(string? requestId, string exception)
     {
-        WriteEvent(LoggingEventIds.ExceptionResponseEvent, requestId, exception);
+        if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+        {
+            WriteEvent(LoggingEventIds.ExceptionResponseEvent, requestId, exception);
+        }
     }
 
     #endregion
