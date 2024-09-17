@@ -16,7 +16,7 @@ public class ServiceEnvironmentVariable
     /// <summary>
     /// The environment variable for the Playwright service URL.
     /// </summary>
-    public static readonly string PlaywrightServiceUrl = "PLAYWRIGHT_SERVICE_URL";
+    public static readonly string PlaywrightServiceUri = "PLAYWRIGHT_SERVICE_URL";
 
     /// <summary>
     /// The environment variable for exposing the Playwright service network.

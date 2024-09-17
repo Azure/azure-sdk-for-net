@@ -14,11 +14,11 @@ public class ConnectOptions<T> where T : class, new()
     /// <summary>
     /// A browser websocket endpoint to connect to.
     /// </summary>
-    public string? WsEndpoint;
+    public string? WsEndpoint { get; set; }
     /// <summary>
     /// Connect options for the service.
     /// </summary>
-    public T? Options;
+    public T? Options { get; set; }
 }
 
 internal class BrowserConnectOptions

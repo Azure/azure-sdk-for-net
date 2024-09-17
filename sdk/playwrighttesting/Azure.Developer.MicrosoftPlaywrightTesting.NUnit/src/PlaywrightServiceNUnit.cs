@@ -4,7 +4,6 @@
 using Azure.Core;
 using NUnit.Framework;
 using System.Threading.Tasks;
-using Azure.Developer.MicrosoftPlaywrightTesting;
 using System.Runtime.InteropServices;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
@@ -27,7 +26,7 @@ public class PlaywrightServiceNUnit : PlaywrightService
     /// <summary>
     /// Creates a new instance of <see cref="PlaywrightServiceOptions"/> based on the runsettings file.
     /// </summary>
-    public static PlaywrightServiceOptions playwrightServiceOptions = new(
+    public static PlaywrightServiceOptions playwrightServiceOptions { get; } = new(
         os: GetOsPlatform(TestContext.Parameters.Get(RunSettingKey.Os)),
         runId: TestContext.Parameters.Get(RunSettingKey.RunId),
         exposeNetwork: TestContext.Parameters.Get(RunSettingKey.ExposeNetwork),

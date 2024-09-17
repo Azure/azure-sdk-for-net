@@ -33,12 +33,12 @@ public class PlaywrightServiceTests
     [SetUp]
     public void Setup()
     {
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, "https://playwright.microsoft.com");
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, "https://playwright.microsoft.com");
     }
     [TearDown]
     public void TearDown()
     {
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, null);
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, null);
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, null);
@@ -122,7 +122,7 @@ public class PlaywrightServiceTests
     [Test]
     public void Initialize_WhenServiceEnpointIsNotSet_NoOP()
     {
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
@@ -148,7 +148,7 @@ public class PlaywrightServiceTests
 
         service.RotationTimer!.Dispose();
 
-        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl), Is.Not.Null);
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri), Is.Not.Null);
     }
 
     [Test]
@@ -167,7 +167,7 @@ public class PlaywrightServiceTests
 
         service.RotationTimer!.Dispose();
 
-        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl), Is.Not.Null);
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri), Is.Not.Null);
     }
 
     [Test]
@@ -183,14 +183,14 @@ public class PlaywrightServiceTests
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "access_token");
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, useCloudHostedBrowsers: false);
 
-        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl), Is.Not.Null);
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri), Is.Not.Null);
 
         service.InitializeAsync().Wait();
         defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
 
         service.RotationTimer!.Dispose();
 
-        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl), Is.Null);
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri), Is.Null);
     }
 
     [Test]
@@ -378,7 +378,7 @@ public class PlaywrightServiceTests
     [Test]
     public void GetConnectOptionsAsync_WhenServiceEndpointIsNotSet_ThrowsException()
     {
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
         PlaywrightService service = new(entraLifecycle: null);
         Exception? ex = Assert.ThrowsAsync<Exception>(() => service.GetConnectOptionsAsync<BrowserConnectOptions>());
         Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_service_endpoint_error_message));
@@ -606,14 +606,14 @@ public class PlaywrightServiceTests
 
         foreach (Dictionary<string, string> testRubric in testRubricCombinations)
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, $"{testRubric["url"]}");
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, $"{testRubric["url"]}");
             var service = new PlaywrightService(entraLifecycle: null);
             Assert.Multiple(() =>
             {
                 Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable), Is.EqualTo($"https://{testRubric["region"]}.reporting.api.{testRubric["domain"]}"));
                 Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_workspace_id_environment_variable), Is.EqualTo(testRubric["workspaceId"]));
             });
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, null);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
             Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, null);
             Environment.SetEnvironmentVariable(Constants.s_playwright_service_workspace_id_environment_variable, null);
         }
@@ -629,7 +629,7 @@ public class PlaywrightServiceTests
             { "region", "eastus" },
             { "domain", "playwright.microsoft.com" }
         };
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, $"{testRubric["url"]}");
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, $"{testRubric["url"]}");
         Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, "https://playwright.microsoft.com");
         var service = new PlaywrightService(entraLifecycle: null);
         Assert.Multiple(() =>
@@ -649,7 +649,7 @@ public class PlaywrightServiceTests
             { "region", "eastus" },
             { "domain", "playwright.microsoft.com" }
         };
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUrl, $"{testRubric["url"]}");
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, $"{testRubric["url"]}");
         Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, "https://playwright.microsoft.com");
         Environment.SetEnvironmentVariable(Constants.s_playwright_service_workspace_id_environment_variable, "sample-id");
         var service = new PlaywrightService(entraLifecycle: null);
