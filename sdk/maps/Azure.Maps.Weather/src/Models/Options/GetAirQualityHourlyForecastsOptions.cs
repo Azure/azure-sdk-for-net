@@ -11,7 +11,7 @@ namespace Azure.Maps.Weather.Models.Options
     public class GetAirQualityHourlyForecastsOptions : WeatherBaseOptions
     {
         /// <summary> Specifies for how long the responses are returned. </summary>
-        public int? Duration { get; set; }
+        public int? DurationInHours { get; set; }
         /// <summary> Boolean value that returns detailed information about each pollutant. </summary>
         public bool? IncludePollutantDetails { get; set; }
     }

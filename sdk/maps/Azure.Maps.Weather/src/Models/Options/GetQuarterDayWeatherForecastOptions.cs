@@ -8,11 +8,11 @@ using Azure.Maps.Weather;
 namespace Azure.Maps.Weather.Models.Options
 {
     /// <summary> Options. </summary>
-    public class GetQuarterDayForecastOptions : WeatherBaseOptions
+    public class GetQuarterDayWeatherForecastOptions : WeatherBaseOptions
     {
         /// <summary> Specifies to return the data in either metric units or imperial units. </summary>
         public WeatherDataUnit? Unit { get; set; }
         /// <summary> Specifies for how long the responses are returned. </summary>
-        public int? Duration { get; set; }
+        public int? DurationInDays { get; set; }
     }
 }

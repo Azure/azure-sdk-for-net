@@ -3,11 +3,13 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Azure.Core.TestFramework;
 using Azure.Core.GeoJson;
 using Azure.Maps.Weather.Models;
 using Azure.Maps.Weather.Models.Options;
+using System.Runtime.InteropServices;
 
 namespace Azure.Maps.Weather.Tests
 {
@@ -20,234 +22,287 @@ namespace Azure.Maps.Weather.Tests
         [RecordedTest]
         public async Task GetAirQualityDailyForecastsTest()
         {
-            var client = CreateClient();
-            var options = new GetAirQualityDailyForecastsOptions()
+            MapsWeatherClient client = CreateClient();
+            GetAirQualityDailyForecastsOptions options = new GetAirQualityDailyForecastsOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = await client.GetAirQualityDailyForecastsAsync(options);
+            Response<DailyAirQualityForecastResult> response = await client.GetAirQualityDailyForecastsAsync(options);
+            Console.WriteLine("Description: " + response.Value.AirQualityResults[0].Description);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetAirQualityHourlyForecastsTest()
         {
-            var client = CreateClient();
-            var options = new GetAirQualityHourlyForecastsOptions()
+            MapsWeatherClient client = CreateClient();
+            GetAirQualityHourlyForecastsOptions options = new GetAirQualityHourlyForecastsOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = await client.GetAirQualityHourlyForecastsAsync(options);
+            Response<AirQualityResult> response = await client.GetAirQualityHourlyForecastsAsync(options);
+            Console.WriteLine("Description: " + response.Value.AirQualityResults[0].Description);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetCurrentAirQualityTest()
         {
-            var client = CreateClient();
-            var options = new GetCurrentAirQualityOptions()
+            MapsWeatherClient client = CreateClient();
+            GetCurrentAirQualityOptions options = new GetCurrentAirQualityOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = await client.GetCurrentAirQualityAsync(options);
+            Response<AirQualityResult> response = await client.GetCurrentAirQualityAsync(options);
+            Console.WriteLine("Description: " + response.Value.AirQualityResults[0].Description);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
-        public async Task GetCurrentConditionsTest()
+        public async Task GetCurrentWeatherConditionsTest()
         {
-            var client = CreateClient();
-            var options = new GetCurrentConditionsOptions()
+            MapsWeatherClient client = CreateClient();
+            GetCurrentWeatherConditionsOptions options = new GetCurrentWeatherConditionsOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = await client.GetCurrentConditionsAsync(options);
+            Response<CurrentConditionsResult> response = await client.GetCurrentWeatherConditionsAsync(options);
+            Console.WriteLine("Temperature: " + response.Value.Results[0].Temperature.Value);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetDailyForecastTest()
         {
-            var client = CreateClient();
-            var options = new GetDailyForecastOptions()
+            MapsWeatherClient client = CreateClient();
+            GetDailyForecastOptions options = new GetDailyForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = await client.GetDailyForecastAsync(options);
+            Response<DailyForecastResult> response = await client.GetDailyForecastAsync(options);
+            Console.WriteLine("Minimum temperatrue: " + response.Value.Forecasts[0].Temperature.Minimum.Value);
+            Console.WriteLine("Maximum temperatrue: " + response.Value.Forecasts[0].Temperature.Maximum.Value);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetDailyHistoricalActualsTest()
         {
-            var client = CreateClient();
-            var options = new GetDailyHistoricalActualsOptions()
+            MapsWeatherClient client = CreateClient();
+            GetDailyHistoricalActualsOptions options = new GetDailyHistoricalActualsOptions()
             {
                 Coordinates = new GeoPosition(-73.961968, 40.760139),
                 StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
                 EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
             };
-            var response = await client.GetDailyHistoricalActualsAsync(options);
+            Response<DailyHistoricalActualsResult> response = await client.GetDailyHistoricalActualsAsync(options);
+            Console.WriteLine("Minimum temperature: " + response.Value.HistoricalActuals[0].Temperature.Minimum.Value);
+            Console.WriteLine("Maximum temperature: " + response.Value.HistoricalActuals[0].Temperature.Maximum.Value);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetDailyHistoricalNormalsTest()
         {
-            var client = CreateClient();
-            var options = new GetDailyHistoricalNormalsOptions()
+            MapsWeatherClient client = CreateClient();
+            GetDailyHistoricalNormalsOptions options = new GetDailyHistoricalNormalsOptions()
             {
                 Coordinates = new GeoPosition(-73.961968, 40.760139),
                 StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
                 EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
             };
-            var response = await client.GetDailyHistoricalNormalsAsync(options);
+            Response<DailyHistoricalNormalsResult> response = await client.GetDailyHistoricalNormalsAsync(options);
+            Console.WriteLine("Minimum temperature: " + response.Value.HistoricalNormals[0].Temperature.Minimum.Value);
+            Console.WriteLine("Maximum temperature: " + response.Value.HistoricalNormals[0].Temperature.Maximum.Value);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetDailyHistoricalRecordsTest()
         {
-            var client = CreateClient();
-            var options = new GetDailyHistoricalRecordsOptions()
+            MapsWeatherClient client = CreateClient();
+            GetDailyHistoricalRecordsOptions options = new GetDailyHistoricalRecordsOptions()
             {
                 Coordinates = new GeoPosition(-73.961968, 40.760139),
                 StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
                 EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
             };
-            var response = await client.GetDailyHistoricalRecordsAsync(options);
+            Response<DailyHistoricalRecordsResult> response = await client.GetDailyHistoricalRecordsAsync(options);
+            Console.WriteLine("Minimum temperature: " + response.Value.HistoricalRecords[0].Temperature.Minimum.Value);
+            Console.WriteLine("Maximum temperature: " + response.Value.HistoricalRecords[0].Temperature.Maximum.Value);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetDailyIndicesTest()
         {
-            var client = CreateClient();
-            var options = new GetDailyIndicesOptions()
+            MapsWeatherClient client = CreateClient();
+            GetDailyIndicesOptions options = new GetDailyIndicesOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = await client.GetDailyIndicesAsync(options);
+            Response<DailyIndicesResult> response = await client.GetDailyIndicesAsync(options);
+            Console.WriteLine("Description: " + response.Value.Results[0].Description);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
-        public async Task GetHourlyForecastTest()
+        public async Task GetHourlyWeatherForecastTest()
         {
-            var client = CreateClient();
-            var options = new GetHourlyForecastOptions()
+            MapsWeatherClient client = CreateClient();
+            GetHourlyWeatherForecastOptions options = new GetHourlyWeatherForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = await client.GetHourlyForecastAsync(options);
+            Response<HourlyForecastResult> response = await client.GetHourlyWeatherForecastAsync(options);
+            Console.WriteLine("Temperature: " + response.Value.Forecasts[0].Temperature.Value);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetMinuteForecastTest()
         {
-            var client = CreateClient();
-            var options = new GetMinuteForecastOptions()
+            MapsWeatherClient client = CreateClient();
+            GetMinuteWeatherForecastOptions options = new GetMinuteWeatherForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = await client.GetMinuteForecastAsync(options);
+            Response<MinuteForecastResult> response = await client.GetMinuteWeatherForecastAsync(options);
+            Console.WriteLine("Summary: " + response.Value.Summary.LongPhrase);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetQuarterDayForecastTest()
         {
-            var client = CreateClient();
-            var options = new GetQuarterDayForecastOptions()
+            MapsWeatherClient client = CreateClient();
+            GetQuarterDayWeatherForecastOptions options = new GetQuarterDayWeatherForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = await client.GetQuarterDayForecastAsync(options);
+            Response<QuarterDayForecastResult> response = await client.GetQuarterDayWeatherForecastAsync(options);
+            Console.WriteLine("Minimum temperature: " + response.Value.Forecasts[0].Temperature.Minimum.Value);
+            Console.WriteLine("Maximum temperature: " + response.Value.Forecasts[0].Temperature.Maximum.Value);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetSevereWeatherAlertsTest()
         {
-            var client = CreateClient();
-            var options = new GetSevereWeatherAlertsOptions()
+            MapsWeatherClient client = CreateClient();
+            GetSevereWeatherAlertsOptions options = new GetSevereWeatherAlertsOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = await client.GetSevereWeatherAlertsAsync(options);
+            Response<SevereWeatherAlertsResult> response = await client.GetSevereWeatherAlertsAsync(options);
+            if (response.Value.Results.Count > 0) {
+                Console.WriteLine("Description: " + response.Value.Results[0].Description);
+            }
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetTropicalStormActiveTest()
         {
-            var client = CreateClient();
-            var response = await client.GetTropicalStormActiveAsync();
+            MapsWeatherClient client = CreateClient();
+            Response<ActiveStormResult> response = await client.GetTropicalStormActiveAsync();
+            Console.WriteLine("Name: " + response.Value.ActiveStorms[0].Name);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetTropicalStormForecastTest()
         {
-            var client = CreateClient();
-            var options = new GetTropicalStormForecastOptions()
+            MapsWeatherClient client = CreateClient();
+            GetTropicalStormForecastOptions options = new GetTropicalStormForecastOptions()
             {
                 Year = 2021,
-                BasinId = "NP",
+                BasinId = BasinId.NP,
                 GovernmentStormId = 2
             };
-            var response = await client.GetTropicalStormForecastAsync(options);
+            Response<StormForecastResult> response = await client.GetTropicalStormForecastAsync(options);
+            Console.WriteLine(
+                "Coordinates(longitude, latitude): ("
+                + response.Value.StormForecasts[0].Coordinates.Longitude
+                + ", "
+                + response.Value.StormForecasts[0].Coordinates.Latitude
+                + ")"
+            );
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetTropicalStormLocationsTest()
         {
-            var client = CreateClient();
-            var options = new GetTropicalStormLocationsOptions()
+            MapsWeatherClient client = CreateClient();
+            GetTropicalStormLocationsOptions options = new GetTropicalStormLocationsOptions()
             {
                 Year = 2021,
                 BasinId = "NP",
                 GovernmentStormId = 2
             };
-            var response = await client.GetTropicalStormLocationsAsync(options);
+            Response<StormLocationsResult> response = await client.GetTropicalStormLocationsAsync(options);
+            Console.WriteLine(
+                "Coordinates(longitude, latitude): ("
+                + response.Value.StormLocations[0].Coordinates.Longitude
+                + ", "
+                + response.Value.StormLocations[0].Coordinates.Latitude
+                + ")"
+            );
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetTropicalStormSearchTest()
         {
-            var client = CreateClient();
-            var options = new GetTropicalStormSearchOptions()
+            MapsWeatherClient client = CreateClient();
+            GetTropicalStormSearchOptions options = new GetTropicalStormSearchOptions()
             {
                 Year = 2021,
                 BasinId = "NP",
                 GovernmentStormId = 2
             };
-            var response = await client.GetTropicalStormSearchAsync(options);
+            Response<StormSearchResult> response = await client.GetTropicalStormSearchAsync(options);
+            Console.WriteLine("Name: " + response.Value.Storms[0].Name);
             Assert.NotNull(response);
         }
 
         [RecordedTest]
         public async Task GetWeatherAlongRouteTest()
         {
-            var client = CreateClient();
-            var response = await client.GetWeatherAlongRouteAsync(
-                "25.033075,121.525694,0:25.0338053,121.5640089,2",
+            MapsWeatherClient client = CreateClient();
+            WeatherAlongRouteQuery query = new WeatherAlongRouteQuery()
+            {
+                Waypoints = new List<WeatherAlongRouteWaypoint> {
+                    new WeatherAlongRouteWaypoint()
+                    {
+                        Coordinates = new GeoPosition(121.525694, 25.033075),
+                        ETA = 0,
+                        Heading = 0
+                    },
+                    new WeatherAlongRouteWaypoint()
+                    {
+                        Coordinates = new GeoPosition(121.5640089, 25.0338053),
+                        ETA = 2,
+                        Heading = 0
+                    }
+                }
+            };
+            Response<WeatherAlongRouteResult> response = await client.GetWeatherAlongRouteAsync(
+                query,
                 WeatherLanguage.EnglishUsa
             );
-            response.ToString();
+            Console.WriteLine("Temperature: " + response.Value.Waypoints[0].Temperature.Value);
             Assert.NotNull(response);
         }
     }

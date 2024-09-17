@@ -71,345 +71,398 @@ namespace Azure.Maps.Weather.Tests.Samples
             MapsWeatherClient client = new MapsWeatherClient(sasCredential);
             #endregion
         }
-
+        [Test]
         public void GetAirQualityDailyForecasts()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetAirQualityDailyForecasts
-            var options = new GetAirQualityDailyForecastsOptions()
+            GetAirQualityDailyForecastsOptions options = new GetAirQualityDailyForecastsOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = client.GetAirQualityDailyForecasts(options);
-            Console.WriteLine(response);
+            Response<DailyAirQualityForecastResult> response = client.GetAirQualityDailyForecasts(options);
+            Console.WriteLine("Description: " + response.Value.AirQualityResults[0].Description);
             #endregion
         }
 
+        [Test]
         public void GetAirQualityHourlyForecasts()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetAirQualityHourlyForecasts
-            var options = new GetAirQualityHourlyForecastsOptions()
+            GetAirQualityHourlyForecastsOptions options = new GetAirQualityHourlyForecastsOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = client.GetAirQualityHourlyForecasts(options);
-            Console.WriteLine(response);
+            Response<AirQualityResult> response = client.GetAirQualityHourlyForecasts(options);
+            Console.WriteLine("Description: " + response.Value.AirQualityResults[0].Description);
             #endregion
         }
 
+        [Test]
         public void GetCurrentAirQuality()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetCurrentAirQuality
-            var options = new GetCurrentAirQualityOptions()
+            GetCurrentAirQualityOptions options = new GetCurrentAirQualityOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = client.GetCurrentAirQuality(options);
-            Console.WriteLine(response);
+            Response<AirQualityResult> response = client.GetCurrentAirQuality(options);
+            Console.WriteLine("Description: " + response.Value.AirQualityResults[0].Description);
             #endregion
         }
 
-        public void GetCurrentConditions()
+        [Test]
+        public void GetCurrentWeatherConditions()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
-            #region Snippet:GetCurrentConditions
-            var options = new GetCurrentConditionsOptions()
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            #region Snippet:GetCurrentWeatherConditions
+            GetCurrentWeatherConditionsOptions options = new GetCurrentWeatherConditionsOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = client.GetCurrentConditions(options);
-            Console.WriteLine(response);
+            Response<CurrentConditionsResult> response = client.GetCurrentWeatherConditions(options);
+            Console.WriteLine("Temperature: " + response.Value.Results[0].Temperature.Value);
             #endregion
         }
 
+        [Test]
         public void GetDailyForecast()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetDailyForecast
-            var options = new GetDailyForecastOptions()
+            GetDailyForecastOptions options = new GetDailyForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = client.GetDailyForecast(options);
-            Console.WriteLine(response);
+            Response<DailyForecastResult> response = client.GetDailyForecast(options);
+            Console.WriteLine("Minimum temperatrue: " + response.Value.Forecasts[0].Temperature.Minimum.Value);
+            Console.WriteLine("Maximum temperatrue: " + response.Value.Forecasts[0].Temperature.Maximum.Value);
             #endregion
         }
 
+        [Test]
         public void GetDailyHistoricalActuals()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetDailyHistoricalActuals
-            var options = new GetDailyHistoricalActualsOptions()
+            GetDailyHistoricalActualsOptions options = new GetDailyHistoricalActualsOptions()
             {
                 Coordinates = new GeoPosition(-73.961968, 40.760139),
                 StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
                 EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
             };
-            var response = client.GetDailyHistoricalActuals(options);
-            Console.WriteLine(response);
+            Response<DailyHistoricalActualsResult> response = client.GetDailyHistoricalActuals(options);
+            Console.WriteLine("Minimum temperature: " + response.Value.HistoricalActuals[0].Temperature.Minimum.Value);
+            Console.WriteLine("Maximum temperature: " + response.Value.HistoricalActuals[0].Temperature.Maximum.Value);
             #endregion
         }
 
+        [Test]
         public void GetDailyHistoricalNormals()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetDailyHistoricalNormals
-            var options = new GetDailyHistoricalNormalsOptions()
+            GetDailyHistoricalNormalsOptions options = new GetDailyHistoricalNormalsOptions()
             {
                 Coordinates = new GeoPosition(-73.961968, 40.760139),
                 StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
                 EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
             };
-            var response = client.GetDailyHistoricalNormals(options);
-            Console.WriteLine(response);
+            Response<DailyHistoricalNormalsResult> response = client.GetDailyHistoricalNormals(options);
+            Console.WriteLine("Minimum temperature: " + response.Value.HistoricalNormals[0].Temperature.Minimum.Value);
+            Console.WriteLine("Maximum temperature: " + response.Value.HistoricalNormals[0].Temperature.Maximum.Value);
             #endregion
         }
 
+        [Test]
         public void GetDailyHistoricalRecords()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetDailyHistoricalRecords
-            var options = new GetDailyHistoricalRecordsOptions()
+            GetDailyHistoricalRecordsOptions options = new GetDailyHistoricalRecordsOptions()
             {
                 Coordinates = new GeoPosition(-73.961968, 40.760139),
                 StartDate = new DateTimeOffset(new DateTime(2024, 1, 1)),
                 EndDate = new DateTimeOffset(new DateTime(2024, 1, 31))
             };
-            var response = client.GetDailyHistoricalRecords(options);
-            Console.WriteLine(response);
+            Response<DailyHistoricalRecordsResult> response = client.GetDailyHistoricalRecords(options);
+            Console.WriteLine("Minimum temperature: " + response.Value.HistoricalRecords[0].Temperature.Minimum.Value);
+            Console.WriteLine("Maximum temperature: " + response.Value.HistoricalRecords[0].Temperature.Maximum.Value);
             #endregion
         }
 
+        [Test]
         public void GetDailyIndices()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetDailyIndices
-            var options = new GetDailyIndicesOptions()
+            GetDailyIndicesOptions options = new GetDailyIndicesOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = client.GetDailyIndices(options);
-            Console.WriteLine(response);
+            Response<DailyIndicesResult> response = client.GetDailyIndices(options);
+            Console.WriteLine("Description: " + response.Value.Results[0].Description);
             #endregion
         }
 
-        public void GetHourlyForecast()
+        [Test]
+        public void GetHourlyWeatherForecast()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
-            #region Snippet:GetHourlyForecast
-            var options = new GetHourlyForecastOptions()
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            #region Snippet:GetHourlyWeatherForecast
+            GetHourlyWeatherForecastOptions options = new GetHourlyWeatherForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = client.GetHourlyForecast(options);
-            Console.WriteLine(response);
+            Response<HourlyForecastResult> response = client.GetHourlyWeatherForecast(options);
+            Console.WriteLine("Temperature: " + response.Value.Forecasts[0].Temperature.Value);
             #endregion
         }
 
+        [Test]
         public void GetMinuteForecast()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetMinuteForecast
-            var options = new GetMinuteForecastOptions()
+            GetMinuteWeatherForecastOptions options = new GetMinuteWeatherForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = client.GetMinuteForecast(options);
-            Console.WriteLine(response);
+            Response<MinuteForecastResult> response = client.GetMinuteWeatherForecast(options);
+            Console.WriteLine("Summary: " + response.Value.Summary.LongPhrase);
             #endregion
         }
 
+        [Test]
         public void GetQuarterDayForecast()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetQuarterDayForecast
-            var options = new GetQuarterDayForecastOptions()
+            GetQuarterDayWeatherForecastOptions options = new GetQuarterDayWeatherForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = client.GetQuarterDayForecast(options);
-            Console.WriteLine(response);
+            Response<QuarterDayForecastResult> response = client.GetQuarterDayWeatherForecast(options);
+            Console.WriteLine("Minimum temperature: " + response.Value.Forecasts[0].Temperature.Minimum.Value);
+            Console.WriteLine("Maximum temperature: " + response.Value.Forecasts[0].Temperature.Maximum.Value);
             #endregion
         }
 
+        [Test]
         public void GetSevereWeatherAlerts()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetSevereWeatherAlerts
-            var options = new GetSevereWeatherAlertsOptions()
+            GetSevereWeatherAlertsOptions options = new GetSevereWeatherAlertsOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            var response = client.GetSevereWeatherAlerts(options);
-            Console.WriteLine(response);
+            Response<SevereWeatherAlertsResult> response = client.GetSevereWeatherAlerts(options);
+            if (response.Value.Results.Count > 0) {
+                Console.WriteLine("Description: " + response.Value.Results[0].Description);
+            }
             #endregion
         }
 
+        [Test]
         public void GetTropicalStormActive()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetTropicalStormActive
-            var response = client.GetTropicalStormActive();
-            Console.WriteLine(response);
+            Response<ActiveStormResult> response = client.GetTropicalStormActive();
+            Console.WriteLine("Name: " + response.Value.ActiveStorms[0].Name);
             #endregion
         }
 
+        [Test]
         public void GetTropicalStormForecast()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetTropicalStormForecast
-            var options = new GetTropicalStormForecastOptions()
+            GetTropicalStormForecastOptions options = new GetTropicalStormForecastOptions()
             {
                 Year = 2021,
-                BasinId = "NP",
+                BasinId = BasinId.NP,
                 GovernmentStormId = 2
             };
-            var response = client.GetTropicalStormForecast(options);
-            Console.WriteLine(response);
+            Response<StormForecastResult> response = client.GetTropicalStormForecast(options);
+            Console.WriteLine(
+                "Coordinates(longitude, latitude): ("
+                + response.Value.StormForecasts[0].Coordinates.Longitude
+                + ", "
+                + response.Value.StormForecasts[0].Coordinates.Latitude
+                + ")"
+            );
             #endregion
         }
 
+        [Test]
         public void GetTropicalStormLocations()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetTropicalStormLocations
-            var options = new GetTropicalStormLocationsOptions()
+            GetTropicalStormLocationsOptions options = new GetTropicalStormLocationsOptions()
             {
                 Year = 2021,
                 BasinId = "NP",
                 GovernmentStormId = 2
             };
-            var response = client.GetTropicalStormLocations(options);
-            Console.WriteLine(response);
+            Response<StormLocationsResult> response = client.GetTropicalStormLocations(options);
+            Console.WriteLine(
+                "Coordinates(longitude, latitude): ("
+                + response.Value.StormLocations[0].Coordinates.Longitude
+                + ", "
+                + response.Value.StormLocations[0].Coordinates.Latitude
+                + ")"
+            );
             #endregion
         }
 
+        [Test]
         public void GetTropicalStormSearch()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetTropicalStormSearch
-            var options = new GetTropicalStormSearchOptions()
+            GetTropicalStormSearchOptions options = new GetTropicalStormSearchOptions()
             {
                 Year = 2021,
                 BasinId = "NP",
                 GovernmentStormId = 2
             };
-            var response = client.GetTropicalStormSearch(options);
-            Console.WriteLine(response);
+            Response<StormSearchResult> response = client.GetTropicalStormSearch(options);
+            Console.WriteLine("Name: " + response.Value.Storms[0].Name);
             #endregion
         }
 
+        [Test]
         public void GetWeatherAlongRoute()
         {
-            var clientOptions = new MapsWeatherClientOptions()
+            MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetWeatherAlongRoute
-            var response = client.GetWeatherAlongRoute(
-                "25.033075,121.525694,0:25.0338053,121.5640089,2",
+            WeatherAlongRouteQuery query = new WeatherAlongRouteQuery()
+            {
+                Waypoints = new List<WeatherAlongRouteWaypoint> {
+                    new WeatherAlongRouteWaypoint()
+                    {
+                        Coordinates = new GeoPosition(121.525694, 25.033075),
+                        ETA = 0,
+                        Heading = 0
+                    },
+                    new WeatherAlongRouteWaypoint()
+                    {
+                        Coordinates = new GeoPosition(121.5640089, 25.0338053),
+                        ETA = 2,
+                        Heading = 0
+                    }
+                }
+            };
+            Response<WeatherAlongRouteResult> response = client.GetWeatherAlongRoute(
+                query,
                 WeatherLanguage.EnglishUsa
             );
-            Console.WriteLine(response);
+            Console.WriteLine("Temperature: " + response.Value.Waypoints[0].Temperature.Value);
             #endregion
         }
     }

@@ -8,9 +8,9 @@ using Azure.Maps.Weather;
 namespace Azure.Maps.Weather.Models.Options
 {
     /// <summary> Options. </summary>
-    public class GetMinuteForecastOptions : WeatherBaseOptions
+    public class GetMinuteWeatherForecastOptions : WeatherBaseOptions
     {
         /// <summary> Specifies time interval in minutes for the returned weather forecast. </summary>
-        public int? Interval { get; set; }
+        public int? IntervalInMinutes { get; set; }
     }
 }

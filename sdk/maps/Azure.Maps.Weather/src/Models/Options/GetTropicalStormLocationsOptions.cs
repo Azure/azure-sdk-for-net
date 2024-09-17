@@ -13,7 +13,7 @@ namespace Azure.Maps.Weather.Models.Options
         /// <summary> Year of the cyclone(s). </summary>
         public int Year { get; set; }
         /// <summary> Basin identifier. Allowed values: "AL" | "EP" | "SI" | "NI" | "CP" | "NP" | "SP". </summary>
-        public string BasinId { get; set; }
+        public BasinId BasinId { get; set; }
         /// <summary> Government storm Id. </summary>
         public int GovernmentStormId { get; set; }
         /// <summary> When true, wind radii summary data is included in the response. </summary>

@@ -11,6 +11,6 @@ namespace Azure.Maps.Weather.Models.Options
     public class GetSevereWeatherAlertsOptions : WeatherBaseOptions
     {
         /// <summary> Return full details for the current conditions. </summary>
-        public bool? Details { get; set; }
+        public bool IncludeDetails { get; set; } = true;
     }
 }
